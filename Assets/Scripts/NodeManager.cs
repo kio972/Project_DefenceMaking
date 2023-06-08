@@ -15,37 +15,18 @@ public class NodeManager : MonoBehaviour
     //배치된 가상노드는 활성노드로 이동
     //현재 배치된 노드로부터 현재존재하지않는 노드의 가상노드 생성
 
-    public Vector3 GetNewNodePosition(TileNode curNode, Direction direction, float distance)
-    {
-        float angle = 0f;
-        switch (direction)
-        {
-            case Direction.LeftUp:
-                angle = 120f;
-                break;
-            case Direction.RightUp:
-                angle = 60f;
-                break;
-            case Direction.Left:
-                angle = 180f;
-                break;
-            case Direction.LeftDown:
-                angle = -120f;
-                break;
-            case Direction.RightDown:
-                angle = -60f;
-                break;
-        }
+    public TileNode startPoint;
 
-        float angleInRadians = angle * Mathf.Deg2Rad;
-        Vector3 dir = new Vector3(Mathf.Cos(angleInRadians), 0, Mathf.Sin(angleInRadians));
-        dir *= distance;
-        return curNode.transform.position + dir;
-    }
+    
 
     private void SetNewNode(TileNode curNode)
     {
-
+        curNode.AddNode(Direction.Left);
+        curNode.AddNode(Direction.LeftUp);
+        curNode.AddNode(Direction.LeftDown);
+        curNode.AddNode(Direction.Right);
+        curNode.AddNode(Direction.RightUp);
+        curNode.AddNode(Direction.RightDown);
     }
 
     public bool IsNodeInstance()
