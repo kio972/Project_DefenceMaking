@@ -18,12 +18,34 @@ public class Test : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPosition = tilemap.WorldToCell(mousePosition);
-            Vector3 cellCenter = tilemap.GetCellCenterWorld(cellPosition);
-            Debug.Log("Cell center position: " + cellCenter);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 충돌된 오브젝트 처리
+                GameObject hitObject = hit.collider.gameObject;
+                //Debug.Log("Hit object: " + hitObject.name);
+                TileNode tile = hitObject.GetComponentInParent<TileNode>();
+                if (tile != null)
+                {
+                    TileNode neighborTile = null;
+                    if (tile.neighborNodeDic.TryGetValue(Direction.Left, out neighborTile))
+                        print(neighborTile.transform.position);
+                    if (tile.neighborNodeDic.TryGetValue(Direction.LeftUp, out neighborTile))
+                        print(neighborTile.transform.position);
+                    if (tile.neighborNodeDic.TryGetValue(Direction.LeftDown, out neighborTile))
+                        print(neighborTile.transform.position);
+                    if (tile.neighborNodeDic.TryGetValue(Direction.Right, out neighborTile))
+                        print(neighborTile.transform.position);
+                    if (tile.neighborNodeDic.TryGetValue(Direction.RightUp, out neighborTile))
+                        print(neighborTile.transform.position);
+                    if (tile.neighborNodeDic.TryGetValue(Direction.RightDown, out neighborTile))
+                        print(neighborTile.transform.position);
+                }
+            }
         }
     }
 }

@@ -7,6 +7,25 @@ using UnityEngine.Events;
 
 public static class UtilHelper
 {
+    //public static Direction ModifyDirection(Direction direction)
+    //{
+    //    switch (direction)
+    //    {
+    //        case Direction.Left:
+    //            break;
+    //        case Direction.LeftUp:
+    //            break;
+    //        case Direction.LeftDown:
+    //            break;
+    //        case Direction.Right:
+    //            break;
+    //        case Direction.RightUp:
+    //            break;
+    //        case Direction.RightDown:
+    //            break;
+    //    }
+    //}
+
     public static Direction ReverseDirection(Direction direction)
     {
         switch(direction)
@@ -26,7 +45,7 @@ public static class UtilHelper
         }
 
         //코드탈일 없음
-        return Direction.Left;
+        return Direction.None;
     }
 
     public static Vector3 GetGridPosition(Vector3 curPos, Direction direction, float distance)
