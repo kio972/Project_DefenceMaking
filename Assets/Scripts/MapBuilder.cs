@@ -24,8 +24,15 @@ public class MapBuilder : MonoBehaviour
         TileNode startTile = NodeManager.Instance.InstanceTile(startPointPrefab, startPointPos);
         startTile.SwapTile(NodeManager.Instance.startPoint);
         TileNode nextTile = NodeManager.Instance.startPoint.neighborNodeDic[Direction.Right];
+
+        NodeManager.Instance.emptyNodes.Remove(NodeManager.Instance.startPoint);
         Destroy(NodeManager.Instance.startPoint.gameObject);
+
         NodeManager.Instance.startPoint = startTile;
+        
+        NodeManager.Instance.activeNodes = new List<TileNode>();
+        NodeManager.Instance.activeNodes.Add(startTile);
+        NodeManager.Instance.emptyNodes.Remove(startTile);
 
         for (int i = 0; i < startPathSize; i++)
         {
@@ -34,13 +41,24 @@ public class MapBuilder : MonoBehaviour
             tempTile.SwapTile(nextTile);
             TileNode destroyTargetTile = nextTile;
             nextTile = nextTile.neighborNodeDic[Direction.Right];
+
+            NodeManager.Instance.emptyNodes.Remove(destroyTargetTile);
             Destroy(destroyTargetTile.gameObject);
+
+            NodeManager.Instance.activeNodes.Add(tempTile);
+            NodeManager.Instance.emptyNodes.Remove(tempTile);
         }
 
         Vector3 endPos = nextTile.transform.position;
         TileNode endTile = NodeManager.Instance.InstanceTile(endPointPrefab, endPos);
         endTile.SwapTile(nextTile);
+
+        NodeManager.Instance.emptyNodes.Remove(nextTile);
         Destroy(nextTile.gameObject);
+
+        NodeManager.Instance.activeNodes.Add(endTile);
+        NodeManager.Instance.emptyNodes.Remove(endTile);
+        endTile.movable = true;
     }
 
     private bool IsStartPointValid(TileNode node)
@@ -119,6 +137,8 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.SetEmptyNode();
         SetStartPoint();
         SetBasicTile();
+
+        InputManager.Instance.UpdateTile();
     }
 
     void Start()

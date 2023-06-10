@@ -26,6 +26,77 @@ public static class UtilHelper
     //    }
     //}
 
+    public static TileNode RayCastTile()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // 충돌된 오브젝트 처리
+            GameObject hitObject = hit.collider.gameObject;
+            //Debug.Log("Hit object: " + hitObject.name);
+            TileNode tile = hitObject.GetComponentInParent<TileNode>();
+            if (tile != null)
+                return tile;
+        }
+
+        return null;
+    }
+
+    public static void SetAvail(bool value, List<TileNode> targetNode)
+    {
+        foreach (TileNode node in targetNode)
+        {
+            node.SetAvail(value);
+        }
+    }
+
+    public static void SetCollider(bool value, List<TileNode> targetNode)
+    {
+        foreach (TileNode node in targetNode)
+        {
+            Collider col = node.GetComponentInChildren<Collider>();
+            if(col != null)
+                col.enabled = value;
+        }
+    }
+
+    public static Vector3 GetMouseWorldPosition(float yPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, -yPosition);
+        float rayDistance;
+        if (groundPlane.Raycast(ray, out rayDistance))
+        {
+            Vector3 point = ray.GetPoint(rayDistance);
+            return point;
+        }
+
+        // groundPlane과 교차하지 않을 경우, playerPosition을 반환합니다.
+        return Vector3.zero;
+    }
+
+    public static int Find_Data_Index(object target, List<Dictionary<string, object>> targetDic, string key = "ID")
+    {
+        for (int i = 0; i < targetDic.Count; i++)
+        {
+            if (targetDic[i][key].ToString() == target.ToString())
+            {
+                return i;
+            }
+        }
+        return -1; // 일치하는 데이터가 없을 경우 -1 반환
+    }
+
+    public static T Find_Prefab<T>(int id, List<Dictionary<string, object>> dataDic) where T : UnityEngine.Object
+    {
+        int index = Find_Data_Index(id, dataDic);
+        string prefabPath = dataDic[index]["Prefab"].ToString();
+        T prefab = Resources.Load<T>(prefabPath);
+        return prefab;
+    }
+
     public static Direction ReverseDirection(Direction direction)
     {
         switch(direction)
@@ -110,17 +181,6 @@ public static class UtilHelper
             yield return null;
         }
         func();
-    }
-
-    public static IEnumerator ReActiveCollider(Collider2D collider, float delayTime)
-    {
-        float elapsedTime = 0f;
-        while (elapsedTime < delayTime)
-        {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        collider.isTrigger = false;
     }
 
     public static T Find<T>(Transform transform, string path, bool init = false) where T : Component

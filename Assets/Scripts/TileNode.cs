@@ -1,7 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.XR;
+using static UnityEngine.Rendering.DebugUI;
+
+public enum RoomType
+{
+    Path,
+    Room,
+}
 
 public enum Direction
 {
@@ -20,6 +29,8 @@ public class TileNode : MonoBehaviour
     private List<Direction> pathDirection = new List<Direction>();
     [SerializeField]
     private List<Direction> roomDirection = new List<Direction>();
+    [SerializeField]
+    private RoomType roomType;
 
     //public List<TileNode> neighborNodes = new List<TileNode>();
     public Dictionary<Direction, TileNode> neighborNodeDic = new Dictionary<Direction, TileNode>();
@@ -30,10 +41,25 @@ public class TileNode : MonoBehaviour
     public bool isActive = false;
     public bool haveTrap = false;
 
-    public void SwapTile(TileNode prevNode)
+    public bool movable = false;
+
+    public bool waitToMove = false;
+
+    public TileNode twin = null;
+
+    [SerializeField]
+    private GameObject guideObject;
+
+    public void SwapTile(TileNode prevNode, bool switchNode = false)
     {
         Dictionary<Direction, TileNode> newDic = new Dictionary<Direction, TileNode>(prevNode.neighborNodeDic);
+        if (switchNode)
+            prevNode.SwapTile(this);
         neighborNodeDic = newDic;
+
+        Direction closeDirection = GetNodeDirection(prevNode);
+        neighborNodeDic[UtilHelper.ReverseDirection(closeDirection)] = prevNode;
+
         //노드별로 이웃타일 재지정
         DirectionalNode(Direction.Left)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.Left), this);
         DirectionalNode(Direction.LeftDown)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.LeftDown), this);
@@ -57,30 +83,53 @@ public class TileNode : MonoBehaviour
         return Direction.None;
     }
 
-    public void SetAvail()
+    public void SetAvail(bool value)
     {
-        //배치가능한 virtual노드에 
+        //배치가능한 virtual노드에
+        Material material = GetComponentInChildren<Renderer>().material;
+        if(value)
+        {
+            guideObject.SetActive(true);
+        }
+        else
+        {
+            guideObject.SetActive(false);
+        }
     }
 
     public bool IsConnected(List<Direction> targetNode_PathDirection, List<Direction> targetNode_RoomDirection)
     {
         //현재 노드와 targetNode를 비교하여 연결되어있는지 확인하는 함수
         bool isConnected = false;
-        foreach(Direction direction in pathDirection)
+        foreach(Direction direction in targetNode_PathDirection)
         {
-            foreach (Direction targetDirection in targetNode_PathDirection)
+            if(neighborNodeDic.ContainsKey(direction))
             {
-                if (direction == UtilHelper.ReverseDirection(targetDirection))
-                    return true;
+                TileNode targetNode = neighborNodeDic[direction];
+                if (!NodeManager.Instance.activeNodes.Contains(targetNode))
+                    continue;
+
+                foreach (Direction targetDirection in targetNode.pathDirection)
+                {
+                    if (direction == UtilHelper.ReverseDirection(targetDirection))
+                        return true;
+                }
             }
         }
 
-        foreach (Direction direction in roomDirection)
+        foreach (Direction direction in targetNode_RoomDirection)
         {
-            foreach (Direction targetDirection in targetNode_RoomDirection)
+            if (neighborNodeDic.ContainsKey(direction))
             {
-                if (direction == UtilHelper.ReverseDirection(targetDirection))
-                    return true;
+                TileNode targetNode = neighborNodeDic[direction];
+                if (!NodeManager.Instance.activeNodes.Contains(targetNode))
+                    continue;
+
+                foreach (Direction targetDirection in targetNode.roomDirection)
+                {
+                    if (direction == UtilHelper.ReverseDirection(targetDirection))
+                        return true;
+                }
             }
         }
 
@@ -144,13 +193,9 @@ public class TileNode : MonoBehaviour
         if(node == null) return;
 
         if (neighborNodeDic.ContainsKey(direction))
-        {
             neighborNodeDic[direction] = node;
-        }
         else
-        {
             neighborNodeDic.Add(direction, node);
-        }
     }
 
     //originNode로부터 가상노드들간에 이웃노드들을 설정하는 함수
@@ -162,47 +207,34 @@ public class TileNode : MonoBehaviour
                 PushNeighborNode(Direction.RightUp, originNode.neighborNodeDic[Direction.LeftUp]);
                 PushNeighborNode(Direction.RightDown, originNode.neighborNodeDic[Direction.LeftDown]);
                 PushNeighborNode(UtilHelper.ReverseDirection(Direction.Left), originNode);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.LeftUp]);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.LeftDown]);
                 break;
             case Direction.LeftUp:
                 PushNeighborNode(Direction.LeftDown, originNode.neighborNodeDic[Direction.Left]);
                 PushNeighborNode(Direction.Right, originNode.neighborNodeDic[Direction.RightUp]);
                 PushNeighborNode(UtilHelper.ReverseDirection(Direction.LeftUp), originNode);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.Left]);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.RightUp]);
                 break;
             case Direction.LeftDown:
                 PushNeighborNode(Direction.LeftUp, originNode.neighborNodeDic[Direction.Left]);
                 PushNeighborNode(Direction.Right, originNode.neighborNodeDic[Direction.RightDown]);
                 PushNeighborNode(UtilHelper.ReverseDirection(Direction.LeftDown), originNode);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.Left]);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.RightDown]);
                 break;
             case Direction.Right:
                 PushNeighborNode(Direction.LeftUp, originNode.neighborNodeDic[Direction.RightUp]);
                 PushNeighborNode(Direction.LeftDown, originNode.neighborNodeDic[Direction.RightDown]);
                 PushNeighborNode(UtilHelper.ReverseDirection(Direction.Right), originNode);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.RightUp]);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.RightDown]);
                 break;
             case Direction.RightUp:
                 PushNeighborNode(Direction.Left, originNode.neighborNodeDic[Direction.LeftUp]);
                 PushNeighborNode(Direction.RightDown, originNode.neighborNodeDic[Direction.Right]);
                 PushNeighborNode(UtilHelper.ReverseDirection(Direction.RightUp), originNode);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.LeftUp]);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.Right]);
                 break;
             case Direction.RightDown:
                 PushNeighborNode(Direction.RightUp, originNode.neighborNodeDic[Direction.Right]);
                 PushNeighborNode(Direction.Left, originNode.neighborNodeDic[Direction.LeftDown]);
                 PushNeighborNode(UtilHelper.ReverseDirection(Direction.RightDown), originNode);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.Right]);
-                //neighborNodes.Add(originNode.neighborNodeDic[Direction.LeftDown]);
                 break;
         }
     }
-
 
 
     public void AddNode(Direction direction)
@@ -227,5 +259,106 @@ public class TileNode : MonoBehaviour
     public void Init()
     {
         
+    }
+
+    private void UpdateMoveTilePos(TileNode curNode)
+    {
+        if (curNode != null && NodeManager.Instance.emptyNodes.Contains(curNode))
+            twin.transform.position = curNode.transform.position;
+        else
+            twin.transform.position = new Vector3(0, 10000, 0);
+    }
+
+    private void MoveTile(TileNode curNode)
+    {
+        //빈타일 하나를 생성, 빈타일에 현재타일의 정보를 저장
+        //
+        this.SwapTile(curNode, true);
+        Vector3 prevPos = this.transform.position;
+        this.transform.position = curNode.transform.position;
+        curNode.transform.position = prevPos;
+
+        this.transform.rotation = twin.transform.rotation;
+        this.roomDirection = new List<Direction>(twin.roomDirection);
+        this.pathDirection = new List<Direction>(twin.pathDirection);
+    }
+
+    private void EndMoveing()
+    {
+        twin.gameObject.SetActive(false);
+        waitToMove = false;
+        InputManager.Instance.settingCard = false;
+        NodeManager.Instance.ResetAvail();
+        Destroy(twin.gameObject);
+        twin = null;
+    }
+
+    private void InstanceTwin()
+    {
+        twin = Instantiate(this);
+        twin.waitToMove = false;
+        Collider collider = twin.GetComponentInChildren<Collider>();
+        if (collider != null)
+            collider.enabled = false;
+    }
+
+    private void CheckEndInput(TileNode curNode)
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (curNode != null)
+                MoveTile(curNode);
+
+            EndMoveing();
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1))
+            EndMoveing();
+    }
+
+    private void RotateDirection()
+    {
+        transform.rotation *= Quaternion.Euler(0f, 60f, 0f);
+    }
+
+    private void RotateCheck()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            twin.RotateTile();
+        }
+    }
+
+    public void RotateTile()
+    {
+        pathDirection = RotateNode(pathDirection);
+        roomDirection = RotateNode(roomDirection);
+        RotateDirection();
+    }   
+
+    public void ResetTwin()
+    {
+        twin.pathDirection = pathDirection;
+        twin.roomDirection = roomDirection;
+    }
+
+    private void Update()
+    {
+        if (!waitToMove)
+            return;
+        if (twin == null)
+        {
+            InstanceTwin();
+            return;
+        }
+        else if (!twin.gameObject.activeSelf)
+        {
+            twin.gameObject.SetActive(true);
+            return;
+        }
+
+        TileNode curNode = UtilHelper.RayCastTile();
+        UpdateMoveTilePos(curNode);
+        RotateCheck();
+        CheckEndInput(curNode);
     }
 }

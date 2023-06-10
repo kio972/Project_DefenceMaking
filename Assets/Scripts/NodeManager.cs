@@ -4,15 +4,83 @@ using UnityEngine;
 
 public class NodeManager : Singleton<NodeManager>
 {
-    //비활성화 상태의 노드
-    public List<TileNode> virtualNodes;
+    //활성화 노드들의 이웃노드 중 비활성화 노드
+    public List<TileNode> virtualNodes = new List<TileNode>();
     //활성화 상태의 노드
-    public List<TileNode> activeNodes;
+    public List<TileNode> activeNodes = new List<TileNode>();
 
-    public List<TileNode> emptyNodes;
+    public List<TileNode> emptyNodes = new List<TileNode>();
 
     public TileNode startPoint;
 
+    public void ResetAvail()
+    {
+        //foreach (TileNode node in virtualNodes)
+        //{
+        //    node.SetAvail(false);
+        //}
+
+        foreach (TileNode node in emptyNodes)
+        {
+            node.SetAvail(false);
+        }
+    }
+
+    public void SetPathAvailTile(TileNode targetNode)
+    {
+        ResetAvail();
+        List<Direction> targetNode_PathDirection = targetNode.PathDirection;
+        List<Direction> targetNode_RoomDirection = targetNode.RoomDirection;
+        UtilHelper.SetCollider(true, virtualNodes);
+        foreach (TileNode node in virtualNodes)
+        {
+            if (node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection))
+                node.SetAvail(true);
+            else
+            {
+                Collider col = node.GetComponentInChildren<Collider>();
+                if(col != null)
+                    col.enabled = false;
+            }
+        }
+    }
+
+    public void AddVirtualNode(TileNode node, Direction direction)
+    {
+        if(node.neighborNodeDic.ContainsKey(direction))
+        {
+            TileNode curNode = node.neighborNodeDic[direction];
+            if(!activeNodes.Contains(curNode))
+            {
+                virtualNodes.Add(curNode);
+            }
+        }
+    }
+
+    public void SetVirtualTile()
+    {
+        virtualNodes = new List<TileNode>();
+
+        //activeNodes의 이웃타일들 전부 가상노드에 추가
+        //이웃타일이 이미 activeNode에있다면 추가하지않음
+        foreach (TileNode node in activeNodes)
+        {
+            AddVirtualNode(node, Direction.Left);
+            AddVirtualNode(node, Direction.LeftUp);
+            AddVirtualNode(node, Direction.LeftDown);
+            AddVirtualNode(node, Direction.Right);
+            AddVirtualNode(node, Direction.RightUp);
+            AddVirtualNode(node, Direction.RightDown);
+        }
+    }
+
+    //public void SetAvailTile(TileNode curTile)
+    //{
+    //    SetVirtualTile();
+    //    UtilHelper.SetCollider(false, emptyNodes);
+    //    UtilHelper.SetCollider(false, activeNodes);
+        
+    //}
 
     public void SetEmptyNode()
     {
@@ -42,16 +110,7 @@ public class NodeManager : Singleton<NodeManager>
         return newNode;
     }
 
-    public void SetAvailTile(TileNode targetNode)
-    {
-        List<Direction> targetNode_PathDirection = targetNode.PathDirection;
-        List<Direction> targetNode_RoomDirection = targetNode.RoomDirection;
-        foreach (TileNode node in virtualNodes)
-        {
-            if (node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection))
-                node.SetAvail();
-        }
-    }
+
     
     public void SetNewNode(TileNode curNode)
     {
@@ -74,10 +133,5 @@ public class NodeManager : Singleton<NodeManager>
     {
 
         return false;
-    }
-
-    public void Init()
-    {
-
     }
 }
