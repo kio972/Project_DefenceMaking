@@ -26,6 +26,30 @@ public static class UtilHelper
     //    }
     //}
 
+    public static List<TileNode> GetConnectedNodes(TileNode curNode)
+    {
+        List<TileNode> nodes = new List<TileNode>();
+
+        List<Direction> connectedDirection = new List<Direction>();
+        foreach(Direction direction in curNode.PathDirection)
+            connectedDirection.Add(direction);
+        foreach(Direction direction in curNode.RoomDirection)
+            connectedDirection.Add(direction);
+
+        foreach(Direction direction in connectedDirection)
+        {
+            TileNode tempNode = curNode.DirectionalNode(direction);
+            if (tempNode != null && NodeManager.Instance.activeNodes.Contains(tempNode))
+            {
+                Direction reverseDirection = ReverseDirection(direction);
+                if(tempNode.PathDirection.Contains(reverseDirection) || tempNode.RoomDirection.Contains(reverseDirection))
+                    nodes.Add(tempNode);
+            }
+        }
+
+        return nodes;
+    }
+
     public static TileNode RayCastTile()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -12,6 +12,9 @@ public class NodeManager : Singleton<NodeManager>
     public List<TileNode> emptyNodes = new List<TileNode>();
 
     public TileNode startPoint;
+    public TileNode endPoint;
+
+    private Vector3 endPointPosition = Vector3.zero;
 
     public void ResetAvail()
     {
@@ -133,5 +136,24 @@ public class NodeManager : Singleton<NodeManager>
     {
 
         return false;
+    }
+
+    private void Update()
+    {
+        if(endPointPosition != endPoint.transform.position)
+        {
+            //도착지 변경시 영향 함수 호출
+
+            if (PathFinder.Instance.FindPath(startPoint) == null)
+                Time.timeScale = 0f;
+            else
+                Time.timeScale = 1f;
+
+            Adventurer[] adventurers = FindObjectsOfType<Adventurer>();
+            foreach (Adventurer adventurer in adventurers)
+                adventurer.EndPointMoved();
+
+            endPointPosition = endPoint.transform.position;
+        }
     }
 }

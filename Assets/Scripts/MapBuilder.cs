@@ -59,6 +59,7 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.activeNodes.Add(endTile);
         NodeManager.Instance.emptyNodes.Remove(endTile);
         endTile.movable = true;
+        NodeManager.Instance.endPoint = endTile;
     }
 
     private bool IsStartPointValid(TileNode node)

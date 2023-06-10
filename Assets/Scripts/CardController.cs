@@ -40,7 +40,7 @@ public class CardController : MonoBehaviour
         {
             //타일 놓기
             instancedObject = null;
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
@@ -107,6 +107,7 @@ public class CardController : MonoBehaviour
     private void ReadyForMapTile()
     {
         UtilHelper.SetCollider(false, NodeManager.Instance.emptyNodes);
+        UtilHelper.SetCollider(false, NodeManager.Instance.activeNodes);
         NodeManager.Instance.SetVirtualTile();
         TileNode tileNode = instancedObject.GetComponent<TileNode>();
         NodeManager.Instance.SetPathAvailTile(tileNode);
