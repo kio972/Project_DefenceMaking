@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathDirection: 04000000
   roomDirection: 
+  roomType: 0
   isActive: 0
   haveTrap: 0
   movable: 0
@@ -70,7 +71,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae7ed13b99986904eaee73beefd2f4a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae7ed13b99986904eaee73beefd2f4a3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -107,7 +108,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ae7ed13b99986904eaee73beefd2f4a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fbaaf8ee52c3ac349911ccf698e400bf, type: 2}
+      objectReference: {fileID: -5876798485316771813, guid: 67c62ec2d5159534ba365c2510fbf67a, type: 3}
+    - target: {fileID: -7511558181221131132, guid: ae7ed13b99986904eaee73beefd2f4a3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 5988431801309703379, guid: 67c62ec2d5159534ba365c2510fbf67a, type: 3}
     - target: {fileID: 919132149155446097, guid: ae7ed13b99986904eaee73beefd2f4a3, type: 3}
       propertyPath: m_Name
       value: Road_TutTypeStart

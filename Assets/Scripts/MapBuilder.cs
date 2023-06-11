@@ -132,7 +132,7 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         SetNewMap();
         NodeManager.Instance.SetEmptyNode();
@@ -140,11 +140,6 @@ public class MapBuilder : MonoBehaviour
         SetBasicTile();
 
         InputManager.Instance.UpdateTile();
+        NodeManager.Instance.endPointPosition = NodeManager.Instance.endPoint.transform.position;
     }
-
-    void Start()
-    {
-        Init();
-    }
-
 }

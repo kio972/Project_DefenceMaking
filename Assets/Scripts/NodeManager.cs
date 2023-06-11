@@ -14,14 +14,14 @@ public class NodeManager : Singleton<NodeManager>
     public TileNode startPoint;
     public TileNode endPoint;
 
-    private Vector3 endPointPosition = Vector3.zero;
+    public Vector3 endPointPosition = Vector3.zero;
 
     public void ResetAvail()
     {
-        //foreach (TileNode node in virtualNodes)
-        //{
-        //    node.SetAvail(false);
-        //}
+        foreach (TileNode node in activeNodes)
+        {
+            node.SetAvail(false);
+        }
 
         foreach (TileNode node in emptyNodes)
         {
@@ -145,9 +145,9 @@ public class NodeManager : Singleton<NodeManager>
             //도착지 변경시 영향 함수 호출
 
             if (PathFinder.Instance.FindPath(startPoint) == null)
-                Time.timeScale = 0f;
+                GameManager.Instance.speedController.SetSpeedZero();
             else
-                Time.timeScale = 1f;
+                GameManager.Instance.speedController.SetSpeedNormal();
 
             Adventurer[] adventurers = FindObjectsOfType<Adventurer>();
             foreach (Adventurer adventurer in adventurers)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Adventurer : MonoBehaviour
+public class Adventurer : Battler
 {
     private List<TileNode> crossedNodes = new List<TileNode>();
     private TileNode prevTile;
@@ -17,6 +17,31 @@ public class Adventurer : MonoBehaviour
 
     private Coroutine directPassCoroutine = null;
     private Coroutine moveCoroutine = null;
+
+    private Animator animator;
+
+    private void ArriveEndPoint()
+    {
+        GameManager.Instance.adventurersList.Remove(this);
+        StopCoroutine(moveCoroutine);
+        animator.SetBool("Attack", true);
+        
+        PlayerBattleMain king = FindObjectOfType<PlayerBattleMain>();
+        king.GetDamage(1);
+
+        Destroy(this.gameObject, 1f);
+        Destroy(this, 0f);
+    }
+
+    public override void Dead()
+    {
+        GameManager.Instance.adventurersList.Remove(this);
+        StopCoroutine(moveCoroutine);
+        animator.SetBool("Die", true);
+        Destroy(this.gameObject, 1f);
+        Destroy(this, 0f);
+    }
+
     public void EndPointMoved()
     {
         if (!directPass)
@@ -38,6 +63,8 @@ public class Adventurer : MonoBehaviour
             yield return moveCoroutine = StartCoroutine(Move(node.transform.position,
             () => { NodeAction(node); }));
         }
+
+        ArriveEndPoint();
     }
 
     //다음 노드 찾는 로직
@@ -75,7 +102,7 @@ public class Adventurer : MonoBehaviour
         while (distance > 0.001f)
         {
             // 다음 위치로 이동
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
 
             // 현재 위치와 목표 위치 간의 거리 갱신
             distance = Vector3.Distance(transform.position, nextPos);
@@ -97,6 +124,11 @@ public class Adventurer : MonoBehaviour
 
         if(!afterCrossPath.Contains(curTile))
             afterCrossPath.Add(curTile);
+
+        if(curTile.trap != null)
+        {
+            GetDamage(curTile.trap.damage);
+        }
     }
 
     private IEnumerator MoveLogic()
@@ -106,7 +138,11 @@ public class Adventurer : MonoBehaviour
         while(true)
         {
             if(curTile == null) break;
-            if (curTile == NodeManager.Instance.endPoint) break;
+            if (curTile == NodeManager.Instance.endPoint)
+            {
+                ArriveEndPoint();
+                break;
+            }
 
             TileNode nextNode = FindNextNode(curTile);
 
@@ -145,13 +181,10 @@ public class Adventurer : MonoBehaviour
         }
     }
 
-    public void Init()
+    public override void Init()
     {
+        base.Init();
         StartCoroutine(MoveLogic());
-    }
-
-    private void Start()
-    {
-        Init();
+        animator = GetComponentInChildren<Animator>();
     }
 }

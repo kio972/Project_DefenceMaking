@@ -7,7 +7,7 @@ public enum CardType
 {
     MapTile,
     Monster,
-    Adventurer,
+    Trap,
 }
 
 public class CardController : MonoBehaviour
@@ -40,6 +40,7 @@ public class CardController : MonoBehaviour
         {
             //타일 놓기
             instancedObject = null;
+            GameManager.Instance.cardDeckController.hand_CardNumber--;
             Destroy(this.gameObject);
         }
         else
@@ -70,6 +71,13 @@ public class CardController : MonoBehaviour
                 tileNode.transform.position = curNode.transform.position;
                 Destroy(curNode.gameObject);
             }
+
+            Trap trap = instancedObject.GetComponent<Trap>();
+            if(trap != null)
+            {
+                curNode.trap = trap;
+                trap.transform.SetParent(curNode.transform);
+            }
         }
 
         Discard(discard);
@@ -80,7 +88,8 @@ public class CardController : MonoBehaviour
     private void UpdateObjectPosition()
     {
         curNode = UtilHelper.RayCastTile();
-        if(curNode != null && NodeManager.Instance.virtualNodes.Contains(curNode))
+
+        if(curNode != null)
         {
             instancedObject.transform.position = curNode.transform.position;
         }
@@ -102,6 +111,13 @@ public class CardController : MonoBehaviour
 
         if (SetInput())
             SetObjectOnMap();
+    }
+
+    private void ReadyForTrap()
+    {
+        UtilHelper.SetCollider(false, NodeManager.Instance.emptyNodes);
+        UtilHelper.SetAvail(true, NodeManager.Instance.activeNodes);
+        UtilHelper.SetCollider(true, NodeManager.Instance.activeNodes);
     }
 
     private void ReadyForMapTile()
@@ -130,8 +146,10 @@ public class CardController : MonoBehaviour
                 ReadyForMapTile();
                 break;
             case CardType.Monster:
+                ReadyForTrap();
                 break;
-            case CardType.Adventurer:
+            case CardType.Trap:
+                ReadyForTrap();
                 break;
         }
     }

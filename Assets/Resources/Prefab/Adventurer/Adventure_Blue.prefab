@@ -67,6 +67,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c983529d044c4cf4e9199b21ebb48e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  curHp: 12
+  maxHp: 12
+  armor: 0
+  attackSpeed: 1
+  unitType: 1
 --- !u!1 &5420829524700576082
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +182,7 @@ Transform:
   m_GameObject: {fileID: 6060128528388781653}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4918023498950901690}

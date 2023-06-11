@@ -48,8 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathDirection: 
   roomDirection: 
+  roomType: 0
   isActive: 0
-  haveTrap: 0
+  trap: {fileID: 0}
   movable: 0
   waitToMove: 0
   twin: {fileID: 0}
@@ -79,7 +80,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_LocalPosition.z
@@ -142,7 +143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_LocalPosition.z
@@ -176,6 +177,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7702754b700e15c46a3091142f7c8176, type: 2}
     - target: {fileID: 919132149155446097, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_Name
       value: Empty_Hex

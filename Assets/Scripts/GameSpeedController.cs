@@ -11,10 +11,37 @@ public class GameSpeedController : MonoBehaviour
     private Button speed_1;
     [SerializeField]
     private Button speed_2;
-    
+
+
+    public Sprite zeroSprite;
+    public Sprite zeroSprite_Select;
+    public Sprite normalSprite;
+    public Sprite normalSprite_Select;
+    public Sprite fastSprite;
+    public Sprite fastSprite_Select;
+
+    public Image zeroImg;
+    public Image normalImg;
+    public Image fastImg;
+
+    private void SetButtonState()
+    {
+        zeroImg.sprite = zeroSprite;
+        normalImg.sprite = normalSprite;
+        fastImg.sprite = fastSprite;
+
+        if (GameManager.Instance.timeScale == 0)
+            zeroImg.sprite = zeroSprite_Select;
+        if (GameManager.Instance.timeScale == 1)
+            normalImg.sprite = normalSprite_Select;
+        if (GameManager.Instance.timeScale == 2)
+            fastImg.sprite = fastSprite_Select;
+    }
+
     public void SetSpeedZero()
     {
-        Time.timeScale = 0;
+        GameManager.Instance.timeScale = 0;
+        SetButtonState();
     }
 
     public void SetSpeedNormal()
@@ -22,7 +49,8 @@ public class GameSpeedController : MonoBehaviour
         if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
             return;
 
-        Time.timeScale = 1;
+        GameManager.Instance.timeScale = 1;
+        SetButtonState();
     }
 
     public void SetSpeedFast()
@@ -30,19 +58,14 @@ public class GameSpeedController : MonoBehaviour
         if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
             return;
 
-        Time.timeScale = 2;
+        GameManager.Instance.timeScale = 2;
+        SetButtonState();
     }
 
-    public void Start()
+    public void Awake()
     {
         speed_0.onClick.AddListener(SetSpeedZero);
         speed_1.onClick.AddListener(SetSpeedNormal);
         speed_2.onClick.AddListener(SetSpeedFast);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

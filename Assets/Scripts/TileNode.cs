@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.XR;
-using static UnityEngine.Rendering.DebugUI;
 
 public enum RoomType
 {
@@ -39,7 +35,7 @@ public class TileNode : MonoBehaviour
     public List<Direction> RoomDirection { get => roomDirection; }
 
     public bool isActive = false;
-    public bool haveTrap = false;
+    public Trap trap = null;
 
     public bool movable = false;
 
@@ -86,7 +82,9 @@ public class TileNode : MonoBehaviour
     public void SetAvail(bool value)
     {
         //배치가능한 virtual노드에
-        Material material = GetComponentInChildren<Renderer>().material;
+        if (guideObject == null)
+            return;
+
         if(value)
         {
             guideObject.SetActive(true);
