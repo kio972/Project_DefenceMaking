@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public struct WaveData
 {
@@ -21,6 +23,11 @@ public class WaveController : MonoBehaviour
 
     [SerializeField]
     private float spawnWaitTime = 1f;
+
+    [SerializeField]
+    private TextMeshProUGUI waveText;
+    [SerializeField]
+    private WaveGauge waveFill;
 
     public List<WaveData> SetWaveData(int waveIndex)
     {
@@ -49,8 +56,14 @@ public class WaveController : MonoBehaviour
     public IEnumerator ISpawnWave(int waveIndex)
     {
         List<WaveData> curWave = SetWaveData(waveIndex);
-
+        waveText.text = (waveIndex + 1).ToString("D2");
+        int maxEnemyNumber = 0;
+        int curEnemyNumber = 0;
         foreach(WaveData waveData in curWave)
+            maxEnemyNumber += waveData.number;
+        waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
+
+        foreach (WaveData waveData in curWave)
         {
             for(int i = 0; i < waveData.number; i++)
             {
@@ -66,6 +79,10 @@ public class WaveController : MonoBehaviour
                 Adventurer adventurer = temp.GetComponent<Adventurer>();
                 adventurer.Init();
                 GameManager.Instance.adventurersList.Add(adventurer);
+
+                curEnemyNumber++;
+
+                waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
             }
         }
         yield return null;

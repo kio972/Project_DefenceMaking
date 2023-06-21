@@ -5,16 +5,19 @@ using UnityEngine.UI;
 
 public class HpBar : MonoBehaviour
 {
+    [SerializeField]
     private Battler battler;
     [SerializeField]
     private Image hp_Bar;
-
-    public float hp_Rate;
 
     public float delayTime = 1f;
     public float lerpTime = 0.2f;
 
     private Coroutine curCoroutine = null;
+
+    private float battlerCurHp;
+
+    private bool deadBar = false;
 
     private void HPBarEnd()
     {
@@ -24,40 +27,47 @@ public class HpBar : MonoBehaviour
     public void Init(Battler battler)
     {
         this.battler = battler;
+        battlerCurHp = battler.curHp;
+        deadBar = false;
     }
 
 
-    private void UpdatePosition()
+    private void UpdatePosition(Vector3 position)
     {
         if (battler == null)
             return;
 
-        // controller의 위치를 월드 좌표계에서 스크린 좌표계로 변환
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(battler.transform.position);
-
-        // 스크린 좌표계에서 RectTransform 좌표계로 변환하여 위치 이동
-        Vector2 anchoredPos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            GameManager.Instance.cameraCanvas.transform as RectTransform, screenPos, Camera.main, out anchoredPos);
-        anchoredPos.y += 150;
         RectTransform rect = transform.GetComponent<RectTransform>();
-        rect.anchoredPosition = anchoredPos;
+        rect.position = position;
     }
 
-    private void UpdateHp()
+    public void UpdateHp()
     {
-        // 메인 체력바는 바로 업데이트
-        float nextAmount = battler.curHp / battler.maxHp;
+        if(deadBar) return;
+
+        float curHp = battler.curHp;
+        float maxHp = battler.maxHp;
+        float nextAmount = curHp / maxHp;
         hp_Bar.fillAmount = nextAmount;
+
+        if(nextAmount <= 0)
+        {
+            deadBar = true;
+            Invoke("HPBarEnd", 0.2f);
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    public void UpdateHpBar(Vector3 position)
     {
         if (battler == null)
             return;
 
-        UpdateHp();
-        UpdatePosition();
+        if (battlerCurHp != battler.curHp)
+        {
+            battlerCurHp = battler.curHp;
+            UpdateHp();
+        }
+        UpdatePosition(position);
     }
 }

@@ -85,7 +85,7 @@ public class GameManager : Singleton<GameManager>
 
         for (int i = 0; i < startCardNumber; i++)
         {
-            cardDeckController.FreeDrawCard();
+            cardDeckController.DrawCard();
         }
 
         speedController.SetSpeedZero();

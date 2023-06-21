@@ -28,13 +28,14 @@ public class Adventurer : Battler
         
         PlayerBattleMain king = FindObjectOfType<PlayerBattleMain>();
         king.GetDamage(1);
-
-        Destroy(this.gameObject, 1f);
-        Destroy(this, 0f);
+        
+        this.GetDamage(maxHp);
     }
 
     public override void Dead()
     {
+        base.Dead();
+
         GameManager.Instance.adventurersList.Remove(this);
         StopCoroutine(moveCoroutine);
         animator.SetBool("Die", true);
