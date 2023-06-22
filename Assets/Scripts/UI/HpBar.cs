@@ -13,8 +13,6 @@ public class HpBar : MonoBehaviour
     public float delayTime = 1f;
     public float lerpTime = 0.2f;
 
-    private Coroutine curCoroutine = null;
-
     private float battlerCurHp;
 
     private bool deadBar = false;

@@ -23,12 +23,26 @@ public class Battler : MonoBehaviour
     public bool battleState = false;
     public Battler curTarget;
 
+    public bool isDead = false;
+
+    protected List<TileNode> crossedNodes = new List<TileNode>();
+    protected TileNode prevTile;
+    protected TileNode curTile;
+    protected TileNode lastCrossRoad;
+    protected List<TileNode> afterCrossPath = new List<TileNode>();
+    protected Coroutine moveCoroutine = null;
+
+    protected Animator animator;
+
+    [SerializeField]
+    private Transform attackZone;
+
     public virtual void Dead()
     {
         hpBar.UpdateHp();
     }
 
-    public void GetDamage(int damage)
+    public virtual void GetDamage(int damage, Battler attacker)
     {
         int finalDamage = damage - armor;
         if (finalDamage < 0)
@@ -39,6 +53,177 @@ public class Battler : MonoBehaviour
             Dead();
     }
 
+    private void RotateCharacter(Vector3 direction)
+    {
+        Vector3 targetDirection = direction - transform.position;
+        if (attackZone != null)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            attackZone.rotation = targetRotation;
+        }
+
+        if (rotatonAxis != null)
+        {
+            //rotationAxis의 방향이 항상 카메라방향을 보도록 설정
+        }
+    }
+
+    protected IEnumerator Move(Vector3 nextPos, System.Action callback = null)
+    {
+        float distance = Vector3.Distance(transform.position, nextPos);
+        //다음 노드로 이동
+        while (distance > 0.001f)
+        {
+            //전투상태 진입 시 움직임멈춤
+            if (battleState)
+            {
+                yield return null;
+                continue;
+            }
+
+            // 다음 위치로 이동
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
+
+            // 현재 위치와 목표 위치 간의 거리 갱신
+            distance = Vector3.Distance(transform.position, nextPos);
+
+            RotateCharacter(nextPos);
+
+            yield return null;
+        }
+
+        callback?.Invoke();
+    }
+
+    protected TileNode FindNextNode(TileNode curNode)
+    {
+        //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
+        List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
+        //해당 노드에서 전에 갔던 노드는 제외
+        nextNodes.Remove(prevTile);
+        if (crossedNodes != null)
+        {
+            foreach (TileNode node in crossedNodes)
+                nextNodes.Remove(node);
+        }
+
+        if (nextNodes.Count == 0)
+            return null;
+
+        //갈림길일경우 저장
+        if (nextNodes.Count > 1)
+        {
+            afterCrossPath = new List<TileNode>();
+            lastCrossRoad = curNode;
+            afterCrossPath.Add(lastCrossRoad);
+        }
+
+        return nextNodes[UnityEngine.Random.Range(0, nextNodes.Count)];
+    }
+
+    protected virtual void DeadLock_Logic_Move()
+    {
+
+    }
+
+    protected virtual void NodeAction(TileNode nextNode)
+    {
+
+    }
+
+    protected IEnumerator MoveLogic()
+    {
+        curTile = NodeManager.Instance.startPoint;
+        transform.position = curTile.transform.position;
+        while (true)
+        {
+            if (curTile == null) break;
+            if (curTile == NodeManager.Instance.endPoint)
+            {
+                break;
+            }
+
+            TileNode nextNode = FindNextNode(curTile);
+
+            if (nextNode == null) // 막다른길일 경우
+            {
+                //갈림길에 도달할때까지 되돌아감
+                if (lastCrossRoad != null)
+                {
+                    afterCrossPath.Reverse();
+                    for (int i = 0; i < afterCrossPath.Count; i++)
+                    {
+                        nextNode = afterCrossPath[i];
+                        if (moveCoroutine != null)
+                            StopCoroutine(moveCoroutine);
+                        yield return moveCoroutine = StartCoroutine(Move(nextNode.transform.position,
+                            () => { NodeAction(nextNode); }));
+                    }
+
+                    lastCrossRoad = null;
+                    afterCrossPath = new List<TileNode>();
+                    continue;
+                }
+                else
+                {
+                    //도착지까지 길찾아서 최단루트로 바로이동
+                    DeadLock_Logic_Move();
+                    yield break;
+                }
+            }
+
+            if (moveCoroutine != null)
+                StopCoroutine(moveCoroutine);
+            yield return moveCoroutine = StartCoroutine(Move(nextNode.transform.position,
+                () => { NodeAction(nextNode); }));
+        }
+    }
+
+    protected void ExcuteBattle()
+    {
+        if (curTarget == null || curTarget.isDead)
+        {
+            curTarget = null;
+            animator.SetBool("Attack", false);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE"))
+                battleState = false;
+            return;
+        }
+
+        RotateCharacter(curTarget.transform.position);
+
+        //공격속도에 따라 애니메이션 속도 제어
+        animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+        animator.SetBool("Attack", true);
+    }
+
+    //애니메이션 이벤트에서 작동
+    private void Attack()
+    {
+        if (curTarget.isDead)
+            curTarget = null;
+
+        curTarget.GetDamage(damage, this);
+    }
+
+    private void LookAtCamera()
+    {
+        Vector3 cameraPosition = Camera.main.transform.position;
+
+        // 스프라이트 오브젝트의 위치와 카메라의 위치를 기준으로 방향 벡터를 계산합니다.
+        Vector3 direction = cameraPosition - transform.position;
+
+        // 방향 벡터의 각도를 구합니다.
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // 오브젝트의 rotation 값을 설정하여 카메라 방향을 바라보도록 합니다.
+        float rotationX = rotatonAxis.rotation.eulerAngles.x;
+        float rotationY = rotatonAxis.rotation.eulerAngles.y;
+        float rotationZ = angle += 70f;
+        if (Mathf.Abs(rotationY) > 90f)
+            rotationZ *= -1;
+        rotatonAxis.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+    }
 
     public virtual void Init()
     {
@@ -58,27 +243,14 @@ public class Battler : MonoBehaviour
 
             this.hpBar = hpBar;
         }
+
+        if(animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
 
-    private void LookAtCamera()
-    {
-        Vector3 cameraPosition = Camera.main.transform.position;
-
-        // 스프라이트 오브젝트의 위치와 카메라의 위치를 기준으로 방향 벡터를 계산합니다.
-        Vector3 direction = cameraPosition - transform.position;
-
-        // 방향 벡터의 각도를 구합니다.
-        float angle = Mathf.Atan2(direction.z, direction.y) * Mathf.Rad2Deg;
-
-        // 오브젝트의 rotation 값을 설정하여 카메라 방향을 바라보도록 합니다.
-        rotatonAxis.transform.rotation = Quaternion.Euler(angle + 70f, 0f, 0f);
-    }
 
     public virtual void Update()
     {
-        if (rotatonAxis != null)
-            LookAtCamera();
-
         if (hpBar != null)
             hpBar.UpdateHpBar(hpPivot.position);
     }

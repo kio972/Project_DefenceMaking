@@ -103,13 +103,20 @@ public class NodeManager : Singleton<NodeManager>
         return tile;
     }
 
-    public TileNode InstanceNewNode(TileNode node, Direction direction)
+    public TileNode InstanceNewNode(TileNode node, Direction direction, Transform parent = null)
     {
         Vector3 position = UtilHelper.GetGridPosition(node.transform.position, direction, 1f);
         TileNode newNode = Resources.Load<TileNode>("Prefab/Tile/EmptyTile");
         newNode = Instantiate(newNode);
         newNode.transform.position = position;
-
+        if(parent != null)
+            newNode.transform.SetParent(parent);
+        else
+        {
+            MapBuilder map = FindObjectOfType<MapBuilder>();
+            if (map != null)
+                newNode.transform.SetParent(map.transform);
+        }
         return newNode;
     }
 

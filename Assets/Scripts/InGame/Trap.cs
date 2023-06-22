@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Trap : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Trap : MonoBehaviour
     public float attackSpeed;
     private int attackCount = 0;
 
-    private Dictionary<Battler, Coroutine> coroutineDic;
+    private Dictionary<Battler, Coroutine> coroutineDic = new Dictionary<Battler, Coroutine>();
 
     private void DestroyTrap()
     {
@@ -24,7 +25,13 @@ public class Trap : MonoBehaviour
 
     private void ExcuteAttack(Battler target)
     {
-        target.GetDamage(damage);
+        if(target.isDead)
+        {
+            RemoveTarget(target);
+            return;
+        }
+
+        target.GetDamage(damage, null);
         attackCount++;
 
         if (attackCount >= duration)
@@ -38,7 +45,7 @@ public class Trap : MonoBehaviour
             ExcuteAttack(battle);
 
             float attackElapsed = 0f;
-            while(attackElapsed < duration)
+            while(attackElapsed < 1 / attackSpeed)
             {
                 attackElapsed += Time.deltaTime * GameManager.Instance.timeScale;
                 yield return null;
@@ -53,7 +60,17 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
+        print("hi");
         coroutineDic.Add(battle, StartCoroutine(IExcuteDamage(battle)));
+    }
+
+    private void RemoveTarget(Battler battle)
+    {
+        if (coroutineDic.ContainsKey(battle))
+        {
+            StopCoroutine(coroutineDic[battle]);
+            coroutineDic.Remove(battle);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -61,10 +78,18 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
-        if(coroutineDic.ContainsKey(battle))
-        {
-            StopCoroutine(coroutineDic[battle]);
-            coroutineDic.Remove(battle);
-        }
+        RemoveTarget(battle);
     }
+
+    public void Init()
+    {
+        damage = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["attackPower"]);
+        attackSpeed = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["attackSpeed"]);
+        duration = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["duration"]);
+
+        Collider col = GetComponentInChildren<Collider>();
+        if (col != null)
+            col.enabled = true;
+    }
+
 }

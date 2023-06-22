@@ -16,8 +16,6 @@ public class WaveGauge : MonoBehaviour
     private float elapsedTime = 0f;
     private float curFillRate = 0;
 
-    private Coroutine coroutine = null;
-
     public void SetWaveGauge(int curWave, int curSpawnIndex, int maxSpawnIndex)
     {
         if (curWave != GameManager.Instance.CurWave || maxSpawnIndex == 0)

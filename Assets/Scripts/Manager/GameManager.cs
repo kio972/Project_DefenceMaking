@@ -29,13 +29,29 @@ public class GameManager : Singleton<GameManager>
 
     public List<Adventurer> adventurersList = new List<Adventurer>();
 
-    public List<Trap> trapList = new List<Trap>();
+    public PlayerBattleMain king;
 
     public float timeScale;
+
+    private bool updateNeed = true;
+
+    private void WinGame()
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (!updateNeed) return;
+
+        if(king.isDead)
+        {
+            updateNeed = false;
+            speedController.SetSpeedZero();
+            WinGame();
+        }
+
         timer += Time.deltaTime * defaultSpeed * timeScale;
         if(timer > 720f && dailyIncome)
         {

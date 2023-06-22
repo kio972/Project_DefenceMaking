@@ -8,7 +8,6 @@ public class InputManager : Singleton<InputManager>
 
     public bool settingCard = false;
 
-    private bool needUpdate = true;
 
     private GameObject endPointPrefab = null;
     public TileNode curMoveObject = null;
@@ -35,7 +34,6 @@ public class InputManager : Singleton<InputManager>
 
         }
 
-        
     }
 
     void Init()

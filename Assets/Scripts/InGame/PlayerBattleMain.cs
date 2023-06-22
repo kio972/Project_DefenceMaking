@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PlayerBattleMain : Battler
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public override void GetDamage(int damage, Battler attacker)
     {
-        Init();
+        curHp -= 1;
+        if (curHp <= 0)
+            Dead();
+
+        attacker.GetDamage(attacker.maxHp, this);
     }
+
 }

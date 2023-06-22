@@ -75,8 +75,8 @@ public class CardController : MonoBehaviour
             Trap trap = instancedObject.GetComponent<Trap>();
             if(trap != null)
             {
-                curNode.trap = trap;
                 trap.transform.SetParent(curNode.transform);
+                trap.Init();
             }
         }
 

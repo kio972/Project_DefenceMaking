@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8474323579097540012}
   - component: {fileID: -3469633884032424613}
   - component: {fileID: 5018297080547852682}
-  - component: {fileID: 5296019163725433804}
+  - component: {fileID: -7463750327690883626}
   m_Layer: 0
   m_Name: Adventure_Red
   m_TagString: Untagged
@@ -75,10 +75,15 @@ MonoBehaviour:
   maxHp: 12
   armor: 0
   attackSpeed: 1
-  moveSpeed: 0
+  moveSpeed: 1
   unitType: 1
   rotatonAxis: {fileID: 6024107003459182810}
   hpPivot: {fileID: 3736713600125128576}
+  battleState: 0
+  curTarget: {fileID: 0}
+  isDead: 0
+  attackZone: {fileID: 8541116302665851814}
+  adventurerIndex: 0
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -87,13 +92,13 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060345853617806872}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.2
   m_Height: 0.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.4, z: 0}
---- !u!54 &5296019163725433804
+--- !u!54 &-7463750327690883626
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,14 +138,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5420829524700576082}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.57, y: 6.86, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0.16}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2823092532441335052}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!212 &6765707368255348038
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -218,7 +223,7 @@ Transform:
   m_GameObject: {fileID: 6060128528388781653}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4918023498950901690}
@@ -333,8 +338,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.3}
-  m_Center: {x: 0.3, y: 0.3, z: 0}
+  m_Size: {x: 0.3, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.3, z: 0.3}
 --- !u!114 &1435685986319677956
 MonoBehaviour:
   m_ObjectHideFlags: 0

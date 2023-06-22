@@ -35,7 +35,6 @@ public class TileNode : MonoBehaviour
     public List<Direction> RoomDirection { get => roomDirection; }
 
     public bool isActive = false;
-    public Trap trap = null;
 
     public bool movable = false;
 
@@ -295,9 +294,9 @@ public class TileNode : MonoBehaviour
     {
         twin = Instantiate(this);
         twin.waitToMove = false;
-        Collider collider = twin.GetComponentInChildren<Collider>();
-        if (collider != null)
-            collider.enabled = false;
+        Collider[] collider = twin.GetComponentsInChildren<Collider>();
+        foreach(Collider col in collider)
+            col.enabled = false;
     }
 
     private void CheckEndInput(TileNode curNode)

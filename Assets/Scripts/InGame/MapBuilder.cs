@@ -53,6 +53,9 @@ public class MapBuilder : MonoBehaviour
         TileNode endTile = NodeManager.Instance.InstanceTile(endPointPrefab, endPos);
         endTile.SwapTile(nextTile);
 
+        PlayerBattleMain king = endTile.GetComponentInChildren<PlayerBattleMain>();
+        king.Init();
+        GameManager.Instance.king = king;
         NodeManager.Instance.emptyNodes.Remove(nextTile);
         Destroy(nextTile.gameObject);
 
@@ -119,7 +122,7 @@ public class MapBuilder : MonoBehaviour
                 if (cycle != x_Size - 2)
                     direction = Direction.Left;
                 if (!curNode.neighborNodeDic.TryGetValue(direction, out curNode))
-                    curNode = NodeManager.Instance.InstanceNewNode(curNode, direction);
+                    curNode = NodeManager.Instance.InstanceNewNode(curNode, direction, transform);
                 NodeManager.Instance.SetNewNode(curNode);
             }
 
@@ -127,7 +130,7 @@ public class MapBuilder : MonoBehaviour
                 break;
 
             if (!curNode.neighborNodeDic.TryGetValue(Direction.LeftUp, out curNode))
-                curNode = NodeManager.Instance.InstanceNewNode(curNode, Direction.LeftUp);
+                curNode = NodeManager.Instance.InstanceNewNode(curNode, Direction.LeftUp, transform);
             NodeManager.Instance.SetNewNode(curNode);
         }
     }
