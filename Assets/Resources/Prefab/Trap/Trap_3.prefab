@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 2683340452862314027}
   - component: {fileID: 6185386966240983400}
   - component: {fileID: 3624122425495236915}
+  - component: {fileID: 4587422042787470500}
   m_Layer: 0
   m_Name: Trap_3
   m_TagString: Untagged
@@ -185,9 +186,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23ac2ee009ced3408a80e083817ef9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trapIndex: 2
   damage: 4
   duration: 4
-  elapsedDuration: 0
+  attackSpeed: 0
+--- !u!65 &4587422042787470500
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3348130830592187537}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &4777123228198812667
 GameObject:
   m_ObjectHideFlags: 0

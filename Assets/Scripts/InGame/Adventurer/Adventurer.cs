@@ -20,6 +20,21 @@ public class Adventurer : Battler
 
     private Animator animator;
 
+    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (battleState) return;
+
+        Battler battle = other.GetComponent<Battler>();
+        if (battle == null || battle.unitType == UnitType.Enemy) return;
+
+        battleState = true;
+        curTarget = battle;
+    }
+
+
+
     private void ArriveEndPoint()
     {
         GameManager.Instance.adventurersList.Remove(this);
@@ -97,18 +112,22 @@ public class Adventurer : Battler
 
     private IEnumerator Move(Vector3 nextPos, System.Action callback = null)
     {
-        float moveSpeed = 1f;
         float distance = Vector3.Distance(transform.position, nextPos);
         //다음 노드로 이동
         while (distance > 0.001f)
         {
+            //전투상태 진입 시 움직임멈춤
+            if (battleState)
+            {
+                yield return null;
+                continue;
+            }
+
             // 다음 위치로 이동
             transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
 
             // 현재 위치와 목표 위치 간의 거리 갱신
             distance = Vector3.Distance(transform.position, nextPos);
-
-            //몬스터 조우 시 전투동안 대기하는 함수 추가예정
 
             yield return null;
         }
@@ -125,11 +144,6 @@ public class Adventurer : Battler
 
         if(!afterCrossPath.Contains(curTile))
             afterCrossPath.Add(curTile);
-
-        if(curTile.trap != null)
-        {
-            GetDamage(curTile.trap.damage);
-        }
     }
 
     private IEnumerator MoveLogic()
@@ -182,10 +196,32 @@ public class Adventurer : Battler
         }
     }
 
+    private void ExcuteBattle()
+    {
+        if(curTarget == null)
+        {
+            battleState = false;
+            animator.SetBool("Attack", false);
+            return;
+        }
+
+        //공격속도에 따라 애니메이션 속도 제어
+        animator.SetFloat("AttackSpeed", attackSpeed);
+        animator.SetBool("Attack", true);
+    }
+
     public override void Init()
     {
         base.Init();
         StartCoroutine(MoveLogic());
         animator = GetComponentInChildren<Animator>();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (battleState)
+            ExcuteBattle();
     }
 }

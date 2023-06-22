@@ -33,20 +33,6 @@ public class GameManager : Singleton<GameManager>
 
     public float timeScale;
 
-    private void TrapElapse()
-    {
-        List<Trap> expiredTraps = new List<Trap>();
-        foreach (Trap trap in trapList)
-        {
-            trap.elapsedDuration++;
-            if (trap.elapsedDuration >= trap.duration)
-                expiredTraps.Add(trap);
-        }
-
-        foreach (Trap trap in expiredTraps)
-            trapList.Remove(trap);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -65,8 +51,6 @@ public class GameManager : Singleton<GameManager>
             timer = 0f;
 
             dailyIncome = true;
-
-            TrapElapse();
 
             //몬스터 웨이브 스폰
             curWave++;

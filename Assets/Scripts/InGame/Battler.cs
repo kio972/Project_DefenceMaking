@@ -9,6 +9,7 @@ public class Battler : MonoBehaviour
     public int maxHp;
     public int armor;
     public float attackSpeed;
+    public float moveSpeed;
 
     public UnitType unitType = UnitType.Enemy;
 
@@ -18,6 +19,9 @@ public class Battler : MonoBehaviour
     private Transform rotatonAxis;
     [SerializeField]
     private Transform hpPivot;
+
+    public bool battleState = false;
+    public Battler curTarget;
 
     public virtual void Dead()
     {
@@ -70,7 +74,7 @@ public class Battler : MonoBehaviour
         rotatonAxis.transform.rotation = Quaternion.Euler(angle + 70f, 0f, 0f);
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (rotatonAxis != null)
             LookAtCamera();
