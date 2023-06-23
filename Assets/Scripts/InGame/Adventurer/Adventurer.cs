@@ -10,19 +10,37 @@ public class Adventurer : Battler
     private bool directPass = false;
     private Coroutine directPassCoroutine = null;
 
+
     private void OnTriggerEnter(Collider other)
     {
-        if (battleState) return;
-
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Enemy) return;
 
         if(!battle.isDead)
         {
+            rangedTargets.Add(battle);
             battleState = true;
-            curTarget = battle;
-            curTarget.battleState = true;
+
+            curTarget = FindNextTarget();
+            if (curTarget == null)
+                return;
+
+            if(!curTarget.battleState)
+            {
+                curTarget.battleState = true;
+                curTarget.RotateCharacter(transform.position);
+            }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Battler battle = other.GetComponent<Battler>();
+        if (battle == null || battle.unitType == UnitType.Enemy) return;
+
+        rangedTargets.Remove(battle);
+        if (curTarget == battle)
+            curTarget = null;
     }
 
     //private void ArriveEndPoint()
@@ -30,28 +48,21 @@ public class Adventurer : Battler
     //    GameManager.Instance.adventurersList.Remove(this);
     //    StopCoroutine(moveCoroutine);
     //    animator.SetBool("Attack", true);
-        
+
     //    PlayerBattleMain king = FindObjectOfType<PlayerBattleMain>();
     //    king.GetDamage(1);
-        
+
     //    this.GetDamage(maxHp);
     //}
 
     public override void Dead()
     {
         base.Dead();
-
         GameManager.Instance.adventurersList.Remove(this);
-        StopAllCoroutines();
-        animator.SetBool("Die", true);
-        isDead = true;
-        Invoke("RemoveBody", 2.5f);
+        
     }
 
-    private void RemoveBody()
-    {
-        gameObject.SetActive(false);
-    }
+    
 
     public void EndPointMoved()
     {
@@ -76,17 +87,6 @@ public class Adventurer : Battler
         }
     }
 
-    protected override void NodeAction(TileNode nextNode)
-    {
-        prevTile = curTile;
-        curTile = nextNode;
-        if (!crossedNodes.Contains(curTile))
-            crossedNodes.Add(curTile);
-
-        if(!afterCrossPath.Contains(curTile))
-            afterCrossPath.Add(curTile);
-    }
-
     protected override void DeadLock_Logic_Move()
     {
         directPass = true;
@@ -98,6 +98,14 @@ public class Adventurer : Battler
     public override void Init()
     {
         base.Init();
+
+        maxHp = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["hp"]);
+        curHp = maxHp;
+        damage = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["attackPower"]);
+        float.TryParse(DataManager.Instance.Adventurer_Table[adventurerIndex]["attackSpeed"].ToString(), out attackSpeed);
+        armor = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["armor"]);
+        float.TryParse(DataManager.Instance.Adventurer_Table[adventurerIndex]["moveSpeed"].ToString(), out moveSpeed);
+
         StartCoroutine(MoveLogic());
     }
 

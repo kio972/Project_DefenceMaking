@@ -37,9 +37,20 @@ public class Battler : MonoBehaviour
     [SerializeField]
     private Transform attackZone;
 
+    protected List<Battler> rangedTargets = new List<Battler>();
+
+    private void RemoveBody()
+    {
+        gameObject.SetActive(false);
+    }
+
     public virtual void Dead()
     {
         hpBar.UpdateHp();
+        isDead = true;
+        StopAllCoroutines();
+        animator.SetBool("Die", true);
+        Invoke("RemoveBody", 2.5f);
     }
 
     public virtual void GetDamage(int damage, Battler attacker)
@@ -53,7 +64,7 @@ public class Battler : MonoBehaviour
             Dead();
     }
 
-    private void RotateCharacter(Vector3 direction)
+    public void RotateCharacter(Vector3 direction)
     {
         Vector3 targetDirection = direction - transform.position;
         if (attackZone != null)
@@ -64,7 +75,8 @@ public class Battler : MonoBehaviour
 
         if (rotatonAxis != null)
         {
-            //rotationAxis의 방향이 항상 카메라방향을 보도록 설정
+            float rotationY = (targetDirection.x > 0f) ? 0f : 180f;
+            rotatonAxis.transform.rotation = Quaternion.Euler(rotatonAxis.rotation.eulerAngles.x, rotationY, rotatonAxis.rotation.eulerAngles.z);
         }
     }
 
@@ -118,7 +130,8 @@ public class Battler : MonoBehaviour
             afterCrossPath.Add(lastCrossRoad);
         }
 
-        return nextNodes[UnityEngine.Random.Range(0, nextNodes.Count)];
+        TileNode nextNode = nextNodes[UnityEngine.Random.Range(0, nextNodes.Count)];
+        return nextNode;
     }
 
     protected virtual void DeadLock_Logic_Move()
@@ -128,20 +141,27 @@ public class Battler : MonoBehaviour
 
     protected virtual void NodeAction(TileNode nextNode)
     {
+        prevTile = curTile;
+        curTile = nextNode;
+        if (!crossedNodes.Contains(curTile))
+            crossedNodes.Add(curTile);
 
+        if(!afterCrossPath.Contains(curTile))
+            afterCrossPath.Add(curTile);
     }
 
     protected IEnumerator MoveLogic()
     {
-        curTile = NodeManager.Instance.startPoint;
+        if(curTile == null)
+            curTile = NodeManager.Instance.startPoint;
         transform.position = curTile.transform.position;
         while (true)
         {
             if (curTile == null) break;
-            if (curTile == NodeManager.Instance.endPoint)
-            {
-                break;
-            }
+            //if (curTile == NodeManager.Instance.endPoint)
+            //{
+            //    break;
+            //}
 
             TileNode nextNode = FindNextNode(curTile);
 
@@ -179,29 +199,64 @@ public class Battler : MonoBehaviour
         }
     }
 
+    protected Battler FindNextTarget(Battler prevTarget = null)
+    {
+        rangedTargets.Remove(prevTarget);
+        if (rangedTargets.Count == 0)
+            return null;
+        else
+        {
+            Battler closestTarget = rangedTargets[0];
+            float dist = (transform.position - closestTarget.transform.position).magnitude;
+            foreach(Battler target in rangedTargets)
+            {
+                float targetDist = (transform.position - target.transform.position).magnitude;
+                if(targetDist < dist)
+                {
+                    dist = targetDist;
+                    closestTarget = target;
+                }
+            }
+
+            return closestTarget;
+        }
+    }
+
     protected void ExcuteBattle()
     {
         if (curTarget == null || curTarget.isDead)
+            curTarget = FindNextTarget(curTarget);
+
+        if(curTarget == null)
         {
-            curTarget = null;
-            animator.SetBool("Attack", false);
-            if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE"))
-                battleState = false;
+            if (animator != null)
+            {
+                animator.SetBool("Attack", false);
+                if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE"))
+                    battleState = false;
+            }
             return;
         }
 
         RotateCharacter(curTarget.transform.position);
 
         //공격속도에 따라 애니메이션 속도 제어
-        animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
-        animator.SetBool("Attack", true);
+        if (animator != null)
+        {
+            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+            animator.SetBool("Attack", true);
+        }
     }
 
     //애니메이션 이벤트에서 작동
     private void Attack()
     {
-        if (curTarget.isDead)
-            curTarget = null;
+        if (curTarget == null || curTarget.isDead)
+        {
+            curTarget = FindNextTarget(curTarget);
+            if (curTarget == null)
+                return;
+        }
 
         curTarget.GetDamage(damage, this);
     }

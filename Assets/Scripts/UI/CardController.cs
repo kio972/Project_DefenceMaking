@@ -78,6 +78,14 @@ public class CardController : MonoBehaviour
                 trap.transform.SetParent(curNode.transform);
                 trap.Init();
             }
+
+            Monster monster = instancedObject.GetComponent<Monster>();
+            if(monster != null)
+            {
+                monster.SetStartPoint(curNode);
+                monster.transform.position = curNode.transform.position;
+                monster.Init();
+            }
         }
 
         Discard(discard);
