@@ -24,6 +24,9 @@ public class CardController : MonoBehaviour
 
     private TileNode curNode = null;
 
+    private TileNode availNodes;
+
+
     private bool SetInput()
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
@@ -56,36 +59,52 @@ public class CardController : MonoBehaviour
         curNode = null;
     }
 
+    private void SetTile()
+    {
+        Tile tile = instancedObject.GetComponent<Tile>();
+        if (tile != null)
+        {
+            NodeManager.Instance.emptyNodes.Remove(curNode);
+            NodeManager.Instance.activeNodes.Add(curNode);
+            tile.MoveTile(curNode);
+        }
+    }
+
+    private void SetMonster()
+    {
+        Monster monster = instancedObject.GetComponent<Monster>();
+        if (monster != null)
+        {
+            monster.SetStartPoint(curNode);
+            monster.transform.position = curNode.transform.position;
+            monster.Init();
+        }
+    }
+
+    private void SetTrap()
+    {
+        Trap trap = instancedObject.GetComponent<Trap>();
+        if (trap != null)
+        {
+            trap.transform.SetParent(curNode.transform);
+            trap.Init();
+        }
+    }
+
     private void SetObjectOnMap()
     {
         bool discard = false;
-        if(curNode != null)
+        switch (cardType)
         {
-            discard = true;
-            TileNode tileNode = instancedObject.GetComponent<TileNode>();
-            if(tileNode != null)
-            {
-                tileNode.SwapTile(curNode);
-                NodeManager.Instance.emptyNodes.Remove(curNode);
-                NodeManager.Instance.activeNodes.Add(tileNode);
-                tileNode.transform.position = curNode.transform.position;
-                Destroy(curNode.gameObject);
-            }
-
-            Trap trap = instancedObject.GetComponent<Trap>();
-            if(trap != null)
-            {
-                trap.transform.SetParent(curNode.transform);
-                trap.Init();
-            }
-
-            Monster monster = instancedObject.GetComponent<Monster>();
-            if(monster != null)
-            {
-                monster.SetStartPoint(curNode);
-                monster.transform.position = curNode.transform.position;
-                monster.Init();
-            }
+            case CardType.MapTile:
+                SetTile();
+                break;
+            case CardType.Monster:
+                SetMonster();
+                break;
+            case CardType.Trap:
+                SetTrap();
+                break;
         }
 
         Discard(discard);
@@ -97,7 +116,7 @@ public class CardController : MonoBehaviour
     {
         curNode = UtilHelper.RayCastTile();
 
-        if(curNode != null)
+        if(curNode != null && curNode.setAvail)
         {
             instancedObject.transform.position = curNode.transform.position;
         }
@@ -112,7 +131,7 @@ public class CardController : MonoBehaviour
         UpdateObjectPosition();
         if(cardType == CardType.MapTile && Input.GetKeyDown(KeyCode.R))
         {
-            TileNode tile = instancedObject.GetComponent<TileNode>();
+            Tile tile = instancedObject.GetComponent<Tile>();
             tile.RotateTile();
             ReadyForMapTile();
         }
@@ -132,9 +151,8 @@ public class CardController : MonoBehaviour
     {
         UtilHelper.SetCollider(false, NodeManager.Instance.emptyNodes);
         UtilHelper.SetCollider(false, NodeManager.Instance.activeNodes);
-        NodeManager.Instance.SetVirtualTile();
-        TileNode tileNode = instancedObject.GetComponent<TileNode>();
-        NodeManager.Instance.SetPathAvailTile(tileNode);
+        Tile tile = instancedObject.GetComponent<Tile>();
+        NodeManager.Instance.SetTileAvail(tile);
     }
 
     private void CallCard()

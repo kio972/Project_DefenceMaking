@@ -12,11 +12,6 @@ public class InputManager : Singleton<InputManager>
     private GameObject endPointPrefab = null;
     public TileNode curMoveObject = null;
 
-    public void UpdateTile()
-    {
-        UtilHelper.SetCollider(true, NodeManager.Instance.activeNodes);
-    }
-
     private void ReadySetTile(TileNode curTile)
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -42,22 +37,26 @@ public class InputManager : Singleton<InputManager>
             endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
     }
 
+
+    public void Call()
+    {
+
+    }
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (settingCard)
             return;
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            UpdateTile();
             TileNode node = UtilHelper.RayCastTile();
-            if (node != null && node.movable)
+            if (node != null && node.curTile != null && node.curTile.movable)
             {
-                UtilHelper.SetCollider(true, NodeManager.Instance.emptyNodes);
                 UtilHelper.SetAvail(true, NodeManager.Instance.emptyNodes);
-                UtilHelper.SetCollider(false, NodeManager.Instance.activeNodes);
-                node.waitToMove = true;
+                UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
+                node.curTile.waitToMove = true;
                 settingCard = true;
             }
         }

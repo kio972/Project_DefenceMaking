@@ -7,33 +7,41 @@ using UnityEngine.Events;
 
 public static class UtilHelper
 {
-    //public static Direction ModifyDirection(Direction direction)
-    //{
-    //    switch (direction)
-    //    {
-    //        case Direction.Left:
-    //            break;
-    //        case Direction.LeftUp:
-    //            break;
-    //        case Direction.LeftDown:
-    //            break;
-    //        case Direction.Right:
-    //            break;
-    //        case Direction.RightUp:
-    //            break;
-    //        case Direction.RightDown:
-    //            break;
-    //    }
-    //}
+    public static List<TKey> GetKeyValues<TKey, TValue>(Dictionary<TKey, TValue> dictionary)
+    {
+        List<TKey> keyValues = new List<TKey>(dictionary.Keys);
+        return keyValues;
+    }
+
+    public static bool IsTileConnected(TileNode curNode, List<Direction> curTile_Direction, List<Direction> targetTile_Direction)
+    {
+        foreach (Direction direction in targetTile_Direction)
+        {
+            if (curNode.neighborNodeDic.ContainsKey(direction))
+            {
+                Tile targetTile = curNode.neighborNodeDic[direction].curTile;
+                if (targetTile == null)
+                    continue;
+
+                foreach (Direction targetDirection in curTile_Direction)
+                {
+                    if (direction == ReverseDirection(targetDirection))
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public static List<TileNode> GetConnectedNodes(TileNode curNode)
     {
         List<TileNode> nodes = new List<TileNode>();
 
         List<Direction> connectedDirection = new List<Direction>();
-        foreach(Direction direction in curNode.PathDirection)
+        foreach(Direction direction in curNode.curTile.PathDirection)
             connectedDirection.Add(direction);
-        foreach(Direction direction in curNode.RoomDirection)
+        foreach(Direction direction in curNode.curTile.RoomDirection)
             connectedDirection.Add(direction);
 
         foreach(Direction direction in connectedDirection)
@@ -42,7 +50,7 @@ public static class UtilHelper
             if (tempNode != null && NodeManager.Instance.activeNodes.Contains(tempNode))
             {
                 Direction reverseDirection = ReverseDirection(direction);
-                if(tempNode.PathDirection.Contains(reverseDirection) || tempNode.RoomDirection.Contains(reverseDirection))
+                if(tempNode.curTile.PathDirection.Contains(reverseDirection) || tempNode.curTile.RoomDirection.Contains(reverseDirection))
                     nodes.Add(tempNode);
             }
         }
