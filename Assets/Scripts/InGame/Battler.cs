@@ -92,15 +92,11 @@ public class Battler : MonoBehaviour
                 yield return null;
                 continue;
             }
-
+            RotateCharacter(nextPos);
             // 다음 위치로 이동
             transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
-
             // 현재 위치와 목표 위치 간의 거리 갱신
             distance = Vector3.Distance(transform.position, nextPos);
-
-            RotateCharacter(nextPos);
-
             yield return null;
         }
 

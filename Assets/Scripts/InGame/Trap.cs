@@ -60,7 +60,6 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
-        print("hi");
         coroutineDic.Add(battle, StartCoroutine(IExcuteDamage(battle)));
     }
 

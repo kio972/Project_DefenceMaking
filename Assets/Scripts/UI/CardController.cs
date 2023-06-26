@@ -27,6 +27,17 @@ public class CardController : MonoBehaviour
     private TileNode availNodes;
 
 
+    //1. 그래픽스 레이캐스팅 사용
+    //2. 마우스오버 : 카드 확대(스케일 조정)
+    //3. 드래그시작 : 카드 선택
+    //4. 드래그중 : 마우스 위치까지 선으로 표시
+    //5. 드래그종료 : 타일놓기/취소
+
+    private void CardSelectCheck()
+    {
+
+    }
+
     private bool SetInput()
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
@@ -44,6 +55,10 @@ public class CardController : MonoBehaviour
             //타일 놓기
             instancedObject = null;
             GameManager.Instance.cardDeckController.hand_CardNumber--;
+
+            GameManager.Instance.cardDeckController.cards.Remove(this.transform);
+            GameManager.Instance.cardDeckController.SetCardPosition();
+
             Destroy(this.gameObject);
         }
         else

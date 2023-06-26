@@ -19,6 +19,116 @@ public class CardDeckController : MonoBehaviour
 
     private bool initState = false;
 
+    [SerializeField]
+    private float minPos_X = 550;
+    [SerializeField]
+    private float maxPos_X = 100;
+    [SerializeField]
+    private float minPos_Y = 1370;
+    [SerializeField]
+    private float maxPos_Y = 1820;
+    [SerializeField]
+    private int pointPadding = 2;
+    [SerializeField]
+    private float handHeight = 1;
+
+    public List<Transform> cards = new List<Transform>();
+
+    public void SetCardRotation(List<Vector3> dirVecs)
+    {
+        for(int i = 0; i < cards.Count; i++)
+        {
+            Vector3 targetDirection = dirVecs[i];
+            Quaternion rotation = UtilHelper.AlignUpWithVector(targetDirection);
+            cards[i].transform.rotation = rotation;
+        }
+    }
+
+
+    public List<Vector3> CalculateRotation()
+    {
+        //회전값계산
+        //전포인트 -> 다음포인트로 방향벡터 / 2를 전포인트에 더한 위치
+        //위 위치 -> 내위치로 가는 방향벡터와 내 transform.up을 동일하게 하도록 roation 조정
+        int points = pointPadding + hand_CardNumber + pointPadding;
+        List<Vector3> cardPos = new List<Vector3>();
+        List<Vector3> cardDirVecs = new List<Vector3>();
+        for (int i = pointPadding - 1; i < points - pointPadding + 1; ++i)
+        {
+            float t = (float)i / (points - 1);
+            float x = Mathf.Lerp(ReturnStartX(), ReturnStartY(), t);
+            float y = handHeight * Mathf.Sin(2 * Mathf.PI * t * 0.5f);
+            cardPos.Add(new Vector3(x, y));
+        }
+
+        for(int i = 1; i < cardPos.Count - 1; i++)
+        {
+            Vector3 prevPos = cardPos[i - 1] * 1000;
+            Vector3 nextPos = cardPos[i + 1] * 1000;
+            Vector3 dirVec = (nextPos - prevPos) / 2 * 1000;
+            cardDirVecs.Add((cardPos[i] - (prevPos + dirVec)).normalized);
+        }
+
+        return cardDirVecs;
+    }
+
+    public float ReturnStartY()
+    {
+        if (hand_CardNumber >= 0 && hand_CardNumber <= 10)
+        {
+            // 카드 개수가 0에서 10 사이일 때
+            float startX = Mathf.Lerp(minPos_Y, maxPos_Y, hand_CardNumber / 10f);
+            return startX;
+        }
+        else
+        {
+            // 카드 개수가 범위를 벗어날 때 기본값인 100을 반환하거나 예외 처리를 수행합니다.
+            return 450f;
+        }
+    }
+
+    public float ReturnStartX()
+    {
+        //현재 카드 개수가 0에서 10임에 따라 100 ~ 450값을 반환
+        if (hand_CardNumber >= 0 && hand_CardNumber <= 10)
+        {
+            // 카드 개수가 0에서 10 사이일 때
+            float startX = Mathf.Lerp(minPos_X, maxPos_X, hand_CardNumber / 10f);
+            return startX;
+        }
+        else
+        {
+            // 카드 개수가 범위를 벗어날 때 기본값인 100을 반환하거나 예외 처리를 수행합니다.
+            return 450f;
+        }
+    }
+
+    public void SetCardPosition()
+    {
+        List<Vector3> cardPos = GetCardPosition();
+        for(int i = 0; i < hand_CardNumber; i++)
+            cards[i].transform.position = cardPos[i];
+        SetCardRotation(CalculateRotation());
+    }
+
+    private List<Vector3> GetCardPosition()
+    {
+        int points = pointPadding + hand_CardNumber + pointPadding;
+        List<Vector3> cardPos = new List<Vector3>();
+        for (int i = pointPadding; i < points - pointPadding; ++i)
+        {
+            // i를 0.0-1.0 사이의 값으로 정규화
+            float t = (float)i / (points - 1);
+            // start부터 end 위치까지 points 개수의 점을 일정하게 배치
+            float x = Mathf.Lerp(ReturnStartX(), ReturnStartY(), t);
+            // 2*Mathf.PI = 360이고, t는 0.0~1.0 사이의 값이기 때문에 이 값을 곱하면 1 진동의 사인 그래프가 완성되고,
+            // frequency를 곱하기 때문에 frequency 값에 따라 진동수가 결정된다.
+            float y = handHeight * Mathf.Sin(2 * Mathf.PI * t * 0.5f);
+            cardPos.Add(new Vector3(x, y));
+        }
+        return cardPos;
+    }
+
     //초기 카드 숫자
     public int hand_CardNumber = 0;
     //최대 카드 숫자
@@ -50,6 +160,9 @@ public class CardDeckController : MonoBehaviour
         GameObject targetPrefab = Resources.Load<GameObject>(targtPrerfab);
         GameObject temp = Instantiate(targetPrefab, cardZone);
         temp.transform.position = cardZone.transform.position;
+        
+        cards.Add(temp.transform);
+        SetCardPosition();
     }
 
     private void SetDeck()

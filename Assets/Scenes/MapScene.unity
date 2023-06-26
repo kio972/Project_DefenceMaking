@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973146160}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
@@ -1030,7 +1030,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 2
+  m_ChildAlignment: 1
   m_Spacing: -15
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -1518,9 +1518,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1514226270}
   - component: {fileID: 1514226273}
+  - component: {fileID: 1514226274}
   - component: {fileID: 1514226272}
   - component: {fileID: 1514226271}
-  - component: {fileID: 1514226274}
   m_Layer: 5
   m_Name: DeckButton
   m_TagString: Untagged
@@ -1664,6 +1664,13 @@ MonoBehaviour:
   - {fileID: 8086615794040897011, guid: 921b136ff26c3a544a97f2f604a993b5, type: 3}
   - {fileID: 8086615794040897011, guid: 5052d83edb1079746afedbf0568a7720, type: 3}
   cardZone: {fileID: 973146161}
+  minPos_X: 600
+  maxPos_X: 100
+  minPos_Y: 1320
+  maxPos_Y: 1820
+  pointPadding: 2
+  handHeight: 100
+  cards: []
   hand_CardNumber: 0
   maxCardNumber: 10
 --- !u!1 &1821850289

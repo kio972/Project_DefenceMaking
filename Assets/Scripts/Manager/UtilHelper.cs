@@ -4,9 +4,26 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public static class UtilHelper
 {
+    public static Quaternion AlignUpWithVector(Vector3 direction)
+    {
+        Vector3 targetUp = direction.normalized;
+
+        // 두 벡터 사이의 각도 계산
+        float angle = Vector3.Angle(Vector3.up, targetUp) - 90;
+
+        // 벡터의 외적을 사용하여 회전 축 계산
+        Vector3 rotationAxis = Vector3.Cross(Vector3.up, targetUp);
+
+        // 회전 축과 각도를 사용하여 Quaternion 생성
+        Quaternion rotation = Quaternion.AngleAxis(angle, rotationAxis);
+
+        return rotation;
+    }
+
     public static List<TKey> GetKeyValues<TKey, TValue>(Dictionary<TKey, TValue> dictionary)
     {
         List<TKey> keyValues = new List<TKey>(dictionary.Keys);
@@ -60,17 +77,19 @@ public static class UtilHelper
 
     public static TileNode RayCastTile()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        if (EventSystem.current.IsPointerOverGameObject())
+            return null;
 
-        if (Physics.Raycast(ray, out hit))
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        foreach (RaycastHit hit in hits)
         {
-            // 충돌된 오브젝트 처리
             GameObject hitObject = hit.collider.gameObject;
-            //Debug.Log("Hit object: " + hitObject.name);
             TileNode tile = hitObject.GetComponentInParent<TileNode>();
             if (tile != null)
-                return tile;
+                if (tile != null)
+                    return tile;
         }
 
         return null;
