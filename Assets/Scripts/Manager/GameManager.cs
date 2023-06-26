@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     public int gold = 0;
 
 
+
     public int startCardNumber = 6;
     public CardDeckController cardDeckController;
     public GameSpeedController speedController;

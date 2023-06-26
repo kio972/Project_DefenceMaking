@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
+
 public class MapBuilder : MonoBehaviour
 {
     public TileNode curNode;
@@ -30,8 +33,11 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.activeNodes = new List<TileNode>();
 
         NodeManager.Instance.activeNodes.Add(startTile.curNode);
-        TileNode nextNode = startTile.curNode.neighborNodeDic[Direction.Right];
+        NodeManager.Instance.ExpandEmptyNode(startTile.curNode, emptyNodeSize);
 
+        TileNode nextNode = startTile.curNode.neighborNodeDic[Direction.Right];
+        NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
+        
 
         for (int i = 0; i < startPathSize; i++)
         {
@@ -40,6 +46,7 @@ public class MapBuilder : MonoBehaviour
 
             NodeManager.Instance.activeNodes.Add(pathTile.curNode);
             nextNode = nextNode.neighborNodeDic[Direction.Right];
+            NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
         }
 
         Tile endTile = Instantiate(endPointPrefab)?.GetComponent<Tile>();
@@ -70,42 +77,19 @@ public class MapBuilder : MonoBehaviour
 
     private void SetStartPoint()
     {
-        int errorStack = 0;
-        TileNode startPoint = null;
-        while (true)
-        {
-            if(errorStack > 10000)
-            {
-                print("Cannot_Find_Valid_StartPoint");
-                break;
-            }
-
-            int randomIndex = Random.Range(0, NodeManager.Instance.emptyNodes.Count);
-            startPoint = NodeManager.Instance.emptyNodes[randomIndex];
-            if (!IsStartPointValid(startPoint))
-            {
-                errorStack++;
-                continue;
-            }
-            else
-                break;
-        }
-
-        NodeManager.Instance.startPoint = startPoint;
+        NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
     }
 
     private void SetNewMap()
     {
-        //NodeManager.Instance.allNodes.Add(curNode);
-        //for (int i = 0; i < emptyNodeSize; i++)
-        //{
-        //    NodeManager.Instance.BuildNewNodes();
-        //}
+        NodeManager.Instance.allNodes.Add(curNode);
+        for (int i = 0; i < emptyNodeSize; i++)
+        {
+            NodeManager.Instance.BuildNewNodes();
+        }
 
 
-        //순환회수 : x - 2회
-        //최초노드 생성
-        NodeManager.Instance.SetNewNode(curNode);
+        
 
         //1.최초노드 생성
         //2.최초노드에서 왼쪽타일 + 순환횟수의 타일 불러오기
@@ -116,31 +100,16 @@ public class MapBuilder : MonoBehaviour
 
         //1. 최초노드의 Left에서 SetNewNode
         //RightUp, Right, RightDown, LeftDown, Left, LeftUp
-        Direction[] directions = new Direction[]
-        { Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown, Direction.Left, Direction.LeftUp};
+        //Direction[] directions = new Direction[]
+        //{ Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown, Direction.Left, Direction.LeftUp};
         
-        TileNode node = curNode;
-        for (int i = 1; i < emptyNodeSize; i++)
-        {
-            NodeManager.Instance.SetNewNode(node.neighborNodeDic[Direction.Left]);
-            node = node.neighborNodeDic[Direction.Left];
-
-            foreach (Direction direction in directions)
-            {
-                for (int j = 0; j < i; j++)
-                {
-                    NodeManager.Instance.SetNewNode(node.neighborNodeDic[direction]);
-                    node = node.neighborNodeDic[direction];
-                }
-            }
-        }
     }
 
     public void Init()
     {
         SetNewMap();
         NodeManager.Instance.SetEmptyNode();
-        SetStartPoint();
+        NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
         SetBasicTile();
 
         InputManager.Instance.Call();

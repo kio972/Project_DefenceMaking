@@ -18,6 +18,117 @@ public class NodeManager : Singleton<NodeManager>
 
     public Vector3 endPointPosition = Vector3.zero;
 
+    public void SetTile(TileNode curNode, string prefabPath)
+    {
+        
+    }
+
+    public void ExpandEmptyNode(TileNode curNode, int emptyNodeSize)
+    {
+        //1. 최초노드의 Left에서 SetNewNode
+        //RightUp, Right, RightDown, LeftDown, Left, LeftUp
+        //Direction[] directions = new Direction[]
+        //{ Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown, Direction.Left, Direction.LeftUp};
+
+        SetNewNode(curNode);
+        Direction[] directions = new Direction[]
+        { Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown, Direction.Left, Direction.LeftUp};
+
+        TileNode node = curNode;
+        for (int i = 1; i < emptyNodeSize; i++)
+        {
+            SetNewNode(node.neighborNodeDic[Direction.Left]);
+            node = node.neighborNodeDic[Direction.Left];
+
+            foreach (Direction direction in directions)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    SetNewNode(node.neighborNodeDic[direction]);
+                    node = node.neighborNodeDic[direction];
+                }
+            }
+        }
+
+    }
+
+    public List<Direction> GetAllDirection()
+    {
+        List<Direction> directions = new List<Direction>();
+        directions.Add(Direction.Left);
+        directions.Add(Direction.LeftUp);
+        directions.Add(Direction.RightUp);
+        directions.Add(Direction.Right);
+        directions.Add(Direction.RightDown);
+        directions.Add(Direction.LeftDown);
+        return directions;
+    }
+
+    public void SetNeighborNode(TileNode targetNode)
+    {
+        int[] index = new int[2] { targetNode.row, targetNode.col };
+        List<Direction> directions = GetAllDirection();
+        foreach(Direction direction in directions)
+        {
+            int[] neighborIndex = NextIndex(index, direction);
+            TileNode node = FindNode(neighborIndex[0], neighborIndex[1]);
+            if(node != null)
+            {
+                targetNode.PushNeighborNode(direction, node);
+                node.PushNeighborNode(UtilHelper.ReverseDirection(direction), targetNode);
+            }
+        }
+    }
+
+    public int[] NextIndex(int[] originIndex, Direction direction)
+    {
+        int row = originIndex[0];
+        int col = originIndex[1];
+
+        switch (direction)
+        {
+            case Direction.Left:
+                col--;
+                break;
+            case Direction.Right:
+                col++;
+                break;
+            case Direction.LeftUp:
+                row++;
+                if (row % 2 == 0)
+                    col--;
+                break;
+            case Direction.LeftDown:
+                row--;
+                if (row % 2 == 0)
+                    col--;
+                break;
+            case Direction.RightUp:
+                row++;
+                if (row % 2 != 0)
+                    col++;
+                break;
+            case Direction.RightDown:
+                row--;
+                if (row % 2 != 0)
+                    col++;
+                break;
+        }
+
+        return new int[2] { row, col };
+    }
+
+    public TileNode FindNode(int row, int col)
+    {
+        foreach(TileNode node in allNodes)
+        {
+            if (node.row == row && node.col == col)
+                return node;
+        }
+
+        return null;
+    }
+
     public void SetActiveNode(TileNode node, bool value)
     {
         if(value)
@@ -30,24 +141,6 @@ public class NodeManager : Singleton<NodeManager>
             emptyNodes.Add(node);
             activeNodes.Remove(node);
         }
-    }
-        
-
-    private List<Direction> SetDirection(Direction direction)
-    {
-        List<Direction> directions = new List<Direction>();
-        if (direction == Direction.None)
-        {
-            directions.Add(Direction.Left);
-            directions.Add(Direction.LeftUp);
-            directions.Add(Direction.RightUp);
-            directions.Add(Direction.Right);
-            directions.Add(Direction.RightDown);
-            directions.Add(Direction.LeftDown);
-        }
-        else
-            directions.Add(direction);
-        return directions;
     }
 
     private void AddNewNodeToDic(TileNode newNode, TileNode parentNode, Dictionary<TileNode, List<TileNode>> newNodeDictionary)
@@ -69,32 +162,35 @@ public class NodeManager : Singleton<NodeManager>
         }
     }
 
-    public void BuildNewNodes(Direction direction)
+    public void BuildNewNodes(Direction direction = Direction.None)
     {
         List<TileNode> tempNodes = new List<TileNode>(allNodes);
-        Dictionary<TileNode, List<TileNode>> newNodeDictionary = new Dictionary<TileNode, List<TileNode>>();
+        //Dictionary<TileNode, List<TileNode>> newNodeDictionary = new Dictionary<TileNode, List<TileNode>>();
+        List<Direction> directions = new List<Direction>();
+        if (direction == Direction.None)
+            directions = GetAllDirection();
+        else
+            directions.Add(direction);
 
         foreach (TileNode node in tempNodes)
         {
             //node의 이웃타일이 없는타일의 방향에 노드추가
-            TileNode newNode = node.AddNode(direction);
-            if (newNode != null)
+            foreach(Direction dir in directions)
             {
-                AddNewNodeToDic(newNode, node, newNodeDictionary);
-                allNodes.Add(newNode);
+                TileNode newNode = node.AddNode(node.row, node.col, dir);
             }
         }
 
         //newNodeDictionary에 있는 key TileNode를 받아오는 함수
-        List<TileNode> keyNodes = UtilHelper.GetKeyValues(newNodeDictionary);
-        foreach (TileNode keyNode in keyNodes)
-        {
-            foreach (TileNode newNode in newNodeDictionary[keyNode])
-            {
-                Direction dir = keyNode.GetNodeDirection(newNode);
-                newNode.SetNeighborNode(keyNode, dir);
-            }
-        }
+        //List<TileNode> keyNodes = UtilHelper.GetKeyValues(newNodeDictionary);
+        //foreach (TileNode keyNode in keyNodes)
+        //{
+        //    foreach (TileNode newNode in newNodeDictionary[keyNode])
+        //    {
+        //        Direction dir = keyNode.GetNodeDirection(newNode);
+        //        newNode.SetNeighborNode(keyNode, dir);
+        //    }
+        //}
     }
 
     public TileNode InstanceTile(GameObject tilePrefab, Vector3 targetPosition)
@@ -111,7 +207,7 @@ public class NodeManager : Singleton<NodeManager>
     {
         foreach (TileNode node in allNodes)
         {
-            node.gameObject.SetActive(false);
+            node.DeActiveGuide();
             node.setAvail = false;
         }
     }
@@ -182,11 +278,12 @@ public class NodeManager : Singleton<NodeManager>
 
 
 
-    public TileNode InstanceNewNode(TileNode node, Direction direction, Transform parent = null)
+    public TileNode InstanceNewNode(TileNode node, Direction direction, int[] index ,Transform parent = null)
     {
         Vector3 position = UtilHelper.GetGridPosition(node.transform.position, direction, 1f);
         TileNode newNode = Resources.Load<TileNode>("Prefab/Tile/EmptyTile");
         newNode = Instantiate(newNode);
+        newNode.Init(index[0], index[1]);
         newNode.transform.position = position;
         if(parent != null)
             newNode.transform.SetParent(parent);
@@ -204,37 +301,16 @@ public class NodeManager : Singleton<NodeManager>
 
     public void SetNewNode(TileNode curNode)
     {
-        curNode.AddNode(Direction.Left);
-        curNode.AddNode(Direction.LeftUp);
-        curNode.AddNode(Direction.LeftDown);
-        curNode.AddNode(Direction.Right);
-        curNode.AddNode(Direction.RightUp);
-        curNode.AddNode(Direction.RightDown);
-
-        curNode.DirectionalNode(Direction.Left).SetNeighborNode(curNode, Direction.Left);
-        curNode.DirectionalNode(Direction.LeftUp).SetNeighborNode(curNode, Direction.LeftUp);
-        curNode.DirectionalNode(Direction.LeftDown).SetNeighborNode(curNode, Direction.LeftDown);
-        curNode.DirectionalNode(Direction.Right).SetNeighborNode(curNode, Direction.Right);
-        curNode.DirectionalNode(Direction.RightUp).SetNeighborNode(curNode, Direction.RightUp);
-        curNode.DirectionalNode(Direction.RightDown).SetNeighborNode(curNode, Direction.RightDown);
+        curNode.AddNode(curNode.row, curNode.col, Direction.Left);
+        curNode.AddNode(curNode.row, curNode.col, Direction.LeftUp);
+        curNode.AddNode(curNode.row, curNode.col, Direction.LeftDown);
+        curNode.AddNode(curNode.row, curNode.col, Direction.Right);
+        curNode.AddNode(curNode.row, curNode.col, Direction.RightUp);
+        curNode.AddNode(curNode.row, curNode.col, Direction.RightDown);
     }
 
-    private void Update()
-    {
-        //if(endPointPosition != endPoint.transform.position)
-        //{
-        //    //도착지 변경시 영향 함수 호출
-
-        //    if (PathFinder.Instance.FindPath(startPoint) == null)
-        //        GameManager.Instance.speedController.SetSpeedZero();
-        //    else
-        //        GameManager.Instance.speedController.SetSpeedNormal();
-
-        //    Adventurer[] adventurers = FindObjectsOfType<Adventurer>();
-        //    foreach (Adventurer adventurer in adventurers)
-        //        adventurer.EndPointMoved();
-
-        //    endPointPosition = endPoint.transform.position;
-        //}
-    }
+    //private void Update()
+    //{
+        
+    //}
 }

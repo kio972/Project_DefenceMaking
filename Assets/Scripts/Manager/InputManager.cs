@@ -43,6 +43,11 @@ public class InputManager : Singleton<InputManager>
 
     }
 
+    private void InputCheck()
+    {
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -54,7 +59,7 @@ public class InputManager : Singleton<InputManager>
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null && node.curTile.movable)
             {
-                UtilHelper.SetAvail(true, NodeManager.Instance.emptyNodes);
+                UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
                 UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
                 node.curTile.waitToMove = true;
                 settingCard = true;

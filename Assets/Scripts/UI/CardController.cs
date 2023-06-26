@@ -94,17 +94,21 @@ public class CardController : MonoBehaviour
     private void SetObjectOnMap()
     {
         bool discard = false;
-        switch (cardType)
+        if(curNode != null && curNode.setAvail)
         {
-            case CardType.MapTile:
-                SetTile();
-                break;
-            case CardType.Monster:
-                SetMonster();
-                break;
-            case CardType.Trap:
-                SetTrap();
-                break;
+            switch (cardType)
+            {
+                case CardType.MapTile:
+                    SetTile();
+                    break;
+                case CardType.Monster:
+                    SetMonster();
+                    break;
+                case CardType.Trap:
+                    SetTrap();
+                    break;
+            }
+            discard = true;
         }
 
         Discard(discard);
@@ -142,15 +146,13 @@ public class CardController : MonoBehaviour
 
     private void ReadyForTrap()
     {
-        UtilHelper.SetCollider(false, NodeManager.Instance.emptyNodes);
+        NodeManager.Instance.ResetAvail();
         UtilHelper.SetAvail(true, NodeManager.Instance.activeNodes);
-        UtilHelper.SetCollider(true, NodeManager.Instance.activeNodes);
     }
 
     private void ReadyForMapTile()
     {
-        UtilHelper.SetCollider(false, NodeManager.Instance.emptyNodes);
-        UtilHelper.SetCollider(false, NodeManager.Instance.activeNodes);
+        NodeManager.Instance.ResetAvail();
         Tile tile = instancedObject.GetComponent<Tile>();
         NodeManager.Instance.SetTileAvail(tile);
     }

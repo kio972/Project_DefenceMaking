@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62551697574579565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.22, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 82694215407906673}
   - component: {fileID: 6512068704573270428}
   - component: {fileID: 8945118246915258461}
-  - component: {fileID: 907175447758075629}
+  - component: {fileID: 7141161965367787149}
   m_Layer: 0
   m_Name: King
   m_TagString: Untagged
@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 3936675834573604408}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.272, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.19999999, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5186736132288342304}
@@ -98,7 +98,8 @@ MonoBehaviour:
   battleState: 0
   curTarget: {fileID: 0}
   isDead: 0
---- !u!136 &907175447758075629
+  attackZone: {fileID: 0}
+--- !u!136 &7141161965367787149
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,10 +109,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2.66
+  m_Radius: 0.2
+  m_Height: 0.85
   m_Direction: 1
-  m_Center: {x: 0, y: 1.45, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &4436951818891705388
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,8 +171,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6301625855100013979}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.43, z: 0}
-  m_LocalScale: {x: 0.20000002, y: 0.20000002, z: 0.10000001}
+  m_LocalPosition: {x: 0, y: 0.389, z: 0}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.10000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5186736132288342304}

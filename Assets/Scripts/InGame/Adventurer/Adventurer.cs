@@ -84,6 +84,7 @@ public class Adventurer : Battler
                 StopCoroutine(moveCoroutine);
             yield return moveCoroutine = StartCoroutine(Move(node.transform.position,
             () => { NodeAction(node); }));
+            yield return null;
         }
     }
 

@@ -17,6 +17,9 @@ public enum Direction
 
 public class TileNode : MonoBehaviour
 {
+    public int row;
+    public int col;
+
     public Tile curTile;
 
     //public List<TileNode> neighborNodes = new List<TileNode>();
@@ -45,6 +48,11 @@ public class TileNode : MonoBehaviour
     //    DirectionalNode(Direction.RightDown)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.RightDown), this);
     //    DirectionalNode(Direction.RightUp)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.RightUp), this);
     //}
+
+    public void DeActiveGuide()
+    {
+        guideObject.gameObject.SetActive(false);
+    }
 
     public Direction GetNodeDirection(TileNode value)
     {
@@ -184,14 +192,20 @@ public class TileNode : MonoBehaviour
     }
 
 
-    public TileNode AddNode(Direction direction)
+    public TileNode AddNode(int originRow, int originCol, Direction direction)
     {
         TileNode node = null;
         if (!neighborNodeDic.TryGetValue(direction, out node))
         {
-            node = NodeManager.Instance.InstanceNewNode(this, direction);
-            neighborNodeDic.Add(direction, node);
-            NodeManager.Instance.allNodes.Add(node);
+            int[] index = NodeManager.Instance.NextIndex(new int[2] { originRow, originCol }, direction);
+            node = NodeManager.Instance.FindNode(index[0], index[1]);
+            if (node != null)
+                return node;
+            else
+            {
+                node = NodeManager.Instance.InstanceNewNode(this, direction, index);
+                //neighborNodeDic.Add(direction, node);
+            }
             
             return node;
         }
@@ -206,9 +220,14 @@ public class TileNode : MonoBehaviour
         return null;
     }
 
-    public void Init()
-    {
-        
-    }
 
+
+    public void Init(int row, int col)
+    {
+        this.row = row;
+        this.col = col;
+        NodeManager.Instance.allNodes.Add(this);
+        NodeManager.Instance.emptyNodes.Add(this);
+        NodeManager.Instance.SetNeighborNode(this);
+    }
 }

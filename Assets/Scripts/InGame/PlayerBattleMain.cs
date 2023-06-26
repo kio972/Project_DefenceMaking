@@ -11,7 +11,7 @@ public class PlayerBattleMain : Battler
         if (curHp <= 0)
             Dead();
 
-        attacker.GetDamage(attacker.maxHp, this);
+        attacker.GetDamage(attacker.maxHp + attacker.armor, this);
     }
 
 }

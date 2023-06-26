@@ -84,16 +84,6 @@ public static class UtilHelper
         }
     }
 
-    public static void SetCollider(bool value, List<TileNode> targetNode)
-    {
-        foreach (TileNode node in targetNode)
-        {
-            Collider col = node.GetComponentInChildren<Collider>();
-            if(col != null)
-                col.enabled = value;
-        }
-    }
-
     public static Vector3 GetMouseWorldPosition(float yPosition)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

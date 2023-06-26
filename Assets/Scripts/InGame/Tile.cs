@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum TileType
 {
@@ -17,7 +18,7 @@ public class Tile : MonoBehaviour
     [SerializeField]
     private List<Direction> roomDirection = new List<Direction>();
     [SerializeField]
-    private TileType roomType;
+    private TileType tileType;
 
     public List<Direction> PathDirection { get => pathDirection; }
     public List<Direction> RoomDirection { get => roomDirection; }
@@ -32,6 +33,7 @@ public class Tile : MonoBehaviour
 
     public Tile twin = null;
 
+
     public void MoveTile(TileNode nextNode)
     {
         if(curNode != null)
@@ -40,6 +42,20 @@ public class Tile : MonoBehaviour
         curNode = nextNode;
         nextNode.curTile = this;
         transform.position = nextNode.transform.position;
+        NodeManager.Instance.ExpandEmptyNode(nextNode, 4);
+
+        if (tileType == TileType.End)
+        {
+            NodeManager.Instance.endPoint = nextNode;
+            if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
+                GameManager.Instance.speedController.SetSpeedZero();
+            else
+                GameManager.Instance.speedController.SetSpeedNormal();
+
+            Adventurer[] adventurers = FindObjectsOfType<Adventurer>();
+            foreach (Adventurer adventurer in adventurers)
+                adventurer.EndPointMoved();
+        }
     }
 
     private void UpdateMoveTilePos(TileNode curNode)
@@ -56,7 +72,6 @@ public class Tile : MonoBehaviour
         waitToMove = false;
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.ResetAvail();
-        //Destroy(twin.gameObject);
         twin = null;
     }
 
@@ -75,6 +90,9 @@ public class Tile : MonoBehaviour
                 NodeManager.Instance.SetActiveNode(this.curNode, false);
                 NodeManager.Instance.SetActiveNode(curNode, true);
                 MoveTile(curNode);
+                transform.rotation = twin.transform.rotation;
+                pathDirection = new List<Direction>(twin.pathDirection);
+                roomDirection = new List<Direction>(twin.roomDirection);
             }
 
             EndMoveing();

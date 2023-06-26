@@ -56,7 +56,7 @@ public class Battler : MonoBehaviour
     public virtual void GetDamage(int damage, Battler attacker)
     {
         int finalDamage = damage - armor;
-        if (finalDamage < 0)
+        if (finalDamage <= 0)
             finalDamage = 1;
 
         curHp -= finalDamage;
@@ -158,11 +158,6 @@ public class Battler : MonoBehaviour
         while (true)
         {
             if (curTile == null) break;
-            //if (curTile == NodeManager.Instance.endPoint)
-            //{
-            //    break;
-            //}
-
             TileNode nextNode = FindNextNode(curTile);
 
             if (nextNode == null) // 막다른길일 경우
@@ -196,6 +191,8 @@ public class Battler : MonoBehaviour
                 StopCoroutine(moveCoroutine);
             yield return moveCoroutine = StartCoroutine(Move(nextNode.transform.position,
                 () => { NodeAction(nextNode); }));
+
+            yield return null;
         }
     }
 
