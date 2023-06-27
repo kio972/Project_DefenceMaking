@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public enum CardType
 {
@@ -10,7 +11,7 @@ public enum CardType
     Trap,
 }
 
-public class CardController : MonoBehaviour
+public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public CardType cardType;
     [SerializeField]
@@ -33,14 +34,35 @@ public class CardController : MonoBehaviour
     //4. 드래그중 : 마우스 위치까지 선으로 표시
     //5. 드래그종료 : 타일놓기/취소
 
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if(!Input.GetKey(KeyCode.Mouse0))
+        {
+            OnEndDrag(eventData);
+            return;
+        }
+        //카드선택
+        CallCard();
+    }
+
+    public void OnDrag(PointerEventData eventData) { }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (instancedObject == null || !instancedObject.gameObject.activeSelf)
+            return;
+
+        SetObjectOnMap();
+    }
+
     private void CardSelectCheck()
     {
 
     }
 
-    private bool SetInput()
+    private bool CancelInput()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if(Input.GetKeyDown(KeyCode.Mouse1))
         {
             return true;
         }
@@ -106,10 +128,10 @@ public class CardController : MonoBehaviour
         }
     }
 
-    private void SetObjectOnMap()
+    private void SetObjectOnMap(bool cancel = false)
     {
         bool discard = false;
-        if(curNode != null && curNode.setAvail)
+        if(!cancel && curNode != null && curNode.setAvail)
         {
             switch (cardType)
             {
@@ -127,6 +149,7 @@ public class CardController : MonoBehaviour
         }
 
         Discard(discard);
+        DrawLine(false);
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.ResetAvail();
     }
@@ -145,6 +168,15 @@ public class CardController : MonoBehaviour
         }
     }
 
+    private void DrawLine(bool value = true)
+    {
+        //라인렌더러로 선표시
+        Vector3 startPos = transform.position;
+
+        GameManager.Instance.cardDeckController.DrawGuide(startPos, value);
+
+    }
+
     private void UpdateObjectState()
     {
         UpdateObjectPosition();
@@ -155,8 +187,10 @@ public class CardController : MonoBehaviour
             ReadyForMapTile();
         }
 
-        if (SetInput())
-            SetObjectOnMap();
+        DrawLine();
+
+        if (CancelInput())
+            SetObjectOnMap(true);
     }
 
     private void ReadyForTrap()
@@ -201,8 +235,8 @@ public class CardController : MonoBehaviour
     {
         this.cardType = type;
         this.targetPrefab = targetPrefab;
-        button = GetComponent<Button>();
-        button.onClick.AddListener(CallCard);
+        //button = GetComponent<Button>();
+        //button.onClick.AddListener(CallCard);
     }
 
     // Update is called once per frame

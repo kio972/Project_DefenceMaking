@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class CardDeckController : MonoBehaviour
 {
@@ -33,6 +36,67 @@ public class CardDeckController : MonoBehaviour
     private float handHeight = 1;
 
     public List<Transform> cards = new List<Transform>();
+
+    [SerializeField]
+    private UILineRenderer lineRenderer;
+    [SerializeField]
+    private int lineRendererPoint = 10;
+    [SerializeField]
+    private float lineAmplitude = 1f;
+
+    public void DrawGuide(Vector3 cardPos, bool value)
+    {
+        lineRenderer.gameObject.SetActive(value);
+        if(value)
+        {
+            List<Vector2> lines = GetLine(cardPos, Input.mousePosition);
+            lineRenderer.Points = lines.ToArray();
+        }
+    }
+
+    private List<Vector2> GetLine(Vector3 startPos, Vector3 endPos)
+    {
+        int points = lineRendererPoint;
+        List<Vector2> linePosition = new List<Vector2>();
+
+        Vector2 rotDir = startPos - endPos;
+        float amplitude = lineAmplitude;
+        // rotDir의 길이에 따라 amplitude 조정하는 코드 필요
+        float minAmp = 0;
+        float maxAmp = 300;
+        float minDist = 0;
+        float maxDist = 2000;
+        float distance = rotDir.magnitude;
+        float normalizedDist = Mathf.InverseLerp(minDist, maxDist, distance);
+        // 정규화된 거리 값을 최소진폭과 최대진폭 사이의 값으로 매핑
+        amplitude = Mathf.Lerp(minAmp, maxAmp, normalizedDist);
+        // 최소진폭 ~ 최대진폭
+        // 최소거리 ~ 최대거리
+        float invert = 1f;
+        if (endPos.x > startPos.x)
+            invert *= -1f;
+
+        for (int i = 0; i < points; ++i)
+        {
+            // i를 0.0-1.0 사이의 값으로 정규화
+            float t = (float)i / (points - 1);
+
+            Vector2 point = Vector2.Lerp(startPos, endPos, t);
+
+            //modifyValue만큼 point의 좌표값을 조정
+            Vector2 modifyValue = new Vector2(0, amplitude * Mathf.Sin(2 * Mathf.PI * t * 0.5f) * invert);
+            //modifyValue를 rotDir만큼 회전
+            float angle = Mathf.Deg2Rad * Vector2.SignedAngle(Vector2.right, rotDir.normalized);
+
+            Vector2 rotatedModifyValue = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * angle) * modifyValue;
+
+            point.x += rotatedModifyValue.x;
+            point.y += rotatedModifyValue.y;
+
+            linePosition.Add(point);
+        }
+        return linePosition;
+    }
 
     public void SetCardRotation(List<Vector3> dirVecs)
     {

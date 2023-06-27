@@ -38,7 +38,7 @@ public class LineRendererSinWave : MonoBehaviour
 			// 2*Mathf.PI = 360이고, t는 0.0~1.0 사이의 값이기 때문에 이 값을 곱하면 1 진동의 사인 그래프가 완성되고,
 			// frequency를 곱하기 때문에 frequency 값에 따라 진동수가 결정된다.
 			float y = amplitude * Mathf.Sin(2 * Mathf.PI * t * frequency);
-
+			
 			lineRenderer.SetPosition(i, new Vector3(x, y, 0));
 		}
 	}
