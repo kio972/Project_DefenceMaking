@@ -64,9 +64,10 @@ public static class UtilHelper
         foreach(Direction direction in connectedDirection)
         {
             TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode != null && NodeManager.Instance.activeNodes.Contains(tempNode))
+            if (tempNode != null && tempNode.curTile != null && NodeManager.Instance.activeNodes.Contains(tempNode))
             {
                 Direction reverseDirection = ReverseDirection(direction);
+
                 if(tempNode.curTile.PathDirection.Contains(reverseDirection) || tempNode.curTile.RoomDirection.Contains(reverseDirection))
                     nodes.Add(tempNode);
             }

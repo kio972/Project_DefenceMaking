@@ -83,22 +83,23 @@ public class Tile : MonoBehaviour
 
     private void CheckEndInput(TileNode curNode)
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             if (curNode != null && curNode.setAvail)
             {
-                NodeManager.Instance.SetActiveNode(this.curNode, false);
-                NodeManager.Instance.SetActiveNode(curNode, true);
-                MoveTile(curNode);
                 transform.rotation = twin.transform.rotation;
                 pathDirection = new List<Direction>(twin.pathDirection);
                 roomDirection = new List<Direction>(twin.roomDirection);
+
+                NodeManager.Instance.SetActiveNode(this.curNode, false);
+                NodeManager.Instance.SetActiveNode(curNode, true);
+                MoveTile(curNode);
             }
 
-            EndMoveing();
+            Invoke("EndMoveing", 0.1f);
         }
-        else if (Input.GetKeyDown(KeyCode.Mouse1))
-            EndMoveing();
+        else if (Input.GetKeyUp(KeyCode.Mouse1))
+            Invoke("EndMoveing", 0.1f);
     }
 
     private void RotateDirection()
@@ -157,6 +158,14 @@ public class Tile : MonoBehaviour
     {
         twin.pathDirection = pathDirection;
         twin.roomDirection = roomDirection;
+    }
+
+    public void ReadyForMove()
+    {
+        UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
+        UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
+        curNode.SetAvail(true);
+        waitToMove = true;
     }
 
     private void Update()

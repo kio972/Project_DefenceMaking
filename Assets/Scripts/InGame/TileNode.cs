@@ -27,6 +27,7 @@ public class TileNode : MonoBehaviour
 
     [SerializeField]
     private Renderer guideObject;
+    public bool GuideActive { get => guideObject.gameObject.activeSelf; }
 
     public bool setAvail = false;
 

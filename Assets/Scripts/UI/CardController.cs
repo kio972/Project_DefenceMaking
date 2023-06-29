@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public enum CardType
 {
@@ -11,7 +12,7 @@ public enum CardType
     Trap,
 }
 
-public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public CardType cardType;
     [SerializeField]
@@ -27,6 +28,115 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     private TileNode availNodes;
 
+    private Coroutine scale_Modify_Coroutine = null;
+    private Coroutine position_Modify_Coroutine = null;
+
+    private bool drawEnd = false;
+
+    public Vector3 originPos;
+
+    [SerializeField]
+    private float mouseOverTime = 0.2f;
+
+    private void DrawEnd()
+    {
+        drawEnd = true;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!drawEnd)
+            return;
+
+        if (scale_Modify_Coroutine != null)
+            StopCoroutine(scale_Modify_Coroutine);
+        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one * 1.2f, mouseOverTime));
+
+        if (position_Modify_Coroutine != null)
+            StopCoroutine(position_Modify_Coroutine);
+        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 150, originPos.z), mouseOverTime));
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!drawEnd)
+            return;
+
+        if (scale_Modify_Coroutine != null)
+            StopCoroutine(scale_Modify_Coroutine);
+        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one, mouseOverTime));
+
+        if (position_Modify_Coroutine != null)
+            StopCoroutine(position_Modify_Coroutine);
+        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, originPos, mouseOverTime));
+    }
+
+    private IEnumerator IMoveEffect(Vector3 originPositioin, Vector3 targetPosition, float lerpTime)
+    {
+        //targetPosition = originPositioin + targetPosition;
+        float elapsedTime = 0f;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            transform.position = Vector3.Lerp(originPositioin, targetPosition, Mathf.Sin(t * Mathf.PI * 0.5f));
+            yield return null;
+        }
+    }
+
+    private IEnumerator IColorEffect(Color startColor, Color targetColor, float lerpTime)
+    {
+        Image[] cardImgs = GetComponentsInChildren<Image>();
+        TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
+        float elapsedTime = 0f;
+        foreach (Image temp1 in cardImgs)
+            temp1.color = startColor;
+        foreach (TextMeshProUGUI temp2 in texts)
+            temp2.color = startColor;
+
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            // cardImgs와 texts의 color의 알파값 조정
+            foreach (Image img in cardImgs)
+            {
+                Color currentColor = Color.Lerp(startColor, targetColor, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+                img.color = currentColor;
+            }
+
+            foreach (TextMeshProUGUI text in texts)
+            {
+                Color currentColor = Color.Lerp(startColor, targetColor, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+                text.color = currentColor;
+            }
+
+            yield return null;
+        }
+        yield return null;
+
+        Destroy(this.gameObject);
+    }
+
+    private IEnumerator IScaleEffect(Vector3 startScale, Vector3 targetScale, float lerpTime = 0.5f)
+    {
+        //뽑히는 카드의 스케일 조정
+        //lerpTime에 걸쳐 transform.scale을 0에서 1로 변경
+        float elapsedTime = 0f;
+        transform.localScale = startScale;
+
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            Vector3 currentScale = Vector3.Lerp(startScale, targetScale, t);
+            transform.localScale = currentScale;
+
+            yield return null;
+        }
+        yield return null;
+    }
 
     //1. 그래픽스 레이캐스팅 사용
     //2. 마우스오버 : 카드 확대(스케일 조정)
@@ -81,7 +191,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             GameManager.Instance.cardDeckController.cards.Remove(this.transform);
             GameManager.Instance.cardDeckController.SetCardPosition();
 
-            Destroy(this.gameObject);
+            float lerpTime = 0.4f;
+            StartCoroutine(IColorEffect(Color.white, new Color(1,1,1,0),lerpTime));
+            StartCoroutine(IMoveEffect(originPos, originPos + new Vector3(0, 150, 0), lerpTime));
         }
         else
         {
@@ -158,7 +270,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     {
         curNode = UtilHelper.RayCastTile();
 
-        if(curNode != null && curNode.setAvail)
+        if(curNode != null && curNode.GuideActive)
         {
             instancedObject.transform.position = curNode.transform.position;
         }
@@ -231,12 +343,19 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         }
     }
 
+    public void DrawEffect()
+    {
+        if (scale_Modify_Coroutine != null)
+            StopCoroutine(scale_Modify_Coroutine);
+        float lerpTime = 0.5f;
+        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(Vector3.zero, Vector3.one, lerpTime));
+        Invoke("DrawEnd", lerpTime);
+    }
+
     public void Init(CardType type, GameObject targetPrefab)
     {
         this.cardType = type;
         this.targetPrefab = targetPrefab;
-        //button = GetComponent<Button>();
-        //button.onClick.AddListener(CallCard);
     }
 
     // Update is called once per frame

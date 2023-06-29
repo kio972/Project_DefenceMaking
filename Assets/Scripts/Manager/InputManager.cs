@@ -54,14 +54,12 @@ public class InputManager : Singleton<InputManager>
         if (settingCard)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null && node.curTile.movable)
             {
-                UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
-                UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
-                node.curTile.waitToMove = true;
+                node.curTile.ReadyForMove();
                 settingCard = true;
             }
         }

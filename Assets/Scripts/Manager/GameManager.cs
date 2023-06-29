@@ -11,8 +11,6 @@ public class GameManager : Singleton<GameManager>
 
     public int gold = 0;
 
-
-
     public int startCardNumber = 6;
     public CardDeckController cardDeckController;
     public GameSpeedController speedController;
@@ -38,7 +36,22 @@ public class GameManager : Singleton<GameManager>
 
     private void WinGame()
     {
+        updateNeed = false;
+        speedController.SetSpeedZero();
 
+        ResultController result = FindObjectOfType<ResultController>(true);
+        if (result != null)
+            result.GameWin();
+    }
+
+    public void LoseGame()
+    {
+        updateNeed = false;
+        speedController.SetSpeedZero();
+
+        ResultController result = FindObjectOfType<ResultController>(true);
+        if (result != null)
+            result.GameDefeat();
     }
 
     // Update is called once per frame
@@ -47,11 +60,7 @@ public class GameManager : Singleton<GameManager>
         if (!updateNeed) return;
 
         if(king.isDead)
-        {
-            updateNeed = false;
-            speedController.SetSpeedZero();
-            WinGame();
-        }
+            LoseGame();
 
         timer += Time.deltaTime * defaultSpeed * timeScale;
         if(timer > 720f && dailyIncome)
@@ -71,7 +80,8 @@ public class GameManager : Singleton<GameManager>
 
             //몬스터 웨이브 스폰
             curWave++;
-            StartCoroutine(waveController.ISpawnWave(curWave));
+            if (!waveController.SpawnWave(curWave))
+                WinGame();
         }
     }
 
@@ -90,6 +100,6 @@ public class GameManager : Singleton<GameManager>
         }
 
         speedController.SetSpeedZero();
-        StartCoroutine(waveController.ISpawnWave(curWave));
+        waveController.SpawnWave(curWave);
     }
 }

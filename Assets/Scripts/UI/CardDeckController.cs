@@ -44,6 +44,8 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private float lineAmplitude = 1f;
 
+    private Coroutine set_CardPos_Coroutine = null;
+
     public void DrawGuide(Vector3 cardPos, bool value)
     {
         lineRenderer.gameObject.SetActive(value);
@@ -97,17 +99,6 @@ public class CardDeckController : MonoBehaviour
         }
         return linePosition;
     }
-
-    public void SetCardRotation(List<Vector3> dirVecs)
-    {
-        for(int i = 0; i < cards.Count; i++)
-        {
-            Vector3 targetDirection = dirVecs[i];
-            Quaternion rotation = UtilHelper.AlignUpWithVector(targetDirection);
-            cards[i].transform.rotation = rotation;
-        }
-    }
-
 
     public List<Vector3> CalculateRotation()
     {
@@ -163,16 +154,15 @@ public class CardDeckController : MonoBehaviour
         else
         {
             // 카드 개수가 범위를 벗어날 때 기본값인 100을 반환하거나 예외 처리를 수행합니다.
-            return 450f;
+            return minPos_X;
         }
     }
 
     public void SetCardPosition()
     {
-        List<Vector3> cardPos = GetCardPosition();
-        for(int i = 0; i < hand_CardNumber; i++)
-            cards[i].transform.position = cardPos[i];
-        SetCardRotation(CalculateRotation());
+        if (set_CardPos_Coroutine != null)
+            StopCoroutine(set_CardPos_Coroutine);
+        set_CardPos_Coroutine = StartCoroutine(ISetCardPosition());
     }
 
     private List<Vector3> GetCardPosition()
@@ -215,6 +205,46 @@ public class CardDeckController : MonoBehaviour
         DrawCard();
     }
 
+    private IEnumerator ISetCardPosition()
+    {
+        //모든 카드들의 위치를 lerpTime에 걸쳐 조정
+        //모든 카드들의 회전값을 lerpTime에 걸쳐 조정
+
+        float elapsedTime = 0f;
+        float lerpTime = 0.5f;
+        List<Vector3> cardPos = GetCardPosition();
+        List<Vector3> cardRot = CalculateRotation();
+        Vector3[] startPositions = new Vector3[cards.Count];
+        Quaternion[] startRotations = new Quaternion[cards.Count];
+        for (int i = 0; i < cards.Count; i++)
+        {
+            startPositions[i] = cards[i].position;
+            startRotations[i] = cards[i].rotation;
+            CardController temp = cards[i].GetComponent<CardController>();
+            temp.originPos = cardPos[i];
+        }
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            t = Mathf.Sin(t * Mathf.PI * 0.5f);
+            for (int i = 0; i < hand_CardNumber; i++)
+                cards[i].transform.position = Vector3.Lerp(startPositions[i], cardPos[i], t);
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Vector3 targetDirection = cardRot[i];
+                Quaternion targetRotation = UtilHelper.AlignUpWithVector(targetDirection);
+
+                Quaternion currentRotation = Quaternion.Lerp(startRotations[i], targetRotation, t);
+                cards[i].transform.rotation = currentRotation;
+            }
+
+            yield return null;
+        }
+
+    }
+
     public void DrawCard()
     {
         if(cardDeck.Count < 1) return;
@@ -223,8 +253,9 @@ public class CardDeckController : MonoBehaviour
         hand_CardNumber++;
         GameObject targetPrefab = Resources.Load<GameObject>(targtPrerfab);
         GameObject temp = Instantiate(targetPrefab, cardZone);
-        temp.transform.position = cardZone.transform.position;
-        
+        CardController card = temp.GetComponent<CardController>();
+        card?.DrawEffect();
+        temp.transform.position = transform.position;
         cards.Add(temp.transform);
         SetCardPosition();
     }

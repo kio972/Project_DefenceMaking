@@ -46,7 +46,7 @@ public class Battler : MonoBehaviour
 
     public virtual void Dead()
     {
-        hpBar.UpdateHp();
+        hpBar?.UpdateHp();
         isDead = true;
         StopAllCoroutines();
         animator.SetBool("Die", true);

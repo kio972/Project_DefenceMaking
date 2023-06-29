@@ -53,9 +53,8 @@ public class WaveController : MonoBehaviour
         return curWave;
     }
 
-    public IEnumerator ISpawnWave(int waveIndex)
+    public IEnumerator ISpawnWave(int waveIndex, List<WaveData> curWave)
     {
-        List<WaveData> curWave = SetWaveData(waveIndex);
         waveText.text = (waveIndex + 1).ToString("D2");
         int maxEnemyNumber = 0;
         int curEnemyNumber = 0;
@@ -86,6 +85,18 @@ public class WaveController : MonoBehaviour
             }
         }
         yield return null;
+    }
+
+    public bool SpawnWave(int curWave)
+    {
+        List<WaveData> waveData = SetWaveData(curWave);
+        if (waveData != new List<WaveData>())
+        {
+            StartCoroutine(ISpawnWave(curWave, waveData));
+            return true;
+        }
+        else
+            return false;
     }
 
     public void Init()
