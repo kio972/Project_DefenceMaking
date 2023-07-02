@@ -39,6 +39,9 @@ public class Battler : MonoBehaviour
 
     protected List<Battler> rangedTargets = new List<Battler>();
 
+    private int prevRotLevel = -1;
+    private Coroutine rotLevelCoroutine = null;
+
     private void RemoveBody()
     {
         gameObject.SetActive(false);
@@ -49,7 +52,7 @@ public class Battler : MonoBehaviour
         hpBar?.UpdateHp();
         isDead = true;
         StopAllCoroutines();
-        animator.SetBool("Die", true);
+        animator?.SetBool("Die", true);
         Invoke("RemoveBody", 2.5f);
     }
 
@@ -75,8 +78,20 @@ public class Battler : MonoBehaviour
 
         if (rotatonAxis != null)
         {
-            float rotationY = (targetDirection.x > 0f) ? 0f : 180f;
-            rotatonAxis.transform.rotation = Quaternion.Euler(rotatonAxis.rotation.eulerAngles.x, rotationY, rotatonAxis.rotation.eulerAngles.z);
+            float rotationX = UtilHelper.NormalizeAngle(rotatonAxis.rotation.eulerAngles.x);
+
+            if (targetDirection.x < 0f)
+            {
+                if (rotationX > 0)
+                    rotationX *= -1f;
+                rotatonAxis.rotation = Quaternion.Euler(rotationX, 180, rotatonAxis.rotation.eulerAngles.z);
+            }
+            else
+            {
+                if (rotationX < 0)
+                    rotationX *= -1f;
+                rotatonAxis.rotation = Quaternion.Euler(rotationX, 0, rotatonAxis.rotation.eulerAngles.z);
+            }
         }
     }
 
@@ -254,28 +269,17 @@ public class Battler : MonoBehaviour
         curTarget.GetDamage(damage, this);
     }
 
-    private void LookAtCamera()
+    public void SetRotation()
     {
-        Vector3 cameraPosition = Camera.main.transform.position;
-
-        // 스프라이트 오브젝트의 위치와 카메라의 위치를 기준으로 방향 벡터를 계산합니다.
-        Vector3 direction = cameraPosition - transform.position;
-
-        // 방향 벡터의 각도를 구합니다.
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // 오브젝트의 rotation 값을 설정하여 카메라 방향을 바라보도록 합니다.
-        float rotationX = rotatonAxis.rotation.eulerAngles.x;
-        float rotationY = rotatonAxis.rotation.eulerAngles.y;
-        float rotationZ = angle += 70f;
-        if (Mathf.Abs(rotationY) > 90f)
-            rotationZ *= -1;
-        rotatonAxis.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+        if (rotatonAxis != null)
+        {
+            rotatonAxis.rotation = TargetRoation(GameManager.Instance.cameraController.Camera_Level);
+            prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
+        }
     }
 
     public virtual void Init()
     {
-
         if(this.hpBar == null)
         {
             string resourcePath = "";
@@ -292,8 +296,89 @@ public class Battler : MonoBehaviour
             this.hpBar = hpBar;
         }
 
-        if(animator == null)
+        SetRotation();
+
+        if (animator == null)
             animator = GetComponentInChildren<Animator>();
+    }
+
+    private Quaternion TargetRoation(int camera_Level)
+    {
+        Vector3 characterRotation = UtilHelper.NormalizeEulerAngles(rotatonAxis.eulerAngles);
+
+        switch (camera_Level)
+        {
+            case 0:
+                characterRotation.x = 70f;
+                break;
+            case 1:
+                characterRotation.x = 70f;
+                break;
+            case 2:
+                characterRotation.x = 50f;
+                break;
+            case 3:
+                characterRotation.x = 20f;
+                break;
+        }
+
+        if (characterRotation.y > 90f)
+        {
+            characterRotation.x *= -1f;
+            characterRotation.y = 180f;
+        }
+
+        return Quaternion.Euler(characterRotation);
+    }
+
+    private Quaternion UpdateStartRotation(Quaternion originRotation)
+    {
+        Vector3 startRotation = UtilHelper.NormalizeEulerAngles(originRotation.eulerAngles);
+        Vector3 curRotation = UtilHelper.NormalizeEulerAngles(rotatonAxis.rotation.eulerAngles);
+
+        if (curRotation.x < 0 && startRotation.x < 0)
+            return originRotation;
+        else if (curRotation.x >= 0 && startRotation.x >= 0)
+            return originRotation;
+
+        startRotation.x *= -1f;
+        return Quaternion.Euler(startRotation);
+    }
+
+    private IEnumerator IUpdateRotation()
+    {
+        if (rotatonAxis != null)
+        {
+            int camera_Level = GameManager.Instance.cameraController.Camera_Level;
+            Vector3 startRotation = UtilHelper.NormalizeEulerAngles(rotatonAxis.rotation.eulerAngles);
+            Vector3 targetRotation = UtilHelper.NormalizeEulerAngles(TargetRoation(camera_Level).eulerAngles);
+
+            float elapsedTime = 0f;
+            float lerpTime = 1f;
+
+            while (elapsedTime < lerpTime)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+                targetRotation = UtilHelper.NormalizeEulerAngles(TargetRoation(camera_Level).eulerAngles);
+                //startRotation = UpdateStartRotation(startRotation);
+
+                Vector3 nextRotation = Vector3.Lerp(startRotation, targetRotation, t);
+                rotatonAxis.rotation = Quaternion.Euler(nextRotation);
+                yield return null;
+            }
+
+            //rotatonAxis.rotation = Quaternion.Euler(targetRotation);
+        }
+    }
+
+    private void UpdateRotation()
+    {
+        if (rotLevelCoroutine != null)
+            StopCoroutine(rotLevelCoroutine);
+
+        rotLevelCoroutine = StartCoroutine(IUpdateRotation());
     }
 
 
@@ -301,5 +386,11 @@ public class Battler : MonoBehaviour
     {
         if (hpBar != null)
             hpBar.UpdateHpBar(hpPivot.position);
+
+        if(prevRotLevel != GameManager.Instance.cameraController.Camera_Level)
+        {
+            prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
+            UpdateRotation();
+        }
     }
 }

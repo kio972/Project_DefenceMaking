@@ -34,6 +34,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     private bool drawEnd = false;
 
     public Vector3 originPos;
+    public Quaternion originRot;
+
+    private int originSiblingIndex = -1;
 
     [SerializeField]
     private float mouseOverTime = 0.2f;
@@ -50,11 +53,15 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one * 1.2f, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one * 1.8f, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 150, originPos.z), mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 200, originPos.z), mouseOverTime));
+
+        transform.rotation = Quaternion.identity;
+        originSiblingIndex = transform.GetSiblingIndex();
+        transform.SetAsLastSibling();
     }
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -68,6 +75,10 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
         position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, originPos, mouseOverTime));
+
+        transform.rotation = originRot;
+        if (originSiblingIndex != -1)
+            transform.SetSiblingIndex(originSiblingIndex);
     }
 
     private IEnumerator IMoveEffect(Vector3 originPositioin, Vector3 targetPosition, float lerpTime)
@@ -325,6 +336,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             instancedObject = Instantiate(targetPrefab);
         else
             instancedObject.SetActive(true);
+
+        if(cardType == CardType.Monster)
+        {
+            Monster monster = instancedObject.GetComponent<Monster>();
+            monster.SetRotation();
+        }
+
         targetCollider = instancedObject.GetComponentInChildren<Collider>();
         if(targetCollider != null ) { targetCollider.enabled = false; }
         InputManager.Instance.settingCard = true;

@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     public int startCardNumber = 6;
     public CardDeckController cardDeckController;
     public GameSpeedController speedController;
+    public CameraController cameraController;
     public WaveController waveController;
     public MapBuilder mapBuilder;
     public Canvas cameraCanvas;

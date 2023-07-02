@@ -8,6 +8,23 @@ using UnityEngine.EventSystems;
 
 public static class UtilHelper
 {
+    public static float NormalizeAngle(float angle)
+    {
+        if (angle > 180f)
+            angle -= 360f;
+        else if (angle < -180f)
+            angle += 360f;
+        return angle;
+    }
+
+    public static Vector3 NormalizeEulerAngles(Vector3 eulerAngles)
+    {
+        eulerAngles.x = NormalizeAngle(eulerAngles.x);
+        eulerAngles.y = NormalizeAngle(eulerAngles.y);
+        eulerAngles.z = NormalizeAngle(eulerAngles.z);
+        return eulerAngles;
+    }
+
     public static Quaternion AlignUpWithVector(Vector3 direction)
     {
         Vector3 targetUp = direction.normalized;

@@ -17,6 +17,8 @@ public class CardDeckController : MonoBehaviour
 
     [SerializeField]
     private Transform cardZone;
+    [SerializeField]
+    private Transform cardZoom;
 
     private List<int> cardDeck;
 
@@ -220,9 +222,8 @@ public class CardDeckController : MonoBehaviour
         {
             startPositions[i] = cards[i].position;
             startRotations[i] = cards[i].rotation;
-            CardController temp = cards[i].GetComponent<CardController>();
-            temp.originPos = cardPos[i];
         }
+
         while (elapsedTime < lerpTime)
         {
             elapsedTime += Time.deltaTime;
@@ -243,6 +244,12 @@ public class CardDeckController : MonoBehaviour
             yield return null;
         }
 
+        for(int i = 0; i < cards.Count; i++)
+        {
+            CardController temp = cards[i].GetComponent<CardController>();
+            temp.originPos = cardPos[i];
+            temp.originRot = temp.transform.rotation;
+        }
     }
 
     public void DrawCard()
