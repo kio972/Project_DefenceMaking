@@ -62,6 +62,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         transform.rotation = Quaternion.identity;
         originSiblingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
+
+        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -228,6 +230,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             NodeManager.Instance.activeNodes.Add(curNode);
             tile.MoveTile(curNode);
         }
+
+        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
     }
 
     private void SetMonster()
@@ -239,6 +243,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             monster.transform.position = curNode.transform.position;
             monster.Init();
         }
+
+        AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance.fxVolume);
     }
 
     private void SetTrap()
@@ -249,6 +255,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             trap.transform.SetParent(curNode.transform);
             trap.Init();
         }
+
+        AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance.fxVolume);
     }
 
     private void SetObjectOnMap(bool cancel = false)

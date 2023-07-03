@@ -55,10 +55,6 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.activeNodes.Add(endTile.curNode);
         NodeManager.Instance.endPoint = endTile.curNode;
         endTile.movable = true;
-
-        PlayerBattleMain king = endTile.GetComponentInChildren<PlayerBattleMain>();
-        king.Init();
-        GameManager.Instance.king = king;
     }
 
     private bool IsStartPointValid(TileNode node)
@@ -87,22 +83,6 @@ public class MapBuilder : MonoBehaviour
         {
             NodeManager.Instance.BuildNewNodes();
         }
-
-
-        
-
-        //1.최초노드 생성
-        //2.최초노드에서 왼쪽타일 + 순환횟수의 타일 불러오기
-        //3.해당노드에서 SetNewNode
-        //4.해당노드에서 오른쪽위타일을 순환횟수만큼 이동하며 SetNewNode
-        //5.끝나면 오른쪽, 오른쪽아래, 왼쪽아래, 왼쪽순으로 이동하며 SetNewNode
-        //6.
-
-        //1. 최초노드의 Left에서 SetNewNode
-        //RightUp, Right, RightDown, LeftDown, Left, LeftUp
-        //Direction[] directions = new Direction[]
-        //{ Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown, Direction.Left, Direction.LeftUp};
-        
     }
 
     public void Init()
@@ -113,6 +93,5 @@ public class MapBuilder : MonoBehaviour
         SetBasicTile();
 
         InputManager.Instance.Call();
-        NodeManager.Instance.endPointPosition = NodeManager.Instance.endPoint.transform.position;
     }
 }

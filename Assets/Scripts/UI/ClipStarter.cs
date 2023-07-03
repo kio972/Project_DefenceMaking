@@ -12,7 +12,7 @@ public class ClipStarter : MonoBehaviour
     {
         if (clip == null)
             return;
-        AudioManager.Instance.PlayBackground(clip, volume);
+        AudioManager.Instance.PlayBackground(clip, volume * SettingManager.Instance.bgmVolume);
     }
 
 }

@@ -13,11 +13,13 @@ public class SettingManager : Singleton<SettingManager>
 {
     public float bgmVolume = 1f;
     public float fxVolume = 1f;
-    public ScreenSize screenSize;
+    public bool screen_FullSize = true;
+    public ScreenSize screenSize = ScreenSize.Size_1920x1080;
 
     public void Set_FullScreen(bool value)
     {
         Screen.fullScreen = value;
+        this.screen_FullSize = value;
     }
 
     public void Set_ScreenSize(ScreenSize screenSize)

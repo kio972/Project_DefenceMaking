@@ -205,6 +205,7 @@ public class CardDeckController : MonoBehaviour
 
         GameManager.Instance.gold -= 200;
         DrawCard();
+        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
     }
 
     private IEnumerator ISetCardPosition()
@@ -265,6 +266,8 @@ public class CardDeckController : MonoBehaviour
         temp.transform.position = transform.position;
         cards.Add(temp.transform);
         SetCardPosition();
+
+
     }
 
     private void SetDeck()

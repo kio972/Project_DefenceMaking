@@ -94,6 +94,8 @@ public class Tile : MonoBehaviour
                 NodeManager.Instance.SetActiveNode(this.curNode, false);
                 NodeManager.Instance.SetActiveNode(curNode, true);
                 MoveTile(curNode);
+
+                AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
             }
 
             Invoke("EndMoveing", 0.1f);

@@ -16,7 +16,7 @@ public class NodeManager : Singleton<NodeManager>
     public TileNode startPoint;
     public TileNode endPoint;
 
-    public Vector3 endPointPosition = Vector3.zero;
+    //public Vector3 endPointPosition = Vector3.zero;
 
     public void SetTile(TileNode curNode, string prefabPath)
     {

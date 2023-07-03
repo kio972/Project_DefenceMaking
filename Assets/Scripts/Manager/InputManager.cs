@@ -61,6 +61,7 @@ public class InputManager : Singleton<InputManager>
             {
                 node.curTile.ReadyForMove();
                 settingCard = true;
+                AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
             }
         }
     }

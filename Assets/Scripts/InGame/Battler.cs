@@ -42,6 +42,11 @@ public class Battler : MonoBehaviour
     private int prevRotLevel = -1;
     private Coroutine rotLevelCoroutine = null;
 
+    [SerializeField]
+    private AudioClip attackSound;
+    [SerializeField]
+    private AudioClip deadSound;
+
     private void RemoveBody()
     {
         gameObject.SetActive(false);
@@ -54,6 +59,8 @@ public class Battler : MonoBehaviour
         StopAllCoroutines();
         animator?.SetBool("Die", true);
         Invoke("RemoveBody", 2.5f);
+        if(deadSound != null)
+            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance.fxVolume);
     }
 
     public virtual void GetDamage(int damage, Battler attacker)
@@ -265,6 +272,9 @@ public class Battler : MonoBehaviour
             if (curTarget == null)
                 return;
         }
+
+        if (attackSound != null)
+            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
 
         curTarget.GetDamage(damage, this);
     }

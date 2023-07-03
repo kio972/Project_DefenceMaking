@@ -68,6 +68,8 @@ public class GameManager : Singleton<GameManager>
         {
             gold += 200;
 
+            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
+
             dailyIncome = false;
         }
 
@@ -83,18 +85,28 @@ public class GameManager : Singleton<GameManager>
             curWave++;
             if (!waveController.SpawnWave(curWave))
                 WinGame();
+
+            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
         }
     }
 
-    private void KingBattle()
+    private void SpawnKing()
     {
-
+        PlayerBattleMain king = Resources.Load<PlayerBattleMain>("Prefab/Monster/King");
+        if(king != null)
+        {
+            king = Instantiate(king);
+            king.Init();
+            this.king = king;
+        }
     }
 
     private void Start()
     {
         mapBuilder.Init();
+        SpawnKing();
 
+        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
         for (int i = 0; i < startCardNumber; i++)
         {
             cardDeckController.DrawCard();

@@ -34,6 +34,8 @@ public class Trap : MonoBehaviour
         target.GetDamage(damage, null);
         attackCount++;
 
+        AudioManager.Instance.Play2DSound("Attack_trap", SettingManager.Instance.fxVolume);
+
         if (attackCount >= duration)
             DestroyTrap();
     }
