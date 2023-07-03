@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class CardDeckController : MonoBehaviour
 {

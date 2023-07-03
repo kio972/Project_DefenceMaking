@@ -16,6 +16,8 @@ public class SettingManager : Singleton<SettingManager>
     public bool screen_FullSize = true;
     public ScreenSize screenSize = ScreenSize.Size_1920x1080;
 
+    
+
     public void Set_FullScreen(bool value)
     {
         Screen.fullScreen = value;

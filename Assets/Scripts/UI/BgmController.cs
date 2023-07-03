@@ -14,6 +14,7 @@ public class BgmController : MonoBehaviour
             return;
 
         SettingManager.Instance.bgmVolume = slider.value;
+        AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance.bgmVolume);
     }
 
     void Awake()

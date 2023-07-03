@@ -15,6 +15,7 @@ public class FxsController : MonoBehaviour
             return;
 
         SettingManager.Instance.fxVolume = slider.value;
+        AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance.bgmVolume);
     }
 
     void Awake()
