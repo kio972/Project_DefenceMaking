@@ -23,12 +23,23 @@ public class PlayerBattleMain : Battler
         RotateCharacter(exitNode);
     }
 
+
+
     public override void Update()
     {
         base.Update();
 
         if ((transform.position - NodeManager.Instance.endPoint.transform.position).magnitude > 0.01f)
             MoveToBossRoom();
+
+        if(battleState)
+        {
+            if (curTarget == null || curTarget.isDead)
+            {
+                battleState = false;
+                curTarget = null;
+            }
+        }
     }
 
     public override void Init()

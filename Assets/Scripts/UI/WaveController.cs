@@ -7,13 +7,15 @@ using UnityEngine.UI;
 
 public struct WaveData
 {
-    public int adventurerIndex;
     public int number;
+    public string adventurerName;
+    public string prefab;
 
-    public WaveData(int adventurerIndex, int number)
+    public WaveData(string adventurerName, int number, string prefab)
     {
-        this.adventurerIndex = adventurerIndex;
+        this.adventurerName = adventurerName;
         this.number = number;
+        this.prefab = prefab;
     }
 }
 
@@ -44,9 +46,10 @@ public class WaveController : MonoBehaviour
         List<WaveData> curWave = new List<WaveData>();
         foreach(int i in indexList)
         {
-            int adventurerIndex = Convert.ToInt32(DataManager.Instance.Wave_Table[i]["adventure"]);
+            string adventurerName = DataManager.Instance.Wave_Table[i]["adventure"].ToString();
             int number = Convert.ToInt32(DataManager.Instance.Wave_Table[i]["num"]);
-            WaveData waveData = new WaveData(adventurerIndex, number);
+            string prefab = DataManager.Instance.Wave_Table[i]["prefab"].ToString();
+            WaveData waveData = new WaveData(adventurerName, number, prefab);
             curWave.Add(waveData);
         }
 
@@ -74,7 +77,8 @@ public class WaveController : MonoBehaviour
                 }
 
                 //모험가 스폰
-                GameObject temp = Instantiate(adventurerPrefab[waveData.adventurerIndex]);
+                GameObject prefab = Resources.Load<GameObject>("Prefab/Adventurer/" + waveData.prefab);
+                GameObject temp = Instantiate(prefab);
                 Adventurer adventurer = temp.GetComponent<Adventurer>();
                 adventurer.Init();
                 GameManager.Instance.adventurersList.Add(adventurer);

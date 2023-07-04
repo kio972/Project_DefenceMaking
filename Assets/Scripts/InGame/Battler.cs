@@ -76,6 +76,9 @@ public class Battler : MonoBehaviour
 
     public void RotateCharacter(Vector3 direction)
     {
+        if (isDead)
+            return;
+
         Vector3 targetDirection = direction - transform.position;
         if (attackZone != null)
         {

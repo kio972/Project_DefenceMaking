@@ -48,6 +48,8 @@ public class InputManager : Singleton<InputManager>
 
     }
 
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -60,8 +62,6 @@ public class InputManager : Singleton<InputManager>
             if (node != null && node.curTile != null && node.curTile.movable)
             {
                 node.curTile.ReadyForMove();
-                settingCard = true;
-                AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
             }
         }
     }

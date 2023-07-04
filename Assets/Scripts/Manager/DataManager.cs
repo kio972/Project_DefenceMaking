@@ -17,6 +17,51 @@ public class DataManager : Singleton<DataManager>
     public List<Dictionary<string, object>> Monster_Table { get => monster_Table; }
     public List<Dictionary<string, object>> Adventurer_Table { get => adventurer_Table; }
 
+    private List<int> tileCard_Indexs;
+    private List<int> monsterCard_Indexs;
+    private List<int> trapCard_Indexs;
+
+    public List<int> TileCard_Indexs
+    {
+        get
+        {
+            if(tileCard_Indexs == null)
+                tileCard_Indexs = Find_Typeof_Index(deckList, "cardtype", "tile");
+            return tileCard_Indexs;
+        }
+    }
+
+    public List<int> MonsterCard_Indexs
+    {
+        get
+        {
+            if (monsterCard_Indexs == null)
+                monsterCard_Indexs = Find_Typeof_Index(deckList, "cardtype", "monster");
+            return monsterCard_Indexs;
+        }
+    }
+
+    public List<int> TrapCard_Indexs
+    {
+        get
+        {
+            if (trapCard_Indexs == null)
+                trapCard_Indexs = Find_Typeof_Index(deckList, "cardtype", "trap");
+            return trapCard_Indexs;
+        }
+    }
+
+    private List<int> Find_Typeof_Index(List<Dictionary<string, object>> table, string key, string value)
+    {
+        List<int> indexs = new List<int>();
+        for (int i = 0; i < table.Count; i++)
+        {
+            if (deckList[i][key].ToString() == value)
+                indexs.Add(i);
+        }
+        return indexs;
+    }
+
     // csv파일 주소(Resource폴더 내)
     private string wave_Table_DataPath = "Data/waveData";
     private string deckList_DataPath = "Data/deckList";

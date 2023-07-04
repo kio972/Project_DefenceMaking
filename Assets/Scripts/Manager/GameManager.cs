@@ -66,7 +66,7 @@ public class GameManager : Singleton<GameManager>
         timer += Time.deltaTime * defaultSpeed * timeScale;
         if(timer > 720f && dailyIncome)
         {
-            gold += 200;
+            gold += 100 + PassiveManager.Instance.income_Weight;
 
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
 
@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
         if(timer > 1440f)
         {
             //재화수급
-            gold += 200;
+            gold += 100 + PassiveManager.Instance.income_Weight;
             timer = 0f;
 
             dailyIncome = true;

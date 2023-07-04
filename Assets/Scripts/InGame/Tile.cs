@@ -20,6 +20,8 @@ public class Tile : MonoBehaviour
     [SerializeField]
     private TileType tileType;
 
+    public TileType _TileType { get => tileType; }
+
     public List<Direction> PathDirection { get => pathDirection; }
     public List<Direction> RoomDirection { get => roomDirection; }
 
@@ -33,6 +35,13 @@ public class Tile : MonoBehaviour
 
     public Tile twin = null;
 
+    private bool BossRoom_BattleCheck()
+    {
+        if (curNode == NodeManager.Instance.endPoint && GameManager.Instance.king.battleState)
+            return true;
+
+        return false;
+    }
 
     public void MoveTile(TileNode nextNode)
     {
@@ -83,6 +92,9 @@ public class Tile : MonoBehaviour
 
     private void CheckEndInput(TileNode curNode)
     {
+        if(BossRoom_BattleCheck())
+            EndMoveing();
+
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             if (curNode != null && curNode.setAvail)
@@ -98,10 +110,10 @@ public class Tile : MonoBehaviour
                 AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
             }
 
-            Invoke("EndMoveing", 0.1f);
+            EndMoveing();
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
-            Invoke("EndMoveing", 0.1f);
+            EndMoveing();
     }
 
     private void RotateDirection()
@@ -164,10 +176,16 @@ public class Tile : MonoBehaviour
 
     public void ReadyForMove()
     {
+        if (BossRoom_BattleCheck())
+            return;
+
         UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
         UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
         curNode.SetAvail(true);
         waitToMove = true;
+
+        InputManager.Instance.settingCard = true;
+        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
     }
 
     private void Update()

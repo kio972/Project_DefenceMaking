@@ -1,20 +1,26 @@
-index,name,num,prefab
-0,road1,10,TileCard0
-1,road2,8,TileCard1
-2,road3,5,TileCard2
-3,road4,2,TileCard3
-4,road5,3,TileCard4
-5,road6,3,TileCard5
-6,road7,2,TileCard6
-7,road8,1,TileCard7
-8,road9,1,TileCard8
-9,road10,1,TileCard9
-10,road11,1,TileCard10
-11,trap1,2,TrapCard_Spin
-12,trap2,2,TrapCard_Spear
-13,trap3,2,TrapCard_Saw
-14,trap4,2,TrapCard_Hole
-15,slime_R,9,MonsterCard_Slime-Red
-16,slime_G,6,MonsterCard_Slime-Green
-17,slime_B,4,MonsterCard_Slime-Black
-18,slime_Y,2,MonsterCard_Slime-Purple
+index,cardtype,type,name,grade,text(한글),text,startNumber,prefab
+0,tile,road,Road1,normal,직선 길,A straight path,10,TileCard0
+1,tile,road,Road2,normal,굽어져 있는 길,A slightly crooked path,8,TileCard1
+2,tile,road,Road3,normal,심하게 꺽여있는 길,A badly twisted path,5,TileCard2
+3,tile,road,Road4,normal,세갈래길,Three-way path,2,TileCard3
+4,tile,road,Road5,normal,오른쪽 갈래길,Right fork path,3,TileCard4
+5,tile,road,Road6,normal,왼쪽 갈래길,Left fork path,3,TileCard5
+6,tile,road,Road7,normal,양쪽 갈래길,Both fork path,2,TileCard6
+7,tile,road,Road8,normal,탁자 모양 갈래길,Table-shape forks path,1,TileCard7
+8,tile,road,Road9,normal,X 모양 갈래길,X-shape forks path,1,TileCard8
+9,tile,road,Road10,normal,포크 모양 갈래길,Fork-shape forks path,1,TileCard9
+10,tile,road,Road11,normal,다섯갈래길,Five forks in the path,1,TileCard10
+11,tile,room,Room1,normal,,,3,RoomCard0
+12,tile,room,Room2,normal,,,3,RoomCard1
+13,tile,room,Room3,normal,,,3,RoomCard2
+14,trap,trap,Spin Cutter,normal,회전하는 칼날로 공격하는 함정이다. 공격력 : 2 내구도 : 8,Traps that attack with a spinning blade. It's Crude.,2,TrapCard_Spin
+15,trap,trap,Rotary Saw,epic,회전톱으로 공격하는 함정이다. 공격력 : 8 내구도 : 15,Trap with a spinning saw blade. It's Sturdy,2,TrapCard_Saw
+16,trap,trap,Spear,uniqe,창이 솟아올라 공격하는 함정이다. 공격력 : 1 내구도 : 20,Traps that attack with a spear. It's pretty sturdy.,2,TrapCard_Spear
+17,trap,trap,Hole,legend,구멍에 빠뜨려 공격하는 함정이다. 공격력 : 10 내구도 : 1,The trap of falling into a hole. It breaks easily,2,TrapCard_Hole
+18,tile,environment,Rock,normal,크고 단단한 바위 설치시 모든 몬스터의 HP를 1 증가 시킨다.,,10,Environment_Rock
+19,tile,environment,Swamp,normal,보기만 해도 끈적이는 늪 주변 모험가들의 이동속도를 25% 감소시킨다.,,2,Environment_Swamp
+20,tile,environment,Gold,normal,금광 보상금 + 5,,5,Environment_Gold
+21,monster,monster,Red Slime,normal,최하급 슬라임,Lowest level slime,9,MonsterCard_Slime-Red
+22,monster,monster,Green Slime,rare,하급 슬라임,Low level slime,6,MonsterCard_Slime-Green
+23,monster,monster,Purple Slime,epic,상급 슬라임,High level slime,4,MonsterCard_Slime-Purple
+24,monster,monster,Black Slime,legend,최상급 슬라임,Superlative slime,2,MonsterCard_Slime-Black

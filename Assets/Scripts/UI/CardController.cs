@@ -10,6 +10,7 @@ public enum CardType
     MapTile,
     Monster,
     Trap,
+    Environment,
 }
 
 public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
@@ -234,6 +235,19 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
     }
 
+    private void SetEnvironment()
+    {
+        Environment environment = instancedObject.GetComponent<Environment>();
+        if (environment != null)
+        {
+            NodeManager.Instance.emptyNodes.Remove(curNode);
+            NodeManager.Instance.activeNodes.Add(curNode);
+            environment.Init(curNode);
+        }
+
+        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+    }
+
     private void SetMonster()
     {
         Monster monster = instancedObject.GetComponent<Monster>();
@@ -252,7 +266,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Trap trap = instancedObject.GetComponent<Trap>();
         if (trap != null)
         {
-            trap.transform.SetParent(curNode.transform);
+            trap.transform.SetParent(curNode.curTile.transform);
             trap.Init();
         }
 
@@ -274,6 +288,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                     break;
                 case CardType.Trap:
                     SetTrap();
+                    break;
+                case CardType.Environment:
+                    SetEnvironment();
                     break;
             }
             discard = true;
@@ -324,10 +341,34 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             SetObjectOnMap(true);
     }
 
+    private void ReadyForEnvironment()
+    {
+        NodeManager.Instance.ResetAvail();
+        NodeManager.Instance.SetEnvironmentAvail();
+    }
+
+    private void ReadyForMonster()
+    {
+        NodeManager.Instance.ResetAvail();
+        foreach (TileNode node in NodeManager.Instance.activeNodes)
+        {
+            if (node.curTile != null && node.curTile._TileType == TileType.Room)
+                node.SetAvail(true);
+            else
+                node.SetAvail(false);
+        }
+    }
+
     private void ReadyForTrap()
     {
         NodeManager.Instance.ResetAvail();
-        UtilHelper.SetAvail(true, NodeManager.Instance.activeNodes);
+        foreach(TileNode node in NodeManager.Instance.activeNodes)
+        {
+            if (node.curTile != null && node.curTile._TileType == TileType.Path)
+                node.SetAvail(true);
+            else
+                node.SetAvail(false);
+        }
     }
 
     private void ReadyForMapTile()
@@ -361,10 +402,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                 ReadyForMapTile();
                 break;
             case CardType.Monster:
-                ReadyForTrap();
+                ReadyForMonster();
                 break;
             case CardType.Trap:
                 ReadyForTrap();
+                break;
+            case CardType.Environment:
+                ReadyForEnvironment();
                 break;
         }
     }

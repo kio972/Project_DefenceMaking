@@ -98,7 +98,7 @@ public class TileNode : MonoBehaviour
             if (neighborNodeDic.ContainsKey(direction))
             {
                 TileNode targetNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance.activeNodes.Contains(targetNode))
+                if (!NodeManager.Instance.activeNodes.Contains(targetNode) || targetNode.curTile == null)
                     continue;
 
                 foreach (Direction targetDirection in targetNode.curTile.PathDirection)

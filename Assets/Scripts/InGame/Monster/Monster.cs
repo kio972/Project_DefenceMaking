@@ -54,6 +54,8 @@ public class Monster : Battler
         base.Init();
 
         maxHp = Convert.ToInt32(DataManager.Instance.Monster_Table[monsterIndex]["hp"]);
+        maxHp += PassiveManager.Instance.monsterHp_Weight;
+
         curHp = maxHp;
         damage = Convert.ToInt32(DataManager.Instance.Monster_Table[monsterIndex]["attackPower"]);
         attackSpeed = Convert.ToInt32(DataManager.Instance.Monster_Table[monsterIndex]["attackSpeed"]);

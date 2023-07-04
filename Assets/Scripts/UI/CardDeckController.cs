@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using TMPro;
 
 public class CardDeckController : MonoBehaviour
 {
@@ -45,6 +46,46 @@ public class CardDeckController : MonoBehaviour
     private float lineAmplitude = 1f;
 
     private Coroutine set_CardPos_Coroutine = null;
+
+    [SerializeField]
+    private TextMeshProUGUI deckCountText;
+
+    [SerializeField]
+    private int cardPrice = 5;
+
+    public void DeckSupply(CardType type)
+    {
+        List<int> cardPool = new List<int>();
+        switch(type)
+        {
+            case CardType.MapTile:
+                cardPool = DataManager.Instance.TileCard_Indexs;
+                break;
+            case CardType.Trap:
+                cardPool = DataManager.Instance.TrapCard_Indexs;
+                break;
+            case CardType.Monster:
+                cardPool = DataManager.Instance.MonsterCard_Indexs;
+                break;
+        }
+
+        //차후 공식에따라 변경예정
+        int randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+        cardDeck.Add(randomIndex);
+        UpdateDeckCount();
+    }
+
+    private void UpdateDeckCount()
+    {
+        if (deckCountText == null)
+            return;
+
+        deckCountText.text = (cardDeck.Count).ToString();
+        if (cardDeck.Count < 10)
+            deckCountText.color = Color.red;
+        else
+            deckCountText.color = Color.black;
+    }
 
     public void DrawGuide(Vector3 cardPos, bool value)
     {
@@ -198,10 +239,10 @@ public class CardDeckController : MonoBehaviour
 
     public void DrawDeck()
     {
-        if (GameManager.Instance.gold < 200 || hand_CardNumber >= maxCardNumber)
+        if (GameManager.Instance.gold < cardPrice || hand_CardNumber >= maxCardNumber)
             return;
 
-        GameManager.Instance.gold -= 200;
+        GameManager.Instance.gold -= cardPrice;
         DrawCard();
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
     }
@@ -265,7 +306,7 @@ public class CardDeckController : MonoBehaviour
         cards.Add(temp.transform);
         SetCardPosition();
 
-
+        UpdateDeckCount();
     }
 
     private void SetDeck()
@@ -273,7 +314,7 @@ public class CardDeckController : MonoBehaviour
         cardDeck = new List<int>();
         for(int i = 0; i < DataManager.Instance.Deck_Table.Count; i++)
         {
-            int cardNumber = Convert.ToInt32(DataManager.Instance.Deck_Table[i]["num"]);
+            int cardNumber = Convert.ToInt32(DataManager.Instance.Deck_Table[i]["startNumber"]);
             for (int j = 0; j < cardNumber; j++)
                 cardDeck.Add(Convert.ToInt32(DataManager.Instance.Deck_Table[i]["index"]));
         }

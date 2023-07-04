@@ -212,6 +212,41 @@ public class NodeManager : Singleton<NodeManager>
         }
     }
 
+    private bool HaveConnectedTile(TileNode node)
+    {
+        List<Direction> allDirection = GetAllDirection();
+        foreach(Direction direction in allDirection)
+        {
+            if (!node.neighborNodeDic.ContainsKey(direction))
+                continue;
+
+            if (node.neighborNodeDic[direction].curTile == null)
+                continue;
+
+            Direction reversedDirection = UtilHelper.ReverseDirection(direction);
+            if (node.neighborNodeDic[direction].curTile.PathDirection.Contains(reversedDirection))
+                return true;
+            if (node.neighborNodeDic[direction].curTile.RoomDirection.Contains(reversedDirection))
+                return true;
+        }
+
+        return false;
+    }
+
+    public void SetEnvironmentAvail()
+    {
+        SetVirtualNode();
+
+        foreach(TileNode node in virtualNodes)
+        {
+            if (!HaveConnectedTile(node))
+                node.SetAvail(true);
+            else
+                node.SetAvail(false);
+        }
+
+    }
+
     public void SetTileAvail(Tile targetTile)
     {
         SetVirtualNode();

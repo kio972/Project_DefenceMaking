@@ -10,6 +10,8 @@ public class Adventurer : Battler
     private bool directPass = false;
     private Coroutine directPassCoroutine = null;
 
+    private int reward;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,6 +30,7 @@ public class Adventurer : Battler
             if(!curTarget.battleState)
             {
                 curTarget.battleState = true;
+                curTarget.curTarget = this;
                 curTarget.RotateCharacter(transform.position);
             }
         }
@@ -58,6 +61,7 @@ public class Adventurer : Battler
     public override void Dead()
     {
         base.Dead();
+        GameManager.Instance.gold += reward;
         GameManager.Instance.adventurersList.Remove(this);
         
     }
@@ -106,7 +110,7 @@ public class Adventurer : Battler
         float.TryParse(DataManager.Instance.Adventurer_Table[adventurerIndex]["attackSpeed"].ToString(), out attackSpeed);
         armor = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["armor"]);
         float.TryParse(DataManager.Instance.Adventurer_Table[adventurerIndex]["moveSpeed"].ToString(), out moveSpeed);
-
+        reward = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["reward"]);
         StartCoroutine(MoveLogic());
     }
 
