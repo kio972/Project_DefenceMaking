@@ -250,6 +250,7 @@ public class Battler : MonoBehaviour
             if (animator != null)
             {
                 animator.SetBool("Attack", false);
+                animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
                 if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE"))
                     battleState = false;
             }

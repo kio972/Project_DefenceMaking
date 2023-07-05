@@ -54,11 +54,11 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one * 1.8f, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one * 1.5f, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 200, originPos.z), mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
 
         transform.rotation = Quaternion.identity;
         originSiblingIndex = transform.GetSiblingIndex();
@@ -267,7 +267,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         if (trap != null)
         {
             trap.transform.SetParent(curNode.curTile.transform);
-            trap.Init();
+            trap.Init(curNode.curTile);
         }
 
         AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance.fxVolume);
@@ -364,7 +364,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         NodeManager.Instance.ResetAvail();
         foreach(TileNode node in NodeManager.Instance.activeNodes)
         {
-            if (node.curTile != null && node.curTile._TileType == TileType.Path)
+            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.trap == null)
                 node.SetAvail(true);
             else
                 node.SetAvail(false);

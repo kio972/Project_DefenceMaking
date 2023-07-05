@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ore
+  m_Name: Road
   m_Shader: {fileID: 4800000, guid: 9baf30ce95c751649b14d96da3a4b4d5, type: 3}
   m_ValidKeywords:
   - _EMISSIVE_SIMPLE
-  - _OUTLINE_NML
+  - _OUTLINE_POS
   m_InvalidKeywords:
   - _
   m_LightmapFlags: 4
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: fc6eb202fb4ed89419731fecf6ae0b5b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 872920bcb8601254982131078b7d5b10, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -112,8 +112,8 @@ Material:
     - _CullMode: 0
     - _EMISSIVE: 0
     - _Farthest_Distance: 100
-    - _GI_Intensity: 0.057
-    - _HighColor_Power: 0.586
+    - _GI_Intensity: 0.324
+    - _HighColor_Power: 0
     - _Inverse_MatcapMask: 0
     - _Inverse_Z_Axis_BLD: 1
     - _Is_BLD: 0
@@ -124,14 +124,14 @@ Material:
     - _Is_ColorShift: 0
     - _Is_Filter_HiCutPointLightColor: 1
     - _Is_Filter_LightColor: 0
-    - _Is_LightColor_1st_Shade: 0
-    - _Is_LightColor_2nd_Shade: 0
-    - _Is_LightColor_Ap_RimLight: 0
-    - _Is_LightColor_Base: 0
-    - _Is_LightColor_HighColor: 0
-    - _Is_LightColor_MatCap: 0
+    - _Is_LightColor_1st_Shade: 1
+    - _Is_LightColor_2nd_Shade: 1
+    - _Is_LightColor_Ap_RimLight: 1
+    - _Is_LightColor_Base: 1
+    - _Is_LightColor_HighColor: 1
+    - _Is_LightColor_MatCap: 1
     - _Is_LightColor_Outline: 0
-    - _Is_LightColor_RimLight: 0
+    - _Is_LightColor_RimLight: 1
     - _Is_NormalMapForMatCap: 0
     - _Is_NormalMapToBase: 0
     - _Is_NormalMapToHighColor: 0
@@ -147,15 +147,15 @@ Material:
     - _LightDirection_MaskOn: 0
     - _MatCap: 0
     - _Nearest_Distance: 0.5
-    - _OUTLINE: 0
+    - _OUTLINE: 1
     - _Offset_X_Axis_BLD: -0.05
     - _Offset_Y_Axis_BLD: 0.09
     - _Offset_Z: 0
     - _Outline_Width: 15
-    - _RimLight: 1
+    - _RimLight: 0
     - _RimLight_FeatherOff: 0
-    - _RimLight_InsideMask: 0.1
-    - _RimLight_Power: 0.26
+    - _RimLight_InsideMask: 0.0001
+    - _RimLight_Power: 0.1
     - _Rotate_EmissiveUV: 0
     - _Rotate_MatCapUV: 0
     - _Rotate_NormalMapForMatCapUV: 0
@@ -172,23 +172,23 @@ Material:
     - _Tweak_MatcapMaskLevel: 0
     - _Tweak_RimLightMaskLevel: 0
     - _Tweak_SystemShadowsLevel: 0
-    - _Unlit_Intensity: 2.18
-    - _Use_1stAs2nd: 0
+    - _Unlit_Intensity: 1.33
+    - _Use_1stAs2nd: 1
     - _Use_BaseAs1st: 1
     - _simpleUI: 0
     - _utsTechnique: 0
     - _utsVersion: 2.08
     m_Colors:
-    - _1st_ShadeColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
+    - _1st_ShadeColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
-    - _Color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+    - _BaseColor: {r: 0.7924528, g: 0.66503346, b: 0.5420078, a: 1}
+    - _Color: {r: 0.6627451, g: 0.5483194, b: 0.43921566, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
-    - _Emissive_Color: {r: 0.0009724143, g: 0.0009724143, b: 0.0009724143, a: 1}
-    - _HighColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _HighColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
-    - _RimLightColor: {r: 0, g: 0.011367798, b: 1, a: 1}
+    - _RimLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _ViewShift: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

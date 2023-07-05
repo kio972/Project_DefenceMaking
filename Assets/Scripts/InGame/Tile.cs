@@ -35,6 +35,8 @@ public class Tile : MonoBehaviour
 
     public Tile twin = null;
 
+    public Trap trap = null;
+
     private bool BossRoom_BattleCheck()
     {
         if (curNode == NodeManager.Instance.endPoint && GameManager.Instance.king.battleState)

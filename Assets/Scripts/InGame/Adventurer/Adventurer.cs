@@ -80,16 +80,23 @@ public class Adventurer : Battler
 
     private IEnumerator DirectPass()
     {
-        List<TileNode> path = PathFinder.Instance.FindPath(curTile);
-        Vector3 finalPos = NodeManager.Instance.endPoint.transform.position;
-        foreach (TileNode node in path)
+        while(true)
         {
-            if (moveCoroutine != null)
-                StopCoroutine(moveCoroutine);
-            yield return moveCoroutine = StartCoroutine(Move(node.transform.position,
-            () => { NodeAction(node); }));
             yield return null;
+            List<TileNode> path = PathFinder.Instance.FindPath(curTile);
+            if (path == null)
+                continue;
+            Vector3 finalPos = NodeManager.Instance.endPoint.transform.position;
+            foreach (TileNode node in path)
+            {
+                if (moveCoroutine != null)
+                    StopCoroutine(moveCoroutine);
+                yield return moveCoroutine = StartCoroutine(Move(node.transform.position,
+                () => { NodeAction(node); }));
+                yield return null;
+            }
         }
+        
     }
 
     protected override void DeadLock_Logic_Move()

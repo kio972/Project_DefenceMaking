@@ -13,6 +13,8 @@ public class Trap : MonoBehaviour
 
     private Dictionary<Battler, Coroutine> coroutineDic = new Dictionary<Battler, Coroutine>();
 
+    private Tile curTile;
+
     private void DestroyTrap()
     {
         foreach(Coroutine co in coroutineDic.Values)
@@ -20,6 +22,7 @@ public class Trap : MonoBehaviour
             StopCoroutine(co);
         }
 
+        curTile.trap = null;
         Destroy(this.gameObject);
     }
 
@@ -82,11 +85,14 @@ public class Trap : MonoBehaviour
         RemoveTarget(battle);
     }
 
-    public void Init()
+    public void Init(Tile curTile)
     {
         damage = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["attackPower"]);
         attackSpeed = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["attackSpeed"]);
         duration = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["duration"]);
+
+        this.curTile = curTile;
+        curTile.trap = this;
 
         Collider col = GetComponentInChildren<Collider>();
         if (col != null)
