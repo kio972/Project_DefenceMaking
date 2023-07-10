@@ -47,6 +47,9 @@ public class Battler : MonoBehaviour
     [SerializeField]
     private AudioClip deadSound;
 
+    [SerializeField]
+    protected string battlerID;
+
     private void RemoveBody()
     {
         gameObject.SetActive(false);
@@ -65,6 +68,9 @@ public class Battler : MonoBehaviour
 
     public virtual void GetDamage(int damage, Battler attacker)
     {
+        if (isDead)
+            return;
+
         int finalDamage = damage - armor;
         if (finalDamage <= 0)
             finalDamage = 1;
@@ -128,7 +134,7 @@ public class Battler : MonoBehaviour
         callback?.Invoke();
     }
 
-    protected TileNode FindNextNode(TileNode curNode)
+    protected virtual TileNode FindNextNode(TileNode curNode)
     {
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);

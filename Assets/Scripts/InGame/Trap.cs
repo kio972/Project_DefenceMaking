@@ -5,59 +5,48 @@ using System;
 
 public class Trap : MonoBehaviour
 {
-    public int trapIndex;
-    public int damage;
-    public int duration;
-    public float attackSpeed;
+    private int trapIndex = -1;
+    [SerializeField]
+    private string battlerID;
+
+    private int damage;
+    private int duration;
+    private float attackSpeed;
     private int attackCount = 0;
 
     private Dictionary<Battler, Coroutine> coroutineDic = new Dictionary<Battler, Coroutine>();
 
+    private List<Battler> targetList = new List<Battler>();
+
     private Tile curTile;
+
+    private Animator animator;
+
+    private float coolDown = 0f;
+
+    private bool isInit = false;
 
     private void DestroyTrap()
     {
-        foreach(Coroutine co in coroutineDic.Values)
-        {
-            StopCoroutine(co);
-        }
-
         curTile.trap = null;
         Destroy(this.gameObject);
     }
 
-    private void ExcuteAttack(Battler target)
+    private void ExcuteAttack()
     {
-        if(target.isDead)
+        List<Battler> removeTargets = new List<Battler>();
+        foreach(Battler target in targetList)
         {
-            RemoveTarget(target);
-            return;
+            target.GetDamage(damage, null);
+            if (target.isDead)
+                removeTargets.Add(target);
         }
 
-        target.GetDamage(damage, null);
         attackCount++;
-
         AudioManager.Instance.Play2DSound("Attack_trap", SettingManager.Instance.fxVolume);
 
-        if (attackCount >= duration)
-            DestroyTrap();
-    }
-
-    private IEnumerator IExcuteDamage(Battler battle)
-    {
-        while (true)
-        {
-            ExcuteAttack(battle);
-
-            float attackElapsed = 0f;
-            while(attackElapsed < 1 / attackSpeed)
-            {
-                attackElapsed += Time.deltaTime * GameManager.Instance.timeScale;
-                yield return null;
-            }
-
-            yield return null;
-        }
+        foreach (Battler removeTarget in removeTargets)
+            targetList.Remove(removeTarget);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -65,16 +54,7 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
-        coroutineDic.Add(battle, StartCoroutine(IExcuteDamage(battle)));
-    }
-
-    private void RemoveTarget(Battler battle)
-    {
-        if (coroutineDic.ContainsKey(battle))
-        {
-            StopCoroutine(coroutineDic[battle]);
-            coroutineDic.Remove(battle);
-        }
+        targetList.Add(battle);
     }
 
     private void OnTriggerExit(Collider other)
@@ -82,14 +62,16 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
-        RemoveTarget(battle);
+        targetList.Remove(battle);
     }
 
     public void Init(Tile curTile)
     {
-        damage = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["attackPower"]);
-        attackSpeed = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["attackSpeed"]);
-        duration = Convert.ToInt32(DataManager.Instance.Trap_Table[trapIndex]["duration"]);
+        trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+
+        damage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPower"]);
+        attackSpeed = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackSpeed"]);
+        duration = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["duration"]);
 
         this.curTile = curTile;
         curTile.trap = this;
@@ -97,6 +79,39 @@ public class Trap : MonoBehaviour
         Collider col = GetComponentInChildren<Collider>();
         if (col != null)
             col.enabled = true;
+
+        animator = GetComponent<Animator>();
+
+        isInit = true;
     }
 
+    private void Update()
+    {
+        if (!isInit)
+            return;
+
+        if (attackCount >= duration)
+            DestroyTrap();
+
+        if(coolDown > 0)
+            coolDown -= Time.deltaTime * GameManager.Instance.timeScale;
+
+        if (targetList.Count == 0)
+        {
+            if (animator != null)
+                animator.ResetTrigger("Attack");
+            return;
+        }
+
+        if (GameManager.Instance.timeScale == 0) return;
+
+        if (coolDown <= 0)
+        {
+            if (animator != null)
+                animator.SetTrigger("Attack");
+
+            ExcuteAttack();
+            coolDown =  1 / attackSpeed;
+        }
+    }
 }

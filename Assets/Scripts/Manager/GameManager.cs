@@ -82,9 +82,14 @@ public class GameManager : Singleton<GameManager>
             dailyIncome = true;
 
             //몬스터 웨이브 스폰
-            curWave++;
+            
             if (!waveController.SpawnWave(curWave))
-                WinGame();
+            {
+                if(adventurersList.Count == 0)
+                    WinGame();
+            }
+            else
+                curWave++;
 
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
         }

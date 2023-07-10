@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class Adventurer : Battler
 {
-    public int adventurerIndex;
+    private int adventurerIndex = -1;
     private bool directPass = false;
     private Coroutine directPassCoroutine = null;
 
     private int reward;
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -111,13 +110,18 @@ public class Adventurer : Battler
     {
         base.Init();
 
-        maxHp = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["hp"]);
-        curHp = maxHp;
-        damage = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["attackPower"]);
-        float.TryParse(DataManager.Instance.Adventurer_Table[adventurerIndex]["attackSpeed"].ToString(), out attackSpeed);
-        armor = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["armor"]);
-        float.TryParse(DataManager.Instance.Adventurer_Table[adventurerIndex]["moveSpeed"].ToString(), out moveSpeed);
-        reward = Convert.ToInt32(DataManager.Instance.Adventurer_Table[adventurerIndex]["reward"]);
+        adventurerIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        if(adventurerIndex != -1)
+        {
+            maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["hp"]);
+            curHp = maxHp;
+            damage = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["attackPower"]);
+            float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["attackSpeed"].ToString(), out attackSpeed);
+            armor = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["armor"]);
+            float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["moveSpeed"].ToString(), out moveSpeed);
+            reward = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["reward"]);
+        }
+
         StartCoroutine(MoveLogic());
     }
 

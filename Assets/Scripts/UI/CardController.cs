@@ -179,11 +179,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         SetObjectOnMap();
     }
 
-    private void CardSelectCheck()
-    {
-
-    }
-
     private bool CancelInput()
     {
         if(Input.GetKeyDown(KeyCode.Mouse1))
@@ -256,6 +251,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             monster.SetStartPoint(curNode);
             monster.transform.position = curNode.transform.position;
             monster.Init();
+            curNode.curTile.monster = monster;
         }
 
         AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance.fxVolume);
@@ -352,7 +348,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         NodeManager.Instance.ResetAvail();
         foreach (TileNode node in NodeManager.Instance.activeNodes)
         {
-            if (node.curTile != null && node.curTile._TileType == TileType.Room)
+            if (node.curTile != null && node.curTile._TileType == TileType.Room && node.curTile.monster == null)
                 node.SetAvail(true);
             else
                 node.SetAvail(false);

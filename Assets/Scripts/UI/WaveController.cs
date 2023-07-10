@@ -48,6 +48,8 @@ public class WaveController : MonoBehaviour
         {
             string adventurerName = DataManager.Instance.Wave_Table[i]["adventure"].ToString();
             int number = Convert.ToInt32(DataManager.Instance.Wave_Table[i]["num"]);
+            //int adventurerIndex = DataManager.Instance.
+
             string prefab = DataManager.Instance.Wave_Table[i]["prefab"].ToString();
             WaveData waveData = new WaveData(adventurerName, number, prefab);
             curWave.Add(waveData);
@@ -94,7 +96,7 @@ public class WaveController : MonoBehaviour
     public bool SpawnWave(int curWave)
     {
         List<WaveData> waveData = SetWaveData(curWave);
-        if (waveData != new List<WaveData>())
+        if (waveData != new List<WaveData>() && waveData.Count != 0)
         {
             StartCoroutine(ISpawnWave(curWave, waveData));
             return true;

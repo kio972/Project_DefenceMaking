@@ -264,6 +264,13 @@ public class CardDeckController : MonoBehaviour
             startRotations[i] = cards[i].rotation;
         }
 
+        for (int i = 0; i < cards.Count; i++)
+        {
+            CardController temp = cards[i].GetComponent<CardController>();
+            temp.originPos = cardPos[i];
+            temp.originRot = UtilHelper.AlignUpWithVector(cardRot[i]);
+        }
+
         while (elapsedTime < lerpTime)
         {
             elapsedTime += Time.deltaTime;
@@ -282,13 +289,6 @@ public class CardDeckController : MonoBehaviour
             }
 
             yield return null;
-        }
-
-        for(int i = 0; i < cards.Count; i++)
-        {
-            CardController temp = cards[i].GetComponent<CardController>();
-            temp.originPos = cardPos[i];
-            temp.originRot = temp.transform.rotation;
         }
     }
 

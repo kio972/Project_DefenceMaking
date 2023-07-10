@@ -36,6 +36,7 @@ public class Tile : MonoBehaviour
     public Tile twin = null;
 
     public Trap trap = null;
+    public Monster monster = null;
 
     private bool BossRoom_BattleCheck()
     {
@@ -190,7 +191,7 @@ public class Tile : MonoBehaviour
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
     }
 
-    private void Update()
+    private void TileMoveCheck()
     {
         if (!waitToMove)
             return;
@@ -209,5 +210,20 @@ public class Tile : MonoBehaviour
         UpdateMoveTilePos(curNode);
         RotateCheck();
         CheckEndInput(curNode);
+    }
+
+    private void MonsterOutCheck()
+    {
+        if (monster == null)
+            return;
+
+        if ((monster.transform.position - transform.position).magnitude > 0.5f)
+            monster = null;
+    }
+
+    private void Update()
+    {
+        MonsterOutCheck();
+        TileMoveCheck();
     }
 }
