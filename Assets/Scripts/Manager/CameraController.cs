@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Transform guideObject;
 
+    private float mouseMult = 1f;
+
     private void SetCam()
     {
         cam_Index0.gameObject.SetActive(false);
@@ -35,15 +37,19 @@ public class CameraController : MonoBehaviour
         {
             case 0:
                 cam_Index0.gameObject.SetActive(true);
+                mouseMult = 1.2f;
                 break;
             case 1:
                 cam_Index1.gameObject.SetActive(true);
+                mouseMult = 1f;
                 break;
             case 2:
                 cam_Index2.gameObject.SetActive(true);
+                mouseMult = 0.8f;
                 break;
             case 3:
                 cam_Index3.gameObject.SetActive(true);
+                mouseMult = 0.6f;
                 break;
         }
     }
@@ -82,7 +88,7 @@ public class CameraController : MonoBehaviour
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
-            Vector3 targetPos = guideObject.position + new Vector3(-mouseX, 0, -mouseY);
+            Vector3 targetPos = guideObject.position + (new Vector3(-mouseX, 0, -mouseY) * mouseMult * SettingManager.Instance.MouseSensitivity);
             guideObject.position = targetPos;
         }
     }

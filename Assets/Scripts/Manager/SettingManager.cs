@@ -15,8 +15,15 @@ public class SettingManager : Singleton<SettingManager>
     public float fxVolume = 1f;
     public bool screen_FullSize = true;
     public ScreenSize screenSize = ScreenSize.Size_1920x1080;
-
-    
+    public float mouseSensitivity = 0.25f;
+    public float MouseSensitivity
+    {
+        get
+        {
+            mouseSensitivity = Mathf.Clamp01(mouseSensitivity);
+            return Mathf.Lerp(0.5f, 2.5f, mouseSensitivity);
+        }
+    }
 
     public void Set_FullScreen(bool value)
     {
