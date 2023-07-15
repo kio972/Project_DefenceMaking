@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class Battler : MonoBehaviour
 {
@@ -274,7 +275,22 @@ public class Battler : MonoBehaviour
     }
 
     //애니메이션 이벤트에서 작동
-    private void Attack()
+    public void Attack()
+    {
+        if (curTarget == null || curTarget.isDead)
+        {
+            curTarget = FindNextTarget(curTarget);
+            if (curTarget == null)
+                return;
+        }
+
+        if (attackSound != null)
+            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
+
+        curTarget.GetDamage(damage, this);
+    }
+
+    private void ATTACK()
     {
         if (curTarget == null || curTarget.isDead)
         {

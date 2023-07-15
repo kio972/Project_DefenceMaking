@@ -25,6 +25,25 @@ public class SettingManager : Singleton<SettingManager>
         }
     }
 
+    public int ScreenSizeIndex
+    {
+        get
+        {
+            return (int)screenSize;
+        }
+        set
+        {
+            if (System.Enum.IsDefined(typeof(ScreenSize), value))
+            {
+                screenSize = (ScreenSize)value;
+            }
+            else
+            {
+                Debug.LogError("Invalid ScreenSize index: " + value);
+            }
+        }
+    }
+
     public void Set_FullScreen(bool value)
     {
         Screen.fullScreen = value;
@@ -46,13 +65,8 @@ public class SettingManager : Singleton<SettingManager>
         Screen.SetResolution(width, height, Screen.fullScreen);
     }
 
-    private void Load_SettingData()
-    {
-        //설정 데이터에서 데이터 불러오기
-    }
-
     public void Init()
     {
-        Load_SettingData();
+        SaveManager.Instance.LoadSettingData();
     }
 }
