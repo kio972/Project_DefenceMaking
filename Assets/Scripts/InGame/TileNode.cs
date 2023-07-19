@@ -31,25 +31,6 @@ public class TileNode : MonoBehaviour
 
     public bool setAvail = false;
 
-    //public void SwapTile(TileNode prevNode, bool switchNode = false)
-    //{
-    //    Dictionary<Direction, TileNode> newDic = new Dictionary<Direction, TileNode>(prevNode.neighborNodeDic);
-    //    if (switchNode)
-    //        prevNode.SwapTile(this);
-    //    neighborNodeDic = newDic;
-
-    //    Direction closeDirection = GetNodeDirection(prevNode);
-    //    neighborNodeDic[UtilHelper.ReverseDirection(closeDirection)] = prevNode;
-
-    //    //노드별로 이웃타일 재지정
-    //    DirectionalNode(Direction.Left)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.Left), this);
-    //    DirectionalNode(Direction.LeftDown)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.LeftDown), this);
-    //    DirectionalNode(Direction.LeftUp)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.LeftUp), this);
-    //    DirectionalNode(Direction.Right)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.Right), this);
-    //    DirectionalNode(Direction.RightDown)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.RightDown), this);
-    //    DirectionalNode(Direction.RightUp)?.PushNeighborNode(UtilHelper.ReverseDirection(Direction.RightUp), this);
-    //}
-
     public void DeActiveGuide()
     {
         guideObject.gameObject.SetActive(false);
@@ -128,26 +109,6 @@ public class TileNode : MonoBehaviour
         return isConnected;
     }
 
-    //public List<TileNode> CalculatePathableNode()
-    //{
-    //    List<TileNode> pathableNodes = new List<TileNode>();
-    //    foreach(Direction direction in pathDirection)
-    //    {
-    //        TileNode node = DirectionalNode(direction);
-    //        if (node != null)
-    //            pathableNodes.Add(node);
-    //    }
-
-    //    foreach (Direction direction in roomDirection)
-    //    {
-    //        TileNode node = DirectionalNode(direction);
-    //        if (node != null)
-    //            pathableNodes.Add(node);
-    //    }
-
-    //    return pathableNodes;
-    //}
-    
     public void PushNeighborNode(Direction direction, TileNode node)
     {
         if(node == null) return;

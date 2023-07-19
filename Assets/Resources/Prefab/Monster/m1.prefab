@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6528212802685220637}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RotationAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2688902613905504799}
   - component: {fileID: 1602038348056628104}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Black Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3491947175668925710}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HpPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7628547921235060627}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: -2413977546196078762}
   - component: {fileID: 7389840894960381613}
   - component: {fileID: -1457180912227096614}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: m1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,6 +234,7 @@ MonoBehaviour:
   maxHp: 1
   armor: 0
   attackSpeed: 1
+  attackRange: 0
   moveSpeed: 1
   unitType: 0
   rotatonAxis: {fileID: 6528212802685220637}
@@ -245,7 +246,6 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
   deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m10001
-  monsterIndex: 0
 --- !u!95 &-2413977546196078762
 Animator:
   serializedVersion: 5
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 6221726617232482286}
   - component: {fileID: 6835795455241126477}
   - component: {fileID: 3221750860887084097}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

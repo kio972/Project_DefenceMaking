@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Adventurer : Battler
@@ -12,38 +11,38 @@ public class Adventurer : Battler
 
     private int reward;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Battler battle = other.GetComponent<Battler>();
-        if (battle == null || battle.unitType == UnitType.Enemy) return;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Battler battle = other.GetComponent<Battler>();
+    //    if (battle == null || battle.unitType == UnitType.Enemy) return;
 
-        if(!battle.isDead)
-        {
-            rangedTargets.Add(battle);
-            battleState = true;
+    //    if(!battle.isDead)
+    //    {
+    //        rangedTargets.Add(battle);
+    //        battleState = true;
 
-            curTarget = FindNextTarget();
-            if (curTarget == null)
-                return;
+    //        curTarget = FindNextTarget();
+    //        if (curTarget == null)
+    //            return;
 
-            if(!curTarget.battleState)
-            {
-                curTarget.battleState = true;
-                curTarget.curTarget = this;
-                curTarget.RotateCharacter(transform.position);
-            }
-        }
-    }
+    //        if(!curTarget.battleState)
+    //        {
+    //            curTarget.battleState = true;
+    //            curTarget.curTarget = this;
+    //            curTarget.RotateCharacter(transform.position);
+    //        }
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        Battler battle = other.GetComponent<Battler>();
-        if (battle == null || battle.unitType == UnitType.Enemy) return;
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    Battler battle = other.GetComponent<Battler>();
+    //    if (battle == null || battle.unitType == UnitType.Enemy) return;
 
-        rangedTargets.Remove(battle);
-        if (curTarget == battle)
-            curTarget = null;
-    }
+    //    rangedTargets.Remove(battle);
+    //    if (curTarget == battle)
+    //        curTarget = null;
+    //}
 
     //private void ArriveEndPoint()
     //{
@@ -64,8 +63,6 @@ public class Adventurer : Battler
         GameManager.Instance.adventurersList.Remove(this);
         
     }
-
-    
 
     public void EndPointMoved()
     {
@@ -90,8 +87,7 @@ public class Adventurer : Battler
             {
                 if (moveCoroutine != null)
                     StopCoroutine(moveCoroutine);
-                yield return moveCoroutine = StartCoroutine(Move(node.transform.position,
-                () => { NodeAction(node); }));
+                yield return moveCoroutine = StartCoroutine(Move(node, () => { NodeAction(node); }));
                 yield return null;
             }
         }
@@ -120,16 +116,48 @@ public class Adventurer : Battler
             armor = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["armor"]);
             float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["moveSpeed"].ToString(), out moveSpeed);
             reward = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["reward"]);
+            float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["attackRange"].ToString(), out attackRange);
         }
 
         StartCoroutine(MoveLogic());
+    }
+
+    private bool BattleCheck()
+    {
+        curTarget = null;
+        //본인 주변 attackRange만큼 spherecastAll실행
+        Collider[] colliders = new Collider[10];
+        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
+        for (int i = 0; i < colliderCount; i++)
+        {
+            Battler battle = colliders[i].GetComponent<Battler>();
+            if (battle == null || battle.unitType == UnitType.Enemy)
+                continue;
+
+            if (curTarget == null)
+                curTarget = battle;
+            else if (Vector3.Distance(transform.position, battle.transform.position) <
+                Vector3.Distance(transform.position, curTarget.transform.position))
+                curTarget = battle;
+        }
+
+        if (curTarget == null)
+        {
+            battleState = false;
+            return false;
+        }
+        else
+        {
+            battleState = true;
+            return true;
+        }
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (battleState)
+        if (BattleCheck())
             ExcuteBattle();
     }
 }

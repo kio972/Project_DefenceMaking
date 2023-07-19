@@ -10,6 +10,7 @@ public class Battler : MonoBehaviour
     public int maxHp;
     public int armor;
     public float attackSpeed;
+    public float attackRange;
     public float moveSpeed;
 
     public UnitType unitType = UnitType.Enemy;
@@ -50,6 +51,15 @@ public class Battler : MonoBehaviour
 
     [SerializeField]
     protected string battlerID;
+
+    private float MoveSpeed
+    {
+        get
+        {
+            float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
+            return moveSpeed * slowRate;
+        }
+    }
 
     private void RemoveBody()
     {
@@ -112,8 +122,23 @@ public class Battler : MonoBehaviour
         }
     }
 
-    protected IEnumerator Move(Vector3 nextPos, System.Action callback = null)
+    private void TileMoveCheck(TileNode nextNode, float distance)
     {
+        if (curTile == nextNode)
+            return;
+
+        if(distance < Vector3.Distance(curTile.transform.position, transform.position))
+        {
+            prevTile = curTile;
+            curTile = nextNode;
+        }
+    }
+
+    
+
+    protected IEnumerator Move(TileNode nextNode, System.Action callback = null)
+    {
+        Vector3 nextPos = nextNode.transform.position;
         float distance = Vector3.Distance(transform.position, nextPos);
         //다음 노드로 이동
         while (distance > 0.001f)
@@ -124,11 +149,16 @@ public class Battler : MonoBehaviour
                 yield return null;
                 continue;
             }
+
+            if (nextNode.curTile == null)
+                yield break;
+
             RotateCharacter(nextPos);
             // 다음 위치로 이동
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, MoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
             // 현재 위치와 목표 위치 간의 거리 갱신
             distance = Vector3.Distance(transform.position, nextPos);
+            TileMoveCheck(nextNode, distance);
             yield return null;
         }
 
@@ -169,8 +199,8 @@ public class Battler : MonoBehaviour
 
     protected virtual void NodeAction(TileNode nextNode)
     {
-        prevTile = curTile;
-        curTile = nextNode;
+        //prevTile = curTile;
+        //curTile = nextNode;
         if (!crossedNodes.Contains(curTile))
             crossedNodes.Add(curTile);
 
@@ -199,8 +229,7 @@ public class Battler : MonoBehaviour
                         nextNode = afterCrossPath[i];
                         if (moveCoroutine != null)
                             StopCoroutine(moveCoroutine);
-                        yield return moveCoroutine = StartCoroutine(Move(nextNode.transform.position,
-                            () => { NodeAction(nextNode); }));
+                        yield return moveCoroutine = StartCoroutine(Move(nextNode, () => { NodeAction(nextNode); }));
                     }
 
                     lastCrossRoad = null;
@@ -217,8 +246,7 @@ public class Battler : MonoBehaviour
 
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
-            yield return moveCoroutine = StartCoroutine(Move(nextNode.transform.position,
-                () => { NodeAction(nextNode); }));
+            yield return moveCoroutine = StartCoroutine(Move(nextNode, () => { NodeAction(nextNode); }));
 
             yield return null;
         }
@@ -249,10 +277,7 @@ public class Battler : MonoBehaviour
 
     protected void ExcuteBattle()
     {
-        if (curTarget == null || curTarget.isDead)
-            curTarget = FindNextTarget(curTarget);
-
-        if(curTarget == null)
+        if(curTarget == null || curTarget.isDead)
         {
             if (animator != null)
             {

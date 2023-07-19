@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIFade : Singleton<UIFade>
+public class UIFade : MonoBehaviour
 {
     private Image image;
     private float elapsed = 0;
@@ -13,6 +13,43 @@ public class UIFade : Singleton<UIFade>
     private bool isUpdate = false;
     private Color start;
     private Color end;
+
+    private static UIFade instance;
+
+    public static UIFade Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<UIFade>();
+
+                if (instance == null)
+                {
+                    UIFade uiFadePrefab = Resources.Load<UIFade>("Prefab/UI/UIFade");
+                    UIFade obj = Instantiate(uiFadePrefab);
+                    obj.name = typeof(UIFade).Name;
+                    instance = obj;
+                    instance.SendMessage("Init", SendMessageOptions.DontRequireReceiver);
+                }
+            }
+
+            return instance;
+        }
+    }
+
+    protected virtual void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void FadeIn(float speed)
     {
@@ -36,7 +73,7 @@ public class UIFade : Singleton<UIFade>
         elapsed = 0;
     }
 
-    void Start()
+    void Init()
     {
         image = GetComponentInChildren<Image>(true);
         FadeIn(0.5f);

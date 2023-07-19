@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeManager : Singleton<NodeManager>
+public class NodeManager : IngameSingleton<NodeManager>
 {
     //활성화 노드들의 이웃노드 중 비활성화 노드
     public List<TileNode> virtualNodes = new List<TileNode>();

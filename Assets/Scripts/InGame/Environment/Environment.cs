@@ -7,6 +7,7 @@ public enum EnvironmentType
     custom,
     monsterHp,
     income,
+    slow,
 }
 
 public class Environment : MonoBehaviour
@@ -19,6 +20,8 @@ public class Environment : MonoBehaviour
 
     private TileNode curNode;
 
+    protected virtual void CustomFunc() { }
+
     public void Init(TileNode node)
     {
         curNode = node;
@@ -29,6 +32,9 @@ public class Environment : MonoBehaviour
                 break;
             case EnvironmentType.income:
                 PassiveManager.Instance.income_Weight += (int)value;
+                break;
+            case EnvironmentType.slow:
+                PassiveManager.Instance.slowedTile.Add(node, value);
                 break;
         }
     }
