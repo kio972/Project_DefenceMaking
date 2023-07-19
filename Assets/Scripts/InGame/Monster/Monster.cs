@@ -8,31 +8,6 @@ public class Monster : Battler
     private int monsterIndex = -1;
     
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (battleState) return;
-
-    //    Battler battle = other.GetComponent<Battler>();
-    //    if (battle == null || battle.unitType == UnitType.Player) return;
-
-    //    if (!battle.isDead)
-    //    {
-    //        battleState = true;
-    //        curTarget = battle;
-    //        curTarget.battleState = true;
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Battler battle = other.GetComponent<Battler>();
-    //    if (battle == null || battle.unitType == UnitType.Player) return;
-
-    //    rangedTargets.Remove(battle);
-    //    if (curTarget == battle)
-    //        curTarget = null;
-    //}
-
     protected override TileNode FindNextNode(TileNode curNode)
     {
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
@@ -100,46 +75,17 @@ public class Monster : Battler
         StartCoroutine(MoveLogic());
     }
 
-    private bool BattleCheck()
-    {
-        curTarget = null;
-        //본인 주변 attackRange만큼 spherecastAll실행
-        Collider[] colliders = new Collider[10];
-        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
-        for(int i = 0; i < colliderCount; i++)
-        {
-            Battler battle = colliders[i].GetComponent<Battler>();
-            if (battle == null || battle.unitType == UnitType.Player)
-                continue;
-
-            if (curTarget == null)
-                curTarget = battle;
-            else if(Vector3.Distance(transform.position, battle.transform.position) <
-                Vector3.Distance(transform.position, curTarget.transform.position))
-                curTarget = battle;
-        }
-
-        if (curTarget == null)
-        {
-            battleState = false;
-            return false;
-        }
-        else
-        {
-            battleState = true;
-            return true;
-        }
-    }
-
     public override void Update()
     {
         base.Update();
 
-        Collider[] cols = GetComponentsInChildren<Collider>();
-        foreach (Collider col in cols)
-            col.enabled = true;
+        if (animator != null)
+            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
 
-        if (BattleCheck())
+        bool isBattleOn = BattleCheck();
+        if (battleState)
+            AttackEndCheck();
+        else if (isBattleOn)
             ExcuteBattle();
     }
 }

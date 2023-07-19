@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
+public enum AttackType
+{
+    Melee,
+    Ranged,
+}
+
 public class Battler : MonoBehaviour
 {
     public int damage;
@@ -14,6 +20,9 @@ public class Battler : MonoBehaviour
     public float moveSpeed;
 
     public UnitType unitType = UnitType.Enemy;
+
+    [SerializeField]
+    private AttackType attackType = AttackType.Melee;
 
     private HpBar hpBar;
 
@@ -275,9 +284,19 @@ public class Battler : MonoBehaviour
         }
     }
 
-    protected void ExcuteBattle()
+    private bool IsTargetEscaped()
     {
-        if(curTarget == null || curTarget.isDead)
+        Collider collider = curTarget.GetComponent<Collider>();
+        float dist = Vector3.Distance(collider.ClosestPoint(curTarget.transform.position), transform.position);
+        if (dist > attackRange + 0.1f)
+            return true;
+
+        return false;
+    }
+
+    protected void AttackEndCheck()
+    {
+        if (curTarget == null || curTarget.isDead)
         {
             if (animator != null)
             {
@@ -288,8 +307,12 @@ public class Battler : MonoBehaviour
             }
             return;
         }
+    }
 
-        RotateCharacter(curTarget.transform.position);
+    protected void ExcuteBattle()
+    {
+        battleState = true;
+        //RotateCharacter(curTarget.transform.position);
 
         //공격속도에 따라 애니메이션 속도 제어
         if (animator != null)
@@ -303,26 +326,7 @@ public class Battler : MonoBehaviour
     public void Attack()
     {
         if (curTarget == null || curTarget.isDead)
-        {
-            curTarget = FindNextTarget(curTarget);
-            if (curTarget == null)
-                return;
-        }
-
-        if (attackSound != null)
-            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
-
-        curTarget.GetDamage(damage, this);
-    }
-
-    private void ATTACK()
-    {
-        if (curTarget == null || curTarget.isDead)
-        {
-            curTarget = FindNextTarget(curTarget);
-            if (curTarget == null)
-                return;
-        }
+            return;
 
         if (attackSound != null)
             AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
@@ -442,6 +446,58 @@ public class Battler : MonoBehaviour
         rotLevelCoroutine = StartCoroutine(IUpdateRotation());
     }
 
+    private bool IsTargetValid(Battler target)
+    {
+        float attackRange = this.attackRange;
+        AttackType attackType = this.attackType;
+        
+        if (target.tag == "King")
+        {
+            //타겟이 마왕일경우 : 사거리가 0.5f인 근거리 유닛으로 처리
+            attackRange = 0.5f;
+            attackType = AttackType.Melee;
+        }
+        
+        if (attackType == AttackType.Melee)
+        {
+            //근거리일경우 : 서로의 타일이 인접타일인지 확인
+            if (!this.curTile.neighborNodeDic.ContainsValue(target.curTile))
+                return false;
+        }
+        else if(attackType == AttackType.Ranged)
+        {
+            //원거리일경우 : 서로의 타일 사이에 방의 벽으로 막혀있지 않은지 확인
+
+        }
+
+        return true;
+    }
+
+    protected bool BattleCheck()
+    {
+        curTarget = null;
+        //본인 주변 attackRange만큼 spherecastAll실행
+        Collider[] colliders = new Collider[10];
+        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
+        for (int i = 0; i < colliderCount; i++)
+        {
+            Battler battle = colliders[i].GetComponent<Battler>();
+            if (battle == null || battle == this)
+                continue;
+            if (battle.unitType == unitType || battle.isDead || !IsTargetValid(battle))
+                continue;
+            if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
+                curTarget = battle;
+            else if (Vector3.Distance(transform.position, battle.transform.position) <
+                Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")
+                curTarget = battle;
+        }
+
+        if (curTarget == null)
+            return false;
+        else
+            return true;
+    }
 
     public virtual void Update()
     {

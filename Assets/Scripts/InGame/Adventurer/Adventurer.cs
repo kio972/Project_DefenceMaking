@@ -11,39 +11,6 @@ public class Adventurer : Battler
 
     private int reward;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Battler battle = other.GetComponent<Battler>();
-    //    if (battle == null || battle.unitType == UnitType.Enemy) return;
-
-    //    if(!battle.isDead)
-    //    {
-    //        rangedTargets.Add(battle);
-    //        battleState = true;
-
-    //        curTarget = FindNextTarget();
-    //        if (curTarget == null)
-    //            return;
-
-    //        if(!curTarget.battleState)
-    //        {
-    //            curTarget.battleState = true;
-    //            curTarget.curTarget = this;
-    //            curTarget.RotateCharacter(transform.position);
-    //        }
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Battler battle = other.GetComponent<Battler>();
-    //    if (battle == null || battle.unitType == UnitType.Enemy) return;
-
-    //    rangedTargets.Remove(battle);
-    //    if (curTarget == battle)
-    //        curTarget = null;
-    //}
-
     //private void ArriveEndPoint()
     //{
     //    GameManager.Instance.adventurersList.Remove(this);
@@ -122,42 +89,17 @@ public class Adventurer : Battler
         StartCoroutine(MoveLogic());
     }
 
-    private bool BattleCheck()
-    {
-        curTarget = null;
-        //본인 주변 attackRange만큼 spherecastAll실행
-        Collider[] colliders = new Collider[10];
-        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
-        for (int i = 0; i < colliderCount; i++)
-        {
-            Battler battle = colliders[i].GetComponent<Battler>();
-            if (battle == null || battle.unitType == UnitType.Enemy)
-                continue;
-
-            if (curTarget == null)
-                curTarget = battle;
-            else if (Vector3.Distance(transform.position, battle.transform.position) <
-                Vector3.Distance(transform.position, curTarget.transform.position))
-                curTarget = battle;
-        }
-
-        if (curTarget == null)
-        {
-            battleState = false;
-            return false;
-        }
-        else
-        {
-            battleState = true;
-            return true;
-        }
-    }
-
     public override void Update()
     {
         base.Update();
 
-        if (BattleCheck())
+        if (animator != null)
+            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+
+        bool isBattleOn = BattleCheck();
+        if (battleState)
+            AttackEndCheck();
+        else if (isBattleOn)
             ExcuteBattle();
     }
 }

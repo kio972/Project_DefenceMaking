@@ -388,8 +388,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             monster.SetRotation();
         }
 
-        targetCollider = instancedObject.GetComponentInChildren<Collider>();
-        if(targetCollider != null ) { targetCollider.enabled = false; }
+        //targetCollider = instancedObject.GetComponentInChildren<Collider>();
+        //if(targetCollider != null ) { targetCollider.enabled = false; }
         InputManager.Instance.settingCard = true;
         //카드 종류별 처리
         switch (cardType)
