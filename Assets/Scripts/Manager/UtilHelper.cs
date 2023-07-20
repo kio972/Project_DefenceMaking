@@ -8,6 +8,45 @@ using UnityEngine.EventSystems;
 
 public static class UtilHelper
 {
+    public static float CalCulateDistance(Transform origin, Transform target)
+    {
+        Vector3 originPos = origin.position;
+        Collider targetCol = target.GetComponent<Collider>();
+        if (targetCol == null)
+            return 0f;
+        Vector3 targetPos = targetCol.ClosestPoint(originPos);
+
+        return Vector3.Distance(originPos, targetPos);
+    }
+
+    public static Direction CheckClosestDirection(Vector3 directionVector)
+    {
+        Dictionary<Direction, Vector3> directionVectors = new Dictionary<Direction, Vector3>()
+        {
+            { Direction.LeftUp, new Vector3(-1f, 1f, 0f).normalized },
+            { Direction.RightUp, new Vector3(1f, 1f, 0f).normalized },
+            { Direction.Left, new Vector3(-1f, 0f, 0f).normalized },
+            { Direction.Right, new Vector3(1f, 0f, 0f).normalized },
+            { Direction.LeftDown, new Vector3(-1f, -1f, 0f).normalized },
+            { Direction.RightDown, new Vector3(1f, -1f, 0f).normalized },
+        };
+
+        float minAngle = float.MaxValue;
+        Direction closestDirection = Direction.None;
+
+        foreach (KeyValuePair<Direction, Vector3> kvp in directionVectors)
+        {
+            float angle = Vector3.Angle(directionVector, kvp.Value);
+            if (angle < minAngle)
+            {
+                minAngle = angle;
+                closestDirection = kvp.Key;
+            }
+        }
+
+        return closestDirection;
+    }
+
     public static float NormalizeAngle(float angle)
     {
         if (angle > 180f)

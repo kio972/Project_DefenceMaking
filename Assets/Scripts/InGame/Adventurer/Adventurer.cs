@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Adventurer : Battler
@@ -87,6 +88,12 @@ public class Adventurer : Battler
         }
 
         StartCoroutine(MoveLogic());
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
     public override void Update()
