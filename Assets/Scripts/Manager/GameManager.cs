@@ -112,10 +112,8 @@ public class GameManager : IngameSingleton<GameManager>
         SpawnKing();
 
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
-        for (int i = 0; i < startCardNumber; i++)
-        {
-            cardDeckController.DrawCard();
-        }
+
+        cardDeckController.Mulligan();
 
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);

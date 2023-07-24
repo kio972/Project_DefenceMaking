@@ -10,9 +10,11 @@ public class CardDeckController : MonoBehaviour
 {
     [SerializeField]
     private Button deckDrawBtn;
-
+    private Image deckBtnImg;
     [SerializeField]
-    private List<GameObject> deckPrefab;
+    private Sprite originDeckImg;
+    [SerializeField]
+    private Sprite emptyDeckImg;
 
     [SerializeField]
     private Transform cardZone;
@@ -51,12 +53,12 @@ public class CardDeckController : MonoBehaviour
     private TextMeshProUGUI deckCountText;
 
     [SerializeField]
-    private int cardPrice = 5;
+    private int cardPrice = 20;
 
-    public void DeckSupply(CardType type)
+    private int GetRandomCard(CardType type)
     {
         List<int> cardPool = new List<int>();
-        switch(type)
+        switch (type)
         {
             case CardType.MapTile:
                 cardPool = DataManager.Instance.TileCard_Indexs;
@@ -69,8 +71,13 @@ public class CardDeckController : MonoBehaviour
                 break;
         }
 
+        return cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+    }
+
+    public void DeckSupply(CardType type)
+    {
         //차후 공식에따라 변경예정
-        int randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+        int randomIndex = GetRandomCard(type);
         cardDeck.Add(randomIndex);
         UpdateDeckCount();
     }
@@ -85,6 +92,11 @@ public class CardDeckController : MonoBehaviour
             deckCountText.color = Color.red;
         else
             deckCountText.color = Color.black;
+
+        if (cardDeck.Count <= 0)
+            deckBtnImg.sprite = emptyDeckImg;
+        else
+            deckBtnImg.sprite = originDeckImg;
     }
 
     public void DrawGuide(Vector3 cardPos, bool value)
@@ -229,6 +241,13 @@ public class CardDeckController : MonoBehaviour
     //최대 카드 숫자
     public int maxCardNumber = 10;
 
+    private string ReturnDeck(int target)
+    {
+        cardDeck.Remove(target);
+        string cardPrefabPath = DataManager.Instance.Deck_Table[target]["prefab"].ToString();
+        return "Prefab/Card/" + cardPrefabPath;
+    }
+
     private string ReturnDeck()
     {
         int random = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
@@ -292,20 +311,63 @@ public class CardDeckController : MonoBehaviour
         }
     }
 
+    private void DrawTypeCard(List<int> cardPool, int drawNumber = 1)
+    {
+        if (cardPool == null)
+            return;
+
+        for (int i = 0; i < drawNumber; i++)
+        {
+            int randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+            while (!cardDeck.Contains(randomIndex))
+                randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+            DrawCard(randomIndex);
+        }
+    }
+
+    public void Mulligan()
+    {
+        // 길타일 3
+        // 방타일 1
+        // 함정타일 1
+        // 몬스터 1
+        List<int> pathPool = DataManager.Instance.PathCard_Indexs;
+        DrawTypeCard(pathPool, 3);
+        List<int> roomPool = DataManager.Instance.RoomCard_Indexs;
+        DrawTypeCard(roomPool);
+        List<int> trapPool = DataManager.Instance.TrapCard_Indexs;
+        DrawTypeCard(trapPool);
+        List<int> monsterPool = DataManager.Instance.MonsterCard_Indexs;
+        DrawTypeCard(monsterPool);
+    }
+
+    public void DrawCard(int cardIndex)
+    {
+        if (cardDeck.Count < 1) return;
+        if (!cardDeck.Contains(cardIndex)) return;
+
+        string prefabPath = ReturnDeck(cardIndex);
+        InstantiateCard(prefabPath);
+    }
+
     public void DrawCard()
     {
         if(cardDeck.Count < 1) return;
 
-        string targtPrerfab = ReturnDeck();
+        string prefabPath = ReturnDeck();
+        InstantiateCard(prefabPath);
+    }
+
+    private void InstantiateCard(string prefabPath)
+    {
         hand_CardNumber++;
-        GameObject targetPrefab = Resources.Load<GameObject>(targtPrerfab);
+        GameObject targetPrefab = Resources.Load<GameObject>(prefabPath);
         GameObject temp = Instantiate(targetPrefab, cardZone);
         CardController card = temp.GetComponent<CardController>();
         card?.DrawEffect();
         temp.transform.position = transform.position;
         cards.Add(temp.transform);
         SetCardPosition();
-
         UpdateDeckCount();
     }
 
@@ -325,6 +387,7 @@ public class CardDeckController : MonoBehaviour
         if (initState) return;
 
         deckDrawBtn.onClick.AddListener(DrawDeck);
+        deckBtnImg = deckDrawBtn.GetComponent<Image>();
         SetDeck();
         initState = true;
     }

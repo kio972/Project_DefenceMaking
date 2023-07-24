@@ -7,23 +7,20 @@ public class DataManager : Singleton<DataManager>
 {
     private List<Dictionary<string, object>> wave_Table;
     private List<Dictionary<string, object>> deckList;
-    //private List<Dictionary<string, object>> trap_Table;
-    //private List<Dictionary<string, object>> monster_Table;
-    //private List<Dictionary<string, object>> adventurer_Table;
     private List<Dictionary<string, object>> battler_Table;
 
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
-    //public List<Dictionary<string, object>> Trap_Table { get => trap_Table; }
-    //public List<Dictionary<string, object>> Monster_Table { get => monster_Table; }
-    //public List<Dictionary<string, object>> Adventurer_Table { get => adventurer_Table; }
 
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
 
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
     private List<int> trapCard_Indexs;
+
+    private List<int> pathCard_Indexs;
+    private List<int> roomCard_Indexs;
 
     public List<int> TileCard_Indexs
     {
@@ -34,7 +31,24 @@ public class DataManager : Singleton<DataManager>
             return tileCard_Indexs;
         }
     }
-
+    public List<int> PathCard_Indexs
+    {
+        get
+        {
+            if (pathCard_Indexs == null)
+                pathCard_Indexs = Find_Typeof_Index(deckList, "type", "road");
+            return pathCard_Indexs;
+        }
+    }
+    public List<int> RoomCard_Indexs
+    {
+        get
+        {
+            if (roomCard_Indexs == null)
+                roomCard_Indexs = Find_Typeof_Index(deckList, "type", "room");
+            return roomCard_Indexs;
+        }
+    }
     public List<int> MonsterCard_Indexs
     {
         get
@@ -44,7 +58,6 @@ public class DataManager : Singleton<DataManager>
             return monsterCard_Indexs;
         }
     }
-
     public List<int> TrapCard_Indexs
     {
         get
