@@ -131,6 +131,9 @@ public class PathFinder : Singleton<PathFinder>
         if(endTile == null)
             endTile = NodeManager.Instance.endPoint;
 
+        if (startTile == endTile)
+            return null;
+
         List<Node> openNode = new List<Node>();
         List<Node> closedNode = new List<Node>();
         TileNode curTile = startTile;

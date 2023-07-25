@@ -39,9 +39,10 @@ public class Battler : FSM<Battler>
     protected List<TileNode> crossedNodes = new List<TileNode>();
     protected TileNode prevTile;
     protected TileNode curTile;
+    public TileNode CurTile { get => curTile; }
     protected TileNode lastCrossRoad;
-    protected List<TileNode> afterCrossPath = new List<TileNode>();
-    protected Coroutine moveCoroutine = null;
+    protected TileNode nextNode;
+    protected bool directPass = false;
 
     protected Animator animator;
 
@@ -69,6 +70,8 @@ public class Battler : FSM<Battler>
             return moveSpeed * slowRate;
         }
     }
+
+    
 
     private void RemoveBody()
     {
@@ -143,37 +146,6 @@ public class Battler : FSM<Battler>
         }
     }
 
-    
-
-    protected IEnumerator Move(TileNode nextNode, System.Action callback = null)
-    {
-        Vector3 nextPos = nextNode.transform.position;
-        float distance = Vector3.Distance(transform.position, nextPos);
-        //다음 노드로 이동
-        while (distance > 0.001f)
-        {
-            //전투상태 진입 시 움직임멈춤
-            if (battleState)
-            {
-                yield return null;
-                continue;
-            }
-
-            if (nextNode.curTile == null)
-                yield break;
-
-            RotateCharacter(nextPos);
-            // 다음 위치로 이동
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, MoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
-            // 현재 위치와 목표 위치 간의 거리 갱신
-            distance = Vector3.Distance(transform.position, nextPos);
-            TileMoveCheck(nextNode, distance);
-            yield return null;
-        }
-
-        callback?.Invoke();
-    }
-
     protected virtual TileNode FindNextNode(TileNode curNode)
     {
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
@@ -191,74 +163,78 @@ public class Battler : FSM<Battler>
 
         //갈림길일경우 저장
         if (nextNodes.Count > 1)
-        {
-            afterCrossPath = new List<TileNode>();
             lastCrossRoad = curNode;
-            afterCrossPath.Add(lastCrossRoad);
-        }
 
         TileNode nextNode = nextNodes[UnityEngine.Random.Range(0, nextNodes.Count)];
         return nextNode;
     }
 
-    protected virtual void DeadLock_Logic_Move()
-    {
-
-    }
-
     protected virtual void NodeAction(TileNode nextNode)
     {
-        //prevTile = curTile;
-        //curTile = nextNode;
+        this.nextNode = null;
         if (!crossedNodes.Contains(curTile))
             crossedNodes.Add(curTile);
 
-        if(!afterCrossPath.Contains(curTile))
-            afterCrossPath.Add(curTile);
+        // 마왕성 이동 중 유효타일이 발생시 directPass = false;
+        if (directPass && FindNextNode(curTile) != null)
+            directPass = false;
     }
 
-    protected IEnumerator MoveLogic()
+    protected void ExcuteMove(TileNode nextNode)
     {
-        if(curTile == null)
-            curTile = NodeManager.Instance.startPoint;
-        transform.position = curTile.transform.position;
-        while (true)
+        Vector3 nextPos = nextNode.transform.position;
+        RotateCharacter(nextPos);
+        transform.position = Vector3.MoveTowards(transform.position, nextPos, MoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
+        float distance = Vector3.Distance(transform.position, nextPos);
+        TileMoveCheck(nextNode, distance);
+    }
+
+    protected virtual void DirectPass()
+    {
+        //마왕타일로 이동수행
+        if (nextNode == null || nextNode.curTile == null)
         {
-            if (curTile == null) break;
-            TileNode nextNode = FindNextNode(curTile);
-
-            if (nextNode == null) // 막다른길일 경우
-            {
-                //갈림길에 도달할때까지 되돌아감
-                if (lastCrossRoad != null)
-                {
-                    afterCrossPath.Reverse();
-                    for (int i = 0; i < afterCrossPath.Count; i++)
-                    {
-                        nextNode = afterCrossPath[i];
-                        if (moveCoroutine != null)
-                            StopCoroutine(moveCoroutine);
-                        yield return moveCoroutine = StartCoroutine(Move(nextNode, () => { NodeAction(nextNode); }));
-                    }
-
-                    lastCrossRoad = null;
-                    afterCrossPath = new List<TileNode>();
-                    continue;
-                }
-                else
-                {
-                    //도착지까지 길찾아서 최단루트로 바로이동
-                    DeadLock_Logic_Move();
-                    yield break;
-                }
-            }
-
-            if (moveCoroutine != null)
-                StopCoroutine(moveCoroutine);
-            yield return moveCoroutine = StartCoroutine(Move(nextNode, () => { NodeAction(nextNode); }));
-
-            yield return null;
+            List<TileNode> path = PathFinder.Instance.FindPath(curTile);
+            if (path != null && path.Count > 0)
+                nextNode = path[0];
+            else
+                return;
         }
+
+        ExcuteMove(nextNode);
+
+        // nextNode까지 이동완료
+        if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
+            NodeAction(nextNode);
+    }
+
+    private void NormalPatrol()
+    {
+        //다음 노드가 없으면 다음노드 탐색
+        if (nextNode == null || nextNode.curTile == null)
+            nextNode = FindNextNode(curTile);
+
+        //탐색후에도 유효한 노드가 없을경우
+        if (nextNode == null)
+        {
+            directPass = true;
+            return;
+        }
+
+        // nextNode로 이동수행
+        ExcuteMove(nextNode);
+
+        // nextNode까지 이동완료
+        if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
+            NodeAction(nextNode);
+    }
+
+    public void Patrol()
+    {
+        if (directPass)
+            DirectPass();
+        else
+            NormalPatrol();
     }
 
     protected Battler FindNextTarget(Battler prevTarget = null)
@@ -366,7 +342,11 @@ public class Battler : FSM<Battler>
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
 
-        InitState(this, FSMPatrol.Instance);
+        if (curTile == null)
+        {
+            curTile = NodeManager.Instance.startPoint;
+            transform.position = curTile.transform.position;
+        }
     }
 
     private Quaternion TargetRoation(int camera_Level)
@@ -493,9 +473,9 @@ public class Battler : FSM<Battler>
 
     
 
-    protected bool BattleCheck()
+    public Battler BattleCheck()
     {
-        curTarget = null;
+        Battler curTarget = null;
         //본인 주변 attackRange만큼 spherecastAll실행
         Collider[] colliders = new Collider[10];
         int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
@@ -513,10 +493,7 @@ public class Battler : FSM<Battler>
                 curTarget = battle;
         }
 
-        if (curTarget == null)
-            return false;
-        else
-            return true;
+        return curTarget;
     }
 
     public virtual void Update()

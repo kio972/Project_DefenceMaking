@@ -6,7 +6,31 @@ using System;
 public class Monster : Battler
 {
     private int monsterIndex = -1;
-    
+
+    protected override void DirectPass()
+    {
+        //마왕타일로 이동수행
+        if (nextNode == null || nextNode.curTile == null)
+        {
+            List<TileNode> path = PathFinder.Instance.FindPath(curTile, lastCrossRoad);
+            if (path != null && path.Count > 0)
+                nextNode = path[0];
+            else
+            {
+                crossedNodes = new List<TileNode>();
+                lastCrossRoad = null;
+                prevTile = null;
+                directPass = false;
+                return;
+            }
+        }
+
+        ExcuteMove(nextNode);
+
+        // nextNode까지 이동완료
+        if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
+            NodeAction(nextNode);
+    }
 
     protected override TileNode FindNextNode(TileNode curNode)
     {
@@ -27,25 +51,10 @@ public class Monster : Battler
 
         //갈림길일경우 저장
         if (nextNodes.Count > 1)
-        {
-            afterCrossPath = new List<TileNode>();
             lastCrossRoad = curNode;
-            afterCrossPath.Add(lastCrossRoad);
-        }
 
         TileNode nextNode = nextNodes[UnityEngine.Random.Range(0, nextNodes.Count)];
         return nextNode;
-    }
-
-    protected override void DeadLock_Logic_Move()
-    {
-        //교착상태일경우 리스트 초기화 후 이동로직 다시시작
-        crossedNodes = new List<TileNode>();
-        afterCrossPath = new List<TileNode>();
-        lastCrossRoad = null;
-        prevTile = null;
-        StopAllCoroutines();
-        StartCoroutine(MoveLogic());
     }
 
     public void SetStartPoint(TileNode tile)
@@ -72,7 +81,7 @@ public class Monster : Battler
             float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["attackRange"].ToString(), out attackRange);
         }
 
-        StartCoroutine(MoveLogic());
+        InitState(this, FSMPatrol.Instance);
     }
 
     public override void Update()
@@ -82,10 +91,10 @@ public class Monster : Battler
         if (animator != null)
             animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
 
-        bool isBattleOn = BattleCheck();
-        if (battleState)
-            AttackEndCheck();
-        else if (isBattleOn)
-            ExcuteBattle();
+        //bool isBattleOn = BattleCheck();
+        //if (battleState)
+        //    AttackEndCheck();
+        //else if (isBattleOn)
+        //    ExcuteBattle();
     }
 }

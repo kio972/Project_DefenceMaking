@@ -15,13 +15,38 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
 
     private bool NeedChange(Battler e)
     {
+        //0
         if (e.curHp <= 0)
         {
             e.ChangeState(FSMDead.Instance);
             return true;
         }
+        //1
+        if(e.CurTile.curTile._TileType == TileType.Path || e.CurTile.curTile._TileType == TileType.Room)
+        {
+            //2
+            if (e.CurTile.curTile.IsBigRoom)
+            {
+                e.ChangeState(FSMRoom.Instance);
+                return true;
+            }
 
-        //if()
+            //1.1
+            Battler curTarget = e.BattleCheck();
+            if (curTarget != null)
+            {
+                e.ChangeState(FSMAttack.Instance);
+                e.curTarget = curTarget;
+                return true;
+            }
+            //1.2
+
+        }
+        else if(e.CurTile.curTile._TileType == TileType.End)
+        {
+            e.ChangeState(FSMKingAttack.Instance);
+            return true;
+        }
 
         return false;
     }
@@ -35,6 +60,8 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
     {
         if (NeedChange(e))
             return;
+
+        e.Patrol();
     }
 
     public void Exit(Battler e)

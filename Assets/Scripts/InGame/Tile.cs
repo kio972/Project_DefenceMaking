@@ -38,6 +38,8 @@ public class Tile : MonoBehaviour
     public Trap trap = null;
     public Monster monster = null;
 
+    public bool IsBigRoom = false;
+
     private bool BossRoom_BattleCheck()
     {
         if (curNode == NodeManager.Instance.endPoint && GameManager.Instance.king.battleState)
@@ -64,9 +66,6 @@ public class Tile : MonoBehaviour
             else
                 GameManager.Instance.speedController.SetSpeedNormal();
 
-            Adventurer[] adventurers = FindObjectsOfType<Adventurer>();
-            foreach (Adventurer adventurer in adventurers)
-                adventurer.EndPointMoved();
         }
     }
 
