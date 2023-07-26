@@ -31,7 +31,7 @@ public class Battler : FSM<Battler>
     [SerializeField]
     private Transform hpPivot;
 
-    public bool battleState = false;
+    public Battler chaseTarget;
     public Battler curTarget;
 
     public bool isDead = false;
@@ -45,6 +45,7 @@ public class Battler : FSM<Battler>
     protected bool directPass = false;
 
     protected Animator animator;
+    public Animator _Animator { get => animator; }
 
     [SerializeField]
     private Transform attackZone;
@@ -89,10 +90,28 @@ public class Battler : FSM<Battler>
             AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance.fxVolume);
     }
 
+    private void UpdateChaseTarget(Battler attacker)
+    {
+        if (attacker.attackType == AttackType.Melee)
+            return;
+
+        if(chaseTarget == null)
+            chaseTarget = attacker;
+        else
+        {
+            List<TileNode> originPath = PathFinder.Instance.FindPath(CurTile, chaseTarget.CurTile);
+            List<TileNode> updatePath = PathFinder.Instance.FindPath(CurTile, attacker.CurTile);
+            if (updatePath.Count < originPath.Count)
+                chaseTarget = attacker;
+        }
+    }
+
     public virtual void GetDamage(int damage, Battler attacker)
     {
         if (isDead)
             return;
+
+        UpdateChaseTarget(attacker);
 
         int finalDamage = damage - armor;
         if (finalDamage <= 0)
@@ -189,12 +208,12 @@ public class Battler : FSM<Battler>
         TileMoveCheck(nextNode, distance);
     }
 
-    protected virtual void DirectPass()
+    protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
         if (nextNode == null || nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.Instance.FindPath(curTile);
+            List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
                 nextNode = path[0];
             else
@@ -208,7 +227,7 @@ public class Battler : FSM<Battler>
             NodeAction(nextNode);
     }
 
-    private void NormalPatrol()
+    protected void NormalPatrol()
     {
         //다음 노드가 없으면 다음노드 탐색
         if (nextNode == null || nextNode.curTile == null)
@@ -229,12 +248,17 @@ public class Battler : FSM<Battler>
             NodeAction(nextNode);
     }
 
-    public void Patrol()
+    public virtual void Patrol()
     {
         if (directPass)
-            DirectPass();
+            DirectPass(NodeManager.Instance.endPoint);
         else
             NormalPatrol();
+    }
+
+    public void Chase()
+    {
+        DirectPass(chaseTarget.curTile);
     }
 
     protected Battler FindNextTarget(Battler prevTarget = null)
@@ -278,36 +302,29 @@ public class Battler : FSM<Battler>
             {
                 animator.SetBool("Attack", false);
                 animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
-                if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE"))
-                    battleState = false;
+                
             }
             return;
         }
     }
 
-    protected void ExcuteBattle()
+    public void Play_AttackAnimation()
     {
-        battleState = true;
-        //RotateCharacter(curTarget.transform.position);
-
-        //공격속도에 따라 애니메이션 속도 제어
         if (animator != null)
         {
             animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
-            animator.SetBool("Attack", true);
+            animator.SetTrigger("Attack");
         }
     }
 
     //애니메이션 이벤트에서 작동
     public void Attack()
     {
-        if (curTarget == null || curTarget.isDead)
-            return;
-
         if (attackSound != null)
             AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
 
-        curTarget.GetDamage(damage, this);
+        if (curTarget != null && !curTarget.isDead)
+            curTarget.GetDamage(damage, this);
     }
 
     public void SetRotation()
@@ -471,7 +488,11 @@ public class Battler : FSM<Battler>
         return true;
     }
 
-    
+    public void UpdateAttackSpeed()
+    {
+        if (animator != null)
+            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+    }
 
     public Battler BattleCheck()
     {

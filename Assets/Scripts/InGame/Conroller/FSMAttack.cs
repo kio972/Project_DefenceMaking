@@ -9,7 +9,7 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
     0. hp가 0이하로 떨어졌을경우 -> Dead로
     1. curTarget이 사망한경우 -> Patrol로
     2. curTarget이 사거리보다 멀어진경우 -> Patrol로
-    3. Attack수행이 끝났을경우 -> Patrol로 -> Attack으로 */
+    3. Attack수행이 끝났을경우 -> Patrol로 */
 
     private bool NeedChange(Battler e)
     {
@@ -19,24 +19,27 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
             return true;
         }
 
-        //if()
-
         return false;
     }
 
     public void Enter(Battler e)
     {
-
+        e.Play_AttackAnimation();
     }
 
     public void Excute(Battler e)
     {
         if (NeedChange(e))
             return;
+
+        e.UpdateAttackSpeed();
+
+        if (!e._Animator.GetCurrentAnimatorStateInfo(0).IsTag("ATTACK") && !e._Animator.IsInTransition(0))
+            e.ChangeState(FSMPatrol.Instance);
     }
 
     public void Exit(Battler e)
     {
-
+        e.curTarget = null;
     }
 }

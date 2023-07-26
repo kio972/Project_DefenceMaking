@@ -31,6 +31,17 @@ public class Tile : MonoBehaviour
 
     public bool movable = false;
 
+    public bool Movable
+    {
+        get
+        {
+            bool canMove = movable;
+            if(canMove)
+                canMove = !GameManager.Instance.IsAdventurererOnTile(curNode);
+            return canMove;
+        }
+    }
+
     public bool waitToMove = false;
 
     public Tile twin = null;
@@ -42,7 +53,7 @@ public class Tile : MonoBehaviour
 
     private bool BossRoom_BattleCheck()
     {
-        if (curNode == NodeManager.Instance.endPoint && GameManager.Instance.king.battleState)
+        if (curNode == NodeManager.Instance.endPoint && GameManager.Instance.king.chaseTarget != null)
             return true;
 
         return false;
@@ -94,7 +105,7 @@ public class Tile : MonoBehaviour
 
     private void CheckEndInput(TileNode curNode)
     {
-        if(BossRoom_BattleCheck())
+        if(!movable)
             EndMoveing();
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -178,9 +189,6 @@ public class Tile : MonoBehaviour
 
     public void ReadyForMove()
     {
-        if (BossRoom_BattleCheck())
-            return;
-
         UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
         UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
         curNode.SetAvail(true);

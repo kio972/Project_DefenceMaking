@@ -59,7 +59,7 @@ public class InputManager : IngameSingleton<InputManager>
         if (Input.GetKey(KeyCode.Mouse0))
         {
             TileNode node = UtilHelper.RayCastTile();
-            if (node != null && node.curTile != null && node.curTile.movable)
+            if (node != null && node.curTile != null && node.curTile.Movable)
             {
                 node.curTile.ReadyForMove();
             }

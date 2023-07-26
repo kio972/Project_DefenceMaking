@@ -7,12 +7,12 @@ public class Monster : Battler
 {
     private int monsterIndex = -1;
 
-    protected override void DirectPass()
+    protected override void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
         if (nextNode == null || nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.Instance.FindPath(curTile, lastCrossRoad);
+            List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
                 nextNode = path[0];
             else
@@ -30,6 +30,14 @@ public class Monster : Battler
         // nextNode까지 이동완료
         if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
             NodeAction(nextNode);
+    }
+
+    public override void Patrol()
+    {
+        if (directPass)
+            DirectPass(lastCrossRoad);
+        else
+            NormalPatrol();
     }
 
     protected override TileNode FindNextNode(TileNode curNode)
@@ -84,17 +92,11 @@ public class Monster : Battler
         InitState(this, FSMPatrol.Instance);
     }
 
+
     public override void Update()
     {
         base.Update();
 
-        if (animator != null)
-            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
-
-        //bool isBattleOn = BattleCheck();
-        //if (battleState)
-        //    AttackEndCheck();
-        //else if (isBattleOn)
-        //    ExcuteBattle();
+        
     }
 }

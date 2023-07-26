@@ -35,6 +35,17 @@ public class GameManager : IngameSingleton<GameManager>
 
     private bool updateNeed = true;
 
+    public bool IsAdventurererOnTile(TileNode tile)
+    {
+        foreach(Adventurer adventurer in adventurersList)
+        {
+            if (adventurer.CurTile == tile)
+                return true;
+        }
+
+        return false;
+    }
+
     private void WinGame()
     {
         updateNeed = false;
@@ -62,6 +73,8 @@ public class GameManager : IngameSingleton<GameManager>
 
         if(king.isDead)
             LoseGame();
+
+
 
         timer += Time.deltaTime * defaultSpeed * timeScale;
         if(timer > 720f && dailyIncome)
