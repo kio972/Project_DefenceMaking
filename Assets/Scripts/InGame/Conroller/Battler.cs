@@ -17,7 +17,7 @@ public class Battler : FSM<Battler>
     public int armor;
     public float attackSpeed;
     public float attackRange;
-    public float moveSpeed;
+    protected float moveSpeed;
 
     public UnitType unitType = UnitType.Enemy;
 
@@ -39,9 +39,10 @@ public class Battler : FSM<Battler>
     protected List<TileNode> crossedNodes = new List<TileNode>();
     protected TileNode prevTile;
     protected TileNode curTile;
+    protected TileNode nextTile;
     public TileNode CurTile { get => curTile; }
+    public TileNode NextTile { get => nextTile; }
     protected TileNode lastCrossRoad;
-    protected TileNode nextNode;
     protected bool directPass = false;
 
     protected Animator animator;
@@ -63,7 +64,7 @@ public class Battler : FSM<Battler>
     [SerializeField]
     protected string battlerID;
 
-    private float MoveSpeed
+    public float MoveSpeed
     {
         get
         {
@@ -92,6 +93,9 @@ public class Battler : FSM<Battler>
 
     private void UpdateChaseTarget(Battler attacker)
     {
+        if (attacker == null)
+            return;
+
         if (attacker.attackType == AttackType.Melee)
             return;
 
@@ -99,9 +103,9 @@ public class Battler : FSM<Battler>
             chaseTarget = attacker;
         else
         {
-            List<TileNode> originPath = PathFinder.Instance.FindPath(CurTile, chaseTarget.CurTile);
-            List<TileNode> updatePath = PathFinder.Instance.FindPath(CurTile, attacker.CurTile);
-            if (updatePath.Count < originPath.Count)
+            float originDist = PathFinder.Instance.GetBattlerDistance(this, chaseTarget);
+            float updateDist = PathFinder.Instance.GetBattlerDistance(this, attacker);
+            if (updateDist < originDist)
                 chaseTarget = attacker;
         }
     }
@@ -190,7 +194,7 @@ public class Battler : FSM<Battler>
 
     protected virtual void NodeAction(TileNode nextNode)
     {
-        this.nextNode = null;
+        this.nextTile = null;
         if (!crossedNodes.Contains(curTile))
             crossedNodes.Add(curTile);
 
@@ -211,41 +215,41 @@ public class Battler : FSM<Battler>
     protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
-        if (nextNode == null || nextNode.curTile == null)
+        if (nextTile == null || nextTile.curTile == null)
         {
             List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
-                nextNode = path[0];
+                nextTile = path[0];
             else
                 return;
         }
 
-        ExcuteMove(nextNode);
+        ExcuteMove(nextTile);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
-            NodeAction(nextNode);
+        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
+            NodeAction(nextTile);
     }
 
     protected void NormalPatrol()
     {
         //다음 노드가 없으면 다음노드 탐색
-        if (nextNode == null || nextNode.curTile == null)
-            nextNode = FindNextNode(curTile);
+        if (nextTile == null || nextTile.curTile == null)
+            nextTile = FindNextNode(curTile);
 
         //탐색후에도 유효한 노드가 없을경우
-        if (nextNode == null)
+        if (nextTile == null)
         {
             directPass = true;
             return;
         }
 
         // nextNode로 이동수행
-        ExcuteMove(nextNode);
+        ExcuteMove(nextTile);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
-            NodeAction(nextNode);
+        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
+            NodeAction(nextTile);
     }
 
     public virtual void Patrol()
@@ -456,34 +460,40 @@ public class Battler : FSM<Battler>
             attackRange = 0.5f;
             attackType = AttackType.Melee;
         }
-        
-        if (attackType == AttackType.Melee)
-        {
-            //근거리일경우 : 서로의 타일이 길로 이어진 타일인지 확인
-            if (UtilHelper.CalCulateDistance(transform, target.transform) > attackRange)
-                return false;
 
-        }
-        else if(attackType == AttackType.Ranged)
-        {
-            //원거리일경우 : 서로의 타일 사이에 방의 벽으로 막혀있지 않은지 확인
-            Vector3 dir = (target.transform.position - transform.position).normalized;
-            float dist = (target.transform.position - transform.position).magnitude;
-            Direction direction = UtilHelper.CheckClosestDirection(dir);
-            if (direction == Direction.None)
-                return false;
-            int tileDistance = (int)dist + 1;
-            TileNode curTileNode = this.curTile;
-            for(int i = 0; i < tileDistance; i++)
-            {
-                //curTile로부터 direction방향의 노드로 이동하며 타겟노드와 일치하는지 확인
-                //방의 벽으로 막혀있는지 여부 확인 코드 추가 필요
-                if (curTileNode == target.curTile)
-                    return true;
-                curTileNode = curTile.neighborNodeDic[direction];
-            }
+        if (target.CurTile == null)
             return false;
-        }
+
+        if (PathFinder.Instance.GetBattlerDistance(this, target) > attackRange)
+            return false;
+
+        //if (attackType == AttackType.Melee)
+        //{
+        //    //근거리일경우 : 서로의 타일이 길로 이어진 타일인지 확인
+        //    if (UtilHelper.CalCulateDistance(transform, target.transform) > attackRange)
+        //        return false;
+
+        //}
+        //else if(attackType == AttackType.Ranged)
+        //{
+        //    //원거리일경우 : 서로의 타일 사이에 방의 벽으로 막혀있지 않은지 확인
+        //    Vector3 dir = (target.transform.position - transform.position).normalized;
+        //    float dist = (target.transform.position - transform.position).magnitude;
+        //    Direction direction = UtilHelper.CheckClosestDirection(dir);
+        //    if (direction == Direction.None)
+        //        return false;
+        //    int tileDistance = (int)dist + 1;
+        //    TileNode curTileNode = this.curTile;
+        //    for(int i = 0; i < tileDistance; i++)
+        //    {
+        //        //curTile로부터 direction방향의 노드로 이동하며 타겟노드와 일치하는지 확인
+        //        //방의 벽으로 막혀있는지 여부 확인 코드 추가 필요
+        //        if (curTileNode == target.curTile)
+        //            return true;
+        //        curTileNode = curTile.neighborNodeDic[direction];
+        //    }
+        //    return false;
+        //}
 
         return true;
     }
@@ -494,10 +504,9 @@ public class Battler : FSM<Battler>
             animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
     }
 
-    public Battler BattleCheck()
+    public List<Battler> GetRangedTargets()
     {
-        Battler curTarget = null;
-        //본인 주변 attackRange만큼 spherecastAll실행
+        List<Battler> validTargets = new List<Battler>();
         Collider[] colliders = new Collider[10];
         int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
         for (int i = 0; i < colliderCount; i++)
@@ -507,6 +516,17 @@ public class Battler : FSM<Battler>
                 continue;
             if (battle.unitType == unitType || battle.isDead || !IsTargetValid(battle))
                 continue;
+            validTargets.Add(battle);
+        }
+        return validTargets;
+    }
+
+    public Battler BattleCheck()
+    {
+        Battler curTarget = null;
+        List<Battler> rangedTargets = GetRangedTargets();
+        foreach(Battler battle in rangedTargets)
+        {
             if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
                 curTarget = battle;
             else if (Vector3.Distance(transform.position, battle.transform.position) <

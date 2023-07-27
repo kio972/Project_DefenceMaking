@@ -162,4 +162,43 @@ public class PathFinder : Singleton<PathFinder>
         finalNode.Reverse();
         return finalNode;
     }
+
+    public float GetBattlerDistance(Battler origin, Battler target)
+    {
+        if (origin.CurTile == target.CurTile)
+        {
+            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.CurTile.transform.position);
+            float modifyTarget = Vector3.Distance(target.transform.position, target.CurTile.transform.position);
+            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.CurTile.transform.position);
+            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.transform.position - target.CurTile.transform.position);
+            if (originBattlerDirection == targetBattlerDirection)
+                modifyTarget *= -1f;
+
+            return modifyOrigin + modifyTarget;
+        }
+        else
+        {
+            List<TileNode> path = FindPath(origin.CurTile, target.CurTile);
+            if (path == null || path.Count <= 0)
+                return Mathf.Infinity;
+            float distance = path.Count * 1f;
+
+            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.CurTile.transform.position);
+            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.CurTile.transform.position);
+            Direction originPathDirection = origin.CurTile.GetNodeDirection(path[0]);
+            if (originBattlerDirection == originPathDirection)
+                modifyOrigin *= -1f;
+
+            float modifyTarget = Vector3.Distance(target.transform.position, target.CurTile.transform.position);
+            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.CurTile.transform.position - target.transform.position);
+            TileNode destPoint = origin.CurTile;
+            if (path.Count > 1)
+                destPoint = path[path.Count - 2];
+            Direction targetPathDirection = destPoint.GetNodeDirection(target.CurTile);
+            if (targetBattlerDirection == targetPathDirection)
+                modifyTarget *= -1f;
+
+            return distance + modifyOrigin + modifyTarget;
+        }
+    }
 }

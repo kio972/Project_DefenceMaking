@@ -29,6 +29,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public List<Adventurer> adventurersList = new List<Adventurer>();
 
+    public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
+
     public PlayerBattleMain king;
 
     public float timeScale;
@@ -66,6 +68,14 @@ public class GameManager : IngameSingleton<GameManager>
             result.GameDefeat();
     }
 
+    private void UpdateBossRoom()
+    {
+        bool bossTileMove = true;
+        if (adventurer_entered_BossRoom.Count > 0)
+            bossTileMove = false;
+        king.CurTile.curTile.movable = bossTileMove;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -74,7 +84,7 @@ public class GameManager : IngameSingleton<GameManager>
         if(king.isDead)
             LoseGame();
 
-
+        UpdateBossRoom();
 
         timer += Time.deltaTime * defaultSpeed * timeScale;
         if(timer > 720f && dailyIncome)

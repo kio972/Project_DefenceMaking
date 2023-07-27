@@ -10,11 +10,11 @@ public class Monster : Battler
     protected override void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
-        if (nextNode == null || nextNode.curTile == null)
+        if (nextTile == null || nextTile.curTile == null)
         {
             List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
-                nextNode = path[0];
+                nextTile = path[0];
             else
             {
                 crossedNodes = new List<TileNode>();
@@ -25,11 +25,11 @@ public class Monster : Battler
             }
         }
 
-        ExcuteMove(nextNode);
+        ExcuteMove(nextTile);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextNode.transform.position) < 0.001f)
-            NodeAction(nextNode);
+        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
+            NodeAction(nextTile);
     }
 
     public override void Patrol()

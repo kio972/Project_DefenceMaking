@@ -105,7 +105,7 @@ public class Tile : MonoBehaviour
 
     private void CheckEndInput(TileNode curNode)
     {
-        if(!movable)
+        if(!Movable)
             EndMoveing();
 
         if (Input.GetKeyUp(KeyCode.Mouse0))

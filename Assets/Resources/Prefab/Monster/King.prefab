@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3976440122746867361}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: HpPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6512068704573270428}
   - component: {fileID: 8945118246915258461}
   - component: {fileID: 7141161965367787149}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: King
   m_TagString: King
   m_Icon: {fileID: 0}
@@ -92,12 +92,11 @@ MonoBehaviour:
   armor: 0
   attackSpeed: 0
   attackRange: 0
-  moveSpeed: 0
   unitType: 0
   attackType: 0
   rotatonAxis: {fileID: 5186736132288342304}
   hpPivot: {fileID: 3976440122746867361}
-  battleState: 0
+  chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
   isDead: 0
   attackZone: {fileID: 0}
@@ -127,7 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5186736132288342304}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RotationAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4545534975588535096}
   - component: {fileID: 239406136779993974}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CharImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
