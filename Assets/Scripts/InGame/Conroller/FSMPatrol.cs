@@ -60,7 +60,8 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
 
     public void Enter(Battler e)
     {
-
+        if (e._Animator != null)
+            e._Animator.SetBool("Move", true);
     }
 
     public void Excute(Battler e)
@@ -76,6 +77,7 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
 
     public void Exit(Battler e)
     {
-
+        if (e._Animator != null)
+            e._Animator.SetBool("Move", false);
     }
 }
