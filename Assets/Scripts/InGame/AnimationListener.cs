@@ -11,4 +11,10 @@ public class AnimationListener : MonoBehaviour
     {
         battler.Attack();
     }
+
+    private void Awake()
+    {
+        if (battler == null)
+            battler = GetComponentInParent<Battler>();
+    }
 }
