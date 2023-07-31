@@ -378,7 +378,7 @@ public class CardDeckController : MonoBehaviour
         {
             int cardNumber = Convert.ToInt32(DataManager.Instance.Deck_Table[i]["startNumber"]);
             for (int j = 0; j < cardNumber; j++)
-                cardDeck.Add(Convert.ToInt32(DataManager.Instance.Deck_Table[i]["index"]));
+                cardDeck.Add(i);
         }
     }
 

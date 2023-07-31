@@ -48,9 +48,8 @@ public class WaveController : MonoBehaviour
         {
             string adventurerName = DataManager.Instance.Wave_Table[i]["adventure"].ToString();
             int number = Convert.ToInt32(DataManager.Instance.Wave_Table[i]["num"]);
-            //int adventurerIndex = DataManager.Instance.
-
-            string prefab = DataManager.Instance.Wave_Table[i]["prefab"].ToString();
+            int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.Battler_Table, "name");
+            string prefab = DataManager.Instance.Battler_Table[adventurerIndex]["prefab"].ToString();
             WaveData waveData = new WaveData(adventurerName, number, prefab);
             curWave.Add(waveData);
         }
