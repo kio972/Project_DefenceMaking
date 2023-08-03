@@ -43,6 +43,8 @@ public class HpBar : MonoBehaviour
     {
         if(deadBar) return;
 
+        transform.SetAsLastSibling();
+
         float curHp = battler.curHp;
         float maxHp = battler.maxHp;
         float nextAmount = curHp / maxHp;

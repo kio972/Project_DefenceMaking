@@ -11,11 +11,26 @@ public class Monster : Battler
     {
         base.Dead();
         GameManager.Instance.monsterList.Remove(this);
+        if (curTile.curTile.monster != null && curTile.curTile.monster == this)
+            curTile.curTile.monster = null;
+    }
+
+    private void ResetPaths()
+    {
+        crossedNodes = new List<TileNode>();
+        lastCrossRoad = null;
+        prevTile = null;
+        directPass = false;
     }
 
     protected override void DirectPass(TileNode targetTile)
     {
-        //마왕타일로 이동수행
+        if (targetTile == null)
+        {
+            ResetPaths();
+            return;
+        }
+
         if (nextTile == null || nextTile.curTile == null)
         {
             List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
@@ -23,10 +38,7 @@ public class Monster : Battler
                 nextTile = path[0];
             else
             {
-                crossedNodes = new List<TileNode>();
-                lastCrossRoad = null;
-                prevTile = null;
-                directPass = false;
+                ResetPaths();
                 return;
             }
         }
