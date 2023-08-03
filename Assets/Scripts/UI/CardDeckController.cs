@@ -362,6 +362,8 @@ public class CardDeckController : MonoBehaviour
     {
         hand_CardNumber++;
         GameObject targetPrefab = Resources.Load<GameObject>(prefabPath);
+        if (targetPrefab == null)
+            return;
         GameObject temp = Instantiate(targetPrefab, cardZone);
         CardController card = temp.GetComponent<CardController>();
         card?.DrawEffect();

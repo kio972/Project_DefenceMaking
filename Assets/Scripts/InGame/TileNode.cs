@@ -50,6 +50,14 @@ public class TileNode : MonoBehaviour
         return Direction.None;
     }
 
+    public void SetGuideColor(Color color)
+    {
+        if (guideObject == null)
+            return;
+        guideObject.gameObject.SetActive(true);
+        guideObject.material.SetColor("_FresnelColor", color);
+    }
+
     public void SetAvail(bool value)
     {
         if (guideObject == null)

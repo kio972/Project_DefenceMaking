@@ -7,6 +7,12 @@ public class Monster : Battler
 {
     private int monsterIndex = -1;
 
+    public override void Dead()
+    {
+        base.Dead();
+        GameManager.Instance.monsterList.Remove(this);
+    }
+
     protected override void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
@@ -89,6 +95,8 @@ public class Monster : Battler
             float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["attackRange"].ToString(), out attackRange);
         }
 
+        GameManager.Instance.monsterList.Add(this);
+
         InitState(this, FSMPatrol.Instance);
     }
 
@@ -96,7 +104,5 @@ public class Monster : Battler
     public override void Update()
     {
         base.Update();
-
-        
     }
 }

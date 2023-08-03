@@ -38,6 +38,20 @@ public class GameSpeedController : MonoBehaviour
             fastImg.sprite = fastSprite_Select;
     }
 
+    public bool Is_All_Tile_Connected()
+    {
+        foreach(TileNode tile in NodeManager.Instance.activeNodes)
+        {
+            if (tile == NodeManager.Instance.endPoint || tile.curTile == null)
+                continue;
+
+            if (PathFinder.Instance.FindPath(tile) == null)
+                return false;
+        }
+
+        return true;
+    }
+
     public void SetSpeedZero()
     {
         GameManager.Instance.timeScale = 0;
@@ -46,7 +60,7 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedNormal()
     {
-        if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
+        if (!Is_All_Tile_Connected())
             return;
 
         GameManager.Instance.timeScale = 1;
@@ -55,7 +69,7 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedFast()
     {
-        if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
+        if (!Is_All_Tile_Connected())
             return;
 
         GameManager.Instance.timeScale = 2;

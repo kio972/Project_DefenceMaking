@@ -31,11 +31,29 @@ public class GameManager : IngameSingleton<GameManager>
 
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
+    public List<Monster> monsterList = new List<Monster>();
+
     public PlayerBattleMain king;
 
     public float timeScale;
 
     private bool updateNeed = true;
+
+    private bool allWaveSpawned = false;
+
+    private bool isInit = false;
+    public bool IsInit { get => isInit; }
+
+    public bool IsMonsterOnTile(TileNode tile)
+    {
+        foreach (Monster monster in monsterList)
+        {
+            if (monster.CurTile == tile)
+                return true;
+        }
+
+        return false;
+    }
 
     public bool IsAdventurererOnTile(TileNode tile)
     {
@@ -82,7 +100,16 @@ public class GameManager : IngameSingleton<GameManager>
         if (!updateNeed) return;
 
         if(king.isDead)
+        {
             LoseGame();
+            return;
+        }
+
+        if (allWaveSpawned && adventurersList.Count == 0)
+        {
+            WinGame();
+            return;
+        }
 
         UpdateBossRoom();
 
@@ -90,9 +117,7 @@ public class GameManager : IngameSingleton<GameManager>
         if(timer > 720f && dailyIncome)
         {
             gold += 100 + PassiveManager.Instance.income_Weight;
-
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
-
             dailyIncome = false;
         }
 
@@ -101,18 +126,16 @@ public class GameManager : IngameSingleton<GameManager>
             //재화수급
             gold += 100 + PassiveManager.Instance.income_Weight;
             timer = 0f;
-
             dailyIncome = true;
 
             //몬스터 웨이브 스폰
-            
             if (!waveController.SpawnWave(curWave))
-            {
-                if(adventurersList.Count == 0)
-                    WinGame();
-            }
+                allWaveSpawned = true;
             else
                 curWave++;
+
+            //이동가능타일 잠금
+            NodeManager.Instance.LockMovableTiles();
 
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
         }
@@ -140,5 +163,7 @@ public class GameManager : IngameSingleton<GameManager>
 
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
+        NodeManager.Instance.SetGuideState(GuideState.None);
+        isInit = true;
     }
 }

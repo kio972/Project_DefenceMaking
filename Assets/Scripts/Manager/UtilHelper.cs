@@ -110,7 +110,8 @@ public static class UtilHelper
     public static List<TileNode> GetConnectedNodes(TileNode curNode)
     {
         List<TileNode> nodes = new List<TileNode>();
-
+        if (curNode.curTile == null)
+            return nodes;
         List<Direction> connectedDirection = new List<Direction>();
         foreach(Direction direction in curNode.curTile.PathDirection)
             connectedDirection.Add(direction);

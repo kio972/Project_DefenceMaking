@@ -225,6 +225,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             NodeManager.Instance.emptyNodes.Remove(curNode);
             NodeManager.Instance.activeNodes.Add(curNode);
             tile.MoveTile(curNode);
+            tile.movable = true;
         }
 
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
@@ -295,7 +296,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Discard(discard);
         DrawLine(false);
         InputManager.Instance.settingCard = false;
-        NodeManager.Instance.ResetAvail();
+        NodeManager.Instance.SetGuideState(GuideState.None);
     }
 
     private void UpdateObjectPosition()
@@ -328,7 +329,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         {
             Tile tile = instancedObject.GetComponent<Tile>();
             tile.RotateTile();
-            ReadyForMapTile();
+            NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
         }
 
         DrawLine();
@@ -337,42 +338,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             SetObjectOnMap(true);
     }
 
-    private void ReadyForEnvironment()
-    {
-        NodeManager.Instance.ResetAvail();
-        NodeManager.Instance.SetEnvironmentAvail();
-    }
-
-    private void ReadyForMonster()
-    {
-        NodeManager.Instance.ResetAvail();
-        foreach (TileNode node in NodeManager.Instance.activeNodes)
-        {
-            if (node.curTile != null && node.curTile._TileType == TileType.Room && node.curTile.monster == null)
-                node.SetAvail(true);
-            else
-                node.SetAvail(false);
-        }
-    }
-
-    private void ReadyForTrap()
-    {
-        NodeManager.Instance.ResetAvail();
-        foreach(TileNode node in NodeManager.Instance.activeNodes)
-        {
-            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.trap == null)
-                node.SetAvail(true);
-            else
-                node.SetAvail(false);
-        }
-    }
-
-    private void ReadyForMapTile()
-    {
-        NodeManager.Instance.ResetAvail();
-        Tile tile = instancedObject.GetComponent<Tile>();
-        NodeManager.Instance.SetTileAvail(tile);
-    }
 
     private void CallCard()
     {
@@ -395,16 +360,17 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         switch (cardType)
         {
             case CardType.MapTile:
-                ReadyForMapTile();
+                Tile tile = instancedObject.GetComponent<Tile>();
+                NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
                 break;
             case CardType.Monster:
-                ReadyForMonster();
+                NodeManager.Instance.SetGuideState(GuideState.Monster);
                 break;
             case CardType.Trap:
-                ReadyForTrap();
+                NodeManager.Instance.SetGuideState(GuideState.Trap);
                 break;
             case CardType.Environment:
-                ReadyForEnvironment();
+                NodeManager.Instance.SetGuideState(GuideState.Environment);
                 break;
         }
     }

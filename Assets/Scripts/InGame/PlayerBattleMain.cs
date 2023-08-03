@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerBattleMain : Battler
 {
+    public void SetTile(TileNode node)
+    {
+        curTile = node;
+    }
 
     public override void GetDamage(int damage, Battler attacker)
     {
@@ -39,6 +43,7 @@ public class PlayerBattleMain : Battler
     {
         base.Init();
 
+        curTile = NodeManager.Instance.endPoint;
         MoveToBossRoom();
     }
 

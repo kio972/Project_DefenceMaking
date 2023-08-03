@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GuideState
+{
+    None,
+    Monster,
+    Trap,
+    Tile,
+    Environment,
+    Movable,
+}
+
 public class NodeManager : IngameSingleton<NodeManager>
 {
     //활성화 노드들의 이웃노드 중 비활성화 노드
@@ -16,7 +26,130 @@ public class NodeManager : IngameSingleton<NodeManager>
     public TileNode startPoint;
     public TileNode endPoint;
 
-    //public Vector3 endPointPosition = Vector3.zero;
+    #region GuidePart
+    private GuideState guideState = GuideState.None;
+
+    public void SetGuideState(GuideState guideState, Tile tile = null)
+    {
+        //if (this.guideState == guideState)
+        //    return;
+
+        this.guideState = guideState;
+        ResetAvail();
+
+        switch (guideState)
+        {
+            case GuideState.None:
+                ShowMovableTiles();
+                break;
+            case GuideState.Tile:
+                if (tile == null)
+                    return;
+                SetTileAvail(tile);
+                break;
+            case GuideState.Trap:
+                SetTrapAvail();
+                break;
+            case GuideState.Monster:
+                SetMonsterAvail();
+                break;
+            case GuideState.Environment:
+                SetEnvironmentAvail();
+                break;
+        }
+    }
+
+    public void LockMovableTiles()
+    {
+        foreach (TileNode node in activeNodes)
+        {
+            if (node.curTile != null && node.curTile.movable && node != endPoint)
+                node.curTile.movable = false;
+        }
+
+        if (guideState == GuideState.None)
+            SetGuideState(GuideState.None);
+    }
+
+    private void ShowMovableTiles()
+    {
+        //가이드 노란색으로 설정
+        foreach (TileNode node in activeNodes)
+        {
+            if (node.curTile != null && node.curTile.movable)
+            {
+                node.SetGuideColor(Color.yellow);
+            }
+        }
+    }
+
+    private void SetMonsterAvail()
+    {
+        foreach (TileNode node in activeNodes)
+        {
+            if (node.curTile != null && node.curTile._TileType == TileType.Room && node.curTile.monster == null)
+                node.SetAvail(true);
+            else
+                node.SetAvail(false);
+        }
+    }
+
+    private void SetTrapAvail()
+    {
+        foreach (TileNode node in activeNodes)
+        {
+            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.trap == null)
+                node.SetAvail(true);
+            else
+                node.SetAvail(false);
+        }
+    }
+
+    
+
+    private void SetEnvironmentAvail()
+    {
+        SetVirtualNode();
+
+        foreach (TileNode node in virtualNodes)
+        {
+            if (!HaveConnectedTile(node))
+                node.SetAvail(true);
+            else
+                node.SetAvail(false);
+        }
+
+    }
+
+    private void SetTileAvail(Tile targetTile)
+    {
+        SetVirtualNode();
+
+        List<Direction> targetNode_PathDirection = targetTile.PathDirection;
+        List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
+
+        List<TileNode> availTile = new List<TileNode>();
+
+        ResetAvail();
+        //UtilHelper.SetCollider(true, virtualNodes);
+        foreach (TileNode node in virtualNodes)
+        {
+            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection);
+            node.SetAvail(isConnected);
+        }
+
+    }
+
+    private void ResetAvail()
+    {
+        foreach (TileNode node in allNodes)
+        {
+            node.DeActiveGuide();
+            node.setAvail = false;
+        }
+    }
+
+    #endregion
 
     public void SetTile(TileNode curNode, string prefabPath)
     {
@@ -180,17 +313,6 @@ public class NodeManager : IngameSingleton<NodeManager>
                 TileNode newNode = node.AddNode(node.row, node.col, dir);
             }
         }
-
-        //newNodeDictionary에 있는 key TileNode를 받아오는 함수
-        //List<TileNode> keyNodes = UtilHelper.GetKeyValues(newNodeDictionary);
-        //foreach (TileNode keyNode in keyNodes)
-        //{
-        //    foreach (TileNode newNode in newNodeDictionary[keyNode])
-        //    {
-        //        Direction dir = keyNode.GetNodeDirection(newNode);
-        //        newNode.SetNeighborNode(keyNode, dir);
-        //    }
-        //}
     }
 
     public TileNode InstanceTile(GameObject tilePrefab, Vector3 targetPosition)
@@ -203,14 +325,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         return tile;
     }
 
-    public void ResetAvail()
-    {
-        foreach (TileNode node in allNodes)
-        {
-            node.DeActiveGuide();
-            node.setAvail = false;
-        }
-    }
+    
 
     private bool HaveConnectedTile(TileNode node)
     {
@@ -233,38 +348,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         return false;
     }
 
-    public void SetEnvironmentAvail()
-    {
-        SetVirtualNode();
-
-        foreach(TileNode node in virtualNodes)
-        {
-            if (!HaveConnectedTile(node))
-                node.SetAvail(true);
-            else
-                node.SetAvail(false);
-        }
-
-    }
-
-    public void SetTileAvail(Tile targetTile)
-    {
-        SetVirtualNode();
-
-        List<Direction> targetNode_PathDirection = targetTile.PathDirection;
-        List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
-
-        List<TileNode> availTile = new List<TileNode>();
-
-        ResetAvail();
-        //UtilHelper.SetCollider(true, virtualNodes);
-        foreach (TileNode node in virtualNodes)
-        {
-            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection);
-            node.SetAvail(isConnected);
-        }
-
-    }
+    
 
     public void AddVirtualNode(TileNode node, Direction direction)
     {
@@ -295,14 +379,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    //public void SetAvailTile(TileNode curTile)
-    //{
-    //    SetVirtualTile();
-    //    UtilHelper.SetCollider(false, emptyNodes);
-    //    UtilHelper.SetCollider(false, activeNodes);
-        
-    //}
-
     public void SetEmptyNode()
     {
         emptyNodes = new List<TileNode>();
@@ -310,8 +386,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         foreach (TileNode node in nodes)
             emptyNodes.Add(node);
     }
-
-
 
     public TileNode InstanceNewNode(TileNode node, Direction direction, int[] index ,Transform parent = null)
     {
@@ -343,9 +417,4 @@ public class NodeManager : IngameSingleton<NodeManager>
         curNode.AddNode(curNode.row, curNode.col, Direction.RightUp);
         curNode.AddNode(curNode.row, curNode.col, Direction.RightDown);
     }
-
-    //private void Update()
-    //{
-        
-    //}
 }

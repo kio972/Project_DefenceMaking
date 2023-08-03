@@ -38,6 +38,8 @@ public class Tile : MonoBehaviour
             bool canMove = movable;
             if(canMove)
                 canMove = !GameManager.Instance.IsAdventurererOnTile(curNode);
+            if (canMove)
+                canMove = !GameManager.Instance.IsMonsterOnTile(curNode);
             return canMove;
         }
     }
@@ -51,20 +53,18 @@ public class Tile : MonoBehaviour
 
     public bool IsBigRoom = false;
 
-    private bool BossRoom_BattleCheck()
-    {
-        if (curNode == NodeManager.Instance.endPoint && GameManager.Instance.king.chaseTarget != null)
-            return true;
-
-        return false;
-    }
 
     public void MoveTile(TileNode nextNode)
     {
         if(curNode != null)
+        {
             curNode.curTile = null;
+            NodeManager.Instance.activeNodes.Remove(curNode);
+        }
 
         curNode = nextNode;
+        if(!NodeManager.Instance.activeNodes.Contains(nextNode))
+            NodeManager.Instance.activeNodes.Add(nextNode);
         nextNode.curTile = this;
         transform.position = nextNode.transform.position;
         NodeManager.Instance.ExpandEmptyNode(nextNode, 4);
@@ -72,12 +72,16 @@ public class Tile : MonoBehaviour
         if (tileType == TileType.End)
         {
             NodeManager.Instance.endPoint = nextNode;
-            if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
-                GameManager.Instance.speedController.SetSpeedZero();
-            else
-                GameManager.Instance.speedController.SetSpeedNormal();
-
+            if(GameManager.Instance.king != null)
+                GameManager.Instance.king.SetTile(nextNode);
+            //if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
+            //    GameManager.Instance.speedController.SetSpeedZero();
+            //else
+            //    GameManager.Instance.speedController.SetSpeedNormal();
         }
+
+        if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_All_Tile_Connected())
+            GameManager.Instance.speedController.SetSpeedZero();
     }
 
     private void UpdateMoveTilePos(TileNode curNode)
@@ -93,7 +97,7 @@ public class Tile : MonoBehaviour
         twin.gameObject.SetActive(false);
         waitToMove = false;
         InputManager.Instance.settingCard = false;
-        NodeManager.Instance.ResetAvail();
+        NodeManager.Instance.SetGuideState(GuideState.None);
         twin = null;
     }
 
@@ -179,6 +183,8 @@ public class Tile : MonoBehaviour
         pathDirection = RotateDirection(pathDirection);
         roomDirection = RotateDirection(roomDirection);
         RotateDirection();
+        if(tileType != TileType.End)
+            NodeManager.Instance.SetGuideState(GuideState.Tile, this);
     }
 
     public void ResetTwin()
@@ -189,8 +195,17 @@ public class Tile : MonoBehaviour
 
     public void ReadyForMove()
     {
-        UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
-        UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
+        switch(tileType)
+        {
+            case TileType.End:
+                UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
+                UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
+                break;
+            default:
+                NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+                break;
+        }
+        
         curNode.SetAvail(true);
         waitToMove = true;
 

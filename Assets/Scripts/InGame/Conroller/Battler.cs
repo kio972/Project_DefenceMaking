@@ -221,7 +221,10 @@ public class Battler : FSM<Battler>
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else
+            {
+                GameManager.Instance.speedController.SetSpeedZero();
                 return;
+            }
         }
 
         ExcuteMove(nextTile);
