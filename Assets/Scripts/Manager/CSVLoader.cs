@@ -8,8 +8,8 @@ public class CSVLoader
     {
         string str = textFile.text;
 
-        str.Replace("\n", "<br>");
-
+        str = str.Replace("'/n'", "<br>");
+        str = str.Replace("','", "<c>");
         string[] lines = str.Split('\n');
 
         string[] heads = lines[0].Split(',');
@@ -27,9 +27,10 @@ public class CSVLoader
             {
                 string value = col[j];
 
-                value.Replace("<br>", "\n");
+                value = value.Replace("<br>", "\n");
+                value = value.Replace("<c>", ",");
 
-                dic.Add(heads[j], col[j]);
+                dic.Add(heads[j], value);
             }
 
             list.Add(dic);

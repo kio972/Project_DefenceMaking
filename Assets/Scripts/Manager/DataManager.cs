@@ -8,12 +8,13 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> wave_Table;
     private List<Dictionary<string, object>> deckList;
     private List<Dictionary<string, object>> battler_Table;
+    private List<Dictionary<string, object>> timeRate_Table;
 
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
-
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
+    public List<Dictionary<string, object>> TimeRate_Table { get => timeRate_Table; }
 
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
@@ -82,19 +83,15 @@ public class DataManager : Singleton<DataManager>
     // csv파일 주소(Resource폴더 내)
     private string wave_Table_DataPath = "Data/waveData";
     private string deckList_DataPath = "Data/deckList";
-    //private string trap_Table_DataPath = "Data/trapData";
-    //private string monster_Table_DataPath = "Data/monsterTable";
-    //private string adventurer_Table_DataPath = "Data/adventurerTable";
     private string battler_Table_DataPath = "Data/battlerTable";
+    private string timeRate_Table_DataPath = "Data/timeData";
 
     private void Init()
     {
         // csv파일 불러오는 함수
         wave_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(wave_Table_DataPath));
         deckList = CSVLoader.LoadCSV(Resources.Load<TextAsset>(deckList_DataPath));
-        //trap_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(trap_Table_DataPath));
-        //monster_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(monster_Table_DataPath));
-        //adventurer_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(adventurer_Table_DataPath));
         battler_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(battler_Table_DataPath));
+        timeRate_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(timeRate_Table_DataPath));
     }
 }

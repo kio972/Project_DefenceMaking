@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class GameManager : IngameSingleton<GameManager>
 {
-    public float defaultSpeed = 1000f;
+    [SerializeField]
+    private int stageNumber;
+    private float defaultSpeed = 100f;
+    public float DefaultSpeed { get => defaultSpeed; }
+
+    public float gameSpeed = 100f;
 
     float timer = 0f;
     public float Timer { get => timer; }
@@ -128,11 +133,10 @@ public class GameManager : IngameSingleton<GameManager>
             timer = 0f;
             dailyIncome = true;
 
+            curWave++;
             //몬스터 웨이브 스폰
             if (!waveController.SpawnWave(curWave))
                 allWaveSpawned = true;
-            else
-                curWave++;
 
             //이동가능타일 잠금
             NodeManager.Instance.LockMovableTiles();
@@ -152,10 +156,23 @@ public class GameManager : IngameSingleton<GameManager>
         }
     }
 
+    private void SetWaveSpeed()
+    {
+        if (stageNumber == 0)
+        {
+            defaultSpeed = gameSpeed / 60f;
+            return;
+        }
+
+        float.TryParse(DataManager.Instance.TimeRate_Table[stageNumber - 1]["time magnification"].ToString(), out defaultSpeed);
+        defaultSpeed = defaultSpeed / 60f;
+    }
+
     private void Start()
     {
         mapBuilder.Init();
         SpawnKing();
+        SetWaveSpeed();
 
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
 

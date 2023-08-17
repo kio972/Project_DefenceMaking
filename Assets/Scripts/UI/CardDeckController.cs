@@ -25,10 +25,7 @@ public class CardDeckController : MonoBehaviour
 
     private bool initState = false;
 
-    [SerializeField]
-    private float minPos_X = 550;
-    [SerializeField]
-    private float maxPos_X = 100;
+
     [SerializeField]
     private float minPos_Y = 1370;
     [SerializeField]
@@ -182,6 +179,11 @@ public class CardDeckController : MonoBehaviour
 
     public float ReturnStartY()
     {
+        float screenSizeX = SettingManager.Instance.GetScreenSize()[0];
+        //float minPos_Y = 1370;
+        //float maxPos_Y = 1820;
+        float minPos_Y = (screenSizeX / 2) + (screenSizeX * 0.2f);
+        float maxPos_Y = (screenSizeX / 2) + (screenSizeX * 0.45f);
         if (hand_CardNumber >= 0 && hand_CardNumber <= 10)
         {
             // 카드 개수가 0에서 10 사이일 때
@@ -191,12 +193,17 @@ public class CardDeckController : MonoBehaviour
         else
         {
             // 카드 개수가 범위를 벗어날 때 기본값인 100을 반환하거나 예외 처리를 수행합니다.
-            return 450f;
+            return minPos_Y;
         }
     }
 
     public float ReturnStartX()
     {
+        float screenSizeX = SettingManager.Instance.GetScreenSize()[0];
+        //float minPos_X = 550;
+        //float maxPos_X = 100;
+        float minPos_X = (screenSizeX / 2) - (screenSizeX * 0.2f);
+        float maxPos_X = (screenSizeX / 2) - (screenSizeX * 0.45f);
         //현재 카드 개수가 0에서 10임에 따라 100 ~ 450값을 반환
         if (hand_CardNumber >= 0 && hand_CardNumber <= 10)
         {
@@ -392,6 +399,16 @@ public class CardDeckController : MonoBehaviour
         deckBtnImg = deckDrawBtn.GetComponent<Image>();
         SetDeck();
         initState = true;
+    }
+
+    private ScreenSize curScreenSize;
+    private void Update()
+    {
+        if(curScreenSize != SettingManager.Instance.screenSize)
+        {
+            curScreenSize = SettingManager.Instance.screenSize;
+            SetCardPosition();
+        }
     }
 
     // Start is called before the first frame update

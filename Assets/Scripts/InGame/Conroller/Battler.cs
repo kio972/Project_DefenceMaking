@@ -9,6 +9,12 @@ public enum AttackType
     Ranged,
 }
 
+public enum UnitType
+{
+    Enemy,
+    Player,
+}
+
 public class Battler : FSM<Battler>
 {
     public int damage;
@@ -64,6 +70,8 @@ public class Battler : FSM<Battler>
     [SerializeField]
     protected string battlerID;
 
+    public string BattlerID { get => battlerID; }
+
     public float MoveSpeed
     {
         get
@@ -72,8 +80,6 @@ public class Battler : FSM<Battler>
             return moveSpeed * slowRate;
         }
     }
-
-    
 
     private void RemoveBody()
     {
@@ -120,6 +126,8 @@ public class Battler : FSM<Battler>
         int finalDamage = damage - armor;
         if (finalDamage <= 0)
             finalDamage = 1;
+
+        DamageTextPooling.Instance.TextEffect(transform.position, finalDamage);
 
         curHp -= finalDamage;
         if (curHp <= 0)
@@ -345,22 +353,7 @@ public class Battler : FSM<Battler>
 
     public virtual void Init()
     {
-        if(this.hpBar == null)
-        {
-            string resourcePath = "";
-            if (unitType == UnitType.Enemy)
-                resourcePath = "Prefab/UI/Adventure_hp_bar";
-            else if (unitType == UnitType.Player)
-                resourcePath = "Prefab/UI/Monster_hp_bar";
-
-
-            HpBar hpBar = Resources.Load<HpBar>(resourcePath);
-            hpBar = Instantiate(hpBar, GameManager.Instance.cameraCanvas.transform);
-            hpBar.Init(this);
-
-            this.hpBar = hpBar;
-        }
-
+        hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         SetRotation();
 
         if (animator == null)
@@ -402,18 +395,15 @@ public class Battler : FSM<Battler>
         return Quaternion.Euler(characterRotation);
     }
 
-    private Quaternion UpdateStartRotation(Quaternion originRotation)
+    private Vector3 UpdateStartRotation(Vector3 originRotation)
     {
-        Vector3 startRotation = UtilHelper.NormalizeEulerAngles(originRotation.eulerAngles);
-        Vector3 curRotation = UtilHelper.NormalizeEulerAngles(rotatonAxis.rotation.eulerAngles);
+        Vector3 characterRotation = UtilHelper.NormalizeEulerAngles(rotatonAxis.eulerAngles);
 
-        if (curRotation.x < 0 && startRotation.x < 0)
+        if (Mathf.Abs(originRotation.y - characterRotation.y) < 1f)
             return originRotation;
-        else if (curRotation.x >= 0 && startRotation.x >= 0)
-            return originRotation;
+        else
+            return new Vector3(-(originRotation.x), characterRotation.y, originRotation.z);
 
-        startRotation.x *= -1f;
-        return Quaternion.Euler(startRotation);
     }
 
     private IEnumerator IUpdateRotation()
@@ -432,8 +422,8 @@ public class Battler : FSM<Battler>
                 elapsedTime += Time.deltaTime;
                 float t = Mathf.Clamp01(elapsedTime / lerpTime);
 
+                startRotation = UpdateStartRotation(startRotation);
                 targetRotation = UtilHelper.NormalizeEulerAngles(TargetRoation(camera_Level).eulerAngles);
-                //startRotation = UpdateStartRotation(startRotation);
 
                 Vector3 nextRotation = Vector3.Lerp(startRotation, targetRotation, t);
                 rotatonAxis.rotation = Quaternion.Euler(nextRotation);

@@ -48,6 +48,20 @@ public class SettingManager : Singleton<SettingManager>
     {
         Screen.fullScreen = value;
         this.screen_FullSize = value;
+
+        SaveManager.Instance.SaveSettingData();
+    }
+
+    public int[] GetScreenSize()
+    {
+        int width = 0;
+        int height = 0;
+        string screenSizeText = screenSize.ToString();
+        screenSizeText = screenSizeText.Replace("Size_", "");
+        string[] sizes = screenSizeText.Split("x");
+        width = System.Convert.ToInt32(sizes[0]);
+        height = System.Convert.ToInt32(sizes[1]);
+        return new int[2] { width, height };
     }
 
     public void Set_ScreenSize(ScreenSize screenSize)
@@ -63,6 +77,8 @@ public class SettingManager : Singleton<SettingManager>
         this.screenSize = screenSize;
 
         Screen.SetResolution(width, height, Screen.fullScreen);
+
+        SaveManager.Instance.SaveSettingData();
     }
 
     public void Init()

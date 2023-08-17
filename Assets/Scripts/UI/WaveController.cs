@@ -24,12 +24,21 @@ public class WaveController : MonoBehaviour
     public List<GameObject> adventurerPrefab;
 
     [SerializeField]
-    private float spawnWaitTime = 1f;
-
-    [SerializeField]
     private TextMeshProUGUI waveText;
     [SerializeField]
     private WaveGauge waveFill;
+
+
+    private float CalSpawnWaitTime(int allAmount, float restrictTime = 720f)
+    {
+        float spawnTime = 2f;
+        restrictTime = 720 / (GameManager.Instance.DefaultSpeed);
+        if (allAmount * spawnTime > restrictTime)
+        {
+            spawnTime = restrictTime / allAmount;
+        }
+        return spawnTime;
+    }
 
     public List<WaveData> SetWaveData(int waveIndex)
     {
@@ -65,7 +74,7 @@ public class WaveController : MonoBehaviour
         foreach(WaveData waveData in curWave)
             maxEnemyNumber += waveData.number;
         waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
-
+        float spawnWaitTime = CalSpawnWaitTime(maxEnemyNumber);
         foreach (WaveData waveData in curWave)
         {
             for(int i = 0; i < waveData.number; i++)
