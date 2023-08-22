@@ -24,6 +24,9 @@ public class GameSpeedController : MonoBehaviour
     public Image normalImg;
     public Image fastImg;
 
+    [SerializeField]
+    private PopUpMessage popUpMessage;
+
     private void SetButtonState()
     {
         zeroImg.sprite = zeroSprite;
@@ -61,7 +64,10 @@ public class GameSpeedController : MonoBehaviour
     public void SetSpeedNormal()
     {
         if (!Is_All_Tile_Connected())
+        {
+            popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
+        }
 
         GameManager.Instance.timeScale = 1;
         SetButtonState();
@@ -70,7 +76,10 @@ public class GameSpeedController : MonoBehaviour
     public void SetSpeedFast()
     {
         if (!Is_All_Tile_Connected())
+        {
+            popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
+        }
 
         GameManager.Instance.timeScale = 2;
         SetButtonState();

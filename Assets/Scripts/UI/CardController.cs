@@ -37,7 +37,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     public Vector3 originPos;
     public Quaternion originRot;
 
-    private int originSiblingIndex = -1;
+    public int originSiblingIndex = -1;
 
     [SerializeField]
     private float mouseOverTime = 0.2f;
@@ -61,7 +61,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
 
         transform.rotation = Quaternion.identity;
-        originSiblingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
 
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);

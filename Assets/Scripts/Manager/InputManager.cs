@@ -53,6 +53,13 @@ public class InputManager : IngameSingleton<InputManager>
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            CameraController cameraController = FindObjectOfType<CameraController>();
+            if (cameraController != null)
+                cameraController.ResetCamPos(Input.GetKey(KeyCode.LeftShift));
+        }
+
         if (settingCard)
             return;
 

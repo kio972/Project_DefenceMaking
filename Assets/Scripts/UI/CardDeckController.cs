@@ -288,13 +288,10 @@ public class CardDeckController : MonoBehaviour
         {
             startPositions[i] = cards[i].position;
             startRotations[i] = cards[i].rotation;
-        }
-
-        for (int i = 0; i < cards.Count; i++)
-        {
             CardController temp = cards[i].GetComponent<CardController>();
             temp.originPos = cardPos[i];
             temp.originRot = UtilHelper.AlignUpWithVector(cardRot[i]);
+            temp.originSiblingIndex = i;
         }
 
         while (elapsedTime < lerpTime)
@@ -367,10 +364,13 @@ public class CardDeckController : MonoBehaviour
 
     private void InstantiateCard(string prefabPath)
     {
-        hand_CardNumber++;
         GameObject targetPrefab = Resources.Load<GameObject>(prefabPath);
         if (targetPrefab == null)
+        {
+            print(prefabPath + " prefab missing!");
             return;
+        }
+        hand_CardNumber++;
         GameObject temp = Instantiate(targetPrefab, cardZone);
         CardController card = temp.GetComponent<CardController>();
         card?.DrawEffect();

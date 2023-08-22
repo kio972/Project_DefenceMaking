@@ -26,6 +26,14 @@ public class CameraController : MonoBehaviour
 
     private float mouseMult = 1f;
 
+    public void ResetCamPos(bool isStartPoint = false)
+    {
+        Vector3 position = NodeManager.Instance.endPoint.transform.position;
+        if (isStartPoint)
+            position = NodeManager.Instance.startPoint.transform.position;
+        guideObject.transform.position = position;
+    }
+
     private void SetCam()
     {
         cam_Index0.gameObject.SetActive(false);
@@ -89,6 +97,15 @@ public class CameraController : MonoBehaviour
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
             Vector3 targetPos = guideObject.position + (new Vector3(-mouseX, 0, -mouseY) * mouseMult * SettingManager.Instance.MouseSensitivity);
+            guideObject.position = targetPos;
+        }
+        else
+        {
+            float mouseX = Input.GetAxis("Horizontal");
+            float mouseY = Input.GetAxis("Vertical");
+            if (mouseX == 0 && mouseY == 0)
+                return;
+            Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.2f * mouseMult * SettingManager.Instance.MouseSensitivity);
             guideObject.position = targetPos;
         }
     }
