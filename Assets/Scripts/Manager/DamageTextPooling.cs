@@ -33,6 +33,7 @@ public class DamageTextPooling : IngameSingleton<DamageTextPooling>
 
         target.StartEffect(value, isHeal);
         RectTransform rect = target.transform.GetComponent<RectTransform>();
-        rect.position = pos + Vector3.up;
+        Vector3 offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
+        rect.position = pos + Vector3.up + offset;
     }
 }
