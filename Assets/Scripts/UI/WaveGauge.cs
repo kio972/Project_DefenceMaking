@@ -10,6 +10,8 @@ public class WaveGauge : MonoBehaviour
 
     private float waveRate = 0;
 
+    public float WaveRate { get { return waveRate; } }
+
     [SerializeField]
     private float lerpTime = 1f;
 

@@ -28,6 +28,7 @@ public class WaveController : MonoBehaviour
     [SerializeField]
     private WaveGauge waveFill;
 
+    public float WaveProgress { get { return waveFill.WaveRate; } }
 
     private float CalSpawnWaitTime(int allAmount, float restrictTime = 720f)
     {

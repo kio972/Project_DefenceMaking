@@ -99,6 +99,11 @@ public class GameManager : IngameSingleton<GameManager>
         king.CurTile.curTile.movable = bossTileMove;
     }
 
+    public void SkipDay()
+    {
+        timer = 1440f;
+    }
+
     // Update is called once per frame
     void Update()
     {
