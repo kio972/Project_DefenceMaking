@@ -105,6 +105,13 @@ public class Monster : Battler
             float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["moveSpeed"].ToString(), out moveSpeed);
 
             float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["attackRange"].ToString(), out attackRange);
+
+            float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["splashRange"].ToString(), out splashRange);
+            if(splashRange > 0)
+            {
+                splashDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["splashPower"]);
+                splashAttack = true;
+            }
         }
 
         GameManager.Instance.monsterList.Add(this);

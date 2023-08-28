@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using UnityEngine.UIElements;
 
 public enum AttackType
 {
@@ -24,6 +25,10 @@ public class Battler : FSM<Battler>
     public float attackSpeed;
     public float attackRange;
     protected float moveSpeed;
+
+    public bool splashAttack = false;
+    public int splashDamage;
+    public float splashRange;
 
     public UnitType unitType = UnitType.Enemy;
 
@@ -332,6 +337,14 @@ public class Battler : FSM<Battler>
         }
     }
 
+    private void SplashAttack(Battler mainTarget)
+    {
+        List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
+        splashTargets.Remove(mainTarget);
+        foreach (Battler target in splashTargets)
+            target.GetDamage(splashDamage, this);
+    }
+
     //애니메이션 이벤트에서 작동
     public void Attack()
     {
@@ -339,7 +352,11 @@ public class Battler : FSM<Battler>
             AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
 
         if (curTarget != null && !curTarget.isDead)
+        {
             curTarget.GetDamage(damage, this);
+            if (splashAttack)
+                SplashAttack(curTarget);
+        }
     }
 
     public void SetRotation()
@@ -497,17 +514,19 @@ public class Battler : FSM<Battler>
             animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
     }
 
-    public List<Battler> GetRangedTargets()
+    public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)
     {
         List<Battler> validTargets = new List<Battler>();
         Collider[] colliders = new Collider[10];
-        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, attackRange, colliders, LayerMask.GetMask("Character"));
+        int colliderCount = Physics.OverlapSphereNonAlloc(position, attackRange, colliders, LayerMask.GetMask("Character"));
         for (int i = 0; i < colliderCount; i++)
         {
             Battler battle = colliders[i].GetComponent<Battler>();
             if (battle == null || battle == this)
                 continue;
-            if (battle.unitType == unitType || battle.isDead || !IsTargetValid(battle))
+            if (battle.unitType == unitType || battle.isDead)
+                continue;
+            if(attackRangeCheck && !IsTargetValid(battle))
                 continue;
             validTargets.Add(battle);
         }
@@ -517,7 +536,7 @@ public class Battler : FSM<Battler>
     public Battler BattleCheck()
     {
         Battler curTarget = null;
-        List<Battler> rangedTargets = GetRangedTargets();
+        List<Battler> rangedTargets = GetRangedTargets(transform.position, attackRange);
         foreach(Battler battle in rangedTargets)
         {
             if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
