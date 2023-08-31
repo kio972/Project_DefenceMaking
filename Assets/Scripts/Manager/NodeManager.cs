@@ -29,7 +29,7 @@ public class NodeManager : IngameSingleton<NodeManager>
     #region GuidePart
     private GuideState guideState = GuideState.None;
 
-    public void SetGuideState(GuideState guideState, Tile tile = null)
+    public void SetGuideState(GuideState guideState, Tile tile = null, bool containOrigin = false)
     {
         //if (this.guideState == guideState)
         //    return;
@@ -45,7 +45,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.Tile:
                 if (tile == null)
                     return;
-                SetTileAvail(tile);
+                SetTileAvail(tile, containOrigin);
                 break;
             case GuideState.Trap:
                 SetTrapAvail();
@@ -121,9 +121,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     }
 
-    private void SetTileAvail(Tile targetTile)
+    private void SetTileAvail(Tile targetTile, bool containOrigin = false)
     {
         SetVirtualNode();
+        if (containOrigin)
+            virtualNodes.Add(targetTile.curNode);
 
         List<Direction> targetNode_PathDirection = targetTile.PathDirection;
         List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
@@ -131,13 +133,13 @@ public class NodeManager : IngameSingleton<NodeManager>
         List<TileNode> availTile = new List<TileNode>();
 
         ResetAvail();
-        //UtilHelper.SetCollider(true, virtualNodes);
         foreach (TileNode node in virtualNodes)
         {
+            if (node == null)
+                continue;
             bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection);
             node.SetAvail(isConnected);
         }
-
     }
 
     private void ResetAvail()

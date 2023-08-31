@@ -53,6 +53,9 @@ public class Tile : MonoBehaviour
 
     public bool IsBigRoom = false;
 
+    private Renderer tileRenderer;
+
+    private bool isTwin = false;
 
     public void MoveTile(TileNode nextNode)
     {
@@ -84,12 +87,23 @@ public class Tile : MonoBehaviour
             GameManager.Instance.speedController.SetSpeedZero();
     }
 
+    private void SetTileVisible(bool value)
+    {
+        if (tileRenderer == null)
+            tileRenderer = GetComponentInChildren<Renderer>();
+        if (tileRenderer == null) return;
+
+        tileRenderer.enabled = value;
+    }
+
     private void UpdateMoveTilePos(TileNode curNode)
     {
-        if (curNode != null && NodeManager.Instance.emptyNodes.Contains(curNode))
+        if (curNode != null && NodeManager.Instance.emptyNodes.Contains(curNode) || curNode == this.curNode)
             twin.transform.position = curNode.transform.position;
         else
             twin.transform.position = new Vector3(0, 10000, 0);
+
+        SetTileVisible(curNode != this.curNode);
     }
 
     private void EndMoveing()
@@ -98,12 +112,14 @@ public class Tile : MonoBehaviour
         waitToMove = false;
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
-        twin = null;
+        //twin = null;
+        SetTileVisible(true);
     }
 
     private void InstanceTwin()
     {
         twin = Instantiate(this);
+        twin.isTwin = true;
         twin.waitToMove = false;
     }
 
@@ -184,7 +200,7 @@ public class Tile : MonoBehaviour
         roomDirection = RotateDirection(roomDirection);
         RotateDirection();
         if(tileType != TileType.End)
-            NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+            NodeManager.Instance.SetGuideState(GuideState.Tile, this, true);
     }
 
     public void ResetTwin()
@@ -245,6 +261,9 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
+        if (isTwin)
+            return;
+
         MonsterOutCheck();
         TileMoveCheck();
     }
