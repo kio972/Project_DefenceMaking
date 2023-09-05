@@ -77,10 +77,6 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.endPoint = nextNode;
             if(GameManager.Instance.king != null)
                 GameManager.Instance.king.SetTile(nextNode);
-            //if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint) == null)
-            //    GameManager.Instance.speedController.SetSpeedZero();
-            //else
-            //    GameManager.Instance.speedController.SetSpeedNormal();
         }
 
         if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_All_Tile_Connected())
@@ -106,13 +102,14 @@ public class Tile : MonoBehaviour
         SetTileVisible(curNode != this.curNode);
     }
 
-    private void EndMoveing()
+    private void EndMoveing(bool resetNode = true)
     {
         twin.gameObject.SetActive(false);
         waitToMove = false;
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
-        //twin = null;
+        if(resetNode)
+            NodeManager.Instance.SetActiveNode(this.curNode, true);
         SetTileVisible(true);
     }
 
@@ -143,7 +140,7 @@ public class Tile : MonoBehaviour
                 AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
             }
 
-            EndMoveing();
+            EndMoveing(false);
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
             EndMoveing();
@@ -200,7 +197,7 @@ public class Tile : MonoBehaviour
         roomDirection = RotateDirection(roomDirection);
         RotateDirection();
         if(tileType != TileType.End)
-            NodeManager.Instance.SetGuideState(GuideState.Tile, this, true);
+            NodeManager.Instance.SetGuideState(GuideState.Tile, this);
     }
 
     public void ResetTwin()
@@ -236,11 +233,16 @@ public class Tile : MonoBehaviour
         if (twin == null)
         {
             InstanceTwin();
+            NodeManager.Instance.SetActiveNode(this.curNode, false);
             return;
         }
         else if (!twin.gameObject.activeSelf)
         {
             twin.gameObject.SetActive(true);
+            twin.transform.rotation = transform.rotation;
+            twin.pathDirection = new List<Direction>(pathDirection);
+            twin.roomDirection = new List<Direction>(roomDirection);
+            NodeManager.Instance.SetActiveNode(this.curNode, false);
             return;
         }
 

@@ -221,8 +221,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Tile tile = instancedObject.GetComponent<Tile>();
         if (tile != null)
         {
-            NodeManager.Instance.emptyNodes.Remove(curNode);
-            NodeManager.Instance.activeNodes.Add(curNode);
+            NodeManager.Instance.SetActiveNode(curNode, true);
             tile.MoveTile(curNode);
             tile.movable = true;
         }

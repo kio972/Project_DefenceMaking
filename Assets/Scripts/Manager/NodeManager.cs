@@ -29,7 +29,7 @@ public class NodeManager : IngameSingleton<NodeManager>
     #region GuidePart
     private GuideState guideState = GuideState.None;
 
-    public void SetGuideState(GuideState guideState, Tile tile = null, bool containOrigin = false)
+    public void SetGuideState(GuideState guideState, Tile tile = null)
     {
         //if (this.guideState == guideState)
         //    return;
@@ -45,7 +45,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.Tile:
                 if (tile == null)
                     return;
-                SetTileAvail(tile, containOrigin);
+                SetTileAvail(tile);
                 break;
             case GuideState.Trap:
                 SetTrapAvail();
@@ -121,11 +121,12 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     }
 
-    private void SetTileAvail(Tile targetTile, bool containOrigin = false)
+    private void SetTileAvail(Tile targetTile)
     {
         SetVirtualNode();
-        if (containOrigin)
-            virtualNodes.Add(targetTile.curNode);
+
+        if (virtualNodes.Contains(targetTile.curNode))
+            print("contain");
 
         List<Direction> targetNode_PathDirection = targetTile.PathDirection;
         List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
@@ -357,7 +358,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         if(node.neighborNodeDic.ContainsKey(direction))
         {
             TileNode curNode = node.neighborNodeDic[direction];
-            if(!activeNodes.Contains(curNode))
+            if(!activeNodes.Contains(curNode) && !virtualNodes.Contains(node))
             {
                 virtualNodes.Add(curNode);
             }
