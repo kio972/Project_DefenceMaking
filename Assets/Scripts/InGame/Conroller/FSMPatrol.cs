@@ -44,8 +44,8 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
         Battler curTarget = e.BattleCheck();
         if (curTarget != null)
         {
-            e.ChangeState(FSMAttack.Instance);
             e.curTarget = curTarget;
+            e.ChangeState(FSMAttack.Instance);
             return true;
         }
 
@@ -60,12 +60,15 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
 
     public void Enter(Battler e)
     {
-        if (e._Animator != null)
+        if (e._Animator != null && GameManager.Instance.timeScale != 0)
             e._Animator.SetBool("Move", true);
     }
 
     public void Excute(Battler e)
     {
+        if (e._Animator != null && GameManager.Instance.timeScale != 0 && !e._Animator.GetBool("Move"))
+            e._Animator.SetBool("Move", true);
+
         if (NeedChange(e))
             return;
 

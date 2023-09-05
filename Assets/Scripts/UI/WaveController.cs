@@ -9,13 +9,11 @@ public struct WaveData
 {
     public int number;
     public string adventurerName;
-    public string prefab;
 
-    public WaveData(string adventurerName, int number, string prefab)
+    public WaveData(string adventurerName, int number)
     {
         this.adventurerName = adventurerName;
         this.number = number;
-        this.prefab = prefab;
     }
 }
 
@@ -58,9 +56,7 @@ public class WaveController : MonoBehaviour
         {
             string adventurerName = DataManager.Instance.Wave_Table[i]["adventure"].ToString();
             int number = Convert.ToInt32(DataManager.Instance.Wave_Table[i]["num"]);
-            int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.Battler_Table, "name");
-            string prefab = DataManager.Instance.Battler_Table[adventurerIndex]["prefab"].ToString();
-            WaveData waveData = new WaveData(adventurerName, number, prefab);
+            WaveData waveData = new WaveData(adventurerName, number);
             curWave.Add(waveData);
         }
 
@@ -88,11 +84,7 @@ public class WaveController : MonoBehaviour
                 }
 
                 //모험가 스폰
-                GameObject prefab = Resources.Load<GameObject>("Prefab/Adventurer/" + waveData.prefab);
-                GameObject temp = Instantiate(prefab);
-                Adventurer adventurer = temp.GetComponent<Adventurer>();
-                adventurer.Init();
-                GameManager.Instance.adventurersList.Add(adventurer);
+                AdventurerPooling.Instance.SpawnAdventurer(waveData.adventurerName);
 
                 curEnemyNumber++;
 

@@ -25,11 +25,6 @@ public class CardDeckController : MonoBehaviour
 
     private bool initState = false;
 
-
-    [SerializeField]
-    private float minPos_Y = 1370;
-    [SerializeField]
-    private float maxPos_Y = 1820;
     [SerializeField]
     private int pointPadding = 2;
     [SerializeField]

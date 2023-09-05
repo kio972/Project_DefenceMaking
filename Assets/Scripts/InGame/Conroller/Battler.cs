@@ -86,6 +86,16 @@ public class Battler : FSM<Battler>
         }
     }
 
+    public void ResetNode()
+    {
+        crossedNodes = new List<TileNode>();
+        prevTile = null;
+        curTile = null;
+        nextTile = null;
+        lastCrossRoad = null;
+        directPass = false;
+    }
+
     private void RemoveBody()
     {
         gameObject.SetActive(false);
@@ -96,7 +106,6 @@ public class Battler : FSM<Battler>
         hpBar?.UpdateHp();
         isDead = true;
         StopAllCoroutines();
-        animator?.SetBool("Die", true);
         Invoke("RemoveBody", 2.5f);
         if(deadSound != null)
             AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance.fxVolume);
@@ -139,12 +148,12 @@ public class Battler : FSM<Battler>
             Dead();
     }
 
-    public void RotateCharacter(Vector3 direction)
+    public void RotateCharacter(Vector3 targetPos)
     {
         if (isDead)
             return;
 
-        Vector3 targetDirection = direction - transform.position;
+        Vector3 targetDirection = targetPos - transform.position;
         if (attackZone != null)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
@@ -368,8 +377,12 @@ public class Battler : FSM<Battler>
         }
     }
 
+    
+
     public virtual void Init()
     {
+        isDead = false;
+
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         SetRotation();
 

@@ -23,6 +23,9 @@ public class Adventurer : Battler
     {
         base.Init();
 
+        transform.position = NodeManager.Instance.startPoint.transform.position;
+        curTile = NodeManager.Instance.startPoint;
+
         adventurerIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
         if(adventurerIndex != -1)
         {

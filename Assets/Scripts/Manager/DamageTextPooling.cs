@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class DamageTextPooling : IngameSingleton<DamageTextPooling>
 {
-    public static DamageTextPooling instance;
-    public List<DamageText> damageTexts = new List<DamageText>();
+    private List<DamageText> damageTexts = new List<DamageText>();
 
     private DamageText InstantiateDamageText()
     {

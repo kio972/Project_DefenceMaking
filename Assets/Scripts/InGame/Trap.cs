@@ -13,6 +13,7 @@ public class Trap : MonoBehaviour
     private int duration;
     private float attackSpeed;
     private int attackCount = 0;
+    private int maxTarget = 1;
 
     private Dictionary<Battler, Coroutine> coroutineDic = new Dictionary<Battler, Coroutine>();
 
@@ -35,11 +36,16 @@ public class Trap : MonoBehaviour
     private void ExcuteAttack()
     {
         List<Battler> removeTargets = new List<Battler>();
+        int targetCount = 0;
         foreach(Battler target in targetList)
         {
+            if (targetCount >= maxTarget)
+                break;
+
             target.GetDamage(damage, null);
             if (target.isDead)
                 removeTargets.Add(target);
+            targetCount++;
         }
 
         attackCount++;
@@ -72,6 +78,7 @@ public class Trap : MonoBehaviour
         damage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPower"]);
         attackSpeed = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackSpeed"]);
         duration = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["duration"]);
+        maxTarget = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["targetCount"]);
 
         this.curTile = curTile;
         curTile.trap = this;

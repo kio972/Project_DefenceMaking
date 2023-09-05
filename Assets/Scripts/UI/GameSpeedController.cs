@@ -58,6 +58,7 @@ public class GameSpeedController : MonoBehaviour
     public void SetSpeedZero()
     {
         GameManager.Instance.timeScale = 0;
+        GameManager.Instance.SetCharAnimPause();
         SetButtonState();
     }
 

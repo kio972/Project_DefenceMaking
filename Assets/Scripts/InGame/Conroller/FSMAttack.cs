@@ -25,6 +25,7 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
     public void Enter(Battler e)
     {
         e.Play_AttackAnimation();
+        e.RotateCharacter(e.curTarget.transform.position);
     }
 
     public void Excute(Battler e)
