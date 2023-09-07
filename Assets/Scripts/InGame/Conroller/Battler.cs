@@ -130,6 +130,27 @@ public class Battler : FSM<Battler>
         }
     }
 
+    private void PlayDamageText(int damage, UnitType unitType, bool isCritical)
+    {
+        Color color = Color.white;
+        if(unitType == UnitType.Enemy)
+        {
+            if (isCritical)
+                color = new Color(0.3882353f, 0, 0, 1);
+            else
+                color = Color.red;
+        }
+        else if(unitType == UnitType.Player)
+        {
+            if (isCritical)
+                color = new Color(1, 0.9607843f, 0, 1);
+            else
+                color = Color.white;
+        }
+
+        DamageTextPooling.Instance.TextEffect(transform.position, damage, color);
+    }
+
     public virtual void GetDamage(int damage, Battler attacker)
     {
         if (isDead)
@@ -137,11 +158,13 @@ public class Battler : FSM<Battler>
 
         UpdateChaseTarget(attacker);
 
+        bool isCritical = false;
+
         int finalDamage = damage - armor;
         if (finalDamage <= 0)
             finalDamage = 1;
 
-        DamageTextPooling.Instance.TextEffect(transform.position, finalDamage);
+        PlayDamageText(finalDamage, unitType, isCritical);
 
         curHp -= finalDamage;
         if (curHp <= 0)
@@ -376,8 +399,6 @@ public class Battler : FSM<Battler>
             prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
         }
     }
-
-    
 
     public virtual void Init()
     {
