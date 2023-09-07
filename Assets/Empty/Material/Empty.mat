@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Empty
-  m_Shader: {fileID: -6465566751694194690, guid: fdf06bd496190a54c9d77315a1186fd5, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9d7d2c5fd11fbe040aeb5886a956a45f, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -24,9 +24,12 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
+    - _BumpScale: 0.5
+    - _Effect: 0
     - _FresnelPower: 1
     m_Colors:
     - _FresnelColor: {r: 0, g: 1, b: 0, a: 0}
+    - _HologramColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3276459456165518916
 MonoBehaviour:

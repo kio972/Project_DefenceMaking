@@ -51,6 +51,7 @@ MonoBehaviour:
   curTile: {fileID: 0}
   guideObject: {fileID: 6255858691695886935}
   setAvail: 0
+  guideColor: {fileID: 6685161419509108386}
 --- !u!1001 &689747315844935782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64,11 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4918990320660255716, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05
+      value: -0.016
       objectReference: {fileID: 0}
     - target: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
       propertyPath: m_LocalPosition.z
@@ -117,6 +122,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5694822683523041630, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
   m_PrefabInstance: {fileID: 689747315844935782}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5607467683378193282 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4918990320660255716, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}
+  m_PrefabInstance: {fileID: 689747315844935782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6685161419509108386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5607467683378193282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c028bfafa017a4645862bbeb1ca32e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseColor: {r: 0, g: 1, b: 0, a: 1}
+  effect: 0
 --- !u!23 &6255858691695886935 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6864400429462434353, guid: 46baa25cfeaa28843bd3e0f293a6f346, type: 3}

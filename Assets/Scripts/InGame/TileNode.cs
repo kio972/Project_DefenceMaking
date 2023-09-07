@@ -30,6 +30,8 @@ public class TileNode : MonoBehaviour
     public bool GuideActive { get => guideObject.gameObject.activeSelf; }
 
     public bool setAvail = false;
+    [SerializeField]
+    private PerObjectMaterialProperties guideColor;
 
     public void DeActiveGuide()
     {
@@ -55,7 +57,7 @@ public class TileNode : MonoBehaviour
         if (guideObject == null)
             return;
         guideObject.gameObject.SetActive(true);
-        guideObject.material.SetColor("_FresnelColor", color);
+        guideColor?.SetColor(color);
     }
 
     public void SetAvail(bool value)
@@ -67,13 +69,9 @@ public class TileNode : MonoBehaviour
         setAvail = value;
 
         if(value)
-        {
-            guideObject.material.SetColor("_FresnelColor", Color.green);
-        }
+            guideColor?.SetColor(Color.green);
         else
-        {
-            guideObject.material.SetColor("_FresnelColor", Color.red);
-        }
+            guideColor?.SetColor(Color.red);
     }
 
 
