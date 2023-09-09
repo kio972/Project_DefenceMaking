@@ -98,12 +98,13 @@ public class WaveController : MonoBehaviour
     {
         List<WaveData> waveData = SetWaveData(curWave);
         if (waveData != new List<WaveData>() && waveData.Count != 0)
-        {
             StartCoroutine(ISpawnWave(curWave, waveData));
+
+        List<WaveData> nextWave = SetWaveData(curWave + 1);
+        if (nextWave != new List<WaveData>() && waveData.Count != 0)
             return true;
-        }
         else
-            return false;
+             return false;
     }
 
     public void Init()

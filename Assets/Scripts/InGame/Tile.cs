@@ -65,6 +65,8 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.activeNodes.Remove(curNode);
         }
 
+        transform.SetParent(nextNode.transform, false);
+
         curNode = nextNode;
         if(!NodeManager.Instance.activeNodes.Contains(nextNode))
             NodeManager.Instance.activeNodes.Add(nextNode);
@@ -107,15 +109,15 @@ public class Tile : MonoBehaviour
         twin.gameObject.SetActive(false);
         waitToMove = false;
         InputManager.Instance.settingCard = false;
-        NodeManager.Instance.SetGuideState(GuideState.None);
         if(resetNode)
             NodeManager.Instance.SetActiveNode(this.curNode, true);
+        NodeManager.Instance.SetGuideState(GuideState.None);
         SetTileVisible(true);
     }
 
     private void InstanceTwin()
     {
-        twin = Instantiate(this);
+        twin = Instantiate(this, transform);
         twin.isTwin = true;
         twin.waitToMove = false;
     }
@@ -127,6 +129,7 @@ public class Tile : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
+            bool resetNode = true;
             if (curNode != null && curNode.setAvail)
             {
                 transform.rotation = twin.transform.rotation;
@@ -138,9 +141,10 @@ public class Tile : MonoBehaviour
                 MoveTile(curNode);
 
                 AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+                resetNode = false;
             }
 
-            EndMoveing(false);
+            EndMoveing(resetNode);
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
             EndMoveing();

@@ -303,6 +303,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if(curNode != null && curNode.GuideActive)
         {
+            instancedObject.transform.SetParent(curNode.transform, false);
             instancedObject.transform.position = curNode.transform.position;
         }
         else
