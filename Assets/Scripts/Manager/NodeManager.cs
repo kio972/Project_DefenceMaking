@@ -26,6 +26,16 @@ public class NodeManager : IngameSingleton<NodeManager>
     public TileNode startPoint;
     public TileNode endPoint;
 
+    private int minRow;
+    private int maxRow;
+    private int minCol;
+    private int maxCol;
+    public int MinRow { get => minRow; }
+    public int MaxRow { get => maxRow; }
+    public int MinCol { get => minCol; }
+    public int MaxCol { get => maxCol; }
+
+
     #region GuidePart
     private GuideState guideState = GuideState.None;
 
@@ -390,12 +400,25 @@ public class NodeManager : IngameSingleton<NodeManager>
             emptyNodes.Add(node);
     }
 
+    private void UpdateMinMaxRowCol(int row, int col)
+    {
+        if (row < minRow)
+            minRow = row;
+        if (row > maxRow)
+            maxRow = row;
+        if (col < minCol)
+            minCol = col;
+        if (col > maxCol)
+            maxCol = col;
+    }
+
     public TileNode InstanceNewNode(TileNode node, Direction direction, int[] index ,Transform parent = null)
     {
         Vector3 position = UtilHelper.GetGridPosition(node.transform.position, direction, 1f);
         TileNode newNode = Resources.Load<TileNode>("Prefab/Tile/EmptyTile");
         newNode = Instantiate(newNode);
         newNode.Init(index[0], index[1]);
+        UpdateMinMaxRowCol(index[0], index[1]);
         newNode.transform.position = position;
         if(parent != null)
             newNode.transform.SetParent(parent);

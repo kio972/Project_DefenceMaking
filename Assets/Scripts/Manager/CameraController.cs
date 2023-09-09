@@ -89,30 +89,49 @@ public class CameraController : MonoBehaviour
         transform.position = targetPos;
     }
 
+    private Vector3 ModifyMaxPosition(Vector3 position)
+    {
+        if(NodeManager.Instance == null)
+            return position;
 
-    private void WheelMove()
+        // 노드 중 row col값
+        position.x = Mathf.Clamp(position.x, NodeManager.Instance.MinCol, NodeManager.Instance.MaxCol);
+        position.z = Mathf.Clamp(position.z, NodeManager.Instance.MinRow, NodeManager.Instance.MaxRow);
+
+        return position;
+    }
+
+    private void WeelMove()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+        Vector3 targetPos = guideObject.position + (new Vector3(-mouseX, 0, -mouseY) * mouseMult * SettingManager.Instance.MouseSensitivity);
+        targetPos = ModifyMaxPosition(targetPos);
+        guideObject.position = targetPos;
+    }
+
+    private void KeyBoardMove()
+    {
+        float mouseX = Input.GetAxis("Horizontal");
+        float mouseY = Input.GetAxis("Vertical");
+        if (mouseX == 0 && mouseY == 0)
+            return;
+        Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.2f * mouseMult * SettingManager.Instance.MouseSensitivity);
+        targetPos = ModifyMaxPosition(targetPos);
+        guideObject.position = targetPos;
+    }
+
+    private void CamMove()
     {
         if (Input.GetKey(KeyCode.Mouse2))
-        {
-            float mouseX = Input.GetAxis("Mouse X");
-            float mouseY = Input.GetAxis("Mouse Y");
-            Vector3 targetPos = guideObject.position + (new Vector3(-mouseX, 0, -mouseY) * mouseMult * SettingManager.Instance.MouseSensitivity);
-            guideObject.position = targetPos;
-        }
+            WeelMove();
         else
-        {
-            float mouseX = Input.GetAxis("Horizontal");
-            float mouseY = Input.GetAxis("Vertical");
-            if (mouseX == 0 && mouseY == 0)
-                return;
-            Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.2f * mouseMult * SettingManager.Instance.MouseSensitivity);
-            guideObject.position = targetPos;
-        }
+            KeyBoardMove();
     }
 
     private void Update()
     {
-        WheelMove();
+        CamMove();
 
         if (MouseWheelCheck())
             SetCam();
