@@ -104,7 +104,7 @@ public class Tile : MonoBehaviour
         SetTileVisible(curNode != this.curNode);
     }
 
-    private void EndMoveing(bool resetNode = true)
+    public void EndMoveing(bool resetNode = true)
     {
         twin.gameObject.SetActive(false);
         waitToMove = false;
@@ -122,45 +122,29 @@ public class Tile : MonoBehaviour
         twin.waitToMove = false;
     }
 
-    private void CheckEndInput(TileNode curNode)
+    public void EndMove(TileNode curNode)
     {
-        if(!Movable)
-            EndMoveing();
-
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        bool resetNode = true;
+        if (curNode != null && curNode.setAvail)
         {
-            bool resetNode = true;
-            if (curNode != null && curNode.setAvail)
-            {
-                transform.rotation = twin.transform.rotation;
-                pathDirection = new List<Direction>(twin.pathDirection);
-                roomDirection = new List<Direction>(twin.roomDirection);
+            transform.rotation = twin.transform.rotation;
+            pathDirection = new List<Direction>(twin.pathDirection);
+            roomDirection = new List<Direction>(twin.roomDirection);
 
-                NodeManager.Instance.SetActiveNode(this.curNode, false);
-                NodeManager.Instance.SetActiveNode(curNode, true);
-                MoveTile(curNode);
+            NodeManager.Instance.SetActiveNode(this.curNode, false);
+            NodeManager.Instance.SetActiveNode(curNode, true);
+            MoveTile(curNode);
 
-                AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
-                resetNode = false;
-            }
-
-            EndMoveing(resetNode);
+            AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+            resetNode = false;
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse1))
-            EndMoveing();
+
+        EndMoveing(resetNode);
     }
 
     private void RotateDirection()
     {
         transform.rotation *= Quaternion.Euler(0f, 60f, 0f);
-    }
-
-    private void RotateCheck()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            twin.RotateTile();
-        }
     }
 
     public List<Direction> RotateDirection(List<Direction> pathDirection)
@@ -226,19 +210,16 @@ public class Tile : MonoBehaviour
         curNode.SetAvail(true);
         waitToMove = true;
 
-        InputManager.Instance.settingCard = true;
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
     }
 
-    private void TileMoveCheck()
+    public TileNode TileMoveCheck()
     {
-        if (!waitToMove)
-            return;
         if (twin == null)
         {
             InstanceTwin();
             NodeManager.Instance.SetActiveNode(this.curNode, false);
-            return;
+            return null;
         }
         else if (!twin.gameObject.activeSelf)
         {
@@ -247,13 +228,12 @@ public class Tile : MonoBehaviour
             twin.pathDirection = new List<Direction>(pathDirection);
             twin.roomDirection = new List<Direction>(roomDirection);
             NodeManager.Instance.SetActiveNode(this.curNode, false);
-            return;
+            return null;
         }
 
         TileNode curNode = UtilHelper.RayCastTile();
         UpdateMoveTilePos(curNode);
-        RotateCheck();
-        CheckEndInput(curNode);
+        return curNode;
     }
 
     private void MonsterOutCheck()
@@ -271,6 +251,5 @@ public class Tile : MonoBehaviour
             return;
 
         MonsterOutCheck();
-        TileMoveCheck();
     }
 }

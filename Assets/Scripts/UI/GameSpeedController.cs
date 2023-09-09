@@ -27,6 +27,21 @@ public class GameSpeedController : MonoBehaviour
     [SerializeField]
     private PopUpMessage popUpMessage;
 
+    private int prevState;
+
+    public void SetSpeedPrev()
+    {
+        switch(prevState)
+        {
+            case 1:
+                SetSpeedNormal(); break;
+            case 2:
+                SetSpeedFast(); break;
+            default:
+                SetSpeedNormal(); break;
+        }
+    }
+
     private void SetButtonState()
     {
         zeroImg.sprite = zeroSprite;
@@ -57,6 +72,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedZero()
     {
+        if (GameManager.Instance.timeScale != 0)
+            prevState = (int)GameManager.Instance.timeScale;
+
         GameManager.Instance.timeScale = 0;
         GameManager.Instance.SetCharAnimPause();
         SetButtonState();
