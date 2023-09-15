@@ -18,7 +18,9 @@ public enum UnitType
 
 public class Battler : FSM<Battler>
 {
-    public int damage;
+    protected int minDamage;
+    protected int maxDamage;
+    public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
     public int curHp;
     public int maxHp;
     public int armor;
@@ -96,7 +98,7 @@ public class Battler : FSM<Battler>
         directPass = false;
     }
 
-    private void RemoveBody()
+    protected virtual void RemoveBody()
     {
         gameObject.SetActive(false);
     }
@@ -385,7 +387,7 @@ public class Battler : FSM<Battler>
 
         if (curTarget != null && !curTarget.isDead)
         {
-            curTarget.GetDamage(damage, this);
+            curTarget.GetDamage(Damage, this);
             if (splashAttack)
                 SplashAttack(curTarget);
         }

@@ -99,7 +99,8 @@ public class Monster : Battler
             maxHp += PassiveManager.Instance.monsterHp_Weight;
 
             curHp = maxHp;
-            damage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["attackPower"]);
+            minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["attackPowerMin"]);
+            maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["attackPowerMax"]);
             float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["attackSpeed"].ToString(), out attackSpeed);
             armor = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["armor"]);
             float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["moveSpeed"].ToString(), out moveSpeed);

@@ -9,7 +9,10 @@ public class Trap : MonoBehaviour
     [SerializeField]
     private string battlerID;
 
-    private int damage;
+    protected int minDamage;
+    protected int maxDamage;
+    public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
+
     private int duration;
     private float attackSpeed;
     private int attackCount = 0;
@@ -42,7 +45,7 @@ public class Trap : MonoBehaviour
             if (targetCount >= maxTarget)
                 break;
 
-            target.GetDamage(damage, null);
+            target.GetDamage(Damage, null);
             if (target.isDead)
                 removeTargets.Add(target);
             targetCount++;
@@ -75,7 +78,8 @@ public class Trap : MonoBehaviour
     {
         trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
 
-        damage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPower"]);
+        minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPowerMin"]);
+        maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPowerMax"]);
         attackSpeed = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackSpeed"]);
         duration = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["duration"]);
         maxTarget = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["targetCount"]);
