@@ -141,6 +141,9 @@ public class InputManager : IngameSingleton<InputManager>
 
     private void TileMoveCheck()
     {
+        if (settingCard)
+            return;
+
         if (curTile != null)
         {
             TileNode node = curTile.TileMoveCheck();
@@ -162,8 +165,9 @@ public class InputManager : IngameSingleton<InputManager>
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null && node.curTile.Movable)
             {
-                node.curTile.ReadyForMove();
                 curTile = node.curTile;
+                print(curTile);
+                node.curTile.ReadyForMove();
             }
         }
     }

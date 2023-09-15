@@ -120,6 +120,7 @@ public class Tile : MonoBehaviour
         twin = Instantiate(this, transform);
         twin.isTwin = true;
         twin.waitToMove = false;
+        twin.transform.rotation = transform.rotation;
     }
 
     public void EndMove(TileNode curNode)
