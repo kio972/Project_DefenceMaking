@@ -44,12 +44,11 @@ public class LanguageText : MonoBehaviour
         mult = Mathf.Clamp(mult, 0.8f, 1.2f);
         float targetSize = Mathf.Round(originSize * mult);
         _Text.fontSize = targetSize;
-        originSize = temp;
     }
 
     public void ChangeLangauge(Languages language)
     {
-        if (keyStr == null || keyStr == "" || keyStr == string.Empty)
+        if (string.IsNullOrEmpty(keyStr))
             return;
 
         // 1. text의 key값으로 인덱스 불러오기

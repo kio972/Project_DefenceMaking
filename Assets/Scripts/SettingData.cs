@@ -9,4 +9,6 @@ public class SettingData
     public bool fullScreen = true;
     public int screenSizeIndex = 0;
     public float mouseSensitivity = 0.25f;
+    public int language = 0;
+    public int autoPlay = 0;
 }

@@ -113,6 +113,9 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(this.curNode, true);
         NodeManager.Instance.SetGuideState(GuideState.None);
         SetTileVisible(true);
+
+        if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+            GameManager.Instance.speedController.SetSpeedPrev(false);
     }
 
     private void InstanceTwin()
@@ -195,9 +198,28 @@ public class Tile : MonoBehaviour
         twin.roomDirection = roomDirection;
     }
 
+    private void SetTwin()
+    {
+        if (twin == null)
+        {
+            InstanceTwin();
+            NodeManager.Instance.SetActiveNode(this.curNode, false);
+        }
+        else if (!twin.gameObject.activeSelf)
+        {
+            twin.gameObject.SetActive(true);
+            twin.transform.rotation = transform.rotation;
+            twin.pathDirection = new List<Direction>(pathDirection);
+            twin.roomDirection = new List<Direction>(roomDirection);
+            NodeManager.Instance.SetActiveNode(this.curNode, false);
+        }
+    }
+
     public void ReadyForMove()
     {
-        switch(tileType)
+        SetTwin();
+
+        switch (tileType)
         {
             case TileType.End:
                 UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
@@ -207,7 +229,7 @@ public class Tile : MonoBehaviour
                 NodeManager.Instance.SetGuideState(GuideState.Tile, this);
                 break;
         }
-        
+
         curNode.SetAvail(true);
         waitToMove = true;
 
@@ -216,21 +238,7 @@ public class Tile : MonoBehaviour
 
     public TileNode TileMoveCheck()
     {
-        if (twin == null)
-        {
-            InstanceTwin();
-            NodeManager.Instance.SetActiveNode(this.curNode, false);
-            return null;
-        }
-        else if (!twin.gameObject.activeSelf)
-        {
-            twin.gameObject.SetActive(true);
-            twin.transform.rotation = transform.rotation;
-            twin.pathDirection = new List<Direction>(pathDirection);
-            twin.roomDirection = new List<Direction>(roomDirection);
-            NodeManager.Instance.SetActiveNode(this.curNode, false);
-            return null;
-        }
+        
 
         TileNode curNode = UtilHelper.RayCastTile();
         UpdateMoveTilePos(curNode);

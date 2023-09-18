@@ -19,6 +19,8 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.screen_FullSize = settingData.fullScreen;
         SettingManager.Instance.ScreenSizeIndex = settingData.screenSizeIndex;
         SettingManager.Instance.mouseSensitivity = settingData.mouseSensitivity;
+        SettingManager.Instance.language = (Languages)settingData.language;
+        SettingManager.Instance.autoPlay = (AutoPlaySetting)settingData.autoPlay;
     }
 
     public void SaveSettingData()
@@ -28,7 +30,8 @@ public class SaveManager : Singleton<SaveManager>
         settingData.fullScreen = SettingManager.Instance.screen_FullSize;
         settingData.screenSizeIndex = SettingManager.Instance.ScreenSizeIndex;
         settingData.mouseSensitivity = SettingManager.Instance.mouseSensitivity;
-
+        settingData.language = (int)SettingManager.Instance.language;
+        settingData.autoPlay = (int)SettingManager.Instance.autoPlay;
         SaveData(settingData, settingDataFileName);
     }
 

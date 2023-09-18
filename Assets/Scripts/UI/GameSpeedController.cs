@@ -29,16 +29,16 @@ public class GameSpeedController : MonoBehaviour
 
     private int prevState;
 
-    public void SetSpeedPrev()
+    public void SetSpeedPrev(bool showPopUp = true)
     {
         switch(prevState)
         {
             case 1:
-                SetSpeedNormal(); break;
+                SetSpeedNormal(showPopUp); break;
             case 2:
-                SetSpeedFast(); break;
+                SetSpeedFast(showPopUp); break;
             default:
-                SetSpeedNormal(); break;
+                SetSpeedNormal(showPopUp); break;
         }
     }
 
@@ -92,11 +92,37 @@ public class GameSpeedController : MonoBehaviour
         SetButtonState();
     }
 
+    public void SetSpeedNormal(bool showPopUp)
+    {
+        if (!Is_All_Tile_Connected())
+        {
+            if (showPopUp)
+                popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            return;
+        }
+
+        GameManager.Instance.timeScale = 1;
+        SetButtonState();
+    }
+
     public void SetSpeedFast()
     {
         if (!Is_All_Tile_Connected())
         {
             popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            return;
+        }
+
+        GameManager.Instance.timeScale = 2;
+        SetButtonState();
+    }
+
+    public void SetSpeedFast(bool showPopUp)
+    {
+        if (!Is_All_Tile_Connected())
+        {
+            if(showPopUp)
+                popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
         }
 

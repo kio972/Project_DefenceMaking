@@ -295,6 +295,19 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         DrawLine(false);
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
+
+        if(cardType == CardType.MapTile)
+        {
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
+        }
+        else
+        {
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
+        }
+        
+
     }
 
     private void UpdateObjectPosition()

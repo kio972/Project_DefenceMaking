@@ -9,7 +9,7 @@ public class SensitivityController : MonoBehaviour
     private Slider slider;
 
 
-    private void SilderUpdateCheck()
+    public void SilderUpdateCheck()
     {
         if (slider == null)
             return;
@@ -21,10 +21,5 @@ public class SensitivityController : MonoBehaviour
     {
         if (slider != null)
             slider.value = SettingManager.Instance.mouseSensitivity;
-    }
-
-    private void Update()
-    {
-        SilderUpdateCheck();
     }
 }
