@@ -8,6 +8,7 @@ public class CSVLoader
     {
         string str = textFile.text;
 
+        str = str.Replace("'\n'", "'/n'");
         str = str.Replace("'/n'", "<br>");
         str = str.Replace("','", "<c>");
         string[] lines = str.Split('\n');

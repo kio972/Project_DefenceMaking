@@ -9,8 +9,26 @@ public enum ScreenSize
 
 }
 
+public enum Languages
+{
+    korean,
+    english,
+}
+
+public enum AutoPlaySetting
+{
+    off,
+    setTile,
+    always,
+}
+
 public class SettingManager : Singleton<SettingManager>
 {
+    //게임플레이
+    public Languages language = Languages.korean;
+    public AutoPlaySetting autoPlay = AutoPlaySetting.off;
+    public float textSize = 1f;
+
     public float bgmVolume = 1f;
     public float fxVolume = 1f;
     public bool screen_FullSize = true;
@@ -62,6 +80,26 @@ public class SettingManager : Singleton<SettingManager>
         width = System.Convert.ToInt32(sizes[0]);
         height = System.Convert.ToInt32(sizes[1]);
         return new int[2] { width, height };
+    }
+
+    public void SetLanguage(Languages language)
+    {
+        LanguageText[] texts = FindObjectsOfType<LanguageText>(true);
+
+        foreach (LanguageText text in texts)
+        {
+            text.ChangeLangauge(language);
+        }
+    }
+
+    public void SetTextSize(float mult)
+    {
+        LanguageText[] texts = FindObjectsOfType<LanguageText>(true);
+
+        foreach (LanguageText text in texts)
+        {
+            text.ChangeTextSize(mult);
+        }
     }
 
     public void Set_ScreenSize(ScreenSize screenSize)

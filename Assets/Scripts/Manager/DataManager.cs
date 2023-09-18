@@ -9,12 +9,14 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> deckList;
     private List<Dictionary<string, object>> battler_Table;
     private List<Dictionary<string, object>> timeRate_Table;
+    private List<Dictionary<string, object>> language_Table;
 
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
     public List<Dictionary<string, object>> TimeRate_Table { get => timeRate_Table; }
+    public List<Dictionary<string, object>> Language_Table { get => language_Table; }
 
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
@@ -22,6 +24,8 @@ public class DataManager : Singleton<DataManager>
 
     private List<int> pathCard_Indexs;
     private List<int> roomCard_Indexs;
+
+
 
     public List<int> TileCard_Indexs
     {
@@ -85,6 +89,7 @@ public class DataManager : Singleton<DataManager>
     private string deckList_DataPath = "Data/deckList";
     private string battler_Table_DataPath = "Data/battlerTable";
     private string timeRate_Table_DataPath = "Data/timeData";
+    private string language_Table_DataPath = "Data/languageData";
 
     private void Init()
     {
@@ -93,5 +98,6 @@ public class DataManager : Singleton<DataManager>
         deckList = CSVLoader.LoadCSV(Resources.Load<TextAsset>(deckList_DataPath));
         battler_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(battler_Table_DataPath));
         timeRate_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(timeRate_Table_DataPath));
+        language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
     }
 }
