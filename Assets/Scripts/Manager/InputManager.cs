@@ -2,96 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ControlKey
-{
-    None,
-    CameraMoveUp,
-    CameraMoveDown,
-    CameraMoveLeft,
-    CameraMoveRight,
-    CameraReset,
-    CameraResetAssist,
-
-    SpeedControl0,
-    SpeedControl1,
-    SpeedControl2,
-
-    ControlBasic,
-    ControlCancel,
-    RotateTile,
-}
-
 public class InputManager : IngameSingleton<InputManager>
 {
-    #region InputKeys
-    public KeyCode[] nextMessageKeys = { KeyCode.Mouse0 };
-    public KeyCode key_Camera_MoveUp = KeyCode.W;
-    public KeyCode key_Camera_MoveDown = KeyCode.S;
-    public KeyCode key_Camera_MoveLeft = KeyCode.A;
-    public KeyCode key_Camera_MoveRight = KeyCode.D;
-    public KeyCode key_Camera_Reset = KeyCode.KeypadEnter;
-    public KeyCode key_Camera_ResetAssist = KeyCode.LeftShift;
-
-    public KeyCode key_SpeedControl_Zero = KeyCode.Space;
-    public KeyCode key_SpeedControl_One = KeyCode.Alpha1;
-    public KeyCode key_SpeedControl_Double = KeyCode.Alpha2;
-
-    public KeyCode key_BasicControl = KeyCode.Mouse0;
-    public KeyCode key_CancelControl = KeyCode.Mouse1;
-
-    public KeyCode key_RotateTile = KeyCode.R;
-
-    private Dictionary<ControlKey, KeyCode> controlKeys = new Dictionary<ControlKey, KeyCode>();
-
-    private List<KeyCode> invalidKeys = new List<KeyCode>()
-    {
-        KeyCode.Escape,
-    };
-
-    public bool IsValidKey(KeyCode value)
-    {
-        foreach (KeyCode key in invalidKeys)
-        {
-            if (key == value)
-                return false;
-        }
-
-        return true;
-    }
-
-    public KeyCode GetValue(ControlKey key)
-    {
-        if (controlKeys.ContainsKey(key))
-            return controlKeys[key];
-        else
-            return KeyCode.None;
-    }
-
-    public ControlKey GetKey(KeyCode value)
-    {
-        foreach (var kvp in controlKeys)
-        {
-            if (kvp.Value == value)
-            {
-                return kvp.Key;
-            }
-        }
-        // 해당 value를 가진 ControlKey 키가 없는 경우 기본값인 ControlKey.None 반환
-        return ControlKey.None;
-    }
-
-    public void SetKey(ControlKey targetKey, KeyCode value)
-    {
-        if (controlKeys.ContainsKey(targetKey))
-        {
-            controlKeys[targetKey] = value;
-        }
-        else
-        {
-            controlKeys.Add(targetKey, value);
-        }
-    }
-    #endregion
 
     public TileNode testTile;
 
@@ -120,16 +32,9 @@ public class InputManager : IngameSingleton<InputManager>
 
     }
 
-    void Init()
-    {
-        if (endPointPrefab == null)
-            endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
-    }
-
-
     public void Call()
     {
-
+        //InputManager Instance 생성 함수
     }
 
     private void InputCheck()
@@ -147,20 +52,20 @@ public class InputManager : IngameSingleton<InputManager>
         if (curTile != null)
         {
             TileNode node = curTile.TileMoveCheck();
-            if (Input.GetKeyDown(key_RotateTile))
+            if (Input.GetKeyDown(SettingManager.Instance.key_RotateTile._CurKey))
                 curTile.twin.RotateTile();
-            if (!curTile.Movable || Input.GetKeyUp(key_CancelControl))
+            if (!curTile.Movable || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
             {
                 curTile.EndMoveing();
                 curTile = null;
             }
-            else if (Input.GetKeyUp(key_BasicControl))
+            else if (Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey))
             {
                 curTile.EndMove(node);
                 curTile = null;
             }
         }
-        else if (Input.GetKey(key_BasicControl))
+        else if (Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey))
         {
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null && node.curTile.Movable)
@@ -174,31 +79,37 @@ public class InputManager : IngameSingleton<InputManager>
 
     private void CameraResetCheck()
     {
-        if (Input.GetKeyDown(key_Camera_Reset))
+        if (Input.GetKeyDown(SettingManager.Instance.key_Camera_Reset._CurKey))
         {
             CameraController cameraController = FindObjectOfType<CameraController>();
             if (cameraController != null)
-                cameraController.ResetCamPos(Input.GetKey(key_Camera_ResetAssist));
+                cameraController.ResetCamPos(Input.GetKey(SettingManager.Instance.key_Camera_ResetAssist._CurKey));
         }
     }
 
     private void SpeedControlCheck()
     {
-        if(Input.GetKeyDown(key_SpeedControl_Zero))
+        if(Input.GetKeyDown(SettingManager.Instance.key_SpeedControl_Zero._CurKey))
         {
             if (GameManager.Instance.timeScale == 0)
                 GameManager.Instance.speedController.SetSpeedPrev();
             else
                 GameManager.Instance.speedController.SetSpeedZero();
         }
-        else if(Input.GetKeyDown(key_SpeedControl_One))
+        else if(Input.GetKeyDown(SettingManager.Instance.key_SpeedControl_One._CurKey))
         {
             GameManager.Instance.speedController.SetSpeedNormal();
         }
-        else if(Input.GetKeyDown(key_SpeedControl_Double))
+        else if(Input.GetKeyDown(SettingManager.Instance.key_SpeedControl_Double._CurKey))
         {
             GameManager.Instance.speedController.SetSpeedFast();
         }
+    }
+
+    void Init()
+    {
+        if (endPointPrefab == null)
+            endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
     }
 
     // Update is called once per frame

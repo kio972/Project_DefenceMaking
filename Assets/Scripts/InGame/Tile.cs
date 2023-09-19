@@ -113,9 +113,6 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(this.curNode, true);
         NodeManager.Instance.SetGuideState(GuideState.None);
         SetTileVisible(true);
-
-        if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
-            GameManager.Instance.speedController.SetSpeedPrev(false);
     }
 
     private void InstanceTwin()
@@ -141,6 +138,9 @@ public class Tile : MonoBehaviour
 
             AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
             resetNode = false;
+
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         EndMoveing(resetNode);

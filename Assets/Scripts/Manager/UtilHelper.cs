@@ -5,9 +5,21 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public static class UtilHelper
 {
+    public static void SetUIColor(Color color, GameObject ui)
+    {
+        Image[] images = ui.GetComponentsInChildren<Image>();
+        TextMeshProUGUI[] texts = ui.GetComponentsInChildren<TextMeshProUGUI>();
+
+        foreach (Image image in images)
+            image.color = color;
+        foreach (TextMeshProUGUI text in texts)
+            text.color = color;
+    }
+
     public static float CalCulateDistance(Transform origin, Transform target)
     {
         Vector3 originPos = origin.position;

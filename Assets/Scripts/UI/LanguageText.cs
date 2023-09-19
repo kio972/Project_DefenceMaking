@@ -46,8 +46,10 @@ public class LanguageText : MonoBehaviour
         _Text.fontSize = targetSize;
     }
 
-    public void ChangeLangauge(Languages language)
+    public void ChangeLangauge(Languages language, string key = null)
     {
+        if (key != null)
+            keyStr = key;
         if (string.IsNullOrEmpty(keyStr))
             return;
 

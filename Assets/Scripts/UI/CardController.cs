@@ -224,6 +224,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             NodeManager.Instance.SetActiveNode(curNode, true);
             tile.MoveTile(curNode);
             tile.movable = true;
+
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
@@ -237,6 +240,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             NodeManager.Instance.emptyNodes.Remove(curNode);
             NodeManager.Instance.activeNodes.Add(curNode);
             environment.Init(curNode);
+
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
@@ -251,6 +257,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             monster.transform.position = curNode.transform.position;
             monster.Init();
             curNode.curTile.monster = monster;
+
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance.fxVolume);
@@ -263,6 +272,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         {
             trap.transform.SetParent(curNode.curTile.transform);
             trap.Init(curNode.curTile);
+
+            if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+                GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance.fxVolume);
@@ -295,19 +307,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         DrawLine(false);
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
-
-        if(cardType == CardType.MapTile)
-        {
-            if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
-                GameManager.Instance.speedController.SetSpeedPrev(false);
-        }
-        else
-        {
-            if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
-                GameManager.Instance.speedController.SetSpeedPrev(false);
-        }
-        
-
     }
 
     private void UpdateObjectPosition()
@@ -365,8 +364,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             monster.SetRotation();
         }
 
-        //targetCollider = instancedObject.GetComponentInChildren<Collider>();
-        //if(targetCollider != null ) { targetCollider.enabled = false; }
         InputManager.Instance.settingCard = true;
         //카드 종류별 처리
         switch (cardType)

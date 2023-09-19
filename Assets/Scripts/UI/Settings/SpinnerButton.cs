@@ -64,5 +64,7 @@ public abstract class SpinnerButton : MonoBehaviour
             return;
 
         text.text = values[index];
+        LanguageText languageText = text.GetComponent<LanguageText>();
+        languageText?.ChangeLangauge(SettingManager.Instance.language, values[index]);
     }
 }

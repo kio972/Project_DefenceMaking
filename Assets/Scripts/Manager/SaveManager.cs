@@ -21,7 +21,15 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.mouseSensitivity = settingData.mouseSensitivity;
         SettingManager.Instance.language = (Languages)settingData.language;
         SettingManager.Instance.autoPlay = (AutoPlaySetting)settingData.autoPlay;
-    }
+
+        SettingManager.Instance.key_Camera_MoveUp.SetCurKey((KeyCode)settingData.key_Camera_MoveUp);
+        SettingManager.Instance.key_Camera_MoveDown.SetCurKey((KeyCode)settingData.key_Camera_MoveDown);
+        SettingManager.Instance.key_Camera_MoveLeft.SetCurKey((KeyCode)settingData.key_Camera_MoveLeft);
+        SettingManager.Instance.key_Camera_MoveRight.SetCurKey((KeyCode)settingData.key_Camera_MoveRight);
+        SettingManager.Instance.key_SpeedControl_Zero.SetCurKey((KeyCode)settingData.key_SpeedControl_Zero);
+        SettingManager.Instance.key_SpeedControl_One.SetCurKey((KeyCode)settingData.key_SpeedControl_One);
+        SettingManager.Instance.key_SpeedControl_Double.SetCurKey((KeyCode)settingData.key_SpeedControl_Double);
+    }                               
 
     public void SaveSettingData()
     {
@@ -32,6 +40,15 @@ public class SaveManager : Singleton<SaveManager>
         settingData.mouseSensitivity = SettingManager.Instance.mouseSensitivity;
         settingData.language = (int)SettingManager.Instance.language;
         settingData.autoPlay = (int)SettingManager.Instance.autoPlay;
+
+        settingData.key_Camera_MoveUp = (int)SettingManager.Instance.key_Camera_MoveUp._CurKey;
+        settingData.key_Camera_MoveDown = (int)SettingManager.Instance.key_Camera_MoveDown._CurKey;
+        settingData.key_Camera_MoveLeft = (int)SettingManager.Instance.key_Camera_MoveLeft._CurKey;
+        settingData.key_Camera_MoveRight = (int)SettingManager.Instance.key_Camera_MoveRight._CurKey;
+        settingData.key_SpeedControl_Zero = (int)SettingManager.Instance.key_SpeedControl_Zero._CurKey;
+        settingData.key_SpeedControl_One = (int)SettingManager.Instance.key_SpeedControl_One._CurKey;
+        settingData.key_SpeedControl_Double = (int)SettingManager.Instance.key_SpeedControl_Double._CurKey;
+
         SaveData(settingData, settingDataFileName);
     }
 

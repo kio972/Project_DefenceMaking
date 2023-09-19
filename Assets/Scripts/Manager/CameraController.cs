@@ -105,18 +105,29 @@ public class CameraController : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-        Vector3 targetPos = guideObject.position + (new Vector3(-mouseX, 0, -mouseY) * mouseMult * SettingManager.Instance.MouseSensitivity);
+        Vector3 targetPos = guideObject.position + (new Vector3(-mouseX, 0, -mouseY) * mouseMult * SettingManager.Instance.mouseSensitivity);
         targetPos = ModifyMaxPosition(targetPos);
         guideObject.position = targetPos;
     }
 
     private void KeyBoardMove()
     {
-        float mouseX = Input.GetAxis("Horizontal");
-        float mouseY = Input.GetAxis("Vertical");
+        float mouseX = 0;
+        float mouseY = 0;
+
+        if (Input.GetKey(SettingManager.Instance.key_Camera_MoveLeft._CurKey))
+            mouseX = -1f;
+        else if (Input.GetKey(SettingManager.Instance.key_Camera_MoveRight._CurKey))
+            mouseX = 1f;
+
+        if (Input.GetKey(SettingManager.Instance.key_Camera_MoveDown._CurKey))
+            mouseY = -1f;
+        else if (Input.GetKey(SettingManager.Instance.key_Camera_MoveUp._CurKey))
+            mouseY = 1f;
+
         if (mouseX == 0 && mouseY == 0)
             return;
-        Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.2f * mouseMult * SettingManager.Instance.MouseSensitivity);
+        Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.1f * mouseMult * SettingManager.Instance.mouseSensitivity);
         targetPos = ModifyMaxPosition(targetPos);
         guideObject.position = targetPos;
     }
