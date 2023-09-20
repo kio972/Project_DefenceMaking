@@ -49,6 +49,9 @@ public class GameManager : IngameSingleton<GameManager>
     private bool isInit = false;
     public bool IsInit { get => isInit; }
 
+
+    public PopUpMessage popUpMessage;
+
     public void SetCharAnimPause()
     {
         foreach(Battler battler in adventurersList)
@@ -201,6 +204,10 @@ public class GameManager : IngameSingleton<GameManager>
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);
+
+        if (popUpMessage == null)
+            popUpMessage = FindObjectOfType<PopUpMessage>(true);
+
         isInit = true;
     }
 }

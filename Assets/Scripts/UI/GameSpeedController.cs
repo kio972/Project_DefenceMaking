@@ -24,8 +24,7 @@ public class GameSpeedController : MonoBehaviour
     public Image normalImg;
     public Image fastImg;
 
-    [SerializeField]
-    private PopUpMessage popUpMessage;
+    
 
     private int prevState;
 
@@ -84,7 +83,7 @@ public class GameSpeedController : MonoBehaviour
     {
         if (!Is_All_Tile_Connected())
         {
-            popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
         }
 
@@ -97,7 +96,7 @@ public class GameSpeedController : MonoBehaviour
         if (!Is_All_Tile_Connected())
         {
             if (showPopUp)
-                popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+                GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
         }
 
@@ -109,7 +108,7 @@ public class GameSpeedController : MonoBehaviour
     {
         if (!Is_All_Tile_Connected())
         {
-            popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
         }
 
@@ -122,7 +121,7 @@ public class GameSpeedController : MonoBehaviour
         if (!Is_All_Tile_Connected())
         {
             if(showPopUp)
-                popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+                GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
             return;
         }
 

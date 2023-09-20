@@ -135,6 +135,7 @@ public class Battler : FSM<Battler>
     private void PlayDamageText(int damage, UnitType unitType, bool isCritical)
     {
         Color color = Color.white;
+        float fontSize = 27f;
         if(unitType == UnitType.Enemy)
         {
             if (isCritical)
@@ -150,7 +151,10 @@ public class Battler : FSM<Battler>
                 color = Color.white;
         }
 
-        DamageTextPooling.Instance.TextEffect(transform.position, damage, color);
+        if (isCritical)
+            fontSize = 34f;
+
+        DamageTextPooling.Instance.TextEffect(transform.position, damage, fontSize, color, isCritical);
     }
 
     public virtual void GetDamage(int damage, Battler attacker)

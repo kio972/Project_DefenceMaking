@@ -260,8 +260,17 @@ public class CardDeckController : MonoBehaviour
 
     public void DrawDeck()
     {
-        if (GameManager.Instance.gold < cardPrice || hand_CardNumber >= maxCardNumber)
+        if (hand_CardNumber >= maxCardNumber)
+        {
+            GameManager.Instance.popUpMessage?.ToastMsg("손 패가 가득 찼습니다");
             return;
+        }
+
+        if (GameManager.Instance.gold < cardPrice)
+        {
+            GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
+            return;
+        }
 
         GameManager.Instance.gold -= cardPrice;
         DrawCard();

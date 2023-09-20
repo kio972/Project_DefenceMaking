@@ -12,7 +12,7 @@ public class DamageTextPooling : IngameSingleton<DamageTextPooling>
         return Instantiate(temp, transform);
     }
 
-    public void TextEffect(Vector3 pos, int value, Color color, bool isHeal = false)
+    public void TextEffect(Vector3 pos, int value, float fontSize, Color color, bool isBold, bool isHeal = false)
     {
         DamageText target = null;
         foreach(DamageText damageText in damageTexts)
@@ -30,7 +30,7 @@ public class DamageTextPooling : IngameSingleton<DamageTextPooling>
             damageTexts.Add(target);
         }
 
-        target.StartEffect(value, color, isHeal);
+        target.StartEffect(value, fontSize, color, isBold, isHeal);
         RectTransform rect = target.transform.GetComponent<RectTransform>();
         Vector3 offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
         rect.position = pos + Vector3.up + offset;
