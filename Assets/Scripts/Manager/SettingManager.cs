@@ -146,9 +146,19 @@ public class SettingManager : Singleton<SettingManager>
 
     #endregion
 
+    #region AudioSetting
+    public float masterVolume = 1f;
     public float bgmVolume = 1f;
     public float fxVolume = 1f;
-    
+    public float uiVolume = 1f;
+    public bool muteOnBackground = false;
+
+    public float _BGMVolume { get { return bgmVolume * masterVolume; } }
+    public float _FxVolume { get { return fxVolume * masterVolume; } }
+    public float _UIVolume { get { return uiVolume * masterVolume; } }
+
+    #endregion
+
     public void Set_FPSLimit(bool value)
     {
         if (value)

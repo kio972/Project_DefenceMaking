@@ -14,10 +14,17 @@ public class SaveManager : Singleton<SaveManager>
     public void LoadSettingData()
     {
         settingData = LoadData<SettingData>(settingDataFileName);
+        SettingManager.Instance.masterVolume = settingData.volume_Master;
         SettingManager.Instance.bgmVolume = settingData.volume_Bgm;
         SettingManager.Instance.fxVolume = settingData.volume_Fxs;
+        SettingManager.Instance.uiVolume = settingData.volume_UI;
+        SettingManager.Instance.muteOnBackground = settingData.muteOnBackground;
+
         SettingManager.Instance.screen_FullSize = settingData.fullScreen;
         SettingManager.Instance.ScreenSizeIndex = settingData.screenSizeIndex;
+        SettingManager.Instance.mouse_Confined = settingData.mouseConfined;
+        SettingManager.Instance.fpsLimit = settingData.fpsLimit;
+
         SettingManager.Instance.mouseSensitivity = settingData.mouseSensitivity;
         SettingManager.Instance.language = (Languages)settingData.language;
         SettingManager.Instance.autoPlay = (AutoPlaySetting)settingData.autoPlay;
@@ -29,17 +36,21 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.key_SpeedControl_Zero.SetCurKey((KeyCode)settingData.key_SpeedControl_Zero);
         SettingManager.Instance.key_SpeedControl_One.SetCurKey((KeyCode)settingData.key_SpeedControl_One);
         SettingManager.Instance.key_SpeedControl_Double.SetCurKey((KeyCode)settingData.key_SpeedControl_Double);
-
-        SettingManager.Instance.mouse_Confined = settingData.mouseConfined;
-        SettingManager.Instance.fpsLimit = settingData.fpsLimit;
     }                               
 
     public void SaveSettingData()
     {
+        settingData.volume_Master = SettingManager.Instance.masterVolume;
         settingData.volume_Bgm = SettingManager.Instance.bgmVolume;
         settingData.volume_Fxs = SettingManager.Instance.fxVolume;
+        settingData.volume_UI = SettingManager.Instance.uiVolume;
+        settingData.muteOnBackground = SettingManager.Instance.muteOnBackground;
+
         settingData.fullScreen = SettingManager.Instance.screen_FullSize;
         settingData.screenSizeIndex = SettingManager.Instance.ScreenSizeIndex;
+        settingData.mouseConfined = SettingManager.Instance.mouse_Confined;
+        settingData.fpsLimit = SettingManager.Instance.fpsLimit;
+
         settingData.mouseSensitivity = SettingManager.Instance.mouseSensitivity;
         settingData.language = (int)SettingManager.Instance.language;
         settingData.autoPlay = (int)SettingManager.Instance.autoPlay;
@@ -51,9 +62,6 @@ public class SaveManager : Singleton<SaveManager>
         settingData.key_SpeedControl_Zero = (int)SettingManager.Instance.key_SpeedControl_Zero._CurKey;
         settingData.key_SpeedControl_One = (int)SettingManager.Instance.key_SpeedControl_One._CurKey;
         settingData.key_SpeedControl_Double = (int)SettingManager.Instance.key_SpeedControl_Double._CurKey;
-
-        settingData.mouseConfined = SettingManager.Instance.mouse_Confined;
-        settingData.fpsLimit = SettingManager.Instance.fpsLimit;
 
         SaveData(settingData, settingDataFileName);
     }

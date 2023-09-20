@@ -145,7 +145,7 @@ public class GameManager : IngameSingleton<GameManager>
         if(timer > 720f && dailyIncome)
         {
             gold += 100 + PassiveManager.Instance.income_Weight;
-            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
             dailyIncome = false;
         }
 
@@ -164,7 +164,7 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             NodeManager.Instance.LockMovableTiles();
 
-            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
         }
     }
 
@@ -197,7 +197,7 @@ public class GameManager : IngameSingleton<GameManager>
         SpawnKing();
         SetWaveSpeed();
 
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
         cardDeckController.Mulligan();
 

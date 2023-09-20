@@ -52,7 +52,7 @@ public class Trap : MonoBehaviour
         }
 
         attackCount++;
-        AudioManager.Instance.Play2DSound("Attack_trap", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Attack_trap", SettingManager.Instance._FxVolume);
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);

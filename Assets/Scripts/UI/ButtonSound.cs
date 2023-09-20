@@ -17,7 +17,7 @@ public class ButtonSound : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (soundOnClick)
         {
-            AudioManager.Instance.Play2DSound(soundOnClip, SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound(soundOnClip, SettingManager.Instance._UIVolume);
         }
     }
 
@@ -25,7 +25,7 @@ public class ButtonSound : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (soundOnHover)
         {
-            AudioManager.Instance.Play2DSound(soundOnHoverClip, SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound(soundOnHoverClip, SettingManager.Instance._UIVolume);
         }
     }
 
@@ -33,7 +33,7 @@ public class ButtonSound : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (soundOnUnHover)
         {
-            AudioManager.Instance.Play2DSound(soundOnUnHoverClip, SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound(soundOnUnHoverClip, SettingManager.Instance._UIVolume);
         }
     }
 }

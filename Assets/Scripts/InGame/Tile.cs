@@ -136,7 +136,7 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(curNode, true);
             MoveTile(curNode);
 
-            AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
             resetNode = false;
 
             if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
@@ -233,7 +233,7 @@ public class Tile : MonoBehaviour
         curNode.SetAvail(true);
         waitToMove = true;
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
     public TileNode TileMoveCheck()

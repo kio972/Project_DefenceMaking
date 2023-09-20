@@ -63,7 +63,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         transform.rotation = Quaternion.identity;
         transform.SetAsLastSibling();
 
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -229,7 +229,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                 GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
     private void SetEnvironment()
@@ -245,7 +245,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                 GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
     private void SetMonster()
@@ -262,7 +262,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                 GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
     }
 
     private void SetTrap()
@@ -277,7 +277,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                 GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
     }
 
     private void SetObjectOnMap(bool cancel = false)

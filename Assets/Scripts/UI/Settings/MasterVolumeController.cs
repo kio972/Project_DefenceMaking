@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FxsController : MonoBehaviour
+public class MasterVolumeController : MonoBehaviour
 {
     [SerializeField]
     private Slider slider;
@@ -13,14 +13,15 @@ public class FxsController : MonoBehaviour
         if (slider == null)
             return;
 
-        SettingManager.Instance.fxVolume = slider.value;
+        SettingManager.Instance.masterVolume = slider.value;
         AudioManager.Instance.UpdateFxVolume(SettingManager.Instance._FxVolume);
+        AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance._BGMVolume);
         SaveManager.Instance.SaveSettingData();
     }
 
     void Awake()
     {
         if (slider != null)
-            slider.value = SettingManager.Instance.fxVolume;
+            slider.value = SettingManager.Instance.masterVolume;
     }
 }

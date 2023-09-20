@@ -110,7 +110,7 @@ public class Battler : FSM<Battler>
         StopAllCoroutines();
         Invoke("RemoveBody", 2.5f);
         if(deadSound != null)
-            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
     }
 
     private void UpdateChaseTarget(Battler attacker)
@@ -387,7 +387,7 @@ public class Battler : FSM<Battler>
     public void Attack()
     {
         if (attackSound != null)
-            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance._FxVolume);
 
         if (curTarget != null && !curTarget.isDead)
         {

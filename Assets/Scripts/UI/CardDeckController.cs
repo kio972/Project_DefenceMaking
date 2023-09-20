@@ -274,7 +274,7 @@ public class CardDeckController : MonoBehaviour
 
         GameManager.Instance.gold -= cardPrice;
         DrawCard();
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
     }
 
     private IEnumerator ISetCardPosition()

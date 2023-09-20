@@ -8,23 +8,19 @@ public class BgmController : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
-    private void VolumeUpdateCheck()
+    public void VolumeUpdateCheck()
     {
         if (slider == null)
             return;
 
         SettingManager.Instance.bgmVolume = slider.value;
-        AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance.bgmVolume);
+        AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance._BGMVolume);
+        SaveManager.Instance.SaveSettingData();
     }
 
     void Awake()
     {
         if (slider != null)
             slider.value = SettingManager.Instance.bgmVolume;
-    }
-
-    private void Update()
-    {
-        VolumeUpdateCheck();
     }
 }

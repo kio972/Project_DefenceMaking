@@ -16,6 +16,21 @@ public class AudioManager : Singleton<AudioManager>
     private ClipController bgmClips;
     private ClipController sfxClips;
 
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!SettingManager.Instance.muteOnBackground)
+            return;
+
+        SetMute(!focus);
+    }
+
+    private void SetMute(bool value)
+    {
+        background.mute = value;
+        foreach (AudioSource fx in effectAudioList)
+            fx.mute = value;
+    }
+
     private void AddClipDic(List<AudioClip> clipList)
     {
         foreach (AudioClip clip in clipList)
