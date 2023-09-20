@@ -16,7 +16,7 @@ public abstract class SpinnerButton : MonoBehaviour
     private Button rightBtn;
 
     [SerializeField]
-    private TextMeshProUGUI text;
+    protected TextMeshProUGUI text;
 
     protected int index = 0;
 

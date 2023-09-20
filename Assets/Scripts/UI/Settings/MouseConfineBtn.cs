@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FullScreenBtns : SwitchButton
+public class MouseConfineBtn : SwitchButton
 {
     protected override void OnValueChange()
     {
         base.OnValueChange();
-        SettingManager.Instance.Set_FullScreen(value);
+        SettingManager.Instance.Set_MouseConfined(value);
     }
 
     protected override void Init()
     {
         base.Init();
-        SetBtn(SettingManager.Instance.screen_FullSize);
+        SetBtn(SettingManager.Instance.mouse_Confined);
     }
 }

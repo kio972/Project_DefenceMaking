@@ -29,6 +29,9 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.key_SpeedControl_Zero.SetCurKey((KeyCode)settingData.key_SpeedControl_Zero);
         SettingManager.Instance.key_SpeedControl_One.SetCurKey((KeyCode)settingData.key_SpeedControl_One);
         SettingManager.Instance.key_SpeedControl_Double.SetCurKey((KeyCode)settingData.key_SpeedControl_Double);
+
+        SettingManager.Instance.mouse_Confined = settingData.mouseConfined;
+        SettingManager.Instance.fpsLimit = settingData.fpsLimit;
     }                               
 
     public void SaveSettingData()
@@ -48,6 +51,9 @@ public class SaveManager : Singleton<SaveManager>
         settingData.key_SpeedControl_Zero = (int)SettingManager.Instance.key_SpeedControl_Zero._CurKey;
         settingData.key_SpeedControl_One = (int)SettingManager.Instance.key_SpeedControl_One._CurKey;
         settingData.key_SpeedControl_Double = (int)SettingManager.Instance.key_SpeedControl_Double._CurKey;
+
+        settingData.mouseConfined = SettingManager.Instance.mouse_Confined;
+        settingData.fpsLimit = SettingManager.Instance.fpsLimit;
 
         SaveData(settingData, settingDataFileName);
     }

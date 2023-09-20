@@ -4,48 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ResolutionBtn : MonoBehaviour
+public class ResolutionBtn : SpinnerButton
 {
-    [SerializeField]
-    private Button leftBtn;
-    [SerializeField]
-    private Button rightBtn;
-
-    private int screenSizeIndex = 0;
-
-    [SerializeField]
-    private TextMeshProUGUI text;
-
-    private void SetResolution()
+    protected override void OnValueChange()
     {
-        ScreenSize[] array = (ScreenSize[])System.Enum.GetValues(typeof(ScreenSize));
-        screenSizeIndex = Mathf.Clamp(screenSizeIndex, 0, array.Length - 1);
+        base.OnValueChange();
 
-        SettingManager.Instance.Set_ScreenSize(array[screenSizeIndex]);
+        SettingManager.Instance.ScreenSizeIndex = index;
+        SettingManager.Instance.Set_ScreenSize((ScreenSize)index);
         int[] screenSizes = SettingManager.Instance.GetScreenSize();
-        text.text = screenSizes[0].ToString() +  " x " + screenSizes[1].ToString();
+        text.text = screenSizes[0].ToString() + " x " + screenSizes[1].ToString();
     }
 
-    private void ResolutionUp()
+    protected override void Init()
     {
-        screenSizeIndex--;
-        SetResolution();
-    }
-
-    private void ResolutionDown()
-    {
-        screenSizeIndex++;
-        SetResolution();
-    }
-
-    private void Awake()
-    {
-        if (leftBtn != null)
-            leftBtn.onClick.AddListener(ResolutionDown);
-        if (rightBtn != null)
-            rightBtn.onClick.AddListener(ResolutionUp);
-
-        screenSizeIndex = SettingManager.Instance.ScreenSizeIndex;
-        SetResolution();
+        base.Init();
+        index = SettingManager.Instance.ScreenSizeIndex;
     }
 }

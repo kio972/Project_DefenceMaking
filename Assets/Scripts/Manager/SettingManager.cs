@@ -126,29 +126,49 @@ public class SettingManager : Singleton<SettingManager>
     }
     #endregion
 
-    public float bgmVolume = 1f;
-    public float fxVolume = 1f;
-    public bool screen_FullSize = true;
+    #region DisplaySetting
     public ScreenSize screenSize = ScreenSize.Size_1920x1080;
-    
+    public bool screen_FullSize = true;
+    public bool mouse_Confined = false;
+    public bool fpsLimit = false;
 
     public int ScreenSizeIndex
     {
-        get
-        {
-            return (int)screenSize;
-        }
+        get { return (int)screenSize; }
         set
         {
             if (System.Enum.IsDefined(typeof(ScreenSize), value))
-            {
                 screenSize = (ScreenSize)value;
-            }
             else
-            {
                 Debug.LogError("Invalid ScreenSize index: " + value);
-            }
         }
+    }
+
+    #endregion
+
+    public float bgmVolume = 1f;
+    public float fxVolume = 1f;
+    
+    public void Set_FPSLimit(bool value)
+    {
+        if (value)
+            Application.targetFrameRate = 60;
+        else
+            Application.targetFrameRate = -1;
+
+        this.fpsLimit = value;
+        SaveManager.Instance.SaveSettingData();
+    }
+
+    public void Set_MouseConfined(bool value)
+    {
+        if(value)
+            Cursor.lockState = CursorLockMode.Confined;
+        else
+            Cursor.lockState = CursorLockMode.None;
+
+        this.mouse_Confined = value;
+        SaveManager.Instance.SaveSettingData();
     }
 
     public void Set_FullScreen(bool value)
