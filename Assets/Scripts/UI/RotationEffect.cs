@@ -27,12 +27,13 @@ public class RotationEffect : MonoBehaviour, IPointerClickHandler, IPointerEnter
         imgRect = targetImg.GetComponent<RectTransform>();
     }
 
-    private void SetDefault()
+    public void SetDefault()
     {
         isOn = false;
         targetImg.sprite = originImg;
         imgRect.rotation = Quaternion.identity;
     }
+
     private void RotateImg()
     {
         float rotationAngle = rotationSpeed * Time.deltaTime;

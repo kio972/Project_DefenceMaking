@@ -254,5 +254,9 @@ public class SettingManager : Singleton<SettingManager>
     {
         SaveManager.Instance.LoadSettingData();
         InitControlKey();
+        Set_ScreenSize(screenSize);
+        Set_FullScreen(screen_FullSize);
+        SetLanguage(language);
+        SetTextSize(textSize);
     }
 }

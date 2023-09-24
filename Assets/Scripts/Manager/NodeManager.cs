@@ -135,9 +135,6 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         SetVirtualNode();
 
-        if (virtualNodes.Contains(targetTile.curNode))
-            print("contain");
-
         List<Direction> targetNode_PathDirection = targetTile.PathDirection;
         List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
 
