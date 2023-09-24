@@ -89,6 +89,11 @@ public class SettingManager : Singleton<SettingManager>
 
     public List<BindKey> bindKeys;
 
+    private List<KeyCode> invalidKeys = new List<KeyCode>()
+    {
+        KeyCode.Escape, KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.Return, KeyCode.Backspace
+    };
+
     public KeyCode GetKey(ControlKey taregt)
     {
         foreach (BindKey bindkey in bindKeys)
@@ -111,11 +116,6 @@ public class SettingManager : Singleton<SettingManager>
             }
         }
     }
-
-    private List<KeyCode> invalidKeys = new List<KeyCode>()
-    {
-        KeyCode.Escape, KeyCode.Mouse0, KeyCode.Mouse1
-    };
 
     public bool IsValidKey(KeyCode value)
     {
