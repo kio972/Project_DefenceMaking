@@ -28,6 +28,10 @@ public class SettingCanvas : MonoBehaviour
 
     [SerializeField]
     private GameObject main;
+    [SerializeField]
+    private GameObject exitGame;
+    [SerializeField]
+    private GameObject fade;
 
     private void Awake()
     {
@@ -42,11 +46,21 @@ public class SettingCanvas : MonoBehaviour
         }
     }
 
+    public void CallSettings(bool value, bool isIngame)
+    {
+        exitGame.SetActive(isIngame);
+
+        CallSettings(value);
+    }
+
     public void CallSettings(bool value)
     {
+        fade.SetActive(value);
         main.SetActive(value);
+
         if(!value)
         {
+            exitGame.SetActive(false);
             RotationEffect rotationEffect = FindObjectOfType<RotationEffect>();
             if (rotationEffect != null)
                 rotationEffect.SetDefault();

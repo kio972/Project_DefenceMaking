@@ -208,6 +208,8 @@ public class GameManager : IngameSingleton<GameManager>
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
 
+        SettingManager.Instance.SetLanguage();
+
         isInit = true;
     }
 }

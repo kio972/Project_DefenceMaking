@@ -201,6 +201,11 @@ public class SettingManager : Singleton<SettingManager>
         return new int[2] { width, height };
     }
 
+    public void SetLanguage()
+    {
+        SetLanguage(language);
+    }
+
     public void SetLanguage(Languages language)
     {
         LanguageText[] texts = FindObjectsOfType<LanguageText>(true);
