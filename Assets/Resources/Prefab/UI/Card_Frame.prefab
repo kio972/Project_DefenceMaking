@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 433899004711985468}
   - component: {fileID: 1066172502007286146}
   - component: {fileID: 5289040651758084962}
+  - component: {fileID: 3625154122706227173}
   m_Layer: 5
   m_Name: CardDescription
   m_TagString: Untagged
@@ -35,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.7048, y: -76.4785}
-  m_SizeDelta: {x: 150.0614, y: 39.9099}
+  m_AnchoredPosition: {x: 0.7048, y: -76.946}
+  m_SizeDelta: {x: 150.0614, y: 38.974}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1066172502007286146
 CanvasRenderer:
@@ -135,6 +136,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3625154122706227173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49617931733227385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 1
 --- !u!1 &2308208432438842881
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +313,7 @@ GameObject:
   - component: {fileID: 7978567227169013887}
   - component: {fileID: 269225935705814868}
   - component: {fileID: 4903987237458669294}
+  - component: {fileID: 3768652298480949668}
   m_Layer: 5
   m_Name: CardName
   m_TagString: Untagged
@@ -322,8 +338,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -44.0639}
-  m_SizeDelta: {x: 86.7497, y: 24.9186}
+  m_AnchoredPosition: {x: 0.70454, y: -45}
+  m_SizeDelta: {x: 150.06, y: 24.9186}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &269225935705814868
 CanvasRenderer:
@@ -380,8 +396,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.6
-  m_fontSizeBase: 20.6
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -422,6 +438,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3768652298480949668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368273005810369704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 1
 --- !u!1 &8042141369777829767
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,8 +605,8 @@ MonoBehaviour:
   card_Frame_Mask: {fileID: 2302431056063880436}
   card_illust: {fileID: 5594061434747238526}
   card_Rank: {fileID: 3271150533458217608}
-  card_Name: {fileID: 4903987237458669294}
-  card_Description: {fileID: 5289040651758084962}
+  card_Name: {fileID: 3768652298480949668}
+  card_Description: {fileID: 3625154122706227173}
   originPos: {x: 0, y: 0, z: 0}
   originRot: {x: 0, y: 0, z: 0, w: 0}
   originSiblingIndex: -1

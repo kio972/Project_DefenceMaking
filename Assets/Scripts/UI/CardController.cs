@@ -36,9 +36,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     [SerializeField]
     private Image card_Rank;
     [SerializeField]
-    private TextMeshProUGUI card_Name;
+    private LanguageText card_Name;
     [SerializeField]
-    private TextMeshProUGUI card_Description;
+    private LanguageText card_Description;
 
     private CardType cardType;
 
@@ -418,12 +418,30 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Invoke("DrawEnd", lerpTime);
     }
 
-    
-
-    public void Init(CardType type, string targetPrefabName)
+    private void SetCardUI(Card targetCard)
     {
-        this.cardType = type;
-        //targetPrefab = GetPrefab(type, targetPrefabName);
+        Sprite frame1 = SpriteList.Instance.LoadSprite("cardFrame1_" + targetCard.cardFrame);
+        Sprite frame2 = SpriteList.Instance.LoadSprite("cardFrame2_" + targetCard.cardFrame);
+        card_Frame.sprite = frame1;
+        card_Frame2.sprite = frame2;
+        card_Frame_Mask.sprite = frame2;
+
+        Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + targetCard.cardGrade.ToString());
+        card_Rank.sprite = cardRank;
+        card_Rank.gameObject.SetActive(cardType != CardType.MapTile && cardType != CardType.Environment);
+
+        card_Name.ChangeLangauge(SettingManager.Instance.language, targetCard.cardName);
+        card_Description.ChangeLangauge(SettingManager.Instance.language, targetCard.cardDescription);
+
+        Sprite illur = SpriteList.Instance.LoadSprite(targetCard.cardPrefabName);
+        card_illust.sprite = illur;
+    }
+
+    public void Init(Card targetCard)
+    {
+        this.cardType = targetCard.cardType;
+        targetPrefab = UtilHelper.GetCardPrefab(targetCard.cardType, targetCard.cardPrefabName);
+        SetCardUI(targetCard);
     }
 
     // Update is called once per frame

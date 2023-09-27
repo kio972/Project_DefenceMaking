@@ -9,6 +9,28 @@ using TMPro;
 
 public static class UtilHelper
 {
+    public static GameObject GetCardPrefab(CardType type, string targetName)
+    {
+        string targetPrefabPath = "Prefab/";
+        switch (type)
+        {
+            case CardType.MapTile:
+                targetPrefabPath += "Tile";
+                break;
+            case CardType.Monster:
+                targetPrefabPath += "Monster";
+                break;
+            case CardType.Trap:
+                targetPrefabPath += "Trap";
+                break;
+            case CardType.Environment:
+                targetPrefabPath += "Environment";
+                break;
+        }
+        targetPrefabPath = targetPrefabPath + "/" + targetName;
+        return Resources.Load<GameObject>(targetPrefabPath);
+    }
+
     public static void SetUIColor(Color color, GameObject ui)
     {
         Image[] images = ui.GetComponentsInChildren<Image>();

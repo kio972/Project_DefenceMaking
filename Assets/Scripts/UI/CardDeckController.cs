@@ -6,6 +6,60 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using TMPro;
 
+public struct Card
+{
+    public string cardFrame;
+    public CardType cardType;
+    public string cardName;
+    public CardGrade cardGrade;
+    public string cardDescription;
+    public string cardPrefabName;
+
+    private static CardGrade GetCardGrade(string grade)
+    {
+        switch (grade)
+        {
+            case "normal":
+                return CardGrade.normal;
+            case "rare":
+                return CardGrade.rare;
+            case "epic":
+                return CardGrade.epic;
+            case "legend":
+                return CardGrade.legend;
+        }
+        return CardGrade.none;
+    }
+
+    private static CardType GetCardType(string type)
+    {
+        switch (type)
+        {
+            case "road":
+                return CardType.MapTile;
+            case "room":
+                return CardType.MapTile;
+            case "trap":
+                return CardType.Trap;
+            case "environment":
+                return CardType.Environment;
+            case "monster":
+                return CardType.Monster;
+        }
+        return CardType.None;
+    }
+
+    public Card(Dictionary<string, object> cardInfo)
+    {
+        cardFrame = cardInfo["cardtype"].ToString();
+        cardType = GetCardType(cardInfo["type"].ToString());
+        cardGrade = GetCardGrade(cardInfo["grade"].ToString());
+        cardName = cardInfo["text_name"].ToString();
+        cardDescription = cardInfo["text_description"].ToString();
+        cardPrefabName = cardInfo["prefab"].ToString();
+    }
+}
+
 public class CardDeckController : MonoBehaviour
 {
     [SerializeField]
@@ -243,19 +297,17 @@ public class CardDeckController : MonoBehaviour
     //최대 카드 숫자
     public int maxCardNumber = 10;
 
-    private string ReturnDeck(int target)
+    private Card ReturnDeck(int target)
     {
         cardDeck.Remove(target);
-        string cardPrefabPath = DataManager.Instance.Deck_Table[target]["prefab"].ToString();
-        return "Prefab/Card/" + cardPrefabPath;
+        Card card = new Card(DataManager.Instance.Deck_Table[target]);
+        return card;
     }
 
-    private string ReturnDeck()
+    private Card ReturnDeck()
     {
         int random = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
-        cardDeck.Remove(random);
-        string cardPrefabPath = DataManager.Instance.Deck_Table[random]["prefab"].ToString();
-        return "Prefab/Card/" + cardPrefabPath;
+        return ReturnDeck(random);
     }
 
     public void DrawDeck()
@@ -354,112 +406,30 @@ public class CardDeckController : MonoBehaviour
         if (cardDeck.Count < 1) return;
         if (!cardDeck.Contains(cardIndex)) return;
 
-        string prefabPath = ReturnDeck(cardIndex);
-        InstantiateCard(prefabPath);
+        InstantiateCard(ReturnDeck(cardIndex));
     }
 
     public void DrawCard()
     {
         if(cardDeck.Count < 1) return;
 
-        string prefabPath = ReturnDeck();
-        InstantiateCard(prefabPath);
+        InstantiateCard(ReturnDeck());
     }
 
-    private GameObject GetCardPrefab(CardType type, string targetName)
-    {
-        string targetPrefabPath = "Prefab/";
-        switch (type)
-        {
-            case CardType.MapTile:
-                targetPrefabPath += "Tile";
-                break;
-            case CardType.Monster:
-                targetPrefabPath += "Monster";
-                break;
-            case CardType.Trap:
-                targetPrefabPath += "Trap";
-                break;
-            case CardType.Environment:
-                targetPrefabPath += "Environment";
-                break;
-        }
-        targetPrefabPath = targetPrefabPath + "/" + targetName;
-        return Resources.Load<GameObject>(targetPrefabPath);
-    }
+    
 
-    private void DrawCard2()
+    private void InstantiateCard(Card targetCard)
     {
         CardController cardPrefab = Resources.Load<CardController>("Prefab/UI/Card_Frame");
 
-    }
-
-    private void InstantiateCard(string prefabPath)
-    {
-        GameObject targetPrefab = Resources.Load<GameObject>(prefabPath);
-        if (targetPrefab == null)
-        {
-            print(prefabPath + " prefab missing!");
-            return;
-        }
         hand_CardNumber++;
-        GameObject temp = Instantiate(targetPrefab, cardZone);
-        CardController card = temp.GetComponent<CardController>();
+        CardController card = Instantiate(cardPrefab, cardZone);
+        card.Init(targetCard);
         card?.DrawEffect();
-        temp.transform.position = transform.position;
-        cards.Add(temp.transform);
+        card.transform.position = transform.position;
+        cards.Add(card.transform);
         SetCardPosition();
         UpdateDeckCount();
-    }
-
-    public struct Card
-    {
-        public CardType cardType;
-        public string cardName;
-        public CardGrade cardGrade;
-        public string cardDescription;
-
-        private static CardGrade GetCardGrade(string grade)
-        {
-            switch (grade)
-            {
-                case "normal":
-                    return CardGrade.normal;
-                case "rare":
-                    return CardGrade.rare;
-                case "epic":
-                    return CardGrade.epic;
-                case "legend":
-                    return CardGrade.legend;
-            }
-            return CardGrade.none;
-        }
-
-        private static CardType GetCardType(string type)
-        {
-            switch (type)
-            {
-                case "road":
-                    return CardType.MapTile;
-                case "room":
-                    return CardType.MapTile;
-                case "trap":
-                    return CardType.Trap;
-                case "environment":
-                    return CardType.Environment;
-                case "monster":
-                    return CardType.Monster;
-            }
-            return CardType.None;
-        }
-
-        public Card(Dictionary<string, object> cardInfo)
-        {
-            cardType = GetCardType(cardInfo["type"].ToString());
-            cardGrade = GetCardGrade(cardInfo["grade"].ToString());
-            cardName = cardInfo["text_name"].ToString();
-            cardDescription = cardInfo["text_description"].ToString();
-        }
     }
 
     private void SetDeck()
@@ -467,6 +437,11 @@ public class CardDeckController : MonoBehaviour
         cardDeck = new List<int>();
         for(int i = 0; i < DataManager.Instance.Deck_Table.Count; i++)
         {
+            Card cardCheck = new Card(DataManager.Instance.Deck_Table[i]);
+            GameObject cardPrefab = UtilHelper.GetCardPrefab(cardCheck.cardType, cardCheck.cardPrefabName);
+            if (cardPrefab == null)
+                continue;
+
             int cardNumber = Convert.ToInt32(DataManager.Instance.Deck_Table[i]["startNumber"]);
             for (int j = 0; j < cardNumber; j++)
                 cardDeck.Add(i);

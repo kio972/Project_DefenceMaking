@@ -20,7 +20,7 @@ public class SpriteList : MonoBehaviour
                 instance = FindObjectOfType<SpriteList>();
                 if(instance == null)
                 {
-                    SpriteList temp = Resources.Load<SpriteList>("Data/SpriteTable");
+                    SpriteList temp = Resources.Load<SpriteList>("Data/SpriteList");
                     temp = Instantiate(temp);
                     temp.name = typeof(SpriteList).Name;
                     instance = temp;

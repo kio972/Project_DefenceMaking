@@ -10,6 +10,9 @@ public class LanguageText : MonoBehaviour
     protected string keyStr;
     public string KeyStr { get => keyStr; }
 
+    [SerializeField]
+    private bool sizeLock = false;
+
     private TextMeshProUGUI text;
 
     private float originSize;
@@ -40,6 +43,9 @@ public class LanguageText : MonoBehaviour
 
     public void ChangeTextSize(float mult)
     {
+        if (sizeLock)
+            return;
+
         float temp = _Text.fontSize;
         mult = Mathf.Clamp(mult, 0.8f, 1.2f);
         float targetSize = Mathf.Round(originSize * mult);

@@ -1,34 +1,52 @@
-id,cardtype,type,name,grade,text,startNumber,prefab
-c10001,tile,road,Road1,normal,d100001,10,TileCard0
-c10002,tile,road,Road2,normal,d100002,8,TileCard1
-c10003,tile,road,Road3,normal,d100003,5,TileCard2
-c10004,tile,road,Road4,normal,d100004,2,TileCard3
-c10005,tile,road,Road5,normal,d100005,3,TileCard4
-c10006,tile,road,Road6,normal,d100006,3,TileCard5
-c10007,tile,road,Road7,normal,d100007,2,TileCard6
-c10008,tile,road,Road8,normal,d100008,1,TileCard7
-c10009,tile,road,Road9,normal,d100009,1,TileCard8
-c10010,tile,road,Road10,normal,d100010,1,TileCard9
-c10011,tile,road,Road11,normal,d100011,1,TileCard10
-c11002,tile,room,Room2,normal,d100013,3,RoomCard1
-c11003,tile,room,Room3,normal,d100014,3,RoomCard2
-c11004,tile,room,Room4,normal,d100015,3,RoomCard3
-c20001,trap,trap,Spin Cutter,normal,d100028,2,TrapCard_Spin
-c20002,trap,trap,Rotary Saw,rare,d100029,2,TrapCard_Saw
-c20003,trap,trap,Spear,epic,d100030,2,TrapCard_Spear
-c20004,trap,trap,Hole,legend,d100031,2,TrapCard_Hole
-c30001,tile,environment,Rock,normal,d100032,10,Environment_Rock
-c30002,tile,environment,Swamp,normal,d100033,2,Environment_Swamp
-c30003,tile,environment,Gold,normal,d100034,5,Environment_Gold
-c40001,monster,monster,Red Slime,normal,d100035,9,MonsterCard_Slime-Red
-c40002,monster,monster,Green Slime,rare,d100036,6,MonsterCard_Slime-Green
-c40003,monster,monster,Purple Slime,epic,d100037,4,MonsterCard_Slime-Purple
-c40004,monster,monster,Black Slime,legend,d100038,2,MonsterCard_Slime-Black
-c40005,monster,monster,Green Goblin,normal,d100039,8,MonsterCard_Goblin-Green
-c40006,monster,monster,Blue Goblin,rare,d100040,5,MonsterCard_Goblin-Blue
-c40007,monster,monster,Pink Goblin,epic,d100041,3,MonsterCard_Goblin-Pink
-c40008,monster,monster,Orange Gobiln,legend,d100042,1,MonsterCard_Goblin-Orange
-c40009,monster,monster,Golem_Stone,normal,d100043,7,MonsterCard_Golem-Stone
-c40010,monster,monster,Golem_Blue,rare,d100044,4,MonsterCard_Golem-Blue
-c40011,monster,monster,Golem_Purple,epic,d100045,2,MonsterCard_Golem-Purple
-c40012,monster,monster,Golem_Orange,legend,d100046,1,MonsterCard_Golem-Orange
+id,cardtype,type,name,grade,text_name,text_description,startNumber,prefab
+c10001,tile,road,Road1,normal,card_tile_road1,card_tile_road1,10,RoadTile0
+c10002,tile,road,Road2,normal,card_tile_road2,card_tile_road2,8,RoadTile1
+c10003,tile,road,Road3,normal,card_tile_road3,card_tile_road3,5,RoadTile2
+c10004,tile,road,Road4,normal,card_tile_road4,card_tile_road4,2,RoadTile3
+c10005,tile,road,Road5,normal,card_tile_road5,card_tile_road5,3,RoadTile4
+c10006,tile,road,Road6,normal,card_tile_road6,card_tile_road6,3,RoadTile5
+c10007,tile,road,Road7,normal,card_tile_road7,card_tile_road7,2,RoadTile6
+c10008,tile,road,Road8,normal,card_tile_road8,card_tile_road8,1,RoadTile7
+c10009,tile,road,Road9,normal,card_tile_road9,card_tile_road9,1,RoadTile8
+c10010,tile,road,Road10,normal,card_tile_road10,card_tile_road10,1,RoadTile9
+c10011,tile,road,Road11,normal,card_tile_road11,card_tile_road11,1,RoadTile10
+c11001,tile,room,Room1,normal,card_tile_room1,card_tile_room1,3,
+c11002,tile,room,Room2,normal,card_tile_room2,card_tile_room2,3,RoomTile1
+c11003,tile,room,Room3,normal,card_tile_room3,card_tile_room3,3,RoomTile2
+c11004,tile,room,Room4,normal,card_tile_room4,card_tile_room4,3,RoomTile3
+c12001,tile,room,Room Part1,normal,card_tile_room_parts1,card_tile_room_parts1,10,
+c12002,tile,room,Room Part2,normal,card_tile_room_parts2,card_tile_room_parts2,5,
+c12003,tile,room,Room Part3,normal,card_tile_room_parts3,card_tile_room_parts3,5,
+c12004,tile,room,Room Part4,normal,card_tile_room_parts4,card_tile_room_parts4,5,
+c12005,tile,room,Room Part5,normal,card_tile_room_parts5,card_tile_room_parts5,3,
+c12006,tile,room,Room Part6,normal,card_tile_room_parts6,card_tile_room_parts6,3,
+c12007,tile,room,Room Part7,normal,card_tile_room_parts7,card_tile_room_parts7,3,
+c12008,tile,room,Room Part8,normal,card_tile_room_parts8,card_tile_room_parts8,3,
+c12009,tile,room,Room Part9,normal,card_tile_room_parts9,card_tile_room_parts9,3,
+c12010,tile,room,Room Part10,normal,card_tile_room_parts10,card_tile_room_parts10,2,
+c12011,tile,room,Room Part11,normal,card_tile_room_parts11,card_tile_room_parts11,2,
+c13001,tile,room,Road Room1,normal,card_tile_roadroom,card_tile_roadroom,5,
+c20001,trap,trap,Spin Cutter,normal,card_name_spintrap,card_desc_spintrap,2,Trap_Spin
+c20002,trap,trap,Rotary Saw,rare,card_name_sawtrap,card_desc_sawtrap,2,Trap_Saw
+c20003,trap,trap,Spear,epic,card_name_speartrap,card_desc_speartrap,2,Trap_Spear
+c20004,trap,trap,Hole,legend,card_name_holetrap,card_desc_holetrap,2,Trap_Hole
+c30001,tile,environment,Rock,normal,card_name_rock,card_desc_rock,10,Rock
+c30002,tile,environment,Swamp,normal,card_name_goldmine,card_desc_goldmine,2,Swamp
+c30003,tile,environment,Gold,normal,card_name_swamp,card_desc_swamp,5,Gold
+c30004,tile,environment,Mana Stone,normal,card_name_manastone,card_desc_manastone,5,ManaStone
+c40001,monster,monster,Red Slime,normal,card_monster_slime_normal,card_monster_slime_normal,9,Slime_Red
+c40002,monster,monster,Green Slime,rare,card_monster_slime_rare,card_monster_slime_rare,6,Slime_Green
+c40003,monster,monster,Purple Slime,epic,card_monster_slime_epic,card_monster_slime_epic,4,Slime_Purple
+c40004,monster,monster,Black Slime,legend,card_monster_slime_legend,card_monster_slime_legend,2,Slime_Dark
+c40005,monster,monster,Green Goblin,normal,card_monster_goblin_normal,card_monster_goblin_normal,8,Goblin_Green
+c40006,monster,monster,Blue Goblin,rare,card_monster_goblin_rare,card_monster_goblin_rare,5,Goblin_Blue
+c40007,monster,monster,Pink Goblin,epic,card_monster_goblin_epic,card_monster_goblin_epic,3,Goblin_Pink
+c40008,monster,monster,Orange Gobiln,legend,card_monster_goblin_legend,card_monster_goblin_legend,1,Goblin_Orange
+c40009,monster,monster,Golem_Stone,normal,card_monster_golem_normal,card_monster_golem_normal,7,Golem_Stone
+c40010,monster,monster,Golem_Blue,rare,card_monster_golem_rare,card_monster_golem_rare,4,Golem_Blue
+c40011,monster,monster,Golem_Purple,epic,card_monster_golem_epic,card_monster_golem_epic,2,Golem_Purple
+c40012,monster,monster,Golem_Orange,legend,card_monster_golem_legend,card_monster_golem_legend,1,Golem_Orange
+c40013,monster,monster,Mimic_Level1,normal,card_monster_mimic_normal,card_monster_mimic_normal,4,Mimic_Level1
+c40014,monster,monster,Mimic_Level2,rare,card_monster_mimic_rare,card_monster_mimic_rare,3,Mimic_Level2
+c40015,monster,monster,Mimic_Level3,epic,card_monster_mimic_epic,card_monster_mimic_epic,2,Mimic_Level3
+c40016,monster,monster,Mimic_Level4,legend,card_monster_mimic_legend,card_monster_mimic_legend,1,Mimic_Level4
