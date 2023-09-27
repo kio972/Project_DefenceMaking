@@ -366,6 +366,34 @@ public class CardDeckController : MonoBehaviour
         InstantiateCard(prefabPath);
     }
 
+    private GameObject GetCardPrefab(CardType type, string targetName)
+    {
+        string targetPrefabPath = "Prefab/";
+        switch (type)
+        {
+            case CardType.MapTile:
+                targetPrefabPath += "Tile";
+                break;
+            case CardType.Monster:
+                targetPrefabPath += "Monster";
+                break;
+            case CardType.Trap:
+                targetPrefabPath += "Trap";
+                break;
+            case CardType.Environment:
+                targetPrefabPath += "Environment";
+                break;
+        }
+        targetPrefabPath = targetPrefabPath + "/" + targetName;
+        return Resources.Load<GameObject>(targetPrefabPath);
+    }
+
+    private void DrawCard2()
+    {
+        CardController cardPrefab = Resources.Load<CardController>("Prefab/UI/Card_Frame");
+
+    }
+
     private void InstantiateCard(string prefabPath)
     {
         GameObject targetPrefab = Resources.Load<GameObject>(prefabPath);
@@ -382,6 +410,56 @@ public class CardDeckController : MonoBehaviour
         cards.Add(temp.transform);
         SetCardPosition();
         UpdateDeckCount();
+    }
+
+    public struct Card
+    {
+        public CardType cardType;
+        public string cardName;
+        public CardGrade cardGrade;
+        public string cardDescription;
+
+        private static CardGrade GetCardGrade(string grade)
+        {
+            switch (grade)
+            {
+                case "normal":
+                    return CardGrade.normal;
+                case "rare":
+                    return CardGrade.rare;
+                case "epic":
+                    return CardGrade.epic;
+                case "legend":
+                    return CardGrade.legend;
+            }
+            return CardGrade.none;
+        }
+
+        private static CardType GetCardType(string type)
+        {
+            switch (type)
+            {
+                case "road":
+                    return CardType.MapTile;
+                case "room":
+                    return CardType.MapTile;
+                case "trap":
+                    return CardType.Trap;
+                case "environment":
+                    return CardType.Environment;
+                case "monster":
+                    return CardType.Monster;
+            }
+            return CardType.None;
+        }
+
+        public Card(Dictionary<string, object> cardInfo)
+        {
+            cardType = GetCardType(cardInfo["type"].ToString());
+            cardGrade = GetCardGrade(cardInfo["grade"].ToString());
+            cardName = cardInfo["text_name"].ToString();
+            cardDescription = cardInfo["text_description"].ToString();
+        }
     }
 
     private void SetDeck()

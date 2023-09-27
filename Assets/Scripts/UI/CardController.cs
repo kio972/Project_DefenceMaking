@@ -7,16 +7,41 @@ using TMPro;
 
 public enum CardType
 {
+    None,
     MapTile,
     Monster,
     Trap,
     Environment,
 }
 
+public enum CardGrade
+{
+    none,
+    normal,
+    rare,
+    epic,
+    legend,
+}
+
 public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public CardType cardType;
     [SerializeField]
+    private Image card_Frame;
+    [SerializeField]
+    private Image card_Frame2;
+    [SerializeField]
+    private Image card_Frame_Mask;
+    [SerializeField]
+    private Image card_illust;
+    [SerializeField]
+    private Image card_Rank;
+    [SerializeField]
+    private TextMeshProUGUI card_Name;
+    [SerializeField]
+    private TextMeshProUGUI card_Description;
+
+    private CardType cardType;
+
     private GameObject targetPrefab;
 
     private Button button;
@@ -393,10 +418,12 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Invoke("DrawEnd", lerpTime);
     }
 
-    public void Init(CardType type, GameObject targetPrefab)
+    
+
+    public void Init(CardType type, string targetPrefabName)
     {
         this.cardType = type;
-        this.targetPrefab = targetPrefab;
+        //targetPrefab = GetPrefab(type, targetPrefabName);
     }
 
     // Update is called once per frame
@@ -404,10 +431,5 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     {
         if (instancedObject != null && instancedObject.gameObject.activeSelf)
             UpdateObjectState();
-    }
-
-    private void Start()
-    {
-        Init(cardType, targetPrefab);
     }
 }
