@@ -5,6 +5,7 @@ using UnityEngine;
 public enum ScreenSize
 {
     Size_1920x1080,
+    Size_1600x900,
     Size_1280x720,
 
 }
@@ -89,6 +90,15 @@ public class SettingManager : Singleton<SettingManager>
 
     public List<BindKey> bindKeys;
 
+    private List<KeyCode> invalidKeys = new List<KeyCode>()
+    {
+        KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.Mouse2, KeyCode.Mouse3, KeyCode.Mouse4, KeyCode.Mouse5, KeyCode.Mouse6,
+        KeyCode.Escape, KeyCode.Return, KeyCode.Backspace, KeyCode.LeftWindows, KeyCode.RightWindows,
+        KeyCode.Pause, KeyCode.Print, KeyCode.ScrollLock, KeyCode.Break, KeyCode.Numlock,
+        KeyCode.Tab, KeyCode.CapsLock, KeyCode.LeftShift, KeyCode.RightShift, KeyCode.LeftControl, KeyCode.RightControl,
+        KeyCode.LeftAlt, KeyCode.RightAlt, KeyCode.Menu,
+    };
+
     public KeyCode GetKey(ControlKey taregt)
     {
         foreach (BindKey bindkey in bindKeys)
@@ -111,11 +121,6 @@ public class SettingManager : Singleton<SettingManager>
             }
         }
     }
-
-    private List<KeyCode> invalidKeys = new List<KeyCode>()
-    {
-        KeyCode.Escape, KeyCode.Mouse0, KeyCode.Mouse1
-    };
 
     public bool IsValidKey(KeyCode value)
     {

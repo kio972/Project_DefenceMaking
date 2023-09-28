@@ -14,7 +14,7 @@ public class SettingData
     public bool mouseConfined = false;
     public bool fpsLimit = false;
     public int screenSizeIndex = 0;
-    public float mouseSensitivity = 0.25f;
+    public float mouseSensitivity = 1f;
     public int language = 0;
     public int autoPlay = 0;
 

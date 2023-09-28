@@ -10,6 +10,8 @@ public class KeyBinder : MonoBehaviour
     private Button keyChangeBtn;
     [SerializeField]
     private TextMeshProUGUI keyText;
+    [SerializeField]
+    private Outline outline;
 
     [SerializeField]
     private ControlKey controlKey = ControlKey.None;
@@ -22,8 +24,6 @@ public class KeyBinder : MonoBehaviour
 
     private bool updateState = false;
 
-    public Color selectedColor;
-
     public void ChangeKeyDisplay(KeyCode keyCode)
     {
         string targetString = keyCode.ToString();
@@ -35,7 +35,7 @@ public class KeyBinder : MonoBehaviour
     private void ChangeKeyBtn()
     {
         updateState = true;
-        UtilHelper.SetUIColor(selectedColor, this.gameObject);
+        outline.enabled = true;
     }
 
     public KeyCode GetCurrentKeyDown()
@@ -63,7 +63,7 @@ public class KeyBinder : MonoBehaviour
         }
 
         updateState = false;
-        UtilHelper.SetUIColor(Color.white, this.gameObject);
+        outline.enabled = false;
     }
 
     public void SetKey(KeyCode keyCode)

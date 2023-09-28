@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MasterVolumeController : MonoBehaviour
+public class MasterVolumeController : SliderWithText
 {
-    [SerializeField]
-    private Slider slider;
-
-    public void VolumeUpdateCheck()
+    public override void OnValueChange()
     {
+        base.OnValueChange();
         if (slider == null)
             return;
 
@@ -18,10 +16,10 @@ public class MasterVolumeController : MonoBehaviour
         AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance._BGMVolume);
         SaveManager.Instance.SaveSettingData();
     }
-
-    void Awake()
+    protected override void Awake()
     {
         if (slider != null)
             slider.value = SettingManager.Instance.masterVolume;
+        base.Awake();
     }
 }

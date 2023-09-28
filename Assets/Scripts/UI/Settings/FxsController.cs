@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FxsController : MonoBehaviour
+public class FxsController : SliderWithText
 {
-    [SerializeField]
-    private Slider slider;
-
-    public void VolumeUpdateCheck()
+    public override void OnValueChange()
     {
+        base.OnValueChange();
+
         if (slider == null)
             return;
 
@@ -18,9 +17,11 @@ public class FxsController : MonoBehaviour
         SaveManager.Instance.SaveSettingData();
     }
 
-    void Awake()
+    protected override void Awake()
     {
         if (slider != null)
             slider.value = SettingManager.Instance.fxVolume;
+
+        base.Awake();
     }
 }

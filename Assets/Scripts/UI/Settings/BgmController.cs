@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BgmController : MonoBehaviour
+public class BgmController : SliderWithText
 {
-    [SerializeField]
-    private Slider slider;
-
-    public void VolumeUpdateCheck()
+    public override void OnValueChange()
     {
+        base.OnValueChange();
+
         if (slider == null)
             return;
 
@@ -18,9 +17,10 @@ public class BgmController : MonoBehaviour
         SaveManager.Instance.SaveSettingData();
     }
 
-    void Awake()
+    protected override void Awake()
     {
         if (slider != null)
             slider.value = SettingManager.Instance.bgmVolume;
+        base.Awake();
     }
 }

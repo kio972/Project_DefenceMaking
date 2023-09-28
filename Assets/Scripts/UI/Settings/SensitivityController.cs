@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SensitivityController : MonoBehaviour
+public class SensitivityController : SliderWithText
 {
-    [SerializeField]
-    private Slider slider;
-
-
-    public void SilderUpdateCheck()
+    public override void OnValueChange()
     {
+        base.OnValueChange();
+
         if (slider == null)
             return;
 
         SettingManager.Instance.mouseSensitivity = slider.value;
     }
 
-    void Awake()
+    protected override void Awake()
     {
         if (slider != null)
             slider.value = SettingManager.Instance.mouseSensitivity;
+        base.Awake();
     }
 }
