@@ -93,8 +93,7 @@ float GetDetailMask (v2f iP) {
 }
 
 float3 GetAlbedo (v2f iP) {
-	//float3 albedo = tex2D(_MainTex, iP.uv.xy).rgb * _Tint.rgb;
-	float3 albedo = lerp(tex2D(_MainTex, iP.uv.xy).rgb, _Tint.rgb,_Blend);
+	float3 albedo = tex2D(_MainTex, iP.uv.xy).rgb * _Tint.rgb;
 	#if defined (_DETAIL_ALBEDO_MAP)
 		float3 details = tex2D(_DetailTex, iP.uv.zw) * unity_ColorSpaceDouble;
 		albedo = lerp(albedo, albedo * details, GetDetailMask(iP));

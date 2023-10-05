@@ -4,7 +4,6 @@ Shader "Custom/MultiLight"
 
             _MainTex ("Albedo", 2D) = "white" {}
             _Tint ("Tint", Color) = (1, 1, 1, 1)
-            _Blend ("ColorLerp", Range(0, 1)) = 0
             
             [NoScaleOffset] _NormalMap ("Normals", 2D) = "bump" {}
             _BumpScale ("Bump Scale", Float) = 1
@@ -109,4 +108,5 @@ Shader "Custom/MultiLight"
                     ENDCG
             }
        }
+       CustomEditor "StudyShaderGUI"
 }

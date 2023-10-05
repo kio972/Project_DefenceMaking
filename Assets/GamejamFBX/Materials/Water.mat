@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: -6465566751694194690, guid: 03ad6573031c90a478286d2f8b22ccb7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 89bf728ed6e9f95439992db5364e6680, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -19,17 +19,25 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _RippleDensity: 5
+    - _Glossiness: 0
+    - _Metallic: 0.5
+    - _RippleDensity: 8.7
+    - _RipplePower: 8.84
     - _RippleSlimness: 5
-    - _RippleSpeed: 1
+    - _RippleSpeed: 14.81
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.6547983, b: 1, a: 0}
-    - _RippleColor: {r: 0.4448203, g: 1.641002, b: 1.924528, a: 0}
+    - _BaseColor: {r: 0, g: 0.5287113, b: 3.4822023, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _RippleColor: {r: 0.4634989, g: 1.6423982, b: 1.924528, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3110448269423181051
 MonoBehaviour:
