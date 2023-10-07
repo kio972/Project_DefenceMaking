@@ -27,7 +27,7 @@ public class SaveManager : Singleton<SaveManager>
 
         SettingManager.Instance.mouseSensitivity = settingData.mouseSensitivity;
         SettingManager.Instance.language = (Languages)settingData.language;
-        SettingManager.Instance.autoPlay = (AutoPlaySetting)settingData.autoPlay;
+        //SettingManager.Instance.autoPlay = (AutoPlaySetting)settingData.autoPlay;
 
         SettingManager.Instance.key_Camera_MoveUp.SetCurKey((KeyCode)settingData.key_Camera_MoveUp);
         SettingManager.Instance.key_Camera_MoveDown.SetCurKey((KeyCode)settingData.key_Camera_MoveDown);
@@ -53,7 +53,7 @@ public class SaveManager : Singleton<SaveManager>
 
         settingData.mouseSensitivity = SettingManager.Instance.mouseSensitivity;
         settingData.language = (int)SettingManager.Instance.language;
-        settingData.autoPlay = (int)SettingManager.Instance.autoPlay;
+        //settingData.autoPlay = (int)SettingManager.Instance.autoPlay;
 
         settingData.key_Camera_MoveUp = (int)SettingManager.Instance.key_Camera_MoveUp._CurKey;
         settingData.key_Camera_MoveDown = (int)SettingManager.Instance.key_Camera_MoveDown._CurKey;

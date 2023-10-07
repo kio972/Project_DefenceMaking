@@ -19,8 +19,6 @@ public struct WaveData
 
 public class WaveController : MonoBehaviour
 {
-    public List<GameObject> adventurerPrefab;
-
     [SerializeField]
     private TextMeshProUGUI waveText;
     [SerializeField]

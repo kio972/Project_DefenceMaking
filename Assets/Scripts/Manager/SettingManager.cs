@@ -65,7 +65,7 @@ public class SettingManager : Singleton<SettingManager>
 {
     #region GamePlaySetting
     public Languages language = Languages.korean;
-    public AutoPlaySetting autoPlay = AutoPlaySetting.off;
+    public AutoPlaySetting autoPlay = AutoPlaySetting.setTile;
     public float textSize = 1f;
     #endregion
 
