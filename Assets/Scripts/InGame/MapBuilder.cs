@@ -18,6 +18,47 @@ public class MapBuilder : MonoBehaviour
     [SerializeField]
     private int emptyNodeSize = 4;
 
+    private void SetRamdomTileToRandomNode(TileNode tileNode, Tile targetTilePrefab, int range)
+    {
+        //타겟 노드로부터 range거리내의 유효한 타일 중 랜덤한 한 타일에 targetTile을 비활성 상태로 설치
+        //차후 문제 생길 시 랜덤리스트 작성 후 하나씩 빼도록 변경해야함
+        int randomX = Random.Range(-range, range + 1);
+        int randomY = Random.Range(-range, range + 1);
+        TileNode targetNode = NodeManager.Instance.FindNode(tileNode.row + randomX, tileNode.col + randomY);
+        if(targetNode == null || targetNode.curTile != null)
+        {
+            SetRamdomTileToRandomNode(tileNode, targetTilePrefab, range);
+            return;
+        }
+
+        bool isTileAlone = true;
+        foreach(TileNode checkNode in targetNode.neighborNodeDic.Values)
+        {
+            if(checkNode != null && checkNode.curTile != null)
+            {
+                isTileAlone = false;
+                break;
+            }
+        }
+
+        if(!isTileAlone)
+        {
+            SetRamdomTileToRandomNode(tileNode, targetTilePrefab, range);
+            return;
+        }
+
+        int dist = PathFinder.Instance.GetNodeDistance(tileNode, targetNode);
+        if(dist == -1 || dist > range)
+        {
+            SetRamdomTileToRandomNode(tileNode, targetTilePrefab, range);
+            return;
+        }
+
+        Tile newTile = Instantiate(targetTilePrefab);
+        newTile.transform.SetParent(tileNode.transform, false);
+        newTile.Init(targetNode, true);
+    }
+
     private void SetBasicTile()
     {
         //스타트포인트부터 스타트포인트 - 직선길 - 직선길  직선길 - 직선길 - 마왕방
@@ -85,12 +126,23 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
+    public void SetRandomTile()
+    {
+        int index = DataManager.Instance.TileCard_Indexs[Random.Range(0, DataManager.Instance.TileCard_Indexs.Count)];
+        string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+        Tile targetTilePrefab = Resources.Load<Tile>("Prefab/Tile/" + prefabName);
+        SetRamdomTileToRandomNode(NodeManager.Instance.endPoint, targetTilePrefab, 4);
+    }
+
     public void Init()
     {
         SetNewMap();
         NodeManager.Instance.SetEmptyNode();
         NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
         SetBasicTile();
+
+        for (int i = 0; i < 3; i++)
+            SetRandomTile();
 
         InputManager.Instance.Call();
     }

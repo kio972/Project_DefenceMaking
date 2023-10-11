@@ -84,6 +84,33 @@ public class PathFinder : Singleton<PathFinder>
         return new Node();
     }
 
+    private void CheckNodeOpened(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
+    {
+        List<TileNode> neighborTiles = new List<TileNode>(curTile.neighborNodeDic.Values);
+        foreach (TileNode tile in neighborTiles)
+        {
+            if (tile == startTile || IsInNode(tile, closedNode))
+                continue;
+
+            //TileNode tempPrevTile = curPaths.;
+            Node neighborNode = new Node(tile, curTile, startTile, endTile, closedNode);
+            //타일에 해당하는 노드가 오픈노드에 이미 있는지 확인
+            if (IsInNode(tile, openNode))
+            {
+                Node node = FindNode(tile, openNode);
+                // 이미 리스트에 있다면, 새로운노드의 G코스트가 더 작다면 노드교체
+                if (FindNode(curTile, openNode).gCost > neighborNode.gCost)
+                {
+                    openNode.Remove(node);
+                    openNode.Add(neighborNode);
+                }
+            }
+            else //오픈노드에 없다면 추가
+                openNode.Add(neighborNode);
+        }
+        resultOpenNode = openNode;
+    }
+
     private void CheckNode(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
     {
         List<TileNode> neighborTiles = UtilHelper.GetConnectedNodes(curTile);
@@ -161,6 +188,35 @@ public class PathFinder : Singleton<PathFinder>
         List<TileNode> finalNode = CalculateFinalPath(startTile, endTile, closedNode);
         finalNode.Reverse();
         return finalNode;
+    }
+
+    public int GetNodeDistance(TileNode startTile, TileNode endTile)
+    {
+        if (startTile == endTile)
+            return -1;
+        List<Node> openNode = new List<Node>();
+        List<Node> closedNode = new List<Node>();
+        TileNode curTile = startTile;
+        while (curTile != endTile)
+        {
+            CheckNodeOpened(curTile, startTile, endTile, openNode, closedNode, out openNode);
+            if (openNode.Count == 0)
+                return -1;
+
+            float minFCost = openNode[0].FCost;
+            Node minFCostNode = openNode[0];
+            foreach (Node node in openNode)
+            {
+                if (node.FCost < minFCost)
+                    minFCostNode = node;
+            }
+            closedNode.Add(minFCostNode);
+            openNode.Remove(minFCostNode);
+            curTile = minFCostNode.tileNode;
+        }
+
+        List<TileNode> finalNode = CalculateFinalPath(startTile, endTile, closedNode);
+        return finalNode.Count;
     }
 
     public float GetBattlerDistance(Battler origin, Battler target)

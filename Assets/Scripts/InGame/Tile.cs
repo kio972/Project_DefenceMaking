@@ -31,6 +31,10 @@ public class Tile : MonoBehaviour
 
     public bool movable = false;
 
+    private bool isDormant = false;
+
+    public bool IsDormant { get => isDormant; }
+
     public bool Movable
     {
         get
@@ -57,7 +61,20 @@ public class Tile : MonoBehaviour
 
     private bool isTwin = false;
 
-    public void MoveTile(TileNode nextNode)
+    public int GetUnClosedCount()
+    {
+        // 불완전 연결인 상태인 타일 개수를 반환하는 함수
+        if (curNode == null)
+            return -1;
+
+        int count = 0;
+        count += UtilHelper.GetDirectionUnClosed(curNode, PathDirection);
+        count += UtilHelper.GetDirectionUnClosed(curNode, RoomDirection, true);
+
+        return count;
+    }
+
+    public void MoveTile(TileNode nextNode, bool isActive = true)
     {
         if(curNode != null)
         {
@@ -68,8 +85,9 @@ public class Tile : MonoBehaviour
         transform.SetParent(nextNode.transform, false);
 
         curNode = nextNode;
-        if(!NodeManager.Instance.activeNodes.Contains(nextNode))
-            NodeManager.Instance.activeNodes.Add(nextNode);
+        if(isActive && !NodeManager.Instance.activeNodes.Contains(nextNode))
+            NodeManager.Instance.SetActiveNode(nextNode, true);
+
         nextNode.curTile = this;
         transform.position = nextNode.transform.position;
         NodeManager.Instance.ExpandEmptyNode(nextNode, 4);
@@ -80,6 +98,8 @@ public class Tile : MonoBehaviour
             if(GameManager.Instance.king != null)
                 GameManager.Instance.king.SetTile(nextNode);
         }
+
+        NodeManager.Instance.DormantTileCheck();
 
         if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_All_Tile_Connected())
             GameManager.Instance.speedController.SetSpeedZero();
@@ -252,6 +272,53 @@ public class Tile : MonoBehaviour
 
         if ((monster.transform.position - transform.position).magnitude > 0.5f)
             monster = null;
+    }
+
+    private bool DormantAwake()
+    {
+        //연결된 타일 중 active상태인 노드가 있으면 return true
+        foreach(Direction direction in PathDirection)
+        {
+            TileNode target = curNode.neighborNodeDic[direction];
+            if (target == null || target.curTile == null)
+                continue;
+            if (UtilHelper.IsTileConnected(curNode, direction, target.curTile.PathDirection))
+                return true;
+            if (UtilHelper.IsTileConnected(curNode, direction, target.curTile.PathDirection))
+                return true;
+        }
+
+        return false;
+    }
+
+    public void DormantAwakeCheck()
+    {
+        if(DormantAwake())
+        {
+            isDormant = false;
+            if(!GameManager.Instance.speedController.Is_All_Tile_Connected())
+            {
+                isDormant = true;
+                return;
+            }
+
+            movable = false;
+            
+
+            // 보상획득
+            NodeManager.Instance.dormantTile.Remove(this);
+            GameManager.Instance.gold += 100;
+        }
+    }
+
+    public void Init(TileNode targetNode, bool dormant = false)
+    {
+        NodeManager.Instance.SetActiveNode(targetNode, true);
+        MoveTile(targetNode);
+        isDormant = dormant;
+        movable = !dormant;
+        if(isDormant)
+            NodeManager.Instance.dormantTile.Add(this);
     }
 
     private void Update()

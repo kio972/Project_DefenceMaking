@@ -246,9 +246,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Tile tile = instancedObject.GetComponent<Tile>();
         if (tile != null)
         {
-            NodeManager.Instance.SetActiveNode(curNode, true);
-            tile.MoveTile(curNode);
-            tile.movable = true;
+            tile.Init(curNode);
 
             if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
                 GameManager.Instance.speedController.SetSpeedPrev(false);

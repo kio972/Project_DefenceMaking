@@ -9,6 +9,26 @@ using TMPro;
 
 public static class UtilHelper
 {
+    public static int GetDirectionUnClosed(TileNode curNode, List<Direction> directions, bool isRoom = false)
+    {
+        int count = 0;
+        foreach (Direction direction in directions)
+        {
+            TileNode target = curNode.neighborNodeDic[direction];
+            if (target == null || target.curTile == null)
+                count++;
+            else
+            {
+                if (!isRoom && IsTileConnected(curNode, directions, target.curTile.PathDirection))
+                    count++;
+                else if (isRoom && IsTileConnected(curNode, directions, target.curTile.RoomDirection))
+                    count++;
+            }
+        }
+
+        return count;
+    }
+
     public static GameObject GetCardPrefab(CardType type, string targetName)
     {
         string targetPrefabPath = "Prefab/";
@@ -120,21 +140,28 @@ public static class UtilHelper
         return keyValues;
     }
 
+    public static bool IsTileConnected(TileNode curNode, Direction direction, List<Direction> targetTile_Direction)
+    {
+        if (curNode.neighborNodeDic.ContainsKey(direction))
+        {
+            Tile targetTile = curNode.neighborNodeDic[direction].curTile;
+            if (targetTile == null)
+                return false;
+            direction = ReverseDirection(direction);
+            if (targetTile_Direction.Contains(direction))
+                return true;
+        }
+        return false;
+    }
+
     public static bool IsTileConnected(TileNode curNode, List<Direction> curTile_Direction, List<Direction> targetTile_Direction)
     {
         foreach (Direction direction in targetTile_Direction)
         {
             if (curNode.neighborNodeDic.ContainsKey(direction))
             {
-                Tile targetTile = curNode.neighborNodeDic[direction].curTile;
-                if (targetTile == null)
-                    continue;
-
-                foreach (Direction targetDirection in curTile_Direction)
-                {
-                    if (direction == ReverseDirection(targetDirection))
-                        return true;
-                }
+                if (IsTileConnected(curNode, direction, targetTile_Direction))
+                    return true;
             }
         }
 

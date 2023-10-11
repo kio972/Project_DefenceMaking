@@ -62,6 +62,9 @@ public class GameSpeedController : MonoBehaviour
             if (tile == NodeManager.Instance.endPoint || tile.curTile == null)
                 continue;
 
+            if (tile.curTile.IsDormant)
+                continue;
+
             if (PathFinder.Instance.FindPath(tile) == null)
                 return false;
         }

@@ -25,6 +25,8 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public List<List<TileNode>> roomNodes = new List<List<TileNode>>();
 
+    public List<Tile> dormantTile = new List<Tile>();
+
     public TileNode startPoint;
     public TileNode endPoint;
 
@@ -147,6 +149,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (node == null)
                 continue;
+
             bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection);
             node.SetAvail(isConnected);
         }
@@ -162,6 +165,15 @@ public class NodeManager : IngameSingleton<NodeManager>
     }
 
     #endregion
+
+    public void DormantTileCheck()
+    {
+        List<Tile> dormantTiles = new List<Tile>(dormantTile);
+        foreach(Tile tile in dormantTiles)
+        {
+            tile.DormantAwakeCheck();
+        }
+    }
 
     public void RoomCheck(TileNode tileNode)
     {
@@ -365,8 +377,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         return false;
     }
 
-    
-
     public void AddVirtualNode(TileNode node, Direction direction)
     {
         if(node.neighborNodeDic.ContainsKey(direction))
@@ -387,6 +397,9 @@ public class NodeManager : IngameSingleton<NodeManager>
         //이웃타일이 이미 activeNode에있다면 추가하지않음
         foreach (TileNode node in activeNodes)
         {
+            if (node.curTile != null && node.curTile.IsDormant)
+                continue;
+
             AddVirtualNode(node, Direction.Left);
             AddVirtualNode(node, Direction.LeftUp);
             AddVirtualNode(node, Direction.LeftDown);
@@ -434,9 +447,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
         return newNode;
     }
-
-
-
 
     public void SetNewNode(TileNode curNode)
     {
