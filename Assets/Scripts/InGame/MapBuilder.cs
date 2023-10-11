@@ -128,9 +128,20 @@ public class MapBuilder : MonoBehaviour
 
     public void SetRandomTile()
     {
-        int index = DataManager.Instance.TileCard_Indexs[Random.Range(0, DataManager.Instance.TileCard_Indexs.Count)];
+        int index = DataManager.Instance.PathCard_Indexs[Random.Range(0, DataManager.Instance.PathCard_Indexs.Count)];
+        int isRoom = Random.Range(0, 2);
+        if(isRoom == 1)
+            index = DataManager.Instance.RoomCard_Indexs[Random.Range(0, DataManager.Instance.RoomCard_Indexs.Count)];
+
         string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+
         Tile targetTilePrefab = Resources.Load<Tile>("Prefab/Tile/" + prefabName);
+        if(targetTilePrefab == null)
+        {
+            SetRandomTile();
+            return;
+        }
+
         SetRamdomTileToRandomNode(NodeManager.Instance.endPoint, targetTilePrefab, 4);
     }
 

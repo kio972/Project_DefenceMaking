@@ -24,7 +24,7 @@ public class DataManager : Singleton<DataManager>
 
     private List<int> pathCard_Indexs;
     private List<int> roomCard_Indexs;
-
+    private List<int> roomPartCard_Index;
 
 
     public List<int> TileCard_Indexs
@@ -54,6 +54,17 @@ public class DataManager : Singleton<DataManager>
             return roomCard_Indexs;
         }
     }
+
+    public List<int> RoomPartCard_Indexs
+    {
+        get
+        {
+            if (roomPartCard_Index == null)
+                roomPartCard_Index = Find_Typeof_Index(deckList, "type", "roomPart");
+            return roomPartCard_Index;
+        }
+    }
+
     public List<int> MonsterCard_Indexs
     {
         get
@@ -83,6 +94,7 @@ public class DataManager : Singleton<DataManager>
         }
         return indexs;
     }
+
 
     // csv파일 주소(Resource폴더 내)
     private string wave_Table_DataPath = "Data/waveData";
