@@ -23,6 +23,8 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public List<TileNode> allNodes = new List<TileNode>();
 
+    public List<List<TileNode>> roomNodes = new List<List<TileNode>>();
+
     public TileNode startPoint;
     public TileNode endPoint;
 
@@ -160,6 +162,11 @@ public class NodeManager : IngameSingleton<NodeManager>
     }
 
     #endregion
+
+    public void RoomCheck(TileNode tileNode)
+    {
+
+    }
 
     public void SetTile(TileNode curNode, string prefabPath)
     {
