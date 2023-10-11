@@ -39,6 +39,8 @@ public struct Card
                 return CardType.MapTile;
             case "room":
                 return CardType.MapTile;
+            case "roomPart":
+                return CardType.MapTile;
             case "trap":
                 return CardType.Trap;
             case "environment":

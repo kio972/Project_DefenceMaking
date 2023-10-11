@@ -106,6 +106,8 @@ public class TileNode : MonoBehaviour
                 TileNode targetNode = neighborNodeDic[direction];
                 if (!NodeManager.Instance.activeNodes.Contains(targetNode))
                     continue;
+                if (targetNode.curTile == null)
+                    continue;
 
                 foreach (Direction targetDirection in targetNode.curTile.RoomDirection)
                 {
