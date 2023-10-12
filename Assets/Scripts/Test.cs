@@ -5,18 +5,22 @@ using UnityEngine.Tilemaps;
 
 public class Test : MonoBehaviour
 {
-    public Texture texture;
+    public GameObject prefab;
 
-    private MaterialPropertyBlock material;
-
-
-    void Update()
+    IEnumerator SpawnStart()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+        for (int i = 0; i < 5000; i++)
         {
-            material = new MaterialPropertyBlock();
-            material.SetTexture("_MainTex", texture);
-            GetComponent<Renderer>().SetPropertyBlock(material);
+            GameObject newone = Instantiate(prefab);
+            Destroy(newone.GetComponentInChildren<Battler>());
+            print(i + 1);
+            yield return wait;
         }
+    }
+
+    private void Start()
+    {
+        StartCoroutine(SpawnStart());
     }
 }
