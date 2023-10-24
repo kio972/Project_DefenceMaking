@@ -7,12 +7,12 @@ using UnityEngine;
 public enum Direction
 {
     None,
+    Left,
     LeftUp,
     RightUp,
-    Left,
     Right,
-    LeftDown,
     RightDown,
+    LeftDown,
 }
 
 public class TileNode : MonoBehaviour

@@ -171,39 +171,29 @@ public class Tile : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0f, 60f, 0f);
     }
 
-    public List<Direction> RotateDirection(List<Direction> pathDirection)
+    private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
+
+    public List<Direction> RotateDirection(List<Direction> pathDirection, bool reverse = false)
     {
         //현재 노드의 pathDirection과 roomDirection을 60도 회전하는 함수
         List<Direction> newDirection = new List<Direction>();
         foreach (Direction dir in pathDirection)
         {
-            switch (dir)
-            {
-                case Direction.Left:
-                    newDirection.Add(Direction.LeftUp);
-                    break;
-                case Direction.LeftUp:
-                    newDirection.Add(Direction.RightUp);
-                    break;
-                case Direction.LeftDown:
-                    newDirection.Add(Direction.Left);
-                    break;
-                case Direction.Right:
-                    newDirection.Add(Direction.RightDown);
-                    break;
-                case Direction.RightUp:
-                    newDirection.Add(Direction.Right);
-                    break;
-                case Direction.RightDown:
-                    newDirection.Add(Direction.LeftDown);
-                    break;
-            }
+            if (dir == Direction.None) continue;
+            int dirNum = 1;
+            if (reverse) dirNum = -1;
+
+            int nextDir = (int)dir + dirNum;
+            if (nextDir >= RoomRotations.Length) nextDir = 1;
+            else if (nextDir <= 0) nextDir = RoomRotations.Length - 1;
+
+            newDirection.Add(RoomRotations[nextDir]);
         }
 
         return newDirection;
     }
 
-    public void RotateTile()
+    public void RotateTile(bool reverse = false)
     {
         pathDirection = RotateDirection(pathDirection);
         roomDirection = RotateDirection(roomDirection);
