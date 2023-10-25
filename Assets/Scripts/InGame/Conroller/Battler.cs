@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -420,6 +421,27 @@ public class Battler : FSM<Battler>
         {
             rotatonAxis.rotation = TargetRoation(GameManager.Instance.cameraController.Camera_Level);
             prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
+        }
+    }
+
+    protected virtual void InitStats(int index)
+    {
+        maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["hp"]);
+        curHp = maxHp;
+
+        minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMin"]);
+        maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMax"]);
+        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out attackSpeed);
+        armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
+        float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
+
+        float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange);
+
+        float.TryParse(DataManager.Instance.Battler_Table[index]["splashRange"].ToString(), out splashRange);
+        if (splashRange > 0)
+        {
+            splashDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["splashPower"]);
+            splashAttack = true;
         }
     }
 

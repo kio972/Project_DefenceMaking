@@ -15,6 +15,9 @@ public class PlayerBattleMain : Battler
         if (curHp <= 0)
             Dead();
 
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE") && !animator.IsInTransition(0))
+            animator.SetTrigger("Damaged");
+
         attacker.GetDamage(attacker.maxHp + attacker.armor, this);
     }
 
@@ -35,16 +38,22 @@ public class PlayerBattleMain : Battler
 
         if ((transform.position - NodeManager.Instance.endPoint.transform.position).magnitude > 0.01f)
             MoveToBossRoom();
-
-
     }
 
     public override void Init()
     {
         base.Init();
 
+        int index = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        if(index != -1)
+        {
+            InitStats(index);
+        }
+
         curTile = NodeManager.Instance.endPoint;
         MoveToBossRoom();
+
+        InitState(this, FSMKing.Instance);
     }
 
 }

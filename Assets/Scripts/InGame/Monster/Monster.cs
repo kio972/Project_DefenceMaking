@@ -98,24 +98,10 @@ public class Monster : Battler
         monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
         if(monsterIndex != -1)
         {
-            maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["hp"]);
+            InitStats(monsterIndex);
+
             maxHp += PassiveManager.Instance.monsterHp_Weight;
-
             curHp = maxHp;
-            minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["attackPowerMin"]);
-            maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["attackPowerMax"]);
-            float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["attackSpeed"].ToString(), out attackSpeed);
-            armor = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["armor"]);
-            float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["moveSpeed"].ToString(), out moveSpeed);
-
-            float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["attackRange"].ToString(), out attackRange);
-
-            float.TryParse(DataManager.Instance.Battler_Table[monsterIndex]["splashRange"].ToString(), out splashRange);
-            if(splashRange > 0)
-            {
-                splashDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["splashPower"]);
-                splashAttack = true;
-            }
         }
 
         GameManager.Instance.monsterList.Add(this);

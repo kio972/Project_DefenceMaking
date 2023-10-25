@@ -32,15 +32,9 @@ public class Adventurer : Battler
         adventurerIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
         if(adventurerIndex != -1)
         {
-            maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["hp"]);
-            curHp = maxHp;
-            minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["attackPowerMin"]);
-            maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["attackPowerMax"]);
-            float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["attackSpeed"].ToString(), out attackSpeed);
-            armor = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["armor"]);
-            float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["moveSpeed"].ToString(), out moveSpeed);
+            InitStats(adventurerIndex);
+
             reward = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["reward"]);
-            float.TryParse(DataManager.Instance.Battler_Table[adventurerIndex]["attackRange"].ToString(), out attackRange);
         }
 
         InitState(this, FSMPatrol.Instance);
