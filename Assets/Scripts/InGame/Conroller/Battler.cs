@@ -79,6 +79,8 @@ public class Battler : FSM<Battler>
 
     public string BattlerID { get => battlerID; }
 
+    private float ccTime = 0;
+
     public float MoveSpeed
     {
         get
@@ -86,6 +88,21 @@ public class Battler : FSM<Battler>
             float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
             return moveSpeed * slowRate;
         }
+    }
+
+    public bool CCEscape()
+    {
+        ccTime -= Time.deltaTime * GameManager.Instance.timeScale;
+        if (ccTime <= 0)
+            return true;
+
+        return false;
+    }
+
+    public void GetCC(Battler attacker, float time)
+    {
+        this.ccTime = time;
+        
     }
 
     public void ResetNode()

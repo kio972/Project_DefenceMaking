@@ -158,8 +158,8 @@ public class Tile : MonoBehaviour
             AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
             resetNode = false;
 
-            if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
-                GameManager.Instance.speedController.SetSpeedPrev(false);
+            //if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+            //    GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         EndMoveing(resetNode);
@@ -200,8 +200,7 @@ public class Tile : MonoBehaviour
         pathDirection = RotateDirection(pathDirection, reverse);
         roomDirection = RotateDirection(roomDirection, reverse);
         RotateDirection(reverse);
-        if(tileType != TileType.End)
-            NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+        NodeManager.Instance.SetGuideState(GuideState.Tile, this);
     }
 
     public void ResetTwin()
@@ -234,8 +233,7 @@ public class Tile : MonoBehaviour
         switch (tileType)
         {
             case TileType.End:
-                UtilHelper.SetAvail(true, NodeManager.Instance.allNodes);
-                UtilHelper.SetAvail(false, NodeManager.Instance.activeNodes);
+                NodeManager.Instance.SetGuideState(GuideState.Tile, this);
                 break;
             default:
                 NodeManager.Instance.SetGuideState(GuideState.Tile, this);
@@ -250,8 +248,6 @@ public class Tile : MonoBehaviour
 
     public TileNode TileMoveCheck()
     {
-        
-
         TileNode curNode = UtilHelper.RayCastTile();
         UpdateMoveTilePos(curNode);
         return curNode;
@@ -288,7 +284,7 @@ public class Tile : MonoBehaviour
         if(DormantAwake())
         {
             isDormant = false;
-            if(!GameManager.Instance.speedController.Is_All_Tile_Connected())
+            if(!GameManager.Instance.speedController.Is_Tile_Connected(this.curNode))
             {
                 isDormant = true;
                 return;

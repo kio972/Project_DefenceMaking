@@ -7,6 +7,9 @@ public class Monster : Battler
 {
     private int monsterIndex = -1;
 
+    [SerializeField]
+    private bool isHide = false;
+
     public override void Dead()
     {
         base.Dead();
@@ -117,7 +120,10 @@ public class Monster : Battler
 
         GameManager.Instance.monsterList.Add(this);
 
-        InitState(this, FSMPatrol.Instance);
+        if(isHide)
+            InitState(this, FSMHide.Instance);
+        else
+            InitState(this, FSMPatrol.Instance);
     }
 
 

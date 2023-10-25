@@ -248,8 +248,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         {
             tile.Init(curNode);
 
-            if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
-                GameManager.Instance.speedController.SetSpeedPrev(false);
+            //if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+            //    GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);

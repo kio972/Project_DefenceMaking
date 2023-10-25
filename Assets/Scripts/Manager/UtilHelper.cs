@@ -173,20 +173,27 @@ public static class UtilHelper
         List<TileNode> nodes = new List<TileNode>();
         if (curNode.curTile == null)
             return nodes;
-        List<Direction> connectedDirection = new List<Direction>();
-        foreach(Direction direction in curNode.curTile.PathDirection)
-            connectedDirection.Add(direction);
-        foreach(Direction direction in curNode.curTile.RoomDirection)
-            connectedDirection.Add(direction);
 
-        foreach(Direction direction in connectedDirection)
+        foreach(Direction direction in curNode.curTile.PathDirection)
         {
             TileNode tempNode = curNode.DirectionalNode(direction);
             if (tempNode != null && tempNode.curTile != null && NodeManager.Instance.activeNodes.Contains(tempNode))
             {
                 Direction reverseDirection = ReverseDirection(direction);
 
-                if(tempNode.curTile.PathDirection.Contains(reverseDirection) || tempNode.curTile.RoomDirection.Contains(reverseDirection))
+                if (tempNode.curTile.PathDirection.Contains(reverseDirection))
+                    nodes.Add(tempNode);
+            }
+        }
+
+        foreach (Direction direction in curNode.curTile.RoomDirection)
+        {
+            TileNode tempNode = curNode.DirectionalNode(direction);
+            if (tempNode != null && tempNode.curTile != null && NodeManager.Instance.activeNodes.Contains(tempNode))
+            {
+                Direction reverseDirection = ReverseDirection(direction);
+
+                if (tempNode.curTile.RoomDirection.Contains(reverseDirection))
                     nodes.Add(tempNode);
             }
         }

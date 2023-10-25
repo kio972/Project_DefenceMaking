@@ -12,7 +12,6 @@ public class GameSpeedController : MonoBehaviour
     [SerializeField]
     private Button speed_2;
 
-
     public Sprite zeroSprite;
     public Sprite zeroSprite_Select;
     public Sprite normalSprite;
@@ -53,6 +52,14 @@ public class GameSpeedController : MonoBehaviour
             normalImg.sprite = normalSprite_Select;
         if (GameManager.Instance.timeScale == 2)
             fastImg.sprite = fastSprite_Select;
+    }
+
+    public bool Is_Tile_Connected(TileNode tile)
+    {
+        if (PathFinder.Instance.FindPath(tile) == null)
+            return false;
+        else
+            return true;
     }
 
     public bool Is_All_Tile_Connected()
