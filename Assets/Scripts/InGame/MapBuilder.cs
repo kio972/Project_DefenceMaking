@@ -13,7 +13,7 @@ public class MapBuilder : MonoBehaviour
     public int x_Size = 10;
     public int y_Size = 9;
 
-    public int startPathSize = 4;
+    private int startPathSize = 3;
 
     [SerializeField]
     private int emptyNodeSize = 4;
@@ -65,6 +65,7 @@ public class MapBuilder : MonoBehaviour
         //print(NodeManager.Instance.startPoint.transform.position);
         GameObject startPointPrefab = Resources.Load<GameObject>("Prefab/Tile/StartTile");
         GameObject pathPrefab = Resources.Load<GameObject>("Prefab/Tile/RoadTile0");
+        GameObject pathPrefab2 = Resources.Load<GameObject>("Prefab/Tile/RoadTile6");
         GameObject endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
 
         Tile startTile = Instantiate(startPointPrefab)?.GetComponent<Tile>();
@@ -73,7 +74,7 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.startPoint = startTile.curNode;
         NodeManager.Instance.activeNodes = new List<TileNode>();
 
-        NodeManager.Instance.activeNodes.Add(startTile.curNode);
+        NodeManager.Instance.SetActiveNode(startTile.curNode, true);
         NodeManager.Instance.ExpandEmptyNode(startTile.curNode, emptyNodeSize);
 
         TileNode nextNode = startTile.curNode.neighborNodeDic[Direction.Right];
@@ -85,14 +86,22 @@ public class MapBuilder : MonoBehaviour
             Tile pathTile = Instantiate(pathPrefab)?.GetComponent<Tile>();
             pathTile.MoveTile(nextNode);
 
-            NodeManager.Instance.activeNodes.Add(pathTile.curNode);
+            NodeManager.Instance.SetActiveNode(pathTile.curNode, true);
             nextNode = nextNode.neighborNodeDic[Direction.Right];
             NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
         }
 
+        Tile crossTile = Instantiate(pathPrefab2)?.GetComponent<Tile>();
+        crossTile.MoveTile(nextNode);
+        NodeManager.Instance.SetActiveNode(crossTile.curNode, true);
+        crossTile.RotateTile();
+        nextNode = nextNode.neighborNodeDic[Direction.RightUp];
+        NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
+
+
         Tile endTile = Instantiate(endPointPrefab)?.GetComponent<Tile>();
         endTile.MoveTile(nextNode);
-
+        endTile.RotateTile(true);
         NodeManager.Instance.activeNodes.Add(endTile.curNode);
         NodeManager.Instance.endPoint = endTile.curNode;
         endTile.movable = true;

@@ -165,9 +165,12 @@ public class Tile : MonoBehaviour
         EndMoveing(resetNode);
     }
 
-    private void RotateDirection()
+    private void RotateDirection(bool reverse = false)
     {
-        transform.rotation *= Quaternion.Euler(0f, 60f, 0f);
+        float rate = 60f;
+        if (reverse)
+            rate *= -1f;
+        transform.rotation *= Quaternion.Euler(0f, rate, 0f);
     }
 
     private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
@@ -194,9 +197,9 @@ public class Tile : MonoBehaviour
 
     public void RotateTile(bool reverse = false)
     {
-        pathDirection = RotateDirection(pathDirection);
-        roomDirection = RotateDirection(roomDirection);
-        RotateDirection();
+        pathDirection = RotateDirection(pathDirection, reverse);
+        roomDirection = RotateDirection(roomDirection, reverse);
+        RotateDirection(reverse);
         if(tileType != TileType.End)
             NodeManager.Instance.SetGuideState(GuideState.Tile, this);
     }
