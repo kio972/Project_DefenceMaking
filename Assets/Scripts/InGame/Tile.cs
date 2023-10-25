@@ -27,7 +27,6 @@ public class Tile : MonoBehaviour
 
     public TileNode curNode;
 
-    public bool isActive = false;
 
     public bool movable = false;
 
