@@ -27,8 +27,7 @@ public class FSMHide : FSMSingleton<FSMHide>, CharState<Battler>
         Battler curTarget = e.BattleCheck();
         if (curTarget != null)
         {
-            e.curTarget = curTarget;
-            e.ChangeState(FSMAttack.Instance);
+            e.ChangeState(FSMPatrol.Instance);
             return true;
         }
 
