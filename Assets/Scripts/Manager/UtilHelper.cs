@@ -174,26 +174,34 @@ public static class UtilHelper
         if (curNode.curTile == null)
             return nodes;
 
-        foreach(Direction direction in curNode.curTile.PathDirection)
+        if (curNode.curTile._TileType != TileType.Room)
         {
-            TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode != null && tempNode.curTile != null && NodeManager.Instance.activeNodes.Contains(tempNode))
+            foreach (Direction direction in curNode.curTile.PathDirection)
             {
-                Direction reverseDirection = ReverseDirection(direction);
+                TileNode tempNode = curNode.DirectionalNode(direction);
+                if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+                    continue;
 
-                if (tempNode.curTile.PathDirection.Contains(reverseDirection))
+                if (curNode.curTile._TileType == TileType.Path && tempNode.curTile._TileType == TileType.Room)
+                    continue;
+
+                if (tempNode.curTile.PathDirection.Contains(ReverseDirection(direction)))
                     nodes.Add(tempNode);
             }
         }
-
-        foreach (Direction direction in curNode.curTile.RoomDirection)
+        
+        if(curNode.curTile._TileType != TileType.Path)
         {
-            TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode != null && tempNode.curTile != null && NodeManager.Instance.activeNodes.Contains(tempNode))
+            foreach (Direction direction in curNode.curTile.RoomDirection)
             {
-                Direction reverseDirection = ReverseDirection(direction);
+                TileNode tempNode = curNode.DirectionalNode(direction);
+                if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+                    continue;
 
-                if (tempNode.curTile.RoomDirection.Contains(reverseDirection))
+                if (curNode.curTile._TileType == TileType.Room && tempNode.curTile._TileType == TileType.Path)
+                    continue;
+
+                if (tempNode.curTile.RoomDirection.Contains(ReverseDirection(direction)))
                     nodes.Add(tempNode);
             }
         }

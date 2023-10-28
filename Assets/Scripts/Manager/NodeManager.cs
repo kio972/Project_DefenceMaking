@@ -23,7 +23,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public List<TileNode> allNodes = new List<TileNode>();
 
-    public List<List<TileNode>> roomNodes = new List<List<TileNode>>();
+    public List<List<Tile>> roomTiles = new List<List<Tile>>();
 
     public List<Tile> dormantTile = new List<Tile>();
 
@@ -97,12 +97,29 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
+    private bool IsMonsterSetable(TileNode node)
+    {
+        if (node.curTile != null)
+        {
+            if (node.curTile._TileType == TileType.Room || node.curTile._TileType == TileType.Room_Single)
+            {
+                if (node.curTile.monster == null)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     private void SetMonsterAvail()
     {
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile._TileType == TileType.Room && node.curTile.monster == null)
-                node.SetAvail(true);
+            if (IsMonsterSetable(node))
+            {
+                List<TileNode> path = PathFinder.Instance.FindPath(node);
+                node.SetAvail(path != null);
+            }
             else
                 node.SetAvail(false);
         }
@@ -175,9 +192,62 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    public void RoomCheck(TileNode tileNode)
+    private List<TileNode> GetConnectedRoom(Tile tile)
     {
+        List<TileNode> nodes = new List<TileNode>();
+        foreach(Direction dir in tile.RoomDirection)
+        {
+            TileNode node = tile.curNode.DirectionalNode(dir);
+            if (node == null && node.curTile == null)
+                continue;
 
+            if (node.curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(dir)))
+                nodes.Add(node);
+        }
+
+        return nodes;
+    }
+
+    private List<Tile> BFSRoom(Tile startTile)
+    {
+        List<Tile> visited = new List<Tile> { startTile };
+        Queue<Tile> queue = new Queue<Tile>();
+        queue.Enqueue(startTile);
+        
+        while(queue.Count != 0)
+        {
+            Tile next = queue.Dequeue();
+            foreach(Direction dir in next.RoomDirection)
+            {
+                TileNode targetNode = next.curNode.DirectionalNode(dir);
+                // 방 방향으로 타일이 모두 닫혀있지 않음
+                if (targetNode == null || targetNode.curTile == null)
+                    return null;
+
+                if (visited.Contains(targetNode.curTile))
+                    continue;
+
+                // 방 방향으로 방타일이 연결되어있지 않음
+                if (!targetNode.curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(dir)))
+                    return null;
+
+
+                queue.Enqueue(targetNode.curTile);
+                visited.Add(targetNode.curTile);
+            }
+        }
+
+        return visited;
+    }
+
+    public void RoomCheck(Tile tile)
+    {
+        //BFS 수행, 방 완성조건에 부합 시 해당방들에 대해 방완성 = true
+        List<Tile> completeRoom = BFSRoom(tile);
+        if (completeRoom == null) return;
+
+        // 해당 방들 완성으로 변경코드 추가 예정
+        roomTiles.Add(completeRoom);
     }
 
     public void SetTile(TileNode curNode, string prefabPath)

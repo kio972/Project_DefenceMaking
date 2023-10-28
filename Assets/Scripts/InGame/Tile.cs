@@ -9,6 +9,8 @@ public enum TileType
     Path,
     Room,
     End,
+    Door,
+    Room_Single
 }
 
 public class Tile : MonoBehaviour
@@ -100,8 +102,11 @@ public class Tile : MonoBehaviour
 
         NodeManager.Instance.DormantTileCheck();
 
-        if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_All_Tile_Connected())
+        if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_Game_Continuable())
             GameManager.Instance.speedController.SetSpeedZero();
+
+        if (isActive && this.tileType == TileType.Room)
+            NodeManager.Instance.RoomCheck(this);
     }
 
     private void SetTileVisible(bool value)

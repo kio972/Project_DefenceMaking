@@ -65,6 +65,16 @@ public class DataManager : Singleton<DataManager>
         }
     }
 
+    public string GetDescription(string key)
+    {
+        int index = UtilHelper.Find_Data_Index(key, language_Table, "id");
+        if (index == -1)
+            return key;
+
+
+        return language_Table[index]["korean"].ToString();
+    }
+
     public List<int> MonsterCard_Indexs
     {
         get

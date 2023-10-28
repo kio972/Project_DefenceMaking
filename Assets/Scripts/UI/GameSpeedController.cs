@@ -62,6 +62,32 @@ public class GameSpeedController : MonoBehaviour
             return true;
     }
 
+    public bool Is_Game_Continuable()
+    {
+        if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
+            return false;
+
+        foreach(Battler target in GameManager.Instance.monsterList)
+        {
+            if (target.CurTile == NodeManager.Instance.endPoint)
+                continue;
+
+            if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
+                return false;
+        }
+
+        foreach(Battler target in GameManager.Instance.adventurersList)
+        {
+            if (target.CurTile == NodeManager.Instance.endPoint)
+                continue;
+
+            if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
+                return false;
+        }
+
+        return true;
+    }
+
     public bool Is_All_Tile_Connected()
     {
         foreach(TileNode tile in NodeManager.Instance.activeNodes)
@@ -91,9 +117,10 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedNormal()
     {
-        if (!Is_All_Tile_Connected())
+        if (!Is_Game_Continuable())
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
+            GameManager.Instance.popUpMessage?.ToastMsg(desc);
             return;
         }
 
@@ -103,10 +130,13 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedNormal(bool showPopUp)
     {
-        if (!Is_All_Tile_Connected())
+        if (!Is_Game_Continuable())
         {
             if (showPopUp)
-                GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            {
+                string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
+                GameManager.Instance.popUpMessage?.ToastMsg(desc);
+            }
             return;
         }
 
@@ -116,9 +146,10 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedFast()
     {
-        if (!Is_All_Tile_Connected())
+        if (!Is_Game_Continuable())
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
+            GameManager.Instance.popUpMessage?.ToastMsg(desc);
             return;
         }
 
@@ -128,10 +159,13 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedFast(bool showPopUp)
     {
-        if (!Is_All_Tile_Connected())
+        if (!Is_Game_Continuable())
         {
             if(showPopUp)
-                GameManager.Instance.popUpMessage?.ToastMsg("모든 타일이 마왕방과 연결되어 있어야 합니다!");
+            {
+                string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
+                GameManager.Instance.popUpMessage?.ToastMsg(desc);
+            }
             return;
         }
 
