@@ -154,7 +154,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private void SetTileAvail(Tile targetTile)
     {
-        SetVirtualNode();
+        SetVirtualNode(targetTile._TileType == TileType.End);
 
         List<Direction> targetNode_PathDirection = targetTile.PathDirection;
         List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
@@ -459,7 +459,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    public void SetVirtualNode()
+    public void SetVirtualNode(bool withoutDormant = false)
     {
         virtualNodes = new List<TileNode>();
 
@@ -467,7 +467,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         //이웃타일이 이미 activeNode에있다면 추가하지않음
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile.IsDormant)
+            if (withoutDormant && node.curTile != null && node.curTile.IsDormant)
                 continue;
 
             AddVirtualNode(node, Direction.Left);

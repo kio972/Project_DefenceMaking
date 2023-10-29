@@ -88,9 +88,6 @@ public class TileNode : MonoBehaviour
                 if (!NodeManager.Instance.activeNodes.Contains(targetNode) || targetNode.curTile == null)
                     continue;
 
-                if (targetNode.curTile.IsDormant)
-                    continue;
-
                 foreach (Direction targetDirection in targetNode.curTile.PathDirection)
                 {
                     if (direction == UtilHelper.ReverseDirection(targetDirection))
