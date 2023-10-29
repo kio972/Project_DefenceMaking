@@ -10,6 +10,9 @@ public class IngameButtonController : MonoBehaviour
     [SerializeField]
     private Button skipBtn;
 
+    [SerializeField]
+    private SkipDoorBtn skipBtnAnim;
+
     private void SkipWave()
     {
         GameManager.Instance.SkipDay();
@@ -39,7 +42,10 @@ public class IngameButtonController : MonoBehaviour
         if (GameManager.Instance.Timer >= 720f)
             shopBtn.gameObject.SetActive(true);
         else
+        {
+            skipBtnAnim.ResetAnimation();
             shopBtn.gameObject.SetActive(false);
+        }
     }
 
     private void Awake()

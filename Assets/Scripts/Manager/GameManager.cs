@@ -119,7 +119,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public void SkipDay()
     {
-        timer = 1440f;
+        if(timer < 1350f)
+            timer = 1350f;
     }
 
     // Update is called once per frame
