@@ -15,7 +15,6 @@ public class TitleUI : MonoBehaviour
             return;
 
         clicked = false;
-        img.AnimationState.SetAnimation(1, "Fire", true);
     }
 
 }
