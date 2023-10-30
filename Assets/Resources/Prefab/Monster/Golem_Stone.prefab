@@ -64,11 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a8f34116fede5341b2aadf09c1770bb, type: 2}
-  - {fileID: 2100000, guid: c07c885a04a1dac4faa1aae059e5a011, type: 2}
-  - {fileID: 2100000, guid: 18481a3152ea76a409cce560d79e16f9, type: 2}
-  - {fileID: 2100000, guid: c07c885a04a1dac4faa1aae059e5a011, type: 2}
-  - {fileID: 2100000, guid: 18481a3152ea76a409cce560d79e16f9, type: 2}
+  - {fileID: 2100000, guid: 648ac005781a02949ac07db7ab75a074, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -308,7 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271d5732b1a0afc419a6ed773f6e8dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
   curHp: 1
   maxHp: 1
   armor: 0
@@ -328,6 +323,8 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
   deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m30001
+  attackEffect: {fileID: 9054858531674775054, guid: 766ea6773c111c34db0c3af775050a15, type: 3}
+  isHide: 0
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0

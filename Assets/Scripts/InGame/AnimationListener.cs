@@ -10,6 +10,7 @@ public class AnimationListener : MonoBehaviour
     void Attack()
     {
         battler.Attack();
+        
     }
 
     private void Awake()

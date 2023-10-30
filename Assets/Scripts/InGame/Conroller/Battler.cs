@@ -42,11 +42,16 @@ public class Battler : FSM<Battler>
 
     [SerializeField]
     private Transform rotatonAxis;
+
+    public Transform RotationAxis { get => rotatonAxis; }
+
     [SerializeField]
     private Transform hpPivot;
 
     public Battler chaseTarget;
     public Battler curTarget;
+
+    public Vector3 lastPoint;
 
     public bool isDead = false;
 
@@ -77,6 +82,9 @@ public class Battler : FSM<Battler>
 
     [SerializeField]
     protected string battlerID;
+
+    [SerializeField]
+    protected GameObject attackEffect;
 
     public string BattlerID { get => battlerID; }
 
@@ -406,6 +414,9 @@ public class Battler : FSM<Battler>
     {
         if (attackSound != null)
             AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance._FxVolume);
+
+        if (attackEffect != null)
+            EffectPooling.Instance.PlayEffect(attackEffect, curTarget.transform, Vector3.zero, 0.9f);
 
         if (curTarget != null && !curTarget.isDead)
         {
