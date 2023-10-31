@@ -123,7 +123,7 @@ public class GameSpeedController : MonoBehaviour
             GameManager.Instance.popUpMessage?.ToastMsg(desc);
             return;
         }
-
+        prevState = (int)GameManager.Instance.timeScale;
         GameManager.Instance.timeScale = 1;
         SetButtonState();
     }
@@ -139,7 +139,7 @@ public class GameSpeedController : MonoBehaviour
             }
             return;
         }
-
+        prevState = (int)GameManager.Instance.timeScale;
         GameManager.Instance.timeScale = 1;
         SetButtonState();
     }

@@ -30,6 +30,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
         if (instance == null)
         {
             instance = this as T;
+            instance.SendMessage("Init", SendMessageOptions.DontRequireReceiver);
             DontDestroyOnLoad(gameObject);
         }
         else

@@ -10,6 +10,7 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> battler_Table;
     private List<Dictionary<string, object>> timeRate_Table;
     private List<Dictionary<string, object>> language_Table;
+    private List<Dictionary<string, object>> scripts_Table;
 
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
@@ -26,6 +27,33 @@ public class DataManager : Singleton<DataManager>
     private List<int> roomCard_Indexs;
     private List<int> roomPartCard_Index;
 
+    public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
+
+    public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
+
+    private void InitScripts()
+    {
+        scriptsDic = new Dictionary<string, List<Dictionary<string, object>>>();
+        foreach (Dictionary<string, object> script in scripts_Table)
+        {
+            string id = script["id"].ToString();
+            if (!scriptsDic.ContainsKey(id))
+                scriptsDic.Add(id, new List<Dictionary<string, object>>());
+
+            scriptsDic[id].Add(script);
+        }
+    }
+
+    public List<Dictionary<string, object>> GetScripts(string key)
+    {
+        if (scriptsDic == null)
+            InitScripts();
+
+        if (!scriptsDic.ContainsKey(key))
+            return null;
+
+        return scriptsDic[key];
+    }
 
     public List<int> TileCard_Indexs
     {
@@ -112,6 +140,7 @@ public class DataManager : Singleton<DataManager>
     private string battler_Table_DataPath = "Data/battlerTable";
     private string timeRate_Table_DataPath = "Data/timeData";
     private string language_Table_DataPath = "Data/languageData";
+    private string scripts_Table_DataPath = "Data/scriptData";
 
     private void Init()
     {
@@ -121,5 +150,6 @@ public class DataManager : Singleton<DataManager>
         battler_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(battler_Table_DataPath));
         timeRate_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(timeRate_Table_DataPath));
         language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
+        scripts_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scripts_Table_DataPath));
     }
 }
