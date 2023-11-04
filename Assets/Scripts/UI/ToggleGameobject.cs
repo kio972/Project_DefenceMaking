@@ -18,6 +18,7 @@ public class ToggleGameobject : MonoBehaviour
     public void SetToggleState(bool value)
     {
         toggleState = value;
+        targetObject.SetActive(toggleState);
     }
 
     public void ToggleState()

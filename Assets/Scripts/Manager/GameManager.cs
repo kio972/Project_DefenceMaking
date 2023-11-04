@@ -52,6 +52,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public PopUpMessage popUpMessage;
 
+    public bool isPause = false;
+
     public void SetCharAnimPause()
     {
         foreach(Battler battler in adventurersList)

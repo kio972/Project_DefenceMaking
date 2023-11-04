@@ -115,6 +115,9 @@ public class InputManager : IngameSingleton<InputManager>
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.isPause)
+            return;
+
         SpeedControlCheck();
         CameraResetCheck();
         TileMoveCheck();

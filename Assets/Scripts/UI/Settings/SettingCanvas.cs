@@ -49,14 +49,10 @@ public class SettingCanvas : MonoBehaviour
         fade.SetActive(value);
         main.SetActive(value);
 
-        if(!value)
+        IngameMenu ingameMenu = FindObjectOfType<IngameMenu>();
+        if (ingameMenu != null)
         {
-            IngameMenu ingameMenu = FindObjectOfType<IngameMenu>();
-            if (ingameMenu != null)
-            {
-                ingameMenu.SetActiveMenu(false);
-                ingameMenu.SetToggleState(false);
-            }
+            ingameMenu.SetToggleState(!value);
         }
     }
 }

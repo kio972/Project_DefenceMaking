@@ -18,7 +18,7 @@ public class ScriptManager : MonoBehaviour
                 instance = FindObjectOfType<ScriptManager>();
                 if (instance == null)
                 {
-                    ScriptManager temp = Resources.Load<ScriptManager>("UI/ScriptManager");
+                    ScriptManager temp = Resources.Load<ScriptManager>("Prefab/UI/ScriptManager");
                     temp = Instantiate(temp);
                     temp.name = typeof(ScriptManager).Name;
                     instance = temp;
@@ -34,7 +34,7 @@ public class ScriptManager : MonoBehaviour
 
     private Queue<List<Dictionary<string, object>>> scriptQueue = new Queue<List<Dictionary<string, object>>>();
 
-    public float textTime = 0.5f;
+    private float textTime = 0.1f;
 
     [SerializeField]
     private TextMeshProUGUI targetText;
@@ -51,8 +51,12 @@ public class ScriptManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI nameText;
 
+    [SerializeField]
+    private GameObject blocker;
+
     public void MakeChoice(char choice)
     {
+        targetText.text = "";
         choiceNum = choice;
         choiceState = false;
         ResetChoices();
@@ -82,25 +86,31 @@ public class ScriptManager : MonoBehaviour
         newText.gameObject.SetActive(true);
     }
 
-
-
     private IEnumerator PrintScript(string conver)
     {
+        yield return null;
         // 한글자씩 글자 출력
         StringBuilder sb = new StringBuilder();
-        WaitForSeconds waitTime = new WaitForSeconds(textTime);
+        float elapsed = 0f;
         for (int i = 0; i < conver.Length; i++)
         {
             sb.Append(conver[i].ToString());
+            if (conver[i] == ' ')
+                continue;
             targetText.text = sb.ToString();
 
-            if (Input.GetKey(KeyCode.Mouse0))
+            elapsed = 0f;
+            while (elapsed < textTime)
             {
-                targetText.text = conver;
-                yield break;
+                elapsed += Time.unscaledDeltaTime;
+                if (Input.anyKeyDown)
+                {
+                    targetText.text = conver;
+                    yield return null;
+                    yield break;
+                }
+                yield return null;
             }
-
-            yield return waitTime;
         }
     }
 
@@ -108,18 +118,21 @@ public class ScriptManager : MonoBehaviour
     {
         Vector2 closedPos1 = fadeUp.anchoredPosition;
         Vector2 closedPos2 = fadeDown.anchoredPosition;
-        Vector2 openedPos1 = closedPos1 + new Vector2(0, 500);
-        Vector2 openedPos2 = closedPos2 + new Vector2(0, -500);
-        float lerpTime = 0.2f;
-        
+        Vector2 openedPos1 = closedPos1 + new Vector2(0, fadeUp.sizeDelta.y);
+        Vector2 openedPos2 = closedPos2 + new Vector2(0, fadeDown.sizeDelta.y * -1f);
+        float lerpTime = 0.5f;
+
         while (true)
         {
             if (scriptQueue.Count == 0) { yield return null; continue; }
-
+            nameText.text = "";
+            targetText.text = "";
             // 컷인
             fadeUp.gameObject.SetActive(true);
             fadeDown.gameObject.SetActive(true);
-            GameManager.Instance.speedController.SetSpeedZero();
+            blocker.gameObject.SetActive(true);
+            //GameManager.Instance.speedController.SetSpeedZero();
+
             float elapsed = 0;
             while (elapsed < lerpTime)
             {
@@ -128,6 +141,8 @@ public class ScriptManager : MonoBehaviour
                 elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
+            fadeUp.anchoredPosition = closedPos1;
+            fadeDown.anchoredPosition = closedPos2;
 
             List<Dictionary<string, object>> scripts = scriptQueue.Dequeue();
             foreach(Dictionary<string, object> script in scripts)
@@ -135,6 +150,7 @@ public class ScriptManager : MonoBehaviour
                 string type = script["type"].ToString();
                 string conver = script["script"].ToString();
                 string number = script["number"].ToString();
+                string name = script["character name"].ToString();
 
                 if (type == "line")
                 {
@@ -143,7 +159,7 @@ public class ScriptManager : MonoBehaviour
 
                     if (choiceNum == number[0])
                         continue;
-
+                    nameText.text = name;
                     yield return StartCoroutine("PrintScript", conver);
 
                     while (!Input.anyKeyDown)
@@ -171,9 +187,13 @@ public class ScriptManager : MonoBehaviour
                 yield return null;
             }
 
-            GameManager.Instance.speedController.SetSpeedPrev(false);
+            fadeUp.anchoredPosition = openedPos1;
+            fadeDown.anchoredPosition = openedPos2;
+
+            //GameManager.Instance.speedController.SetSpeedPrev(false);
             fadeUp.gameObject.SetActive(false);
             fadeDown.gameObject.SetActive(false);
+            blocker.gameObject.SetActive(false);
             yield return null;
         }
     }
@@ -190,5 +210,8 @@ public class ScriptManager : MonoBehaviour
         choiceTexts = GetComponentsInChildren<ChoiceText>(true).ToList();
         fadeUp.gameObject.SetActive(false);
         fadeDown.gameObject.SetActive(false);
+        nameText.text = "";
+        targetText.text = "";
+        blocker.gameObject.SetActive(false);
     }
 }
