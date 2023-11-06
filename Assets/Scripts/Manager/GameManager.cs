@@ -194,6 +194,16 @@ public class GameManager : IngameSingleton<GameManager>
         defaultSpeed = defaultSpeed / 60f;
     }
 
+    public void SetStroyMode(bool value)
+    {
+        if (value)
+            speedController.SetSpeedZero();
+        else
+            speedController.SetSpeedPrev();
+
+        isPause = value;
+    }
+
     private void Start()
     {
         mapBuilder.Init();
@@ -210,6 +220,9 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
+
+
+        StoryManager.Instance.EnqueueScript("Dan000");
 
         isInit = true;
     }

@@ -5,22 +5,22 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-public class ScriptManager : MonoBehaviour
+public class StoryManager : MonoBehaviour
 {
-    private static ScriptManager instance;
+    private static StoryManager instance;
 
-    public static ScriptManager Instance
+    public static StoryManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<ScriptManager>();
+                instance = FindObjectOfType<StoryManager>();
                 if (instance == null)
                 {
-                    ScriptManager temp = Resources.Load<ScriptManager>("Prefab/UI/ScriptManager");
+                    StoryManager temp = Resources.Load<StoryManager>("Prefab/UI/StoryManager");
                     temp = Instantiate(temp);
-                    temp.name = typeof(ScriptManager).Name;
+                    temp.name = typeof(StoryManager).Name;
                     instance = temp;
                     instance.SendMessage("Init", SendMessageOptions.DontRequireReceiver);
                 }
@@ -53,6 +53,15 @@ public class ScriptManager : MonoBehaviour
 
     [SerializeField]
     private GameObject blocker;
+
+    [SerializeField]
+    private IllustrateUI leftIllust;
+    [SerializeField]
+    private IllustrateUI rightIllust;
+    [SerializeField]
+    private IllustrateUI middleIllust;
+
+    private IllustrateUI prevIllust;
 
     public void MakeChoice(char choice)
     {
@@ -114,6 +123,39 @@ public class ScriptManager : MonoBehaviour
         }
     }
 
+    private void ResetIllust()
+    {
+        prevIllust = null;
+        if (leftIllust.gameObject.activeSelf)
+            leftIllust.FadeOut();
+        if (rightIllust.gameObject.activeSelf)
+            rightIllust.FadeOut();
+        if(middleIllust.gameObject.activeSelf)
+            middleIllust.FadeOut();
+    }
+
+    private void SetIllust(string position)
+    {
+        prevIllust?.SetColor(new Color(1, 1, 1, 0.6f));
+        IllustrateUI targetUI = null;
+        if (position == "left")
+            targetUI = leftIllust;
+        else if (position == "right")
+            targetUI = rightIllust;
+        else if (position == "middle")
+            targetUI = middleIllust;
+
+        if (targetUI == null)
+            return;
+
+        if (!targetUI.gameObject.activeSelf)
+            targetUI.FadeIn();
+        else
+            targetUI.SetColor(Color.white);
+
+        prevIllust = targetUI;
+    }
+
     private IEnumerator ScriptManage()
     {
         Vector2 closedPos1 = fadeUp.anchoredPosition;
@@ -131,7 +173,7 @@ public class ScriptManager : MonoBehaviour
             fadeUp.gameObject.SetActive(true);
             fadeDown.gameObject.SetActive(true);
             blocker.gameObject.SetActive(true);
-            //GameManager.Instance.speedController.SetSpeedZero();
+            GameManager.Instance.SetStroyMode(true);
 
             float elapsed = 0;
             while (elapsed < lerpTime)
@@ -151,6 +193,8 @@ public class ScriptManager : MonoBehaviour
                 string conver = script["script"].ToString();
                 string number = script["number"].ToString();
                 string name = script["character name"].ToString();
+                string illustName = script["character sprite"].ToString();
+                string illustPos = script["sprite position"].ToString();
 
                 if (type == "line")
                 {
@@ -159,7 +203,13 @@ public class ScriptManager : MonoBehaviour
 
                     if (choiceNum == number[0])
                         continue;
-                    nameText.text = name;
+
+                    if(nameText.text != name)
+                    {
+                        nameText.text = name;
+                        SetIllust(illustPos);
+                    }
+
                     yield return StartCoroutine("PrintScript", conver);
 
                     while (!Input.anyKeyDown)
@@ -178,6 +228,7 @@ public class ScriptManager : MonoBehaviour
             }
 
             // ÄÆ¾Æ¿ô
+            ResetIllust();
             elapsed = 0;
             while (elapsed < lerpTime)
             {
@@ -190,10 +241,11 @@ public class ScriptManager : MonoBehaviour
             fadeUp.anchoredPosition = openedPos1;
             fadeDown.anchoredPosition = openedPos2;
 
-            //GameManager.Instance.speedController.SetSpeedPrev(false);
+            GameManager.Instance.SetStroyMode(false);
             fadeUp.gameObject.SetActive(false);
             fadeDown.gameObject.SetActive(false);
             blocker.gameObject.SetActive(false);
+            
             yield return null;
         }
     }

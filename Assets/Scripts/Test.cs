@@ -8,6 +8,6 @@ public class Test : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P)) { ScriptManager.Instance.EnqueueScript("Dan000"); }
+        if(Input.GetKeyDown(KeyCode.P)) { StoryManager.Instance.EnqueueScript("Dan000"); }
     }
 }

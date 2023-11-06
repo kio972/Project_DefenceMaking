@@ -25,7 +25,7 @@ public class ChoiceText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void MakeDecision()
     {
-        ScriptManager.Instance.MakeChoice(choice);
+        StoryManager.Instance.MakeChoice(choice);
         OnPointerExit(null);
     }
 
