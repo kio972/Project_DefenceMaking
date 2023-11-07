@@ -14,6 +14,8 @@ public class IllustrateUI : MonoBehaviour
 
     private bool initState = false;
 
+    private bool fadeInState = false;
+
     private IEnumerator SetColor(SkeletonGraphic image, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
     {
         yield return null;
@@ -80,7 +82,7 @@ public class IllustrateUI : MonoBehaviour
             illust_spine.gameObject.SetActive(true);
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_spine, Color.white));
+            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(illust_image.color.r, illust_image.color.g, illust_image.color.b, 1f)));
         }
         else if (illust_image != null)
         {
@@ -88,7 +90,31 @@ public class IllustrateUI : MonoBehaviour
             illust_image.gameObject.SetActive(true);
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_image, Color.white));
+            colorCoroutine = StartCoroutine(SetColor(illust_image, new Color(illust_image.color.r, illust_image.color.g, illust_image.color.b, 1f)));
+        }
+    }
+
+    public void SetAlpha(float alpha, float lerpTime = 0.1f)
+    {
+        if (!initState)
+            Init();
+
+        if (!fadeInState)
+            return;
+
+        if (illust_spine != null)
+        {
+            illust_spine.gameObject.SetActive(true);
+            if (colorCoroutine != null)
+                StopCoroutine(colorCoroutine);
+            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(illust_spine.color.r, illust_spine.color.g, illust_spine.color.b, alpha), lerpTime));
+        }
+        else if (illust_image != null)
+        {
+            illust_image.gameObject.SetActive(true);
+            if (colorCoroutine != null)
+                StopCoroutine(colorCoroutine);
+            colorCoroutine = StartCoroutine(SetColor(illust_image, new Color(illust_image.color.r, illust_image.color.g, illust_image.color.b, alpha), lerpTime));
         }
     }
 
@@ -98,18 +124,25 @@ public class IllustrateUI : MonoBehaviour
             Init();
 
         if (illust_spine != null)
+            illust_spine.color = new Color(color.r, color.g, color.b, illust_spine.color.a);
+        else if (illust_image != null)
+            illust_image.color = new Color(color.r, color.g, color.b, illust_image.color.a);
+    }
+
+    public void ChangeColor(Color color, float lerpTime = 0.1f)
+    {
+        if (!initState)
+            Init();
+
+        if (illust_spine != null)
         {
             illust_spine.gameObject.SetActive(true);
-            if (colorCoroutine != null)
-                StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_spine, color, 0.1f));
+            StartCoroutine(SetColor(illust_spine, color, lerpTime, () => { fadeInState = true; }));
         }
         else if (illust_image != null)
         {
             illust_image.gameObject.SetActive(true);
-            if (colorCoroutine != null)
-                StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_image, color, 0.1f));
+            StartCoroutine(SetColor(illust_image, color, lerpTime, () => { fadeInState = true; }));
         }
     }
 

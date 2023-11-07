@@ -30,7 +30,7 @@ public class StoryManager : MonoBehaviour
         }
     }
 
-    private char choiceNum = 'a';
+    private char choiceNum = ' ';
 
     private Queue<List<Dictionary<string, object>>> scriptQueue = new Queue<List<Dictionary<string, object>>>();
 
@@ -136,7 +136,6 @@ public class StoryManager : MonoBehaviour
 
     private void SetIllust(string position)
     {
-        prevIllust?.SetColor(new Color(1, 1, 1, 0.6f));
         IllustrateUI targetUI = null;
         if (position == "left")
             targetUI = leftIllust;
@@ -145,13 +144,15 @@ public class StoryManager : MonoBehaviour
         else if (position == "middle")
             targetUI = middleIllust;
 
-        if (targetUI == null)
+        if (targetUI == null || prevIllust == targetUI)
             return;
+
+        prevIllust?.SetAlpha(0.6f);
 
         if (!targetUI.gameObject.activeSelf)
             targetUI.FadeIn();
         else
-            targetUI.SetColor(Color.white);
+            targetUI.SetAlpha(1f);
 
         prevIllust = targetUI;
     }
@@ -195,21 +196,26 @@ public class StoryManager : MonoBehaviour
                 string name = script["character name"].ToString();
                 string illustName = script["character sprite"].ToString();
                 string illustPos = script["sprite position"].ToString();
-
+                string trigger = script["trigger"].ToString();
+                
                 if (type == "line")
                 {
                     while (choiceState)
                         yield return null;
 
-                    if (choiceNum == number[0])
+                    if (number[1] != '_')
+                        choiceNum = ' ';
+
+                    if (choiceNum != ' ' && choiceNum != number[0])
                         continue;
 
-                    if(nameText.text != name)
-                    {
-                        nameText.text = name;
-                        SetIllust(illustPos);
-                    }
+                    if (trigger != "")
+                        SendMessage(trigger, SendMessageOptions.DontRequireReceiver);
 
+                    if (nameText.text != name)
+                        nameText.text = name;
+
+                    SetIllust(illustPos);
                     yield return StartCoroutine("PrintScript", conver);
 
                     while (!Input.anyKeyDown)
@@ -249,6 +255,29 @@ public class StoryManager : MonoBehaviour
             yield return null;
         }
     }
+
+    #region TriggerZone
+    private void FadeInLeft()
+    {
+        leftIllust.ChangeColor(Color.white);
+    }
+
+    private void FadeInRight()
+    {
+        rightIllust.ChangeColor(Color.white);
+    }
+
+    private void SetBlackLeft()
+    {
+        leftIllust.SetColor(Color.black);
+    }
+
+    private void SetBlackRight()
+    {
+        rightIllust.SetColor(Color.black);
+    }
+
+    #endregion
 
     public void EnqueueScript(string scriptID)
     {
