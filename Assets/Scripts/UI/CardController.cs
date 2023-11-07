@@ -67,6 +67,10 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     [SerializeField]
     private float mouseOverTime = 0.2f;
 
+    private bool isOnRecycle = false;
+
+    private int cardIndex = -1;
+
     private void DrawEnd()
     {
         drawEnd = true;
@@ -213,7 +217,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         return false;
     }
 
-    private void Discard(bool value)
+    private void Discard(bool value, bool isRecycle)
     {
         if(value)
         {
@@ -225,8 +229,14 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             GameManager.Instance.cardDeckController.SetCardPosition();
 
             float lerpTime = 0.4f;
-            StartCoroutine(IColorEffect(Color.white, new Color(1,1,1,0),lerpTime));
-            StartCoroutine(IMoveEffect(originPos, originPos + new Vector3(0, 150, 0), lerpTime));
+            StartCoroutine(IColorEffect(Color.white, new Color(1, 1, 1, 0), lerpTime));
+            if (isRecycle)
+            {
+                StartCoroutine(IMoveEffect(originPos, GameManager.Instance.cardDeckController.transform.position, lerpTime));
+                StartCoroutine(IScaleEffect(Vector3.one, Vector3.zero, lerpTime));
+            }
+            else
+                StartCoroutine(IMoveEffect(originPos, originPos + new Vector3(0, 150, 0), lerpTime));
         }
         else
         {
@@ -306,7 +316,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     private void SetObjectOnMap(bool cancel = false)
     {
         bool discard = false;
-        if(!cancel && curNode != null && curNode.setAvail)
+        bool recycle = GameManager.Instance.cardDeckController.IsRecycle;
+        if (!cancel && recycle)
+        {
+            GameManager.Instance.cardDeckController.AddCard(cardIndex);
+            discard = true;
+        }
+        else if (!cancel && curNode != null && curNode.setAvail)
         {
             switch (cardType)
             {
@@ -325,8 +341,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             }
             discard = true;
         }
-
-        Discard(discard);
+        
+        Discard(discard, recycle);
         DrawLine(false);
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
@@ -437,6 +453,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void Init(Card targetCard)
     {
+        this.cardIndex = targetCard.cardIndex;
         this.cardType = targetCard.cardType;
         targetPrefab = UtilHelper.GetCardPrefab(targetCard.cardType, targetCard.cardPrefabName);
         SetCardUI(targetCard);

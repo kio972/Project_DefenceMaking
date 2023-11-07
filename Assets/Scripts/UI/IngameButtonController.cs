@@ -58,7 +58,7 @@ public class IngameButtonController : MonoBehaviour
 
     private void Update()
     {
-        SetShopBtnAvail();
+        //SetShopBtnAvail();
         SetSkipBtnAvail();
     }
 }

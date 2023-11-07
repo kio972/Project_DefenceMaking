@@ -63,6 +63,14 @@ public class StoryManager : MonoBehaviour
 
     private IllustrateUI prevIllust;
 
+    public bool isSkip = false;
+
+    public void SkipScript()
+    {
+        if(!isSkip)
+            isSkip = true;
+    }
+
     public void MakeChoice(char choice)
     {
         targetText.text = "";
@@ -112,7 +120,9 @@ public class StoryManager : MonoBehaviour
             while (elapsed < textTime)
             {
                 elapsed += Time.unscaledDeltaTime;
-                if (Input.anyKeyDown)
+                if (isSkip)
+                    yield break;
+                else if (Input.anyKeyDown)
                 {
                     targetText.text = conver;
                     yield return null;
@@ -190,6 +200,9 @@ public class StoryManager : MonoBehaviour
             List<Dictionary<string, object>> scripts = scriptQueue.Dequeue();
             foreach(Dictionary<string, object> script in scripts)
             {
+                if (isSkip)
+                    break;
+
                 string type = script["type"].ToString();
                 string conver = script["script"].ToString();
                 string number = script["number"].ToString();
@@ -217,7 +230,8 @@ public class StoryManager : MonoBehaviour
 
                     SetIllust(illustPos);
                     yield return StartCoroutine("PrintScript", conver);
-
+                    if (isSkip)
+                        break;
                     while (!Input.anyKeyDown)
                         yield return null;
                 }
@@ -243,6 +257,8 @@ public class StoryManager : MonoBehaviour
                 elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
+
+            isSkip = false;
 
             fadeUp.anchoredPosition = openedPos1;
             fadeDown.anchoredPosition = openedPos2;

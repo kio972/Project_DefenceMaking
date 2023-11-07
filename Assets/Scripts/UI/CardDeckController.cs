@@ -8,6 +8,7 @@ using TMPro;
 
 public struct Card
 {
+    public int cardIndex;
     public string cardFrame;
     public CardType cardType;
     public string cardName;
@@ -51,8 +52,9 @@ public struct Card
         return CardType.None;
     }
 
-    public Card(Dictionary<string, object> cardInfo)
+    public Card(Dictionary<string, object> cardInfo, int index)
     {
+        cardIndex = index;
         cardFrame = cardInfo["cardtype"].ToString();
         cardType = GetCardType(cardInfo["type"].ToString());
         cardGrade = GetCardGrade(cardInfo["grade"].ToString());
@@ -102,6 +104,17 @@ public class CardDeckController : MonoBehaviour
 
     [SerializeField]
     private int cardPrice = 20;
+
+    [SerializeField]
+    private MouseOverEffect2 recycle;
+
+    public bool IsRecycle { get { return recycle.IsMouseOver; } }
+
+    public void AddCard(int index)
+    {
+        cardDeck.Add(index);
+        UpdateDeckCount();
+    }
 
     private int GetRandomCard(CardType type)
     {
@@ -302,7 +315,7 @@ public class CardDeckController : MonoBehaviour
     private Card ReturnDeck(int target)
     {
         cardDeck.Remove(target);
-        Card card = new Card(DataManager.Instance.Deck_Table[target]);
+        Card card = new Card(DataManager.Instance.Deck_Table[target], target);
         return card;
     }
 
@@ -441,7 +454,7 @@ public class CardDeckController : MonoBehaviour
         cardDeck = new List<int>();
         for(int i = 0; i < DataManager.Instance.Deck_Table.Count; i++)
         {
-            Card cardCheck = new Card(DataManager.Instance.Deck_Table[i]);
+            Card cardCheck = new Card(DataManager.Instance.Deck_Table[i], i);
             GameObject cardPrefab = UtilHelper.GetCardPrefab(cardCheck.cardType, cardCheck.cardPrefabName);
             if (cardPrefab == null)
                 continue;
