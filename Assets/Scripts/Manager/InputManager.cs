@@ -92,7 +92,7 @@ public class InputManager : IngameSingleton<InputManager>
         if(Input.GetKeyDown(SettingManager.Instance.key_SpeedControl_Zero._CurKey))
         {
             if (GameManager.Instance.timeScale == 0)
-                GameManager.Instance.speedController.SetSpeedPrev();
+                GameManager.Instance.speedController.SetSpeedPrev(true, false);
             else
                 GameManager.Instance.speedController.SetSpeedZero();
         }

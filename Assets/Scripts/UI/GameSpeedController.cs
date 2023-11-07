@@ -25,12 +25,18 @@ public class GameSpeedController : MonoBehaviour
 
     
 
-    private int prevState;
+    private int prevState = 0;
 
-    public void SetSpeedPrev(bool showPopUp = true)
+    public void SetSpeedPrev(bool showPopUp = true, bool setZero = true)
     {
         switch(prevState)
         {
+            case 0:
+                if (setZero)
+                    SetSpeedZero();
+                else
+                    SetSpeedNormal(showPopUp);
+                break;
             case 1:
                 SetSpeedNormal(showPopUp); break;
             case 2:
@@ -107,8 +113,7 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedZero()
     {
-        if (GameManager.Instance.timeScale != 0)
-            prevState = (int)GameManager.Instance.timeScale;
+        prevState = (int)GameManager.Instance.timeScale;
 
         GameManager.Instance.timeScale = 0;
         GameManager.Instance.SetCharAnimPause();

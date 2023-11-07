@@ -142,6 +142,9 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.isPause)
+            return;
+
         CamMove();
 
         if (MouseWheelCheck())
