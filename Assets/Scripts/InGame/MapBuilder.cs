@@ -135,7 +135,7 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
-    public void SetRandomTile()
+    public void SetRandomTile(int range)
     {
         int index = DataManager.Instance.PathCard_Indexs[Random.Range(0, DataManager.Instance.PathCard_Indexs.Count)];
         int isRoom = Random.Range(0, 2);
@@ -147,11 +147,17 @@ public class MapBuilder : MonoBehaviour
         Tile targetTilePrefab = Resources.Load<Tile>("Prefab/Tile/" + prefabName);
         if(targetTilePrefab == null)
         {
-            SetRandomTile();
+            SetRandomTile(range);
             return;
         }
 
-        SetRamdomTileToRandomNode(NodeManager.Instance.endPoint, targetTilePrefab, 4);
+        SetRamdomTileToRandomNode(NodeManager.Instance.endPoint, targetTilePrefab, range);
+    }
+
+    public void SetRamdomTile(int count, int range)
+    {
+        for (int i = 0; i < count; i++)
+            SetRandomTile(range);
     }
 
     public void Init()
@@ -161,8 +167,9 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
         SetBasicTile();
 
-        for (int i = 0; i < 3; i++)
-            SetRandomTile();
+        Tutorial tutorial = FindObjectOfType<Tutorial>();
+        if (tutorial == null)
+            SetRamdomTile(4, 5);
 
         InputManager.Instance.Call();
     }

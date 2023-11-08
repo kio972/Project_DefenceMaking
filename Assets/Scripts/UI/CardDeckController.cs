@@ -79,6 +79,8 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private Transform cardZoom;
 
+    public Transform CardZone { get => cardZone; }
+
     private List<int> cardDeck;
 
     private bool initState = false;
@@ -89,6 +91,10 @@ public class CardDeckController : MonoBehaviour
     private float handHeight = 1;
 
     public List<Transform> cards = new List<Transform>();
+    //초기 카드 숫자
+    public int hand_CardNumber = 0;
+    //최대 카드 숫자
+    public int maxCardNumber = 10;
 
     [SerializeField]
     private UILineRenderer lineRenderer;
@@ -307,10 +313,7 @@ public class CardDeckController : MonoBehaviour
         return cardPos;
     }
 
-    //초기 카드 숫자
-    public int hand_CardNumber = 0;
-    //최대 카드 숫자
-    public int maxCardNumber = 10;
+    
 
     private Card ReturnDeck(int target)
     {
@@ -410,7 +413,8 @@ public class CardDeckController : MonoBehaviour
         // 몬스터 1
         List<int> pathPool = DataManager.Instance.PathCard_Indexs;
         DrawTypeCard(pathPool, 3);
-        List<int> roomPool = DataManager.Instance.RoomCard_Indexs;
+        List<int> roomPool = new List<int>(DataManager.Instance.RoomCard_Indexs);
+        roomPool.RemoveAt(0);
         DrawTypeCard(roomPool);
         List<int> trapPool = DataManager.Instance.TrapCard_Indexs;
         DrawTypeCard(trapPool);

@@ -33,6 +33,7 @@ public class StoryManager : MonoBehaviour
     private char choiceNum = ' ';
 
     private Queue<List<Dictionary<string, object>>> scriptQueue = new Queue<List<Dictionary<string, object>>>();
+    public bool IsScriptQueueEmpty { get { if (scriptQueue.Count == 0) return true; else return false; } }
 
     private float textTime = 0.1f;
 
@@ -197,7 +198,7 @@ public class StoryManager : MonoBehaviour
             fadeUp.anchoredPosition = closedPos1;
             fadeDown.anchoredPosition = closedPos2;
 
-            List<Dictionary<string, object>> scripts = scriptQueue.Dequeue();
+            List<Dictionary<string, object>> scripts = scriptQueue.Peek();
             foreach(Dictionary<string, object> script in scripts)
             {
                 if (isSkip)
@@ -267,7 +268,12 @@ public class StoryManager : MonoBehaviour
             fadeUp.gameObject.SetActive(false);
             fadeDown.gameObject.SetActive(false);
             blocker.gameObject.SetActive(false);
-            
+
+            scriptQueue.Dequeue();
+            leftIllust.SetColor(Color.white);
+            rightIllust.SetColor(Color.white);
+            middleIllust.SetColor(Color.white);
+
             yield return null;
         }
     }
@@ -298,6 +304,8 @@ public class StoryManager : MonoBehaviour
     public void EnqueueScript(string scriptID)
     {
         List<Dictionary<string, object>> scripts = DataManager.Instance.GetScripts(scriptID);
+        if (scripts == null)
+            return;
         scriptQueue.Enqueue(scripts);
     }
 

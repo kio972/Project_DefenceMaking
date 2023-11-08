@@ -9,6 +9,7 @@ public class InputManager : IngameSingleton<InputManager>
 
     public bool settingCard = false;
 
+    public bool movingTile = false;
 
     private GameObject endPointPrefab = null;
     public TileNode curMoveObject = null;
@@ -58,11 +59,13 @@ public class InputManager : IngameSingleton<InputManager>
             {
                 curTile.EndMoveing();
                 curTile = null;
+                movingTile = false;
             }
             else if (Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey))
             {
                 curTile.EndMove(node);
                 curTile = null;
+                movingTile = false;
             }
         }
         else if (Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey))
@@ -73,6 +76,7 @@ public class InputManager : IngameSingleton<InputManager>
                 curTile = node.curTile;
                 print(curTile);
                 node.curTile.ReadyForMove();
+                movingTile = true;
             }
         }
     }
@@ -89,6 +93,9 @@ public class InputManager : IngameSingleton<InputManager>
 
     private void SpeedControlCheck()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         if(Input.GetKeyDown(SettingManager.Instance.key_SpeedControl_Zero._CurKey))
         {
             if (GameManager.Instance.timeScale == 0)

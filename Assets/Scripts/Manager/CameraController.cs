@@ -34,6 +34,12 @@ public class CameraController : MonoBehaviour
         guideObject.transform.position = position;
     }
 
+    public void SetCamZoom(int level)
+    {
+        cameraZoom_Level = level;
+        SetCam();
+    }
+
     private void SetCam()
     {
         cam_Index0.gameObject.SetActive(false);
@@ -130,6 +136,11 @@ public class CameraController : MonoBehaviour
         Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.1f * mouseMult * SettingManager.Instance.mouseSensitivity);
         targetPos = ModifyMaxPosition(targetPos);
         guideObject.position = targetPos;
+    }
+
+    public void CamMoveToPos(Vector3 position)
+    {
+        guideObject.position = position;
     }
 
     private void CamMove()

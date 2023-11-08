@@ -49,10 +49,12 @@ public class GameManager : IngameSingleton<GameManager>
     private bool isInit = false;
     public bool IsInit { get => isInit; }
 
+    public int researchLevel = 1;
 
     public PopUpMessage popUpMessage;
 
     public bool isPause = false;
+    public bool speedLock = false;
 
     public void SetCharAnimPause()
     {
@@ -128,6 +130,8 @@ public class GameManager : IngameSingleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        if (!isInit) return;
+
         if (!updateNeed) return;
 
         if(king.isDead)
@@ -204,7 +208,7 @@ public class GameManager : IngameSingleton<GameManager>
         isPause = value;
     }
 
-    private void Start()
+    public void Init()
     {
         mapBuilder.Init();
         SpawnKing();
@@ -213,16 +217,12 @@ public class GameManager : IngameSingleton<GameManager>
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
         cardDeckController.Mulligan();
-
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);
 
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
-
-
-        StoryManager.Instance.EnqueueScript("Dan000");
 
         isInit = true;
     }

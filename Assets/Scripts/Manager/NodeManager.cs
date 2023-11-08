@@ -39,6 +39,20 @@ public class NodeManager : IngameSingleton<NodeManager>
     public int MinCol { get => minCol; }
     public int MaxCol { get => maxCol; }
 
+    public bool HaveSingleRoom
+    {
+        get
+        {
+            foreach (TileNode node in activeNodes)
+            {
+                if (node.curTile == null) continue;
+                if (node.curTile._TileType == TileType.Room_Single)
+                    return true;
+            }
+            return false;
+        }
+    }
+
 
     #region GuidePart
     private GuideState guideState = GuideState.None;
