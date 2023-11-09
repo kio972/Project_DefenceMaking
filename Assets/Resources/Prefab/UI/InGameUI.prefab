@@ -7378,6 +7378,7 @@ GameObject:
   - component: {fileID: 8308870059192340282}
   - component: {fileID: 8308870059192340229}
   - component: {fileID: 8308870059192340281}
+  - component: {fileID: 2939572769211614370}
   m_Layer: 5
   m_Name: DeckButton
   m_TagString: Untagged
@@ -7434,14 +7435,14 @@ MonoBehaviour:
   pointPadding: 2
   handHeight: 100
   cards: []
+  hand_CardNumber: 0
+  maxCardNumber: 10
   lineRenderer: {fileID: 8308870059515060237}
   lineRendererPoint: 10
   lineAmplitude: 1
   deckCountText: {fileID: 8308870057611087107}
   cardPrice: 20
-  recycle: {fileID: 899806038879739171}
-  hand_CardNumber: 0
-  maxCardNumber: 10
+  recycle: {fileID: 2939572769211614370}
 --- !u!114 &8308870059192340282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7534,6 +7535,19 @@ MonoBehaviour:
   soundOnClip: {fileID: 8300000, guid: 14231b4c890f0de4496a2a1aa5696fd6, type: 3}
   soundOnHoverClip: {fileID: 8300000, guid: 56e6fc48ddf368542884f632bc5f7186, type: 3}
   soundOnUnHoverClip: {fileID: 0}
+--- !u!114 &2939572769211614370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308870059192340231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a16b3666e7ef44f8d26d888adfae26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeSprite: {fileID: 0}
 --- !u!1 &8308870059259918310
 GameObject:
   m_ObjectHideFlags: 0
@@ -8129,7 +8143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2475500311183309693
 RectTransform:
   m_ObjectHideFlags: 0

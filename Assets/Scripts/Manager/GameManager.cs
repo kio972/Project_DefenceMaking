@@ -55,6 +55,7 @@ public class GameManager : IngameSingleton<GameManager>
 
     public bool isPause = false;
     public bool speedLock = false;
+    public bool spawnLock = false;
 
     public void SetCharAnimPause()
     {
@@ -163,10 +164,13 @@ public class GameManager : IngameSingleton<GameManager>
             timer = 0f;
             dailyIncome = true;
 
-            curWave++;
-            //몬스터 웨이브 스폰
-            if (!waveController.SpawnWave(curWave))
-                allWaveSpawned = true;
+            if(!spawnLock)
+            {
+                curWave++;
+                //몬스터 웨이브 스폰
+                if (!waveController.SpawnWave(curWave))
+                    allWaveSpawned = true;
+            }
 
             //이동가능타일 잠금
             NodeManager.Instance.LockMovableTiles();

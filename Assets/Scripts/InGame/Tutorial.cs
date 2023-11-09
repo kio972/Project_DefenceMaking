@@ -70,6 +70,7 @@ public class Tutorial : MonoBehaviour
         while (GameManager.Instance.adventurersList.Count == 0)
             yield return null;
 
+        GameManager.Instance.spawnLock = true;
         GameManager.Instance.speedLock = true;
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.startPoint.transform.position);
         GameManager.Instance.cameraController.SetCamZoom(3);
@@ -91,22 +92,25 @@ public class Tutorial : MonoBehaviour
         while (!NodeManager.Instance.HaveSingleRoom)
         {
             arrowDown.gameObject.SetActive(!InputManager.Instance.settingCard);
+            arrowDown.transform.position = roomTransform.position + (Vector3.up * 100);
             yield return null;
         }
 
         arrowRight.gameObject.SetActive(true);
+        rightBlocker.SetActive(false);
         while (!managePage.activeSelf)
             yield return null;
 
-        arrowRight.gameObject.SetActive(false);
         topBlocker.SetActive(false);
+        arrowRight.gameObject.SetActive(false);
         GameManager.Instance.speedLock = false;
 
         while (GameManager.Instance.adventurersList.Count != 0)
             yield return null;
 
         StoryManager.Instance.EnqueueScript("Dan004");
-        
+        GameManager.Instance.spawnLock = false;
+
         while (!StoryManager.Instance.IsScriptQueueEmpty)
             yield return null;
 
@@ -116,7 +120,8 @@ public class Tutorial : MonoBehaviour
 
         while (GameManager.Instance.cardDeckController.hand_CardNumber != 10)
             yield return null;
-
+        GameManager.Instance.isPause = true;
+        yield return new WaitForSeconds(1f);
         StoryManager.Instance.EnqueueScript("Dan005");
     }
 
