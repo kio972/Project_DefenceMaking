@@ -35,15 +35,22 @@ public class SlotInfo : MonoBehaviour
     [SerializeField]
     private GameObject trapInfo;
 
-    // Start is called before the first frame update
-    void Start()
+    private enum UnitType
     {
-        
+        Monster,
+        Trap,
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateInfo(Dictionary<string, object> data)
     {
-        
+        string id = data["id"].ToString();
+
+
+    }
+
+    public void UpdateInfo(string id)
+    {
+        int index = UtilHelper.Find_Data_Index(id, DataManager.Instance.Battler_Table, "id");
+        UpdateInfo(DataManager.Instance.Battler_Table[index]);
     }
 }

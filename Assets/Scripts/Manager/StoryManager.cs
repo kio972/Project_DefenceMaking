@@ -158,7 +158,7 @@ public class StoryManager : MonoBehaviour
         if (targetUI == null || prevIllust == targetUI)
             return;
 
-        prevIllust?.SetAlpha(0.6f);
+        prevIllust?.SetAlpha(0.4f);
 
         if (!targetUI.gameObject.activeSelf)
             targetUI.FadeIn();
