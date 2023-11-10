@@ -56,6 +56,7 @@ public class GameManager : IngameSingleton<GameManager>
     public bool isPause = false;
     public bool speedLock = false;
     public bool spawnLock = false;
+    public bool cardLock = false;
 
     public void SetCharAnimPause()
     {

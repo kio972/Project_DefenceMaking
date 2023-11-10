@@ -78,6 +78,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (GameManager.Instance.cardLock)
+            return;
+
         if (!drawEnd)
             return;
 
@@ -188,7 +191,10 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!Input.GetKey(KeyCode.Mouse0))
+        if (GameManager.Instance.cardLock)
+            return;
+
+        if (!Input.GetKey(KeyCode.Mouse0))
         {
             OnEndDrag(eventData);
             return;

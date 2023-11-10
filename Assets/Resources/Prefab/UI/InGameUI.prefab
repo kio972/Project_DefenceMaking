@@ -6834,6 +6834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8308870057718896346}
+  - component: {fileID: 1704463906330717639}
   - component: {fileID: 8308870057718896165}
   - component: {fileID: 8308870057718896164}
   - component: {fileID: 8308870057718896167}
@@ -6875,6 +6876,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1704463906330717639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308870057718896166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666e286f9410aa04eba43a78a8fd4a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiTopBlocker: {fileID: 0}
+  uiRightBlocker: {fileID: 0}
+  uiDownBlocker: {fileID: 0}
 --- !u!223 &8308870057718896165
 Canvas:
   m_ObjectHideFlags: 0
@@ -8843,11 +8859,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1774936229475257683, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1550
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 1774936229475257683, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 970
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 1774936229475257683, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8915,11 +8931,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356744478944836290, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0007194071
+      value: 0.00087234704
       objectReference: {fileID: 0}
     - target: {fileID: 6821301662077167406, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_Size
-      value: 0.99999416
+      value: 0.9999963
       objectReference: {fileID: 0}
     - target: {fileID: 9089784447309069292, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -8927,7 +8943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9089784447309069292, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.99999416
+      value: 0.9999963
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: feb658b2f2d1d8b498836a19069324f0, type: 3}

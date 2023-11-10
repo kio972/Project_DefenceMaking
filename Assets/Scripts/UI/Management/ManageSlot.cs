@@ -19,13 +19,25 @@ public class ManageSlot : MonoBehaviour
 
     private int cost;
 
-
+    [SerializeField]
+    private CardType cardType;
     private Button infoBtn;
 
     [SerializeField]
     private Button deployBtn;
 
+    private ManagementUI managementUI;
 
+    [SerializeField]
+    private string prefabName;
+
+    public void Deploy()
+    {
+        if(managementUI == null)
+            managementUI = GetComponentInParent<ManagementUI>();
+
+        managementUI.DeployReady(cardType, prefabName);
+    }
 
     public void Init(Dictionary<string,object> data)
     {

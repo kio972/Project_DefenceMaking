@@ -5,30 +5,30 @@ using UnityEngine;
 public class InGameUI : MonoBehaviour
 {
     [SerializeField]
-    private GameObject uiTopBlocker;
+    private Transform uiTop;
     [SerializeField]
-    private GameObject uiRightBlocker;
+    private Transform uiRight;
     [SerializeField]
-    private GameObject uiDownBlocker;
-    
-    public void Block_TopUI(bool value)
+    private Transform uiDown;
+
+    private Vector3 originPos_uiTop;
+    private Vector3 originPos_uiRight;
+    private Vector3 originPos_uiDown;
+
+    public void SetTopUI()
     {
-        uiTopBlocker.SetActive(value);
+
     }
 
-    public void Block_RightUI(bool value)
+    public void SetRightUI(bool value)
     {
-        uiRightBlocker.SetActive(value);
+
     }
 
-    public void Block_DownUI(bool value)
+    public void SetDownUI(bool value)
     {
-        uiDownBlocker.SetActive(value);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
