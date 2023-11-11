@@ -22,11 +22,11 @@ public class DataManager : Singleton<DataManager>
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
     private List<int> trapCard_Indexs;
+    private List<int> environmentCard_Indexs;
 
     private List<int> pathCard_Indexs;
     private List<int> roomCard_Indexs;
     private List<int> roomPartCard_Index;
-
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
@@ -90,6 +90,16 @@ public class DataManager : Singleton<DataManager>
             if (roomPartCard_Index == null)
                 roomPartCard_Index = Find_Typeof_Index(deckList, "type", "roomPart");
             return roomPartCard_Index;
+        }
+    }
+
+    public List<int> EnvironmentCard_Indexs
+    {
+        get
+        {
+            if (environmentCard_Indexs == null)
+                environmentCard_Indexs = Find_Typeof_Index(deckList, "type", "environment");
+            return environmentCard_Indexs;
         }
     }
 

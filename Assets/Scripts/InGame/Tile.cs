@@ -264,7 +264,11 @@ public class Tile : MonoBehaviour
             return;
 
         if ((monster.transform.position - transform.position).magnitude > 0.5f)
+        {
             monster = null;
+            if (NodeManager.Instance._GuideState == GuideState.Monster)
+                NodeManager.Instance.SetGuideState(GuideState.Monster);
+        }
     }
 
     private bool DormantAwake()

@@ -1,8 +1,8 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public class ManagementUI : MonoBehaviour
 {
@@ -22,6 +22,16 @@ public class ManagementUI : MonoBehaviour
 
     [SerializeField]
     private Button exitBtn;
+
+    private List<ManageSlot> deployItems = new List<ManageSlot>();
+
+    public void SetActive(bool value)
+    {
+        uiPage.SetActive(value);
+        GameManager.Instance.SetPause(value);
+        if(value)
+            SetItem();
+    }
 
     private void SetTrap(GameObject instancedObject)
     {
@@ -60,6 +70,8 @@ public class ManagementUI : MonoBehaviour
         uiPage.SetActive(true);
         exitBtn.gameObject.SetActive(false);
         GameManager.Instance.cardLock = false;
+
+        GameManager.Instance.SetPause(true);
     }
 
     private void SetObjectOnMap(bool cancel = false)
@@ -88,7 +100,7 @@ public class ManagementUI : MonoBehaviour
     {
         UpdateObjectPosition();
 
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
             SetObjectOnMap();
         else if(Input.GetKeyDown(KeyCode.Mouse1))
             DeployEnd();
@@ -148,9 +160,11 @@ public class ManagementUI : MonoBehaviour
         }
     }
 
-    public void DeployReady(CardType unitType, string prefabName)
+    public void DeployReady(CardType unitType, string prefabName, int cost)
     {
         SetGuideObject(unitType, prefabName);
+        curPrice = cost;
+        GameManager.Instance.SetPause(false);
 
         InputManager.Instance.settingCard = true;
         //함정인지 몬스터인지
@@ -165,23 +179,41 @@ public class ManagementUI : MonoBehaviour
         if (!initState)
             Init();
 
-        if(GameManager.Instance.researchLevel == 0)
-        {
+    }
 
+    private ManageSlot GetNextSlot()
+    {
+        foreach(ManageSlot slot in deployItems)
+        {
+            if (slot.gameObject.activeSelf)
+                continue;
+
+            slot.gameObject.SetActive(true);
+            return slot;
         }
+
+        ManageSlot newSlot = Instantiate(deployItems[0], deployItems[0].transform.parent);
+        deployItems.Add(newSlot);
+        newSlot.gameObject.SetActive(true);
+        return newSlot;
     }
 
     public void Init()
     {
-        foreach(Dictionary<string, object> data in DataManager.Instance.Battler_Table)
+        ManageSlot[] temp = GetComponentsInChildren<ManageSlot>(true);
+        deployItems = temp.ToList();
+        foreach (ManageSlot slot in deployItems)
+            slot.gameObject.SetActive(false);
+
+        foreach (Dictionary<string, object> data in DataManager.Instance.Battler_Table)
         {
             string id = data["id"].ToString();
-            if (id[2] is not 'm' and 't')
+            if (id[2] != 'm' && id[2] != 't')
                 continue;
-
-
+            GetNextSlot().Init(data);
         }
 
+        deployItems[0].SendInfo();
 
         initState = true;
     }

@@ -35,22 +35,49 @@ public class SlotInfo : MonoBehaviour
     [SerializeField]
     private GameObject trapInfo;
 
-    private enum UnitType
+
+    public void UpdateInfo(ManageSlot data)
     {
-        Monster,
-        Trap,
-    }
+        string type = "monster";
+        if (data.cardType == CardType.Trap)
+            type = "trap";
+        Sprite frame = SpriteList.Instance.LoadSprite("cardFrame2_" + type);
+        card_Frame.sprite = frame;
+        card_Frame_Mask.sprite = frame;
 
-    public void UpdateInfo(Dictionary<string, object> data)
-    {
-        string id = data["id"].ToString();
+        Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + data.rate);
+        card_Rank.sprite = cardRank;
 
+        card_Name.ChangeLangauge(SettingManager.Instance.language, data._name);
+        card_Description.ChangeLangauge(SettingManager.Instance.language, data._name + "_desc");
 
+        Sprite illur = SpriteList.Instance.LoadSprite(data.prefabName);
+        card_illust.sprite = illur;
+
+        bool isMonster = type == "monster" ? true : false;
+        monsterInfo.SetActive(isMonster);
+        trapInfo.SetActive(!isMonster);
+
+        if(data.minDamage == data.maxDamage)
+            card_Damage.text = data.maxDamage.ToString();
+        else
+            card_Damage.text = data.minDamage.ToString() + " ~ " + data.maxDamage.ToString();
+
+        if (isMonster)
+        {
+            card_Hp.text = data.hp.ToString();
+            card_Defense.text = data.defense.ToString();
+        }
+        else
+        {
+            card_Duration.text = data.defense.ToString();
+            card_maxTarget.text = data.maxTarget.ToString();
+        }
     }
 
     public void UpdateInfo(string id)
     {
         int index = UtilHelper.Find_Data_Index(id, DataManager.Instance.Battler_Table, "id");
-        UpdateInfo(DataManager.Instance.Battler_Table[index]);
+        
     }
 }

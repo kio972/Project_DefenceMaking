@@ -185,7 +185,7 @@ public class StoryManager : MonoBehaviour
             fadeUp.gameObject.SetActive(true);
             fadeDown.gameObject.SetActive(true);
             blocker.gameObject.SetActive(true);
-            GameManager.Instance.SetStroyMode(true);
+            GameManager.Instance.SetPause(true);
 
             float elapsed = 0;
             while (elapsed < lerpTime)
@@ -264,7 +264,7 @@ public class StoryManager : MonoBehaviour
             fadeUp.anchoredPosition = openedPos1;
             fadeDown.anchoredPosition = openedPos2;
 
-            GameManager.Instance.SetStroyMode(false);
+            GameManager.Instance.SetPause(false);
             fadeUp.gameObject.SetActive(false);
             fadeDown.gameObject.SetActive(false);
             blocker.gameObject.SetActive(false);

@@ -67,8 +67,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     [SerializeField]
     private float mouseOverTime = 0.2f;
 
-    private bool isOnRecycle = false;
-
     private int cardIndex = -1;
 
     private void DrawEnd()

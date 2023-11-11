@@ -57,6 +57,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     #region GuidePart
     private GuideState guideState = GuideState.None;
 
+    public GuideState _GuideState { get => guideState; }
+
     public void SetGuideState(GuideState guideState, Tile tile = null)
     {
         //if (this.guideState == guideState)

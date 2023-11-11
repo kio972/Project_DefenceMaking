@@ -203,7 +203,7 @@ public class GameManager : IngameSingleton<GameManager>
         defaultSpeed = defaultSpeed / 60f;
     }
 
-    public void SetStroyMode(bool value)
+    public void SetPause(bool value)
     {
         if (value)
             speedController.SetSpeedZero();
