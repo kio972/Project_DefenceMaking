@@ -158,7 +158,7 @@ public class Battler : FSM<Battler>
         }
     }
 
-    private void PlayDamageText(int damage, UnitType unitType, bool isCritical)
+    protected void PlayDamageText(int damage, UnitType unitType, bool isCritical)
     {
         Color color = Color.white;
         float fontSize = 27f;

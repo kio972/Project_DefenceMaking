@@ -14,7 +14,14 @@ public class IllustrateUI : MonoBehaviour
 
     private bool initState = false;
 
-    private bool fadeInState = false;
+    public bool fadeInState = false;
+
+    public void SetAnim(string animName, bool loop, int trackNum = 0, string nextAnim = "")
+    {
+        illust_spine.AnimationState.SetAnimation(trackNum, animName, loop);
+        if(nextAnim != "")
+            illust_spine.AnimationState.AddAnimation(trackNum, nextAnim, true, 0f);
+    }
 
     private IEnumerator SetColor(SkeletonGraphic image, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
     {
@@ -61,7 +68,7 @@ public class IllustrateUI : MonoBehaviour
         {
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_image, Color.clear, 0.2f, () => { illust_spine.gameObject.SetActive(false); }));
+            colorCoroutine = StartCoroutine(SetColor(illust_spine, Color.clear, 0.2f, () => { illust_spine.gameObject.SetActive(false); }));
         }
         else if (illust_image != null)
         {
@@ -78,11 +85,11 @@ public class IllustrateUI : MonoBehaviour
 
         if (illust_spine != null)
         {
-            illust_spine.color = new Color(illust_image.color.r, illust_image.color.g, illust_image.color.b, 0f);
+            illust_spine.color = new Color(illust_spine.color.r, illust_spine.color.g, illust_spine.color.b, 0f);
             illust_spine.gameObject.SetActive(true);
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(illust_image.color.r, illust_image.color.g, illust_image.color.b, 1f)));
+            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(illust_spine.color.r, illust_spine.color.g, illust_spine.color.b, 1f)));
         }
         else if (illust_image != null)
         {
@@ -134,15 +141,18 @@ public class IllustrateUI : MonoBehaviour
         if (!initState)
             Init();
 
+        if (!fadeInState)
+            return;
+
         if (illust_spine != null)
         {
             illust_spine.gameObject.SetActive(true);
-            StartCoroutine(SetColor(illust_spine, color, lerpTime, () => { fadeInState = true; }));
+            StartCoroutine(SetColor(illust_spine, color, lerpTime));
         }
         else if (illust_image != null)
         {
             illust_image.gameObject.SetActive(true);
-            StartCoroutine(SetColor(illust_image, color, lerpTime, () => { fadeInState = true; }));
+            StartCoroutine(SetColor(illust_image, color, lerpTime));
         }
     }
 

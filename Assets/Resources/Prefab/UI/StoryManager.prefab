@@ -86,14 +86,15 @@ GameObject:
   m_Component:
   - component: {fileID: 8292055522100409660}
   - component: {fileID: 5474501443604464071}
+  - component: {fileID: 1752430125573021141}
   - component: {fileID: 2699594711002011409}
   m_Layer: 0
-  m_Name: "SkeletonGraphic (\uD30C\uD504\uB77C \uBD84\uB9AC)"
+  m_Name: IllurRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8292055522100409660
 RectTransform:
   m_ObjectHideFlags: 0
@@ -109,12 +110,13 @@ RectTransform:
   - {fileID: 4470761292515385149}
   - {fileID: 3766592112866287024}
   - {fileID: 2513273017561253170}
-  m_Father: {fileID: 779449685010966617}
+  - {fileID: 779449685010966617}
+  m_Father: {fileID: 1279722277974206700}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: -1070}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -338, y: -956.00037}
   m_SizeDelta: {x: 415.7296, y: 2105.8445}
   m_Pivot: {x: 0.37135574, y: 0.0000018814643}
 --- !u!222 &5474501443604464071
@@ -125,6 +127,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2585211655459170350}
   m_CullTransparentMesh: 0
+--- !u!114 &1752430125573021141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2585211655459170350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6dba0c80843624aa84434315a1ac3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInState: 0
 --- !u!114 &2699594711002011409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,109 +182,6 @@ MonoBehaviour:
   - {fileID: 6002071542029944254}
   - {fileID: 374098550559691596}
   - {fileID: 7135517258165665871}
-  separatorSlotNames: []
-  enableSeparatorSlots: 0
-  separatorParts: []
-  updateSeparatorPartLocation: 1
-  updateSeparatorPartScale: 0
-  disableMeshAssignmentOnOverride: 1
-  meshGenerator:
-    settings:
-      useClipping: 1
-      zSpacing: 0
-      pmaVertexColors: 1
-      tintBlack: 0
-      canvasGroupTintBlack: 0
-      calculateTangents: 0
-      addNormals: 0
-      immutableTriangles: 0
-  updateTiming: 1
-  unscaledTime: 0
---- !u!1 &3189854100611545081
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5138907977912418015}
-  - component: {fileID: 2681119246977936671}
-  - component: {fileID: 3677011698568485649}
-  m_Layer: 0
-  m_Name: SkeletonGraphic (Door)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &5138907977912418015
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3189854100611545081}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 779449685010966617}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -450}
-  m_SizeDelta: {x: 500, y: 900}
-  m_Pivot: {x: 0.5, y: 0}
---- !u!222 &2681119246977936671
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3189854100611545081}
-  m_CullTransparentMesh: 0
---- !u!114 &3677011698568485649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3189854100611545081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: b66cf7a186d13054989b33a5c90044e4, type: 2}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 2177e873a605586418a029036b0f79bd, type: 2}
-  additiveMaterial: {fileID: 2100000, guid: 2e8245019faeb8c43b75f9ca3ac8ee34, type: 2}
-  multiplyMaterial: {fileID: 2100000, guid: e74a1f8978a7da348a721508d0d58834, type: 2}
-  screenMaterial: {fileID: 2100000, guid: bab24c479f34eec45be6ea8595891569, type: 2}
-  initialSkinName: default
-  initialFlipX: 0
-  initialFlipY: 0
-  startingAnimation: 
-  startingLoop: 1
-  timeScale: 1
-  freeze: 0
-  layoutScaleMode: 4
-  referenceSize: {x: 284.64404, y: 310.7951}
-  referenceScale: 1.0058094
-  rectTransformSize: {x: 500, y: 819.5304}
-  editReferenceRect: 0
-  updateWhenInvisible: 3
-  allowMultipleCanvasRenderers: 0
-  canvasRenderers: []
   separatorSlotNames: []
   enableSeparatorSlots: 0
   separatorParts: []
@@ -480,6 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6dba0c80843624aa84434315a1ac3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeInState: 0
 --- !u!114 &4066475694139164692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1562,7 +1475,7 @@ MonoBehaviour:
   nameText: {fileID: 6420988434204136429}
   blocker: {fileID: 1621255722547916920}
   leftIllust: {fileID: 454770666269723973}
-  rightIllust: {fileID: 3524777236479740499}
+  rightIllust: {fileID: 1752430125573021141}
   middleIllust: {fileID: 3524777236479740499}
   isSkip: 0
 --- !u!223 &6420988436213905963
@@ -1721,7 +1634,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5472231108632896030}
-  - {fileID: 779449685010966617}
+  - {fileID: 8292055522100409660}
   - {fileID: 1480930948878861878}
   m_Father: {fileID: 6420988436213905960}
   m_RootOrder: 2
@@ -1924,6 +1837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6dba0c80843624aa84434315a1ac3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeInState: 0
 --- !u!114 &1762061158107508555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1980,19 +1894,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8569826376219542664}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5138907977912418015}
-  - {fileID: 8292055522100409660}
-  m_Father: {fileID: 1279722277974206700}
-  m_RootOrder: 1
+  m_Children: []
+  m_Father: {fileID: 8292055522100409660}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -328, y: 114}
+  m_AnchoredPosition: {x: -251.34607, y: 1070.0044}
   m_SizeDelta: {x: 1000, y: 2017.6763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6677391042175776351
@@ -2015,6 +1927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6dba0c80843624aa84434315a1ac3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeInState: 0
 --- !u!114 &4961651899837177983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2022,7 +1935,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8569826376219542664}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

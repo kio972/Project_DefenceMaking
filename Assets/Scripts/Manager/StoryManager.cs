@@ -145,7 +145,7 @@ public class StoryManager : MonoBehaviour
             middleIllust.FadeOut();
     }
 
-    private void SetIllust(string position)
+    private void SetIllust(string position, string track0, string track1)
     {
         IllustrateUI targetUI = null;
         if (position == "left")
@@ -155,17 +155,29 @@ public class StoryManager : MonoBehaviour
         else if (position == "middle")
             targetUI = middleIllust;
 
-        if (targetUI == null || prevIllust == targetUI)
+        if (targetUI == null)
             return;
 
-        prevIllust?.SetAlpha(0.4f);
+        if(prevIllust != targetUI)
+        {
+            prevIllust?.ChangeColor(new Color(0.6f, 0.6f, 0.6f));
 
-        if (!targetUI.gameObject.activeSelf)
-            targetUI.FadeIn();
-        else
-            targetUI.SetAlpha(1f);
+            if (!targetUI.gameObject.activeSelf)
+                targetUI.FadeIn();
+            else
+                targetUI.ChangeColor(Color.white);
 
-        prevIllust = targetUI;
+            prevIllust = targetUI;
+        }
+        
+        if (track0 != "")
+        {
+            bool loop = track0 == "idle" ? true : false;
+            string idle = track0 == "idle" ? "" : "idle";
+            targetUI.SetAnim(track0, loop, 0, idle);
+        }
+        if (track1 != "")
+            targetUI.SetAnim(track1, false, 1);
     }
 
     private IEnumerator ScriptManage()
@@ -211,7 +223,9 @@ public class StoryManager : MonoBehaviour
                 string illustName = script["character sprite"].ToString();
                 string illustPos = script["sprite position"].ToString();
                 string trigger = script["trigger"].ToString();
-                
+                string track0 = script["track0"].ToString();
+                string track1 = script["track1"].ToString();
+
                 if (type == "line")
                 {
                     while (choiceState)
@@ -229,12 +243,15 @@ public class StoryManager : MonoBehaviour
                     if (nameText.text != name)
                         nameText.text = name;
 
-                    SetIllust(illustPos);
-                    yield return StartCoroutine("PrintScript", conver);
-                    if (isSkip)
-                        break;
-                    while (!Input.anyKeyDown)
-                        yield return null;
+                    SetIllust(illustPos, track0, track1);
+                    if(conver != "")
+                    {
+                        yield return StartCoroutine("PrintScript", conver);
+                        if (isSkip)
+                            break;
+                        while (!Input.anyKeyDown)
+                            yield return null;
+                    }
                 }
                 else if (type == "choice")
                 {
@@ -281,11 +298,13 @@ public class StoryManager : MonoBehaviour
     #region TriggerZone
     private void FadeInLeft()
     {
+        leftIllust.fadeInState = true;
         leftIllust.ChangeColor(Color.white);
     }
 
     private void FadeInRight()
     {
+        rightIllust.fadeInState = true;
         rightIllust.ChangeColor(Color.white);
     }
 

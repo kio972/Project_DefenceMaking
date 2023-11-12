@@ -38,7 +38,8 @@ public class ManagementUI : MonoBehaviour
         Trap trap = instancedObject.GetComponent<Trap>();
         if (trap != null)
         {
-            trap.transform.SetParent(curNode.curTile.transform);
+            trap.transform.SetParent(curNode.curTile.transform, false);
+            trap.transform.localPosition = Vector3.zero;
             trap.Init(curNode.curTile);
         }
 
@@ -61,6 +62,7 @@ public class ManagementUI : MonoBehaviour
 
     public void DeployEnd()
     {
+        curObject.SetActive(false);
         curObject = null;
         curType = CardType.None;
         curNode = null;
@@ -70,7 +72,6 @@ public class ManagementUI : MonoBehaviour
         uiPage.SetActive(true);
         exitBtn.gameObject.SetActive(false);
         GameManager.Instance.cardLock = false;
-
         GameManager.Instance.SetPause(true);
     }
 
@@ -138,7 +139,7 @@ public class ManagementUI : MonoBehaviour
 
         if (curNode != null && curNode.GuideActive)
         {
-            curObject.transform.SetParent(curNode.transform, false);
+            curObject.transform.SetParent(curNode.transform, true);
             curObject.transform.position = curNode.transform.position;
         }
         else

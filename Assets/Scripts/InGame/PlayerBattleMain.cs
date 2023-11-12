@@ -18,6 +18,8 @@ public class PlayerBattleMain : Battler
         if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE") && !animator.IsInTransition(0))
             animator.SetTrigger("Damaged");
 
+        PlayDamageText(1, UnitType.Player, false);
+
         attacker.GetDamage(attacker.maxHp + attacker.armor, this);
     }
 
