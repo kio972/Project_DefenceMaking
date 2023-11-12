@@ -122,33 +122,6 @@ public class CardDeckController : MonoBehaviour
         UpdateDeckCount();
     }
 
-    private int GetRandomCard(CardType type)
-    {
-        List<int> cardPool = new List<int>();
-        switch (type)
-        {
-            case CardType.MapTile:
-                cardPool = DataManager.Instance.TileCard_Indexs;
-                break;
-            case CardType.Trap:
-                cardPool = DataManager.Instance.TrapCard_Indexs;
-                break;
-            case CardType.Monster:
-                cardPool = DataManager.Instance.MonsterCard_Indexs;
-                break;
-        }
-
-        return cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
-    }
-
-    public void DeckSupply(CardType type)
-    {
-        //차후 공식에따라 변경예정
-        int randomIndex = GetRandomCard(type);
-        cardDeck.Add(randomIndex);
-        UpdateDeckCount();
-    }
-
     private void UpdateDeckCount()
     {
         if (deckCountText == null)

@@ -84,11 +84,11 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one * 1.5f, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, transform.localScale, Vector3.one * 1.5f, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
 
         transform.rotation = Quaternion.identity;
         transform.SetAsLastSibling();
@@ -102,84 +102,17 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(transform.localScale, Vector3.one, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, transform.localScale, Vector3.one, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(IMoveEffect(transform.position, originPos, mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));
 
         transform.rotation = originRot;
         if (originSiblingIndex != -1)
             transform.SetSiblingIndex(originSiblingIndex);
     }
 
-    private IEnumerator IMoveEffect(Vector3 originPositioin, Vector3 targetPosition, float lerpTime)
-    {
-        //targetPosition = originPositioin + targetPosition;
-        float elapsedTime = 0f;
-        while (elapsedTime < lerpTime)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / lerpTime);
-
-            transform.position = Vector3.Lerp(originPositioin, targetPosition, Mathf.Sin(t * Mathf.PI * 0.5f));
-            yield return null;
-        }
-    }
-
-    private IEnumerator IColorEffect(Color startColor, Color targetColor, float lerpTime)
-    {
-        Image[] cardImgs = GetComponentsInChildren<Image>();
-        TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
-        float elapsedTime = 0f;
-        foreach (Image temp1 in cardImgs)
-            temp1.color = startColor;
-        foreach (TextMeshProUGUI temp2 in texts)
-            temp2.color = startColor;
-
-        while (elapsedTime < lerpTime)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / lerpTime);
-
-            // cardImgs와 texts의 color의 알파값 조정
-            foreach (Image img in cardImgs)
-            {
-                Color currentColor = Color.Lerp(startColor, targetColor, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
-                img.color = currentColor;
-            }
-
-            foreach (TextMeshProUGUI text in texts)
-            {
-                Color currentColor = Color.Lerp(startColor, targetColor, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
-                text.color = currentColor;
-            }
-
-            yield return null;
-        }
-        yield return null;
-
-        Destroy(this.gameObject);
-    }
-
-    private IEnumerator IScaleEffect(Vector3 startScale, Vector3 targetScale, float lerpTime = 0.5f)
-    {
-        //뽑히는 카드의 스케일 조정
-        //lerpTime에 걸쳐 transform.scale을 0에서 1로 변경
-        float elapsedTime = 0f;
-        transform.localScale = startScale;
-
-        while (elapsedTime < lerpTime)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / lerpTime);
-            Vector3 currentScale = Vector3.Lerp(startScale, targetScale, t);
-            transform.localScale = currentScale;
-
-            yield return null;
-        }
-        yield return null;
-    }
 
     //1. 그래픽스 레이캐스팅 사용
     //2. 마우스오버 : 카드 확대(스케일 조정)
@@ -233,14 +166,14 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             GameManager.Instance.cardDeckController.SetCardPosition();
 
             float lerpTime = 0.4f;
-            StartCoroutine(IColorEffect(Color.white, new Color(1, 1, 1, 0), lerpTime));
+            StartCoroutine(UtilHelper.IColorEffect(transform, Color.white, new Color(1, 1, 1, 0), lerpTime, () => { Destroy(this.gameObject); }));
             if (isRecycle)
             {
-                StartCoroutine(IMoveEffect(originPos, GameManager.Instance.cardDeckController.transform.position, lerpTime));
-                StartCoroutine(IScaleEffect(Vector3.one, Vector3.zero, lerpTime));
+                StartCoroutine(UtilHelper.IMoveEffect(transform, originPos, GameManager.Instance.cardDeckController.transform.position, lerpTime));
+                StartCoroutine(UtilHelper.IScaleEffect(transform, Vector3.one, Vector3.zero, lerpTime));
             }
             else
-                StartCoroutine(IMoveEffect(originPos, originPos + new Vector3(0, 150, 0), lerpTime));
+                StartCoroutine(UtilHelper.IMoveEffect(transform, originPos, originPos + new Vector3(0, 150, 0), lerpTime));
         }
         else
         {
@@ -432,7 +365,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
         float lerpTime = 0.5f;
-        scale_Modify_Coroutine = StartCoroutine(IScaleEffect(Vector3.zero, Vector3.one, lerpTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, Vector3.zero, Vector3.one, lerpTime));
         Invoke("DrawEnd", lerpTime);
     }
 

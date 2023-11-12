@@ -9,6 +9,78 @@ using TMPro;
 
 public static class UtilHelper
 {
+    public static IEnumerator IMoveEffect(Transform transform, Vector3 originPositioin, Vector3 targetPosition, float lerpTime, System.Action callback = null)
+    {
+        //targetPosition = originPositioin + targetPosition;
+        float elapsedTime = 0f;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            transform.position = Vector3.Lerp(originPositioin, targetPosition, Mathf.Sin(t * Mathf.PI * 0.5f));
+            yield return null;
+        }
+        yield return null;
+        callback?.Invoke();
+    }
+
+    public static IEnumerator IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
+    {
+        Image[] cardImgs = transform.GetComponentsInChildren<Image>();
+        TextMeshProUGUI[] texts = transform.GetComponentsInChildren<TextMeshProUGUI>();
+        float elapsedTime = 0f;
+        foreach (Image temp1 in cardImgs)
+            temp1.color = startColor;
+        foreach (TextMeshProUGUI temp2 in texts)
+            temp2.color = startColor;
+
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            // cardImgs와 texts의 color의 알파값 조정
+            foreach (Image img in cardImgs)
+            {
+                Color currentColor = Color.Lerp(startColor, targetColor, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+                img.color = currentColor;
+            }
+
+            foreach (TextMeshProUGUI text in texts)
+            {
+                Color currentColor = Color.Lerp(startColor, targetColor, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+                text.color = currentColor;
+            }
+
+            yield return null;
+        }
+        yield return null;
+
+        callback?.Invoke();
+    }
+
+    public static IEnumerator IScaleEffect(Transform transform, Vector3 startScale, Vector3 targetScale, float lerpTime = 0.5f, System.Action callback = null)
+    {
+        //뽑히는 카드의 스케일 조정
+        //lerpTime에 걸쳐 transform.scale을 0에서 1로 변경
+        float elapsedTime = 0f;
+        transform.localScale = startScale;
+
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            Vector3 currentScale = Vector3.Lerp(startScale, targetScale, t);
+            transform.localScale = currentScale;
+
+            yield return null;
+        }
+        yield return null;
+
+        callback?.Invoke();
+    }
+
     public static int GetDirectionUnClosed(TileNode curNode, List<Direction> directions, bool isRoom = false)
     {
         int count = 0;
