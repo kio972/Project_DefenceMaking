@@ -39,10 +39,9 @@ public class PassiveManager : IngameSingleton<PassiveManager>
             foreach (string target in table.enemy_raise)
             {
                 string[] split = target.Split('+');
-                string _name = DataManager.Instance.GetDescription(split[0]);
                 int number = Convert.ToInt32(split[1]);
 
-                WaveData newWaveData = new WaveData(_name, number);
+                WaveData newWaveData = new WaveData(split[0], number);
                 adventurerRaiseTable.Add(newWaveData);
             }
         }

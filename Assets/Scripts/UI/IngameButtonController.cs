@@ -29,7 +29,13 @@ public class IngameButtonController : MonoBehaviour
             return;
 
         if (GameManager.Instance.waveController.WaveProgress >= 1 && GameManager.Instance.adventurersList.Count == 0)
-            skipBtn.gameObject.SetActive(true);
+        {
+            if(!skipBtn.gameObject.activeSelf)
+            {
+                skipBtn.gameObject.SetActive(true);
+                skipBtn.SendMessage("ResetAnimation");
+            }
+        }
         else
             skipBtn.gameObject.SetActive(false);
     }

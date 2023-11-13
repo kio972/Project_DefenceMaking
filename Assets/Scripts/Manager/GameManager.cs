@@ -61,6 +61,12 @@ public class GameManager : IngameSingleton<GameManager>
 
     public int loop = 0;
 
+    public void SetWave(int val)
+    {
+        curWave = val - 1;
+        SkipDay();
+    }
+
     private void LoopWave()
     {
         curWave = -1;

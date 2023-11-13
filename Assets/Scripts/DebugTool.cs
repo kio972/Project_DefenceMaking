@@ -10,12 +10,19 @@ public class DebugTool : MonoBehaviour
     CardDeckController cardDeckController;
     public int cardIndex;
 
+    public int waveIndex;
+
     Button getCardBtn;
 
     private int prevIndex;
 
     [SerializeField]
     TextMeshProUGUI text;
+
+    public void SetWave()
+    {
+        GameManager.Instance.SetWave(waveIndex);
+    }
 
     public void GetCard()
     {
