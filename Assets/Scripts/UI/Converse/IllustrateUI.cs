@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
+using Spine.Unity.Examples;
 
 public class IllustrateUI : MonoBehaviour
 {
@@ -23,10 +24,10 @@ public class IllustrateUI : MonoBehaviour
             illust_spine.AnimationState.AddAnimation(trackNum, nextAnim, true, 0f);
     }
 
-    private IEnumerator SetColor(SkeletonGraphic image, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
+    private IEnumerator SetColor(SkeletonGraphic graphic, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
     {
         yield return null;
-
+        SkeletonGraphicRenderTexture image = graphic.GetComponent< SkeletonGraphicRenderTexture>();
         Color originColor = image.color;
 
         float elapsedTime = 0f;
@@ -85,11 +86,12 @@ public class IllustrateUI : MonoBehaviour
 
         if (illust_spine != null)
         {
-            illust_spine.color = new Color(illust_spine.color.r, illust_spine.color.g, illust_spine.color.b, 0f);
+            SkeletonGraphicRenderTexture image = illust_spine.GetComponent<SkeletonGraphicRenderTexture>();
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0f);
             illust_spine.gameObject.SetActive(true);
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(illust_spine.color.r, illust_spine.color.g, illust_spine.color.b, 1f)));
+            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(image.color.r, image.color.g, image.color.b, 1f)));
         }
         else if (illust_image != null)
         {
@@ -131,7 +133,10 @@ public class IllustrateUI : MonoBehaviour
             Init();
 
         if (illust_spine != null)
-            illust_spine.color = new Color(color.r, color.g, color.b, illust_spine.color.a);
+        {
+            SkeletonGraphicRenderTexture image = illust_spine.GetComponent<SkeletonGraphicRenderTexture>();
+            image.color = new Color(color.r, color.g, color.b, image.color.a);
+        }
         else if (illust_image != null)
             illust_image.color = new Color(color.r, color.g, color.b, illust_image.color.a);
     }
