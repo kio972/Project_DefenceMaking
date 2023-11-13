@@ -61,16 +61,20 @@ public class WaveController : MonoBehaviour
         return curWave;
     }
 
-    public IEnumerator ISpawnWave(int waveIndex, List<WaveData> curWave)
+    public IEnumerator ISpawnWave(int waveIndex, List<WaveData> curWave, System.Action callback = null)
     {
-        waveText.text = (waveIndex + 1).ToString("D2");
+        List<WaveData> waves = new List<WaveData>(PassiveManager.Instance.adventurerRaiseTable);
+        foreach(WaveData wave in curWave)
+            waves.Add(wave);
+
+        waveText.text = (waveIndex + (GameManager.Instance.loop * DataManager.Instance.WaveLevelTable.Count) + 1).ToString("D2");
         int maxEnemyNumber = 0;
         int curEnemyNumber = 0;
-        foreach(WaveData waveData in curWave)
+        foreach(WaveData waveData in waves)
             maxEnemyNumber += waveData.number;
         waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
         float spawnWaitTime = CalSpawnWaitTime(maxEnemyNumber);
-        foreach (WaveData waveData in curWave)
+        foreach (WaveData waveData in waves)
         {
             for(int i = 0; i < waveData.number; i++)
             {
@@ -89,20 +93,21 @@ public class WaveController : MonoBehaviour
                 waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
             }
         }
+
+        callback?.Invoke();
         yield return null;
     }
 
-    public bool SpawnWave(int curWave)
+    public void SpawnWave(int curWave)
     {
         List<WaveData> waveData = SetWaveData(curWave);
-        if (waveData != new List<WaveData>() && waveData.Count != 0)
-            StartCoroutine(ISpawnWave(curWave, waveData));
+        if (curWave < 0 || curWave >= DataManager.Instance.WaveLevelTable.Count)
+            return;
 
-        List<WaveData> nextWave = SetWaveData(curWave + 1);
-        if (nextWave != new List<WaveData>() && waveData.Count != 0)
-            return true;
+        if (curWave + 1 >= DataManager.Instance.WaveLevelTable.Count)
+            StartCoroutine(ISpawnWave(curWave, DataManager.Instance.WaveLevelTable[curWave], () => { GameManager.Instance.AllWaveSpawned = true; }));
         else
-             return false;
+            StartCoroutine(ISpawnWave(curWave, DataManager.Instance.WaveLevelTable[curWave]));
     }
 
     public void Init()

@@ -12,6 +12,8 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> language_Table;
     private List<Dictionary<string, object>> scripts_Table;
 
+    private List<Dictionary<string, object>> buff_Table;
+
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
@@ -30,6 +32,31 @@ public class DataManager : Singleton<DataManager>
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
+
+    private Dictionary<int, List<WaveData>> waveLevelTable = null;
+
+    public Dictionary<int, List<WaveData>> WaveLevelTable
+    {
+        get
+        {
+            if(waveLevelTable == null)
+            {
+                waveLevelTable = new Dictionary<int, List<WaveData>>();
+                foreach(Dictionary<string, object> data in wave_Table)
+                {
+                    int level = Convert.ToInt32(data["level"]);
+                    string adventurerName = data["adventure"].ToString();
+                    int number = Convert.ToInt32(data["num"]);
+                    WaveData waveData = new WaveData(adventurerName, number);
+                    if (!waveLevelTable.ContainsKey(level))
+                        waveLevelTable.Add(level, new List<WaveData>());
+                    waveLevelTable[level].Add(waveData);
+                }
+            }
+
+            return waveLevelTable;
+        }
+    }
 
     private void InitScripts()
     {
@@ -109,8 +136,8 @@ public class DataManager : Singleton<DataManager>
         if (index == -1)
             return key;
 
-
-        return language_Table[index]["korean"].ToString();
+        string language = SettingManager.Instance.language.ToString();
+        return language_Table[index][language].ToString();
     }
 
     public List<int> MonsterCard_Indexs
@@ -143,6 +170,29 @@ public class DataManager : Singleton<DataManager>
         return indexs;
     }
 
+    private Dictionary<int, Dictionary<char, Dictionary<string, object>>> sortedBuffTable = null;
+
+    public Dictionary<int, Dictionary<char, Dictionary<string, object>>> BuffTable
+    {
+        get
+        {
+            if(sortedBuffTable == null)
+            {
+                sortedBuffTable = new Dictionary<int, Dictionary<char, Dictionary<string, object>>>();
+                foreach (Dictionary<string, object> value in buff_Table)
+                {
+                    string[] split = value["id"].ToString().Split('_');
+                    int loop = Convert.ToInt32(split[0]);
+                    char choice = split[1][0];
+                    if (!sortedBuffTable.ContainsKey(loop))
+                        sortedBuffTable.Add(loop, new Dictionary<char, Dictionary<string, object>>());
+                    sortedBuffTable[loop].Add(choice, value);
+                }
+            }
+
+            return sortedBuffTable;
+        }
+    }
 
     // csv파일 주소(Resource폴더 내)
     private string wave_Table_DataPath = "Data/waveData";
@@ -151,6 +201,7 @@ public class DataManager : Singleton<DataManager>
     private string timeRate_Table_DataPath = "Data/timeData";
     private string language_Table_DataPath = "Data/languageData";
     private string scripts_Table_DataPath = "Data/scriptData";
+    private string buff_Table_DataPath = "Data/buffData";
 
     private void Init()
     {
@@ -161,5 +212,6 @@ public class DataManager : Singleton<DataManager>
         timeRate_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(timeRate_Table_DataPath));
         language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
         scripts_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scripts_Table_DataPath));
+        buff_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(buff_Table_DataPath));
     }
 }

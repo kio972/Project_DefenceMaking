@@ -45,6 +45,7 @@ public class GameManager : IngameSingleton<GameManager>
     private bool updateNeed = true;
 
     private bool allWaveSpawned = false;
+    public bool AllWaveSpawned { set { allWaveSpawned = value; } }
 
     private bool isInit = false;
     public bool IsInit { get => isInit; }
@@ -57,6 +58,15 @@ public class GameManager : IngameSingleton<GameManager>
     public bool speedLock = false;
     public bool spawnLock = false;
     public bool cardLock = false;
+
+    public int loop = 0;
+
+    private void LoopWave()
+    {
+        curWave = -1;
+        isPause = true;
+        StoryManager.Instance.EnqueueScript("Dan100");
+    }
 
     public void SetCharAnimPause()
     {
@@ -136,6 +146,8 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (!updateNeed) return;
 
+        if (isPause) return;
+
         if(king.isDead)
         {
             LoseGame();
@@ -144,7 +156,13 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (allWaveSpawned && adventurersList.Count == 0)
         {
-            WinGame();
+            loop++;
+            allWaveSpawned = false;
+            if (DataManager.Instance.BuffTable.ContainsKey(loop))
+                LoopWave();
+            else
+                WinGame();
+
             return;
         }
 
@@ -169,8 +187,7 @@ public class GameManager : IngameSingleton<GameManager>
             {
                 curWave++;
                 //몬스터 웨이브 스폰
-                if (!waveController.SpawnWave(curWave))
-                    allWaveSpawned = true;
+                waveController.SpawnWave(curWave);
             }
 
             //이동가능타일 잠금
@@ -211,6 +228,14 @@ public class GameManager : IngameSingleton<GameManager>
             speedController.SetSpeedPrev();
 
         isPause = value;
+    }
+
+    public void HealAlly(int healAmount)
+    {
+        foreach(Monster monster in monsterList)
+        {
+            monster.curHp = Mathf.Max(monster.curHp + healAmount, monster.maxHp);
+        }
     }
 
     public void Init()

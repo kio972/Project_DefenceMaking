@@ -225,6 +225,7 @@ public class StoryManager : MonoBehaviour
                 string trigger = script["trigger"].ToString();
                 string track0 = script["track0"].ToString();
                 string track1 = script["track1"].ToString();
+                string act = script["act"].ToString();
 
                 if (type == "line")
                 {
@@ -249,8 +250,11 @@ public class StoryManager : MonoBehaviour
                         yield return StartCoroutine("PrintScript", conver);
                         if (isSkip)
                             break;
-                        while (!Input.anyKeyDown)
-                            yield return null;
+                        if(act != "NoWait")
+                        {
+                            while (!Input.anyKeyDown)
+                                yield return null;
+                        }
                     }
                 }
                 else if (type == "choice")
@@ -260,7 +264,8 @@ public class StoryManager : MonoBehaviour
                         ResetChoices();
                         choiceState = true;
                     }
-
+                    if (trigger != "")
+                        SendMessage(trigger, SendMessageOptions.DontRequireReceiver);
                     SetChoice(conver, number[number.Length - 1]);
                 }
             }
@@ -296,6 +301,26 @@ public class StoryManager : MonoBehaviour
     }
 
     #region TriggerZone
+
+    private void SetBuff()
+    {
+        foreach (ChoiceText choice in choiceTexts)
+            choice.setInfo = true;
+    }
+
+    private void AddBuff()
+    {
+        char choice = choiceNum;
+        PassiveManager.Instance.AddBuffTable(DataManager.Instance.BuffTable[GameManager.Instance.loop][choice]);
+    }
+
+    private void ResetBuff()
+    {
+        foreach (ChoiceText choice in choiceTexts)
+            choice.setInfo = false;
+    }
+
+
     private void FadeInLeft()
     {
         leftIllust.fadeInState = true;

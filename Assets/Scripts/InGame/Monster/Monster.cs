@@ -104,6 +104,12 @@ public class Monster : Battler
         {
             InitStats(monsterIndex);
 
+            armor += PassiveManager.Instance.monsterDefense_Weight;
+            attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
+            minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
+            maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
+
+            maxHp = (int)((float)maxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
             maxHp += PassiveManager.Instance.monsterHp_Weight;
             curHp = maxHp;
         }

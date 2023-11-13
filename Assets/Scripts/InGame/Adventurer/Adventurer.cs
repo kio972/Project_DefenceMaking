@@ -34,6 +34,10 @@ public class Adventurer : Battler
         {
             InitStats(adventurerIndex);
 
+            attackSpeed *= ((100 + PassiveManager.Instance.adventurerAttackSpeed_Weight) / 100);
+            minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.adventurerDamageRate_Weight) / 100));
+            maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.adventurerDamageRate_Weight) / 100));
+
             reward = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["reward"]);
         }
 

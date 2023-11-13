@@ -13,14 +13,27 @@ public class ChoiceText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private Button btn;
 
+    [SerializeField]
+    private BuffInfo buffInfo;
+    public bool setInfo = false;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         text.transform.localScale = Vector3.one * 1.1f;
+        if (setInfo)
+        {
+            buffInfo.gameObject.SetActive(true);
+            buffInfo.SetInfo(DataManager.Instance.BuffTable[GameManager.Instance.loop][choice]);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         text.transform.localScale = Vector3.one;
+        if (setInfo)
+        {
+            buffInfo.gameObject.SetActive(false);
+        }
     }
 
     private void MakeDecision()
