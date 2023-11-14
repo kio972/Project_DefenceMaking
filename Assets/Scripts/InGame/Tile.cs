@@ -149,7 +149,9 @@ public class Tile : MonoBehaviour
         twin.gameObject.SetActive(false);
         waitToMove = false;
         InputManager.Instance.settingCard = false;
-        if(resetNode)
+        InputManager.Instance.ResetTileClick();
+
+        if (resetNode)
             NodeManager.Instance.SetActiveNode(this.curNode, true);
         NodeManager.Instance.SetGuideState(GuideState.None);
         SetTileVisible(true);

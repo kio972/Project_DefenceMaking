@@ -49,6 +49,8 @@ public class InputManager : IngameSingleton<InputManager>
         if(tileControlUI == null)
             tileControlUI = FindObjectOfType<TileControlUI>();
         tileControlUI?.SetButton(false, false);
+        if (curTile != null && curTile.waitToMove)
+            curTile.EndMoveing();
         curTile = null;
         NodeManager.Instance.SetGuideState(GuideState.None);
     }

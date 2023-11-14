@@ -16,7 +16,6 @@ public class TileControlUI : MonoBehaviour
             return;
         if (curTile.Movable)
         {
-            InputManager.Instance.ResetTileClick();
             curTile.ReadyForMove();
         }
         else
