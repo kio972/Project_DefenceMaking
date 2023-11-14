@@ -8,12 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Poison
-  m_Shader: {fileID: 4800000, guid: 9baf30ce95c751649b14d96da3a4b4d5, type: 3}
-  m_ValidKeywords:
-  - _EMISSIVE_SIMPLE
-  - _OUTLINE_NML
-  m_InvalidKeywords:
-  - _
+  m_Shader: {fileID: -6465566751694194690, guid: 03ad6573031c90a478286d2f8b22ccb7, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -101,6 +98,8 @@ Material:
     - _Add_Antipodean_RimLight: 0
     - _Ap_RimLight_FeatherOff: 0
     - _Ap_RimLight_Power: 0.1
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
     - _BaseColor_Step: 0.6
     - _BaseShade_Feather: 0.0001
     - _Base_Speed: 0
@@ -156,6 +155,9 @@ Material:
     - _RimLight_FeatherOff: 0
     - _RimLight_InsideMask: 0.0001
     - _RimLight_Power: 0.732
+    - _RippleDensity: 5
+    - _RippleSlimness: 5
+    - _RippleSpeed: 0.2
     - _Rotate_EmissiveUV: 0
     - _Rotate_MatCapUV: 0
     - _Rotate_NormalMapForMatCapUV: 0
@@ -182,7 +184,7 @@ Material:
     - _1st_ShadeColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    - _BaseColor: {r: 0.25691923, g: 0.109647475, b: 0.7924528, a: 1}
     - _Color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _Emissive_Color: {r: 0.053291477, g: 0.004805972, b: 0.33962262, a: 1}
@@ -190,5 +192,19 @@ Material:
     - _MatCapColor: {r: 1, g: 0, b: 0, a: 1}
     - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
     - _RimLightColor: {r: 1, g: 0.11022442, b: 0, a: 1}
+    - _RippleColor: {r: 0.7508255, g: 0, b: 2.569396, a: 0}
     - _ViewShift: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &2436822030762931654
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
