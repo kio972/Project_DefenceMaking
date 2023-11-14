@@ -70,7 +70,10 @@ public class NodeManager : IngameSingleton<NodeManager>
         switch (guideState)
         {
             case GuideState.None:
-                ShowMovableTiles();
+                //ShowMovableTiles();
+                break;
+            case GuideState.Movable:
+                ShowSelectedTile(tile);
                 break;
             case GuideState.Tile:
                 if (tile == null)
@@ -99,6 +102,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
         if (guideState == GuideState.None)
             SetGuideState(GuideState.None);
+    }
+
+    private void ShowSelectedTile(Tile targetTile)
+    {
+        targetTile.curNode.SetGuideColor(Color.yellow);
     }
 
     private void ShowMovableTiles()

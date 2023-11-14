@@ -29,6 +29,20 @@ public class Tile : MonoBehaviour
 
     public TileNode curNode;
 
+    private bool removable = false;
+    public bool IsRemovable
+    {
+        get
+        {
+            if (!removable)
+                return false;
+
+            if (UtilHelper.GetConnectedCount(this) >= 2)
+                return false;
+
+            return true;
+        }
+    }
 
     public bool movable = false;
 
@@ -61,6 +75,8 @@ public class Tile : MonoBehaviour
     private Renderer tileRenderer;
 
     private bool isTwin = false;
+    
+    private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
 
     public int GetUnClosedCount()
     {
@@ -178,7 +194,6 @@ public class Tile : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0f, rate, 0f);
     }
 
-    private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
 
     public List<Direction> RotateDirection(List<Direction> pathDirection, bool reverse = false)
     {
@@ -308,12 +323,27 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void Init(TileNode targetNode, bool dormant = false)
+    public void RemoveTile()
+    {
+        NodeManager.Instance.SetActiveNode(curNode, false);
+        InputManager.Instance.ResetTileClick();
+        Destroy(this.gameObject);
+    }
+
+    public void CallTileControlUI()
+    {
+        TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
+        bool removable = !this.removable || isDormant ? false : true;
+        tileControlUI?.SetButton(movable, removable);
+    }
+
+    public void Init(TileNode targetNode, bool dormant = false, bool removable = true)
     {
         NodeManager.Instance.SetActiveNode(targetNode, true);
         MoveTile(targetNode);
         isDormant = dormant;
-        movable = !dormant;
+        movable = tileType == TileType.End ? true : false;
+        this.removable = removable;
         if(isDormant)
             NodeManager.Instance.dormantTile.Add(this);
     }
@@ -324,5 +354,20 @@ public class Tile : MonoBehaviour
             return;
 
         MonsterOutCheck();
+
+        if(waitToMove)
+        {
+            TileNode curTile = TileMoveCheck();
+            if (Input.GetKeyDown(SettingManager.Instance.key_RotateTile._CurKey))
+                twin.RotateTile();
+            if (!Movable || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
+            {
+                EndMoveing();
+            }
+            else if (Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey) && curTile != null)
+            {
+                EndMove(curTile);
+            }
+        }
     }
 }

@@ -84,25 +84,22 @@ public class MapBuilder : MonoBehaviour
         for (int i = 0; i < startPathSize; i++)
         {
             Tile pathTile = Instantiate(pathPrefab)?.GetComponent<Tile>();
-            pathTile.MoveTile(nextNode);
+            pathTile.Init(nextNode, false, false);
 
-            NodeManager.Instance.SetActiveNode(pathTile.curNode, true);
             nextNode = nextNode.neighborNodeDic[Direction.Right];
             NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
         }
 
         Tile crossTile = Instantiate(pathPrefab2)?.GetComponent<Tile>();
-        crossTile.MoveTile(nextNode);
-        NodeManager.Instance.SetActiveNode(crossTile.curNode, true);
+        crossTile.Init(nextNode, false, false);
         crossTile.RotateTile();
+
         nextNode = nextNode.neighborNodeDic[Direction.RightUp];
         NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
 
-
         Tile endTile = Instantiate(endPointPrefab)?.GetComponent<Tile>();
-        endTile.MoveTile(nextNode);
+        endTile.Init(nextNode, false, false);
         endTile.RotateTile(true);
-        NodeManager.Instance.activeNodes.Add(endTile.curNode);
         NodeManager.Instance.endPoint = endTile.curNode;
         endTile.movable = true;
     }

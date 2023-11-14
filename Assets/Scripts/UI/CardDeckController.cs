@@ -108,8 +108,7 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI deckCountText;
 
-    [SerializeField]
-    private int cardPrice = 20;
+    private int cardPrice = 5;
 
     [SerializeField]
     private MouseOverEffect2 recycle;

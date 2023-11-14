@@ -9,6 +9,36 @@ using TMPro;
 
 public static class UtilHelper
 {
+    public static int GetConnectedCount(Tile tile)
+    {
+        if(tile.curNode == null)
+            return -1;
+
+        int count = 0;
+
+        foreach(Direction direction in tile.PathDirection)
+        {
+            if (tile.curNode.neighborNodeDic[direction] == null || tile.curNode.neighborNodeDic[direction].curTile == null)
+                continue;
+
+            Direction reversedDir = ReverseDirection(direction);
+            if (tile.curNode.neighborNodeDic[direction].curTile.PathDirection.Contains(reversedDir))
+                count++;
+        }
+
+        foreach (Direction direction in tile.RoomDirection)
+        {
+            if (tile.curNode.neighborNodeDic[direction] == null || tile.curNode.neighborNodeDic[direction].curTile == null)
+                continue;
+
+            Direction reversedDir = ReverseDirection(direction);
+            if(tile.curNode.neighborNodeDic[direction].curTile.RoomDirection.Contains(reversedDir))
+                count++;
+        }
+
+        return count;
+    }
+
     public static IEnumerator IMoveEffect(Transform transform, Vector3 originPositioin, Vector3 targetPosition, float lerpTime, System.Action callback = null)
     {
         //targetPosition = originPositioin + targetPosition;

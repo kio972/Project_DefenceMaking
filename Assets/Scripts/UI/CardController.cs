@@ -125,6 +125,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         if (GameManager.Instance.cardLock)
             return;
 
+        InputManager.Instance.ResetTileClick();
+
         if (!Input.GetKey(KeyCode.Mouse0))
         {
             OnEndDrag(eventData);

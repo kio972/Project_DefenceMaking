@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : IngameSingleton<InputManager>
 {
@@ -13,6 +14,11 @@ public class InputManager : IngameSingleton<InputManager>
 
     private GameObject endPointPrefab = null;
     public TileNode curMoveObject = null;
+
+    TileControlUI tileControlUI = null;
+
+    private Tile curTile = null;
+    public Tile _CurTile { get => curTile; }
 
     private void ReadySetTile(TileNode curTile)
     {
@@ -38,47 +44,40 @@ public class InputManager : IngameSingleton<InputManager>
         //InputManager Instance 생성 함수
     }
 
-    private void InputCheck()
+    public void ResetTileClick()
     {
-
+        if(tileControlUI == null)
+            tileControlUI = FindObjectOfType<TileControlUI>();
+        tileControlUI?.SetButton(false, false);
+        curTile = null;
+        NodeManager.Instance.SetGuideState(GuideState.None);
     }
 
-    private Tile curTile = null;
-
-    private void TileMoveCheck()
+    public void TileClickCheck()
     {
         if (settingCard)
             return;
 
-        if (curTile != null)
+        if (Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey))
         {
-            TileNode node = curTile.TileMoveCheck();
-            if (Input.GetKeyDown(SettingManager.Instance.key_RotateTile._CurKey))
-                curTile.twin.RotateTile();
-            if (!curTile.Movable || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
-            {
-                curTile.EndMoveing();
-                curTile = null;
-                movingTile = false;
-            }
-            else if (Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey))
-            {
-                curTile.EndMove(node);
-                curTile = null;
-                movingTile = false;
-            }
-        }
-        else if (Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey))
-        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            if (NodeManager.Instance._GuideState != GuideState.None && NodeManager.Instance._GuideState != GuideState.Movable)
+                return;
+
             TileNode node = UtilHelper.RayCastTile();
-            if (node != null && node.curTile != null && node.curTile.Movable)
+            if (node != null && node.curTile != null)
             {
                 curTile = node.curTile;
-                print(curTile);
-                node.curTile.ReadyForMove();
-                movingTile = true;
+                NodeManager.Instance.SetGuideState(GuideState.Movable, curTile);
+                curTile.CallTileControlUI();
             }
+            else
+                ResetTileClick();
         }
+        else if (Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
+            ResetTileClick();
     }
 
     private void CameraResetCheck()
@@ -127,6 +126,6 @@ public class InputManager : IngameSingleton<InputManager>
 
         SpeedControlCheck();
         CameraResetCheck();
-        TileMoveCheck();
+        TileClickCheck();
     }
 }
