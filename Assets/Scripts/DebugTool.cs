@@ -19,6 +19,16 @@ public class DebugTool : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI text;
 
+    public void WinGame()
+    {
+        GameManager.Instance.SendMessage("WinGame");
+    }
+
+    public void LoseGame()
+    {
+        GameManager.Instance.SendMessage("LoseGame");
+    }
+
     public void SetWave()
     {
         GameManager.Instance.SetWave(waveIndex);
