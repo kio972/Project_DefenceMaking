@@ -33,11 +33,11 @@ public class Tutorial : MonoBehaviour
             yield return null;
 
         GameManager.Instance.Init();
-        Transform roomTransform = GameManager.Instance.cardDeckController.cards[3];
         GameManager.Instance.isPause = true;
         GameManager.Instance.speedLock = true;
         yield return new WaitForSeconds(2f);
 
+        Transform roomTransform = GameManager.Instance.cardDeckController.cards[3];
         StoryManager.Instance.EnqueueScript("Dan001");
         while (!StoryManager.Instance.IsScriptQueueEmpty)
             yield return null;

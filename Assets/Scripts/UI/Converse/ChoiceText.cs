@@ -17,9 +17,13 @@ public class ChoiceText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private BuffInfo buffInfo;
     public bool setInfo = false;
 
+    private string script;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         text.transform.localScale = Vector3.one * 1.1f;
+        text.text = "『 " + script + " 『";
+        text.color = Color.white;
         if (setInfo)
         {
             buffInfo.gameObject.SetActive(true);
@@ -30,6 +34,8 @@ public class ChoiceText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         text.transform.localScale = Vector3.one;
+        text.text = script;
+        text.color = Color.gray;
         if (setInfo)
         {
             buffInfo.gameObject.SetActive(false);
@@ -46,7 +52,9 @@ public class ChoiceText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if(text == null)
             text = GetComponentInChildren<TextMeshProUGUI>(true);
-        text.text = "『 " + script + " 『";
+        text.text = script;
+        text.color = Color.gray;
+        this.script = script;
         this.choice = choice;
     }
 

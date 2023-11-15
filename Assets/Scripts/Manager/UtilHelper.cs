@@ -39,6 +39,23 @@ public static class UtilHelper
         return count;
     }
 
+    public static IEnumerator IMoveEffect(Transform transform, Vector3 targetPosition, float lerpTime, System.Action callback = null)
+    {
+        //targetPosition = originPositioin + targetPosition;
+        float elapsedTime = 0f;
+        Vector3 originPositioin = transform.position;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            transform.position = Vector3.Lerp(originPositioin, targetPosition, Mathf.Sin(t * Mathf.PI * 0.5f));
+            yield return null;
+        }
+        yield return null;
+        callback?.Invoke();
+    }
+
     public static IEnumerator IMoveEffect(Transform transform, Vector3 originPositioin, Vector3 targetPosition, float lerpTime, System.Action callback = null)
     {
         //targetPosition = originPositioin + targetPosition;

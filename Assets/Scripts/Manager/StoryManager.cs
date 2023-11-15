@@ -66,6 +66,9 @@ public class StoryManager : MonoBehaviour
 
     public bool isSkip = false;
 
+    [SerializeField]
+    private GameObject nextArrow;
+
     public void SkipScript()
     {
         if(!isSkip)
@@ -252,8 +255,10 @@ public class StoryManager : MonoBehaviour
                             break;
                         if(act != "NoWait")
                         {
+                            nextArrow.SetActive(true);
                             while (!Input.anyKeyDown || Input.GetKey(KeyCode.Escape))
                                 yield return null;
+                            nextArrow.SetActive(false);
                         }
                     }
                 }

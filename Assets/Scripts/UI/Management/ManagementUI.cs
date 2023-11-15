@@ -25,6 +25,8 @@ public class ManagementUI : MonoBehaviour
 
     private List<ManageSlot> deployItems = new List<ManageSlot>();
 
+    private InGameUI ingameUI;
+
     public void SetActive(bool value)
     {
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
@@ -75,6 +77,11 @@ public class ManagementUI : MonoBehaviour
         UIManager.Instance.CloseTab(exitBtn.gameObject);
         GameManager.Instance.cardLock = false;
         GameManager.Instance.SetPause(true);
+
+        if (ingameUI == null)
+            ingameUI = GetComponentInParent<InGameUI>();
+        ingameUI?.SetRightUI(true);
+        ingameUI?.SetDownUI(true);
     }
 
     private void SetObjectOnMap(bool cancel = false)
@@ -168,6 +175,11 @@ public class ManagementUI : MonoBehaviour
         SetGuideObject(unitType, prefabName);
         curPrice = cost;
         GameManager.Instance.SetPause(false);
+
+        if (ingameUI == null)
+            ingameUI = GetComponentInParent<InGameUI>();
+        ingameUI?.SetRightUI(false);
+        ingameUI?.SetDownUI(false);
 
         InputManager.Instance.settingCard = true;
         //함정인지 몬스터인지

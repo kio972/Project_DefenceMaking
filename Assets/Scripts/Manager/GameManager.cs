@@ -61,6 +61,9 @@ public class GameManager : IngameSingleton<GameManager>
 
     public int loop = 0;
 
+    [SerializeField]
+    InGameUI ingameUI;
+
     public void SetWave(int val)
     {
         curWave = val - 1;
@@ -249,10 +252,12 @@ public class GameManager : IngameSingleton<GameManager>
         mapBuilder.Init();
         SpawnKing();
         SetWaveSpeed();
-
+        if (ingameUI == null)
+            ingameUI = FindObjectOfType<InGameUI>();
+        ingameUI?.Init();
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
-        cardDeckController.Mulligan();
+        cardDeckController.Invoke("Mulligan", 1f);
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);
