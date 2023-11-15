@@ -114,14 +114,25 @@ public class GameManager : IngameSingleton<GameManager>
         return false;
     }
 
-    private void WinGame()
+    private IEnumerator WinTextWait()
     {
-        updateNeed = false;
-        speedController.SetSpeedZero();
+        StoryManager.Instance.EnqueueScript("Dan900");
+
+        while (!StoryManager.Instance.IsScriptQueueEmpty)
+            yield return null;
 
         ResultController result = FindObjectOfType<ResultController>(true);
         if (result != null)
             result.GameWin();
+    }
+
+    private void WinGame()
+    {
+        updateNeed = false;
+        speedController.SetSpeedZero();
+        StartCoroutine(WinTextWait());
+        
+        
     }
 
     public void LoseGame()

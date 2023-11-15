@@ -5,8 +5,6 @@ using TMPro;
 
 public class Tutorial : MonoBehaviour
 {
-    private bool waitForStart = false;
-
     [SerializeField]
     private GameObject tuto1;
 
@@ -33,6 +31,33 @@ public class Tutorial : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI rotationInfo;
 
+    private void SetEndTileMoveGuide(Vector3 targetPos, Vector3 endPos)
+    {
+        if (InputManager.Instance._CurTile == NodeManager.Instance.endPoint.curTile)
+        {
+            if (InputManager.Instance.movingTile)
+            {
+                arrowDown.SetActive(true);
+                arrowDown.transform.position = Camera.main.WorldToScreenPoint(targetPos);
+                arrowRight2.gameObject.SetActive(false);
+                rotationInfo.gameObject.SetActive(true);
+            }
+            else
+            {
+                arrowDown.SetActive(false);
+                arrowRight2.gameObject.SetActive(true);
+                rotationInfo.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            arrowDown.transform.position = Camera.main.WorldToScreenPoint(endPos);
+            arrowDown.gameObject.SetActive(true);
+            arrowRight2.gameObject.SetActive(false);
+            rotationInfo.gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator ITutorial()
     {
         yield return null;
@@ -58,31 +83,7 @@ public class Tutorial : MonoBehaviour
 
         while (true)
         {
-            
-            if (InputManager.Instance._CurTile == NodeManager.Instance.endPoint.curTile)
-            {
-                if (InputManager.Instance.movingTile)
-                {
-                    arrowDown.SetActive(true);
-                    arrowDown.transform.position = Camera.main.WorldToScreenPoint(targetPos);
-                    arrowRight2.gameObject.SetActive(false);
-                    rotationInfo.gameObject.SetActive(true);
-                }
-                else
-                {
-                    arrowDown.SetActive(false);
-                    arrowRight2.gameObject.SetActive(true);
-                    rotationInfo.gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                arrowDown.transform.position = Camera.main.WorldToScreenPoint(endPos);
-                arrowDown.gameObject.SetActive(true);
-                arrowRight2.gameObject.SetActive(false);
-                rotationInfo.gameObject.SetActive(false);
-            }
-            
+            SetEndTileMoveGuide(targetPos, endPos);
 
             if ((endPos - NodeManager.Instance.endPoint.transform.position).magnitude > 0.2f)
                 break;
@@ -107,19 +108,21 @@ public class Tutorial : MonoBehaviour
         while (GameManager.Instance.adventurersList.Count == 0)
             yield return null;
 
+        //모험가 침입
         GameManager.Instance.spawnLock = true;
         GameManager.Instance.speedLock = true;
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.startPoint.transform.position);
         GameManager.Instance.cameraController.SetCamZoom(3);
         topBlocker.SetActive(true);
         GameManager.Instance.speedLock = true;
+        
         StoryManager.Instance.EnqueueScript("Dan003");
         while (!StoryManager.Instance.IsScriptQueueEmpty)
             yield return null;
 
         GameManager.Instance.cameraController.SetCamZoom(1);
         GameManager.Instance.speedController.SetSpeedZero();
-        
+        //방타일있는지 체크
         if(!NodeManager.Instance.HaveSingleRoom)
         {
             arrowDown.SetActive(true);
@@ -136,6 +139,8 @@ public class Tutorial : MonoBehaviour
         ingameUI.SetRightUI(true, 1f, () => { arrowRight.gameObject.SetActive(true); });
         ingameUI.rightUILock = false;
         rightBlocker.SetActive(true);
+
+        //상점페이지
         while (!managePage.activeSelf)
             yield return null;
 
@@ -145,7 +150,11 @@ public class Tutorial : MonoBehaviour
         GameManager.Instance.speedLock = false;
 
         while (GameManager.Instance.adventurersList.Count != 0)
+        {
+            if(arrowRight.gameObject.activeSelf)
+                arrowRight.gameObject.SetActive(false);
             yield return null;
+        }
 
         StoryManager.Instance.EnqueueScript("Dan004");
         GameManager.Instance.spawnLock = false;

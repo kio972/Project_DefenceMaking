@@ -233,7 +233,14 @@ public class StoryManager : MonoBehaviour
                 if (type == "line")
                 {
                     while (choiceState)
+                    {
+                        if (isSkip)
+                            break;
                         yield return null;
+                    }
+
+                    if (isSkip)
+                        break;
 
                     if (number[1] != '_')
                         choiceNum = ' ';
