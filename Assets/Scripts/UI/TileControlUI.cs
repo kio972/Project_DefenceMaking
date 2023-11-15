@@ -8,6 +8,24 @@ public class TileControlUI : MonoBehaviour
     private GameObject tileMoveBtn;
     [SerializeField]
     private GameObject tileRemoveBtn;
+    [SerializeField]
+    private GameObject exitBtn;
+
+    private InGameUI inGameUI;
+
+    public void CloseAllBtn()
+    {
+        NodeManager.Instance.SetGuideState(GuideState.None);
+        CloseAll();
+    }
+
+    public void CloseAll()
+    {
+        tileMoveBtn.SetActive(false);
+        tileRemoveBtn.SetActive(false);
+        exitBtn.SetActive(false);
+        inGameUI?.SwitchRightToTileUI(false);
+    }
 
     public void MoveTile()
     {
@@ -40,6 +58,10 @@ public class TileControlUI : MonoBehaviour
     {
         tileMoveBtn.SetActive(movable);
         tileRemoveBtn.SetActive(removable);
+        exitBtn.SetActive(true);
+        if (inGameUI == null)
+            inGameUI = GetComponentInParent<InGameUI>();
+        inGameUI?.SwitchRightToTileUI(true);
     }
 
     public void Update()

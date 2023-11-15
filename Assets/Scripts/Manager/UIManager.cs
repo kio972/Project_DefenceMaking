@@ -12,6 +12,14 @@ public class UIManager : Singleton<UIManager>
 
     private bool frameUpdate = false;
 
+    public void ResetUI()
+    {
+        foreach (GameObject obj in targetUI)
+            obj.SetActive(false);
+        targetUI = new List<GameObject>();
+        closeActDic = new Dictionary<GameObject, System.Action>();
+    }
+
     public void CloseTab(GameObject target)
     {
         target.SetActive(false);

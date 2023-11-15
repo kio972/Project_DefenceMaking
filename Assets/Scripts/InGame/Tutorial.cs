@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Tutorial : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class Tutorial : MonoBehaviour
     private GameObject arrowDown;
     [SerializeField]
     private GameObject arrowRight;
+    [SerializeField]
+    private GameObject arrowRight2;
+
+    [SerializeField]
+    private InGameUI ingameUI;
+
+    [SerializeField]
+    private TextMeshProUGUI rotationInfo;
 
     private IEnumerator ITutorial()
     {
@@ -33,6 +42,8 @@ public class Tutorial : MonoBehaviour
             yield return null;
 
         GameManager.Instance.Init();
+        ingameUI.SetRightUI(false, 0.1f);
+        ingameUI.rightUILock = true;
         GameManager.Instance.isPause = true;
         GameManager.Instance.speedLock = true;
         yield return new WaitForSeconds(2f);
@@ -43,10 +54,36 @@ public class Tutorial : MonoBehaviour
             yield return null;
 
         Vector3 endPos = NodeManager.Instance.endPoint.transform.position;
+        Vector3 targetPos = NodeManager.Instance.FindNode(-1, 5).transform.position;
+
         while (true)
         {
-            arrowDown.transform.position = Camera.main.WorldToScreenPoint(endPos);
-            arrowDown.gameObject.SetActive(!InputManager.Instance.movingTile);
+            
+            if (InputManager.Instance._CurTile == NodeManager.Instance.endPoint.curTile)
+            {
+                if (InputManager.Instance.movingTile)
+                {
+                    arrowDown.SetActive(true);
+                    arrowDown.transform.position = Camera.main.WorldToScreenPoint(targetPos);
+                    arrowRight2.gameObject.SetActive(false);
+                    rotationInfo.gameObject.SetActive(true);
+                }
+                else
+                {
+                    arrowDown.SetActive(false);
+                    arrowRight2.gameObject.SetActive(true);
+                    rotationInfo.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                arrowDown.transform.position = Camera.main.WorldToScreenPoint(endPos);
+                arrowDown.gameObject.SetActive(true);
+                arrowRight2.gameObject.SetActive(false);
+                rotationInfo.gameObject.SetActive(false);
+            }
+            
+
             if ((endPos - NodeManager.Instance.endPoint.transform.position).magnitude > 0.2f)
                 break;
             yield return null;
@@ -96,11 +133,13 @@ public class Tutorial : MonoBehaviour
             yield return null;
         }
 
-        arrowRight.gameObject.SetActive(true);
-        rightBlocker.SetActive(false);
+        ingameUI.SetRightUI(true, 1f, () => { arrowRight.gameObject.SetActive(true); });
+        ingameUI.rightUILock = false;
+        rightBlocker.SetActive(true);
         while (!managePage.activeSelf)
             yield return null;
 
+        rightBlocker.SetActive(false);
         topBlocker.SetActive(false);
         arrowRight.gameObject.SetActive(false);
         GameManager.Instance.speedLock = false;
@@ -129,11 +168,5 @@ public class Tutorial : MonoBehaviour
     void Start()
     {
         StartCoroutine(ITutorial());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

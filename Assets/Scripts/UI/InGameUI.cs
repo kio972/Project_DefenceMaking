@@ -11,6 +11,9 @@ public class InGameUI : MonoBehaviour
     [SerializeField]
     private RectTransform uiDown;
 
+    [SerializeField]
+    private RectTransform uiRight2;
+
     private Vector2 originPos_uiTop;
     private Vector2 originPos_uiRight;
     private Vector2 originPos_uiDown;
@@ -23,6 +26,32 @@ public class InGameUI : MonoBehaviour
     private Coroutine rightCoroutine;
     private Coroutine downCoroutine;
 
+    private Coroutine right2Coroutine;
+
+    public bool rightUILock = false;
+
+    public void HideRightBtns(bool value = true)
+    {
+        uiRight.gameObject.SetActive(!value);
+    }
+
+    public void SwitchRightToTileUI(bool value, float lerpTime = 0.2f)
+    {
+        if(value)
+            SetRightUI(false, lerpTime, () => { SetTileUI(true, lerpTime); });
+        else
+            SetTileUI(false, lerpTime, () => { if (rightUILock) return; SetRightUI(true, lerpTime); });
+    }
+
+    public void SetTileUI(bool value, float lerpTime = 0.5f, System.Action callBack = null)
+    {
+        if (right2Coroutine != null)
+            StopCoroutine(right2Coroutine);
+
+        Vector2 targetPos = value ? originPos_uiRight : hidePos_uiRight;
+        right2Coroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight2.transform, targetPos, lerpTime, callBack));
+    }
+
     public void SetTopUI(bool value, float lerpTime = 0.5f)
     {
         if (topCoroutine != null)
@@ -32,13 +61,13 @@ public class InGameUI : MonoBehaviour
         topCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiTop.transform, targetPos, lerpTime));
     }
 
-    public void SetRightUI(bool value, float lerpTime = 0.5f)
+    public void SetRightUI(bool value, float lerpTime = 0.5f, System.Action callBack = null)
     {
         if (rightCoroutine != null)
             StopCoroutine(rightCoroutine);
 
         Vector2 targetPos = value ? originPos_uiRight : hidePos_uiRight;
-        rightCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight.transform, targetPos, lerpTime));
+        rightCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight.transform, targetPos, lerpTime, callBack));
     }
 
     public void SetDownUI(bool value, float lerpTime = 0.5f)
@@ -71,5 +100,7 @@ public class InGameUI : MonoBehaviour
         uiTop.position = hidePos_uiTop;
         uiRight.position = hidePos_uiRight;
         uiDown.position = hidePos_uiDown;
+
+        uiRight2.position = hidePos_uiRight;
     }
 }

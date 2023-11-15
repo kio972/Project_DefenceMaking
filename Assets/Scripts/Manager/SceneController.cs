@@ -46,6 +46,7 @@ public class SceneController : Singleton<SceneController>
         if (sceneChanging)
             return;
         StartCoroutine(IMoveScene(sceneName, time));
+        UIManager.Instance.ResetUI();
     }
 
     public void RestartScene(float time = 1f)

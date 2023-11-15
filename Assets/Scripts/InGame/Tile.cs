@@ -149,8 +149,8 @@ public class Tile : MonoBehaviour
         twin.gameObject.SetActive(false);
         waitToMove = false;
         InputManager.Instance.settingCard = false;
+        InputManager.Instance.movingTile = false;
         InputManager.Instance.ResetTileClick();
-
         if (resetNode)
             NodeManager.Instance.SetActiveNode(this.curNode, true);
         NodeManager.Instance.SetGuideState(GuideState.None);
@@ -251,7 +251,7 @@ public class Tile : MonoBehaviour
     public void ReadyForMove()
     {
         SetTwin();
-
+        InputManager.Instance.movingTile = true;
         switch (tileType)
         {
             case TileType.End:
