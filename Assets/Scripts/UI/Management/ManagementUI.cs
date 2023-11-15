@@ -27,7 +27,7 @@ public class ManagementUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
-        uiPage.SetActive(value);
+        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
         if(value)
             SetItem();
@@ -38,8 +38,10 @@ public class ManagementUI : MonoBehaviour
         Trap trap = instancedObject.GetComponent<Trap>();
         if (trap != null)
         {
-            trap.transform.SetParent(curNode.curTile.transform, false);
+            Vector3 scale = trap.transform.lossyScale;
+            trap.transform.SetParent(curNode.curTile.transform, true);
             trap.transform.localPosition = Vector3.zero;
+            trap.transform.localScale = scale;
             trap.Init(curNode.curTile);
         }
 
@@ -69,8 +71,8 @@ public class ManagementUI : MonoBehaviour
 
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
-        uiPage.SetActive(true);
-        exitBtn.gameObject.SetActive(false);
+        UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
+        UIManager.Instance.CloseTab(exitBtn.gameObject);
         GameManager.Instance.cardLock = false;
         GameManager.Instance.SetPause(true);
     }
@@ -171,15 +173,14 @@ public class ManagementUI : MonoBehaviour
         //함정인지 몬스터인지
         SetGuideState(curType);
         GameManager.Instance.cardLock = true;
-        uiPage.SetActive(false);
-        exitBtn.gameObject.SetActive(true);
+        UIManager.Instance.CloseTab(uiPage);
+        UIManager.Instance.SetTab(exitBtn.gameObject, true, () => { DeployEnd(); }); 
     }
 
     public void SetItem()
     {
         if (!initState)
             Init();
-
     }
 
     private ManageSlot GetNextSlot()

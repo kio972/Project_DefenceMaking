@@ -20,6 +20,21 @@ public class DeckSupply : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField]
     private GameObject twin;
 
+    private List<GameObject> twins = new List<GameObject>();
+
+    private GameObject GetTwin()
+    {
+        foreach(GameObject target in twins)
+        {
+            if (!target.activeSelf)
+                return target;
+        }
+
+        GameObject newTwin = Instantiate(twin, twin.transform.parent);
+        twins.Add(newTwin);
+        return newTwin;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (position_Modify_Coroutine != null)
@@ -36,7 +51,7 @@ public class DeckSupply : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));
     }
 
-    private void ResetTwin()
+    private void ResetTwin(GameObject twin)
     {
         twin.gameObject.SetActive(false);
         twin.transform.position = transform.position;
@@ -44,12 +59,13 @@ public class DeckSupply : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void DeckSupplyEffect()
     {
-        if (deckController == null || twin == null)
+        if (deckController == null || this.twin == null)
             return;
 
+        GameObject twin = GetTwin();
         twin.gameObject.SetActive(true);
         StartCoroutine(UtilHelper.IMoveEffect(twin.transform, originPos, GameManager.Instance.cardDeckController.transform.position, 0.4f));
-        StartCoroutine(UtilHelper.IScaleEffect(twin.transform, Vector3.one, Vector3.zero, 0.4f, () => { ResetTwin(); }));
+        StartCoroutine(UtilHelper.IScaleEffect(twin.transform, Vector3.one, Vector3.zero, 0.4f, () => { ResetTwin(twin); }));
     }
 
     public void SupplyPathCard()

@@ -40,7 +40,7 @@ public class RotationEffect : MonoBehaviour, IPointerClickHandler, IPointerEnter
         imgRect.Rotate(0f, 0f, rotationAngle);
     }
 
-    private void SetSelected()
+    protected void SetSelected()
     {
         if (isOn)
             return;
@@ -76,7 +76,7 @@ public class RotationEffect : MonoBehaviour, IPointerClickHandler, IPointerEnter
         mouseOver = false;
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (targetImg == null)
             return;

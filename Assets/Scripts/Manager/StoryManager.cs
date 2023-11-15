@@ -120,10 +120,10 @@ public class StoryManager : MonoBehaviour
             elapsed = 0f;
             while (elapsed < textTime)
             {
-                elapsed += Time.unscaledDeltaTime;
+                elapsed += Time.deltaTime;
                 if (isSkip)
                     yield break;
-                else if (Input.anyKeyDown)
+                else if (Input.anyKeyDown && !Input.GetKey(KeyCode.Escape))
                 {
                     targetText.text = conver;
                     yield return null;
@@ -204,7 +204,7 @@ public class StoryManager : MonoBehaviour
             {
                 fadeUp.anchoredPosition = Vector2.Lerp(openedPos1, closedPos1, elapsed / lerpTime);
                 fadeDown.anchoredPosition = Vector2.Lerp(openedPos2, closedPos2, elapsed / lerpTime);
-                elapsed += Time.unscaledDeltaTime;
+                elapsed += Time.deltaTime;
                 yield return null;
             }
             fadeUp.anchoredPosition = closedPos1;
@@ -252,7 +252,7 @@ public class StoryManager : MonoBehaviour
                             break;
                         if(act != "NoWait")
                         {
-                            while (!Input.anyKeyDown)
+                            while (!Input.anyKeyDown || Input.GetKey(KeyCode.Escape))
                                 yield return null;
                         }
                     }

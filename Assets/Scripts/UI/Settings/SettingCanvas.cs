@@ -31,6 +31,9 @@ public class SettingCanvas : MonoBehaviour
     [SerializeField]
     private GameObject fade;
 
+    [SerializeField]
+    private GameObject ingameMenu;
+
     private void Awake()
     {
         if (instance == null)
@@ -44,15 +47,42 @@ public class SettingCanvas : MonoBehaviour
         }
     }
 
-    public void CallSettings(bool value)
+    public void CloseSettingTab()
     {
-        fade.SetActive(value);
-        main.SetActive(value);
+        if (ingameMenu.activeSelf)
+            UIManager.Instance.SetTab(main, false);
+        else
+            CallSettings(false);
+    }
 
-        IngameMenu ingameMenu = FindObjectOfType<IngameMenu>();
-        if (ingameMenu != null)
+    public void CallSettings(bool value, bool isIngame = false)
+    {
+        if(value)
         {
-            ingameMenu.SetToggleState(!value);
+            Time.timeScale = 0;
+            GameManager.Instance.isPause = true;
+            UIManager.Instance.SetTab(ingameMenu, isIngame);
+            UIManager.Instance.SetTab(main, !isIngame);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            GameManager.Instance.isPause = false;
+            UIManager.Instance.SetTab(ingameMenu, false);
+            UIManager.Instance.SetTab(main, false);
+            InGameSettingCallBtn rotationEffect = FindObjectOfType<InGameSettingCallBtn>();
+            rotationEffect?.SetDefault();
+        }
+
+        fade.SetActive(value);
+    }
+
+    public void Update()
+    {
+        if(fade.activeSelf)
+        {
+            if (!main.activeSelf && !ingameMenu.activeSelf)
+                CallSettings(false);
         }
     }
 }

@@ -18,11 +18,6 @@ public class IngameButtonController : MonoBehaviour
         GameManager.Instance.SkipDay();
     }
 
-    private void OpenShop()
-    {
-        GameManager.Instance.speedController.SetSpeedZero();
-    }
-
     private void SetSkipBtnAvail()
     {
         if (skipBtn == null)
@@ -56,8 +51,6 @@ public class IngameButtonController : MonoBehaviour
 
     private void Awake()
     {
-        if (shopBtn != null)
-            shopBtn.onClick.AddListener(OpenShop);
         if(skipBtn != null)
             skipBtn.onClick.AddListener(SkipWave);
     }

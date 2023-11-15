@@ -8,10 +8,11 @@ public class CallSettingBtn : MonoBehaviour
 {
     private Button btn;
     public bool value = true;
+    public bool inIngame = false;
 
     private void CallSetting()
     {
-        SettingCanvas.Instance.CallSettings(value);
+        SettingCanvas.Instance.CallSettings(value, inIngame);
         SettingManager.Instance.SetLanguage();
     }
 
