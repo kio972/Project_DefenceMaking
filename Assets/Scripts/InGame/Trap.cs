@@ -8,6 +8,7 @@ public class Trap : MonoBehaviour
     private int trapIndex = -1;
     [SerializeField]
     private string battlerID;
+    public string BattlerID { get => battlerID; }
 
     protected int minDamage;
     protected int maxDamage;
@@ -33,7 +34,8 @@ public class Trap : MonoBehaviour
     private void DestroyTrap()
     {
         curTile.trap = null;
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        gameObject.SetActive(false);
     }
 
     private void ExcuteAttack()
@@ -86,6 +88,7 @@ public class Trap : MonoBehaviour
 
         this.curTile = curTile;
         curTile.trap = this;
+        transform.position = curTile.transform.position;
 
         Collider col = GetComponentInChildren<Collider>();
         if (col != null)

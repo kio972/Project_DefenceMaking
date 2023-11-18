@@ -86,7 +86,7 @@ public class WaveController : MonoBehaviour
                 }
 
                 //모험가 스폰
-                AdventurerPooling.Instance.SpawnAdventurer(waveData.adventurerName);
+                BattlerPooling.Instance.SpawnAdventurer(waveData.adventurerName);
 
                 curEnemyNumber++;
 

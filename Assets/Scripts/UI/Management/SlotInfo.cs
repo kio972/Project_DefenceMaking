@@ -51,8 +51,7 @@ public class SlotInfo : MonoBehaviour
         card_Name.ChangeLangauge(SettingManager.Instance.language, data._name);
         card_Description.ChangeLangauge(SettingManager.Instance.language, data._name + "_desc");
 
-        Sprite illur = SpriteList.Instance.LoadSprite(data.prefabName);
-        card_illust.sprite = illur;
+        card_illust.sprite = data.illur;
 
         bool isMonster = type == "monster" ? true : false;
         monsterInfo.SetActive(isMonster);

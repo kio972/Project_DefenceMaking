@@ -35,35 +35,6 @@ public class ManagementUI : MonoBehaviour
             SetItem();
     }
 
-    private void SetTrap(GameObject instancedObject)
-    {
-        Trap trap = instancedObject.GetComponent<Trap>();
-        if (trap != null)
-        {
-            Vector3 scale = trap.transform.lossyScale;
-            trap.transform.SetParent(curNode.curTile.transform, true);
-            trap.transform.localPosition = Vector3.zero;
-            trap.transform.localScale = scale;
-            trap.Init(curNode.curTile);
-        }
-
-        AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-    }
-
-    private void SetMonster(GameObject instancedObject)
-    {
-        Monster monster = instancedObject.GetComponent<Monster>();
-        if (monster != null)
-        {
-            monster.SetStartPoint(curNode);
-            monster.transform.position = curNode.transform.position;
-            monster.Init();
-            curNode.curTile.monster = monster;
-        }
-
-        AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
-    }
-
     public void DeployEnd()
     {
         curObject.SetActive(false);
@@ -96,11 +67,16 @@ public class ManagementUI : MonoBehaviour
 
             GameManager.Instance.gold -= curPrice;
 
-            GameObject newObject = Instantiate(curObject);
             if (curType == CardType.Monster)
-                SetMonster(newObject);
+            {
+                BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
+                AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
+            }
             else if (curType == CardType.Trap)
-                SetTrap(newObject);
+            {
+                BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
+                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+            }
 
             SetGuideState(curType);
         }
@@ -116,7 +92,7 @@ public class ManagementUI : MonoBehaviour
             DeployEnd();
     }
 
-    public void SetGuideObject(CardType unitType, string prefabName)
+    public void SetGuideObject(CardType unitType, string targetName, string prefabName)
     {
         GameObject guideObject = null;
         targetPrefab = UtilHelper.GetCardPrefab(unitType, prefabName);
@@ -130,6 +106,7 @@ public class ManagementUI : MonoBehaviour
         else
         {
             guideObject = Instantiate(targetPrefab);
+            guideObject.name = targetName;
             guideObjects.Add(prefabName, guideObject);
         }
 
@@ -170,9 +147,9 @@ public class ManagementUI : MonoBehaviour
         }
     }
 
-    public void DeployReady(CardType unitType, string prefabName, int cost)
+    public void DeployReady(CardType unitType, string targetName, string prefabName, int cost)
     {
-        SetGuideObject(unitType, prefabName);
+        SetGuideObject(unitType, targetName, prefabName);
         curPrice = cost;
         GameManager.Instance.SetPause(false);
 

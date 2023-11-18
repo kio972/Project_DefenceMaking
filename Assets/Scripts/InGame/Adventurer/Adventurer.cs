@@ -26,6 +26,8 @@ public class Adventurer : Battler
     {
         base.Init();
 
+        ResetNode();
+
         transform.position = NodeManager.Instance.startPoint.transform.position;
         curTile = NodeManager.Instance.startPoint;
 
@@ -41,6 +43,8 @@ public class Adventurer : Battler
             reward = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["reward"]);
         }
 
+        GameManager.Instance.adventurersList.Add(this);
+        
         InitState(this, FSMPatrol.Instance);
     }
 

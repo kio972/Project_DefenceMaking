@@ -92,12 +92,15 @@ public class Monster : Battler
 
     public void SetStartPoint(TileNode tile)
     {
+        transform.position = tile.transform.position;
         curTile = tile;
     }
 
     public override void Init()
     {
         base.Init();
+
+        ResetNode();
 
         monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
         if(monsterIndex != -1)

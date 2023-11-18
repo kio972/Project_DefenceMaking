@@ -32,10 +32,13 @@ public class ManageSlot : MonoBehaviour
 
     private ManagementUI managementUI;
 
-    public string prefabName;
+    private string prefabName;
 
     [SerializeField]
     private Image icon;
+
+    public Sprite illur { get => icon.sprite; }
+
     [SerializeField]
     private LanguageText nameText;
     [SerializeField]
@@ -54,7 +57,7 @@ public class ManageSlot : MonoBehaviour
         if(managementUI == null)
             managementUI = GetComponentInParent<ManagementUI>();
 
-        managementUI.DeployReady(cardType, prefabName, cost);
+        managementUI.DeployReady(cardType, _name, prefabName, cost);
     }
 
     public void Init(Dictionary<string,object> data)

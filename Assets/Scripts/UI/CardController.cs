@@ -113,13 +113,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             transform.SetSiblingIndex(originSiblingIndex);
     }
 
-
-    //1. 그래픽스 레이캐스팅 사용
-    //2. 마우스오버 : 카드 확대(스케일 조정)
-    //3. 드래그시작 : 카드 선택
-    //4. 드래그중 : 마우스 위치까지 선으로 표시
-    //5. 드래그종료 : 타일놓기/취소
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (GameManager.Instance.cardLock)
