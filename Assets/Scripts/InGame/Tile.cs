@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public enum TileType
 {
@@ -34,13 +35,17 @@ public class Tile : MonoBehaviour
     {
         get
         {
-            if (!removable)
-                return false;
+            bool remove = removable;
+
+            if (remove)
+                remove = !GameManager.Instance.IsAdventurererOnTile(curNode);
+            if (remove)
+                remove = !GameManager.Instance.IsMonsterOnTile(curNode);
 
             if (UtilHelper.GetConnectedCount(this) >= 2)
-                return false;
+                remove = false;
 
-            return true;
+            return remove;
         }
     }
 
@@ -121,8 +126,11 @@ public class Tile : MonoBehaviour
         if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_Game_Continuable())
             GameManager.Instance.speedController.SetSpeedZero();
 
-        if (isActive && this.tileType == TileType.Room)
-            NodeManager.Instance.RoomCheck(this);
+        if (isActive)
+        {
+            if(tileType == TileType.Room || tileType == TileType.Door)
+                NodeManager.Instance.RoomCheck(this);
+        }
     }
 
     private void SetTileVisible(bool value)

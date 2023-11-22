@@ -255,7 +255,6 @@ public class NodeManager : IngameSingleton<NodeManager>
                 if (!targetNode.curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(dir)))
                     return null;
 
-
                 queue.Enqueue(targetNode.curTile);
                 visited.Add(targetNode.curTile);
             }
@@ -268,7 +267,7 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         //BFS 수행, 방 완성조건에 부합 시 해당방들에 대해 방완성 = true
         List<Tile> completeRoom = BFSRoom(tile);
-        if (completeRoom == null) return;
+        if (completeRoom == null || completeRoom.Count <= 1) return;
 
         // 해당 방들 완성으로 변경코드 추가 예정
         roomTiles.Add(completeRoom);
