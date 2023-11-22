@@ -10,6 +10,7 @@ public class IllustrateUI : MonoBehaviour
 {
     private SkeletonGraphic illust_spine;
     private Image illust_image;
+    private SkeletonGraphicRenderTexture illust_renderTexture;
 
     private Coroutine colorCoroutine;
 
@@ -24,10 +25,29 @@ public class IllustrateUI : MonoBehaviour
             illust_spine.AnimationState.AddAnimation(trackNum, nextAnim, true, 0f);
     }
 
-    private IEnumerator SetColor(SkeletonGraphic graphic, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
+    private IEnumerator SetAlphaColor(SkeletonGraphic graphic, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
+    {
+        SkeletonGraphicRenderTexture image = graphic.GetComponent<SkeletonGraphicRenderTexture>();
+        image.enabled = true;
+
+        Color originColor = image.color;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < lerpTime)
+        {
+            image.color = Color.Lerp(originColor, targetColor, elapsedTime / lerpTime);
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        image.color = targetColor;
+        image.enabled = false;
+        callback?.Invoke();
+    }
+
+    private IEnumerator SetColor(SkeletonGraphic image, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)
     {
         yield return null;
-        SkeletonGraphicRenderTexture image = graphic.GetComponent< SkeletonGraphicRenderTexture>();
         Color originColor = image.color;
 
         float elapsedTime = 0f;
@@ -67,9 +87,10 @@ public class IllustrateUI : MonoBehaviour
 
         if (illust_spine != null)
         {
+            illust_renderTexture.color = new Color(1, 1, 1, 1f);
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_spine, Color.clear, 0.2f, () => { illust_spine.gameObject.SetActive(false); }));
+            colorCoroutine = StartCoroutine(SetAlphaColor(illust_spine, new Color(1, 1, 1, 0), 0.2f, () => { illust_spine.gameObject.SetActive(false); }));
         }
         else if (illust_image != null)
         {
@@ -86,12 +107,11 @@ public class IllustrateUI : MonoBehaviour
 
         if (illust_spine != null)
         {
-            SkeletonGraphicRenderTexture image = illust_spine.GetComponent<SkeletonGraphicRenderTexture>();
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0f);
+            illust_renderTexture.color = new Color(1, 1, 1, 0f);
             illust_spine.gameObject.SetActive(true);
             if (colorCoroutine != null)
                 StopCoroutine(colorCoroutine);
-            colorCoroutine = StartCoroutine(SetColor(illust_spine, new Color(image.color.r, image.color.g, image.color.b, 1f)));
+            colorCoroutine = StartCoroutine(SetAlphaColor(illust_spine, new Color(1, 1, 1, 1)));
         }
         else if (illust_image != null)
         {
@@ -134,8 +154,7 @@ public class IllustrateUI : MonoBehaviour
 
         if (illust_spine != null)
         {
-            SkeletonGraphicRenderTexture image = illust_spine.GetComponent<SkeletonGraphicRenderTexture>();
-            image.color = new Color(color.r, color.g, color.b, image.color.a);
+            illust_spine.color = new Color(color.r, color.g, color.b, illust_spine.color.a);
         }
         else if (illust_image != null)
             illust_image.color = new Color(color.r, color.g, color.b, illust_image.color.a);
@@ -165,6 +184,9 @@ public class IllustrateUI : MonoBehaviour
     {
         illust_spine = GetComponent<SkeletonGraphic>();
         illust_image = GetComponent<Image>();
+        illust_renderTexture = GetComponent<SkeletonGraphicRenderTexture>();
+        if(illust_renderTexture != null)
+            illust_renderTexture.enabled = false;
         initState = true;
     }
 }

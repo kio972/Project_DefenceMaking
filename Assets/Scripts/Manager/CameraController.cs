@@ -116,7 +116,7 @@ public class CameraController : MonoBehaviour
         guideObject.position = targetPos;
     }
 
-    private void KeyBoardMove()
+    private bool KeyBoardMove()
     {
         float mouseX = 0;
         float mouseY = 0;
@@ -132,10 +132,17 @@ public class CameraController : MonoBehaviour
             mouseY = 1f;
 
         if (mouseX == 0 && mouseY == 0)
-            return;
+            return false;
         Vector3 targetPos = guideObject.position + (new Vector3(mouseX, 0, mouseY) * 0.1f * mouseMult * SettingManager.Instance.mouseSensitivity);
         targetPos = ModifyMaxPosition(targetPos);
         guideObject.position = targetPos;
+
+        return true;
+    }
+
+    private void ScreenMove()
+    {
+        //
     }
 
     public void CamMoveToPos(Vector3 position)
