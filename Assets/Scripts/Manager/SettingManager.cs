@@ -86,7 +86,8 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_BasicControl = new BindKey(ControlKey.key_BasicControl, KeyCode.Mouse0);
     public BindKey key_CancelControl = new BindKey(ControlKey.key_BasicControl, KeyCode.Mouse1);
 
-    public BindKey key_RotateTile = new BindKey(ControlKey.key_RotateTile, KeyCode.R);
+    public BindKey key_RotateLeft = new BindKey(ControlKey.key_RotateTile, KeyCode.Q);
+    public BindKey key_RotateRight = new BindKey(ControlKey.key_RotateTile, KeyCode.E);
 
     public List<BindKey> bindKeys;
 

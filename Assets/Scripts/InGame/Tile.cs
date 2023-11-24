@@ -368,8 +368,10 @@ public class Tile : MonoBehaviour
         if(waitToMove)
         {
             TileNode curTile = TileMoveCheck();
-            if (Input.GetKeyDown(SettingManager.Instance.key_RotateTile._CurKey))
+            if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
                 twin.RotateTile();
+            else if(Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+                twin.RotateTile(true);
             if (!Movable || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
             {
                 EndMoveing();

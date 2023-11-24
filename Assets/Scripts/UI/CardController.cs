@@ -307,11 +307,20 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     private void UpdateObjectState()
     {
         UpdateObjectPosition();
-        if(cardType == CardType.MapTile && Input.GetKeyDown(KeyCode.R))
+        if(cardType == CardType.MapTile)
         {
-            Tile tile = instancedObject.GetComponent<Tile>();
-            tile.RotateTile();
-            NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
+            if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
+            {
+                Tile tile = instancedObject.GetComponent<Tile>();
+                tile.RotateTile();
+                NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
+            }
+            else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+            {
+                Tile tile = instancedObject.GetComponent<Tile>();
+                tile.RotateTile(true);
+                NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
+            }
         }
 
         DrawLine();
