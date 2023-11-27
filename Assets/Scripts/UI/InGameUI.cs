@@ -49,7 +49,7 @@ public class InGameUI : MonoBehaviour
             StopCoroutine(right2Coroutine);
 
         Vector2 targetPos = value ? originPos_uiRight : hidePos_uiRight;
-        right2Coroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight2.transform, targetPos, lerpTime, callBack));
+        right2Coroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight2, targetPos, lerpTime, callBack));
     }
 
     public void SetTopUI(bool value, float lerpTime = 0.5f)
@@ -58,7 +58,7 @@ public class InGameUI : MonoBehaviour
             StopCoroutine(topCoroutine);
 
         Vector2 targetPos = value ? originPos_uiTop : hidePos_uiTop;
-        topCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiTop.transform, targetPos, lerpTime));
+        topCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiTop, targetPos, lerpTime));
     }
 
     public void SetRightUI(bool value, float lerpTime = 0.5f, System.Action callBack = null)
@@ -67,7 +67,7 @@ public class InGameUI : MonoBehaviour
             StopCoroutine(rightCoroutine);
 
         Vector2 targetPos = value ? originPos_uiRight : hidePos_uiRight;
-        rightCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight.transform, targetPos, lerpTime, callBack));
+        rightCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiRight, targetPos, lerpTime, callBack));
     }
 
     public void SetDownUI(bool value, float lerpTime = 0.5f)
@@ -76,7 +76,7 @@ public class InGameUI : MonoBehaviour
             StopCoroutine(downCoroutine);
 
         Vector2 targetPos = value ? originPos_uiDown : hidePos_uiDown;
-        downCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiDown.transform, targetPos, lerpTime));
+        downCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiDown, targetPos, lerpTime));
     }
 
     public void Init()
@@ -88,19 +88,19 @@ public class InGameUI : MonoBehaviour
     
     private void Awake()
     {
-        originPos_uiTop = uiTop.position;
+        originPos_uiTop = uiTop.anchoredPosition;
         hidePos_uiTop = originPos_uiTop + new Vector2(0, uiTop.sizeDelta.y + 20);
 
-        originPos_uiRight = uiRight.position;
+        originPos_uiRight = uiRight.anchoredPosition;
         hidePos_uiRight = originPos_uiRight + new Vector2(uiRight.sizeDelta.x + 50, 0);
 
-        originPos_uiDown = uiDown.position;
+        originPos_uiDown = uiDown.anchoredPosition;
         hidePos_uiDown = originPos_uiDown + new Vector2(0, -uiRight.sizeDelta.y - 20);
 
-        uiTop.position = hidePos_uiTop;
-        uiRight.position = hidePos_uiRight;
-        uiDown.position = hidePos_uiDown;
+        uiTop.anchoredPosition = hidePos_uiTop;
+        uiRight.anchoredPosition = hidePos_uiRight;
+        uiDown.anchoredPosition = hidePos_uiDown;
 
-        uiRight2.position = hidePos_uiRight;
+        uiRight2.anchoredPosition = hidePos_uiRight;
     }
 }

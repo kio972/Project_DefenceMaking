@@ -144,7 +144,14 @@ public class CardDeckController : MonoBehaviour
         if(value)
         {
             List<Vector2> lines = GetLine(cardPos, Input.mousePosition);
+            print(cardPos.ToString() + " " + Input.mousePosition.ToString());
             lineRenderer.Points = lines.ToArray();
+
+            float modifyX = SettingManager.Instance.GetScreenSize()[0];
+            float modifyY = SettingManager.Instance.GetScreenSize()[1];
+            modifyX = 1920f / modifyX;
+            modifyY = 1080f / modifyY;
+            lineRenderer.transform.localScale = new Vector3(modifyX, modifyY, 1);
         }
     }
 

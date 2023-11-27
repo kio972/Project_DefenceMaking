@@ -20,5 +20,6 @@ public class ResolutionBtn : SpinnerButton
     {
         base.Init();
         index = SettingManager.Instance.ScreenSizeIndex;
+        OnValueChange();
     }
 }
