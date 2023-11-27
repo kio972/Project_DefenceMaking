@@ -191,7 +191,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             if (node == null)
                 continue;
 
-            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection);
+            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection, targetTile._TileType != TileType.End);
             node.SetAvail(isConnected);
         }
     }

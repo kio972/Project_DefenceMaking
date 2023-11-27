@@ -76,45 +76,55 @@ public class TileNode : MonoBehaviour
 
 
 
-    public bool IsConnected(List<Direction> targetNode_PathDirection, List<Direction> targetNode_RoomDirection)
+    public bool IsConnected(List<Direction> targetNode_PathDirection, List<Direction> targetNode_RoomDirection, bool isRestricted = true)
     {
         //현재 노드와 targetNode를 비교하여 연결되어있는지 확인하는 함수
-        bool isConnected = false;
-        foreach (Direction direction in targetNode_PathDirection)
+        int connectedCount = 0;
+        foreach(Direction direction in NodeManager.Instance.GetAllDirection())
         {
             if (neighborNodeDic.ContainsKey(direction))
             {
-                TileNode targetNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance.activeNodes.Contains(targetNode) || targetNode.curTile == null)
+                TileNode neighborNode = neighborNodeDic[direction];
+                if (!NodeManager.Instance.activeNodes.Contains(neighborNode) || neighborNode.curTile == null)
                     continue;
 
-                foreach (Direction targetDirection in targetNode.curTile.PathDirection)
+                if (neighborNode.curTile.IsDormant && !isRestricted)
+                    return false;
+
+                Direction reversed = UtilHelper.ReverseDirection(direction);
+                if (neighborNode.curTile.PathDirection.Contains(reversed))
                 {
-                    if (direction == UtilHelper.ReverseDirection(targetDirection))
-                        return true;
+                    if (targetNode_PathDirection.Contains(direction))
+                    {
+                        if (isRestricted)
+                            connectedCount++;
+                        else
+                            return true;
+                    }
+                    else
+                        return false;
                 }
+                else if (neighborNode.curTile.RoomDirection.Contains(reversed))
+                {
+                    if (targetNode_RoomDirection.Contains(direction))
+                    {
+                        if (isRestricted)
+                            connectedCount++;
+                        else
+                            return true;
+                    }
+                    else
+                        return false;
+                }
+                else if(targetNode_PathDirection.Contains(direction) || targetNode_RoomDirection.Contains(direction))
+                    return false;
             }
         }
 
-        foreach (Direction direction in targetNode_RoomDirection)
-        {
-            if (neighborNodeDic.ContainsKey(direction))
-            {
-                TileNode targetNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance.activeNodes.Contains(targetNode))
-                    continue;
-                if (targetNode.curTile == null)
-                    continue;
-
-                foreach (Direction targetDirection in targetNode.curTile.RoomDirection)
-                {
-                    if (direction == UtilHelper.ReverseDirection(targetDirection))
-                        return true;
-                }
-            }
-        }
-
-        return isConnected;
+        if (connectedCount == 0)
+            return false;
+        else
+            return true;
     }
 
     public void PushNeighborNode(Direction direction, TileNode node)
