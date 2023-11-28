@@ -23,6 +23,10 @@ public class Tile : MonoBehaviour
     [SerializeField]
     private TileType tileType;
 
+    [SerializeField]
+    private int roomMana;
+    public int RoomMana { get => roomMana; }
+
     public TileType _TileType { get => tileType; }
 
     public List<Direction> PathDirection { get => pathDirection; }

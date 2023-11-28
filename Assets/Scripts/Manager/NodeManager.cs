@@ -23,7 +23,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public List<TileNode> allNodes = new List<TileNode>();
 
-    public List<List<Tile>> roomTiles = new List<List<Tile>>();
+    public List<CompleteRoom> roomTiles = new List<CompleteRoom>();
 
     public List<Tile> dormantTile = new List<Tile>();
 
@@ -270,7 +270,9 @@ public class NodeManager : IngameSingleton<NodeManager>
         if (completeRoom == null || completeRoom.Count <= 1) return;
 
         // 해당 방들 완성으로 변경코드 추가 예정
-        roomTiles.Add(completeRoom);
+        CompleteRoom newRoom = new CompleteRoom(completeRoom);
+        roomTiles.Add(newRoom);
+        print(newRoom.totalMana);
     }
 
     public void SetTile(TileNode curNode, string prefabPath)
