@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoryManager : MonoBehaviour
 {
@@ -68,6 +69,9 @@ public class StoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject nextArrow;
+
+    [SerializeField]
+    private Button skipBtn;
 
     public void SkipScript()
     {
@@ -201,7 +205,7 @@ public class StoryManager : MonoBehaviour
             fadeDown.gameObject.SetActive(true);
             blocker.gameObject.SetActive(true);
             GameManager.Instance.SetPause(true);
-
+            skipBtn.gameObject.SetActive(false);
             float elapsed = 0;
             while (elapsed < lerpTime)
             {
@@ -212,7 +216,7 @@ public class StoryManager : MonoBehaviour
             }
             fadeUp.anchoredPosition = closedPos1;
             fadeDown.anchoredPosition = closedPos2;
-
+            skipBtn.gameObject.SetActive(true);
             List<Dictionary<string, object>> scripts = scriptQueue.Peek();
             foreach(Dictionary<string, object> script in scripts)
             {
@@ -313,6 +317,11 @@ public class StoryManager : MonoBehaviour
     }
 
     #region TriggerZone
+
+    private void DeActiveSkip()
+    {
+        skipBtn.gameObject.SetActive(false);
+    }
 
     private void SetBuff()
     {
