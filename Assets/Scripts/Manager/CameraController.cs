@@ -140,9 +140,34 @@ public class CameraController : MonoBehaviour
         return true;
     }
 
+    float speed = 0.1f;
+    float maxSpeed = 1f;
+
     private void ScreenMove()
     {
-        //
+        Vector3 targetPos = guideObject.position;
+        int isizeX = Screen.width;
+        int isizeY = Screen.height;
+        float mouseAccel = 1f;
+        if (Input.mousePosition.x < 5)
+            targetPos.x -= 0.1f * speed;
+        else if (Input.mousePosition.x > isizeX - 5)
+            targetPos.x += 0.1f * speed;
+
+        if (Input.mousePosition.y < 5)
+            targetPos.z -= 0.1f * speed;
+        else if (Input.mousePosition.y > isizeY - 5)
+            targetPos.z += 0.1f * speed;
+
+        if (guideObject.position != targetPos)
+        {
+            speed += Time.deltaTime * mouseAccel;
+            if (speed > maxSpeed)
+                speed = maxSpeed;
+            guideObject.position = ModifyMaxPosition(targetPos);
+        }
+        else
+            speed = 0.1f;
     }
 
     public void CamMoveToPos(Vector3 position)
@@ -155,7 +180,10 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse2))
             WeelMove();
         else
+        {
             KeyBoardMove();
+            ScreenMove();
+        }
     }
 
     private void Update()
