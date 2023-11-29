@@ -23,6 +23,8 @@ public class Tile : MonoBehaviour
     [SerializeField]
     private TileType tileType;
 
+    private Animator tileAnimator;
+
     [SerializeField]
     private int roomMana;
     public int RoomMana { get => roomMana; }
@@ -341,7 +343,8 @@ public class Tile : MonoBehaviour
     {
         NodeManager.Instance.SetActiveNode(curNode, false);
         InputManager.Instance.ResetTileClick();
-        Destroy(this.gameObject);
+        tileAnimator.SetTrigger("Destroy");
+        Destroy(this.gameObject, 1.0f);
     }
 
     public void CallTileControlUI()
@@ -351,8 +354,10 @@ public class Tile : MonoBehaviour
         tileControlUI?.SetButton(movable, removable);
     }
 
-    public void Init(TileNode targetNode, bool dormant = false, bool removable = true)
+    public void Init(TileNode targetNode, bool dormant = false, bool removable = true, bool playAnim = true)
     {
+        if(tileAnimator == null)
+            tileAnimator = GetComponentInChildren<Animator>();
         NodeManager.Instance.SetActiveNode(targetNode, true);
         MoveTile(targetNode);
         isDormant = dormant;
@@ -360,6 +365,8 @@ public class Tile : MonoBehaviour
         this.removable = removable;
         if(isDormant)
             NodeManager.Instance.dormantTile.Add(this);
+        if(playAnim)
+            tileAnimator?.SetTrigger("Set");
     }
 
     private void Update()

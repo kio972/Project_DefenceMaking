@@ -69,7 +69,7 @@ public class MapBuilder : MonoBehaviour
         GameObject endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
 
         Tile startTile = Instantiate(startPointPrefab)?.GetComponent<Tile>();
-        startTile.MoveTile(NodeManager.Instance.startPoint);
+        startTile.Init(NodeManager.Instance.startPoint, false, false, false);
 
         NodeManager.Instance.startPoint = startTile.curNode;
         NodeManager.Instance.activeNodes = new List<TileNode>();
@@ -84,21 +84,21 @@ public class MapBuilder : MonoBehaviour
         for (int i = 0; i < startPathSize; i++)
         {
             Tile pathTile = Instantiate(pathPrefab)?.GetComponent<Tile>();
-            pathTile.Init(nextNode, false, false);
+            pathTile.Init(nextNode, false, false, false);
 
             nextNode = nextNode.neighborNodeDic[Direction.Right];
             NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
         }
 
         Tile crossTile = Instantiate(pathPrefab2)?.GetComponent<Tile>();
-        crossTile.Init(nextNode, false, false);
+        crossTile.Init(nextNode, false, false, false);
         crossTile.RotateTile();
 
         nextNode = nextNode.neighborNodeDic[Direction.RightUp];
         NodeManager.Instance.ExpandEmptyNode(nextNode, emptyNodeSize);
 
         Tile endTile = Instantiate(endPointPrefab)?.GetComponent<Tile>();
-        endTile.Init(nextNode, false, false);
+        endTile.Init(nextNode, false, false, false);
         endTile.RotateTile(true);
         NodeManager.Instance.endPoint = endTile.curNode;
         endTile.movable = true;
