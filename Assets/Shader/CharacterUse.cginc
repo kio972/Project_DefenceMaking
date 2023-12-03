@@ -25,6 +25,7 @@ struct VertexData {
     float3 normal : NORMAL;
     float4 tangent : TANGENT;
     float2 uv : TEXCOORD0;
+	float4 color : COLOR;
 };
 
 struct v2f {
@@ -42,10 +43,7 @@ struct v2f {
 	float3 worldPos : TEXCOORD4;
 
 	SHADOW_COORDS(5)
-
-	#if defined(VERTEXLIGHT_ON)
-		float3 vertexLightColor : TEXCOORD6;
-	#endif
+	float4 vertexLightColor : TEXCOORD6;
 };
 
 float GetMetallic (v2f iP) {
@@ -94,7 +92,7 @@ float3 GetTangentSpaceNormal (v2f iP) {
 float GetAlpha (v2f iP) {
 	float alpha = _Tint.a;
 	#if !defined(_SMOOTHNESS_ALBEDO)
-		alpha *= tex2D(_MainTex, iP.uv.xy).a;
+		alpha *= tex2D(_MainTex, iP.uv.xy).a * iP.vertexLightColor.a;
 	#endif
 	return alpha;
 }
@@ -125,7 +123,7 @@ v2f VertexProgram (VertexData v){
     iP.pos = UnityObjectToClipPos(v.vertex);
 	iP.normal = UnityObjectToWorldNormal(v.normal);
 	iP.worldPos = mul(unity_ObjectToWorld, v.vertex);
-
+	iP.vertexLightColor = v.color;
     iP.uv.xy = TRANSFORM_TEX(v.uv, _MainTex);
 
     return iP;
@@ -147,9 +145,7 @@ float4 FragmentProgram(v2f iP) : SV_TARGET{
 		specularColor, 
 		oneMinusReflectivity
 	);
-	albedo.r = saturate(albedo.r + _RedCorrection);
-	albedo.g = saturate(albedo.g + _GreenCorrection);
-	albedo.b = saturate(albedo.b + _BlueCorrection);
+
 
     float4 color = UNITY_BRDF_PBS(
 		albedo, 
@@ -161,6 +157,7 @@ float4 FragmentProgram(v2f iP) : SV_TARGET{
 		CreateLight(iP), 
 		CreateIndirectLight(iP, viewDir)
 	);
+
 	color.rgb += GetEmission(iP);
 	color.a = GetAlpha(iP);
 
