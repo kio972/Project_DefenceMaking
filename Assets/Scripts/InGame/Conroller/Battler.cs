@@ -19,6 +19,8 @@ public enum UnitType
 
 public class Battler : FSM<Battler>
 {
+    protected string _name;
+
     protected int minDamage;
     protected int maxDamage;
     public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
@@ -185,7 +187,9 @@ public class Battler : FSM<Battler>
 
     public virtual void GetDamage(int damage, Battler attacker)
     {
-        if (isDead || attacker.isDead)
+        if (isDead)
+            return;
+        if (attacker != null && attacker.isDead)
             return;
 
         UpdateChaseTarget(attacker);
@@ -332,8 +336,26 @@ public class Battler : FSM<Battler>
             NodeAction(nextTile);
     }
 
+    protected float collapseCool = 0;
+
+    private void ReturnToBase()
+    {
+        Dead();
+        GameManager.Instance.waveController.AddDelayedTarget(_name);
+    }
+
     public virtual void Patrol()
     {
+        if (PathFinder.Instance.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        {
+            collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
+            if (collapseCool >= 5f)
+            {
+                collapseCool = 0f;
+                ReturnToBase();
+            }
+        }
+
         if (directPass)
             DirectPass(NodeManager.Instance.endPoint);
         else
@@ -437,6 +459,7 @@ public class Battler : FSM<Battler>
 
     protected virtual void InitStats(int index)
     {
+        _name = DataManager.Instance.Battler_Table[index]["name"].ToString();
         maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["hp"]);
         curHp = maxHp;
 

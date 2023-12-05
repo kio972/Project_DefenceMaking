@@ -24,7 +24,14 @@ public class WaveController : MonoBehaviour
     [SerializeField]
     private WaveGauge waveFill;
 
+    private List<string> delayedTargets = new List<string>();
+
     public float WaveProgress { get { return waveFill.WaveRate; } }
+
+    public void AddDelayedTarget(string adventurerName)
+    {
+        delayedTargets.Add(adventurerName);
+    }
 
     private float CalSpawnWaitTime(int allAmount, float restrictTime = 720f)
     {
@@ -101,6 +108,15 @@ public class WaveController : MonoBehaviour
     public void SpawnWave(int curWave)
     {
         List<WaveData> waveData = SetWaveData(curWave);
+        if(delayedTargets.Count > 0)
+        {
+            foreach(string targetName in delayedTargets)
+                waveData.Add(new WaveData(targetName, 1));
+            delayedTargets.Clear();
+        }
+
+        //딜레이 타겟이 있을경우 마지막웨이브에도 추가 웨이브가 소환될 수 있도록 코드 추가 필요
+
         if (curWave < 0 || curWave >= DataManager.Instance.WaveLevelTable.Count)
             return;
 

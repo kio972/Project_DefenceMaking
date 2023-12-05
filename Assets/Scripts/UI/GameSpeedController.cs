@@ -73,23 +73,23 @@ public class GameSpeedController : MonoBehaviour
         if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
             return false;
 
-        foreach(Battler target in GameManager.Instance.monsterList)
-        {
-            if (target.CurTile == NodeManager.Instance.endPoint)
-                continue;
+        //foreach(Battler target in GameManager.Instance.monsterList)
+        //{
+        //    if (target.CurTile == NodeManager.Instance.endPoint)
+        //        continue;
 
-            if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
-                return false;
-        }
+        //    if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
+        //        return false;
+        //}
 
-        foreach(Battler target in GameManager.Instance.adventurersList)
-        {
-            if (target.CurTile == NodeManager.Instance.endPoint)
-                continue;
+        //foreach(Battler target in GameManager.Instance.adventurersList)
+        //{
+        //    if (target.CurTile == NodeManager.Instance.endPoint)
+        //        continue;
 
-            if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
-                return false;
-        }
+        //    if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
+        //        return false;
+        //}
 
         return true;
     }

@@ -71,6 +71,16 @@ public class Monster : Battler
 
     public override void Patrol()
     {
+        if(PathFinder.Instance.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        {
+            collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
+            if(collapseCool >= 1f)
+            {
+                collapseCool = 0f;
+                GetDamage(1, null);
+            }
+        }
+
         if (directPass)
             DirectPass(lastCrossRoad);
         else

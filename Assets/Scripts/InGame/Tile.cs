@@ -48,8 +48,8 @@ public class Tile : MonoBehaviour
             if (remove)
                 remove = !GameManager.Instance.IsMonsterOnTile(curNode);
 
-            if (UtilHelper.GetConnectedCount(this) >= 2)
-                remove = false;
+            //if (UtilHelper.GetConnectedCount(this) >= 2)
+            //    remove = false;
 
             return remove;
         }
