@@ -116,7 +116,6 @@ public class GameSpeedController : MonoBehaviour
         prevState = (int)GameManager.Instance.timeScale;
 
         GameManager.Instance.timeScale = 0;
-        GameManager.Instance.SetCharAnimPause();
         SetButtonState();
     }
 

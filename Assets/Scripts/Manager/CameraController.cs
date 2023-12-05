@@ -175,8 +175,18 @@ public class CameraController : MonoBehaviour
         guideObject.position = position;
     }
 
+    private bool applicationFocusState = true;
+
+    private void OnApplicationFocus(bool focus)
+    {
+        applicationFocusState = focus;
+    }
+
     private void CamMove()
     {
+        if (!applicationFocusState)
+            return;
+
         if (Input.GetKey(KeyCode.Mouse2))
             WeelMove();
         else

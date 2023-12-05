@@ -77,21 +77,6 @@ public class GameManager : IngameSingleton<GameManager>
         StoryManager.Instance.EnqueueScript("Dan100");
     }
 
-    public void SetCharAnimPause()
-    {
-        foreach(Battler battler in adventurersList)
-        {
-            if (battler._Animator.GetBool("Move"))
-                battler._Animator.SetBool("Move", false);
-        }
-
-        foreach (Battler battler in monsterList)
-        {
-            if (battler._Animator.GetBool("Move"))
-                battler._Animator.SetBool("Move", false);
-        }
-    }
-
     public bool IsMonsterOnTile(TileNode tile)
     {
         foreach (Monster monster in monsterList)
