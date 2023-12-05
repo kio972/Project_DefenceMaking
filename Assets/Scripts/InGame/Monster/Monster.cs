@@ -9,6 +9,18 @@ public class Monster : Battler
 
     [SerializeField]
     private bool isHide = false;
+    [SerializeField]
+    private int holdBackCount = 1;
+
+    public bool CanHoldBack
+    {
+        get
+        {
+            bool isListHaveEmpty = rangedTargets.Count < holdBackCount;
+            return isListHaveEmpty;
+        }
+    }
+
 
     public override void Dead()
     {
@@ -115,6 +127,8 @@ public class Monster : Battler
             maxHp = (int)((float)maxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
             maxHp += PassiveManager.Instance.monsterHp_Weight;
             curHp = maxHp;
+
+            holdBackCount = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["holdbackCount"]);
         }
 
         GameManager.Instance.monsterList.Add(this);

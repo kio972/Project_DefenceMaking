@@ -185,7 +185,7 @@ public class Battler : FSM<Battler>
 
     public virtual void GetDamage(int damage, Battler attacker)
     {
-        if (isDead)
+        if (isDead || attacker.isDead)
             return;
 
         UpdateChaseTarget(attacker);
@@ -623,11 +623,52 @@ public class Battler : FSM<Battler>
         return validTargets;
     }
 
+    private void RemoveOutCaseTargets(List<Battler> targets)
+    {
+        List<Battler> removeList = new List<Battler>();
+        foreach (Battler battler in rangedTargets)
+        {
+            if (battler.isDead || !targets.Contains(battler))
+                removeList.Add(battler);
+        }
+
+        foreach (Battler battler in removeList)
+            rangedTargets.Remove(battler);
+    }
+
+    private void ModifyBattlerList(List<Battler> targets)
+    {
+        RemoveOutCaseTargets(targets);
+
+        foreach (Battler battler in targets)
+        {
+            if (rangedTargets.Contains(battler))
+                continue;
+
+            if(battler.unitType == UnitType.Player && battler.tag != "King")
+            {
+                Monster target = battler.GetComponent<Monster>();
+                if (!target.CanHoldBack && !target.rangedTargets.Contains(this))
+                    continue;
+            }
+
+            if(this.unitType == UnitType.Player && this.tag != "King")
+            {
+                Monster monster = GetComponent<Monster>();
+                if(monster.CanHoldBack)
+                    rangedTargets.Add(battler);
+            }
+            else
+                rangedTargets.Add(battler);
+        }
+    }
+
     public Battler BattleCheck()
     {
         Battler curTarget = null;
         List<Battler> rangedTargets = GetRangedTargets(transform.position, attackRange);
-        foreach(Battler battle in rangedTargets)
+        ModifyBattlerList(rangedTargets);
+        foreach(Battler battle in this.rangedTargets)
         {
             if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
                 curTarget = battle;
