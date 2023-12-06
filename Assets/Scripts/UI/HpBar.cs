@@ -17,7 +17,7 @@ public class HpBar : MonoBehaviour
 
     private bool deadBar = false;
 
-    private void HPBarEnd()
+    public void HPBarEnd()
     {
         gameObject.SetActive(false);
     }
@@ -26,6 +26,7 @@ public class HpBar : MonoBehaviour
     {
         this.battler = battler;
         battlerCurHp = battler.curHp;
+        hp_Bar.fillAmount = 1f;
         deadBar = false;
     }
 

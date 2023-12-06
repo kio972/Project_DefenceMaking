@@ -161,8 +161,11 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (allWaveSpawned && adventurersList.Count == 0)
         {
-            loop++;
             allWaveSpawned = false;
+            if (waveController.HaveDelayedTarget)
+                return;
+            
+            loop++;
             if (DataManager.Instance.BuffTable.ContainsKey(loop))
                 LoopWave();
             else

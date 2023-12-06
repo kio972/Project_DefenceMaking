@@ -34,14 +34,6 @@ public class Monster : Battler
         }
     }
 
-    private void ResetPaths()
-    {
-        crossedNodes = new List<TileNode>();
-        lastCrossRoad = null;
-        prevTile = null;
-        directPass = false;
-    }
-
     protected override void DirectPass(TileNode targetTile)
     {
         if (targetTile == null)

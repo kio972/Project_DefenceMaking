@@ -293,6 +293,14 @@ public class Battler : FSM<Battler>
         TileMoveCheck(nextNode, distance);
     }
 
+    protected void ResetPaths()
+    {
+        crossedNodes = new List<TileNode>();
+        lastCrossRoad = null;
+        prevTile = null;
+        directPass = false;
+    }
+
     protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
@@ -303,7 +311,7 @@ public class Battler : FSM<Battler>
                 nextTile = path[0];
             else
             {
-                GameManager.Instance.speedController.SetSpeedZero();
+                ResetPaths();
                 return;
             }
         }
@@ -340,7 +348,13 @@ public class Battler : FSM<Battler>
 
     private void ReturnToBase()
     {
-        Dead();
+        isDead = true;
+        StopAllCoroutines();
+        hpBar.HPBarEnd();
+        ChangeState(FSMDead.Instance);
+        Invoke("RemoveBody", 2.5f);
+        if (deadSound != null)
+            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
         GameManager.Instance.waveController.AddDelayedTarget(_name);
     }
 

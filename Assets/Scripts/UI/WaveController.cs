@@ -26,6 +26,8 @@ public class WaveController : MonoBehaviour
 
     private List<string> delayedTargets = new List<string>();
 
+    public bool HaveDelayedTarget { get { return delayedTargets.Count != 0; } }
+
     public float WaveProgress { get { return waveFill.WaveRate; } }
 
     public void AddDelayedTarget(string adventurerName)
@@ -107,7 +109,11 @@ public class WaveController : MonoBehaviour
 
     public void SpawnWave(int curWave)
     {
-        List<WaveData> waveData = SetWaveData(curWave);
+        List<WaveData> waveData = new List<WaveData>();
+        if (curWave >= 0 && curWave < DataManager.Instance.WaveLevelTable.Count)
+            waveData = new List<WaveData>(DataManager.Instance.WaveLevelTable[curWave]);
+        else
+            curWave--;
         if(delayedTargets.Count > 0)
         {
             foreach(string targetName in delayedTargets)
@@ -115,15 +121,13 @@ public class WaveController : MonoBehaviour
             delayedTargets.Clear();
         }
 
-        //딜레이 타겟이 있을경우 마지막웨이브에도 추가 웨이브가 소환될 수 있도록 코드 추가 필요
-
-        if (curWave < 0 || curWave >= DataManager.Instance.WaveLevelTable.Count)
+        if (waveData.Count == 0)
             return;
 
         if (curWave + 1 >= DataManager.Instance.WaveLevelTable.Count)
-            StartCoroutine(ISpawnWave(curWave, DataManager.Instance.WaveLevelTable[curWave], () => { GameManager.Instance.AllWaveSpawned = true; }));
+            StartCoroutine(ISpawnWave(curWave, waveData, () => { GameManager.Instance.AllWaveSpawned = true; }));
         else
-            StartCoroutine(ISpawnWave(curWave, DataManager.Instance.WaveLevelTable[curWave]));
+            StartCoroutine(ISpawnWave(curWave, waveData));
     }
 
     public void Init()
