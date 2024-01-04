@@ -31,7 +31,7 @@ public class TileNode : MonoBehaviour
 
     public bool setAvail = false;
     [SerializeField]
-    private PerObjectMaterialProperties guideColor;
+    private RoadEmptyMaterialProperties guideColor;
 
     public void DeActiveGuide()
     {
