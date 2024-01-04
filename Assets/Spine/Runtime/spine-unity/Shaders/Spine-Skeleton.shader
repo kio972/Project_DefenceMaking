@@ -22,8 +22,7 @@ Shader "Spine/Skeleton" {
 
 		Fog { Mode Off }
 		Cull Off
-		Ztest Always
-		//ZWrite Off
+		ZWrite Off
 		Blend One OneMinusSrcAlpha
 		Lighting Off
 
