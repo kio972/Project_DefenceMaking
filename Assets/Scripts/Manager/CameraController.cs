@@ -13,18 +13,16 @@ public class CameraController : MonoBehaviour
     public int Camera_Level { get => cameraZoom_Level; }
 
     [SerializeField]
-    private GameObject cam_Index0;
+    private List<GameObject> virtualCameraGroup;
     [SerializeField]
-    private GameObject cam_Index1;
-    [SerializeField]
-    private GameObject cam_Index2;
-    [SerializeField]
-    private GameObject cam_Index3;
+    private List<float> mouseMultVals;
 
     [SerializeField]
     private Transform guideObject;
 
     private float mouseMult = 1f;
+
+    public bool useScreenMove = true;
 
     public void ResetCamPos(bool isStartPoint = false)
     {
@@ -42,30 +40,11 @@ public class CameraController : MonoBehaviour
 
     private void SetCam()
     {
-        cam_Index0.gameObject.SetActive(false);
-        cam_Index1.gameObject.SetActive(false);
-        cam_Index2.gameObject.SetActive(false);
-        cam_Index3.gameObject.SetActive(false);
+        foreach (GameObject cam in virtualCameraGroup)
+            cam.SetActive(false);
 
-        switch (cameraZoom_Level)
-        {
-            case 0:
-                cam_Index0.gameObject.SetActive(true);
-                mouseMult = 1.2f;
-                break;
-            case 1:
-                cam_Index1.gameObject.SetActive(true);
-                mouseMult = 1f;
-                break;
-            case 2:
-                cam_Index2.gameObject.SetActive(true);
-                mouseMult = 0.8f;
-                break;
-            case 3:
-                cam_Index3.gameObject.SetActive(true);
-                mouseMult = 0.6f;
-                break;
-        }
+        virtualCameraGroup[cameraZoom_Level].SetActive(true);
+        mouseMult = mouseMultVals[cameraZoom_Level];
     }
 
     private bool MouseWheelCheck()
@@ -74,13 +53,13 @@ public class CameraController : MonoBehaviour
         if (scrollDelta > 0f)
         {
             // 휠을 위로 스크롤할 때
-            cameraZoom_Level = Mathf.Clamp(cameraZoom_Level + 1, 0, 3);
+            cameraZoom_Level = Mathf.Clamp(cameraZoom_Level + 1, 0, virtualCameraGroup.Count - 1);
             return true;
         }
         else if (scrollDelta < 0f)
         {
             // 휠을 아래로 스크롤할 때
-            cameraZoom_Level = Mathf.Clamp(cameraZoom_Level - 1, 0, 3);
+            cameraZoom_Level = Mathf.Clamp(cameraZoom_Level - 1, 0, virtualCameraGroup.Count - 1);
             return true;
         }
 
@@ -145,6 +124,9 @@ public class CameraController : MonoBehaviour
 
     private void ScreenMove()
     {
+        if (!useScreenMove)
+            return;
+
         Vector3 targetPos = guideObject.position;
         int isizeX = Screen.width;
         int isizeY = Screen.height;
