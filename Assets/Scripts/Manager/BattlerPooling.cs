@@ -98,7 +98,7 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         return null;
     }
 
-    public void SpawnMonster(string monsterName, TileNode startTile)
+    public Monster SpawnMonster(string monsterName, TileNode startTile)
     {
         int monsterIndex = UtilHelper.Find_Data_Index(monsterName, DataManager.Instance.Battler_Table, "name");
         string prefab = DataManager.Instance.Battler_Table[monsterIndex]["prefab"].ToString();
@@ -116,7 +116,8 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         monster.Init();
         monster.SetStartPoint(startTile);
         monster.gameObject.SetActive(true);
-        startTile.curTile.monster = monster;
+
+        return monster;
     }
 
     private Adventurer GetAdventurerInPool(string adventurerId)

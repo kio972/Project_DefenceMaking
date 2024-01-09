@@ -79,7 +79,7 @@ public class Tile : MonoBehaviour
     public Tile twin = null;
 
     public Trap trap = null;
-    public Monster monster = null;
+    public bool haveMonster = false;
 
     public bool IsBigRoom = false;
 
@@ -291,15 +291,15 @@ public class Tile : MonoBehaviour
 
     private void MonsterOutCheck()
     {
-        if (monster == null)
-            return;
+        //if (monster == null)
+        //    return;
 
-        if ((monster.transform.position - transform.position).magnitude > 0.5f)
-        {
-            monster = null;
-            if (NodeManager.Instance._GuideState == GuideState.Monster)
-                NodeManager.Instance.SetGuideState(GuideState.Monster);
-        }
+        //if ((monster.transform.position - transform.position).magnitude > 0.5f)
+        //{
+        //    monster = null;
+        //    if (NodeManager.Instance._GuideState == GuideState.Monster)
+        //        NodeManager.Instance.SetGuideState(GuideState.Monster);
+        //}
     }
 
     private bool DormantAwake()
@@ -374,7 +374,7 @@ public class Tile : MonoBehaviour
         if (isTwin)
             return;
 
-        MonsterOutCheck();
+        //MonsterOutCheck();
 
         if(waitToMove)
         {
