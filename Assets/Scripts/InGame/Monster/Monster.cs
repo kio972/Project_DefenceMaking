@@ -26,12 +26,12 @@ public class Monster : Battler
     {
         base.Dead();
         GameManager.Instance.monsterList.Remove(this);
-        if (curTile.curTile.monster != null && curTile.curTile.monster == this)
-        {
-            curTile.curTile.monster = null;
-            if (NodeManager.Instance._GuideState == GuideState.Monster)
-                NodeManager.Instance.SetGuideState(GuideState.Monster);
-        }
+        //if (curTile.curTile.monster != null && curTile.curTile.monster == this)
+        //{
+        //    curTile.curTile.monster = null;
+        //    if (NodeManager.Instance._GuideState == GuideState.Monster)
+        //        NodeManager.Instance.SetGuideState(GuideState.Monster);
+        //}
     }
 
     protected override void DirectPass(TileNode targetTile)

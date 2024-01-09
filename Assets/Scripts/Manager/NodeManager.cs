@@ -127,7 +127,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (node.curTile._TileType == TileType.Room || node.curTile._TileType == TileType.Room_Single)
             {
-                if (node.curTile.monster == null)
+                if (!node.curTile.haveMonster)
                     return true;
             }
         }

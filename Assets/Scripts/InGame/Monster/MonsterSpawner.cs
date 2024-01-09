@@ -21,6 +21,10 @@ public class MonsterSpawner : MonoBehaviour
 
     private string targetName;
 
+    private int maxMonster = 3;
+
+    private List<Monster> monsters = new List<Monster>();
+
     public void Dead()
     {
         isUpdate = false;
@@ -31,7 +35,7 @@ public class MonsterSpawner : MonoBehaviour
         this.tile = curNode;
         transform.position = curNode.transform.position;
         this.targetName = targetName;
-        
+        curNode.curTile.haveMonster = true;
 
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(targetName, DataManager.Instance.Battler_Table, "name")];
         Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString());
@@ -49,14 +53,26 @@ public class MonsterSpawner : MonoBehaviour
         if (!isUpdate)
             return;
 
-        curCoolTime += Time.deltaTime * GameManager.Instance.timeScale;
-        fillImg.fillAmount = 1 - (curCoolTime / spawnCoolTime);
+        List<Monster> removeTarget = new List<Monster>();
+        foreach(Monster monster in monsters)
+        {
+            if (monster.isDead)
+                removeTarget.Add(monster);
+        }
+        foreach (Monster monster in removeTarget)
+            monsters.Remove(monster);
 
         if(curCoolTime > spawnCoolTime)
         {
-            BattlerPooling.Instance.SpawnMonster(targetName, tile);
-            curCoolTime = 0f;
             fillImg.fillAmount = 1f;
+            if (monsters.Count >= maxMonster)
+                return;
+
+            monsters.Add(BattlerPooling.Instance.SpawnMonster(targetName, tile));
+            curCoolTime = 0f;
         }
+
+        curCoolTime += Time.deltaTime * GameManager.Instance.timeScale;
+        fillImg.fillAmount = 1 - (curCoolTime / spawnCoolTime);
     }
 }

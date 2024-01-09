@@ -221,7 +221,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             monster.SetStartPoint(curNode);
             monster.transform.position = curNode.transform.position;
             monster.Init();
-            curNode.curTile.monster = monster;
+            //curNode.curTile.monster = monster;
 
             if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
                 GameManager.Instance.speedController.SetSpeedPrev(false);
