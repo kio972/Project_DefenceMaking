@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public static class UtilHelper
 {
@@ -304,45 +304,64 @@ public static class UtilHelper
         return false;
     }
 
+    private static List<TileNode> GetRoomConnection(TileNode curNode)
+    {
+        List<TileNode> nodes = new List<TileNode>();
+
+        foreach (Direction direction in curNode.curTile.RoomDirection)
+        {
+            TileNode tempNode = curNode.DirectionalNode(direction);
+            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+                continue;
+
+            if (tempNode.curTile._TileType == TileType.Path)
+                continue;
+
+            if (tempNode.curTile.RoomDirection.Contains(ReverseDirection(direction)))
+                nodes.Add(tempNode);
+        }
+
+        return nodes;
+    }
+
+    private static List<TileNode> GetPathConnection(TileNode curNode)
+    {
+        List<TileNode> nodes = new List<TileNode>();
+        foreach (Direction direction in curNode.curTile.PathDirection)
+        {
+            TileNode tempNode = curNode.DirectionalNode(direction);
+            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+                continue;
+
+            if (tempNode.curTile._TileType == TileType.Room)
+                continue;
+
+            if (tempNode.curTile.PathDirection.Contains(ReverseDirection(direction)))
+                nodes.Add(tempNode);
+        }
+
+        return nodes;
+    }
+
     public static List<TileNode> GetConnectedNodes(TileNode curNode)
     {
         List<TileNode> nodes = new List<TileNode>();
         if (curNode.curTile == null)
             return nodes;
 
-        if (curNode.curTile._TileType != TileType.Room)
+        if (curNode.curTile._TileType == TileType.Room)
+            return GetRoomConnection(curNode);
+        else if (curNode.curTile._TileType == TileType.Door)
         {
-            foreach (Direction direction in curNode.curTile.PathDirection)
-            {
-                TileNode tempNode = curNode.DirectionalNode(direction);
-                if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
-                    continue;
+            foreach (TileNode node in GetRoomConnection(curNode))
+                nodes.Add(node);
+            foreach (TileNode node in GetPathConnection(curNode))
+                nodes.Add(node);
 
-                if (curNode.curTile._TileType == TileType.Path && tempNode.curTile._TileType == TileType.Room)
-                    continue;
-
-                if (tempNode.curTile.PathDirection.Contains(ReverseDirection(direction)))
-                    nodes.Add(tempNode);
-            }
+            return nodes;
         }
-        
-        if(curNode.curTile._TileType != TileType.Path)
-        {
-            foreach (Direction direction in curNode.curTile.RoomDirection)
-            {
-                TileNode tempNode = curNode.DirectionalNode(direction);
-                if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
-                    continue;
-
-                if (curNode.curTile._TileType == TileType.Room && tempNode.curTile._TileType == TileType.Path)
-                    continue;
-
-                if (tempNode.curTile.RoomDirection.Contains(ReverseDirection(direction)))
-                    nodes.Add(tempNode);
-            }
-        }
-
-        return nodes;
+        else
+            return GetPathConnection(curNode);
     }
 
     public static TileNode RayCastTile()
