@@ -23,6 +23,7 @@ public class GameManager : IngameSingleton<GameManager>
     public WaveController waveController;
     public MapBuilder mapBuilder;
     public Canvas cameraCanvas;
+    public Canvas worldCanvas;
 
     public int king_Hp = 20;
     private bool dailyIncome = true;

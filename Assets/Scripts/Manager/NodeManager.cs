@@ -305,7 +305,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         
         // 해당 방들 완성으로 변경코드 추가 예정
         roomTiles.Add(newRoom);
-        print(newRoom.totalMana);
     }
 
     public void SetTile(TileNode curNode, string prefabPath)
