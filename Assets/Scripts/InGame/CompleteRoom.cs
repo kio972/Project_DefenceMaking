@@ -8,13 +8,14 @@ public class CompleteRoom
     public int totalMana;
     public int spendedMana;
 
-    public CompleteRoom(List<Tile> targetTiles)
+    public List<Tile> _IncludeRooms { get => includeRooms; }
+    public int _RemainingMana { get { return totalMana - spendedMana; } }
+    public Tile HeadRoom { get { return includeRooms[0]; } }
+
+    public CompleteRoom(List<Tile> targetTiles, bool singleRoom = false)
     {
         includeRooms = targetTiles;
-        totalMana = 0;
-        foreach (Tile tile in includeRooms)
-            totalMana += tile.RoomMana;
-        
+        totalMana = singleRoom ? 3 : includeRooms.Count;
         spendedMana = 0;
     }
 }

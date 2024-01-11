@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ public class ManagementUI : MonoBehaviour
         curType = CardType.None;
         curNode = null;
 
+        NodeManager.Instance.SetManaGuide(false);
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
         UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
@@ -65,10 +67,18 @@ public class ManagementUI : MonoBehaviour
                 return;
             }
 
-            GameManager.Instance.gold -= curPrice;
-
             if (curType == CardType.Monster)
             {
+                Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.Battler_Table, "name")];
+                int requireMana = Convert.ToInt32(data["requiredMagicpower"]);
+                CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
+                if(room == null || room._RemainingMana < requireMana)
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    return;
+                }
+
+                room.spendedMana += requireMana;
                 //BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
                 monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.cameraCanvas.transform);
@@ -81,6 +91,7 @@ public class ManagementUI : MonoBehaviour
                 AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
 
+            GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
         }
     }
@@ -88,6 +99,7 @@ public class ManagementUI : MonoBehaviour
     public void UpdateDeployState()
     {
         UpdateObjectPosition();
+        NodeManager.Instance.SetManaGuide(curType == CardType.Monster);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
             SetObjectOnMap();
