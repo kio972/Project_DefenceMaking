@@ -81,7 +81,7 @@ public class ManagementUI : MonoBehaviour
                 room.spendedMana += requireMana;
                 //BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
-                monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.cameraCanvas.transform);
+                monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
                 monsterSpawner.Init(curNode, curObject.name);
                 AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
             }
