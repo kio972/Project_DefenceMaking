@@ -53,11 +53,35 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
+    public CompleteRoom GetRoomByNode(TileNode targetNode)
+    {
+        foreach(CompleteRoom room in roomTiles)
+        {
+            foreach(Tile tile in room._IncludeRooms)
+            {
+                if (tile.curNode == targetNode)
+                    return room;
+            }
+        }
+        return null;
+    }
+
 
     #region GuidePart
     private GuideState guideState = GuideState.None;
 
     public GuideState _GuideState { get => guideState; }
+
+    private bool manaGuideState = false;
+
+    public void SetManaGuide(bool value)
+    {
+        if (manaGuideState == value)
+            return;
+
+        manaGuideState = value;
+        RoomManaPool.Instance.SetManaUI(value, roomTiles);
+    }
 
     public void SetGuideState(GuideState guideState, Tile tile = null)
     {
@@ -265,12 +289,21 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void RoomCheck(Tile tile)
     {
-        //BFS 수행, 방 완성조건에 부합 시 해당방들에 대해 방완성 = true
-        List<Tile> completeRoom = BFSRoom(tile);
-        if (completeRoom == null || completeRoom.Count <= 1) return;
-
+        CompleteRoom newRoom;
+        if (tile._TileType == TileType.Room_Single)
+        {
+            List<Tile> completeRoom = new List<Tile>() { tile };
+            newRoom = new CompleteRoom(completeRoom, true);
+        }
+        else
+        {
+            //BFS 수행, 방 완성조건에 부합 시 해당방들에 대해 방완성 = true
+            List<Tile> completeRoom = BFSRoom(tile);
+            if (completeRoom == null || completeRoom.Count <= 1) return;
+            newRoom = new CompleteRoom(completeRoom);
+        }
+        
         // 해당 방들 완성으로 변경코드 추가 예정
-        CompleteRoom newRoom = new CompleteRoom(completeRoom);
         roomTiles.Add(newRoom);
         print(newRoom.totalMana);
     }

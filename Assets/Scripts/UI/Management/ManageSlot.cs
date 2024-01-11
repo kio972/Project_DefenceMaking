@@ -74,7 +74,7 @@ public class ManageSlot : MonoBehaviour
         {
             hp = Convert.ToInt32(data["hp"]);
             defense = Convert.ToInt32(data["armor"]);
-            float.TryParse(data["requiredMana"].ToString(), out mana);
+            float.TryParse(data["requiredMagicpower"].ToString(), out mana);
         }
         
 

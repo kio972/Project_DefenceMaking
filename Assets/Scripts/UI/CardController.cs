@@ -183,7 +183,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         curNode = null;
     }
 
-    private void SetTile()
+    private void SetTile(TileNode curNode)
     {
         Tile tile = instancedObject.GetComponent<Tile>();
         if (tile != null)
@@ -197,7 +197,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
-    private void SetEnvironment()
+    private void SetEnvironment(TileNode curNode)
     {
         Environment environment = instancedObject.GetComponent<Environment>();
         if (environment != null)
@@ -213,7 +213,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
-    private void SetMonster()
+    private void SetMonster(TileNode curNode)
     {
         Monster monster = instancedObject.GetComponent<Monster>();
         if (monster != null)
@@ -230,7 +230,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
     }
 
-    private void SetTrap()
+    private void SetTrap(TileNode curNode)
     {
         Trap trap = instancedObject.GetComponent<Trap>();
         if (trap != null)
@@ -259,16 +259,16 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             switch (cardType)
             {
                 case CardType.MapTile:
-                    SetTile();
+                    SetTile(curNode);
                     break;
                 case CardType.Monster:
-                    SetMonster();
+                    SetMonster(curNode);
                     break;
                 case CardType.Trap:
-                    SetTrap();
+                    SetTrap(curNode);
                     break;
                 case CardType.Environment:
-                    SetEnvironment();
+                    SetEnvironment(curNode);
                     break;
             }
             discard = true;

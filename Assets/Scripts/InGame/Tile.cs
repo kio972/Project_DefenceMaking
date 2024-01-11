@@ -134,7 +134,7 @@ public class Tile : MonoBehaviour
 
         if (isActive)
         {
-            if(tileType == TileType.Room || tileType == TileType.Door)
+            if(tileType == TileType.Room_Single || tileType == TileType.Room || tileType == TileType.Door)
                 NodeManager.Instance.RoomCheck(this);
         }
     }
