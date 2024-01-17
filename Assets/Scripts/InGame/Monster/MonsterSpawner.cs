@@ -21,9 +21,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private string targetName;
 
-    private int maxMonster = 3;
-
-    private List<Monster> monsters = new List<Monster>();
+    private int requiredMana;
 
     public void Dead()
     {
@@ -41,7 +39,7 @@ public class MonsterSpawner : MonoBehaviour
         Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString());
         bgImg.sprite = illur;
         fillImg.sprite = illur;
-
+        this.requiredMana = Convert.ToInt32(data["requiredMagicpower"]);
         this.spawnCoolTime = Convert.ToInt32(data["duration"]);
         curCoolTime = spawnCoolTime;
         
@@ -53,22 +51,13 @@ public class MonsterSpawner : MonoBehaviour
         if (!isUpdate)
             return;
 
-        List<Monster> removeTarget = new List<Monster>();
-        foreach(Monster monster in monsters)
-        {
-            if (monster.isDead)
-                removeTarget.Add(monster);
-        }
-        foreach (Monster monster in removeTarget)
-            monsters.Remove(monster);
-
         if(curCoolTime > spawnCoolTime)
         {
-            fillImg.fillAmount = 1f;
-            if (monsters.Count >= maxMonster)
+            fillImg.fillAmount = 0f;
+            if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 return;
 
-            monsters.Add(BattlerPooling.Instance.SpawnMonster(targetName, tile));
+            BattlerPooling.Instance.SpawnMonster(targetName, tile);
             curCoolTime = 0f;
         }
 

@@ -12,6 +12,9 @@ public class Monster : Battler
     [SerializeField]
     private int holdBackCount = 1;
 
+    private int requiredMana;
+    public int _RequiredMana { get => requiredMana; }
+
     public bool CanHoldBack
     {
         get
@@ -25,7 +28,7 @@ public class Monster : Battler
     public override void Dead()
     {
         base.Dead();
-        GameManager.Instance.monsterList.Remove(this);
+        GameManager.Instance.SetMonseter(this, false);
         //if (curTile.curTile.monster != null && curTile.curTile.monster == this)
         //{
         //    curTile.curTile.monster = null;
@@ -131,9 +134,10 @@ public class Monster : Battler
             curHp = maxHp;
 
             holdBackCount = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["holdbackCount"]);
+            requiredMana = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["requiredMagicpower"]);
         }
 
-        GameManager.Instance.monsterList.Add(this);
+        GameManager.Instance.SetMonseter(this, true);
 
         if(isHide)
             InitState(this, FSMHide.Instance);

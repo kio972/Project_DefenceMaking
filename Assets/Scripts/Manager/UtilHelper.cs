@@ -311,7 +311,7 @@ public static class UtilHelper
         foreach (Direction direction in curNode.curTile.RoomDirection)
         {
             TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance._ActiveNodes.Contains(tempNode))
                 continue;
 
             if (tempNode.curTile._TileType == TileType.Path)
@@ -330,7 +330,7 @@ public static class UtilHelper
         foreach (Direction direction in curNode.curTile.PathDirection)
         {
             TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance._ActiveNodes.Contains(tempNode))
                 continue;
 
             if (tempNode.curTile._TileType == TileType.Room)

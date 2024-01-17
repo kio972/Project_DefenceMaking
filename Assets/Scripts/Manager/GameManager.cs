@@ -37,7 +37,7 @@ public class GameManager : IngameSingleton<GameManager>
 
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
-    public List<Monster> monsterList = new List<Monster>();
+    private List<Monster> monsterList = new List<Monster>();
 
     public PlayerBattleMain king;
 
@@ -65,6 +65,26 @@ public class GameManager : IngameSingleton<GameManager>
     [SerializeField]
     InGameUI ingameUI;
 
+    private int totalMana;
+    private int curMana;
+
+    public int _TotalMana { get => totalMana; }
+    public int _CurMana { get => curMana; set { curMana = value; } }
+
+    public void UpdateTotalMana()
+    {
+        int totalMana = 0;
+        foreach(TileNode node in NodeManager.Instance._ActiveNodes)
+        {
+            if (node.curTile == null || node.curTile.IsDormant)
+                continue;
+
+            totalMana += node.curTile.RoomMana;
+        }
+
+        this.totalMana = totalMana;
+    }
+
     public void SetWave(int val)
     {
         curWave = val - 1;
@@ -76,6 +96,24 @@ public class GameManager : IngameSingleton<GameManager>
         curWave = -1;
         isPause = true;
         StoryManager.Instance.EnqueueScript("Dan100");
+    }
+
+    public void SetMonseter(Monster monster, bool value)
+    {
+        if (monster == null)
+            return;
+
+        if (value)
+        {
+            monsterList.Add(monster);
+            curMana += monster._RequiredMana;
+        }
+        else
+        {
+            monsterList.Remove(monster);
+            curMana -= monster._RequiredMana;
+        }
+
     }
 
     public bool IsMonsterOnTile(TileNode tile)

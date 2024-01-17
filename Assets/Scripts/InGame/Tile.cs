@@ -107,13 +107,13 @@ public class Tile : MonoBehaviour
         if(curNode != null)
         {
             curNode.curTile = null;
-            NodeManager.Instance.activeNodes.Remove(curNode);
+            NodeManager.Instance.SetActiveNode(curNode, false);
         }
 
         transform.SetParent(nextNode.transform, false);
 
         curNode = nextNode;
-        if(isActive && !NodeManager.Instance.activeNodes.Contains(nextNode))
+        if(isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
             NodeManager.Instance.SetActiveNode(nextNode, true);
 
         nextNode.curTile = this;
@@ -128,6 +128,7 @@ public class Tile : MonoBehaviour
         }
 
         NodeManager.Instance.DormantTileCheck();
+        GameManager.Instance.UpdateTotalMana();
 
         if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_Game_Continuable())
             GameManager.Instance.speedController.SetSpeedZero();

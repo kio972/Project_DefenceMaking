@@ -17,7 +17,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     //활성화 노드들의 이웃노드 중 비활성화 노드
     public List<TileNode> virtualNodes = new List<TileNode>();
     //활성화 상태의 노드
-    public List<TileNode> activeNodes = new List<TileNode>();
+    private List<TileNode> activeNodes = new List<TileNode>();
+    public List<TileNode> _ActiveNodes { get => activeNodes; }
 
     public List<TileNode> emptyNodes = new List<TileNode>();
 
@@ -64,6 +65,15 @@ public class NodeManager : IngameSingleton<NodeManager>
             }
         }
         return null;
+    }
+
+    public void ResetNode()
+    {
+        activeNodes = new List<TileNode>();
+        emptyNodes = new List<TileNode>();
+        allNodes = new List<TileNode>();
+        roomTiles = new List<CompleteRoom>();
+        dormantTile = new List<Tile>();
     }
 
 

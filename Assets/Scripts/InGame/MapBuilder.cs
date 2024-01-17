@@ -68,11 +68,12 @@ public class MapBuilder : MonoBehaviour
         GameObject pathPrefab2 = Resources.Load<GameObject>("Prefab/Tile/RoadTile6");
         GameObject endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
 
+        //NodeManager.Instance.ResetNode();
+        
         Tile startTile = Instantiate(startPointPrefab)?.GetComponent<Tile>();
         startTile.Init(NodeManager.Instance.startPoint, false, false, false);
 
         NodeManager.Instance.startPoint = startTile.curNode;
-        NodeManager.Instance.activeNodes = new List<TileNode>();
 
         NodeManager.Instance.SetActiveNode(startTile.curNode, true);
         NodeManager.Instance.ExpandEmptyNode(startTile.curNode, emptyNodeSize);

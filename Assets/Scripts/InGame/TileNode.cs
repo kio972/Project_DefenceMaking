@@ -85,7 +85,7 @@ public class TileNode : MonoBehaviour
             if (neighborNodeDic.ContainsKey(direction))
             {
                 TileNode neighborNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance.activeNodes.Contains(neighborNode) || neighborNode.curTile == null)
+                if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || neighborNode.curTile == null)
                     continue;
 
                 if (neighborNode.curTile.IsDormant && !isRestricted)

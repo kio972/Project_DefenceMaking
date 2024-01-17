@@ -96,7 +96,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_All_Tile_Connected()
     {
-        foreach(TileNode tile in NodeManager.Instance.activeNodes)
+        foreach(TileNode tile in NodeManager.Instance._ActiveNodes)
         {
             if (tile == NodeManager.Instance.endPoint || tile.curTile == null)
                 continue;

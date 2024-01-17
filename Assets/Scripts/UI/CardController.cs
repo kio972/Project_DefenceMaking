@@ -203,7 +203,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         if (environment != null)
         {
             NodeManager.Instance.emptyNodes.Remove(curNode);
-            NodeManager.Instance.activeNodes.Add(curNode);
+            NodeManager.Instance.SetActiveNode(curNode, true);
             environment.Init(curNode);
 
             if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
