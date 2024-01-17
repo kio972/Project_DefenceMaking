@@ -2,15 +2,13 @@ using UnityEngine;
 using UnityEditor;
 
 [DisallowMultipleComponent]
-public class PerObjectMaterialProperties : MonoBehaviour
+public class RoadEmptyMaterialProperties : MonoBehaviour
 {
-    static int baseColorId = Shader.PropertyToID("_HologramColor");
-    static int effectId = Shader.PropertyToID("_Effect");
+    static int baseColorId = Shader.PropertyToID("_BaseColor");
 
     [SerializeField]
     public Color baseColor = Color.white;
-    [SerializeField]
-    bool effect = false;
+
 
     static MaterialPropertyBlock block;
 
@@ -19,7 +17,7 @@ public class PerObjectMaterialProperties : MonoBehaviour
         OnValidate();
     }
 
-    public void SetColor(Color color)
+    public void SetColor(Color color) //함수명 변경됨
     {
         this.baseColor = color;
 
@@ -28,7 +26,7 @@ public class PerObjectMaterialProperties : MonoBehaviour
             block = new MaterialPropertyBlock();
         }
         block.SetColor(baseColorId, baseColor);
-        block.SetFloat(effectId, BoolToFloat(effect));
+
         GetComponent<Renderer>().SetPropertyBlock(block);
     }
 
@@ -39,7 +37,7 @@ public class PerObjectMaterialProperties : MonoBehaviour
             block = new MaterialPropertyBlock();
         }
         block.SetColor(baseColorId, baseColor);
-        block.SetFloat(effectId, BoolToFloat(effect));
+
         GetComponent<Renderer>().SetPropertyBlock(block);
     }
 
