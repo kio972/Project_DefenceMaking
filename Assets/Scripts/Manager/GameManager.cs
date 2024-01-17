@@ -174,7 +174,7 @@ public class GameManager : IngameSingleton<GameManager>
         bool bossTileMove = true;
         if (adventurer_entered_BossRoom.Count > 0)
             bossTileMove = false;
-        king.CurTile.curTile.movable = bossTileMove;
+        king.CurTile.curTile.Movable = bossTileMove;
     }
 
     public void SkipDay()

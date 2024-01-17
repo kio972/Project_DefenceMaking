@@ -130,8 +130,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile.movable && node != endPoint)
-                node.curTile.movable = false;
+            if (node.curTile != null && node.curTile.Movable && node != endPoint)
+                node.curTile.Movable = false;
         }
 
         if (guideState == GuideState.None)
@@ -148,7 +148,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         //가이드 노란색으로 설정
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile.movable)
+            if (node.curTile != null && node.curTile.Movable)
             {
                 node.SetGuideColor(Color.yellow);
             }
@@ -161,7 +161,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (node.curTile._TileType == TileType.Room || node.curTile._TileType == TileType.Room_Single)
             {
-                if (!node.curTile.haveMonster)
+                if (!node.curTile.HaveSpawner)
                     return true;
             }
         }

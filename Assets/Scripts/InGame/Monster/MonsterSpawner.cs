@@ -33,7 +33,7 @@ public class MonsterSpawner : MonoBehaviour
         this.tile = curNode;
         transform.position = curNode.transform.position;
         this.targetName = targetName;
-        curNode.curTile.haveMonster = true;
+        curNode.curTile.AddSpawner(this);
 
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(targetName, DataManager.Instance.Battler_Table, "name")];
         Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString());

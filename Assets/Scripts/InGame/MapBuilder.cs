@@ -102,7 +102,7 @@ public class MapBuilder : MonoBehaviour
         endTile.Init(nextNode, false, false, false);
         endTile.RotateTile(true);
         NodeManager.Instance.endPoint = endTile.curNode;
-        endTile.movable = true;
+        endTile.Movable = true;
     }
 
     private bool IsStartPointValid(TileNode node)
