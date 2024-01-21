@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1541984396882622673}
   - component: {fileID: 8584033815563302772}
+  - component: {fileID: 6725244234986947998}
   m_Layer: 5
   m_Name: ResearchSlot
   m_TagString: Untagged
@@ -175,6 +176,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 8802481602767545777}
   targetTransform: {fileID: 1541984396882622673}
+--- !u!114 &6725244234986947998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909987169426763037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e5a4b6be2333f4984c8f072d69dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 8802481602767545777}
+  targetSlot: {fileID: 6725244234986947998}
+  outlineImg: {fileID: 2904518664042380112}
+  frameImg: {fileID: 5648661459538452643}
+  iconImg: {fileID: 8300259188968005654}
 --- !u!1 &6715845843587437934
 GameObject:
   m_ObjectHideFlags: 0
