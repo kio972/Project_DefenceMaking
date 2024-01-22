@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using static UnityEngine.Rendering.DebugUI;
-using static UnityEngine.UI.Image;
 
 public class PopUIControl : MonoBehaviour
 {
@@ -23,17 +23,31 @@ public class PopUIControl : MonoBehaviour
     private Transform curTarget;
     private Coroutine moveCoroutine = null;
 
-    public float moveSpeed = 2f;
+    public float lerpTime = 0.2f;
+
+    private void OnEnable()
+    {
+        Invoke("ResetClamped", 0.2f);
+    }
+
+    private void ResetClamped()
+    {
+        scrollRect.movementType = ScrollRect.MovementType.Elastic;
+    }
+
+    public virtual void ResetPopUp()
+    {
+        scrollRect.movementType = ScrollRect.MovementType.Clamped;
+        contentRect.transform.position = originTransform.position;
+        popUpRect.gameObject.SetActive(false);
+        curTarget = null;
+    }
 
     private void SetPopUp(bool value)
     {
         if (popUpRect.gameObject.activeSelf == value)
             return;
 
-        //float modifySize = popUpRect.sizeDelta.x;
-        //if (value)
-        //    modifySize = -modifySize;
-        //rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rect.sizeDelta.x + modifySize);
         popUpRect.gameObject.SetActive(value);
     }
 
@@ -69,7 +83,7 @@ public class PopUIControl : MonoBehaviour
                 targetPos.x += direction;
             }
 
-            moveCoroutine = StartCoroutine(UtilHelper.MoveToTargetPos(contentRect, targetPos, 0.2f));
+            moveCoroutine = StartCoroutine(UtilHelper.MoveToTargetPos(contentRect, targetPos, lerpTime));
         }
     }
 }
