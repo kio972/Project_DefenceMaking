@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+using static UnityEngine.UI.Image;
 
 public class PopUIControl : MonoBehaviour
 {
@@ -16,52 +17,30 @@ public class PopUIControl : MonoBehaviour
     ScrollRect scrollRect;
     [SerializeField]
     Transform guideTransform;
+    [SerializeField]
+    Transform originTransform;
 
     private Transform curTarget;
     private Coroutine moveCoroutine = null;
 
     public float moveSpeed = 2f;
 
-    private IEnumerator ModifyPositon(Transform origin, Transform moveTarget, Vector3 targetPos, float moveSpeed = 1f)
-    {
-        //움직일 방향 도출
-        float direction = targetPos.x - origin.transform.position.x;
-        Vector3 movedir = Vector3.left;
-        if (direction > 0)
-            movedir = Vector3.right;
-        else if (direction == 0)
-            yield break;
-
-        while(true)
-        {
-            if (direction > 0 && origin.transform.position.x >= targetPos.x)
-                break;
-            if (direction < 0 && origin.transform.position.x <= targetPos.x)
-                break;
-
-            moveTarget.transform.Translate(movedir * Time.deltaTime * 1000 * moveSpeed);
-            yield return null;
-        }
-
-        yield return null;
-    }
-
     private void SetPopUp(bool value)
     {
         if (popUpRect.gameObject.activeSelf == value)
             return;
 
-        float modifySize = popUpRect.sizeDelta.x;
-        if (value)
-            modifySize = -modifySize;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rect.sizeDelta.x + modifySize);
+        //float modifySize = popUpRect.sizeDelta.x;
+        //if (value)
+        //    modifySize = -modifySize;
+        //rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rect.sizeDelta.x + modifySize);
         popUpRect.gameObject.SetActive(value);
     }
 
     private bool IsMoveAvail(Transform target)
     {
         if (target == null)
-            return false;
+            return true;
 
         if (target.position.x <= guideTransform.position.x)
             return false;
@@ -82,7 +61,15 @@ public class PopUIControl : MonoBehaviour
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
 
-            StartCoroutine(ModifyPositon(target, contentRect.transform, guideTransform.position, moveSpeed));
+            Vector3 targetPos = originTransform.position;
+            if (target != null)
+            {
+                float direction = guideTransform.position.x - target.transform.position.x;
+                targetPos = contentRect.transform.position;
+                targetPos.x += direction;
+            }
+
+            moveCoroutine = StartCoroutine(UtilHelper.MoveToTargetPos(contentRect, targetPos, 0.2f));
         }
     }
 }
