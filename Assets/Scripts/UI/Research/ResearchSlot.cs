@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public enum ResearchState
 {
+    Incomplete,
     Complete,
     InProgress,
-    
+    Impossible,
 }
 
 public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -23,6 +24,11 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Image frameImg;
     [SerializeField]
     private Image iconImg;
+    [SerializeField]
+    private GameObject checkBox;
+
+    [SerializeField]
+    private ResearchState curState;
 
     private bool isClicked = false;
 
