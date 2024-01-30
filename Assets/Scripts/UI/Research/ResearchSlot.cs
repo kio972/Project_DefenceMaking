@@ -28,9 +28,14 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private GameObject checkBox;
 
     [SerializeField]
+    private Image inProgressImg;
+
+    [SerializeField]
     private ResearchState curState;
 
     private bool isClicked = false;
+    [SerializeField]
+    private bool isInProgress = false;
 
     private ResearchUI researchUI;
 
@@ -70,7 +75,7 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (button == null) return;
 
-        if (isClicked) return;
+        if (isClicked || isInProgress) return;
 
         if (frameImg == null || outlineImg == null) return;
         frameImg.color = Color.gray;
@@ -81,11 +86,20 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (button == null) return;
 
-        if (isClicked) return;
+        if (isClicked || isInProgress) return;
 
         if (frameImg == null || outlineImg == null) return;
         frameImg.color = Color.black;
         outlineImg.color = Color.black;
+    }
+
+    private void OnEnable()
+    {
+        if (outlineImg != null)
+            outlineImg.gameObject.SetActive(!isInProgress);
+
+        if (inProgressImg != null)
+            inProgressImg.gameObject.SetActive(isInProgress);
     }
 
     private void Awake()
