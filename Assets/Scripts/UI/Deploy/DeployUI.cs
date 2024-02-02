@@ -185,6 +185,14 @@ public class DeployUI : MonoBehaviour
     {
         if (!initState)
             Init();
+
+        foreach(DeploySlot slot in deployItems)
+        {
+            if (!slot.gameObject.activeSelf)
+                continue;
+
+            slot.gameObject.SetActive(slot.IsUnlocked);
+        }
     }
 
     private DeploySlot GetNextSlot()

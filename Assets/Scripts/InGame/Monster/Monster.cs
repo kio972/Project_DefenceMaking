@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum MonsterType
+{
+    none,
+    slime,
+    goblin,
+    golem,
+    mimic,
+}
+
 public class Monster : Battler
 {
     private int monsterIndex = -1;

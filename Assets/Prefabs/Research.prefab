@@ -252,11 +252,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e5a4b6be2333f4984c8f072d69dccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  researchId: 
+  imgGroup: {fileID: 0}
   button: {fileID: 0}
   targetSlot: {fileID: 7805088836514329935}
   outlineImg: {fileID: 1822567346700897153}
   frameImg: {fileID: 9178882107199656050}
   iconImg: {fileID: 4770880798376431815}
+  checkBox: {fileID: 0}
+  inProgressImg: {fileID: 0}
+  curState: 0
 --- !u!1 &589556346154247320
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1596878152312244398
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1806,8 +1811,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2107335348191686020}
-        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+      - m_Target: {fileID: 8957071659002887979}
+        m_TargetAssemblyTypeName: ResearchMainUI, Assembly-CSharp
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -3158,11 +3163,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e5a4b6be2333f4984c8f072d69dccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  researchId: 
+  imgGroup: {fileID: 0}
   button: {fileID: 1269673841298564599}
   targetSlot: {fileID: 0}
   outlineImg: {fileID: 0}
   frameImg: {fileID: 0}
   iconImg: {fileID: 0}
+  checkBox: {fileID: 0}
+  inProgressImg: {fileID: 0}
+  curState: 0
 --- !u!114 &4569798657645096659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3852,11 +3862,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e5a4b6be2333f4984c8f072d69dccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  researchId: 
+  imgGroup: {fileID: 0}
   button: {fileID: 1974610887260167925}
   targetSlot: {fileID: 0}
   outlineImg: {fileID: 0}
   frameImg: {fileID: 0}
   iconImg: {fileID: 0}
+  checkBox: {fileID: 0}
+  inProgressImg: {fileID: 0}
+  curState: 0
 --- !u!114 &2689168025946461258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4165,7 +4180,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1459164290425845969}
-  - component: {fileID: 2108376759902550232}
   m_Layer: 5
   m_Name: ResearchInfos
   m_TagString: Untagged
@@ -4198,32 +4212,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2108376759902550232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5789846704991650430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 20
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 5
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &6265089120696027299
 GameObject:
   m_ObjectHideFlags: 0
@@ -4286,11 +4274,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e5a4b6be2333f4984c8f072d69dccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  researchId: 
+  imgGroup: {fileID: 0}
   button: {fileID: 7570528743427442447}
   targetSlot: {fileID: 0}
   outlineImg: {fileID: 0}
   frameImg: {fileID: 0}
   iconImg: {fileID: 0}
+  checkBox: {fileID: 0}
+  inProgressImg: {fileID: 0}
+  curState: 0
 --- !u!114 &7041819810591065632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5117,7 +5110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9152986941282536333}
-  - component: {fileID: 2107335348191686020}
+  - component: {fileID: 8957071659002887979}
   m_Layer: 5
   m_Name: Research
   m_TagString: Untagged
@@ -5146,7 +5139,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2107335348191686020
+--- !u!114 &8957071659002887979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5155,7 +5148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6932789636664418635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af635d3ae69454418a20f098ad99587, type: 3}
+  m_Script: {fileID: 11500000, guid: a9c5aafda0fe92c439b8d831a482e73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   uiPage: {fileID: 3718853359964011801}
@@ -12842,8 +12835,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResearchSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6725244234986947998, guid: f486e1ed80dd1e746b0e8b6668317544, type: 3}
+      propertyPath: curState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725244234986947998, guid: f486e1ed80dd1e746b0e8b6668317544, type: 3}
+      propertyPath: researchId
+      value: r_m10001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f486e1ed80dd1e746b0e8b6668317544, type: 3}
+--- !u!1 &5691366909607772475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3909987169426763037, guid: f486e1ed80dd1e746b0e8b6668317544, type: 3}
+  m_PrefabInstance: {fileID: 8698945197801860134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1914238493451581879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5691366909607772475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d48e0bb8d44aff4f95696acf62e538d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetId: r_m10001
 --- !u!224 &7917018297973069047 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1541984396882622673, guid: f486e1ed80dd1e746b0e8b6668317544, type: 3}

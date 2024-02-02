@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public enum ResearchState
 {
+    None,
     Incomplete,
     Complete,
     InProgress,
@@ -14,6 +15,12 @@ public enum ResearchState
 
 public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField]
+    private string researchId;
+
+    [SerializeField]
+    private GameObject imgGroup;
+
     [SerializeField]
     private Button button;
     [SerializeField]
@@ -30,14 +37,13 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField]
     private Image inProgressImg;
 
-    [SerializeField]
-    private ResearchState curState;
-
     private bool isClicked = false;
-    [SerializeField]
-    private bool isInProgress = false;
-
+    
     private ResearchUI researchUI;
+
+    [SerializeField]
+    protected ResearchState curState;
+    protected bool isInProgress = false;
 
     public void DeActiveClick()
     {
@@ -106,5 +112,8 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (button != null)
             button.onClick.AddListener(OnClick);
+
+        if (curState == ResearchState.None && imgGroup != null)
+            imgGroup.SetActive(false);
     }
 }

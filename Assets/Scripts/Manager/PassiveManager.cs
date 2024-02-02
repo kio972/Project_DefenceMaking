@@ -20,6 +20,14 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
+    public Dictionary<string, bool> deployAvailableTable = new Dictionary<string, bool>();
+
+    public void AddDeployData(string targetId)
+    {
+        if(!deployAvailableTable.ContainsKey(targetId))
+            deployAvailableTable.Add(targetId, true);
+    }
+
     public void AddBuffTable(Dictionary<string, object> data)
     {
         BuffTable table = new BuffTable(data);

@@ -49,7 +49,17 @@ public class DeploySlot : MonoBehaviour
     [SerializeField]
     private SlotInfo info;
 
-    [SerializeField]
+    private bool isUnlocked = false;
+    public bool IsUnlocked
+    {
+        get
+        {
+            if (!isUnlocked && PassiveManager.Instance.deployAvailableTable.ContainsKey(id))
+                isUnlocked = true;
+
+            return isUnlocked;
+        }
+    }
 
     public void SendInfo()
     {
@@ -86,6 +96,7 @@ public class DeploySlot : MonoBehaviour
         {
             duration = Convert.ToInt32(data["duration"]);
             maxTarget = Convert.ToInt32(data["targetCount"]);
+            isUnlocked = true;
         }
 
         manaText.gameObject.SetActive(mana == 0 ? false : true);
