@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManagementUI : MonoBehaviour
+public class DeployUI : MonoBehaviour
 {
     private bool initState = false;
 
@@ -24,7 +24,7 @@ public class ManagementUI : MonoBehaviour
     [SerializeField]
     private Button exitBtn;
 
-    private List<ManageSlot> deployItems = new List<ManageSlot>();
+    private List<DeploySlot> deployItems = new List<DeploySlot>();
 
     private InGameUI ingameUI;
 
@@ -187,9 +187,9 @@ public class ManagementUI : MonoBehaviour
             Init();
     }
 
-    private ManageSlot GetNextSlot()
+    private DeploySlot GetNextSlot()
     {
-        foreach(ManageSlot slot in deployItems)
+        foreach(DeploySlot slot in deployItems)
         {
             if (slot.gameObject.activeSelf)
                 continue;
@@ -198,7 +198,7 @@ public class ManagementUI : MonoBehaviour
             return slot;
         }
 
-        ManageSlot newSlot = Instantiate(deployItems[0], deployItems[0].transform.parent);
+        DeploySlot newSlot = Instantiate(deployItems[0], deployItems[0].transform.parent);
         deployItems.Add(newSlot);
         newSlot.gameObject.SetActive(true);
         return newSlot;
@@ -206,9 +206,9 @@ public class ManagementUI : MonoBehaviour
 
     public void Init()
     {
-        ManageSlot[] temp = GetComponentsInChildren<ManageSlot>(true);
+        DeploySlot[] temp = GetComponentsInChildren<DeploySlot>(true);
         deployItems = temp.ToList();
-        foreach (ManageSlot slot in deployItems)
+        foreach (DeploySlot slot in deployItems)
             slot.gameObject.SetActive(false);
 
         foreach (Dictionary<string, object> data in DataManager.Instance.Battler_Table)

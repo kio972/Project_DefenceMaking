@@ -31,12 +31,17 @@ public class SlotInfo : MonoBehaviour
     private TextMeshProUGUI card_maxTarget;
 
     [SerializeField]
+    private TextMeshProUGUI card_Cost;
+    [SerializeField]
+    private TextMeshProUGUI card_RequiredMana;
+
+    [SerializeField]
     private GameObject monsterInfo;
     [SerializeField]
     private GameObject trapInfo;
 
 
-    public void UpdateInfo(ManageSlot data)
+    public void UpdateInfo(DeploySlot data)
     {
         string type = "monster";
         if (data.cardType == CardType.Trap)
@@ -53,9 +58,14 @@ public class SlotInfo : MonoBehaviour
 
         card_illust.sprite = data.illur;
 
+        card_Cost.text = data.cost.ToString();
+        card_RequiredMana.text = data.mana.ToString();
+
         bool isMonster = type == "monster" ? true : false;
         monsterInfo.SetActive(isMonster);
         trapInfo.SetActive(!isMonster);
+
+        card_RequiredMana.gameObject.SetActive(isMonster);
 
         if(data.minDamage == data.maxDamage)
             card_Damage.text = data.maxDamage.ToString();

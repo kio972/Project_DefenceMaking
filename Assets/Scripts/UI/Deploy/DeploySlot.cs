@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ManageSlot : MonoBehaviour
+public class DeploySlot : MonoBehaviour
 {
     private string id = "";
 
@@ -30,7 +30,7 @@ public class ManageSlot : MonoBehaviour
     [SerializeField]
     private Button deployBtn;
 
-    private ManagementUI managementUI;
+    private DeployUI delpoyUI;
 
     private string prefabName;
 
@@ -43,9 +43,13 @@ public class ManageSlot : MonoBehaviour
     private LanguageText nameText;
     [SerializeField]
     private TextMeshProUGUI costText;
+    [SerializeField]
+    private TextMeshProUGUI manaText;
 
     [SerializeField]
     private SlotInfo info;
+
+    [SerializeField]
 
     public void SendInfo()
     {
@@ -54,10 +58,10 @@ public class ManageSlot : MonoBehaviour
 
     public void Deploy()
     {
-        if(managementUI == null)
-            managementUI = GetComponentInParent<ManagementUI>();
+        if(delpoyUI == null)
+            delpoyUI = GetComponentInParent<DeployUI>();
 
-        managementUI.DeployReady(cardType, _name, prefabName, cost);
+        delpoyUI.DeployReady(cardType, _name, prefabName, cost);
     }
 
     public void Init(Dictionary<string,object> data)
@@ -67,6 +71,7 @@ public class ManageSlot : MonoBehaviour
         cardType = (id[2] == 't' ? CardType.Trap : CardType.Monster);
         minDamage = Convert.ToInt32(data["attackPowerMin"]);
         maxDamage = Convert.ToInt32(data["attackPowerMax"]);
+        mana = 0;
 
         rate = data["rate"].ToString();
 
@@ -77,19 +82,21 @@ public class ManageSlot : MonoBehaviour
             float.TryParse(data["requiredMagicpower"].ToString(), out mana);
         }
         
-
         if(cardType == CardType.Trap)
         {
             duration = Convert.ToInt32(data["duration"]);
             maxTarget = Convert.ToInt32(data["targetCount"]);
         }
-        
+
+        manaText.gameObject.SetActive(mana == 0 ? false : true);
+        manaText.text = mana.ToString();
+
         cost = Convert.ToInt32(data["cost"]);
         prefabName = data["prefab"].ToString();
 
         Sprite illur = SpriteList.Instance.LoadSprite(prefabName);
         icon.sprite = illur;
         nameText.ChangeLangauge(SettingManager.Instance.language, _name);
-        costText.text = cost.ToString() + "G";
+        costText.text = cost.ToString();
     }
 }
