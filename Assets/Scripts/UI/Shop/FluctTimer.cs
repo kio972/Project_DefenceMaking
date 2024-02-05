@@ -12,13 +12,14 @@ public class FluctTimer : MonoBehaviour
     [SerializeField]
     private int fluctTime = 10;
 
-    private int curWave;
     [SerializeField]
     private TextMeshProUGUI text;
 
-    private void Start()
+    private FluctItem[] items;
+
+    public void ResetTime()
     {
-        curWave = GameManager.Instance.CurWave;
+        curTime = 0;
     }
 
     private void FluctPrice()
@@ -26,24 +27,33 @@ public class FluctTimer : MonoBehaviour
         if (target == null)
             return;
 
-        target.BroadcastMessage("FluctPrice", SendMessageOptions.DontRequireReceiver);
+        if (items == null)
+            items = target.GetComponentsInChildren<FluctItem>(true);
+
+        foreach (FluctItem item in items)
+            item.FluctPrice();
     }
 
-    void Update()
+    public void IncreaseTime()
     {
-        if (curWave == GameManager.Instance.CurWave)
-            return;
-
-        curTime += GameManager.Instance.CurWave - curWave;
-        curWave = GameManager.Instance.CurWave;
-
+        curTime++;
         if(curTime >= fluctTime)
         {
+            ResetTime();
             FluctPrice();
-            curTime = 0;
         }
 
-        if(text != null)
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        if (text != null)
             text.text = (fluctTime - curTime).ToString();
+    }
+
+    private void OnEnable()
+    {
+        UpdateText();
     }
 }

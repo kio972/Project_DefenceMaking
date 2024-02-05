@@ -34,8 +34,9 @@ public class Trap : MonoBehaviour
     private void DestroyTrap()
     {
         curTile.trap = null;
-        //Destroy(this.gameObject);
         gameObject.SetActive(false);
+        if (NodeManager.Instance._GuideState == GuideState.Trap)
+            NodeManager.Instance.SetGuideState(GuideState.Trap);
     }
 
     private void ExcuteAttack()
@@ -95,6 +96,8 @@ public class Trap : MonoBehaviour
             col.enabled = true;
 
         animator = GetComponent<Animator>();
+
+        attackCount = 0;
 
         isInit = true;
     }
