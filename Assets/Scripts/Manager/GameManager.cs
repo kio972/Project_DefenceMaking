@@ -15,6 +15,9 @@ public class GameManager : IngameSingleton<GameManager>
     public float Timer { get => timer; }
 
     public int gold = 0;
+    public int hurb1 = 0;
+    public int hurb2 = 0;
+    public int hurb3 = 0;
 
     public int startCardNumber = 6;
     public CardDeckController cardDeckController;
@@ -83,6 +86,11 @@ public class GameManager : IngameSingleton<GameManager>
         }
 
         this.totalMana = totalMana;
+    }
+
+    public void IncreaseWave()
+    {
+        curWave++;
     }
 
     public void SetWave(int val)

@@ -22,6 +22,18 @@ public class FluctTimer : MonoBehaviour
         curTime = 0;
     }
 
+    private void UpdateCoolTime()
+    {
+        if (target == null)
+            return;
+
+        if (items == null)
+            items = target.GetComponentsInChildren<FluctItem>(true);
+
+        foreach (FluctItem item in items)
+            item.UpdateCoolTime();
+    }
+
     private void FluctPrice()
     {
         if (target == null)
@@ -37,12 +49,14 @@ public class FluctTimer : MonoBehaviour
     public void IncreaseTime()
     {
         curTime++;
-        if(curTime >= fluctTime)
+
+        if (curTime >= fluctTime)
         {
             ResetTime();
             FluctPrice();
         }
 
+        UpdateCoolTime();
         UpdateText();
     }
 

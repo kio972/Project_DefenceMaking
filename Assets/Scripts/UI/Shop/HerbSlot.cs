@@ -7,9 +7,10 @@ using TMPro;
 public interface FluctItem
 {
     public void FluctPrice();
+    public void UpdateCoolTime();
 }
 
-public class HurbSlot : MonoBehaviour, FluctItem
+public class HerbSlot : MonoBehaviour, FluctItem
 {
     [SerializeField]
     Image icon;
@@ -38,26 +39,77 @@ public class HurbSlot : MonoBehaviour, FluctItem
     [SerializeField]
     private int coolTime = 3;
 
+    [SerializeField]
+    private int targetHurb = 0;
+
     private bool tradeState = true;
 
     private int coolStartWave = -1;
 
-    private void BuyHurb()
-    {
-        if (!tradeState)
-            return;
+    [SerializeField]
+    private Sprite increaseSprite;
+    [SerializeField]
+    private Sprite decreaseSprite;
 
+    private void ModifyHurb(int count)
+    {
+        switch (targetHurb)
+        {
+            case 1:
+                GameManager.Instance.hurb1 += count;
+                return;
+            case 2:
+                GameManager.Instance.hurb2 += count;
+                return;
+            case 3:
+                GameManager.Instance.hurb3 += count;
+                return;
+        }
+    }
+    private bool HaveHurb()
+    {
+        switch (targetHurb)
+        {
+            case 1:
+                return GameManager.Instance.hurb1 > 0 ? true : false;
+            case 2:
+                return GameManager.Instance.hurb2 > 0 ? true : false;
+            case 3:
+                return GameManager.Instance.hurb3 > 0 ? true : false;
+        }
+
+        return false;
     }
 
-    private void SellHurb()
+    public void BuyHurb()
     {
         if (!tradeState)
             return;
 
+        if (GameManager.Instance.gold < curPrice)
+            return;
+
+        ModifyHurb(1);
+        GameManager.Instance.gold -= curPrice;
+    }
+
+    public void SellHurb()
+    {
+        if (!tradeState)
+            return;
+
+        if (!HaveHurb())
+            return;
+
+        ModifyHurb(-1);
+        GameManager.Instance.gold += curPrice;
     }
 
     private void DeListHurb()
     {
+        if (!tradeState)
+            return;
+
         curPrice = 0;
         tradeState = false;
         buyBtn.gameObject.SetActive(false);
@@ -88,6 +140,21 @@ public class HurbSlot : MonoBehaviour, FluctItem
         return Mathf.RoundToInt(curPrice * changeVal / 100);
     }
 
+    private void SetFluctImg(int val)
+    {
+        if (fluctImg == null)
+            return;
+
+        fluctImg.gameObject.SetActive(true);
+
+        if (val == 0)
+            fluctImg.gameObject.SetActive(false);
+        else if (val > 0)
+            fluctImg.sprite = increaseSprite;
+        else
+            fluctImg.sprite = decreaseSprite;
+    }
+
     public void FluctPrice()
     {
         int token = Random.Range(0, 2);
@@ -101,16 +168,22 @@ public class HurbSlot : MonoBehaviour, FluctItem
         if(curPrice <= 0)
             DeListHurb();
         priceText.text = curPrice.ToString();
+        SetFluctImg(fluctVal);
     }
 
-    private void OnEnable()
+    public void UpdateCoolTime()
     {
         if (coolStartWave == -1)
             return;
 
         int curWave = GameManager.Instance.CurWave;
-        if (coolStartWave + coolTime >= curWave)
+        if (curWave >= coolStartWave + coolTime)
             OnListHurb();
+    }
+
+    private void OnEnable()
+    {
+        priceText.text = curPrice.ToString();
     }
 
     private void Start()
