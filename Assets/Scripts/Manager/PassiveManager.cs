@@ -6,6 +6,7 @@ using UnityEngine;
 public class PassiveManager : IngameSingleton<PassiveManager>
 {
     public int monsterHp_Weight = 0;
+
     public int monsterDefense_Weight = 0;
     public float monsterAttackSpeed_Weight = 0; 
     public float monsterDamageRate_Weight = 0;
@@ -21,6 +22,25 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
     public Dictionary<string, bool> deployAvailableTable = new Dictionary<string, bool>();
+
+    public int[] monsterTypeHp_Weight = null;
+    public int[] monsterTypeAttackSpeed_Weight = null;
+
+    public void UpgradeAttackSpeed(MonsterType monsterType, int value)
+    {
+        if (monsterTypeAttackSpeed_Weight == null)
+            monsterTypeAttackSpeed_Weight = new int[Enum.GetValues(typeof(MonsterType)).Length];
+
+        monsterTypeAttackSpeed_Weight[(int)monsterType] += value;
+    }
+
+    public void UpgradeHp(MonsterType monsterType, int value)
+    {
+        if (monsterTypeHp_Weight == null)
+            monsterTypeHp_Weight = new int[Enum.GetValues(typeof(MonsterType)).Length];
+
+        monsterTypeHp_Weight[(int)monsterType] += value;
+    }
 
     public void AddDeployData(string targetId)
     {
