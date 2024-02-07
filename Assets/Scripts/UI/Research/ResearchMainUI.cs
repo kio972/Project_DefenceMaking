@@ -7,6 +7,10 @@ public class ResearchMainUI : MonoBehaviour
     [SerializeField]
     GameObject uiPage;
 
+    private Research curResearch;
+    private float curProgressTime;
+
+
     public void SetActive(bool value)
     {
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });

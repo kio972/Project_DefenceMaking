@@ -45,10 +45,13 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     protected ResearchState curState;
     protected bool isInProgress = false;
 
+    private float progressTime;
+
     public void DeActiveClick()
     {
         isClicked = false;
 
+        outlineImg.gameObject.SetActive(false);
         outlineImg.color = Color.black;
         frameImg.color = Color.black;
     }
@@ -70,6 +73,7 @@ public class ResearchSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             isClicked = true;
 
+            outlineImg.gameObject.SetActive(true);
             outlineImg.color = Color.green;
             frameImg.color = Color.black;
         }
