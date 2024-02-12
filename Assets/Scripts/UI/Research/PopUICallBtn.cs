@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class PopUICallBtn : MonoBehaviour
 {
     [SerializeField]
-    private Button button;
+    protected Button button;
     [SerializeField]
-    private Transform targetTransform;
+    protected Transform targetTransform;
     private PopUIControl popUIControl;
 
-    private void CallPopUpUI()
+    protected virtual void CallPopUpUI()
     {
         if (button == null)
             return;
@@ -25,7 +25,7 @@ public class PopUICallBtn : MonoBehaviour
         popUIControl.SetUI(targetTransform);
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (button != null)
             button.onClick.AddListener(CallPopUpUI);

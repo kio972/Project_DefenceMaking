@@ -176,7 +176,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1541984396882622673}
-  - component: {fileID: 8584033815563302772}
   - component: {fileID: 6725244234986947998}
   m_Layer: 5
   m_Name: ResearchSlot
@@ -206,20 +205,6 @@ RectTransform:
   m_AnchoredPosition: {x: -442, y: 137}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8584033815563302772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3909987169426763037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6188d2cfd2e09fb4c967ba6e21ed5f1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 336079911662334243}
-  targetTransform: {fileID: 1541984396882622673}
 --- !u!114 &6725244234986947998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,9 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e5a4b6be2333f4984c8f072d69dccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 336079911662334243}
+  targetTransform: {fileID: 1541984396882622673}
   researchId: 
   imgGroup: {fileID: 5609621401699662793}
-  button: {fileID: 336079911662334243}
   targetSlot: {fileID: 6725244234986947998}
   outlineImg: {fileID: 2904518664042380112}
   frameImg: {fileID: 5648661459538452643}
@@ -242,6 +228,7 @@ MonoBehaviour:
   checkBox: {fileID: 9173837545712383948}
   inProgressImg: {fileID: 1438415907384880469}
   curState: 0
+  prevResearch: []
 --- !u!1 &5609621401699662793
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +336,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}

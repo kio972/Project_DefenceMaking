@@ -10,6 +10,7 @@ public class ResearchMainUI : MonoBehaviour
     private Research curResearch;
     private float curProgressTime;
 
+    public float CurProgressTime { get => curProgressTime; }
 
     public void SetActive(bool value)
     {

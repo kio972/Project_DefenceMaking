@@ -6,6 +6,11 @@ public class ResearchUI : PopUIControl
 {
     private ResearchSlot curSelectedSlot = null;
 
+    [SerializeField]
+    private ResearchPopup researchPopup;
+
+    public ResearchPopup _ResearchPopup { get => researchPopup; }
+
     public override void ResetPopUp()
     {
         SetClickedSlot(null);

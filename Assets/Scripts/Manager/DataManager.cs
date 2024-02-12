@@ -14,12 +14,14 @@ public class DataManager : Singleton<DataManager>
 
     private List<Dictionary<string, object>> buff_Table;
 
+    private List<Dictionary<string, object>> research_Table;
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
     public List<Dictionary<string, object>> TimeRate_Table { get => timeRate_Table; }
     public List<Dictionary<string, object>> Language_Table { get => language_Table; }
+    public List<Dictionary<string, object>> Research_Table { get => research_Table; }
 
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
@@ -202,6 +204,7 @@ public class DataManager : Singleton<DataManager>
     private string language_Table_DataPath = "Data/languageData";
     private string scripts_Table_DataPath = "Data/scriptData";
     private string buff_Table_DataPath = "Data/buffData";
+    private string research_Table_DataPath = "Data/researchData";
 
     private void Init()
     {
@@ -213,5 +216,6 @@ public class DataManager : Singleton<DataManager>
         language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
         scripts_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scripts_Table_DataPath));
         buff_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(buff_Table_DataPath));
+        research_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(research_Table_DataPath));
     }
 }
