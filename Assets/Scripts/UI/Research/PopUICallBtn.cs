@@ -11,7 +11,7 @@ public class PopUICallBtn : MonoBehaviour
     protected Transform targetTransform;
     private PopUIControl popUIControl;
 
-    protected virtual void CallPopUpUI()
+    public virtual void CallPopUpUI()
     {
         if (button == null)
             return;

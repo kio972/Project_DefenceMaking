@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HurbUpdater1 : MonoBehaviour
+public class HerbUpdater2 : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI targetText;
@@ -12,6 +12,6 @@ public class HurbUpdater1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        targetText.text = GameManager.Instance.hurb1.ToString();
+        targetText.text = GameManager.Instance.herb2.ToString();
     }
 }

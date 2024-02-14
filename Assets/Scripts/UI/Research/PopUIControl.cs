@@ -30,6 +30,11 @@ public class PopUIControl : MonoBehaviour
         Invoke("ResetClamped", 0.2f);
     }
 
+    private void OnDisable()
+    {
+        ResetPopUp();
+    }
+
     private void ResetClamped()
     {
         scrollRect.movementType = ScrollRect.MovementType.Elastic;

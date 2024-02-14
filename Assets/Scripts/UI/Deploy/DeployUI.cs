@@ -188,8 +188,13 @@ public class DeployUI : MonoBehaviour
 
         foreach(DeploySlot slot in deployItems)
         {
-            if (!slot.gameObject.activeSelf)
+            //if (!slot.gameObject.activeSelf)
+            //    continue;
+            if (slot.cardType == CardType.Trap)
+            {
+                slot.gameObject.SetActive(true);
                 continue;
+            }
 
             slot.gameObject.SetActive(slot.IsUnlocked);
         }

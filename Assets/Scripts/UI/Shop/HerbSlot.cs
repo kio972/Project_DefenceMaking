@@ -40,7 +40,7 @@ public class HerbSlot : MonoBehaviour, FluctItem
     private int coolTime = 3;
 
     [SerializeField]
-    private int targetHurb = 0;
+    private int targetherb = 0;
 
     private bool tradeState = true;
 
@@ -51,37 +51,37 @@ public class HerbSlot : MonoBehaviour, FluctItem
     [SerializeField]
     private Sprite decreaseSprite;
 
-    private void ModifyHurb(int count)
+    private void Modifyherb(int count)
     {
-        switch (targetHurb)
+        switch (targetherb)
         {
             case 1:
-                GameManager.Instance.hurb1 += count;
+                GameManager.Instance.herb1 += count;
                 return;
             case 2:
-                GameManager.Instance.hurb2 += count;
+                GameManager.Instance.herb2 += count;
                 return;
             case 3:
-                GameManager.Instance.hurb3 += count;
+                GameManager.Instance.herb3 += count;
                 return;
         }
     }
-    private bool HaveHurb()
+    private bool Haveherb()
     {
-        switch (targetHurb)
+        switch (targetherb)
         {
             case 1:
-                return GameManager.Instance.hurb1 > 0 ? true : false;
+                return GameManager.Instance.herb1 > 0 ? true : false;
             case 2:
-                return GameManager.Instance.hurb2 > 0 ? true : false;
+                return GameManager.Instance.herb2 > 0 ? true : false;
             case 3:
-                return GameManager.Instance.hurb3 > 0 ? true : false;
+                return GameManager.Instance.herb3 > 0 ? true : false;
         }
 
         return false;
     }
 
-    public void BuyHurb()
+    public void Buyherb()
     {
         if (!tradeState)
             return;
@@ -89,23 +89,23 @@ public class HerbSlot : MonoBehaviour, FluctItem
         if (GameManager.Instance.gold < curPrice)
             return;
 
-        ModifyHurb(1);
+        Modifyherb(1);
         GameManager.Instance.gold -= curPrice;
     }
 
-    public void SellHurb()
+    public void Sellherb()
     {
         if (!tradeState)
             return;
 
-        if (!HaveHurb())
+        if (!Haveherb())
             return;
 
-        ModifyHurb(-1);
+        Modifyherb(-1);
         GameManager.Instance.gold += curPrice;
     }
 
-    private void DeListHurb()
+    private void DeListherb()
     {
         if (!tradeState)
             return;
@@ -117,7 +117,7 @@ public class HerbSlot : MonoBehaviour, FluctItem
         coolStartWave = GameManager.Instance.CurWave;
     }
 
-    private void OnListHurb()
+    private void OnListherb()
     {
         curPrice = originPrice;
         tradeState = true;
@@ -166,7 +166,7 @@ public class HerbSlot : MonoBehaviour, FluctItem
 
         curPrice += fluctVal;
         if(curPrice <= 0)
-            DeListHurb();
+            DeListherb();
         priceText.text = curPrice.ToString();
         SetFluctImg(fluctVal);
     }
@@ -178,7 +178,7 @@ public class HerbSlot : MonoBehaviour, FluctItem
 
         int curWave = GameManager.Instance.CurWave;
         if (curWave >= coolStartWave + coolTime)
-            OnListHurb();
+            OnListherb();
     }
 
     private void OnEnable()
@@ -188,6 +188,6 @@ public class HerbSlot : MonoBehaviour, FluctItem
 
     private void Start()
     {
-        OnListHurb();
+        OnListherb();
     }
 }
