@@ -21,7 +21,7 @@ public struct ResearchData
 
         researchName = data["Name"].ToString();
         researchDesc = data["Content"].ToString();
-        requiredTime = float.Parse(data["RequiredTime"].ToString());
+        float.TryParse(data["RequiredTime"].ToString(), out requiredTime);
         requiredMoney = Convert.ToInt32(data["RequiredMoney"]);
         requiredherb1 = Convert.ToInt32(data["RequiredHerb1"]);
         requiredherb2 = Convert.ToInt32(data["RequiredHerb2"]);

@@ -90,6 +90,8 @@ public class DeploySlot : MonoBehaviour
             hp = Convert.ToInt32(data["hp"]);
             defense = Convert.ToInt32(data["armor"]);
             float.TryParse(data["requiredMagicpower"].ToString(), out mana);
+            MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
+            mana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
         }
         
         if(cardType == CardType.Trap)

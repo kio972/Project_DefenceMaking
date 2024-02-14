@@ -351,7 +351,7 @@ public class Tile : MonoBehaviour
 
     public void RemoveSpawner()
     {
-        Destroy(spawner.gameObject);
+        spawner.Dead();
         spawner = null;
     }
 
@@ -360,6 +360,9 @@ public class Tile : MonoBehaviour
         NodeManager.Instance.SetActiveNode(curNode, false);
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
+
+        GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
+
         Destroy(this.gameObject, 1.0f);
     }
 

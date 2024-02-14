@@ -92,7 +92,7 @@ public class Battler : FSM<Battler>
 
     private float ccTime = 0;
 
-    public float MoveSpeed
+    public virtual float MoveSpeed
     {
         get
         {

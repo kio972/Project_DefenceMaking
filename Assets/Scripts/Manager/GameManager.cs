@@ -28,7 +28,7 @@ public class GameManager : IngameSingleton<GameManager>
     public Canvas cameraCanvas;
     public Canvas worldCanvas;
 
-    public int king_Hp = 20;
+    //public int king_Hp = 20;
     private bool dailyIncome = true;
 
     private int curWave = 0; 
@@ -41,6 +41,8 @@ public class GameManager : IngameSingleton<GameManager>
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
     private List<Monster> monsterList = new List<Monster>();
+
+    public List<MonsterSpawner> monsterSpawner = new List<MonsterSpawner>();
 
     public PlayerBattleMain king;
 

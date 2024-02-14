@@ -57,6 +57,18 @@ public class DeployUI : MonoBehaviour
         ingameUI?.SetDownUI(true);
     }
 
+    private bool HaveMana(CompleteRoom room, out int outMana)
+    {
+        Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.Battler_Table, "name")];
+        int requireMana = Convert.ToInt32(data["requiredMagicpower"]);
+        MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
+        requireMana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
+
+        outMana = requireMana;
+
+        return room != null && room._RemainingMana >= requireMana;
+    }
+
     private void SetObjectOnMap(bool cancel = false)
     {
         if (!cancel && curNode != null && curNode.setAvail)
@@ -69,16 +81,16 @@ public class DeployUI : MonoBehaviour
 
             if (curType == CardType.Monster)
             {
-                Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.Battler_Table, "name")];
-                int requireMana = Convert.ToInt32(data["requiredMagicpower"]);
                 CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
-                if(room == null || room._RemainingMana < requireMana)
+                int requiredMana;
+
+                if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
                     return;
                 }
 
-                room.spendedMana += requireMana;
+                room.spendedMana += requiredMana;
                 //BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
                 monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
