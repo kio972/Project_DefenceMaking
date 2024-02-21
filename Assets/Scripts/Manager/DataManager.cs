@@ -31,6 +31,7 @@ public class DataManager : Singleton<DataManager>
     private List<int> pathCard_Indexs;
     private List<int> roomCard_Indexs;
     private List<int> roomPartCard_Index;
+    private List<int> roomTypeCard_Indexs;
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
@@ -82,6 +83,22 @@ public class DataManager : Singleton<DataManager>
             return null;
 
         return scriptsDic[key];
+    }
+
+
+    public List<int> RoomTypeCard_Indexs
+    {
+        get
+        {
+            if(roomTypeCard_Indexs == null)
+            {
+                roomTypeCard_Indexs = new List<int>(RoomCard_Indexs);
+                foreach (int val in RoomPartCard_Indexs)
+                    roomTypeCard_Indexs.Add(val);
+            }
+
+            return roomTypeCard_Indexs;
+        }
     }
 
     public List<int> TileCard_Indexs

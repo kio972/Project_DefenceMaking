@@ -11,7 +11,8 @@ public enum TileType
     Room,
     End,
     Door,
-    Room_Single
+    Room_Single,
+    Environment,
 }
 
 public class Tile : MonoBehaviour

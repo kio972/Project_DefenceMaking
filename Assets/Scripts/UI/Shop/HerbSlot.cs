@@ -4,13 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public interface FluctItem
-{
-    public void FluctPrice();
-    public void UpdateCoolTime();
-}
-
-public class HerbSlot : MonoBehaviour, FluctItem
+public class HerbSlot : FluctItem
 {
     [SerializeField]
     Image icon;
@@ -24,27 +18,9 @@ public class HerbSlot : MonoBehaviour, FluctItem
     private Button sellBtn;
 
     [SerializeField]
-    private int originPrice;
-    private int curPrice;
-
-    [SerializeField]
-    private float increaseMin;
-    [SerializeField]
-    private float increaseMax;
-    [SerializeField]
-    private float decreaseMin;
-    [SerializeField]
-    private float decreaseMax;
-
-    [SerializeField]
-    private int coolTime = 3;
-
-    [SerializeField]
     private int targetherb = 0;
 
     private bool tradeState = true;
-
-    private int coolStartWave = -1;
 
     [SerializeField]
     private Sprite increaseSprite;
@@ -155,7 +131,7 @@ public class HerbSlot : MonoBehaviour, FluctItem
             fluctImg.sprite = decreaseSprite;
     }
 
-    public void FluctPrice()
+    public override void FluctPrice()
     {
         int token = Random.Range(0, 2);
         int fluctVal = 0;
@@ -171,7 +147,7 @@ public class HerbSlot : MonoBehaviour, FluctItem
         SetFluctImg(fluctVal);
     }
 
-    public void UpdateCoolTime()
+    public override void UpdateCoolTime()
     {
         if (coolStartWave == -1)
             return;
