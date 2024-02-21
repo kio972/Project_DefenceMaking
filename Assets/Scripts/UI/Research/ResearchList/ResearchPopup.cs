@@ -17,6 +17,8 @@ public class ResearchPopup : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI researchTime;
     [SerializeField]
+    private TextMeshProUGUI researchTimer;
+    [SerializeField]
     private TextMeshProUGUI herb1;
     [SerializeField]
     private TextMeshProUGUI herb2;
@@ -24,11 +26,13 @@ public class ResearchPopup : MonoBehaviour
     private TextMeshProUGUI herb3;
     [SerializeField]
     private TextMeshProUGUI gold;
-    [SerializeField]
-    private Button researchStartBtn;
 
     [SerializeField]
+    private GameObject researchStartBtn;
+    [SerializeField]
     private GameObject inProgressBtn;
+    [SerializeField]
+    private GameObject researchStopBtn;
 
     [SerializeField]
     private GameObject researchPart;
@@ -61,6 +65,8 @@ public class ResearchPopup : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    ResearchState researchState;
     bool haveGold; 
     bool haveHerb1;
     bool haveHerb2;
@@ -80,20 +86,18 @@ public class ResearchPopup : MonoBehaviour
     {
         curResearch = researchSlot;
         ResearchData researchData = researchSlot._ResearchData;
+        this.researchState = curState;
 
         icon.sprite = iconSprite;
         bool isInProgress = curState == ResearchState.InProgress;
         inprogressFrame.SetActive(isInProgress);
-        researchTime.gameObject.SetActive(!(curState == ResearchState.Complete));
-        researchStartBtn.gameObject.SetActive(curState == ResearchState.Incomplete);
-        inProgressBtn.SetActive(curState == ResearchState.InProgress);
+        researchTimer.gameObject.SetActive(isInProgress);
         if (isInProgress)
-            researchTime.text = GetMinSecTime(CurTime);
-        else
-            researchTime.text = GetMinSecTime(researchData.requiredTime);
+            researchTimer.text = GetMinSecTime(CurTime);
 
         researchName.text = researchData.researchName;
         researchDesc.text = researchData.researchDesc;
+        researchTime.text = GetMinSecTime(researchData.requiredTime);
 
         herb1.text = researchData.requiredherb1.ToString();
         herb1.transform.parent.gameObject.SetActive(researchData.requiredherb1 != 0);
@@ -119,29 +123,84 @@ public class ResearchPopup : MonoBehaviour
         haveHerb3 = GameManager.Instance.herb3 >= curResearch._ResearchData.requiredherb3;
         herb3.color = haveHerb3 ? Color.white : Color.red;
 
+        SetResearchBtn(researchState);
+    }
+
+    private bool HaveAsset()
+    {
+        return haveGold && haveHerb1 && haveHerb2 && haveHerb3;
+    }
+
+    private void ModifyAssets(bool isPlus)
+    {
+        int plusMinus = isPlus ? 1 : -1;
+
+        GameManager.Instance.gold += curResearch._ResearchData.requiredMoney * plusMinus;
+        GameManager.Instance.herb1 += curResearch._ResearchData.requiredherb1 * plusMinus;
+        GameManager.Instance.herb2 += curResearch._ResearchData.requiredherb2 * plusMinus;
+        GameManager.Instance.herb3 += curResearch._ResearchData.requiredherb3 * plusMinus;
+    }
+
+    private void SetResearchBtn(ResearchState curState)
+    {
+        researchStartBtn?.SetActive(false);
+        inProgressBtn?.SetActive(false);
+        researchStopBtn?.SetActive(false);
+
+        switch(curState)
+        {
+            case ResearchState.InProgress:
+                researchStopBtn?.SetActive(true);
+                break;
+            case ResearchState.Incomplete:
+                researchStartBtn?.SetActive(HaveAsset());
+                inProgressBtn?.SetActive(!HaveAsset());
+                break;
+        }
+
         researchPart.SetActive(curState != ResearchState.Complete);
         completePart.SetActive(curState == ResearchState.Complete);
     }
 
-    private void ModifyAssets()
+    public void ResearchInteract()
     {
-        GameManager.Instance.gold -= curResearch._ResearchData.requiredMoney;
-        GameManager.Instance.herb1 -= curResearch._ResearchData.requiredherb1;
-        GameManager.Instance.herb2 -= curResearch._ResearchData.requiredherb2;
-        GameManager.Instance.herb3 -= curResearch._ResearchData.requiredherb3;
+        ResearchState curState = researchState;
+        if (curState == ResearchState.Incomplete)
+            StartResearch();
+        else if (curState == ResearchState.InProgress)
+            StopResearch();
+
+        if(curState != researchState)
+            SetResearchBtn(researchState);
     }
 
-    public void StartResearch()
+    private void StartResearch()
     {
-        if (!(haveGold && haveHerb1 && haveHerb2 && haveHerb3))
+        if (!HaveAsset())
+        {
+            GameManager.Instance.popUpMessage.ToastMsg("연구 재화가 부족합니다.");
             return;
+        }
 
         bool isStart = ResearchMain.StartResearch(curResearch);
         if(isStart)
         {
             inprogressFrame.SetActive(true);
             inProgressBtn.SetActive(true);
-            ModifyAssets();
+            researchTimer.gameObject.SetActive(true);
+            researchTimer.text = GetMinSecTime(curResearch._ResearchData.requiredTime);
+            ModifyAssets(false);
+            researchState = ResearchState.InProgress;
         }
+    }
+
+    private void StopResearch()
+    {
+        ResearchMain.StopResearch(curResearch);
+        inprogressFrame.SetActive(false);
+        inProgressBtn.SetActive(false);
+        researchTimer.gameObject.SetActive(false);
+        ModifyAssets(true);
+        researchState = ResearchState.Incomplete;
     }
 }

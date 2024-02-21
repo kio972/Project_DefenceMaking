@@ -13,6 +13,8 @@ public class ResearchMainUI : MonoBehaviour
 
     public float CurProgressTime { get => curProgressTime; }
 
+    private Coroutine researchCoroutine;
+
     private IEnumerator IResearch(ResearchSlot curResearch)
     {
         this.curResearch = curResearch;
@@ -48,8 +50,19 @@ public class ResearchMainUI : MonoBehaviour
         if (curResearch != null)
             return false;
 
-        StartCoroutine(IResearch(target));
+        researchCoroutine = StartCoroutine(IResearch(target));
         return true;
+    }
+
+    public void StopResearch(ResearchSlot target)
+    {
+        if (curResearch == null)
+            return;
+
+        StopCoroutine(researchCoroutine);
+        curProgressTime = 0f;
+        curResearch.SetResearchState(ResearchState.Incomplete);
+        this.curResearch = null;
     }
 
     public void SetActive(bool value)
