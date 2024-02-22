@@ -725,7 +725,7 @@ public class Battler : FSM<Battler>
         if(prevRotLevel != GameManager.Instance.cameraController.Camera_Level)
         {
             prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
-            UpdateRotation();
+            //UpdateRotation();
         }
 
         FSMUpdate();
