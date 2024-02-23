@@ -81,7 +81,7 @@ public class WaveController : MonoBehaviour
         int curEnemyNumber = 0;
         foreach(WaveData waveData in waves)
             maxEnemyNumber += waveData.number;
-        waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
+        waveFill?.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
         float spawnWaitTime = CalSpawnWaitTime(maxEnemyNumber);
         foreach (WaveData waveData in waves)
         {
@@ -99,7 +99,7 @@ public class WaveController : MonoBehaviour
 
                 curEnemyNumber++;
 
-                waveFill.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
+                waveFill?.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
             }
         }
 

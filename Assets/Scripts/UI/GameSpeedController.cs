@@ -12,13 +12,6 @@ public class GameSpeedController : MonoBehaviour
     [SerializeField]
     private Button speed_2;
 
-    public Sprite zeroSprite;
-    public Sprite zeroSprite_Select;
-    public Sprite normalSprite;
-    public Sprite normalSprite_Select;
-    public Sprite fastSprite;
-    public Sprite fastSprite_Select;
-
     public Image zeroImg;
     public Image normalImg;
     public Image fastImg;
@@ -48,16 +41,16 @@ public class GameSpeedController : MonoBehaviour
 
     private void SetButtonState()
     {
-        zeroImg.sprite = zeroSprite;
-        normalImg.sprite = normalSprite;
-        fastImg.sprite = fastSprite;
+        zeroImg.color = Color.clear;
+        normalImg.color = Color.clear;
+        fastImg.color = Color.clear;
 
         if (GameManager.Instance.timeScale == 0)
-            zeroImg.sprite = zeroSprite_Select;
+            zeroImg.color = Color.white;
         if (GameManager.Instance.timeScale == 1)
-            normalImg.sprite = normalSprite_Select;
+            normalImg.color = Color.white;
         if (GameManager.Instance.timeScale == 2)
-            fastImg.sprite = fastSprite_Select;
+            fastImg.color = Color.white;
     }
 
     public bool Is_Tile_Connected(TileNode tile)
