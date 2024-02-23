@@ -19,6 +19,10 @@ public class GameManager : IngameSingleton<GameManager>
     public int herb2 = 0;
     public int herb3 = 0;
 
+    public int herb1Max = 0;
+    public int herb2Max = 0;
+    public int herb3Max = 0;
+
     public int startCardNumber = 6;
     public CardDeckController cardDeckController;
     public GameSpeedController speedController;
