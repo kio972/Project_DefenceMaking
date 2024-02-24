@@ -25,14 +25,15 @@ public class UIManager : Singleton<UIManager>
         target.SetActive(false);
         targetUI.Remove(target);
         if (closeActDic.ContainsKey(target))
+        {
+            closeActDic[target].Invoke();
             closeActDic.Remove(target);
+        }
     }
 
     public void CloseTab()
     {
         GameObject target = targetUI[targetUI.Count - 1];
-        if (closeActDic.ContainsKey(target))
-            closeActDic[target].Invoke();
         CloseTab(target);
     }
 
