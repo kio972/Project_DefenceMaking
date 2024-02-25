@@ -9,7 +9,7 @@ public class HerbSlot : FluctItem
     [SerializeField]
     Image icon;
     [SerializeField]
-    Image fluctImg;
+    FluctNoti fluctNoti;
     [SerializeField]
     TextMeshProUGUI priceText;
     [SerializeField]
@@ -22,10 +22,40 @@ public class HerbSlot : FluctItem
 
     private bool tradeState = true;
 
+
     [SerializeField]
-    private Sprite increaseSprite;
+    private ShopUI shopUI;
+
     [SerializeField]
-    private Sprite decreaseSprite;
+    private string buyScript;
+    [SerializeField]
+    private string sellScript;
+
+    private ShopUI _ShopUI
+    {
+        get
+        {
+            if (shopUI == null)
+                shopUI = GetComponentInParent<ShopUI>();
+            return shopUI;
+        }
+    }
+
+    private void Removeherb()
+    {
+        switch (targetherb)
+        {
+            case 1:
+                GameManager.Instance.herb1 = Mathf.Max(GameManager.Instance.herb1, GameManager.Instance.herb1Max);
+                return;
+            case 2:
+                GameManager.Instance.herb2 = Mathf.Max(GameManager.Instance.herb1, GameManager.Instance.herb2Max);
+                return;
+            case 3:
+                GameManager.Instance.herb3 = Mathf.Max(GameManager.Instance.herb1, GameManager.Instance.herb3Max);
+                return;
+        }
+    }
 
     private void Modifyherb(int count)
     {
@@ -63,10 +93,16 @@ public class HerbSlot : FluctItem
             return;
 
         if (GameManager.Instance.gold < curPrice)
+        {
+            _ShopUI?.PlayScript("Shop034");
             return;
+        }
 
         Modifyherb(1);
         GameManager.Instance.gold -= curPrice;
+
+        if (!string.IsNullOrEmpty(buyScript))
+            _ShopUI?.PlayScript(buyScript);
     }
 
     public void Sellherb()
@@ -79,6 +115,9 @@ public class HerbSlot : FluctItem
 
         Modifyherb(-1);
         GameManager.Instance.gold += curPrice;
+
+        if(!string.IsNullOrEmpty(sellScript))
+            _ShopUI?.PlayScript(sellScript);
     }
 
     private void DeListherb()
@@ -91,6 +130,7 @@ public class HerbSlot : FluctItem
         buyBtn.gameObject.SetActive(false);
         sellBtn.gameObject.SetActive(false);
         coolStartWave = GameManager.Instance.CurWave;
+        Removeherb();
     }
 
     private void OnListherb()
@@ -116,21 +156,6 @@ public class HerbSlot : FluctItem
         return Mathf.RoundToInt(curPrice * changeVal / 100);
     }
 
-    private void SetFluctImg(int val)
-    {
-        if (fluctImg == null)
-            return;
-
-        fluctImg.gameObject.SetActive(true);
-
-        if (val == 0)
-            fluctImg.gameObject.SetActive(false);
-        else if (val > 0)
-            fluctImg.sprite = increaseSprite;
-        else
-            fluctImg.sprite = decreaseSprite;
-    }
-
     public override void FluctPrice()
     {
         int token = Random.Range(0, 2);
@@ -140,11 +165,13 @@ public class HerbSlot : FluctItem
         else
             fluctVal += IncreasePrice();
 
+        fluctNoti?.SetNoti(fluctVal, curPrice);
+        
         curPrice += fluctVal;
         if(curPrice <= 0)
             DeListherb();
         priceText.text = curPrice.ToString();
-        SetFluctImg(fluctVal);
+
     }
 
     public override void UpdateCoolTime()

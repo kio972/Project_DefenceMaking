@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FluctType
+{
+    Both,
+    IncreaseOnly,
+    DecreaseOnly,
+    Fixed,
+}
+
 public abstract class FluctItem : MonoBehaviour
 {
     [SerializeField]

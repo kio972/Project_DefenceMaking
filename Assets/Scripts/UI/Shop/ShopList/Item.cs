@@ -7,7 +7,7 @@ public interface Item
     public void UseItem();
 }
 
-public interface Refreashable
+public interface Refreshable
 {
-    public void RefreashItem();
+    public void RefreshItem();
 }

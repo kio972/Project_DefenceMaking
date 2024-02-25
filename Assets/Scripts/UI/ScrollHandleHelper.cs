@@ -18,7 +18,7 @@ public class ScrollHandleHelper : MonoBehaviour
             return;
 
         Vector2 pivot = scrollbar.handleRect.pivot;
-        pivot.y = scrollbar.value;
+        pivot.y = Mathf.Clamp01(scrollbar.value);
         scrollbar.handleRect.pivot = pivot; 
     }
 }

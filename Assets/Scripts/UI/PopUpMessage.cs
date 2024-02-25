@@ -6,7 +6,9 @@ using TMPro;
 
 public class PopUpMessage : MonoBehaviour
 {
+    [SerializeField]
     Image toastBg;
+    [SerializeField]
     TextMeshProUGUI toastText;
 
     public float toastTime = 0.5f;
@@ -17,6 +19,11 @@ public class PopUpMessage : MonoBehaviour
     WaitForSeconds waitTime = null;
 
     private bool initState = false;
+
+    private void OnDisable()
+    {
+        gameObject.SetActive(false);
+    }
 
     private IEnumerator IToastMsg()
     {
