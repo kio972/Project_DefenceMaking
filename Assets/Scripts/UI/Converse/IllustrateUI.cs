@@ -30,7 +30,8 @@ public class IllustrateUI : MonoBehaviour
 
     public void SetAnim(string animName, bool loop, int trackNum = 0, string nextAnim = "")
     {
-        if(_Illust_spine.AnimationState.GetCurrent(trackNum).Animation.Name != animName)
+        Spine.TrackEntry track = _Illust_spine.AnimationState.GetCurrent(trackNum);
+        if (track == null || track.Animation.Name != animName)
             _Illust_spine.AnimationState.SetAnimation(trackNum, animName, loop);
         if(nextAnim != "")
             _Illust_spine.AnimationState.AddAnimation(trackNum, nextAnim, true, 0f);
