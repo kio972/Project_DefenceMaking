@@ -38,6 +38,9 @@ public class DeployUI : MonoBehaviour
 
     public void DeployEnd()
     {
+        if (curObject == null)
+            return;
+
         curObject.SetActive(false);
         curObject = null;
         curType = CardType.None;
