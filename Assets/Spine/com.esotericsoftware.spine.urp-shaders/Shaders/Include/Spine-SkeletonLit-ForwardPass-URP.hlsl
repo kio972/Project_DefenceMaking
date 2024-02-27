@@ -57,7 +57,7 @@ half3 ProcessLight(float3 positionWS, half3 normalWS, uint meshRenderingLayers, 
 
 half3 LightweightLightVertexSimplified(float3 positionWS, half3 normalWS, out half3 shadowedColor) {
 	Light mainLight = GetMainLight();
-	half3 attenuatedLightColor = mainLight.color * (mainLight.distanceAttenuation * mainLight.shadowAttenuation);
+	half3 attenuatedLightColor = mainLight.color * (mainLight.distanceAttenuation * mainLight.shadowAttenuation) * 0.5; //∫Ø∞Ê«‘;
 	half3 mainLightColor = LightingLambert(attenuatedLightColor, mainLight.direction, normalWS);
 
 	half3 additionalLightColor = half3(0, 0, 0);
