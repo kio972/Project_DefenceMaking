@@ -47,12 +47,15 @@ public class HerbSlot : FluctItem
         {
             case 1:
                 GameManager.Instance.herb1 = Mathf.Max(GameManager.Instance.herb1, GameManager.Instance.herb1Max);
+                GameManager.Instance.notificationBar?.SetMesseage("흑색 허브의 가치가 떨어져 폐기처분되었습니다.");
                 return;
             case 2:
                 GameManager.Instance.herb2 = Mathf.Max(GameManager.Instance.herb1, GameManager.Instance.herb2Max);
+                GameManager.Instance.notificationBar?.SetMesseage("자색 허브의 가치가 떨어져 폐기처분되었습니다.");
                 return;
             case 3:
                 GameManager.Instance.herb3 = Mathf.Max(GameManager.Instance.herb1, GameManager.Instance.herb3Max);
+                GameManager.Instance.notificationBar?.SetMesseage("백색 허브의 가치가 떨어져 폐기처분되었습니다.");
                 return;
         }
     }
@@ -158,6 +161,9 @@ public class HerbSlot : FluctItem
 
     public override void FluctPrice()
     {
+        if (curPrice == 0)
+            return;
+
         int token = Random.Range(0, 2);
         int fluctVal = 0;
         if (token == 0)
@@ -189,7 +195,7 @@ public class HerbSlot : FluctItem
         priceText.text = curPrice.ToString();
     }
 
-    private void Start()
+    public void Init()
     {
         OnListherb();
     }

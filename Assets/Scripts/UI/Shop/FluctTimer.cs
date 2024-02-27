@@ -17,6 +17,8 @@ public class FluctTimer : MonoBehaviour
 
     private FluctItem[] items;
 
+    public string fluctMessage;
+
     public void ResetTime()
     {
         curTime = 0;
@@ -44,6 +46,9 @@ public class FluctTimer : MonoBehaviour
 
         foreach (FluctItem item in items)
             item.FluctPrice();
+
+        if (!string.IsNullOrEmpty(fluctMessage))
+            GameManager.Instance.notificationBar?.SetMesseage(fluctMessage);
     }
 
     public void IncreaseTime()

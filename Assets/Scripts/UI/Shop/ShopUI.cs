@@ -51,6 +51,13 @@ public class ShopUI : MonoBehaviour
             PlayScript("Shop000");
     }
 
+    private void Awake()
+    {
+        HerbSlot[] herbSlots = GetComponentsInChildren<HerbSlot>(true);
+        foreach (HerbSlot slot in herbSlots)
+            slot.Init();
+    }
+
     void Update()
     {
         if (curWave == GameManager.Instance.CurWave)
