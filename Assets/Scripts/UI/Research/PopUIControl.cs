@@ -37,12 +37,14 @@ public class PopUIControl : MonoBehaviour
 
     private void ResetClamped()
     {
-        scrollRect.movementType = ScrollRect.MovementType.Elastic;
+        if (scrollRect != null)
+            scrollRect.movementType = ScrollRect.MovementType.Elastic;
     }
 
     public virtual void ResetPopUp()
     {
-        scrollRect.movementType = ScrollRect.MovementType.Clamped;
+        if (scrollRect != null)
+            scrollRect.movementType = ScrollRect.MovementType.Clamped;
         contentRect.transform.position = originTransform.position;
         popUpRect.gameObject.SetActive(false);
         curTarget = null;

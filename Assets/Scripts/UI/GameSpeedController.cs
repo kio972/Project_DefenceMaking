@@ -106,6 +106,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedZero()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         prevState = (int)GameManager.Instance.timeScale;
 
         GameManager.Instance.timeScale = 0;
@@ -114,6 +117,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedNormal()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         if (!Is_Game_Continuable())
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
@@ -143,6 +149,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedFast()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         if (!Is_Game_Continuable())
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");

@@ -134,6 +134,7 @@ public class InputManager : IngameSingleton<InputManager>
 
         SpeedControlCheck();
         CameraResetCheck();
-        TileClickCheck();
+        if(!GameManager.Instance.tileLock)
+            TileClickCheck();
     }
 }

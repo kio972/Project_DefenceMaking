@@ -50,6 +50,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public List<MonsterSpawner> monsterSpawner = new List<MonsterSpawner>();
 
+    public List<Trap> trapList = new List<Trap>();
+
     public PlayerBattleMain king;
 
     public float timeScale;
@@ -70,6 +72,7 @@ public class GameManager : IngameSingleton<GameManager>
     public bool speedLock = false;
     public bool spawnLock = false;
     public bool cardLock = false;
+    public bool tileLock = false;
 
     public int loop = 0;
 
@@ -260,7 +263,7 @@ public class GameManager : IngameSingleton<GameManager>
         }
     }
 
-    private void SpawnKing()
+    public void SpawnKing()
     {
         PlayerBattleMain king = Resources.Load<PlayerBattleMain>("Prefab/Monster/King");
         if(king != null)
@@ -300,6 +303,19 @@ public class GameManager : IngameSingleton<GameManager>
             monster.curHp = Mathf.Max(monster.curHp + healAmount, monster.maxHp);
         }
     }
+
+    public void ForceInit()
+    {
+        if (ingameUI == null)
+            ingameUI = FindObjectOfType<InGameUI>();
+
+        if (popUpMessage == null)
+            popUpMessage = FindObjectOfType<PopUpMessage>(true);
+
+        SetWaveSpeed();
+
+        isInit = true;
+    }    
 
     public void Init()
     {

@@ -162,12 +162,12 @@ public class ResearchPopup : MonoBehaviour
         completePart.SetActive(curState == ResearchState.Complete);
     }
 
-    public void ResearchInteract()
+    public void ResearchInteract(bool blockStop = false)
     {
         ResearchState curState = researchState;
         if (curState == ResearchState.Incomplete)
             StartResearch();
-        else if (curState == ResearchState.InProgress)
+        else if (curState == ResearchState.InProgress && !blockStop)
             StopResearch();
 
         if(curState != researchState)

@@ -37,6 +37,8 @@ public class Trap : MonoBehaviour
         gameObject.SetActive(false);
         if (NodeManager.Instance._GuideState == GuideState.Trap)
             NodeManager.Instance.SetGuideState(GuideState.Trap);
+
+        GameManager.Instance.trapList.Remove(this);
     }
 
     private void ExcuteAttack()
@@ -99,6 +101,7 @@ public class Trap : MonoBehaviour
 
         attackCount = 0;
 
+        GameManager.Instance.trapList.Add(this);
         isInit = true;
     }
 

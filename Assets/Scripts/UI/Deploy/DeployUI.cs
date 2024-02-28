@@ -13,6 +13,20 @@ public class DeployUI : MonoBehaviour
 
     [SerializeField]
     GameObject uiPage;
+    public int DeployStep
+    {
+        get
+        {
+            if (!uiPage.activeSelf && !exitBtn.gameObject.activeSelf)
+                return 0;
+            else if (uiPage.activeSelf)
+                return 1;
+            else if (exitBtn.gameObject.activeSelf)
+                return 2;
+
+            return 0;
+        }
+    }
 
     private Dictionary<string, GameObject> guideObjects = new Dictionary<string, GameObject>();
 
@@ -32,7 +46,15 @@ public class DeployUI : MonoBehaviour
     {
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
-        if(value)
+        if (value)
+            SetItem();
+    }
+
+    public void SetActive(bool value, bool updateItem = true)
+    {
+        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
+        GameManager.Instance.SetPause(value);
+        if(value && updateItem)
             SetItem();
     }
 
@@ -108,6 +130,8 @@ public class DeployUI : MonoBehaviour
 
             GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
+
+            //DeployEnd();
         }
     }
 

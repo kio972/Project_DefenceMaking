@@ -32,6 +32,7 @@ public class DeploySlot : MonoBehaviour
 
     private DeployUI delpoyUI;
 
+    [SerializeField]
     private string prefabName;
 
     [SerializeField]
