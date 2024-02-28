@@ -18,9 +18,26 @@ public class FluctNoti : MonoBehaviour
     [SerializeField]
     private Sprite decreaseSprite;
 
+    private int coolTime;
+
+    public void DecreaseCoolTime()
+    {
+        coolTime--;
+        fluctImg.gameObject.SetActive(false);
+        fluctText.text = "재입고 대기중 : " + coolTime.ToString();
+    }
+
+    public void SetCoolTime(int coolTime)
+    {
+        this.coolTime = coolTime + 1;
+        fluctImg.gameObject.SetActive(false);
+        fluctText.text = "재입고 대기중 : " + coolTime.ToString();
+    }
+
     public void SetNoti(float fluctVal, float originVal)
     {
         gameObject.SetActive(fluctVal != 0);
+        fluctImg.gameObject.SetActive(true);
 
         if (fluctVal > 0)
         {

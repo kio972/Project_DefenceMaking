@@ -9,6 +9,8 @@ public class RotateImg : MonoBehaviour
 
     public float rotationSpeed = 10;
 
+    public bool reverseDircetion = false;
+
     public void SetDefault()
     {
         imgRect.rotation = Quaternion.identity;
@@ -17,6 +19,8 @@ public class RotateImg : MonoBehaviour
     private void RotateImage()
     {
         float rotationAngle = rotationSpeed * Time.deltaTime;
+        if (reverseDircetion)
+            rotationAngle *= -1f;
         imgRect.Rotate(0f, 0f, rotationAngle);
     }
 
