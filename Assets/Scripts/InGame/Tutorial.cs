@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
+using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
@@ -49,6 +49,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField]
     private GameObject delpoyArrow;
     [SerializeField]
+    private GameObject delpoyArrow2;
+    [SerializeField]
     private GameObject[] pathArrowGroup;
     [SerializeField]
     private GameObject delpoyExitArrow;
@@ -68,6 +70,11 @@ public class Tutorial : MonoBehaviour
     private GameObject arrowRight;
     [SerializeField]
     private GameObject arrowRight2;
+
+    [SerializeField]
+    private GameObject trapDeploySlot;
+    [SerializeField]
+    private GameObject slimeDeploySlot;
 
     [SerializeField]
     private InGameUI ingameUI;
@@ -174,6 +181,7 @@ public class Tutorial : MonoBehaviour
             yield return null;
 
         //모험가 침입
+        Vector3 prevPos = GameManager.Instance.cameraController._GuidePos;
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.spawnLock = true;
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.startPoint.transform.position);
@@ -183,6 +191,7 @@ public class Tutorial : MonoBehaviour
         StoryManager.Instance.EnqueueScript("Dan003");
         while (!StoryManager.Instance.IsScriptQueueEmpty)
             yield return null;
+        GameManager.Instance.cameraController.CamMoveToPos(prevPos);
         GameManager.Instance.cameraController.SetCamZoom(1);
         GameManager.Instance.speedLock = true;
         arrowUp.transform.position = manageBtnPos.position;
@@ -220,7 +229,8 @@ public class Tutorial : MonoBehaviour
             delpoyExitArrow2.SetActive(managePage.DeployStep == 1);
             yield return null;
         }
-
+        delpoyExitArrow.SetActive(false);
+        delpoyExitArrow2.SetActive(false);
         yield return StartCoroutine(WaitForSpeed1());
     }
 
@@ -264,8 +274,8 @@ public class Tutorial : MonoBehaviour
             yield return null;
         }
         slimeSlot.SetResearchState(ResearchState.Complete);
+        slimeDeploySlot.SetActive(true);
 
-        GameManager.Instance.speedLock = false;
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.speedLock = true;
         yield return new WaitForSeconds(1.5f);
@@ -274,16 +284,11 @@ public class Tutorial : MonoBehaviour
         while (!StoryManager.Instance.IsScriptQueueEmpty)
             yield return null;
 
-        GameManager.Instance.speedLock = false;
-        GameManager.Instance.speedController.SetSpeedZero();
-        GameManager.Instance.speedLock = true;
-
-
         ingameUI.SetRightUI(true, 0.1f);
         ingameUI.rightUILock = false;
         rightBlocker.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         RectTransform rect = helpBtn.GetComponent<RectTransform>();
         rect.pivot = new Vector2(0.5f, 0.5f);
@@ -310,25 +315,62 @@ public class Tutorial : MonoBehaviour
             yield return null;
         }
 
+        GameManager.Instance.speedLock = true;
         pathArrowGroup[1].SetActive(false);
-        print("몬스터 설치 진행예정");
+        
+        Button[] btns = trapDeploySlot.GetComponentsInChildren<Button>(true);
+        foreach (Button btn in btns)
+            Destroy(btn);
+        yield return null;
 
-        ////방타일있는지 체크
-        //if (!NodeManager.Instance.HaveSingleRoom)
-        //{
-        //    arrowDown.SetActive(true);
-        //    arrowDown.transform.position = roomTransform.position + (Vector3.up * 100);
-        //}
-
-        //while (!NodeManager.Instance.HaveSingleRoom)
-        //{
-        //    arrowDown.gameObject.SetActive(!InputManager.Instance.settingCard);
-        //    arrowDown.transform.position = roomTransform.position + (Vector3.up * 100);
-        //    yield return null;
-        //}
-
-        while (true)
+        rect.pivot = new Vector2(0.5f, 1f);
+        SetHelpBtn(true, manageBtnPos.position, 0);
+        arrowUp.transform.position = manageBtnPos.position;
+        while (GameManager.Instance.monsterSpawner.Count == 0)
+        {
+            arrowUp.SetActive(managePage.DeployStep == 0);
+            pathArrowGroup[1].SetActive(managePage.DeployStep == 2);
             yield return null;
+        }
+
+        SetHelpBtn(false);
+        delpoyArrow2.SetActive(false);
+        pathArrowGroup[1].SetActive(false);
+
+        while (managePage.DeployStep != 0)
+        {
+            delpoyExitArrow.SetActive(managePage.DeployStep == 2);
+            delpoyExitArrow2.SetActive(managePage.DeployStep == 1);
+            yield return null;
+        }
+
+        yield return StartCoroutine(WaitForSpeed1());
+    }
+
+    private IEnumerator Dan006()
+    {
+        while(GameManager.Instance._MonsterList.Count == 0)
+            yield return null;
+
+        Vector3 prevPos = GameManager.Instance.cameraController._GuidePos;
+        GameManager.Instance.speedController.SetSpeedZero();
+        GameManager.Instance.speedLock = true;
+        GameManager.Instance.cameraController.CamMoveToPos(GameManager.Instance._MonsterList[0].transform.position);
+        GameManager.Instance.cameraController.SetCamZoom(3);
+        
+        StoryManager.Instance.EnqueueScript("Dan006");
+        while (!StoryManager.Instance.IsScriptQueueEmpty)
+            yield return null;
+        GameManager.Instance.cameraController.CamMoveToPos(prevPos);
+        GameManager.Instance.cameraController.SetCamZoom(1);
+
+        yield return new WaitForSeconds(1);
+
+        GameManager.Instance.spawnLock = false;
+        GameManager.Instance.speedLock = false;
+        GameManager.Instance.mapBuilder.SetRamdomTile(4, 5);
+        GameManager.Instance.cardDeckController.Mulligan();
+        GameManager.Instance.SkipDay();
     }
 
     private IEnumerator WaitForSpeed1()
@@ -361,43 +403,9 @@ public class Tutorial : MonoBehaviour
 
         yield return StartCoroutine(Dan005());
 
-        //모험가 침입
+        yield return StartCoroutine(Dan006());
 
-        GameManager.Instance.cameraController.SetCamZoom(1);
-        
-
-        ingameUI.SetRightUI(true, 1f, () => { arrowRight.gameObject.SetActive(true); });
-        ingameUI.rightUILock = false;
-        rightBlocker.SetActive(true);
-
-
-        rightBlocker.SetActive(false);
-        topBlocker.SetActive(false);
-        arrowRight.gameObject.SetActive(false);
-        GameManager.Instance.speedLock = false;
-
-        while (GameManager.Instance.adventurersList.Count != 0)
-        {
-            if(arrowRight.gameObject.activeSelf)
-                arrowRight.gameObject.SetActive(false);
-            yield return null;
-        }
-
-        StoryManager.Instance.EnqueueScript("Dan004");
-        GameManager.Instance.spawnLock = false;
-
-        while (!StoryManager.Instance.IsScriptQueueEmpty)
-            yield return null;
-
-        GameManager.Instance.mapBuilder.SetRamdomTile(4, 5);
-        GameManager.Instance.SkipDay();
-        //튜토리얼 끝날 시
-
-        while (GameManager.Instance.cardDeckController.hand_CardNumber != 10)
-            yield return null;
-        GameManager.Instance.isPause = true;
-        yield return new WaitForSeconds(1f);
-        StoryManager.Instance.EnqueueScript("Dan005");
+        Destroy(gameObject);
     }
 
     // Start is called before the first frame update

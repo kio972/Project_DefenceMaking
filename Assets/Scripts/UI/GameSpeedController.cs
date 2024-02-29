@@ -22,7 +22,10 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedPrev(bool showPopUp = true, bool setZero = true)
     {
-        switch(prevState)
+        if (GameManager.Instance.speedLock)
+            return;
+
+        switch (prevState)
         {
             case 0:
                 if (setZero)

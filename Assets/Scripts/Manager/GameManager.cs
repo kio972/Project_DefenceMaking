@@ -47,7 +47,7 @@ public class GameManager : IngameSingleton<GameManager>
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
     private List<Monster> monsterList = new List<Monster>();
-
+    public List<Monster> _MonsterList { get => monsterList; }
     public List<MonsterSpawner> monsterSpawner = new List<MonsterSpawner>();
 
     public List<Trap> trapList = new List<Trap>();
