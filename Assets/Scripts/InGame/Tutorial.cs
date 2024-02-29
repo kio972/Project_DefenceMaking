@@ -365,9 +365,10 @@ public class Tutorial : MonoBehaviour
         GameManager.Instance.cameraController.SetCamZoom(1);
 
         yield return new WaitForSeconds(1);
-
-        GameManager.Instance.spawnLock = false;
         GameManager.Instance.speedLock = false;
+        GameManager.Instance.spawnLock = false;
+        GameManager.Instance.cardLock = false;
+        GameManager.Instance.tileLock = false;
         GameManager.Instance.mapBuilder.SetRamdomTile(4, 5);
         GameManager.Instance.cardDeckController.Mulligan();
         GameManager.Instance.SkipDay();
