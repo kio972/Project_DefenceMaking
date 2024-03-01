@@ -330,6 +330,8 @@ public class Tutorial : MonoBehaviour
         {
             arrowUp.SetActive(managePage.DeployStep == 0);
             pathArrowGroup[1].SetActive(managePage.DeployStep == 2);
+            if(pathArrowGroup[1].activeSelf)
+                pathArrowGroup[1].transform.position = Camera.main.WorldToScreenPoint(targetPos);
             yield return null;
         }
 
