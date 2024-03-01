@@ -79,7 +79,7 @@ public class SlotInfo : MonoBehaviour
         }
         else
         {
-            card_Duration.text = data.defense.ToString();
+            card_Duration.text = data.duration.ToString();
             card_maxTarget.text = data.maxTarget.ToString();
         }
     }
