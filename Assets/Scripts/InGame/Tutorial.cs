@@ -74,7 +74,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField]
     private GameObject trapDeploySlot;
     [SerializeField]
-    private GameObject slimeDeploySlot;
+    private DeploySlot slimeDeploySlot;
 
     [SerializeField]
     private InGameUI ingameUI;
@@ -273,8 +273,14 @@ public class Tutorial : MonoBehaviour
                 break;
             yield return null;
         }
+        if (GameManager.Instance.gold < 50)
+            GameManager.Instance.gold = 50;
+
         slimeSlot.SetResearchState(ResearchState.Complete);
-        slimeDeploySlot.SetActive(true);
+        int slimeIndex = UtilHelper.Find_Data_Index("s_m10001", DataManager.Instance.Battler_Table, "id");
+        slimeDeploySlot.Init(DataManager.Instance.Battler_Table[slimeIndex]);
+        slimeDeploySlot.SendInfo();
+        slimeDeploySlot.gameObject.SetActive(true);
 
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.speedLock = true;
