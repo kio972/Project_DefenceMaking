@@ -38,7 +38,14 @@ public class GameManager : IngameSingleton<GameManager>
     private bool dailyIncome = true;
 
     private int curWave = 0; 
-    public int CurWave { get => curWave; }
+    public int CurWave
+    {
+        get
+        {
+            int loopVal = curWave == -1 ? 1 : 0;
+            return (loop * DataManager.Instance.WaveLevelTable.Count) + curWave + loopVal;
+        }
+    }
 
     public bool isInBattle = false;
 
@@ -249,7 +256,7 @@ public class GameManager : IngameSingleton<GameManager>
             timer = 0f;
             dailyIncome = true;
 
-            if(!spawnLock)
+            if(!spawnLock && !allWaveSpawned)
             {
                 curWave++;
                 //몬스터 웨이브 스폰
@@ -257,7 +264,7 @@ public class GameManager : IngameSingleton<GameManager>
             }
 
             //이동가능타일 잠금
-            NodeManager.Instance.LockMovableTiles();
+            //NodeManager.Instance.LockMovableTiles();
 
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
         }
