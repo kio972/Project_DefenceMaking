@@ -47,23 +47,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c983529d044c4cf4e9199b21ebb48e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
   curHp: 12
   maxHp: 12
   armor: 0
   attackSpeed: 1
   attackRange: 0
+  splashAttack: 0
+  splashDamage: 0
+  splashRange: 0
   unitType: 0
   attackType: 0
   rotatonAxis: {fileID: 6024107003459182810}
   hpPivot: {fileID: 3736713600125128576}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
   attackSound: {fileID: 8300000, guid: a1d88aed740410048badb875702f2c2a, type: 3}
   deadSound: {fileID: 8300000, guid: 3f6cf1f982a7e1b4587dc0fff38527e6, type: 3}
   battlerID: s_a20001
+  attackEffect: {fileID: 0}
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -158,9 +162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1160f863ceae4464bad71531cabc50e6, type: 2}
-  - {fileID: 2100000, guid: 078c9c12df8b2f0448857f8bf580bf2d, type: 2}
-  - {fileID: 2100000, guid: 1160f863ceae4464bad71531cabc50e6, type: 2}
+  - {fileID: 2100000, guid: 50e19659e6341994d97861eef31eab55, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -180,7 +182,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &4383217014043702367
 Animator:

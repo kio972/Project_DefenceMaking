@@ -84,7 +84,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &7149043362582349741
 Animator:
@@ -318,12 +318,15 @@ MonoBehaviour:
   hpPivot: {fileID: 3491947175668925710}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
   attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
   deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m40003
+  attackEffect: {fileID: 0}
   isHide: 1
+  holdBackCount: 1
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0
