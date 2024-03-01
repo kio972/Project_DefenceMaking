@@ -9,6 +9,8 @@ public class RoadEmptyMaterialProperties : MonoBehaviour
     [SerializeField]
     public Color baseColor = Color.white;
 
+    [Range(0, 1)]
+    public float bumpScale = 1;
 
     static MaterialPropertyBlock block;
 
@@ -19,7 +21,7 @@ public class RoadEmptyMaterialProperties : MonoBehaviour
 
     public void SetColor(Color color) //함수명 변경됨
     {
-        this.baseColor = color;
+        this.baseColor = color * bumpScale;
 
         if (block == null)
         {
