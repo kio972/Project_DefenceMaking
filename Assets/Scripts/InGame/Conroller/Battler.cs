@@ -466,8 +466,8 @@ public class Battler : FSM<Battler>
     {
         if (rotatonAxis != null)
         {
-            rotatonAxis.rotation = TargetRoation(GameManager.Instance.cameraController.Camera_Level);
-            prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
+            rotatonAxis.rotation = TargetRoation(1);
+            //prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
         }
     }
 
