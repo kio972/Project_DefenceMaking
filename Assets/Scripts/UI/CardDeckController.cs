@@ -456,6 +456,7 @@ public class CardDeckController : MonoBehaviour
         deckDrawBtn.onClick.AddListener(DrawDeck);
         deckBtnImg = deckDrawBtn.GetComponent<Image>();
         SetDeck();
+        UpdateDeckCount();
         initState = true;
     }
 
