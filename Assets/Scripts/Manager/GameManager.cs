@@ -85,6 +85,7 @@ public class GameManager : IngameSingleton<GameManager>
 
     [SerializeField]
     InGameUI ingameUI;
+    public InGameUI _InGameUI { get => ingameUI; }
 
     private int totalMana;
     private int curMana;
