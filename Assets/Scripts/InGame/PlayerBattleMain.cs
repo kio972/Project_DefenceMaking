@@ -21,6 +21,8 @@ public class PlayerBattleMain : Battler
         PlayDamageText(1, UnitType.Player, false);
 
         attacker.GetDamage(attacker.maxHp + attacker.armor, this);
+
+        GameManager.Instance._InGameUI.StartBloodEffect();
     }
 
     public void MoveToBossRoom()

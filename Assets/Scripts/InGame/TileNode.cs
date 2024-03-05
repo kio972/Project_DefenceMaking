@@ -31,7 +31,7 @@ public class TileNode : MonoBehaviour
 
     public bool setAvail = false;
     [SerializeField]
-    private PerObjectMaterialProperties guideColor;
+    private RoadEmptyMaterialProperties guideColor;
 
     public void DeActiveGuide()
     {
@@ -85,7 +85,7 @@ public class TileNode : MonoBehaviour
             if (neighborNodeDic.ContainsKey(direction))
             {
                 TileNode neighborNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance.activeNodes.Contains(neighborNode) || neighborNode.curTile == null)
+                if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || neighborNode.curTile == null)
                     continue;
 
                 if (neighborNode.curTile.IsDormant && !isRestricted)

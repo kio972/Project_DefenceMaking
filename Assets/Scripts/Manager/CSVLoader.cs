@@ -30,7 +30,7 @@ public class CSVLoader
 
                 value = value.Replace("<br>", "\n");
                 value = value.Replace("<c>", ",");
-
+                value = value.Replace("\"", "");
                 dic.Add(heads[j], value);
             }
 

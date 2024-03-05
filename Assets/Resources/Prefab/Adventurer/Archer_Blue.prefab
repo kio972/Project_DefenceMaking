@@ -61,11 +61,13 @@ MonoBehaviour:
   hpPivot: {fileID: 3736713600125128576}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
   attackSound: {fileID: 8300000, guid: a1d88aed740410048badb875702f2c2a, type: 3}
   deadSound: {fileID: 8300000, guid: 3f6cf1f982a7e1b4587dc0fff38527e6, type: 3}
   battlerID: s_a20002
+  attackEffect: {fileID: 0}
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -180,7 +182,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &4383217014043702367
 Animator:

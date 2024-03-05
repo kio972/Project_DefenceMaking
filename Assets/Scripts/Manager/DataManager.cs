@@ -14,12 +14,16 @@ public class DataManager : Singleton<DataManager>
 
     private List<Dictionary<string, object>> buff_Table;
 
+    private List<Dictionary<string, object>> research_Table;
+    private List<Dictionary<string, object>> scriptsMalpongsun_Table;
 
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
     public List<Dictionary<string, object>> TimeRate_Table { get => timeRate_Table; }
     public List<Dictionary<string, object>> Language_Table { get => language_Table; }
+    public List<Dictionary<string, object>> Research_Table { get => research_Table; }
+    public List<Dictionary<string, object>> ScriptsMalpongsun_Table { get => scriptsMalpongsun_Table; }
 
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
@@ -29,6 +33,8 @@ public class DataManager : Singleton<DataManager>
     private List<int> pathCard_Indexs;
     private List<int> roomCard_Indexs;
     private List<int> roomPartCard_Index;
+    private List<int> roomTypeCard_Indexs;
+
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
@@ -80,6 +86,22 @@ public class DataManager : Singleton<DataManager>
             return null;
 
         return scriptsDic[key];
+    }
+
+
+    public List<int> RoomTypeCard_Indexs
+    {
+        get
+        {
+            if(roomTypeCard_Indexs == null)
+            {
+                roomTypeCard_Indexs = new List<int>(RoomCard_Indexs);
+                foreach (int val in RoomPartCard_Indexs)
+                    roomTypeCard_Indexs.Add(val);
+            }
+
+            return roomTypeCard_Indexs;
+        }
     }
 
     public List<int> TileCard_Indexs
@@ -194,14 +216,25 @@ public class DataManager : Singleton<DataManager>
         }
     }
 
+    public Dictionary<string, object> GetMalpoongsunScript(string id)
+    {
+        int index = UtilHelper.Find_Data_Index(id, scriptsMalpongsun_Table, "id");
+        if (index == -1)
+            return null;
+
+        return scriptsMalpongsun_Table[index];
+    }
+
     // csv파일 주소(Resource폴더 내)
-    private string wave_Table_DataPath = "Data/waveData";
-    private string deckList_DataPath = "Data/deckList";
-    private string battler_Table_DataPath = "Data/battlerTable";
-    private string timeRate_Table_DataPath = "Data/timeData";
-    private string language_Table_DataPath = "Data/languageData";
-    private string scripts_Table_DataPath = "Data/scriptData";
-    private string buff_Table_DataPath = "Data/buffData";
+    private readonly string wave_Table_DataPath = "Data/waveData";
+    private readonly string deckList_DataPath = "Data/deckList";
+    private readonly string battler_Table_DataPath = "Data/battlerTable";
+    private readonly string timeRate_Table_DataPath = "Data/timeData";
+    private readonly string language_Table_DataPath = "Data/languageData";
+    private readonly string scripts_Table_DataPath = "Data/scriptData";
+    private readonly string buff_Table_DataPath = "Data/buffData";
+    private readonly string research_Table_DataPath = "Data/researchData";
+    private readonly string scriptsMalpongsun_Table_DataPath = "Data/scriptMalpongsunData";
 
     private void Init()
     {
@@ -213,5 +246,7 @@ public class DataManager : Singleton<DataManager>
         language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
         scripts_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scripts_Table_DataPath));
         buff_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(buff_Table_DataPath));
+        research_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(research_Table_DataPath));
+        scriptsMalpongsun_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scriptsMalpongsun_Table_DataPath));
     }
 }

@@ -18,11 +18,23 @@ public class IllustrateUI : MonoBehaviour
 
     public bool fadeInState = false;
 
+    private SkeletonGraphic _Illust_spine
+    {
+        get
+        {
+            if (illust_spine == null)
+                illust_spine = GetComponent<SkeletonGraphic>();
+            return illust_spine;
+        }
+    }
+
     public void SetAnim(string animName, bool loop, int trackNum = 0, string nextAnim = "")
     {
-        illust_spine.AnimationState.SetAnimation(trackNum, animName, loop);
+        Spine.TrackEntry track = _Illust_spine.AnimationState.GetCurrent(trackNum);
+        if (track == null || track.Animation.Name != animName)
+            _Illust_spine.AnimationState.SetAnimation(trackNum, animName, loop);
         if(nextAnim != "")
-            illust_spine.AnimationState.AddAnimation(trackNum, nextAnim, true, 0f);
+            _Illust_spine.AnimationState.AddAnimation(trackNum, nextAnim, true, 0f);
     }
 
     private IEnumerator SetAlphaColor(SkeletonGraphic graphic, Color targetColor, float lerpTime = 0.2f, System.Action callback = null)

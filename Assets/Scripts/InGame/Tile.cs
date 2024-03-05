@@ -11,7 +11,8 @@ public enum TileType
     Room,
     End,
     Door,
-    Room_Single
+    Room_Single,
+    Environment,
 }
 
 public class Tile : MonoBehaviour
@@ -37,7 +38,9 @@ public class Tile : MonoBehaviour
     public TileNode curNode;
 
     private bool removable = false;
-    public bool IsRemovable
+    public bool IsRemovable { get { return !removable || isDormant ? false : true; } }
+
+    public bool IsRemovableNow
     {
         get
         {
@@ -55,13 +58,13 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public bool movable = false;
+    private bool movable = false;
 
     private bool isDormant = false;
 
     public bool IsDormant { get => isDormant; }
-
-    public bool Movable
+    public bool Movable { get => movable; set { movable = value; } }
+    public bool MovableNow
     {
         get
         {
@@ -79,7 +82,9 @@ public class Tile : MonoBehaviour
     public Tile twin = null;
 
     public Trap trap = null;
-    public bool haveMonster = false;
+
+    private MonsterSpawner spawner;
+    public bool HaveSpawner { get { return spawner == null ? false : true; } }
 
     public bool IsBigRoom = false;
 
@@ -107,13 +112,13 @@ public class Tile : MonoBehaviour
         if(curNode != null)
         {
             curNode.curTile = null;
-            NodeManager.Instance.activeNodes.Remove(curNode);
+            NodeManager.Instance.SetActiveNode(curNode, false);
         }
 
         transform.SetParent(nextNode.transform, false);
 
         curNode = nextNode;
-        if(isActive && !NodeManager.Instance.activeNodes.Contains(nextNode))
+        if(isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
             NodeManager.Instance.SetActiveNode(nextNode, true);
 
         nextNode.curTile = this;
@@ -128,6 +133,7 @@ public class Tile : MonoBehaviour
         }
 
         NodeManager.Instance.DormantTileCheck();
+        GameManager.Instance.UpdateTotalMana();
 
         if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_Game_Continuable())
             GameManager.Instance.speedController.SetSpeedZero();
@@ -339,19 +345,26 @@ public class Tile : MonoBehaviour
         }
     }
 
+    public void AddSpawner(MonsterSpawner spawner)
+    {
+        this.spawner = spawner;
+    }
+
+    public void RemoveSpawner()
+    {
+        spawner.Dead();
+        spawner = null;
+    }
+
     public void RemoveTile()
     {
         NodeManager.Instance.SetActiveNode(curNode, false);
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
-        Destroy(this.gameObject, 1.0f);
-    }
 
-    public void CallTileControlUI()
-    {
-        TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
-        bool removable = !this.removable || isDormant ? false : true;
-        tileControlUI?.SetButton(movable, removable);
+        GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
+
+        Destroy(this.gameObject, 1.0f);
     }
 
     public void Init(TileNode targetNode, bool dormant = false, bool removable = true, bool playAnim = true)
@@ -383,7 +396,7 @@ public class Tile : MonoBehaviour
                 twin.RotateTile();
             else if(Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
                 twin.RotateTile(true);
-            if (!Movable || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
+            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
             {
                 EndMoveing();
             }

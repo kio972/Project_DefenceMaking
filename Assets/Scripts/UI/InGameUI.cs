@@ -13,6 +13,8 @@ public class InGameUI : MonoBehaviour
 
     [SerializeField]
     private RectTransform uiRight2;
+    [SerializeField]
+    private BloodEffect bloodEffect;
 
     private Vector2 originPos_uiTop;
     private Vector2 originPos_uiRight;
@@ -29,6 +31,11 @@ public class InGameUI : MonoBehaviour
     private Coroutine right2Coroutine;
 
     public bool rightUILock = false;
+
+    public void StartBloodEffect()
+    {
+        bloodEffect?.StartBloodEffect();
+    }
 
     public void HideRightBtns(bool value = true)
     {

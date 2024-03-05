@@ -17,7 +17,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     //활성화 노드들의 이웃노드 중 비활성화 노드
     public List<TileNode> virtualNodes = new List<TileNode>();
     //활성화 상태의 노드
-    public List<TileNode> activeNodes = new List<TileNode>();
+    private List<TileNode> activeNodes = new List<TileNode>();
+    public List<TileNode> _ActiveNodes { get => activeNodes; }
 
     public List<TileNode> emptyNodes = new List<TileNode>();
 
@@ -64,6 +65,15 @@ public class NodeManager : IngameSingleton<NodeManager>
             }
         }
         return null;
+    }
+
+    public void ResetNode()
+    {
+        activeNodes = new List<TileNode>();
+        emptyNodes = new List<TileNode>();
+        allNodes = new List<TileNode>();
+        roomTiles = new List<CompleteRoom>();
+        dormantTile = new List<Tile>();
     }
 
 
@@ -120,8 +130,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile.movable && node != endPoint)
-                node.curTile.movable = false;
+            if (node.curTile != null && node.curTile.Movable && node != endPoint)
+                node.curTile.Movable = false;
         }
 
         if (guideState == GuideState.None)
@@ -138,7 +148,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         //가이드 노란색으로 설정
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile.movable)
+            if (node.curTile != null && node.curTile.Movable)
             {
                 node.SetGuideColor(Color.yellow);
             }
@@ -151,7 +161,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (node.curTile._TileType == TileType.Room || node.curTile._TileType == TileType.Room_Single)
             {
-                if (!node.curTile.haveMonster)
+                if (!node.curTile.HaveSpawner)
                     return true;
             }
         }

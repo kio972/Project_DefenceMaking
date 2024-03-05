@@ -15,6 +15,13 @@ public class GameManager : IngameSingleton<GameManager>
     public float Timer { get => timer; }
 
     public int gold = 0;
+    public int herb1 = 0;
+    public int herb2 = 0;
+    public int herb3 = 0;
+
+    public int herb1Max = 0;
+    public int herb2Max = 0;
+    public int herb3Max = 0;
 
     public int startCardNumber = 6;
     public CardDeckController cardDeckController;
@@ -24,12 +31,21 @@ public class GameManager : IngameSingleton<GameManager>
     public MapBuilder mapBuilder;
     public Canvas cameraCanvas;
     public Canvas worldCanvas;
+    public NotificationControl notificationBar;
 
-    public int king_Hp = 20;
+
+    //public int king_Hp = 20;
     private bool dailyIncome = true;
 
     private int curWave = 0; 
-    public int CurWave { get => curWave; }
+    public int CurWave
+    {
+        get
+        {
+            int loopVal = curWave == -1 ? 1 : 0;
+            return (loop * DataManager.Instance.WaveLevelTable.Count) + curWave + loopVal;
+        }
+    }
 
     public bool isInBattle = false;
 
@@ -37,7 +53,11 @@ public class GameManager : IngameSingleton<GameManager>
 
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
-    public List<Monster> monsterList = new List<Monster>();
+    private List<Monster> monsterList = new List<Monster>();
+    public List<Monster> _MonsterList { get => monsterList; }
+    public List<MonsterSpawner> monsterSpawner = new List<MonsterSpawner>();
+
+    public List<Trap> trapList = new List<Trap>();
 
     public PlayerBattleMain king;
 
@@ -59,11 +79,38 @@ public class GameManager : IngameSingleton<GameManager>
     public bool speedLock = false;
     public bool spawnLock = false;
     public bool cardLock = false;
+    public bool tileLock = false;
 
     public int loop = 0;
 
     [SerializeField]
     InGameUI ingameUI;
+    public InGameUI _InGameUI { get => ingameUI; }
+
+    private int totalMana;
+    private int curMana;
+
+    public int _TotalMana { get => totalMana; }
+    public int _CurMana { get => curMana; set { curMana = value; } }
+
+    public void UpdateTotalMana()
+    {
+        int totalMana = 0;
+        foreach(TileNode node in NodeManager.Instance._ActiveNodes)
+        {
+            if (node.curTile == null || node.curTile.IsDormant)
+                continue;
+
+            totalMana += node.curTile.RoomMana;
+        }
+
+        this.totalMana = totalMana;
+    }
+
+    public void IncreaseWave()
+    {
+        curWave++;
+    }
 
     public void SetWave(int val)
     {
@@ -76,6 +123,24 @@ public class GameManager : IngameSingleton<GameManager>
         curWave = -1;
         isPause = true;
         StoryManager.Instance.EnqueueScript("Dan100");
+    }
+
+    public void SetMonseter(Monster monster, bool value)
+    {
+        if (monster == null)
+            return;
+
+        if (value)
+        {
+            monsterList.Add(monster);
+            curMana += monster._RequiredMana;
+        }
+        else
+        {
+            monsterList.Remove(monster);
+            curMana -= monster._RequiredMana;
+        }
+
     }
 
     public bool IsMonsterOnTile(TileNode tile)
@@ -136,7 +201,7 @@ public class GameManager : IngameSingleton<GameManager>
         bool bossTileMove = true;
         if (adventurer_entered_BossRoom.Count > 0)
             bossTileMove = false;
-        king.CurTile.curTile.movable = bossTileMove;
+        king.CurTile.curTile.Movable = bossTileMove;
     }
 
     public void SkipDay()
@@ -192,7 +257,7 @@ public class GameManager : IngameSingleton<GameManager>
             timer = 0f;
             dailyIncome = true;
 
-            if(!spawnLock)
+            if(!spawnLock && !allWaveSpawned)
             {
                 curWave++;
                 //몬스터 웨이브 스폰
@@ -200,13 +265,13 @@ public class GameManager : IngameSingleton<GameManager>
             }
 
             //이동가능타일 잠금
-            NodeManager.Instance.LockMovableTiles();
+            //NodeManager.Instance.LockMovableTiles();
 
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
         }
     }
 
-    private void SpawnKing()
+    public void SpawnKing()
     {
         PlayerBattleMain king = Resources.Load<PlayerBattleMain>("Prefab/Monster/King");
         if(king != null)
@@ -246,6 +311,19 @@ public class GameManager : IngameSingleton<GameManager>
             monster.curHp = Mathf.Max(monster.curHp + healAmount, monster.maxHp);
         }
     }
+
+    public void ForceInit()
+    {
+        if (ingameUI == null)
+            ingameUI = FindObjectOfType<InGameUI>();
+
+        if (popUpMessage == null)
+            popUpMessage = FindObjectOfType<PopUpMessage>(true);
+
+        SetWaveSpeed();
+
+        isInit = true;
+    }    
 
     public void Init()
     {

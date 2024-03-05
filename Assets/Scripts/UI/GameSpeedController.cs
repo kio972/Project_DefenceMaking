@@ -12,13 +12,6 @@ public class GameSpeedController : MonoBehaviour
     [SerializeField]
     private Button speed_2;
 
-    public Sprite zeroSprite;
-    public Sprite zeroSprite_Select;
-    public Sprite normalSprite;
-    public Sprite normalSprite_Select;
-    public Sprite fastSprite;
-    public Sprite fastSprite_Select;
-
     public Image zeroImg;
     public Image normalImg;
     public Image fastImg;
@@ -29,7 +22,10 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedPrev(bool showPopUp = true, bool setZero = true)
     {
-        switch(prevState)
+        if (GameManager.Instance.speedLock)
+            return;
+
+        switch (prevState)
         {
             case 0:
                 if (setZero)
@@ -48,16 +44,16 @@ public class GameSpeedController : MonoBehaviour
 
     private void SetButtonState()
     {
-        zeroImg.sprite = zeroSprite;
-        normalImg.sprite = normalSprite;
-        fastImg.sprite = fastSprite;
+        zeroImg.color = Color.clear;
+        normalImg.color = Color.clear;
+        fastImg.color = Color.clear;
 
         if (GameManager.Instance.timeScale == 0)
-            zeroImg.sprite = zeroSprite_Select;
+            zeroImg.color = Color.white;
         if (GameManager.Instance.timeScale == 1)
-            normalImg.sprite = normalSprite_Select;
+            normalImg.color = Color.white;
         if (GameManager.Instance.timeScale == 2)
-            fastImg.sprite = fastSprite_Select;
+            fastImg.color = Color.white;
     }
 
     public bool Is_Tile_Connected(TileNode tile)
@@ -96,7 +92,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_All_Tile_Connected()
     {
-        foreach(TileNode tile in NodeManager.Instance.activeNodes)
+        foreach(TileNode tile in NodeManager.Instance._ActiveNodes)
         {
             if (tile == NodeManager.Instance.endPoint || tile.curTile == null)
                 continue;
@@ -113,6 +109,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedZero()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         prevState = (int)GameManager.Instance.timeScale;
 
         GameManager.Instance.timeScale = 0;
@@ -121,6 +120,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedNormal()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         if (!Is_Game_Continuable())
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
@@ -150,6 +152,9 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedFast()
     {
+        if (GameManager.Instance.speedLock)
+            return;
+
         if (!Is_Game_Continuable())
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");

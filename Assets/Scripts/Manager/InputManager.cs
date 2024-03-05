@@ -55,6 +55,14 @@ public class InputManager : IngameSingleton<InputManager>
         NodeManager.Instance.SetGuideState(GuideState.None);
     }
 
+    public void ClickTile(Tile curTile)
+    {
+        this.curTile = curTile;
+        NodeManager.Instance.SetGuideState(GuideState.Movable, curTile);
+        TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
+        tileControlUI?.SetButton(curTile);
+    }
+
     public void TileClickCheck()
     {
         if (settingCard)
@@ -71,9 +79,7 @@ public class InputManager : IngameSingleton<InputManager>
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null)
             {
-                curTile = node.curTile;
-                NodeManager.Instance.SetGuideState(GuideState.Movable, curTile);
-                curTile.CallTileControlUI();
+                ClickTile(node.curTile);
             }
             else
                 ResetTileClick();
@@ -128,6 +134,7 @@ public class InputManager : IngameSingleton<InputManager>
 
         SpeedControlCheck();
         CameraResetCheck();
-        TileClickCheck();
+        if(!GameManager.Instance.tileLock)
+            TileClickCheck();
     }
 }

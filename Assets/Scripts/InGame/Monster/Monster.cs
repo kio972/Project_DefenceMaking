@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum MonsterType
+{
+    none,
+    slime,
+    goblin,
+    golem,
+    mimic,
+}
+
 public class Monster : Battler
 {
     private int monsterIndex = -1;
@@ -11,6 +20,25 @@ public class Monster : Battler
     private bool isHide = false;
     [SerializeField]
     private int holdBackCount = 1;
+
+    private int requiredMana;
+    public int _RequiredMana { get => requiredMana; }
+
+    MonsterType monsterType;
+
+    private int resurrectCount;
+
+    public override float MoveSpeed
+    {
+        get
+        {
+            float speed = base.MoveSpeed;
+            if (curTile != null && curTile.curTile != null)
+                speed *= (100f + PassiveManager.Instance._TileSpeed_Weight[(int)curTile.curTile._TileType]) / 100f;
+
+            return speed;
+        }
+    }
 
     public bool CanHoldBack
     {
@@ -24,8 +52,15 @@ public class Monster : Battler
 
     public override void Dead()
     {
+        if(resurrectCount > 0)
+        {
+            resurrectCount--;
+            curHp = maxHp;
+            return;
+        }
+
         base.Dead();
-        GameManager.Instance.monsterList.Remove(this);
+        GameManager.Instance.SetMonseter(this, false);
         //if (curTile.curTile.monster != null && curTile.curTile.monster == this)
         //{
         //    curTile.curTile.monster = null;
@@ -110,6 +145,22 @@ public class Monster : Battler
         curTile = tile;
     }
 
+    private void ModifyPassive()
+    {
+        armor += PassiveManager.Instance.monsterDefense_Weight;
+        attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
+        attackSpeed *= ((100 + PassiveManager.Instance._MonsterTypeAttackSpeed_Weight[(int)monsterType]) / 100);
+
+        minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
+        maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
+
+        maxHp += PassiveManager.Instance._MonsterTypeHp_Weight[(int)monsterType];
+        maxHp += PassiveManager.Instance.monsterHp_Weight;
+        maxHp = Mathf.FloorToInt((float)maxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
+
+        resurrectCount += PassiveManager.Instance._MonsterTypeResurrect_Weight[(int)monsterType];
+    }
+
     public override void Init()
     {
         base.Init();
@@ -121,19 +172,15 @@ public class Monster : Battler
         {
             InitStats(monsterIndex);
 
-            armor += PassiveManager.Instance.monsterDefense_Weight;
-            attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
-            minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
-            maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
-
-            maxHp = (int)((float)maxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
-            maxHp += PassiveManager.Instance.monsterHp_Weight;
-            curHp = maxHp;
-
+            monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), DataManager.Instance.Battler_Table[monsterIndex]["type"].ToString());
             holdBackCount = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["holdbackCount"]);
+            requiredMana = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["requiredMagicpower"]);
+
+            ModifyPassive();
+            curHp = maxHp;
         }
 
-        GameManager.Instance.monsterList.Add(this);
+        GameManager.Instance.SetMonseter(this, true);
 
         if(isHide)
             InitState(this, FSMHide.Instance);

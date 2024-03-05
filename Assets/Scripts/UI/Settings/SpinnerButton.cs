@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public enum SpineType
+{
+    Repeat,
+    Clamp,
+}
+
 public abstract class SpinnerButton : MonoBehaviour
 {
     [SerializeField]
@@ -20,14 +26,21 @@ public abstract class SpinnerButton : MonoBehaviour
 
     protected int index = 0;
 
+    [SerializeField]
+    protected SpineType spineType = SpineType.Repeat;
+
     private void LeftBtn()
     {
         if (values == null)
             return;
 
         index--;
-        if (index < 0)
+        
+
+        if(spineType == SpineType.Repeat && index < 0)
             index = values.Count - 1;
+        if(spineType == SpineType.Clamp)
+            SetBtn();
 
         OnValueChange();
     }
@@ -38,10 +51,22 @@ public abstract class SpinnerButton : MonoBehaviour
             return;
 
         index++;
-        if (index >= values.Count)
+        if (spineType == SpineType.Repeat && index >= values.Count)
             index = 0;
+        if (spineType == SpineType.Clamp)
+            SetBtn();
+
 
         OnValueChange();
+    }
+
+    protected void SetBtn()
+    {
+        if (spineType != SpineType.Clamp)
+            return;
+
+        leftBtn.gameObject.SetActive(index != 0);
+        rightBtn.gameObject.SetActive(index != values.Count - 1);
     }
 
     private void Awake()
@@ -55,7 +80,6 @@ public abstract class SpinnerButton : MonoBehaviour
             leftBtn.onClick.AddListener(LeftBtn);
         if (rightBtn != null)
             rightBtn.onClick.AddListener(RightBtn);
-        
     }
 
     protected virtual void OnValueChange()

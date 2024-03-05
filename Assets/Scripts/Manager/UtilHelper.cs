@@ -9,6 +9,22 @@ using UnityEngine.UI;
 
 public static class UtilHelper
 {
+    public static IEnumerator MoveToTargetPos(Transform moveTarget, Vector3 targetPos, float lerpTime = 0.5f)
+    {
+        targetPos.y = moveTarget.position.y;
+        targetPos.z = moveTarget.position.z;
+        Vector3 startPos = moveTarget.position;
+        float elapsedTime = 0f;
+        while (elapsedTime < lerpTime)
+        {
+            moveTarget.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / lerpTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        moveTarget.transform.position = targetPos;
+    }
+
     public static int GetConnectedCount(Tile tile)
     {
         if(tile.curNode == null)
@@ -311,7 +327,7 @@ public static class UtilHelper
         foreach (Direction direction in curNode.curTile.RoomDirection)
         {
             TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance._ActiveNodes.Contains(tempNode))
                 continue;
 
             if (tempNode.curTile._TileType == TileType.Path)
@@ -330,7 +346,7 @@ public static class UtilHelper
         foreach (Direction direction in curNode.curTile.PathDirection)
         {
             TileNode tempNode = curNode.DirectionalNode(direction);
-            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance.activeNodes.Contains(tempNode))
+            if (tempNode == null || tempNode.curTile == null || !NodeManager.Instance._ActiveNodes.Contains(tempNode))
                 continue;
 
             if (tempNode.curTile._TileType == TileType.Room)

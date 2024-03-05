@@ -92,7 +92,7 @@ public class Battler : FSM<Battler>
 
     private float ccTime = 0;
 
-    public float MoveSpeed
+    public virtual float MoveSpeed
     {
         get
         {
@@ -348,13 +348,13 @@ public class Battler : FSM<Battler>
 
     private void ReturnToBase()
     {
-        isDead = true;
         StopAllCoroutines();
         hpBar.HPBarEnd();
-        ChangeState(FSMDead.Instance);
+        ChangeState(FSMReturn.Instance);
+        isDead = true;
         Invoke("RemoveBody", 2.5f);
-        if (deadSound != null)
-            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
+        //if (deadSound != null)
+        //    AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
         GameManager.Instance.waveController.AddDelayedTarget(_name);
     }
 
@@ -466,8 +466,8 @@ public class Battler : FSM<Battler>
     {
         if (rotatonAxis != null)
         {
-            rotatonAxis.rotation = TargetRoation(GameManager.Instance.cameraController.Camera_Level);
-            prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
+            rotatonAxis.rotation = TargetRoation(1);
+            //prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
         }
     }
 
@@ -725,7 +725,7 @@ public class Battler : FSM<Battler>
         if(prevRotLevel != GameManager.Instance.cameraController.Camera_Level)
         {
             prevRotLevel = GameManager.Instance.cameraController.Camera_Level;
-            UpdateRotation();
+            //UpdateRotation();
         }
 
         FSMUpdate();

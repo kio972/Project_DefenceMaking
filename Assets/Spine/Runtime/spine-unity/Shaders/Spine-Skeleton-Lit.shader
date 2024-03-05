@@ -38,8 +38,7 @@ Shader "Spine/Skeleton Lit" {
 
 			Tags { "LightMode"="Vertex" "Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent" }
 
-			Ztest Always
-			//ZWrite Off
+			ZWrite Off
 			Cull Off
 			Blend One OneMinusSrcAlpha
 

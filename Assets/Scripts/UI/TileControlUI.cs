@@ -10,6 +10,8 @@ public class TileControlUI : MonoBehaviour
     private GameObject tileRemoveBtn;
     [SerializeField]
     private GameObject exitBtn;
+    [SerializeField]
+    private GameObject spawnerRemoveBtn;
 
     private InGameUI inGameUI;
 
@@ -32,7 +34,7 @@ public class TileControlUI : MonoBehaviour
         Tile curTile = InputManager.Instance._CurTile;
         if (curTile == null)
             return;
-        if (curTile.Movable)
+        if (curTile.MovableNow)
         {
             curTile.ReadyForMove();
         }
@@ -40,12 +42,22 @@ public class TileControlUI : MonoBehaviour
             GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 움직일 수 없습니다!");
     }
 
+    public void RemoveSpawner()
+    {
+        Tile curTile = InputManager.Instance._CurTile;
+        if (curTile == null)
+            return;
+
+        curTile.RemoveSpawner();
+        InputManager.Instance.ClickTile(curTile);
+    }
+
     public void RemoveTile()
     {
         Tile curTile = InputManager.Instance._CurTile;
         if (curTile == null)
             return;
-        if(curTile.IsRemovable)
+        if(curTile.IsRemovableNow)
         {
             curTile.RemoveTile();
             InputManager.Instance.ResetTileClick();
@@ -54,10 +66,11 @@ public class TileControlUI : MonoBehaviour
             GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 제거 할 수 없습니다!");
     }
 
-    public void SetButton(bool movable, bool removable)
+    public void SetButton(Tile targetTile)
     {
-        tileMoveBtn.SetActive(movable);
-        tileRemoveBtn.SetActive(removable);
+        tileMoveBtn.SetActive(targetTile.Movable);
+        spawnerRemoveBtn.SetActive(targetTile.HaveSpawner);
+        tileRemoveBtn.SetActive(!targetTile.HaveSpawner && targetTile.IsRemovable);
         exitBtn.SetActive(true);
         if (inGameUI == null)
             inGameUI = GetComponentInParent<InGameUI>();
