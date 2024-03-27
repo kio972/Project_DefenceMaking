@@ -84,13 +84,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, transform.localScale, Vector3.one * 1.5f, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(card_Frame.transform, card_Frame.transform.localScale, Vector3.one * 1.5f, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(card_Frame.transform, card_Frame.transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
 
-        transform.rotation = Quaternion.identity;
+        card_Frame.transform.rotation = Quaternion.identity;
         transform.SetAsLastSibling();
 
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
@@ -102,13 +102,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, transform.localScale, Vector3.one, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(card_Frame.transform, card_Frame.transform.localScale, Vector3.one, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(card_Frame.transform, card_Frame.transform.position, originPos, mouseOverTime));
 
-        transform.rotation = originRot;
+        card_Frame.transform.rotation = originRot;
         if (originSiblingIndex != -1)
             transform.SetSiblingIndex(originSiblingIndex);
     }

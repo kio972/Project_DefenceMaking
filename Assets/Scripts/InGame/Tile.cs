@@ -363,7 +363,7 @@ public class Tile : MonoBehaviour
         tileAnimator.SetTrigger("Destroy");
 
         GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
-
+        trap?.DestroyTrap();
         Destroy(this.gameObject, 1.0f);
     }
 

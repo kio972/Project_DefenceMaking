@@ -104,7 +104,7 @@ public class Monster : Battler
             if(collapseCool >= 1f)
             {
                 collapseCool = 0f;
-                GetDamage(1, null);
+                GetDamage(Mathf.RoundToInt(maxHp * 0.05f), null);
             }
         }
 

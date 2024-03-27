@@ -25,6 +25,8 @@ public class MonsterSpawner : MonoBehaviour
 
     private int monsterIndex;
 
+    private CompleteRoom curRoom;
+
     public void UpdatePassive()
     {
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
@@ -39,14 +41,15 @@ public class MonsterSpawner : MonoBehaviour
     public void Dead()
     {
         isUpdate = false;
+        curRoom.spendedMana -= requiredMana;
         GameManager.Instance.monsterSpawner.Remove(this);
-
         Destroy(this.gameObject);
     }
 
-    public void Init(TileNode curNode, string targetName)
+    public void Init(TileNode curNode, string targetName, CompleteRoom room)
     {
         this.tile = curNode;
+        this.curRoom = room;
         transform.position = curNode.transform.position;
         this.targetName = targetName;
         curNode.curTile.AddSpawner(this);
@@ -64,6 +67,7 @@ public class MonsterSpawner : MonoBehaviour
         
         isUpdate = true;
         GameManager.Instance.monsterSpawner.Add(this);
+        curRoom.spendedMana += requiredMana;
     }
 
     private void Update()

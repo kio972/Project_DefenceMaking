@@ -31,14 +31,16 @@ public class Trap : MonoBehaviour
 
     private bool isInit = false;
 
-    private void DestroyTrap()
+    public void DestroyTrap()
     {
         curTile.trap = null;
         gameObject.SetActive(false);
         if (NodeManager.Instance._GuideState == GuideState.Trap)
             NodeManager.Instance.SetGuideState(GuideState.Trap);
 
+        transform.position = Vector3.up * 1000f;
         GameManager.Instance.trapList.Remove(this);
+        isInit = false;
     }
 
     private void ExcuteAttack()
@@ -100,8 +102,10 @@ public class Trap : MonoBehaviour
         animator = GetComponent<Animator>();
 
         attackCount = 0;
+        coolDown = 0.1f;
 
         GameManager.Instance.trapList.Add(this);
+        targetList = new List<Battler>();
         isInit = true;
     }
 
@@ -109,9 +113,6 @@ public class Trap : MonoBehaviour
     {
         if (!isInit)
             return;
-
-        if (attackCount >= duration)
-            DestroyTrap();
 
         if(coolDown > 0)
             coolDown -= Time.deltaTime * GameManager.Instance.timeScale;
@@ -133,5 +134,8 @@ public class Trap : MonoBehaviour
             ExcuteAttack();
             coolDown =  1 / attackSpeed;
         }
+
+        if (attackCount >= duration)
+            DestroyTrap();
     }
 }

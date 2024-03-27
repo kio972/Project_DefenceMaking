@@ -115,11 +115,10 @@ public class DeployUI : MonoBehaviour
                     return;
                 }
 
-                room.spendedMana += requiredMana;
                 //BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
                 monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
-                monsterSpawner.Init(curNode, curObject.name);
+                monsterSpawner.Init(curNode, curObject.name, room);
                 AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
             }
             else if (curType == CardType.Trap)
