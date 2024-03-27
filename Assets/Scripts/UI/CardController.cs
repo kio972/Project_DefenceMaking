@@ -373,13 +373,29 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Invoke("DrawEnd", lerpTime);
     }
 
+    private string GetFrameName(string cardFrame)
+    {
+        switch(cardFrame)
+        {
+            case "road":
+                return "cardFrame_04";
+            case "room":
+                return "cardFrame_05";
+            case "roomPart":
+                return "cardFrame_05";
+            case "environment":
+                return "cardFrame_03";
+        }
+        return null;
+    }
+
     private void SetCardUI(Card targetCard)
     {
-        Sprite frame1 = SpriteList.Instance.LoadSprite("cardFrame1_" + targetCard.cardFrame);
-        Sprite frame2 = SpriteList.Instance.LoadSprite("cardFrame2_" + targetCard.cardFrame);
+        Sprite frame1 = SpriteList.Instance.LoadSprite(GetFrameName(targetCard.cardFrame));
         card_Frame.sprite = frame1;
-        card_Frame2.sprite = frame2;
-        card_Frame_Mask.sprite = frame2;
+        //Sprite frame2 = SpriteList.Instance.LoadSprite("cardFrame2_" + targetCard.cardFrame);
+        //card_Frame2.sprite = frame2;
+        //card_Frame_Mask.sprite = frame2;
 
         Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + targetCard.cardGrade.ToString());
         card_Rank.sprite = cardRank;

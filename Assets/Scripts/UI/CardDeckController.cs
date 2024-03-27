@@ -55,7 +55,7 @@ public struct Card
     public Card(Dictionary<string, object> cardInfo, int index)
     {
         cardIndex = index;
-        cardFrame = cardInfo["cardtype"].ToString();
+        cardFrame = cardInfo["type"].ToString();
         cardType = GetCardType(cardInfo["type"].ToString());
         cardGrade = GetCardGrade(cardInfo["grade"].ToString());
         cardName = cardInfo["text_name"].ToString();
