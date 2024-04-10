@@ -17,6 +17,9 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> research_Table;
     private List<Dictionary<string, object>> scriptsMalpongsun_Table;
 
+    private List<Dictionary<string, object>> quest_Table;
+    private List<Dictionary<string, object>> questMessage_Table;
+
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
@@ -24,6 +27,9 @@ public class DataManager : Singleton<DataManager>
     public List<Dictionary<string, object>> Language_Table { get => language_Table; }
     public List<Dictionary<string, object>> Research_Table { get => research_Table; }
     public List<Dictionary<string, object>> ScriptsMalpongsun_Table { get => scriptsMalpongsun_Table; }
+    public List<Dictionary<string, object>> Quest_Table { get => quest_Table; }
+    public List<Dictionary<string, object>> QuestMessage_Table { get => questMessage_Table; }
+
 
     private List<int> tileCard_Indexs;
     private List<int> monsterCard_Indexs;
@@ -235,6 +241,8 @@ public class DataManager : Singleton<DataManager>
     private readonly string buff_Table_DataPath = "Data/buffData";
     private readonly string research_Table_DataPath = "Data/researchData";
     private readonly string scriptsMalpongsun_Table_DataPath = "Data/scriptMalpongsunData";
+    private readonly string quest_Table_DataPath = "Data/questData";
+    private readonly string questMessage_Table_DataPath = "Data/questMessageData";
 
     private void Init()
     {
@@ -248,5 +256,7 @@ public class DataManager : Singleton<DataManager>
         buff_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(buff_Table_DataPath));
         research_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(research_Table_DataPath));
         scriptsMalpongsun_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scriptsMalpongsun_Table_DataPath));
+        quest_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(quest_Table_DataPath));
+        questMessage_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(questMessage_Table_DataPath));
     }
 }
