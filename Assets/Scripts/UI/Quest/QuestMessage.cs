@@ -21,7 +21,9 @@ public class QuestMessage : MonoBehaviour
 
     private void StartQuest(string id)
     {
-
+        QuestManager.Instance.StartQuest(id);
+        GameManager.Instance.SetPause(false);
+        gameObject.SetActive(false);
     }
 
     public void SelectFirst()
@@ -41,9 +43,11 @@ public class QuestMessage : MonoBehaviour
             StartQuest(targetQuest[1]);
     }
 
-    public void SetMessage(string id)
+    public void SetMessage(Dictionary<string, object> data)
     {
-        Dictionary<string, object> data = UtilHelper.Get_ID_Data(id, DataManager.Instance.Quest_Table);
+        gameObject.SetActive(true);
+        GameManager.Instance.SetPause(true);
+
         if (data == null)
             return;
 

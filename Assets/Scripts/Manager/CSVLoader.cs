@@ -88,7 +88,8 @@ public class CSVLoader
                 value = value.Replace("\"", "");
                 value = value.Replace("<DQ>", "\"");
 
-                dic.Add(heads[headIndex], value);
+                if(!dic.ContainsKey(heads[headIndex]))
+                    dic.Add(heads[headIndex], value);
 
                 if (isNeedCorrect)
                     j += loopTime;

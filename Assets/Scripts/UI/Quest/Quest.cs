@@ -4,12 +4,19 @@ using UnityEngine;
 
 public abstract class Quest
 {
+    protected bool isComplete = false;
 
-    private bool isComplete = false;
+    private string nextQuestMsg;
+    private int clearNum;
+    private int curClearNum;
+    public int _ClearNum { get => clearNum; }
+    public int _CurClearNum { get => curClearNum; }
 
-    public float _CurTime { get; set; }
-    public float _TimeLimit { get; set; }
-    public float _TimeRemain { get { return Mathf.Clamp(_TimeLimit - _CurTime, 0, _TimeLimit) / _TimeLimit; } }
+    private float curTime;
+    private float timeLimit;
+    public float _CurTime { get;}
+    public float _TimeLimit { get;}
+    public float _TimeRemain{ get { return timeLimit == 0 ? 1 : Mathf.Clamp(timeLimit - curTime, 0, timeLimit) / timeLimit; } }
 
     public abstract void CheckCondition();
 
@@ -22,14 +29,28 @@ public abstract class Quest
             return;
 
         CheckCondition();
-        if(isComplete)
+        if(curClearNum >= clearNum)
         {
             CompleteQuest();
+            isComplete = true;
+            if (!string.IsNullOrEmpty(nextQuestMsg))
+                QuestManager.Instance.EnqueueQuest(nextQuestMsg);
             return;
         }
 
-        _CurTime += Time.deltaTime * GameManager.Instance.DefaultSpeed * GameManager.Instance.timeScale;
-        if(_CurTime > _TimeLimit)
-            FailQuest();
+        if(timeLimit != 0)
+        {
+            curTime += Time.deltaTime * GameManager.Instance.DefaultSpeed * GameManager.Instance.timeScale;
+            if (curTime > timeLimit)
+                FailQuest();
+        }
+    }
+
+    public void Init(float timeLimit, int clearNum, string nextQuestMsg)
+    {
+        curTime = 0;
+        this.timeLimit = timeLimit;
+        this.clearNum = clearNum;
+        this.nextQuestMsg = nextQuestMsg;
     }
 }

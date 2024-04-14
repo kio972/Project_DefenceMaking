@@ -24,6 +24,7 @@ public class QuestInfo : MonoBehaviour
 
     public void SetQuest(Quest quest)
     {
+        gameObject.SetActive(true);
         isTimerOn = true;
         curQuest = quest;
     }

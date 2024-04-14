@@ -15,7 +15,6 @@ public class Test : MonoBehaviour
         if (targetQuest == null || infomer == null)
             return;
 
-        targetQuest._TimeLimit = 1440f;
         infomer.SetQuest(targetQuest);
     }
 
