@@ -22,11 +22,24 @@ public class QuestInfo : MonoBehaviour
     private readonly Color midColor = new Color(1, 0.5f, 0);
     private readonly Color alertColor = Color.red;
 
+    private Animator animator;
+    [SerializeField]
+    List<QuestCondition> conditions;
+
+    public void EndQuest()
+    {
+        gameObject.SetActive(false);
+        isTimerOn = false;
+        curQuest = null;
+    }
+
     public void SetQuest(Quest quest)
     {
         gameObject.SetActive(true);
+        animator.Rebind();
         isTimerOn = true;
         curQuest = quest;
+        UpdateTimer();
     }
 
     private void UpdateTimer()

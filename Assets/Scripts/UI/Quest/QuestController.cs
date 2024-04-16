@@ -33,19 +33,23 @@ public class QuestController : MonoBehaviour
     private Quest mainQuest;
     private List<Quest> subQuest = new List<Quest>();
 
-    private Dictionary<int, Dictionary<string, object>> questDic;
-    private Dictionary<int, Dictionary<string, object>> _QuestDic
+    private Dictionary<int, List<Dictionary<string, object>>> questDic;
+    private Dictionary<int, List<Dictionary<string, object>>> _QuestDic
     {
         get
         {
             if(questDic == null)
             {
-                questDic = new Dictionary<int, Dictionary<string, object>>();
+                questDic = new Dictionary<int, List<Dictionary<string, object>>>();
                 foreach (Dictionary<string, object> data in DataManager.Instance.Quest_Table)
                 {
                     int index;
                     if(int.TryParse(data["ID"].ToString().Replace("q", ""), out index))
-                        questDic.Add(index, data);
+                    {
+                        if (!questDic.ContainsKey(index))
+                            questDic.Add(index, new List<Dictionary<string, object>>());
+                        questDic[index].Add(data);
+                    }
                 }
             }
             return questDic;
@@ -75,13 +79,18 @@ public class QuestController : MonoBehaviour
         nextSubInformer.SetQuest(quest);
     }
 
+    public void EndQuest(Quest quest, bool isClear)
+    {
+
+    }
+
     public void StartQuest(int questID)
     {
         Quest curQuest = LoadQuest(questID);
         if (curQuest == null)
             return;
-        curQuest.Init(float.Parse(_QuestDic[questID]["TimeLimit"].ToString()), System.Convert.ToInt32(_QuestDic[questID]["ClearNum"]), _QuestDic[questID]["NextQuest"].ToString());
-        if (_QuestDic[questID]["Type"].ToString() == "main")
+        curQuest.Init(_QuestDic[questID]);
+        if (curQuest._IsMainQuest)
             SetMainQuest(curQuest);
         else
             SetSubQuest(curQuest);
