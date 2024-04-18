@@ -23,6 +23,7 @@ public class QuestInfo : MonoBehaviour
     private readonly Color alertColor = Color.red;
 
     private Animator animator;
+    private Animator _Animator { get { if (animator == null) animator = GetComponentInChildren<Animator>(); return animator; } }
     [SerializeField]
     List<QuestCondition> conditions;
 
@@ -33,12 +34,27 @@ public class QuestInfo : MonoBehaviour
         curQuest = null;
     }
 
+    public void SetQuestText(Quest quest)
+    {
+        questName.text = quest._QuestName;
+        foreach (QuestCondition condition in conditions)
+            condition.gameObject.SetActive(false);
+
+        for(int i = 0; i < quest._ClearInfo.Count; i++)
+        {
+            conditions[i].SetQuest(quest, i);
+            conditions[i].gameObject.SetActive(true);
+        }
+    }
+
     public void SetQuest(Quest quest)
     {
-        gameObject.SetActive(true);
-        animator.Rebind();
-        isTimerOn = true;
         curQuest = quest;
+        
+        SetQuestText(quest);
+        gameObject.SetActive(true);
+        _Animator.Rebind();
+        isTimerOn = true;
         UpdateTimer();
     }
 

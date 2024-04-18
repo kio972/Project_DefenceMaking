@@ -12,6 +12,7 @@ public class QuestCondition : MonoBehaviour
 
     public Quest quest = null;
     private int index = 0;
+    private bool isClear = false;
 
     public void SetText()
     {
@@ -27,13 +28,24 @@ public class QuestCondition : MonoBehaviour
     {
         this.quest = quest;
         this.index = index;
+        text.color = Color.white;
+        text.fontStyle = FontStyles.Normal;
+        checkBox.SetActive(false);
+        isClear = false;
     }
 
     void Update()
     {
-        if (quest == null)
+        if (quest == null || isClear)
             return;
 
         SetText();
+        if(quest._IsComplete[index])
+        {
+            checkBox.SetActive(true);
+            text.fontStyle = FontStyles.Strikethrough;
+            text.color = Color.gray;
+            isClear = true;
+        }
     }
 }
