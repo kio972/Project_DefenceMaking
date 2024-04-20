@@ -126,9 +126,16 @@ public class Battler : FSM<Battler>
         directPass = false;
     }
 
-    protected virtual void RemoveBody()
+    private void SetActiveFalse()
     {
         gameObject.SetActive(false);
+    }
+
+    protected virtual void RemoveBody()
+    {
+        gameObject.transform.position = Vector3.up * 1000f;
+        animator?.Rebind();
+        Invoke("SetActiveFalse", 0.1f);
     }
 
     public virtual void Dead()

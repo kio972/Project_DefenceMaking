@@ -10,6 +10,10 @@ public class QuestInfo : MonoBehaviour
     private TextMeshProUGUI questName;
     [SerializeField]
     private Image questTimer;
+    [SerializeField]
+    private RectTransform self;
+    public float baseScale;
+    public float conditionScale;
 
     private float curTime;
     private float limitTime;
@@ -27,11 +31,20 @@ public class QuestInfo : MonoBehaviour
     [SerializeField]
     List<QuestCondition> conditions;
 
-    public void EndQuest()
+    private void DeActive()
     {
         gameObject.SetActive(false);
+    }
+
+    public void EndQuest()
+    {
         isTimerOn = false;
+        _Animator.SetBool("IsClear", curQuest._IsClear);
+        _Animator.SetTrigger("End");
+        Invoke("DeActive", 1f);
         curQuest = null;
+        QuestController questController = transform.parent.GetComponent<QuestController>();
+        questController?.EndQuest(curQuest);
     }
 
     public void SetQuestText(Quest quest)
@@ -52,6 +65,7 @@ public class QuestInfo : MonoBehaviour
         curQuest = quest;
         
         SetQuestText(quest);
+        self.sizeDelta = new Vector2(self.sizeDelta.x, baseScale + (conditionScale * quest._ClearInfo.Count));
         gameObject.SetActive(true);
         _Animator.Rebind();
         isTimerOn = true;
@@ -83,5 +97,7 @@ public class QuestInfo : MonoBehaviour
             return;
 
         UpdateTimer();
+        if (curQuest._IsEnd)
+            EndQuest();
     }
 }

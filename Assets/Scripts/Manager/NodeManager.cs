@@ -28,6 +28,8 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public List<Tile> dormantTile = new List<Tile>();
 
+    public Dictionary<TileType, List<Tile>> tileDictionary = null;
+
     public TileNode startPoint;
     public TileNode endPoint;
 
@@ -241,6 +243,24 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     #endregion
 
+    private void TileDictionary_Init()
+    {
+        tileDictionary = new Dictionary<TileType, List<Tile>>();
+        var item = System.Enum.GetValues(typeof(TileType));
+        foreach (TileType type in item)
+            tileDictionary.Add(type, new List<Tile>());
+    }
+
+    public void SetTile(Tile tile, bool value)
+    {
+        if (tileDictionary == null)
+            TileDictionary_Init();
+        if (value)
+            tileDictionary[tile._TileType].Add(tile);
+        else
+            tileDictionary[tile._TileType].Remove(tile);
+    }
+
     public void DormantTileCheck()
     {
         List<Tile> dormantTiles = new List<Tile>(dormantTile);
@@ -315,11 +335,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         
         // 해당 방들 완성으로 변경코드 추가 예정
         roomTiles.Add(newRoom);
-    }
-
-    public void SetTile(TileNode curNode, string prefabPath)
-    {
-        
     }
 
     public void ExpandEmptyNode(TileNode curNode, int emptyNodeSize)

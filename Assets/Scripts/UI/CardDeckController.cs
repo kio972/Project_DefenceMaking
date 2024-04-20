@@ -82,6 +82,7 @@ public class CardDeckController : MonoBehaviour
     public Transform CardZone { get => cardZone; }
 
     private List<int> cardDeck;
+    public int _CardDeckCount { get => cardDeck.Count; }
 
     private bool initState = false;
 

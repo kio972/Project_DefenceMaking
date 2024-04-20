@@ -2,11 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public struct QuestData
-{
-
-}
+using UnityEngine.UI;
 
 public class QuestController : MonoBehaviour
 {
@@ -56,6 +52,9 @@ public class QuestController : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private VerticalLayoutGroup layoutGroup;
+
     private Quest LoadQuest(int questID)
     {
         string questClassName = "Quest" + questID.ToString(); // 퀘스트 클래스의 이름
@@ -76,12 +75,17 @@ public class QuestController : MonoBehaviour
     private void SetSubQuest(Quest quest)
     {
         subQuest.Add(quest);
-        nextSubInformer.SetQuest(quest);
+        QuestInfo next = nextSubInformer;
+        next.SetQuest(quest);
+        layoutGroup.enabled = false;
+        next.transform.SetAsLastSibling();
+        layoutGroup.enabled = true;
     }
 
-    public void EndQuest(Quest quest, bool isClear)
+    public void EndQuest(Quest quest)
     {
-
+        if (!quest._IsMainQuest)
+            subQuest.Remove(quest);
     }
 
     public void StartQuest(int questID)

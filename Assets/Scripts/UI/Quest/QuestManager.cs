@@ -33,10 +33,9 @@ public class QuestManager : IngameSingleton<QuestManager>
 
     public void EndQuest(Quest quest, bool isClear)
     {
-        questController.EndQuest(quest, isClear);
+        //questController.EndQuest(quest, isClear);
 
-        if (isClear)
-            clearedQuests.Add(quest._QuestID);
+        clearedQuests.Add(quest._QuestID);
     }
 
     public void StartQuest(string questID)
