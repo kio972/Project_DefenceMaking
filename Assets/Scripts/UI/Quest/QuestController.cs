@@ -82,12 +82,6 @@ public class QuestController : MonoBehaviour
         layoutGroup.enabled = true;
     }
 
-    public void EndQuest(Quest quest)
-    {
-        if (!quest._IsMainQuest)
-            subQuest.Remove(quest);
-    }
-
     public void StartQuest(int questID)
     {
         Quest curQuest = LoadQuest(questID);
@@ -103,7 +97,15 @@ public class QuestController : MonoBehaviour
     private void Update()
     {
         mainQuest?.UpdateQuest();
+        List<Quest> clearedQuest = new List<Quest>();
         foreach(Quest quest in subQuest)
+        {
             quest.UpdateQuest();
+            if (quest._IsEnd)
+                clearedQuest.Add(quest);
+        }
+
+        foreach (Quest quest in clearedQuest)
+            subQuest.Remove(quest);
     }
 }

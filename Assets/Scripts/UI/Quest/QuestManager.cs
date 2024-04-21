@@ -58,7 +58,7 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         while(true)
         {
-            if (questMessage.gameObject.activeSelf || questWatcher.Count == 0)
+            if (questMessage.gameObject.activeSelf || questWatcher.Count == 0 || GameManager.Instance.isPause)
             {
                 yield return null;
                 continue;

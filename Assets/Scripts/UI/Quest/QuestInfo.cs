@@ -43,8 +43,6 @@ public class QuestInfo : MonoBehaviour
         _Animator.SetTrigger("End");
         Invoke("DeActive", 1f);
         curQuest = null;
-        QuestController questController = transform.parent.GetComponent<QuestController>();
-        questController?.EndQuest(curQuest);
     }
 
     public void SetQuestText(Quest quest)

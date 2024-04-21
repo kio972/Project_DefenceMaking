@@ -49,8 +49,8 @@ public class Quest2003 : Quest
     public override void CheckCondition()
     {
         if (startEnvironmentCount == -1)
-            startEnvironmentCount = NodeManager.Instance.tileDictionary[TileType.Environment].Count;
-        curClearNum[0] = NodeManager.Instance.tileDictionary[TileType.Environment].Count - startEnvironmentCount;
+            startEnvironmentCount = NodeManager.Instance.environments.Count;
+        curClearNum[0] = NodeManager.Instance.environments.Count - startEnvironmentCount;
         if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
     }
@@ -59,6 +59,39 @@ public class Quest2003 : Quest
     {
         base.CompleteQuest();
         GameManager.Instance.gold += 100;
+    }
+}
+
+public class Quest2004 : Quest
+{
+    private int startHerbCount1 = -1;
+    private int startHerbCount2 = -1;
+    private int startHerbCount3 = -1;
+
+    public override void CheckCondition()
+    {
+        if(startHerbCount1 == -1)
+        {
+            startHerbCount1 = GameManager.Instance.herb1;
+            startHerbCount2 = GameManager.Instance.herb2;
+            startHerbCount3 = GameManager.Instance.herb3;
+        }
+
+        curClearNum[0] = GameManager.Instance.herb1 - startHerbCount1;
+        curClearNum[1] = GameManager.Instance.herb2 - startHerbCount2;
+        curClearNum[2] = GameManager.Instance.herb3 - startHerbCount3;
+
+        for(int i = 0; i < curClearNum.Count; i++)
+        {
+            if (curClearNum[i] >= Mathf.Abs(_ClearNum[i]))
+                isComplete[i] = true;
+        }
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 2000;
     }
 }
 

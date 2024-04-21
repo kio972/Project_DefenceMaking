@@ -29,6 +29,7 @@ public class NodeManager : IngameSingleton<NodeManager>
     public List<Tile> dormantTile = new List<Tile>();
 
     public Dictionary<TileType, List<Tile>> tileDictionary = null;
+    public List<Environment> environments = new List<Environment>();
 
     public TileNode startPoint;
     public TileNode endPoint;
@@ -249,6 +250,11 @@ public class NodeManager : IngameSingleton<NodeManager>
         var item = System.Enum.GetValues(typeof(TileType));
         foreach (TileType type in item)
             tileDictionary.Add(type, new List<Tile>());
+    }
+
+    public void SetTile(Environment environment)
+    {
+        environments.Add(environment);
     }
 
     public void SetTile(Tile tile, bool value)
