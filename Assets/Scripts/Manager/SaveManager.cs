@@ -11,6 +11,8 @@ public class SaveManager : Singleton<SaveManager>
     // --- 저장용 클래스 변수 --- //
     public SettingData settingData = new SettingData();
 
+    //public 
+
     public void LoadSettingData()
     {
         settingData = LoadData<SettingData>(settingDataFileName);
