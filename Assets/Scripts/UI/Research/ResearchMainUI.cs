@@ -69,7 +69,16 @@ public class ResearchMainUI : MonoBehaviour
     {
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
-        //if (value)
-        //    SetItem();
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+                SetActive(true);
+            else if (uiPage.activeSelf)
+                SetActive(false);
+        }
     }
 }

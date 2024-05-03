@@ -60,6 +60,14 @@ public class ShopUI : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+                SetActive(true);
+            else if (uiPage.activeSelf)
+                SetActive(false);
+        }
+
         if (curWave == GameManager.Instance.CurWave)
             return;
 

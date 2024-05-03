@@ -279,5 +279,13 @@ public class DeployUI : MonoBehaviour
     {
         if (curObject != null)
             UpdateDeployState();
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+                SetActive(true);
+            else if (uiPage.activeSelf)
+                SetActive(false);
+        }
     }
 }
