@@ -29,6 +29,10 @@ public class Battler : FSM<Battler>
     public int armor;
     public float attackSpeed;
     public float attackRange;
+
+    public float attackCoolTime = 0;
+    public float curAttackCoolTime = 0;
+
     protected float moveSpeed;
 
     public bool splashAttack = false;

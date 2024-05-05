@@ -57,8 +57,8 @@ public class DataManager : Singleton<DataManager>
                 foreach(Dictionary<string, object> data in wave_Table)
                 {
                     int level = Convert.ToInt32(data["level"]);
-                    string adventurerName = data["adventure"].ToString();
-                    int number = Convert.ToInt32(data["num"]);
+                    string adventurerName = data["enemy"].ToString();
+                    int number = Convert.ToInt32(data["number"]);
                     WaveData waveData = new WaveData(adventurerName, number);
                     if (!waveLevelTable.ContainsKey(level))
                         waveLevelTable.Add(level, new List<WaveData>());
