@@ -22,6 +22,7 @@ public class MonsterSpawner : MonoBehaviour
     private string targetName;
 
     private int requiredMana;
+    public int _RequiredMana { get => requiredMana; }
 
     private int monsterIndex;
 
@@ -41,7 +42,7 @@ public class MonsterSpawner : MonoBehaviour
     public void Dead()
     {
         isUpdate = false;
-        curRoom.spendedMana -= requiredMana;
+        curRoom.SetSpawner(this, false);
         GameManager.Instance.monsterSpawner.Remove(this);
         Destroy(this.gameObject);
     }
@@ -67,7 +68,7 @@ public class MonsterSpawner : MonoBehaviour
         
         isUpdate = true;
         GameManager.Instance.monsterSpawner.Add(this);
-        curRoom.spendedMana += requiredMana;
+        curRoom.SetSpawner(this, true);
     }
 
     private void Update()

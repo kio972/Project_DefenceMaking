@@ -64,22 +64,29 @@ public class Quest2003 : Quest
 
 public class Quest2004 : Quest
 {
-    private int startHerbCount1 = -1;
-    private int startHerbCount2 = -1;
-    private int startHerbCount3 = -1;
+    private int prevHerbCount1 = -1;
+    private int prevHerbCount2 = -1;
+    private int prevHerbCount3 = -1;
 
     public override void CheckCondition()
     {
-        if(startHerbCount1 == -1)
+        if(prevHerbCount1 == -1)
         {
-            startHerbCount1 = GameManager.Instance.herb1;
-            startHerbCount2 = GameManager.Instance.herb2;
-            startHerbCount3 = GameManager.Instance.herb3;
+            prevHerbCount1 = GameManager.Instance.herb1;
+            prevHerbCount2 = GameManager.Instance.herb2;
+            prevHerbCount3 = GameManager.Instance.herb3;
         }
 
-        curClearNum[0] = GameManager.Instance.herb1 - startHerbCount1;
-        curClearNum[1] = GameManager.Instance.herb2 - startHerbCount2;
-        curClearNum[2] = GameManager.Instance.herb3 - startHerbCount3;
+        if (prevHerbCount1 < GameManager.Instance.herb1)
+            curClearNum[0] += GameManager.Instance.herb1 - prevHerbCount1;
+        if (prevHerbCount2 < GameManager.Instance.herb2)
+            curClearNum[1] += GameManager.Instance.herb2 - prevHerbCount2;
+        if (prevHerbCount3 < GameManager.Instance.herb3)
+            curClearNum[2] += GameManager.Instance.herb3 - prevHerbCount3;
+
+        prevHerbCount1 = GameManager.Instance.herb1;
+        prevHerbCount2 = GameManager.Instance.herb2;
+        prevHerbCount3 = GameManager.Instance.herb3;
 
         for(int i = 0; i < curClearNum.Count; i++)
         {

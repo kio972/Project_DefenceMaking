@@ -6,11 +6,30 @@ public class CompleteRoom
 {
     public List<Tile> includeRooms;
     public int totalMana;
-    public int spendedMana;
 
+    private List<MonsterSpawner> spawners = new List<MonsterSpawner>();
     public List<Tile> _IncludeRooms { get => includeRooms; }
-    public int _RemainingMana { get { return totalMana - spendedMana; } }
+    public int _RemainingMana { get { return totalMana - _SpendedMana; } }
     public Tile HeadRoom { get { return CalculateMidTile(); } }
+
+    private int _SpendedMana
+    {
+        get
+        {
+            int total = 0;
+            foreach (MonsterSpawner spawner in spawners)
+                total += spawner._RequiredMana;
+            return total;
+        }
+    }
+
+    public void SetSpawner(MonsterSpawner spawner, bool value)
+    {
+        if (value)
+            spawners.Add(spawner);
+        else
+            spawners.Remove(spawner);
+    }
 
     private Tile CalculateMidTile()
     {
@@ -43,6 +62,5 @@ public class CompleteRoom
     {
         includeRooms = targetTiles;
         totalMana = singleRoom ? 3 : includeRooms.Count;
-        spendedMana = 0;
     }
 }

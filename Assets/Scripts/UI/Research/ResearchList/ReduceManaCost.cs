@@ -12,5 +12,8 @@ public class ReduceManaCost : MonoBehaviour, Research
     public void ActiveResearch()
     {
         PassiveManager.Instance.ReduceManaCost(targetType, value);
+        DeployUI deployUI = FindObjectOfType<DeployUI>();
+        deployUI?.UpdateMana();
+
     }
 }

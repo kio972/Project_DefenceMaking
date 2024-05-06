@@ -42,6 +42,12 @@ public class DeployUI : MonoBehaviour
 
     private InGameUI ingameUI;
 
+    public void UpdateMana()
+    {
+        foreach (DeploySlot slot in deployItems)
+            slot.UpdateMana();
+    }
+
     public void SetActive(bool value)
     {
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
