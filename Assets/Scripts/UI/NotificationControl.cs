@@ -10,7 +10,18 @@ public class NotificationControl : MonoBehaviour
 
     private Vector2[] slotPos;
 
-    private Queue<string> notiQueue;
+    private struct NotiQueue
+    {
+        public string msg;
+        public NotificationType type;
+        public NotiQueue(string msg, NotificationType type)
+        {
+            this.msg = msg;
+            this.type = type;
+        }
+    }
+
+    private Queue<NotiQueue> notiQueue;
 
     public float waitTime = 1f;
     private WaitForSeconds wait;
@@ -55,9 +66,9 @@ public class NotificationControl : MonoBehaviour
         }
     }
 
-    public void SetMesseage(string msg)
+    public void SetMesseage(string msg, NotificationType type)
     {
-        notiQueue.Enqueue(msg);
+        notiQueue.Enqueue(new NotiQueue(msg, type));
     }
 
     private void ModifyPos()
@@ -93,7 +104,8 @@ public class NotificationControl : MonoBehaviour
             }
 
             activeSlot.Add(slot);
-            slot.SetMesseage(notiQueue.Dequeue());
+            NotiQueue queue = notiQueue.Dequeue();
+            slot.SetMesseage(queue.msg, queue.type);
             slot.index = activeSlot.Count - 1;
 
             yield return null;
@@ -109,7 +121,7 @@ public class NotificationControl : MonoBehaviour
         wait = new WaitForSeconds(waitTime);
 
         slotPos = new Vector2[slots.Length];
-        notiQueue = new Queue<string>();
+        notiQueue = new Queue<NotiQueue>();
 
         float pos = slots[0]._Rect.anchoredPosition.y;
         float width = slots[0]._Rect.sizeDelta.y;

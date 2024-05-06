@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public enum NotificationType
+{
+    Research,
+    Deploy,
+    Shop,
+}
+
 public enum NotificationState
 {
     Open,
@@ -25,6 +32,12 @@ public class NotificationSlot : MonoBehaviour
             return rect;
         }
     }
+
+    [SerializeField]
+    private Sprite[] sprites;
+
+    [SerializeField]
+    private Image img;
 
     [SerializeField]
     private Button btn;
@@ -51,12 +64,14 @@ public class NotificationSlot : MonoBehaviour
         curState = NotificationState.Wait;
     }
 
-    public void SetMesseage(string msg)
+    public void SetMesseage(string msg, NotificationType type)
     {
         animator.Rebind();
         text.text = msg;
         gameObject.SetActive(true);
         curState = NotificationState.Open;
+        if(img != null && sprites != null)
+            img.sprite = sprites[(int)type];
     }
 
     public void OnClick()

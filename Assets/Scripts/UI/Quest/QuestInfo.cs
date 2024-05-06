@@ -22,9 +22,12 @@ public class QuestInfo : MonoBehaviour
 
     private Quest curQuest = null;
 
-    private readonly Color idleColor = Color.white;
-    private readonly Color midColor = new Color(1, 0.5f, 0);
-    private readonly Color alertColor = Color.red;
+    [SerializeField]
+    private Color idleColor = Color.white;
+    [SerializeField]
+    private Color midColor = new Color(1, 0.5f, 0);
+    [SerializeField]
+    private Color alertColor = Color.red;
 
     private Animator animator;
     private Animator _Animator { get { if (animator == null) animator = GetComponentInChildren<Animator>(); return animator; } }

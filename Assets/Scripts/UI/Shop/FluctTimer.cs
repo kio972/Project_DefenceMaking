@@ -48,7 +48,7 @@ public class FluctTimer : MonoBehaviour
             item.FluctPrice();
 
         if (!string.IsNullOrEmpty(fluctMessage))
-            GameManager.Instance.notificationBar?.SetMesseage(fluctMessage);
+            GameManager.Instance.notificationBar?.SetMesseage(fluctMessage, NotificationType.Shop);
     }
 
     public void IncreaseTime()

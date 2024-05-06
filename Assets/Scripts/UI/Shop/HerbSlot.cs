@@ -47,15 +47,15 @@ public class HerbSlot : FluctItem
         {
             case 1:
                 GameManager.Instance.herb1 = Mathf.Clamp(GameManager.Instance.herb1, 0, GameManager.Instance.herb1Max);
-                GameManager.Instance.notificationBar?.SetMesseage("흑색 허브의 가치가 떨어져 폐기처분되었습니다.");
+                GameManager.Instance.notificationBar?.SetMesseage("흑색 허브의 가치가 떨어져 폐기처분되었습니다.", NotificationType.Shop);
                 return;
             case 2:
                 GameManager.Instance.herb2 = Mathf.Clamp(GameManager.Instance.herb1, 0, GameManager.Instance.herb2Max);
-                GameManager.Instance.notificationBar?.SetMesseage("자색 허브의 가치가 떨어져 폐기처분되었습니다.");
+                GameManager.Instance.notificationBar?.SetMesseage("자색 허브의 가치가 떨어져 폐기처분되었습니다.", NotificationType.Shop);
                 return;
             case 3:
                 GameManager.Instance.herb3 = Mathf.Clamp(GameManager.Instance.herb1, 0, GameManager.Instance.herb3Max);
-                GameManager.Instance.notificationBar?.SetMesseage("백색 허브의 가치가 떨어져 폐기처분되었습니다.");
+                GameManager.Instance.notificationBar?.SetMesseage("백색 허브의 가치가 떨어져 폐기처분되었습니다.", NotificationType.Shop);
                 return;
         }
     }
