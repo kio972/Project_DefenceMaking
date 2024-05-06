@@ -11,7 +11,7 @@ public abstract class Quest
     protected List<bool> isComplete;
     public List<bool> _IsComplete { get => isComplete; }
 
-    private string nextQuestMsg;
+    protected string nextQuestMsg;
     private List<int> clearNum;
     protected List<int> curClearNum;
     public List<int> _ClearNum { get => clearNum; }

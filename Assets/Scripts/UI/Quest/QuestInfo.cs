@@ -44,7 +44,7 @@ public class QuestInfo : MonoBehaviour
         isTimerOn = false;
         _Animator.SetBool("IsClear", curQuest._IsClear);
         _Animator.SetTrigger("End");
-        Invoke("DeActive", 1f);
+        //Invoke("DeActive", 1f);
         curQuest = null;
     }
 

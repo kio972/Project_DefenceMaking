@@ -109,6 +109,19 @@ public class Trap : MonoBehaviour
         isInit = true;
     }
 
+    private void DeadTargetCheck()
+    {
+        List<Battler> removeTargets = new List<Battler>();
+        foreach (Battler target in targetList)
+        {
+            if (target.isDead)
+                removeTargets.Add(target);
+        }
+
+        foreach (Battler removeTarget in removeTargets)
+            targetList.Remove(removeTarget);
+    }
+
     private void Update()
     {
         if (!isInit)
@@ -117,6 +130,7 @@ public class Trap : MonoBehaviour
         if(coolDown > 0)
             coolDown -= Time.deltaTime * GameManager.Instance.timeScale;
 
+        DeadTargetCheck();
         if (targetList.Count == 0)
         {
             if (animator != null)

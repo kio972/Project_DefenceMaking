@@ -24,12 +24,28 @@ public class QuestManager : IngameSingleton<QuestManager>
 
     private bool initState = false;
 
-    [SerializeField]
     QuestMessage questMessage;
-    [SerializeField]
+    QuestMessage _QuestMessage
+    {
+        get
+        {
+            if (questMessage == null)
+                questMessage = FindObjectOfType<QuestMessage>(true);
+            return questMessage;
+        }
+    }
     QuestController questController;
+    QuestController _QuestController
+    {
+        get
+        {
+            if (questController == null)
+                questController = FindObjectOfType<QuestController>(true);
+            return questController;
+        }
+    }
 
-    List<string> clearedQuests = new List<string>();
+    HashSet<string> clearedQuests = new HashSet<string>();
 
     public void EndQuest(Quest quest, bool isClear)
     {
@@ -42,7 +58,7 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         int id;
         if(int.TryParse(questID.Replace("q", ""), out id))
-            questController.StartQuest(id);
+            _QuestController.StartQuest(id);
     }
 
     public void EnqueueQuest(string msgID)
@@ -58,7 +74,7 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         while(true)
         {
-            if (questMessage.gameObject.activeSelf || questWatcher.Count == 0 || GameManager.Instance.isPause)
+            if (_QuestMessage.gameObject.activeSelf || questWatcher.Count == 0 || GameManager.Instance.isPause)
             {
                 yield return null;
                 continue;
@@ -68,18 +84,18 @@ public class QuestManager : IngameSingleton<QuestManager>
             if (GameManager.Instance.CurWave < watcher.startRound - 1 || !clearedQuests.Contains(watcher.condition))
                 questWatcher.Enqueue(watcher);
             else
-                questMessage.SetMessage(questMsgDic[watcher.id]);
+                _QuestMessage.SetMessage(questMsgDic[watcher.id]);
 
             yield return null;
         }
     }
 
-    private void Init()
+    public void Init()
     {
         if (initState)
             return;
-
-        foreach(Dictionary<string, object> data in DataManager.Instance.QuestMessage_Table)
+        initState = true;
+        foreach (Dictionary<string, object> data in DataManager.Instance.QuestMessage_Table)
         {
             if (data["Condition"].ToString() == "-")
             {
@@ -88,11 +104,14 @@ public class QuestManager : IngameSingleton<QuestManager>
             questMsgDic.Add(data["ID"].ToString(), data);
         }
         clearedQuests.Add("-");
+
+        StartCoroutine(IQuestManage());
     }
 
-    private void Start()
+    private void Update()
     {
+        if (initState)
+            return;
         Init();
-        StartCoroutine(IQuestManage());
     }
 }
