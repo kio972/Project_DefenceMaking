@@ -136,7 +136,16 @@ public class QuestMessage : MonoBehaviour
     {
         dissolveController.isAppare = true;
         gameObject.SetActive(true);
-        StartCoroutine(SetAlpha(true, 0.1f, dissolveController.appareGoaltime));
+        TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
+        Image[] imgs = GetComponentsInChildren<Image>();
+        foreach (TextMeshProUGUI text in textMeshProUGUIs)
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
+        foreach (Image img in imgs)
+        {
+            if (img == this.img || img == fade)
+                continue;
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
+        }
         GameManager.Instance.SetPause(true);
 
         if (data == null)
