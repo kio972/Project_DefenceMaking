@@ -39,6 +39,54 @@ public class DebugTool : MonoBehaviour
         cardDeckController.DrawCard(cardIndex);
     }
 
+    int goldIndex = 0;
+    [SerializeField]
+    TextMeshProUGUI goldText;
+    int gold { get { goldIndex = goldIndex % 3; if (goldIndex == 0) return 100; else if (goldIndex == 1) return 1000; else return 10000; } }
+    public void SetGoldIndex(bool isRight)
+    {
+        if (isRight)
+            goldIndex++;
+        else
+            goldIndex--;
+
+        goldText.text = $"{gold}{"골드"}";
+    }
+
+    public void GetGold()
+    {
+        GameManager.Instance.gold += gold;
+    }
+
+    int herbIndex = 0;
+    [SerializeField]
+    TextMeshProUGUI herbText;
+    
+    public void SetHerbIndex(bool isRight)
+    {
+        if (isRight)
+            herbIndex++;
+        else
+            herbIndex--;
+        herbIndex = herbIndex % 3;
+        if (herbIndex == 0)
+            herbText.text = "흑색 허브(1개)";
+        else if(herbIndex == 1)
+            herbText.text = "자색 허브(1개)";
+        else
+            herbText.text = "백색 허브(1개)";
+    }
+
+    public void GetHerb()
+    {
+        if (herbIndex == 0)
+            GameManager.Instance.herb1++;
+        else if (herbIndex == 1)
+            GameManager.Instance.herb2++;
+        else
+            GameManager.Instance.herb3++;
+    }
+
     public void DecreaseIndex()
     {
         cardIndex--;

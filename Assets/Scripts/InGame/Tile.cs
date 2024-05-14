@@ -363,8 +363,10 @@ public class Tile : MonoBehaviour
         tileAnimator.SetTrigger("Destroy");
 
         GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
-
+        trap?.DestroyTrap();
         Destroy(this.gameObject, 1.0f);
+
+        NodeManager.Instance.SetTile(this, false);
     }
 
     public void Init(TileNode targetNode, bool dormant = false, bool removable = true, bool playAnim = true)
@@ -380,6 +382,8 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.dormantTile.Add(this);
         if(playAnim)
             tileAnimator?.SetTrigger("Set");
+
+        NodeManager.Instance.SetTile(this, true);
     }
 
     private void Update()

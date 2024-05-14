@@ -423,6 +423,18 @@ public static class UtilHelper
         return Vector3.zero;
     }
 
+    public static Dictionary<string, object> Get_ID_Data(object target, List<Dictionary<string, object>> targetDic, string key = "ID")
+    {
+        for (int i = 0; i < targetDic.Count; i++)
+        {
+            if (targetDic[i][key].ToString() == target.ToString())
+            {
+                return targetDic[i];
+            }
+        }
+        return null; // 일치하는 데이터가 없을 경우 null 반환
+    }
+
     public static int Find_Data_Index(object target, List<Dictionary<string, object>> targetDic, string key = "ID")
     {
         for (int i = 0; i < targetDic.Count; i++)

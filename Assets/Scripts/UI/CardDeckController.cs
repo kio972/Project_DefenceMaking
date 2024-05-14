@@ -55,7 +55,7 @@ public struct Card
     public Card(Dictionary<string, object> cardInfo, int index)
     {
         cardIndex = index;
-        cardFrame = cardInfo["cardtype"].ToString();
+        cardFrame = cardInfo["type"].ToString();
         cardType = GetCardType(cardInfo["type"].ToString());
         cardGrade = GetCardGrade(cardInfo["grade"].ToString());
         cardName = cardInfo["text_name"].ToString();
@@ -82,6 +82,7 @@ public class CardDeckController : MonoBehaviour
     public Transform CardZone { get => cardZone; }
 
     private List<int> cardDeck;
+    public int _CardDeckCount { get => cardDeck.Count; }
 
     private bool initState = false;
 

@@ -50,6 +50,8 @@ public class DeploySlot : MonoBehaviour
     [SerializeField]
     private SlotInfo info;
 
+    Dictionary<string, object> data;
+
     private bool isUnlocked = false;
     public bool IsUnlocked
     {
@@ -73,6 +75,16 @@ public class DeploySlot : MonoBehaviour
             delpoyUI = GetComponentInParent<DeployUI>();
 
         delpoyUI.DeployReady(cardType, _name, prefabName, cost);
+    }
+
+    public void UpdateMana()
+    {
+        if (cardType != CardType.Monster)
+            return;
+        float.TryParse(data["requiredMagicpower"].ToString(), out mana);
+        MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
+        mana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
+        manaText.text = mana.ToString();
     }
 
     public void Init(Dictionary<string,object> data)
@@ -112,5 +124,7 @@ public class DeploySlot : MonoBehaviour
         icon.sprite = illur;
         nameText.ChangeLangauge(SettingManager.Instance.language, _name);
         costText.text = cost.ToString();
+
+        this.data = data;
     }
 }

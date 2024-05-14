@@ -29,6 +29,10 @@ public class Battler : FSM<Battler>
     public int armor;
     public float attackSpeed;
     public float attackRange;
+
+    public float attackCoolTime = 0;
+    public float curAttackCoolTime = 0;
+
     protected float moveSpeed;
 
     public bool splashAttack = false;
@@ -126,9 +130,16 @@ public class Battler : FSM<Battler>
         directPass = false;
     }
 
-    protected virtual void RemoveBody()
+    private void SetActiveFalse()
     {
         gameObject.SetActive(false);
+    }
+
+    protected virtual void RemoveBody()
+    {
+        gameObject.transform.position = Vector3.up * 1000f;
+        animator?.Rebind();
+        Invoke("SetActiveFalse", 0.1f);
     }
 
     public virtual void Dead()

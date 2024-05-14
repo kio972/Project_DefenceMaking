@@ -23,6 +23,12 @@ public class FSMKing : FSMSingleton<FSMKing>, CharState<Battler>
 
     private bool AttackCheck(Battler e)
     {
+        if (e.curAttackCoolTime > 0)
+        {
+            e.curAttackCoolTime -= Time.deltaTime * GameManager.Instance.timeScale;
+            return false;
+        }
+
         //1.1
         Battler curTarget = e.BattleCheck();
         if (curTarget != null)

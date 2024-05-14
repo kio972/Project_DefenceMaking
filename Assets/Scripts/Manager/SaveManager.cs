@@ -2,14 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class SaveManager : Singleton<SaveManager>
 {
     // --- 게임 데이터 파일이름 설정 ("원하는 이름(영문).json") --- //
     string settingDataFileName = "SettingData.json";
+    string playerDataFileName = "PlayerData.json";
 
     // --- 저장용 클래스 변수 --- //
     public SettingData settingData = new SettingData();
+
+    public PlayerData playerData = new PlayerData();
+
+    public void SavePlayerData()
+    {
+        string json = JsonConvert.SerializeObject(playerData);
+        string filePath = Application.persistentDataPath + "/" + playerDataFileName;
+        print(filePath);
+        // 이미 저장된 파일이 있다면 덮어쓰고, 없다면 새로 만들어서 저장
+        File.WriteAllText(filePath, json);
+    }
+
+    public void LoadPlayerData()
+    {
+        playerData = LoadData<PlayerData>(playerDataFileName);
+    }
 
     public void LoadSettingData()
     {

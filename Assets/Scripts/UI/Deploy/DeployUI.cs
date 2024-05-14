@@ -42,6 +42,12 @@ public class DeployUI : MonoBehaviour
 
     private InGameUI ingameUI;
 
+    public void UpdateMana()
+    {
+        foreach (DeploySlot slot in deployItems)
+            slot.UpdateMana();
+    }
+
     public void SetActive(bool value)
     {
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
@@ -115,11 +121,10 @@ public class DeployUI : MonoBehaviour
                     return;
                 }
 
-                room.spendedMana += requiredMana;
                 //BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
                 monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
-                monsterSpawner.Init(curNode, curObject.name);
+                monsterSpawner.Init(curNode, curObject.name, room);
                 AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
             }
             else if (curType == CardType.Trap)
@@ -280,5 +285,13 @@ public class DeployUI : MonoBehaviour
     {
         if (curObject != null)
             UpdateDeployState();
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+                SetActive(true);
+            else if (uiPage.activeSelf)
+                SetActive(false);
+        }
     }
 }

@@ -177,7 +177,7 @@ public class GameManager : IngameSingleton<GameManager>
             result.GameWin();
     }
 
-    private void WinGame()
+    public void WinGame()
     {
         updateNeed = false;
         speedController.SetSpeedZero();
@@ -225,20 +225,20 @@ public class GameManager : IngameSingleton<GameManager>
             return;
         }
 
-        if (allWaveSpawned && adventurersList.Count == 0)
-        {
-            allWaveSpawned = false;
-            if (waveController.HaveDelayedTarget)
-                return;
+        //if (allWaveSpawned && adventurersList.Count == 0)
+        //{
+        //    allWaveSpawned = false;
+        //    if (waveController.HaveDelayedTarget)
+        //        return;
             
-            loop++;
-            if (DataManager.Instance.BuffTable.ContainsKey(loop))
-                LoopWave();
-            else
-                WinGame();
+        //    loop++;
+        //    if (DataManager.Instance.BuffTable.ContainsKey(loop))
+        //        LoopWave();
+        //    else
+        //        WinGame();
 
-            return;
-        }
+        //    return;
+        //}
 
         UpdateBossRoom();
 
@@ -256,10 +256,9 @@ public class GameManager : IngameSingleton<GameManager>
             gold += 100 + PassiveManager.Instance.income_Weight;
             timer = 0f;
             dailyIncome = true;
-
-            if(!spawnLock && !allWaveSpawned)
+            curWave++;
+            if (!spawnLock && !allWaveSpawned)
             {
-                curWave++;
                 //몬스터 웨이브 스폰
                 waveController.SpawnWave(curWave);
             }

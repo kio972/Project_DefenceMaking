@@ -45,5 +45,6 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
     public void Exit(Battler e)
     {
         e.curTarget = null;
+        e.curAttackCoolTime = e.attackCoolTime;
     }
 }

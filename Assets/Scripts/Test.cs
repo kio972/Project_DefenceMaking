@@ -5,12 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class Test : MonoBehaviour
 {
-    public NotificationControl noti;
+    public QuestInfo infomer;
+    public Quest targetQuest;
+
+    private void SetQuest()
+    {
+
+
+        if (targetQuest == null || infomer == null)
+            return;
+
+        infomer.SetQuest(targetQuest);
+    }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P)) { StoryManager.Instance.EnqueueScript("Dan100"); }
-
-        if (Input.GetKeyDown(KeyCode.T)) { noti.SetMesseage("test"); }
+        if(Input.GetKeyDown(KeyCode.T)) { SetQuest(); }
     }
 }

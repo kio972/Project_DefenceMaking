@@ -84,13 +84,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, transform.localScale, Vector3.one * 1.5f, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(card_Frame.transform, card_Frame.transform.localScale, Vector3.one * 1.5f, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(card_Frame.transform, card_Frame.transform.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime));
 
-        transform.rotation = Quaternion.identity;
+        card_Frame.transform.rotation = Quaternion.identity;
         transform.SetAsLastSibling();
 
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
@@ -102,13 +102,13 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (scale_Modify_Coroutine != null)
             StopCoroutine(scale_Modify_Coroutine);
-        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(transform, transform.localScale, Vector3.one, mouseOverTime));
+        scale_Modify_Coroutine = StartCoroutine(UtilHelper.IScaleEffect(card_Frame.transform, card_Frame.transform.localScale, Vector3.one, mouseOverTime));
 
         if (position_Modify_Coroutine != null)
             StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));
+        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(card_Frame.transform, card_Frame.transform.position, originPos, mouseOverTime));
 
-        transform.rotation = originRot;
+        card_Frame.transform.rotation = originRot;
         if (originSiblingIndex != -1)
             transform.SetSiblingIndex(originSiblingIndex);
     }
@@ -373,13 +373,29 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         Invoke("DrawEnd", lerpTime);
     }
 
+    private string GetFrameName(string cardFrame)
+    {
+        switch(cardFrame)
+        {
+            case "road":
+                return "cardFrame_04";
+            case "room":
+                return "cardFrame_05";
+            case "roomPart":
+                return "cardFrame_05";
+            case "environment":
+                return "cardFrame_03";
+        }
+        return null;
+    }
+
     private void SetCardUI(Card targetCard)
     {
-        Sprite frame1 = SpriteList.Instance.LoadSprite("cardFrame1_" + targetCard.cardFrame);
-        Sprite frame2 = SpriteList.Instance.LoadSprite("cardFrame2_" + targetCard.cardFrame);
+        Sprite frame1 = SpriteList.Instance.LoadSprite(GetFrameName(targetCard.cardFrame));
         card_Frame.sprite = frame1;
-        card_Frame2.sprite = frame2;
-        card_Frame_Mask.sprite = frame2;
+        //Sprite frame2 = SpriteList.Instance.LoadSprite("cardFrame2_" + targetCard.cardFrame);
+        //card_Frame2.sprite = frame2;
+        //card_Frame_Mask.sprite = frame2;
 
         Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + targetCard.cardGrade.ToString());
         card_Rank.sprite = cardRank;

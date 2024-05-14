@@ -9,6 +9,8 @@ public class HpBar : MonoBehaviour
     private Battler battler;
     [SerializeField]
     private Image hp_Bar;
+    [SerializeField]
+    private GameObject imgGroup;
 
     public float delayTime = 1f;
     public float lerpTime = 0.2f;
@@ -28,6 +30,7 @@ public class HpBar : MonoBehaviour
         battlerCurHp = battler.curHp;
         hp_Bar.fillAmount = 1f;
         deadBar = false;
+        imgGroup.SetActive(false);
     }
 
 
@@ -63,6 +66,9 @@ public class HpBar : MonoBehaviour
     {
         if (battler == null)
             return;
+
+        if(imgGroup != null)
+            imgGroup.SetActive(hp_Bar.fillAmount < 1);
 
         if (battlerCurHp != battler.curHp)
         {

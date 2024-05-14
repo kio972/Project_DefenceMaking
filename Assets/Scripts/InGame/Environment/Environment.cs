@@ -24,6 +24,7 @@ public class Environment : MonoBehaviour
 
     public void Init(TileNode node)
     {
+        NodeManager.Instance.SetTile(this);
         curNode = node;
         switch(environmentType)
         {
