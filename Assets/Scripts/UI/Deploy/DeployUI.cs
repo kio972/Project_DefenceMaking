@@ -129,6 +129,12 @@ public class DeployUI : MonoBehaviour
             }
             else if (curType == CardType.Trap)
             {
+                if(GameManager.Instance.IsAdventurererOnTile(curNode))
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("적이 있는 타일에는 설치할 수 없습니다.");
+                    return;
+                }
+
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
                 AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
