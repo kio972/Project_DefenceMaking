@@ -448,12 +448,13 @@ public class Battler : FSM<Battler>
         }
     }
 
-    private void SplashAttack(Battler mainTarget)
+    private void SplashAttack(Battler mainTarget, int baseDamage)
     {
         List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
         splashTargets.Remove(mainTarget);
+        int damage = Mathf.CeilToInt(baseDamage * splashDamage);
         foreach (Battler target in splashTargets)
-            target.GetDamage(splashDamage, this);
+            target.GetDamage(damage, this);
     }
 
     //애니메이션 이벤트에서 작동
@@ -467,9 +468,10 @@ public class Battler : FSM<Battler>
 
         if (curTarget != null && !curTarget.isDead)
         {
-            curTarget.GetDamage(Damage, this);
+            int baseDamage = Damage;
+            curTarget.GetDamage(baseDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget);
+                SplashAttack(curTarget, baseDamage);
         }
     }
 
