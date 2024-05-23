@@ -33,6 +33,8 @@ public class GameManager : IngameSingleton<GameManager>
     public Canvas worldCanvas;
     public NotificationControl notificationBar;
 
+    public ResearchMainUI research;
+    public ShopUI shop;
 
     //public int king_Hp = 20;
     private bool dailyIncome = true;
@@ -48,6 +50,7 @@ public class GameManager : IngameSingleton<GameManager>
     }
 
     public bool isInBattle = false;
+
 
     public List<Adventurer> adventurersList = new List<Adventurer>();
 
@@ -311,7 +314,7 @@ public class GameManager : IngameSingleton<GameManager>
         }
     }
 
-    public void ForceInit()
+    public void Awake()
     {
         if (ingameUI == null)
             ingameUI = FindObjectOfType<InGameUI>();
@@ -319,9 +322,11 @@ public class GameManager : IngameSingleton<GameManager>
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
 
-        SetWaveSpeed();
+        if (research == null)
+            research = FindObjectOfType<ResearchMainUI>(true);
 
-        isInit = true;
+        if (shop == null)
+            shop = FindObjectOfType<ShopUI>(true);
     }    
 
     public void Init()
@@ -329,11 +334,11 @@ public class GameManager : IngameSingleton<GameManager>
         mapBuilder.Init();
         SpawnKing();
         SetWaveSpeed();
-        if (ingameUI == null)
-            ingameUI = FindObjectOfType<InGameUI>();
+
         ingameUI?.Init();
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
+        cardDeckController.Init();
         cardDeckController.Invoke("Mulligan", 1f);
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
@@ -341,6 +346,58 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
+
+        isInit = true;
+    }
+
+    public void LoadGame(PlayerData data)
+    {
+        if(data == null)
+        {
+            Init();
+            return;
+        }
+
+        ingameUI?.Init(false);
+
+        curWave = data.curWave;
+        timer = data.curTime;
+        gold = data.gold;
+        herb1 = data.herb1;
+        herb2 = data.herb2;
+        herb3 = data.herb3;
+
+        foreach (TileData tile in data.tiles)
+            mapBuilder.SetTile(tile);
+        foreach (TileData tile in data.environments)
+            mapBuilder.SetTile(tile, true);
+
+        NodeManager.Instance.SetGuideState(GuideState.None);
+
+        BattlerData king = data.devil;
+        NodeManager.Instance.endPoint = NodeManager.Instance.FindNode(king.row, king.col);
+        SpawnKing();
+        this.king.curHp = king.curHp;
+
+        cardDeckController.LoadData(data.cardIdes, data.deckLists);
+
+        foreach(BattlerData enemy in data.enemys)
+        {
+            Adventurer target = BattlerPooling.Instance.SpawnAdventurer(enemy.id, "id");
+            target.LoadData(enemy);
+        }
+
+        foreach (BattlerData ally in data.allies)
+        {
+            Monster target = BattlerPooling.Instance.SpawnMonster(ally.id, NodeManager.Instance.FindNode(ally.row, ally.col), "id");
+            target.LoadData(ally);
+        }
+
+        waveController.SpawnWave(curWave);
+
+        research.LoadData(data);
+        shop.LoadData(data);
+        QuestManager.Instance.LoadGame(data);
 
         isInit = true;
     }

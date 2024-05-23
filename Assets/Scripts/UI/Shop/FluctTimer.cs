@@ -12,6 +12,8 @@ public class FluctTimer : MonoBehaviour
     [SerializeField]
     private int fluctTime = 10;
 
+    public int _CurTime { get => curTime; set => curTime = value; }
+
     [SerializeField]
     private TextMeshProUGUI text;
 

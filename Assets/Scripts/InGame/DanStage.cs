@@ -17,6 +17,9 @@ public class DanStage : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(ITutorial());
+        if (SaveManager.Instance.playerData == null)
+            StartCoroutine(ITutorial());
+        else
+            GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
     }
 }

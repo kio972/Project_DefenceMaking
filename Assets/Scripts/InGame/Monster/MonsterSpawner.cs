@@ -14,12 +14,14 @@ public class MonsterSpawner : MonoBehaviour
     private float spawnCoolTime;
 
     private float curCoolTime;
+    public float _CurCoolTime { get => curCoolTime; set => curCoolTime = value; }
 
     private TileNode tile;
 
     private bool isUpdate = false;
 
     private string targetName;
+    public string _TargetName { get => targetName; }
 
     private int requiredMana;
     public int _RequiredMana { get => requiredMana; }

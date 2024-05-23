@@ -15,12 +15,14 @@ public class ResearchMainUI : MonoBehaviour
 
     private Coroutine researchCoroutine;
 
-    private IEnumerator IResearch(ResearchSlot curResearch)
+    private List<string> completedResearchs = new List<string>();
+
+    private IEnumerator IResearch(ResearchSlot curResearch, float additionalTime)
     {
         this.curResearch = curResearch;
 
         float startTime = (GameManager.Instance.CurWave * 1440) + GameManager.Instance.Timer;
-        float endTime = startTime + curResearch._ResearchData.requiredTime;
+        float endTime = startTime + curResearch._ResearchData.requiredTime - additionalTime;
         curResearch.SetResearchState(ResearchState.InProgress);
         yield return null;
         
@@ -41,16 +43,16 @@ public class ResearchMainUI : MonoBehaviour
         GameManager.Instance.notificationBar?.SetMesseage(curResearch._ResearchData.researchName + " 연구 완료", NotificationType.Research);
         Research research = curResearch.GetComponent<Research>();
         research?.ActiveResearch();
-
+        completedResearchs.Add(curResearch._ResearchId);
         this.curResearch = null;
     }
 
-    public bool StartResearch(ResearchSlot target)
+    public bool StartResearch(ResearchSlot target, float additionalTime = 0)
     {
         if (curResearch != null)
             return false;
 
-        researchCoroutine = StartCoroutine(IResearch(target));
+        researchCoroutine = StartCoroutine(IResearch(target, additionalTime));
         return true;
     }
 
@@ -79,6 +81,34 @@ public class ResearchMainUI : MonoBehaviour
                 SetActive(true);
             else if (uiPage.activeSelf)
                 SetActive(false);
+        }
+    }
+
+    public void SaveData(PlayerData data)
+    {
+        data.researchIdes = new List<string>(completedResearchs);
+        if(curResearch != null)
+        {
+            data.curResearch = curResearch._ResearchId;
+            data.curResearchTime = curResearch._ResearchData.requiredTime - curProgressTime;
+        }
+    }
+
+    public void LoadData(PlayerData data)
+    {
+        completedResearchs = new List<string>(data.researchIdes);
+
+        ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
+        foreach (ResearchSlot slot in slots)
+        {
+            if (completedResearchs.Contains(slot._ResearchId))
+            {
+                slot.SetResearchState(ResearchState.Complete);
+                Research research = slot.GetComponent<Research>();
+                research?.ActiveResearch();
+            }
+            else if(!string.IsNullOrEmpty(data.curResearch) && slot._ResearchId == data.curResearch)
+                StartResearch(slot, data.curResearchTime);
         }
     }
 }

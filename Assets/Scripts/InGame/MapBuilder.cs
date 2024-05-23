@@ -158,16 +158,59 @@ public class MapBuilder : MonoBehaviour
             SetRandomTile(range);
     }
 
-    public void Init()
+    public void SetTile(TileData tile, bool isEnvironment = false)
     {
+        if (!initState)
+            Init(false);
+
+        TileNode node = NodeManager.Instance.FindNode(tile.row, tile.col);
+        if(node == null)
+        {
+            Debug.Log($"No EmptyTile/ Row : { tile.row } Col : { tile.col }");
+            return;
+        }
+
+        if(isEnvironment)
+        {
+            Environment prefab = Resources.Load<Environment>("Prefab/Environment/" + tile.id);
+            Environment instance = Instantiate(prefab);
+            instance.Init(node);
+        }
+        else
+        {
+            Tile prefab = Resources.Load<Tile>("Prefab/Tile/" + tile.id);
+            Tile instance = Instantiate(prefab);
+            for (int i = 0; i < tile.rotation; i++)
+                instance.RotateTile();
+            instance.Init(node, tile.isDormant, tile.isRemovable, false);
+            if (!string.IsNullOrEmpty(tile.trapId))
+                BattlerPooling.Instance.SpawnTrap(tile.trapId, node, "id");
+            if (!string.IsNullOrEmpty(tile.spawnerId))
+            {
+                MonsterSpawner spawner = BattlerPooling.Instance.SetSpawner(node, tile.spawnerId, NodeManager.Instance.FindRoom(node.row, node.col));
+                spawner._CurCoolTime = tile.spawnerCool;
+            }
+        }
+    }
+
+    private bool initState = false;
+
+    public void Init(bool setmap = true)
+    {
+        initState = true;
+
         SetNewMap();
         NodeManager.Instance.SetEmptyNode();
         NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
-        SetBasicTile();
 
-        Tutorial tutorial = FindObjectOfType<Tutorial>();
-        if (tutorial == null)
-            SetRamdomTile(4, 5);
+        if(setmap)
+        {
+            SetBasicTile();
+
+            Tutorial tutorial = FindObjectOfType<Tutorial>();
+            if (tutorial == null)
+                SetRamdomTile(4, 5);
+        }
 
         InputManager.Instance.Call();
     }

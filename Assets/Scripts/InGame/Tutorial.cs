@@ -168,7 +168,7 @@ public class Tutorial : MonoBehaviour
         downBlocker.SetActive(false);
         
         GameManager.Instance.speedLock = false;
-        GameManager.Instance.ForceInit();
+        //GameManager.Instance.ForceInit();
 
     }
 
@@ -267,90 +267,90 @@ public class Tutorial : MonoBehaviour
 
     private IEnumerator Dan005()
     {
-        while (true)
-        {
-            if (PassiveManager.Instance.deployAvailableTable.ContainsKey("s_m10001") && PassiveManager.Instance.deployAvailableTable["s_m10001"])
-                break;
-            yield return null;
-        }
-        if (GameManager.Instance.gold < 50)
-            GameManager.Instance.gold = 50;
+        //while (true)
+        //{
+        //    if (PassiveManager.Instance.deployAvailableTable.ContainsKey("s_m10001") && PassiveManager.Instance.deployAvailableTable["s_m10001"])
+        //        break;
+        //    yield return null;
+        //}
+        //if (GameManager.Instance.gold < 50)
+        //    GameManager.Instance.gold = 50;
 
-        slimeSlot.SetResearchState(ResearchState.Complete);
-        int slimeIndex = UtilHelper.Find_Data_Index("s_m10001", DataManager.Instance.Battler_Table, "id");
-        slimeDeploySlot.Init(DataManager.Instance.Battler_Table[slimeIndex]);
-        slimeDeploySlot.SendInfo();
-        slimeDeploySlot.gameObject.SetActive(true);
+        //slimeSlot.SetResearchState(ResearchState.Complete);
+        //int slimeIndex = UtilHelper.Find_Data_Index("s_m10001", DataManager.Instance.Battler_Table, "id");
+        //slimeDeploySlot.Init(DataManager.Instance.Battler_Table[slimeIndex]);
+        //slimeDeploySlot.SendInfo();
+        //slimeDeploySlot.gameObject.SetActive(true);
 
-        GameManager.Instance.speedController.SetSpeedZero();
-        GameManager.Instance.speedLock = true;
-        yield return new WaitForSeconds(1.5f);
+        //GameManager.Instance.speedController.SetSpeedZero();
+        //GameManager.Instance.speedLock = true;
+        //yield return new WaitForSeconds(1.5f);
 
-        StoryManager.Instance.EnqueueScript("Dan005");
-        while (!StoryManager.Instance.IsScriptQueueEmpty)
-            yield return null;
+        //StoryManager.Instance.EnqueueScript("Dan005");
+        //while (!StoryManager.Instance.IsScriptQueueEmpty)
+        //    yield return null;
 
-        ingameUI.SetRightUI(true, 0.1f);
-        ingameUI.rightUILock = false;
-        rightBlocker.SetActive(true);
+        //ingameUI.SetRightUI(true, 0.1f);
+        //ingameUI.rightUILock = false;
+        //rightBlocker.SetActive(true);
 
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
-        RectTransform rect = helpBtn.GetComponent<RectTransform>();
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        SetHelpBtn(true, deckBtnPos.position, 2);
-        pathArrowGroup[0].SetActive(true);
-        pathArrowGroup[0].transform.position = deckBtnPos.position;
+        //RectTransform rect = helpBtn.GetComponent<RectTransform>();
+        //rect.pivot = new Vector2(0.5f, 0.5f);
+        //SetHelpBtn(true, deckBtnPos.position, 2);
+        //pathArrowGroup[0].SetActive(true);
+        //pathArrowGroup[0].transform.position = deckBtnPos.position;
 
-        while (GameManager.Instance.cardDeckController.hand_CardNumber == 0)
-            yield return null;
-        pathArrowGroup[0].SetActive(false);
-        yield return new WaitForSeconds(0.5f);
+        //while (GameManager.Instance.cardDeckController.hand_CardNumber == 0)
+        //    yield return null;
+        //pathArrowGroup[0].SetActive(false);
+        //yield return new WaitForSeconds(0.5f);
 
-        Vector3 targetPos = NodeManager.Instance.FindNode(1, 5).transform.position;
+        //Vector3 targetPos = NodeManager.Instance.FindNode(1, 5).transform.position;
 
-        Transform roomTransform = GameManager.Instance.cardDeckController.cards[0];
-        pathArrowGroup[1].SetActive(true);
-        while (!NodeManager.Instance.HaveSingleRoom)
-        {
-            if (!InputManager.Instance.settingCard)
-                pathArrowGroup[1].transform.position = roomTransform.position;
-            else
-                pathArrowGroup[1].transform.position = Camera.main.WorldToScreenPoint(targetPos);
+        //Transform roomTransform = GameManager.Instance.cardDeckController.cards[0];
+        //pathArrowGroup[1].SetActive(true);
+        //while (!NodeManager.Instance.HaveSingleRoom)
+        //{
+        //    if (!InputManager.Instance.settingCard)
+        //        pathArrowGroup[1].transform.position = roomTransform.position;
+        //    else
+        //        pathArrowGroup[1].transform.position = Camera.main.WorldToScreenPoint(targetPos);
 
-            yield return null;
-        }
+        //    yield return null;
+        //}
 
-        GameManager.Instance.speedLock = true;
-        pathArrowGroup[1].SetActive(false);
+        //GameManager.Instance.speedLock = true;
+        //pathArrowGroup[1].SetActive(false);
         
-        Button[] btns = trapDeploySlot.GetComponentsInChildren<Button>(true);
-        foreach (Button btn in btns)
-            Destroy(btn);
-        yield return null;
+        //Button[] btns = trapDeploySlot.GetComponentsInChildren<Button>(true);
+        //foreach (Button btn in btns)
+        //    Destroy(btn);
+        //yield return null;
 
-        rect.pivot = new Vector2(0.5f, 1f);
-        SetHelpBtn(true, manageBtnPos.position, 0);
-        arrowUp.transform.position = manageBtnPos.position;
-        while (GameManager.Instance.monsterSpawner.Count == 0)
-        {
-            arrowUp.SetActive(managePage.DeployStep == 0);
-            pathArrowGroup[1].SetActive(managePage.DeployStep == 2);
-            if(pathArrowGroup[1].activeSelf)
-                pathArrowGroup[1].transform.position = Camera.main.WorldToScreenPoint(targetPos);
-            yield return null;
-        }
+        //rect.pivot = new Vector2(0.5f, 1f);
+        //SetHelpBtn(true, manageBtnPos.position, 0);
+        //arrowUp.transform.position = manageBtnPos.position;
+        //while (GameManager.Instance.monsterSpawner.Count == 0)
+        //{
+        //    arrowUp.SetActive(managePage.DeployStep == 0);
+        //    pathArrowGroup[1].SetActive(managePage.DeployStep == 2);
+        //    if(pathArrowGroup[1].activeSelf)
+        //        pathArrowGroup[1].transform.position = Camera.main.WorldToScreenPoint(targetPos);
+        //    yield return null;
+        //}
 
-        SetHelpBtn(false);
-        delpoyArrow2.SetActive(false);
-        pathArrowGroup[1].SetActive(false);
+        //SetHelpBtn(false);
+        //delpoyArrow2.SetActive(false);
+        //pathArrowGroup[1].SetActive(false);
 
-        while (managePage.DeployStep != 0)
-        {
-            delpoyExitArrow.SetActive(managePage.DeployStep == 2);
-            delpoyExitArrow2.SetActive(managePage.DeployStep == 1);
-            yield return null;
-        }
+        //while (managePage.DeployStep != 0)
+        //{
+        //    delpoyExitArrow.SetActive(managePage.DeployStep == 2);
+        //    delpoyExitArrow2.SetActive(managePage.DeployStep == 1);
+        //    yield return null;
+        //}
 
         yield return StartCoroutine(WaitForSpeed1());
     }

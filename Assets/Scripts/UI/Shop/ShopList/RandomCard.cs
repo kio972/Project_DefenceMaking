@@ -9,6 +9,7 @@ public class RandomCard : MonoBehaviour, Item, Refreshable
     private TileType targetType;
 
     private int targetIndex;
+    public int _TargetIndex { get => targetIndex; }
     StringBuilder targetName = new StringBuilder();
 
     [SerializeField]

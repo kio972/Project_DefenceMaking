@@ -19,11 +19,13 @@ public class Environment : MonoBehaviour
     private float value;
 
     private TileNode curNode;
+    public TileNode _CurNode { get => curNode; }
 
     protected virtual void CustomFunc() { }
 
     public void Init(TileNode node)
     {
+        transform.position = node.transform.position;
         NodeManager.Instance.SetTile(this);
         curNode = node;
         switch(environmentType)

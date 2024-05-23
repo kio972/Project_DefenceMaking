@@ -82,8 +82,13 @@ public class CardDeckController : MonoBehaviour
     public Transform CardZone { get => cardZone; }
 
     private List<int> cardDeck;
+    public List<int> _CardDeck { get => cardDeck; }
+
     public int _CardDeckCount { get => cardDeck.Count; }
 
+    private List<int> handCards = new List<int>();
+    public List<int> _HandCards { get => handCards; }
+    
     private bool initState = false;
 
     [SerializeField]
@@ -91,7 +96,7 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private float handHeight = 1;
 
-    public List<Transform> cards = new List<Transform>();
+    private List<Transform> cards = new List<Transform>();
     //초기 카드 숫자
     public int hand_CardNumber = 0;
     //최대 카드 숫자
@@ -418,7 +423,11 @@ public class CardDeckController : MonoBehaviour
         InstantiateCard(ReturnDeck());
     }
 
-    
+    public void DiscardCard(Transform cardTransform, int cardId)
+    {
+        cards.Remove(cardTransform);
+        handCards.Remove(cardId);
+    }
 
     private void InstantiateCard(Card targetCard)
     {
@@ -430,6 +439,7 @@ public class CardDeckController : MonoBehaviour
         card?.DrawEffect();
         card.transform.position = transform.position;
         cards.Add(card.transform);
+        handCards.Add(targetCard.cardIndex);
         SetCardPosition();
         UpdateDeckCount();
     }
@@ -450,7 +460,20 @@ public class CardDeckController : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void LoadData(List<int> cardIdes, List<int> deckLists)
+    {
+        if (!initState)
+            Init();
+
+        cardDeck = new List<int>(deckLists);
+        foreach(int id in cardIdes)
+        {
+            AddCard(id);
+            DrawCard(id);
+        }
+    }
+
+    public void Init()
     {
         if (initState) return;
 
@@ -469,11 +492,5 @@ public class CardDeckController : MonoBehaviour
             curScreenSize = SettingManager.Instance.screenSize;
             SetCardPosition();
         }
-    }
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        Init();
     }
 }

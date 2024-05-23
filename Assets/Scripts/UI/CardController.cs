@@ -157,7 +157,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             instancedObject = null;
             GameManager.Instance.cardDeckController.hand_CardNumber--;
 
-            GameManager.Instance.cardDeckController.cards.Remove(this.transform);
+            GameManager.Instance.cardDeckController.DiscardCard(this.transform, cardIndex);
+            //GameManager.Instance.cardDeckController.cards.Remove(this.transform);
             GameManager.Instance.cardDeckController.SetCardPosition();
 
             float lerpTime = 0.4f;

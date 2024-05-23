@@ -15,14 +15,14 @@ public enum GuideState
 public class NodeManager : IngameSingleton<NodeManager>
 {
     //활성화 노드들의 이웃노드 중 비활성화 노드
-    public List<TileNode> virtualNodes = new List<TileNode>();
+    public HashSet<TileNode> virtualNodes = new HashSet<TileNode>();
     //활성화 상태의 노드
-    private List<TileNode> activeNodes = new List<TileNode>();
-    public List<TileNode> _ActiveNodes { get => activeNodes; }
+    private HashSet<TileNode> activeNodes = new HashSet<TileNode>();
+    public HashSet<TileNode> _ActiveNodes { get => activeNodes; }
 
-    public List<TileNode> emptyNodes = new List<TileNode>();
+    public HashSet<TileNode> emptyNodes = new HashSet<TileNode>();
 
-    public List<TileNode> allNodes = new List<TileNode>();
+    public HashSet<TileNode> allNodes = new HashSet<TileNode>();
 
     public List<CompleteRoom> roomTiles = new List<CompleteRoom>();
 
@@ -72,9 +72,9 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void ResetNode()
     {
-        activeNodes = new List<TileNode>();
-        emptyNodes = new List<TileNode>();
-        allNodes = new List<TileNode>();
+        activeNodes = new HashSet<TileNode>();
+        emptyNodes = new HashSet<TileNode>();
+        allNodes = new HashSet<TileNode>();
         roomTiles = new List<CompleteRoom>();
         dormantTile = new List<Tile>();
     }
@@ -438,6 +438,21 @@ public class NodeManager : IngameSingleton<NodeManager>
         return new int[2] { row, col };
     }
 
+    public CompleteRoom FindRoom(int row, int col)
+    {
+        TileNode point = FindNode(row, col);
+        foreach(CompleteRoom room in roomTiles)
+        {
+            foreach(Tile tile in room._IncludeRooms)
+            {
+                if (tile.curNode == point)
+                    return room;
+            }
+        }
+
+        return null;
+    }
+
     public TileNode FindNode(int row, int col)
     {
         foreach(TileNode node in allNodes)
@@ -549,7 +564,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void SetVirtualNode(bool withoutDormant = false)
     {
-        virtualNodes = new List<TileNode>();
+        virtualNodes = new HashSet<TileNode>();
 
         //activeNodes의 이웃타일들 전부 가상노드에 추가
         //이웃타일이 이미 activeNode에있다면 추가하지않음
@@ -569,7 +584,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void SetEmptyNode()
     {
-        emptyNodes = new List<TileNode>();
+        emptyNodes = new HashSet<TileNode>();
         TileNode[] nodes = FindObjectsOfType<TileNode>();
         foreach (TileNode node in nodes)
             emptyNodes.Add(node);

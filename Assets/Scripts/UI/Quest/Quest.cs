@@ -69,7 +69,7 @@ public abstract class Quest
         }
     }
 
-    public void Init(List<Dictionary<string, object>> data)
+    public void Init(List<Dictionary<string, object>> data, List<int> startVal = null)
     {
         questID = data[0]["ID"].ToString();
         questName = data[0]["Name"].ToString();
@@ -78,13 +78,14 @@ public abstract class Quest
         isMainQuest = data[0]["Type"].ToString() == "main" ? true : false;
         curTime = 0;
         clearNum = new List<int>();
-        curClearNum = new List<int>();
+        curClearNum = startVal != null ? new List<int>(startVal) : new List<int>();
         clearInfo = new List<string>();
         isComplete = new List<bool>();
         foreach(Dictionary<string, object> val in data)
         {
             clearNum.Add(System.Convert.ToInt32(val["ClearNum"]));
-            curClearNum.Add(0);
+            if(startVal == null)
+                curClearNum.Add(0);
             clearInfo.Add(val["ClearInfo"].ToString());
             isComplete.Add(false);
         }

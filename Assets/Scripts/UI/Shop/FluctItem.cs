@@ -24,6 +24,8 @@ public abstract class FluctItem : MonoBehaviour
     protected int originPrice;
     protected int curPrice;
 
+    public int _CurPrice { get => curPrice; set => curPrice = value; }
+
     [SerializeField]
     protected int coolTime = 3;
 

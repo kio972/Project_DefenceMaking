@@ -20,7 +20,7 @@ public class SceneController : Singleton<SceneController>
             yield return null;
         }
 
-        SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         yield return null;
 
         elapsed = 0f;
@@ -29,6 +29,9 @@ public class SceneController : Singleton<SceneController>
             elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
+
+        while(!asyncOperation.isDone)
+            yield return null;
 
         UIFade.Instance.FadeIn(time);
         elapsed = 0f;

@@ -200,8 +200,6 @@ public class TileNode : MonoBehaviour
         return null;
     }
 
-
-
     public void Init(int row, int col)
     {
         this.row = row;
@@ -210,4 +208,6 @@ public class TileNode : MonoBehaviour
         NodeManager.Instance.emptyNodes.Add(this);
         NodeManager.Instance.SetNeighborNode(this);
     }
+
+    
 }

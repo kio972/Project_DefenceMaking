@@ -52,11 +52,12 @@ public class ItemSlot : FluctItem
     }
 
     private bool isSoldOut = false;
-    public bool IsSoldOut { get => isSoldOut; }
+    public bool IsSoldOut { get => isSoldOut; set => isSoldOut = value; }
 
     [SerializeField]
     private bool isTileItem = false;
-
+    [SerializeField]
+    private bool isRefreshable = true;
     public void BuyItem()
     {
         if (GameManager.Instance.gold < curPrice)
@@ -125,9 +126,12 @@ public class ItemSlot : FluctItem
         itemPrice.text = curPrice.ToString();
         refresh?.RefreshItem();
 
-        isSoldOut = false;
-        buyBtn.gameObject.SetActive(true);
-        soldOut?.SetActive(false);
+        if(isRefreshable)
+        {
+            isSoldOut = false;
+            buyBtn.gameObject.SetActive(true);
+            soldOut?.SetActive(false);
+        }
     }
 
     public override void UpdateCoolTime()
@@ -142,12 +146,19 @@ public class ItemSlot : FluctItem
         itemPrice.text = curPrice.ToString();
     }
 
-    private void Awake()
+    public void UpdateTexts()
+    {
+        itemPrice.text = curPrice.ToString();
+        buyBtn.gameObject.SetActive(!isSoldOut);
+        soldOut?.SetActive(isSoldOut);
+    }
+
+    public void Init()
     {
         refresh = GetComponent<Refreshable>();
-        if(buyBtn != null)
+        if (buyBtn != null)
             buyBtn.onClick.AddListener(BuyItem);
-        
+
         curPrice = originPrice;
         refresh?.RefreshItem();
     }

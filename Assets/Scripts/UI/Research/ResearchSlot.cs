@@ -19,6 +19,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
 {
     [SerializeField]
     private string researchId;
+    public string _ResearchId { get => researchId; }
 
     [SerializeField]
     private GameObject imgGroup;
@@ -51,7 +52,15 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     }
 
     private ResearchData researchData;
-    public ResearchData _ResearchData { get => researchData; }
+    private bool initState = false;
+    public ResearchData _ResearchData
+    {
+        get
+        {
+            if (!initState) Init();
+            return researchData;
+        }
+    }
 
     [SerializeField]
     protected ResearchState curState;
@@ -220,17 +229,24 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
             SetImPossible();
     }
 
-    
-
     protected override void Awake()
     {
         base.Awake();
+        Init();
+    }
+
+    private void Init()
+    {
+        if (initState)
+            return;
 
         if (button != null)
             button.onClick.AddListener(OnClick);
 
         if (!string.IsNullOrEmpty(researchId))
             researchData = new ResearchData(researchId);
+
+        initState = true;
     }
 
     private void Start()

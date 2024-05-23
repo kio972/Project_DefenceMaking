@@ -743,4 +743,49 @@ public class Battler : FSM<Battler>
 
         FSMUpdate();
     }
+
+    public void LoadData(BattlerData data)
+    {
+        curTile = NodeManager.Instance.FindNode(data.row, data.col);
+        if(data.nextRow != -1)
+            nextTile = NodeManager.Instance.FindNode(data.nextRow, data.nextCol);
+
+        if (data.lastCrossedRow != -1)
+            lastCrossRoad = NodeManager.Instance.FindNode(data.lastCrossedRow, data.lastCrossedCol);
+
+        for (int i = 0; i < data.crossedRow.Count; i++)
+            crossedNodes.Add(NodeManager.Instance.FindNode(data.crossedRow[i], data.crossedCol[i]));
+
+        transform.position = new Vector3(data.pos_x, transform.position.y, data.pos_z);
+        curHp = data.curHp;
+        hpBar.UpdateHp();
+    }
+
+    public BattlerData GetData()
+    {
+        BattlerData target = new BattlerData();
+        target.id = battlerID;
+        target.curHp = curHp;
+        target.pos_x = transform.position.x;
+        target.pos_z = transform.position.y;
+
+        target.row = curTile.row;
+        target.col = curTile.col;
+
+        target.crossedRow = new List<int>();
+        target.crossedCol = new List<int>();
+        foreach (TileNode node in crossedNodes)
+        {
+            target.crossedRow.Add(node.row);
+            target.crossedCol.Add(node.col);
+        }
+        
+        target.nextRow = nextTile != null ? nextTile.row : -1;
+        target.nextCol = nextTile != null ? nextTile.col : -1;
+
+        target.lastCrossedRow = lastCrossRoad != null ? lastCrossRoad.row : -1;
+        target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;
+
+        return target;
+    }
 }
