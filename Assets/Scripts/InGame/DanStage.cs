@@ -12,7 +12,7 @@ public class DanStage : MonoBehaviour
             yield return null;
 
         GameManager.Instance.Init();
-        QuestManager.Instance.Init();
+        QuestManager.Instance.InitQuest();
     }
 
     void Start()

@@ -90,7 +90,7 @@ public class QuestManager : IngameSingleton<QuestManager>
         }
     }
 
-    public void Init(bool autoEnqueue = true)
+    public void InitQuest(bool autoEnqueue = true)
     {
         if (initState)
             return;
@@ -110,7 +110,7 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         if (initState)
             return;
-        Init();
+        InitQuest();
     }
 
     public void SaveGame(PlayerData data)
@@ -138,7 +138,7 @@ public class QuestManager : IngameSingleton<QuestManager>
 
     public void LoadGame(PlayerData data)
     {
-        Init(false);
+        InitQuest(false);
 
         foreach(QuestData quest in data.curQuests)
             StartQuest(quest.id, quest.curVal);
