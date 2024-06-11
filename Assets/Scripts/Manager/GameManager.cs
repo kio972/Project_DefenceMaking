@@ -6,6 +6,7 @@ public class GameManager : IngameSingleton<GameManager>
 {
     [SerializeField]
     private int stageNumber;
+    [SerializeField]
     private float defaultSpeed = 100f;
     public float DefaultSpeed { get => defaultSpeed; }
 
@@ -260,6 +261,7 @@ public class GameManager : IngameSingleton<GameManager>
             timer = 0f;
             dailyIncome = true;
             curWave++;
+            SetWaveSpeed(curWave);
             if (!spawnLock && !allWaveSpawned)
             {
                 //몬스터 웨이브 스폰
@@ -284,15 +286,15 @@ public class GameManager : IngameSingleton<GameManager>
         }
     }
 
-    private void SetWaveSpeed()
+    private void SetWaveSpeed(int wave = 0)
     {
-        if (stageNumber == 0)
-        {
-            defaultSpeed = gameSpeed / 60f;
-            return;
-        }
+        //if (stageNumber == 0)
+        //{
+        //    defaultSpeed = gameSpeed / 60f;
+        //    return;
+        //}
 
-        float.TryParse(DataManager.Instance.TimeRate_Table[stageNumber - 1]["time magnification"].ToString(), out defaultSpeed);
+        float.TryParse(DataManager.Instance.TimeRate_Table[wave]["time magnification"].ToString(), out defaultSpeed);
         defaultSpeed = defaultSpeed / 60f;
     }
 
@@ -398,7 +400,7 @@ public class GameManager : IngameSingleton<GameManager>
         research.LoadData(data);
         shop.LoadData(data);
         QuestManager.Instance.LoadGame(data);
-
+        SetWaveSpeed(curWave);
         isInit = true;
     }
 }
