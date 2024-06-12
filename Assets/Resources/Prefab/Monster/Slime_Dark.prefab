@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: -2713378433624594966}
+  battler: {fileID: 0}
 --- !u!1 &1215894734976800493
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5274736231055975365}
-  - component: {fileID: -2713378433624594966}
+  - component: {fileID: 4846261365249897999}
   - component: {fileID: 7820231197287753124}
   - component: {fileID: 4564736524047928406}
   m_Layer: 6
@@ -292,7 +292,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2713378433624594966
+--- !u!114 &4846261365249897999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7983978358322300935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 271d5732b1a0afc419a6ed773f6e8dce, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c5d488fa3fcee148b4c345c6325f7d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
@@ -309,6 +309,8 @@ MonoBehaviour:
   armor: 0
   attackSpeed: 1
   attackRange: 0
+  attackCoolTime: 0
+  curAttackCoolTime: 0
   splashAttack: 0
   splashDamage: 0
   splashRange: 0

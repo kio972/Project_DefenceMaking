@@ -357,6 +357,8 @@ public class Battler : FSM<Battler>
 
     protected float collapseCool = 0;
 
+    public virtual void UseSkill() { }
+
     private void ReturnToBase()
     {
         StopAllCoroutines();
@@ -617,34 +619,6 @@ public class Battler : FSM<Battler>
         if (PathFinder.Instance.GetBattlerDistance(this, target) > attackRange)
             return false;
 
-        //if (attackType == AttackType.Melee)
-        //{
-        //    //근거리일경우 : 서로의 타일이 길로 이어진 타일인지 확인
-        //    if (UtilHelper.CalCulateDistance(transform, target.transform) > attackRange)
-        //        return false;
-
-        //}
-        //else if(attackType == AttackType.Ranged)
-        //{
-        //    //원거리일경우 : 서로의 타일 사이에 방의 벽으로 막혀있지 않은지 확인
-        //    Vector3 dir = (target.transform.position - transform.position).normalized;
-        //    float dist = (target.transform.position - transform.position).magnitude;
-        //    Direction direction = UtilHelper.CheckClosestDirection(dir);
-        //    if (direction == Direction.None)
-        //        return false;
-        //    int tileDistance = (int)dist + 1;
-        //    TileNode curTileNode = this.curTile;
-        //    for(int i = 0; i < tileDistance; i++)
-        //    {
-        //        //curTile로부터 direction방향의 노드로 이동하며 타겟노드와 일치하는지 확인
-        //        //방의 벽으로 막혀있는지 여부 확인 코드 추가 필요
-        //        if (curTileNode == target.curTile)
-        //            return true;
-        //        curTileNode = curTile.neighborNodeDic[direction];
-        //    }
-        //    return false;
-        //}
-
         return true;
     }
 
@@ -758,6 +732,7 @@ public class Battler : FSM<Battler>
 
         transform.position = new Vector3(data.pos_x, transform.position.y, data.pos_z);
         curHp = data.curHp;
+        maxHp = data.maxHp;
         hpBar.UpdateHp();
     }
 
@@ -766,8 +741,9 @@ public class Battler : FSM<Battler>
         BattlerData target = new BattlerData();
         target.id = battlerID;
         target.curHp = curHp;
+        target.maxHp = maxHp;
         target.pos_x = transform.position.x;
-        target.pos_z = transform.position.y;
+        target.pos_z = transform.position.z;
 
         target.row = curTile.row;
         target.col = curTile.col;

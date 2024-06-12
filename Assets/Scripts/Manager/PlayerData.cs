@@ -14,6 +14,7 @@ public struct BattlerData
 {
     public string id;
     public int curHp;
+    public int maxHp;
     public float pos_x;
     public float pos_z;
 
