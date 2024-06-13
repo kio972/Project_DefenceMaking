@@ -27,9 +27,9 @@ public class Battler : FSM<Battler>
     public int curHp;
     public int maxHp;
     public int armor;
+    public int shield;
     public float attackSpeed;
     public float attackRange;
-
     public float attackCoolTime = 0;
     public float curAttackCoolTime = 0;
 
@@ -491,7 +491,7 @@ public class Battler : FSM<Battler>
         _name = DataManager.Instance.Battler_Table[index]["name"].ToString();
         maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["hp"]);
         curHp = maxHp;
-
+        shield = 0;
         minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMin"]);
         maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMax"]);
         float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out attackSpeed);

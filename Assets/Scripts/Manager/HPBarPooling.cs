@@ -13,10 +13,10 @@ public class HPBarPooling : IngameSingleton<HPBarPooling>
         string resourcePath = "";
         List<HpBar> targetHpbars = enemyHpbar;
         if (unitType == UnitType.Enemy)
-            resourcePath = "Prefab/UI/Adventure_hp_bar";
+            resourcePath = "Prefab/UI/hp_bar_Adventure";
         else if (unitType == UnitType.Player)
         {
-            resourcePath = "Prefab/UI/Monster_hp_bar";
+            resourcePath = battler is PlayerBattleMain ? "Prefab/UI/hp_bar_King" : "Prefab/UI/hp_bar_Monster";
             isAlly = true;
             targetHpbars = allyHpbars;
         }

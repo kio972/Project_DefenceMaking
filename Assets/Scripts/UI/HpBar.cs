@@ -11,11 +11,14 @@ public class HpBar : MonoBehaviour
     private Image hp_Bar;
     [SerializeField]
     private GameObject imgGroup;
+    [SerializeField]
+    private Image shield_Bar;
 
     public float delayTime = 1f;
     public float lerpTime = 0.2f;
 
     private float battlerCurHp;
+    private float battlerCurSheild;
 
     private bool deadBar = false;
 
@@ -30,7 +33,10 @@ public class HpBar : MonoBehaviour
         battlerCurHp = battler.curHp;
         hp_Bar.fillAmount = 1f;
         deadBar = false;
-        imgGroup.SetActive(false);
+        shield_Bar.gameObject.SetActive(battler.shield != 0);
+        
+        if(battler is not PlayerBattleMain)
+            imgGroup.SetActive(false);
     }
 
 
@@ -48,13 +54,21 @@ public class HpBar : MonoBehaviour
         if(deadBar) return;
 
         transform.SetAsLastSibling();
+        bool haveShield = battler.shield != 0;
+        shield_Bar.gameObject.SetActive(haveShield);
 
         float curHp = battler.curHp;
         float maxHp = battler.maxHp;
-        float nextAmount = curHp / maxHp;
-        hp_Bar.fillAmount = nextAmount;
+        float sheldHp = curHp + battler.shield;
+        if (haveShield)
+        {
+            maxHp = Mathf.Max(sheldHp, maxHp);
+            shield_Bar.fillAmount = sheldHp / maxHp;
+        }
 
-        if(nextAmount <= 0)
+        hp_Bar.fillAmount = curHp / maxHp;
+
+        if(curHp <= 0)
         {
             deadBar = true;
             Invoke("HPBarEnd", 0.2f);
@@ -68,11 +82,12 @@ public class HpBar : MonoBehaviour
             return;
 
         if(imgGroup != null)
-            imgGroup.SetActive(hp_Bar.fillAmount < 1);
+            imgGroup.SetActive(hp_Bar.fillAmount < 1 || battler is PlayerBattleMain);
 
-        if (battlerCurHp != battler.curHp)
+        if (battlerCurHp != battler.curHp || battlerCurSheild != battler.shield)
         {
             battlerCurHp = battler.curHp;
+            battlerCurSheild = battler.shield;
             UpdateHp();
         }
         UpdatePosition(position);
