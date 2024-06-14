@@ -633,7 +633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8086615794040897010}
-  - component: {fileID: -5225599656596598124}
+  - component: {fileID: 1839010092599867973}
   - component: {fileID: 3211986416068546865}
   - component: {fileID: 8086615794040896908}
   - component: {fileID: 8086615794040896909}
@@ -665,7 +665,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &-5225599656596598124
+--- !u!114 &1839010092599867973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -677,17 +677,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a5ab274b2c2f64fb49f38f4999aa6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card_Frame: {fileID: 6194452764934305758}
-  card_Frame2: {fileID: 585189030078227084}
-  card_Frame_Mask: {fileID: 2302431056063880436}
-  card_illust: {fileID: 5594061434747238526}
-  card_Rank: {fileID: 3271150533458217608}
-  card_Name: {fileID: 3768652298480949668}
-  card_Description: {fileID: 3625154122706227173}
-  originPos: {x: 0, y: 0, z: 0}
-  originRot: {x: 0, y: 0, z: 0, w: 0}
-  originSiblingIndex: -1
-  mouseOverTime: 0.2
+  cardType: 0
+  targetPrefab: {fileID: 0}
 --- !u!114 &3211986416068546865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,6 +691,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73bcd8c127c212a4393cfd09d1c7d31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  card_Frame: {fileID: 6194452764934305758}
+  card_Frame2: {fileID: 585189030078227084}
+  card_Frame_Mask: {fileID: 2302431056063880436}
+  card_illust: {fileID: 5594061434747238526}
+  card_Rank: {fileID: 3271150533458217608}
+  card_Name: {fileID: 3768652298480949668}
+  card_Description: {fileID: 3625154122706227173}
+  mouseOverTime: 0.2
+  originPos: {x: 0, y: 0, z: 0}
+  originRot: {x: 0, y: 0, z: 0, w: 0}
+  originSiblingIndex: -1
 --- !u!222 &8086615794040896908
 CanvasRenderer:
   m_ObjectHideFlags: 0

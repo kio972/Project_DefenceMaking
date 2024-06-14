@@ -8,7 +8,8 @@ public class InputManager : IngameSingleton<InputManager>
 
     public TileNode testTile;
 
-    public bool settingCard = false;
+    private bool _settingCard = false;
+    public bool settingCard { get => _settingCard; set => _settingCard = value; }
 
     public bool movingTile = false;
 
@@ -65,7 +66,7 @@ public class InputManager : IngameSingleton<InputManager>
 
     public void TileClickCheck()
     {
-        if (settingCard)
+        if (_settingCard)
             return;
 
         if (Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey))

@@ -6,6 +6,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public static class UtilHelper
 {
@@ -105,7 +107,24 @@ public static class UtilHelper
         callback?.Invoke();
     }
 
-    public static IEnumerator IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
+    public static async UniTask IMoveEffect(Transform transform, Vector3 originPositioin, Vector3 targetPosition, float lerpTime, CancellationToken cancellationToken, System.Action callback = null)
+    {
+        //targetPosition = originPositioin + targetPosition;
+        await UniTask.Yield();
+        float elapsedTime = 0f;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            transform.position = Vector3.Lerp(originPositioin, targetPosition, Mathf.Sin(t * Mathf.PI * 0.5f));
+            await UniTask.Yield(cancellationToken);
+        }
+        await UniTask.Yield(cancellationToken);
+        callback?.Invoke();
+    }
+
+    public static async UniTask IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
     {
         Image[] cardImgs = transform.GetComponentsInChildren<Image>();
         TextMeshProUGUI[] texts = transform.GetComponentsInChildren<TextMeshProUGUI>();
@@ -114,6 +133,8 @@ public static class UtilHelper
             temp1.color = startColor;
         foreach (TextMeshProUGUI temp2 in texts)
             temp2.color = startColor;
+
+        await UniTask.Yield();
 
         while (elapsedTime < lerpTime)
         {
@@ -133,9 +154,32 @@ public static class UtilHelper
                 text.color = currentColor;
             }
 
-            yield return null;
+            await UniTask.Yield();
         }
-        yield return null;
+        await UniTask.Yield();
+
+        callback?.Invoke();
+    }
+
+    public static async UniTask IScaleEffect(Transform transform, Vector3 startScale, Vector3 targetScale, float lerpTime, CancellationToken cancellationToken, System.Action callback = null)
+    {
+        //뽑히는 카드의 스케일 조정
+        //lerpTime에 걸쳐 transform.scale을 0에서 1로 변경
+        float elapsedTime = 0f;
+        transform.localScale = startScale;
+
+        await UniTask.Yield();
+
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            Vector3 currentScale = Vector3.Lerp(startScale, targetScale, t);
+            transform.localScale = currentScale;
+
+            await UniTask.Yield(cancellationToken);
+        }
+        await UniTask.Yield(cancellationToken);
 
         callback?.Invoke();
     }

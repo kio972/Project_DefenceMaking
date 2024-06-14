@@ -41,8 +41,9 @@ public class ResearchMainUI : MonoBehaviour
         //if (popup.gameObject.activeSelf && popup._CurResearch == curResearch._ResearchData)
         //    curResearch.CallPopUpUI();
         GameManager.Instance.notificationBar?.SetMesseage(curResearch._ResearchData.researchName + " 연구 완료", NotificationType.Research);
-        Research research = curResearch.GetComponent<Research>();
-        research?.ActiveResearch();
+        Research[] research = curResearch.GetComponents<Research>();
+        foreach(var item in research)
+            item?.ActiveResearch();
         completedResearchs.Add(curResearch._ResearchId);
         this.curResearch = null;
     }
