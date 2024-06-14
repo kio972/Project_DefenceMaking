@@ -201,7 +201,7 @@ public class DeployUI : MonoBehaviour
         switch (unitType)
         {
             case CardType.Monster:
-                NodeManager.Instance.SetGuideState(GuideState.Monster);
+                NodeManager.Instance.SetGuideState(GuideState.Spawner);
                 break;
             case CardType.Trap:
                 NodeManager.Instance.SetGuideState(GuideState.Trap);

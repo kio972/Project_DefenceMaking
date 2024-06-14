@@ -10,6 +10,7 @@ public enum GuideState
     Tile,
     Environment,
     Movable,
+    Spawner,
 }
 
 public class NodeManager : IngameSingleton<NodeManager>
@@ -120,6 +121,9 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.Trap:
                 SetTrapAvail();
                 break;
+            case GuideState.Spawner:
+                SetSpawnerAvail();
+                break;
             case GuideState.Monster:
                 SetMonsterAvail();
                 break;
@@ -158,7 +162,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    private bool IsMonsterSetable(TileNode node)
+    private bool IsSpawnerSetable(TileNode node)
     {
         if (node.curTile != null)
         {
@@ -170,6 +174,25 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
 
         return false;
+    }
+
+    private bool IsMonsterSetable(TileNode node)
+    {
+        return node.curTile != null && node != startPoint && node != endPoint;
+    }
+
+    private void SetSpawnerAvail()
+    {
+        foreach (TileNode node in activeNodes)
+        {
+            if (IsSpawnerSetable(node))
+            {
+                List<TileNode> path = PathFinder.Instance.FindPath(node);
+                node.SetAvail(path != null);
+            }
+            else
+                node.SetAvail(false);
+        }
     }
 
     private void SetMonsterAvail()

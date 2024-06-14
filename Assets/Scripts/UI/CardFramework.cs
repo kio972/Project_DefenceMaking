@@ -82,9 +82,8 @@ public class CardFramework : MonoBehaviour
         Monster monster = instancedObject.GetComponent<Monster>();
         if (monster != null)
         {
-            monster.SetStartPoint(curNode);
-            monster.transform.position = curNode.transform.position;
             monster.Init();
+            monster.SetStartPoint(curNode);
             //curNode.curTile.monster = monster;
 
             if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
@@ -238,8 +237,9 @@ public class CardFramework : MonoBehaviour
             .Subscribe(_ => UpdateObjectState());
 
         var endInputStream = this.UpdateAsObservable()
-            .Where(_ => instancedObject != null && instancedObject.gameObject.activeSelf && SetInput())
-            .Buffer(2)
+            .Where(_ => instancedObject != null && instancedObject.gameObject.activeSelf)
+            .DelayFrame(1)
+            .Where(_ => SetInput())
             .Subscribe(_ => SetObjectOnMap());
 
         var cancelInputStream = this.UpdateAsObservable()
