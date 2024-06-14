@@ -48,7 +48,7 @@ public class Slime : Monster
         curHp /= 2;
         maxHp /= 2;
         BattlerData curData = GetData();
-        RotationAxis.localScale *= 0.7f;
+        RotationAxis.localScale *= 0.8f;
         TileNode randomNode = nextNodes[Random.Range(0, nextNodes.Count)];
         this.nextTile = randomNode;
         nextNodes.Remove(randomNode);
