@@ -58,10 +58,18 @@ public class DebugTool : MonoBehaviour
         GameManager.Instance.gold += gold;
     }
 
+    public void GetGold(int index)
+    {
+        goldIndex = index;
+        GameManager.Instance.gold += gold;
+    }
+
     int herbIndex = 0;
     [SerializeField]
     TextMeshProUGUI herbText;
-    
+
+    readonly int[] herbAmount = { 1, 10, 100 };
+
     public void SetHerbIndex(bool isRight)
     {
         if (isRight)
@@ -86,6 +94,10 @@ public class DebugTool : MonoBehaviour
         else
             GameManager.Instance.herb3++;
     }
+
+    public void GetHerb1(int index) { GameManager.Instance.herb1 += herbAmount[index]; }
+    public void GetHerb2(int index) { GameManager.Instance.herb2 += herbAmount[index]; }
+    public void GetHerb3(int index) { GameManager.Instance.herb3 += herbAmount[index]; }
 
     public void DecreaseIndex()
     {

@@ -5,24 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public enum CardType
-{
-    None,
-    MapTile,
-    Monster,
-    Trap,
-    Environment,
-}
-
-public enum CardGrade
-{
-    none,
-    normal,
-    rare,
-    epic,
-    legend,
-}
-
 public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
@@ -39,9 +21,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     private LanguageText card_Name;
     [SerializeField]
     private LanguageText card_Description;
-
+    [SerializeField]
     private CardType cardType;
-
+    [SerializeField]
     private GameObject targetPrefab;
 
     private Button button;
@@ -331,7 +313,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     }
 
 
-    private void CallCard()
+    public void CallCard()
     {
         //targetPrefab»ý¼º
         if(instancedObject == null)
