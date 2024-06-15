@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public enum FluctType
 {
@@ -22,9 +23,9 @@ public abstract class FluctItem : MonoBehaviour
     protected float decreaseMax;
     [SerializeField]
     protected int originPrice;
-    protected int curPrice;
+    protected ReactiveProperty<int> curPrice = new ReactiveProperty<int>();
 
-    public int _CurPrice { get => curPrice; set => curPrice = value; }
+    public int _CurPrice { get => curPrice.Value; set => curPrice.Value = value; }
 
     [SerializeField]
     protected int coolTime = 3;

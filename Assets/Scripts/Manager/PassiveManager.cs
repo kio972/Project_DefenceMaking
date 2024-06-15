@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UniRx;
 public class PassiveManager : IngameSingleton<PassiveManager>
 {
     public int monsterHp_Weight = 0;
@@ -40,6 +40,22 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     private int tileDestructIncome = 0;
     public int _TileDesturctIncome { get => tileDestructIncome; }
+
+    public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
+
+    private int devilAuraRange = 0;
+    private int devilAuraPower = 0;
+
+    public void UpgradeDevilAura(int range, int value)
+    {
+        devilAuraRange = range;
+        devilAuraPower = value;
+    }
+
+    public void UpgradeShopSale(int value)
+    {
+        _shopSaleAmount.Value += value;
+    }
 
     public void UpgradeTileDestructInCome(int value)
     {

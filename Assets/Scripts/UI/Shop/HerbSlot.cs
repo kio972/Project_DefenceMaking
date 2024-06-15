@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UniRx;
+using UniRx.Triggers;
 
 public class HerbSlot : FluctItem
 {
@@ -20,7 +22,7 @@ public class HerbSlot : FluctItem
     [SerializeField]
     private int targetherb = 0;
 
-    private bool tradeState = true;
+    private ReactiveProperty<bool> tradeState = new ReactiveProperty<bool>(true);
 
 
     [SerializeField]
@@ -92,17 +94,17 @@ public class HerbSlot : FluctItem
 
     public void Buyherb()
     {
-        if (!tradeState)
+        if (!tradeState.Value)
             return;
 
-        if (GameManager.Instance.gold < curPrice)
+        if (GameManager.Instance.gold < curPrice.Value)
         {
             _ShopUI?.PlayScript("Shop034");
             return;
         }
 
         Modifyherb(1);
-        GameManager.Instance.gold -= curPrice;
+        GameManager.Instance.gold -= curPrice.Value;
 
         if (!string.IsNullOrEmpty(buyScript))
             _ShopUI?.PlayScript(buyScript);
@@ -110,14 +112,14 @@ public class HerbSlot : FluctItem
 
     public void Sellherb()
     {
-        if (!tradeState)
+        if (!tradeState.Value)
             return;
 
         if (!Haveherb())
             return;
 
         Modifyherb(-1);
-        GameManager.Instance.gold += curPrice;
+        GameManager.Instance.gold += curPrice.Value;
 
         if(!string.IsNullOrEmpty(sellScript))
             _ShopUI?.PlayScript(sellScript);
@@ -125,43 +127,38 @@ public class HerbSlot : FluctItem
 
     private void DeListherb()
     {
-        if (!tradeState)
+        if (!tradeState.Value)
             return;
 
-        curPrice = 0;
-        tradeState = false;
-        buyBtn.gameObject.SetActive(false);
-        sellBtn.gameObject.SetActive(false);
+        curPrice.Value = 0;
+        tradeState.Value = false;
+        
         coolStartWave = GameManager.Instance.CurWave;
         Removeherb();
     }
 
     private void OnListherb()
     {
-        curPrice = originPrice;
-        tradeState = true;
-        buyBtn.gameObject.SetActive(true);
-        sellBtn.gameObject.SetActive(true);
+        curPrice.Value = originPrice;
+        tradeState.Value = true;
         coolStartWave = -1;
-
-        priceText.text = curPrice.ToString();
     }
 
     private int DecreasePrice()
     {
         float changeVal = Random.Range(decreaseMin, decreaseMax);
-        return Mathf.RoundToInt(curPrice * changeVal / 100);
+        return Mathf.RoundToInt(curPrice.Value * changeVal / 100);
     }
 
     private int IncreasePrice()
     {
         float changeVal = Random.Range(increaseMin, increaseMax);
-        return Mathf.RoundToInt(curPrice * changeVal / 100);
+        return Mathf.RoundToInt(curPrice.Value * changeVal / 100);
     }
 
     public override void FluctPrice()
     {
-        if (curPrice == 0)
+        if (curPrice.Value == 0)
             return;
 
         int token = Random.Range(0, 2);
@@ -171,10 +168,10 @@ public class HerbSlot : FluctItem
         else
             fluctVal += IncreasePrice();
 
-        fluctNoti?.SetNoti(fluctVal, curPrice);
+        fluctNoti?.SetNoti(fluctVal, curPrice.Value);
         
-        curPrice += fluctVal;
-        if(curPrice <= 0)
+        curPrice.Value += fluctVal;
+        if(curPrice.Value <= 0)
         {
             DeListherb();
             fluctNoti?.SetCoolTime(coolTime);
@@ -205,5 +202,11 @@ public class HerbSlot : FluctItem
     public void Init()
     {
         OnListherb();
+        curPrice.Subscribe(_ => priceText.text = _.ToString());
+        tradeState.Subscribe(_ =>
+        {
+            buyBtn.gameObject.SetActive(_);
+            sellBtn.gameObject.SetActive(_);
+        });
     }
 }

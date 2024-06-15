@@ -119,7 +119,31 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private MouseOverEffect2 recycle;
 
+    private int freeCount = 0;
+    private int curFreeCount = 0;
+
+    private int _CardPrice
+    {
+        get
+        {
+            if (freeCount == 0) return cardPrice;
+            if (curFreeCount == freeCount - 1) return 0;
+            return cardPrice;
+        }
+    }
+
     public bool IsRecycle { get { return recycle.IsMouseOver; } }
+
+    public void SetFreeCount(int value)
+    {
+        freeCount = value;
+    }
+
+    public void IncreaseMaxCount(int value)
+    {
+        maxCardNumber += value;
+        //SetCardPosition();
+    }
 
     public void AddCard(int index)
     {
@@ -238,10 +262,10 @@ public class CardDeckController : MonoBehaviour
         //float maxPos_Y = 1820;
         float minPos_Y = (screenSizeX / 2) + (screenSizeX * 0.2f);
         float maxPos_Y = (screenSizeX / 2) + (screenSizeX * 0.45f);
-        if (hand_CardNumber >= 0 && hand_CardNumber <= 10)
+        if (hand_CardNumber >= 0 && hand_CardNumber <= maxCardNumber)
         {
             // 카드 개수가 0에서 10 사이일 때
-            float startX = Mathf.Lerp(minPos_Y, maxPos_Y, hand_CardNumber / 10f);
+            float startX = Mathf.Lerp(minPos_Y, maxPos_Y, (float)hand_CardNumber / maxCardNumber);
             return startX;
         }
         else
@@ -259,10 +283,10 @@ public class CardDeckController : MonoBehaviour
         float minPos_X = (screenSizeX / 2) - (screenSizeX * 0.2f);
         float maxPos_X = (screenSizeX / 2) - (screenSizeX * 0.45f);
         //현재 카드 개수가 0에서 10임에 따라 100 ~ 450값을 반환
-        if (hand_CardNumber >= 0 && hand_CardNumber <= 10)
+        if (hand_CardNumber >= 0 && hand_CardNumber <= maxCardNumber)
         {
             // 카드 개수가 0에서 10 사이일 때
-            float startX = Mathf.Lerp(minPos_X, maxPos_X, hand_CardNumber / 10f);
+            float startX = Mathf.Lerp(minPos_X, maxPos_X, (float)hand_CardNumber / maxCardNumber);
             return startX;
         }
         else
@@ -320,14 +344,15 @@ public class CardDeckController : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.gold < cardPrice)
+        if (GameManager.Instance.gold < _CardPrice)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
             return;
         }
 
-        GameManager.Instance.gold -= cardPrice;
+        GameManager.Instance.gold -= _CardPrice;
         DrawCard();
+        curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
     }
 

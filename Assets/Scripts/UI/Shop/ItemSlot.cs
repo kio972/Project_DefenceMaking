@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UniRx;
 
 public class ItemSlot : FluctItem
 {
@@ -51,16 +52,19 @@ public class ItemSlot : FluctItem
         }
     }
 
-    private bool isSoldOut = false;
-    public bool IsSoldOut { get => isSoldOut; set => isSoldOut = value; }
+    private ReactiveProperty<bool> isSoldOut = new ReactiveProperty<bool>(false);
+    public bool IsSoldOut { get => isSoldOut.Value; set => isSoldOut.Value = value; }
 
     [SerializeField]
     private bool isTileItem = false;
     [SerializeField]
     private bool isRefreshable = true;
+
+    private int _saledPrice { get => Mathf.FloorToInt(curPrice.Value * (1 - PassiveManager.Instance._shopSaleAmount.Value / 100f)); }
+
     public void BuyItem()
     {
-        if (GameManager.Instance.gold < curPrice)
+        if (GameManager.Instance.gold < _saledPrice)
         {
             _ShopUI?.PlayScript("Shop034");
             return;
@@ -72,28 +76,26 @@ public class ItemSlot : FluctItem
             return;
         }
 
-        GameManager.Instance.gold -= curPrice;
+        GameManager.Instance.gold -= _saledPrice;
 
         _Item?.UseItem();
 
         if (!string.IsNullOrEmpty(buyScript))
             _ShopUI?.PlayScript(buyScript);
 
-        isSoldOut = true;
-        buyBtn.gameObject.SetActive(false);
-        soldOut?.SetActive(true);
+        isSoldOut.Value = true;
     }
 
     private int DecreasePrice()
     {
         float changeVal = Random.Range(decreaseMin, decreaseMax);
-        return Mathf.RoundToInt(curPrice * changeVal / 100);
+        return Mathf.RoundToInt(curPrice.Value * changeVal / 100);
     }
 
     private int IncreasePrice()
     {
         float changeVal = Random.Range(increaseMin, increaseMax);
-        return Mathf.RoundToInt(curPrice * changeVal / 100);
+        return Mathf.RoundToInt(curPrice.Value * changeVal / 100);
     }
 
     private void RandomFluct()
@@ -105,7 +107,7 @@ public class ItemSlot : FluctItem
         else
             fluctVal += IncreasePrice();
 
-        curPrice += fluctVal;
+        curPrice.Value += fluctVal;
     }
 
     public override void FluctPrice()
@@ -116,10 +118,10 @@ public class ItemSlot : FluctItem
                 RandomFluct();
                 break;
             case FluctType.IncreaseOnly:
-                curPrice += IncreasePrice();
+                curPrice.Value += IncreasePrice();
                 break;
             case FluctType.DecreaseOnly:
-                curPrice -= DecreasePrice();
+                curPrice.Value -= DecreasePrice();
                 break;
         }
 
@@ -127,11 +129,7 @@ public class ItemSlot : FluctItem
         refresh?.RefreshItem();
 
         if(isRefreshable)
-        {
-            isSoldOut = false;
-            buyBtn.gameObject.SetActive(true);
-            soldOut?.SetActive(false);
-        }
+            isSoldOut.Value = false;
     }
 
     public override void UpdateCoolTime()
@@ -146,20 +144,21 @@ public class ItemSlot : FluctItem
         itemPrice.text = curPrice.ToString();
     }
 
-    public void UpdateTexts()
-    {
-        itemPrice.text = curPrice.ToString();
-        buyBtn.gameObject.SetActive(!isSoldOut);
-        soldOut?.SetActive(isSoldOut);
-    }
-
     public void Init()
     {
         refresh = GetComponent<Refreshable>();
         if (buyBtn != null)
             buyBtn.onClick.AddListener(BuyItem);
 
-        curPrice = originPrice;
+        curPrice.Subscribe(_ => itemPrice.text = _saledPrice.ToString());
+        PassiveManager.Instance._shopSaleAmount.Subscribe(_ => itemPrice.text = _saledPrice.ToString());
+        isSoldOut.Subscribe(_ =>
+        {
+            buyBtn.gameObject.SetActive(!_);
+            soldOut?.SetActive(_);
+        });
+
+        curPrice.Value = originPrice;
         refresh?.RefreshItem();
     }
 }

@@ -115,7 +115,6 @@ public class ShopUI : MonoBehaviour
 
             itemSlots[i]._CurPrice = data.itemsData[i].curVal;
             itemSlots[i].IsSoldOut = data.itemsData[i].isSoldOut;
-            itemSlots[i].UpdateTexts();
         }
 
         timerList[0]._CurTime = data.itemFluctCool;
