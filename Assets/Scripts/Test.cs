@@ -21,5 +21,10 @@ public class Test : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.T)) { SetQuest(); }
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            GameManager.Instance.king.GetStatusEffect<Poison>(new Poison(GameManager.Instance.king, 100000));
+
+        }
     }
 }

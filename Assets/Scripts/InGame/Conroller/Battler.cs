@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UIElements;
+using UniRx;
 
 public enum AttackType
 {
@@ -45,6 +46,8 @@ public class Battler : FSM<Battler>
     private AttackType attackType = AttackType.Melee;
 
     private HpBar hpBar;
+
+    public ReactiveCollection<StatusEffect> _effects { get; private set; } = new ReactiveCollection<StatusEffect>();
 
     [SerializeField]
     private Transform rotatonAxis;
@@ -105,6 +108,48 @@ public class Battler : FSM<Battler>
         }
     }
 
+    public bool HaveEffect<T>() where T : StatusEffect
+    {
+        foreach (var item in _effects)
+        {
+            if(item is T)
+                return true;
+        }
+        return false;
+    }
+
+    public bool HaveEffect<T>(out StatusEffect statusEffect) where T : StatusEffect
+    {
+        statusEffect = null;
+        foreach (var item in _effects)
+        {
+            if (item is T)
+            {
+                statusEffect = item;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void RemoveStatusEffect(StatusEffect effect)
+    {
+        if(_effects.Contains(effect))
+        {
+            effect.DeActiveEffect();
+            _effects.Remove(effect);
+        }
+    }
+
+    public void GetStatusEffect<T>(StatusEffect effect) where T : StatusEffect
+    {
+        StatusEffect targetEffect;
+        if (HaveEffect<T>(out targetEffect))
+            targetEffect.UpdateEffect(effect._originDuration);
+        else
+            _effects.Add(effect);
+    }
+
     public bool CCEscape()
     {
         ccTime -= Time.deltaTime * GameManager.Instance.timeScale;
@@ -138,6 +183,7 @@ public class Battler : FSM<Battler>
     protected virtual void RemoveBody()
     {
         gameObject.transform.position = Vector3.up * 1000f;
+        _effects.Clear();
         animator?.Rebind();
         Invoke("SetActiveFalse", 0.1f);
     }
@@ -146,6 +192,11 @@ public class Battler : FSM<Battler>
     {
         hpBar?.UpdateHp();
         isDead = true;
+
+        foreach (var item in _effects)
+            item.DeActiveEffect();
+        _effects.Clear();
+
         StopAllCoroutines();
         Invoke("RemoveBody", 2.5f);
         if(deadSound != null)
@@ -513,6 +564,7 @@ public class Battler : FSM<Battler>
         isDead = false;
 
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
+        _effects = new ReactiveCollection<StatusEffect>();
         SetRotation();
 
         if (animator == null)
@@ -660,7 +712,7 @@ public class Battler : FSM<Battler>
             rangedTargets.Remove(battler);
     }
 
-    private void ModifyBattlerList(List<Battler> targets)
+    private void ModifyBattlerList(List<Battler> targets, bool holdBackCheck)
     {
         RemoveOutCaseTargets(targets);
 
@@ -672,14 +724,14 @@ public class Battler : FSM<Battler>
             if(battler.unitType == UnitType.Player && battler.tag != "King")
             {
                 Monster target = battler.GetComponent<Monster>();
-                if (!target.CanHoldBack && !target.rangedTargets.Contains(this))
+                if (!target.CanHoldBack && !target.rangedTargets.Contains(this) && holdBackCheck)
                     continue;
             }
 
             if(this.unitType == UnitType.Player && this.tag != "King")
             {
                 Monster monster = GetComponent<Monster>();
-                if(monster.CanHoldBack)
+                if(monster.CanHoldBack || !holdBackCheck)
                     rangedTargets.Add(battler);
             }
             else
@@ -687,11 +739,11 @@ public class Battler : FSM<Battler>
         }
     }
 
-    public Battler BattleCheck()
+    public Battler BattleCheck(bool holdBackCheck = true)
     {
         Battler curTarget = null;
         List<Battler> rangedTargets = GetRangedTargets(transform.position, attackRange);
-        ModifyBattlerList(rangedTargets);
+        ModifyBattlerList(rangedTargets, holdBackCheck);
         foreach(Battler battle in this.rangedTargets)
         {
             if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.

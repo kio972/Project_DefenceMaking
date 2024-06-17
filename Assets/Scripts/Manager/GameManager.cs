@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class GameManager : IngameSingleton<GameManager>
 {
@@ -53,7 +54,7 @@ public class GameManager : IngameSingleton<GameManager>
     public bool isInBattle = false;
 
 
-    public List<Adventurer> adventurersList = new List<Adventurer>();
+    public ReactiveCollection<Adventurer> adventurersList = new ReactiveCollection<Adventurer>();
 
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 

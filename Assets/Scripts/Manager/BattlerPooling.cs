@@ -113,8 +113,8 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
             monsterPool.Add(monster);
         }
 
-        monster.Init();
         monster.SetStartPoint(startTile);
+        monster.Init();
         monster.gameObject.SetActive(true);
 
         return monster;

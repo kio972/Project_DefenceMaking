@@ -24,6 +24,10 @@ public class HpBar : MonoBehaviour
 
     public void HPBarEnd()
     {
+        StatusEffectUI[] effectUIs = GetComponentsInChildren<StatusEffectUI>(true);
+        foreach (var item in effectUIs)
+            item.DisableUI();
+
         gameObject.SetActive(false);
     }
 
@@ -37,6 +41,10 @@ public class HpBar : MonoBehaviour
         
         if(battler is not PlayerBattleMain)
             imgGroup.SetActive(false);
+
+        StatusEffectUI[] effectUIs = GetComponentsInChildren<StatusEffectUI>(true);
+        foreach (var item in effectUIs)
+            item.Init(battler);
     }
 
 
