@@ -9,6 +9,7 @@ public class Poison : Debuff, IWhileEffect, IStackable
     public Poison(Battler battler, int duration) : base(battler, duration)
     {
         Init(battler, duration);
+        StackEffect(duration);
         effectType = EffectType.Debuff;
         debuffType = DebuffType.DOT;
         tick = 0;
@@ -19,10 +20,13 @@ public class Poison : Debuff, IWhileEffect, IStackable
 
     public int stackCount { get => _stackCount; set => _stackCount = Mathf.Min(value, _maxStack); }
 
-    private readonly int[] _stackDamage = { 180, 300, 480 };
+    private readonly int[] _stackTime = { 0, 180, 300, 480 };
 
     public void StackEffect(float duration)
     {
+        _originDuration = _stackTime[stackCount];
+        _duration.Value = _originDuration;
+        tick = 0;
 
     }
 
@@ -33,6 +37,6 @@ public class Poison : Debuff, IWhileEffect, IStackable
             return;
 
         tick = 0f;
-        _battler.GetDamage(_stackDamage[_stackCount], null);
+        _battler.GetDamage(3, null);
     }
 }
