@@ -10,6 +10,7 @@ public enum MonsterType
     goblin,
     golem,
     mimic,
+    undead,
 }
 
 public class Monster : Battler
@@ -19,7 +20,7 @@ public class Monster : Battler
     [SerializeField]
     private bool isHide = false;
     [SerializeField]
-    private int holdBackCount = 1;
+    protected int holdBackCount = 1;
 
     private int requiredMana;
     public int _RequiredMana { get => requiredMana; }

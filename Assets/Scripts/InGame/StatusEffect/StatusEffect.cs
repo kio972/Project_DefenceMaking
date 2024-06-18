@@ -12,6 +12,11 @@ public enum EffectType
     Debuff,
 }
 
+public interface IAttackPowerEffect
+{
+    public int attackPower { get; set; }
+}
+
 public interface IEnterEffect
 {
     public void EnterEffect();

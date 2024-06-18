@@ -43,10 +43,33 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
 
-    private int devilAuraRange = 0;
-    private int devilAuraPower = 0;
+    public int devilAuraRange { get; private set; } = 0;
+    public int devilAuraPower { get; private set; } = 0;
 
     public ReactiveProperty<int> _slimeSplit_Weight { get; private set; } = new ReactiveProperty<int>(0);
+
+    public bool isGoblinHealActive { get; private set; } = false;
+
+    public int golemHoldback_Weight { get; private set; } = 0;
+
+    public bool isMimicBuffActive { get; private set; } = false;
+
+    public void MimicBuffActive()
+    {
+        isMimicBuffActive = true;
+    }
+
+    public void GolemHoldbackUp(int value)
+    {
+        golemHoldback_Weight += value;
+        foreach (Golem golem in GameManager.Instance._MonsterList)
+            golem.UpdateHoldBack(value);
+    }
+
+    public void GoblinHealActive()
+    {
+        isGoblinHealActive = true;
+    }
 
     public void UpgradeSlimeSplit(int value)
     {

@@ -18,6 +18,7 @@ public enum UnitType
     Player,
 }
 
+
 public class Battler : FSM<Battler>
 {
     protected string _name;
@@ -25,6 +26,18 @@ public class Battler : FSM<Battler>
     protected int minDamage;
     protected int maxDamage;
     public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
+    public int TempDamage(int baseDamage)
+    {
+        int tempDamage = 0;
+        foreach (var item in _effects)
+        {
+            if (item is IAttackPowerEffect effect)
+                tempDamage += baseDamage * effect.attackPower;
+        }
+
+        return tempDamage;
+    }
+
     public int curHp;
     public int maxHp;
     public int armor;
@@ -522,9 +535,10 @@ public class Battler : FSM<Battler>
         if (curTarget != null && !curTarget.isDead)
         {
             int baseDamage = Damage;
-            curTarget.GetDamage(baseDamage, this);
+            int tempDamage = TempDamage(baseDamage);
+            curTarget.GetDamage(baseDamage + tempDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget, baseDamage);
+                SplashAttack(curTarget, baseDamage + tempDamage);
         }
     }
 
