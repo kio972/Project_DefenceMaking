@@ -46,6 +46,15 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     private int devilAuraRange = 0;
     private int devilAuraPower = 0;
 
+    public ReactiveProperty<int> _slimeSplit_Weight { get; private set; } = new ReactiveProperty<int>(0);
+
+    public void UpgradeSlimeSplit(int value)
+    {
+        _slimeSplit_Weight.Value += value;
+        foreach (Slime slime in GameManager.Instance._MonsterList)
+            slime.UpgradeSplitCount(value);
+    }
+
     public void UpgradeDevilAura(int range, int value)
     {
         devilAuraRange = range;

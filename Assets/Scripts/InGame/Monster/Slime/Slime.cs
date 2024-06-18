@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Slime : Monster
 {
-    private int splitCount = 3;
+    private int splitCount = 2;
     private TileNode splitedNode = null;
     private TileNode slime_curNode = null;
     private bool skipedFirst = false;
 
-    public void OnDisable()
+    public void UpgradeSplitCount(int value)
     {
+        splitCount += value;
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        splitCount = 2 + PassiveManager.Instance._slimeSplit_Weight.Value;
         RotationAxis.localScale = Vector3.one;
-        splitCount = 3;
         splitedNode = null;
         slime_curNode = null;
     }

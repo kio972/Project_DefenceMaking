@@ -235,7 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5274736231055975365}
-  - component: {fileID: 5146582078511408920}
+  - component: {fileID: 3172998071402554713}
   - component: {fileID: 7568349882826013026}
   - component: {fileID: -5659467942164138042}
   m_Layer: 6
@@ -261,7 +261,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5146582078511408920
+--- !u!114 &3172998071402554713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,13 +270,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7983978358322300935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5d488fa3fcee148b4c345c6325f7d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 557330f959d0cc64fbb7ac49cb59a7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
   maxHp: 1
   armor: 0
-  attackSpeed: 1
+  shield: 0
+  attackSpeed: 0
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
@@ -298,6 +299,7 @@ MonoBehaviour:
   attackEffect: {fileID: 0}
   isHide: 0
   holdBackCount: 1
+  explosionDamage: 10
 --- !u!136 &7568349882826013026
 CapsuleCollider:
   m_ObjectHideFlags: 0
