@@ -32,8 +32,7 @@ public class DeploySlot : MonoBehaviour
 
     private DeployUI delpoyUI;
 
-    [SerializeField]
-    private string prefabName;
+    public string prefabName;
 
     [SerializeField]
     private Image icon;
@@ -122,7 +121,7 @@ public class DeploySlot : MonoBehaviour
 
         Sprite illur = SpriteList.Instance.LoadSprite(prefabName);
         icon.sprite = illur;
-        nameText.ChangeLangauge(SettingManager.Instance.language, _name);
+        nameText?.ChangeLangauge(SettingManager.Instance.language, _name);
         costText.text = cost.ToString();
 
         this.data = data;
