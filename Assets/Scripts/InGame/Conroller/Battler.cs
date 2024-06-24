@@ -28,11 +28,19 @@ public class Battler : FSM<Battler>
     public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
     public int TempDamage(int baseDamage)
     {
-        int tempDamage = 0;
+        int tempDamage = baseDamage;
         foreach (var item in _effects)
         {
             if (item is IAttackPowerEffect effect)
-                tempDamage += baseDamage * effect.attackPower;
+                tempDamage += effect.attackDamage;
+        }
+
+        baseDamage = tempDamage;
+
+        foreach (var item in _effects)
+        {
+            if (item is IAttackPowerRateEffect rateEffect)
+                tempDamage += baseDamage * rateEffect.attackRate;
         }
 
         return tempDamage;
@@ -85,6 +93,7 @@ public class Battler : FSM<Battler>
     public TileNode NextTile { get => nextTile; }
     protected TileNode lastCrossRoad;
     protected bool directPass = false;
+    public TileNode directPassNode { get; protected set; } = null;
 
     protected Animator animator;
     public Animator _Animator { get => animator; }
@@ -145,6 +154,12 @@ public class Battler : FSM<Battler>
         return false;
     }
 
+    public void RemoveStatusEffect<T>() where T : StatusEffect
+    {
+        if(HaveEffect<T>(out StatusEffect effect))
+            RemoveStatusEffect(effect);
+    }
+
     public void RemoveStatusEffect(StatusEffect effect)
     {
         if(_effects.Contains(effect))
@@ -154,7 +169,7 @@ public class Battler : FSM<Battler>
         }
     }
 
-    public void GetStatusEffect<T>(StatusEffect effect) where T : StatusEffect
+    public void AddStatusEffect<T>(StatusEffect effect) where T : StatusEffect
     {
         StatusEffect targetEffect;
         if (HaveEffect<T>(out targetEffect))
@@ -228,8 +243,8 @@ public class Battler : FSM<Battler>
             chaseTarget = attacker;
         else
         {
-            float originDist = PathFinder.Instance.GetBattlerDistance(this, chaseTarget);
-            float updateDist = PathFinder.Instance.GetBattlerDistance(this, attacker);
+            float originDist = PathFinder.GetBattlerDistance(this, chaseTarget);
+            float updateDist = PathFinder.GetBattlerDistance(this, attacker);
             if (updateDist < originDist)
                 chaseTarget = attacker;
         }
@@ -376,12 +391,17 @@ public class Battler : FSM<Battler>
         directPass = false;
     }
 
+    public void DirectPass()
+    {
+        DirectPass(directPassNode);
+    }
+
     protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
         if (nextTile == null || nextTile.curTile == null)
         {
-            List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
+            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else
@@ -437,7 +457,7 @@ public class Battler : FSM<Battler>
 
     public virtual void Patrol()
     {
-        if (PathFinder.Instance.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        if (PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
             if (collapseCool >= 5f)
@@ -524,7 +544,7 @@ public class Battler : FSM<Battler>
     }
 
     //애니메이션 이벤트에서 작동
-    public void Attack()
+    public virtual void Attack()
     {
         if (attackSound != null)
             AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance._FxVolume);
@@ -682,7 +702,7 @@ public class Battler : FSM<Battler>
         if (target.CurTile == null)
             return false;
 
-        if (PathFinder.Instance.GetBattlerDistance(this, target) > attackRange)
+        if (PathFinder.GetBattlerDistance(this, target) > attackRange)
             return false;
 
         return true;

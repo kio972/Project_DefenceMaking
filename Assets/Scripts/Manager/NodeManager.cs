@@ -187,7 +187,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (IsSpawnerSetable(node))
             {
-                List<TileNode> path = PathFinder.Instance.FindPath(node);
+                List<TileNode> path = PathFinder.FindPath(node);
                 node.SetAvail(path != null);
             }
             else
@@ -201,7 +201,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (IsMonsterSetable(node))
             {
-                List<TileNode> path = PathFinder.Instance.FindPath(node);
+                List<TileNode> path = PathFinder.FindPath(node);
                 node.SetAvail(path != null);
             }
             else

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerEffect
+public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
 {
     Transform devilTransform;
 
-    public int attackPower { get => PassiveManager.Instance.devilAuraPower; set => throw new System.NotImplementedException(); }
+    public int attackRate { get => PassiveManager.Instance.devilAuraPower; set => throw new System.NotImplementedException(); }
 
     public DevilAura(Battler battler, int duration, Transform devilTransform) : base(battler, duration)
     {

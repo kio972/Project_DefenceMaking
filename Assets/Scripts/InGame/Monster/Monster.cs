@@ -80,7 +80,7 @@ public class Monster : Battler
 
         if (nextTile == null || nextTile.curTile == null)
         {
-            List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
+            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else
@@ -99,7 +99,7 @@ public class Monster : Battler
 
     public override void Patrol()
     {
-        if(PathFinder.Instance.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        if(PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
             if(collapseCool >= 1f)

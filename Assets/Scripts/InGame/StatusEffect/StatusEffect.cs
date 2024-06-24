@@ -12,9 +12,19 @@ public enum EffectType
     Debuff,
 }
 
+public interface IAttackSpeedEffect
+{
+    public int attackSpeedRate { get; set; }
+}
+
 public interface IAttackPowerEffect
 {
-    public int attackPower { get; set; }
+    public int attackDamage { get; set; }
+}
+
+public interface IAttackPowerRateEffect
+{
+    public int attackRate { get; set; }
 }
 
 public interface IEnterEffect

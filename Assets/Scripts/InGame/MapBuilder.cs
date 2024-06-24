@@ -47,7 +47,7 @@ public class MapBuilder : MonoBehaviour
             return;
         }
 
-        int dist = PathFinder.Instance.GetNodeDistance(tileNode, targetNode);
+        int dist = PathFinder.GetNodeDistance(tileNode, targetNode);
         if(dist == -1 || dist > range)
         {
             SetRamdomTileToRandomNode(tileNode, targetTilePrefab, range);

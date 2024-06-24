@@ -23,7 +23,7 @@ public class Test : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.T)) { SetQuest(); }
         if(Input.GetKeyDown(KeyCode.A))
         {
-            GameManager.Instance.king.GetStatusEffect<Poison>(new Poison(GameManager.Instance.king, 100000));
+            GameManager.Instance.king.AddStatusEffect<Poison>(new Poison(GameManager.Instance.king, 100000));
 
         }
     }

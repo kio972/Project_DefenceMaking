@@ -25,13 +25,13 @@ public class Mimic : Monster
 
             if (target.HaveEffect<Seduce>())
                 continue;
-            target.GetStatusEffect<Seduce>(new Seduce(target, 0, this));
+            target.AddStatusEffect<Seduce>(new Seduce(target, 0, this));
             curSeduceCount++;
         }
 
         GameManager.Instance.adventurersList.ObserveAdd().Subscribe(x =>
         {
-            x.Value.GetStatusEffect<Seduce>(new Seduce(x.Value, 0, this));
+            x.Value.AddStatusEffect<Seduce>(new Seduce(x.Value, 0, this));
             curSeduceCount++;
             if (curSeduceCount >= seduceTargetCount)
                 disposables.Dispose();

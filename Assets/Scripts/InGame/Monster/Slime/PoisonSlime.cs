@@ -8,7 +8,7 @@ public class PoisonSlime : Slime
     {
         var targets = GetRangedTargets(transform.position, 1, false);
         foreach(Adventurer item in targets)
-            item.GetStatusEffect<Poison>(new Poison(item, 180));
+            item.AddStatusEffect<Poison>(new Poison(item, 180));
     }
 
     public override void Dead()
