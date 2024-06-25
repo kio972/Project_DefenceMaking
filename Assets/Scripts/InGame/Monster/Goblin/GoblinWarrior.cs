@@ -16,6 +16,9 @@ public class GoblinWarrior : Goblin
 
             foreach (Goblin goblin in GameManager.Instance._MonsterList)
             {
+                if (goblin == this)
+                    continue;
+
                 float dist = UtilHelper.CalCulateDistance(transform, goblin.transform);
                 if (dist > buffDist)
                     continue;

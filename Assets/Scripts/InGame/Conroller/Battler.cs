@@ -28,29 +28,46 @@ public class Battler : FSM<Battler>
     public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
     public int TempDamage(int baseDamage)
     {
-        int tempDamage = baseDamage;
-        foreach (var item in _effects)
-        {
-            if (item is IAttackPowerEffect effect)
-                tempDamage += effect.attackDamage;
-        }
+        int resultDamage = baseDamage;
 
-        baseDamage = tempDamage;
-
+        float damageRate = 0;
         foreach (var item in _effects)
         {
             if (item is IAttackPowerRateEffect rateEffect)
-                tempDamage += baseDamage * rateEffect.attackRate;
+                damageRate += rateEffect.attackRate;
         }
 
-        return tempDamage;
+        int bonusDamage = 0;
+        foreach (var item in _effects)
+        {
+            if (item is IAttackPowerEffect effect)
+                bonusDamage += effect.attackDamage;
+        }
+
+        resultDamage *= Mathf.FloorToInt(1 + (damageRate / 100));
+        resultDamage += bonusDamage;
+
+        return resultDamage;
     }
 
     public int curHp;
     public int maxHp;
     public int armor;
     public int shield;
-    public float attackSpeed;
+    public float attackSpeed { get; protected set; } = 1;
+    public float TempAttackSpeed(float baseAttackSpeed)
+    {
+        float attackSpeedRate = 0;
+        foreach (var item in _effects)
+        {
+            if (item is IAttackSpeedEffect rateEffect)
+                attackSpeedRate += rateEffect.attackSpeedRate;
+        }
+
+        return baseAttackSpeed * (1 + (attackSpeedRate / 100));
+    }
+
+
     public float attackRange;
     public float attackCoolTime = 0;
     public float curAttackCoolTime = 0;
@@ -518,8 +535,7 @@ public class Battler : FSM<Battler>
             if (animator != null)
             {
                 animator.SetBool("Attack", false);
-                animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
-                
+                UpdateAttackSpeed();
             }
             return;
         }
@@ -529,7 +545,7 @@ public class Battler : FSM<Battler>
     {
         if (animator != null)
         {
-            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+            UpdateAttackSpeed();
             animator.SetTrigger("Attack");
         }
     }
@@ -579,7 +595,9 @@ public class Battler : FSM<Battler>
         shield = 0;
         minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMin"]);
         maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMax"]);
-        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out attackSpeed);
+        float tempAttackSpeed = 1f;
+        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
+        attackSpeed = tempAttackSpeed;
         armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
         float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
@@ -711,7 +729,7 @@ public class Battler : FSM<Battler>
     public void UpdateAttackSpeed()
     {
         if (animator != null)
-            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+            animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
     }
 
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)

@@ -58,7 +58,6 @@ public class Adventurer : Battler
     {
         base.Update();
 
-        if (animator != null)
-            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+        UpdateAttackSpeed();
     }
 }

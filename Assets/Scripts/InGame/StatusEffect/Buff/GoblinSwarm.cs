@@ -26,13 +26,16 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
         int targetCount = 0;
         foreach (Goblin goblin in GameManager.Instance._MonsterList)
         {
+            if (goblin == _battler)
+                continue;
+
             float dist = UtilHelper.CalCulateDistance(_battler.transform, goblin.transform);
             if (dist > _buffDist)
                 continue;
             targetCount++;
         }
 
-        number = targetCount;
+        number = Mathf.Min(targetCount, _attackDamage.Length - 1);
 
         if(number == 0)
         {
