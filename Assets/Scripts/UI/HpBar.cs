@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class HpBar : MonoBehaviour
 {
     [SerializeField]
@@ -21,6 +21,9 @@ public class HpBar : MonoBehaviour
     private float battlerCurSheild;
 
     private bool deadBar = false;
+
+    [SerializeField]
+    private TextMeshProUGUI status;
 
     public void HPBarEnd()
     {
@@ -98,6 +101,10 @@ public class HpBar : MonoBehaviour
             battlerCurSheild = battler.shield;
             UpdateHp();
         }
+
+        if (status != null)
+            status.text = battler.CurState.GetType().Name;
+
         UpdatePosition(position);
     }
 }

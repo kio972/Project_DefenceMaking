@@ -23,6 +23,7 @@ public class Seduce : Debuff, IEnterEffect, IWhileEffect, IExitEffect
     public void ExitEffect()
     {
         _battler.ChangeState(FSMPatrol.Instance);
+        _battler.chaseTarget = null;
         _battler.RemoveStatusEffect(this);
         DeActiveEffect();
     }

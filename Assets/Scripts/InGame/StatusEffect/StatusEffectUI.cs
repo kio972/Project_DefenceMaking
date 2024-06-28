@@ -44,6 +44,13 @@ public class StatusEffectUI : MonoBehaviour
                 stackText.gameObject.SetActive(false);
 
         }).AddTo(durationUpdateStream);
+
+        Sprite sprite = SpriteList.Instance.LoadSprite(effect.GetType().Name);
+        if(sprite != null)
+        {
+            icon.sprite = sprite;
+            coolDownImg.sprite = sprite;
+        }
     }
 
     private void SetOverIndex(int count)

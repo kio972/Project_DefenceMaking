@@ -9,6 +9,7 @@ public class Poison : Debuff, IWhileEffect, IStackable
     public Poison(Battler battler, int duration) : base(battler, duration)
     {
         Init(battler, duration);
+        _stackCount = 1;
         StackEffect(duration);
         effectType = EffectType.Debuff;
         debuffType = DebuffType.DOT;
@@ -32,7 +33,7 @@ public class Poison : Debuff, IWhileEffect, IStackable
 
     public void WhileEffect()
     {
-        tick += Time.deltaTime * GameManager.Instance.timeScale;
+        tick += Time.deltaTime * GameManager.Instance.DefaultSpeed * GameManager.Instance.timeScale;
         if (tick < 60f)
             return;
 
