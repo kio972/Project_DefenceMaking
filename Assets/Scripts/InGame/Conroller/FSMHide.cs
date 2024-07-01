@@ -42,7 +42,7 @@ public class FSMHide : FSMSingleton<FSMHide>, CharState<Battler>
 
     public void Enter(Battler e)
     {
-        
+        e._Animator.SetBool("Activated", false);
     }
 
     public void Excute(Battler e)
@@ -59,12 +59,6 @@ public class FSMHide : FSMSingleton<FSMHide>, CharState<Battler>
 
     public void Exit(Battler e)
     {
-        e._Animator.SetTrigger("Activated");
-        List<Battler> rangedTargets = e.GetRangedTargets(e.transform.position, e.attackRange + 0.2f);
-        foreach(Battler target in rangedTargets)
-        {
-            target.GetCC(e, 1f);
-            target.ChangeState(FSMCC.Instance);
-        }
+        e._Animator.SetBool("Activated", true);
     }
 }

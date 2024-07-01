@@ -82,8 +82,8 @@ public class StatusEffect
 
         while(_duration.Value > 0 || _originDuration == 0)
         {
-            if(_originDuration != 0)
-                _duration.Value -= Time.deltaTime * GameManager.Instance.DefaultSpeed * GameManager.Instance.timeScale;
+            if (_originDuration != 0)
+                _duration.Value -= GameManager.Instance.InGameDeltaTime;
             if (this is IWhileEffect whileEffect)
                 whileEffect.WhileEffect();
 

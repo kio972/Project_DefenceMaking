@@ -197,7 +197,7 @@ public class Battler : FSM<Battler>
 
     public bool CCEscape()
     {
-        ccTime -= Time.deltaTime * GameManager.Instance.timeScale;
+        ccTime -= GameManager.Instance.InGameDeltaTime;
         if (ccTime <= 0)
             return true;
 
@@ -290,6 +290,18 @@ public class Battler : FSM<Battler>
             fontSize = 34f;
 
         DamageTextPooling.Instance.TextEffect(transform.position, damage, fontSize, color, isCritical);
+    }
+
+    public virtual void GetHeal(int heal, Battler healer)
+    {
+        if (isDead)
+            return;
+        if (healer != null && healer.isDead)
+            return;
+
+        curHp = Mathf.Min(curHp + heal, maxHp);
+        const float fontSize = 27f;
+        DamageTextPooling.Instance.TextEffect(transform.position, heal, fontSize, Color.green, false, true);
     }
 
     public virtual void GetDamage(int damage, Battler attacker)
@@ -756,7 +768,7 @@ public class Battler : FSM<Battler>
         List<Battler> removeList = new List<Battler>();
         foreach (Battler battler in rangedTargets)
         {
-            if (battler.isDead || !targets.Contains(battler))
+            if (battler.isDead || !targets.Contains(battler) || (object)battler.CurState == FSMHide.Instance)
                 removeList.Add(battler);
         }
 

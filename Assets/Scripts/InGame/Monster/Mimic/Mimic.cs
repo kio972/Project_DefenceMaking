@@ -10,9 +10,9 @@ public class Mimic : Monster
 {
     [SerializeField]
     private int seduceTargetCount = 1;
-    private int curSeduceCount = 0;
+    protected int curSeduceCount = 0;
 
-    private CompositeDisposable disposables = new CompositeDisposable();
+    protected CompositeDisposable disposables = new CompositeDisposable();
 
     private void Seduce()
     {
@@ -29,7 +29,10 @@ public class Mimic : Monster
             curSeduceCount++;
         }
 
-        GameManager.Instance.adventurersList.ObserveAdd().Subscribe(x =>
+        if (curSeduceCount >= seduceTargetCount)
+            return;
+
+        GameManager.Instance.adventurersList.ObserveAdd().Where(x => (object)this.CurState == FSMHide.Instance).Subscribe(x =>
         {
             x.Value.AddStatusEffect<Seduce>(new Seduce(x.Value, 0, this));
             curSeduceCount++;

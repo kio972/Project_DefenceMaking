@@ -33,7 +33,7 @@ public class Poison : Debuff, IWhileEffect, IStackable
 
     public void WhileEffect()
     {
-        tick += Time.deltaTime * GameManager.Instance.DefaultSpeed * GameManager.Instance.timeScale;
+        tick += GameManager.Instance.InGameDeltaTime;
         if (tick < 60f)
             return;
 

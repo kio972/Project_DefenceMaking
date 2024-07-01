@@ -51,6 +51,7 @@ public class FSMChase : FSMSingleton<FSMChase>, CharState<Battler>
 
         if(e.chaseTarget == null || e.chaseTarget.isDead)
         {
+            e.chaseTarget = null;
             e.ChangeState(FSMPatrol.Instance);
             return;
         }

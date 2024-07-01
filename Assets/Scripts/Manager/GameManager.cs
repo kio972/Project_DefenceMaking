@@ -11,6 +11,8 @@ public class GameManager : IngameSingleton<GameManager>
     private float defaultSpeed = 100f;
     public float DefaultSpeed { get => defaultSpeed; }
 
+    public float InGameDeltaTime { get => Time.deltaTime * defaultSpeed * timeScale; }
+
     public float gameSpeed = 100f;
 
     float timer = 0f;
@@ -247,8 +249,8 @@ public class GameManager : IngameSingleton<GameManager>
 
         UpdateBossRoom();
 
-        timer += Time.deltaTime * defaultSpeed * timeScale;
-        if(timer > 720f && dailyIncome)
+        timer += InGameDeltaTime;
+        if (timer > 720f && dailyIncome)
         {
             gold += 100 + PassiveManager.Instance.income_Weight;
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);

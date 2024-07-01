@@ -65,7 +65,7 @@ public abstract class Quest
                 FailQuest();
                 isEnd = true;
             }
-            curTime += Time.deltaTime * GameManager.Instance.DefaultSpeed * GameManager.Instance.timeScale;
+            curTime += GameManager.Instance.InGameDeltaTime;
         }
     }
 
