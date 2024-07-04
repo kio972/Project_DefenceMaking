@@ -72,10 +72,10 @@ public class ResearchPopup : MonoBehaviour
     bool haveHerb2;
     bool haveHerb3;
 
-    private void OnDisable()
-    {
-        this.gameObject.SetActive(false);
-    }
+    //private void OnDisable()
+    //{
+    //    this.gameObject.SetActive(false);
+    //}
 
     private string GetMinSecTime(float time)
     {

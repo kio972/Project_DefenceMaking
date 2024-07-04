@@ -23,6 +23,9 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private ResearchSelectControl controller;
 
     [SerializeField]
+    ResearchSlot baseSlot;
+
+    [SerializeField]
     ResearchUI targetPage;
 
     private void SetController()
@@ -51,7 +54,7 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
             return;
         isClicked = true;
 
-        transform.position = originPos + new Vector3(-110, 0 , 0);
+        //transform.position = originPos + new Vector3(-110, 0 , 0);
         if (targetPage != null)
             targetPage.gameObject.SetActive(true);
         SetController();
@@ -62,9 +65,11 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (isClicked)
             return;
 
-        if (position_Modify_Coroutine != null)
-            StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, new Vector3(originPos.x - 110, originPos.y, originPos.z), mouseOverTime));
+
+
+        //if (position_Modify_Coroutine != null)
+        //    StopCoroutine(position_Modify_Coroutine);
+        //position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, new Vector3(originPos.x - 110, originPos.y, originPos.z), mouseOverTime));
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -72,9 +77,9 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (isClicked)
             return;
 
-        if (position_Modify_Coroutine != null)
-            StopCoroutine(position_Modify_Coroutine);
-        position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));
+        //if (position_Modify_Coroutine != null)
+        //    StopCoroutine(position_Modify_Coroutine);
+        //position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));
     }
 
     public void Init()
