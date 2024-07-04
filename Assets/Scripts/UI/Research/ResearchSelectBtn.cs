@@ -12,6 +12,11 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField]
     Button researchBtn;
 
+    [SerializeField]
+    Sprite clickedSprite;
+    [SerializeField]
+    Sprite unclickedSprite;
+
     bool isClicked = false;
 
     Coroutine position_Modify_Coroutine;
@@ -40,10 +45,11 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void DeActiveClick()
     {
         isClicked = false;
-        transform.position = originPos;
-        if(targetPage != null)
+        researchBtn.image.sprite = unclickedSprite;
+        //transform.position = originPos;
+        if (targetPage != null)
         {
-            targetPage.ResetPopUp();
+            //targetPage.ResetPopUp();
             targetPage.gameObject.SetActive(false);
         }
     }
@@ -54,6 +60,9 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
             return;
         isClicked = true;
 
+        baseSlot?.CallPopUpUI();
+        researchBtn.image.sprite = clickedSprite;
+        researchBtn.image.color = Color.white;
         //transform.position = originPos + new Vector3(-110, 0 , 0);
         if (targetPage != null)
             targetPage.gameObject.SetActive(true);
@@ -65,7 +74,7 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (isClicked)
             return;
 
-
+        researchBtn.image.color = Color.white * 0.96f;
 
         //if (position_Modify_Coroutine != null)
         //    StopCoroutine(position_Modify_Coroutine);
@@ -77,6 +86,7 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (isClicked)
             return;
 
+        researchBtn.image.color = Color.white;
         //if (position_Modify_Coroutine != null)
         //    StopCoroutine(position_Modify_Coroutine);
         //position_Modify_Coroutine = StartCoroutine(UtilHelper.IMoveEffect(transform, transform.position, originPos, mouseOverTime));

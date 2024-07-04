@@ -46,7 +46,7 @@ public class PopUIControl : MonoBehaviour
         if (scrollRect != null)
             scrollRect.movementType = ScrollRect.MovementType.Clamped;
         contentRect.transform.position = originTransform.position;
-        popUpRect.gameObject.SetActive(false);
+        //popUpRect.gameObject.SetActive(false);
         curTarget = null;
     }
 

@@ -183,7 +183,7 @@ public class ResearchPopup : MonoBehaviour
         }
 
         bool isStart = ResearchMain.StartResearch(curResearch);
-        if(isStart)
+        if (isStart)
         {
             inprogressFrame.SetActive(true);
             inProgressBtn.SetActive(true);
@@ -192,6 +192,8 @@ public class ResearchPopup : MonoBehaviour
             ModifyAssets(false);
             researchState = ResearchState.InProgress;
         }
+        else
+            GameManager.Instance.popUpMessage.ToastMsg("연구가 이미 진행중입니다.");
     }
 
     private void StopResearch()
