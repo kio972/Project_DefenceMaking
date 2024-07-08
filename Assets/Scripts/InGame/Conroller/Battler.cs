@@ -18,6 +18,10 @@ public enum UnitType
     Player,
 }
 
+public enum CCType
+{
+    KnockBack,
+}
 
 public class Battler : FSM<Battler>
 {
@@ -84,6 +88,8 @@ public class Battler : FSM<Battler>
     private AttackType attackType = AttackType.Melee;
 
     private HpBar hpBar;
+
+    protected List<CCType> cc_Emmunes = new List<CCType>();
 
     public ReactiveCollection<StatusEffect> _effects { get; private set; } = new ReactiveCollection<StatusEffect>();
 
@@ -321,9 +327,15 @@ public class Battler : FSM<Battler>
 
         PlayDamageText(finalDamage, unitType, isCritical);
 
-        curHp -= finalDamage;
-        if (curHp <= 0)
-            Dead();
+        if(shield >= finalDamage)
+            shield -= finalDamage;
+        else
+        {
+            curHp -= Mathf.Abs(shield - finalDamage);
+            shield = 0;
+            if (curHp <= 0)
+                Dead();
+        }
     }
 
     public void RotateCharacter(Vector3 targetPos)
