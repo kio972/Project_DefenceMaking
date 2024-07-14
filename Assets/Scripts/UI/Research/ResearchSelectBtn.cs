@@ -33,6 +33,12 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField]
     ResearchUI targetPage;
 
+    private void OnEnable()
+    {
+        if(isClicked)
+            SetBaseBtn();
+    }
+
     private void SetController()
     {
         if(controller == null)
@@ -54,13 +60,19 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
     }
 
+    private void SetBaseBtn()
+    {
+        baseSlot?.OnClick();
+        baseSlot?.CallPopUpUI();
+    }
+
     public void OnClick()
     {
         if (isClicked)
             return;
         isClicked = true;
 
-        baseSlot?.CallPopUpUI();
+        SetBaseBtn();
         researchBtn.image.sprite = clickedSprite;
         researchBtn.image.color = Color.white;
         //transform.position = originPos + new Vector3(-110, 0 , 0);

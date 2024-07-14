@@ -109,6 +109,9 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
             SetDefault();
         else
             iconImg.color = Color.white;
+
+        if(isClicked)
+            SetClicked();
     }
 
     public void CheckResearchUnlock()
@@ -190,7 +193,14 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         iconImg.color = defaultColor;
     }
 
-    private void OnClick()
+    private void SetClicked()
+    {
+        outLineFrame.SetActive(true);
+        selectedFrame.SetActive(true);
+        iconImg.color = curState == ResearchState.Impossible ? impossibleColor : Color.white;
+    }
+
+    public void OnClick()
     {
         if (isClicked) return;
 
@@ -201,13 +211,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         {
             isClicked = true;
 
-            outLineFrame.SetActive(true);
-            selectedFrame.SetActive(true);
-
-            if (curState == ResearchState.Impossible)
-                iconImg.color = impossibleColor;
-            else
-                iconImg.color = Color.white;
+            SetClicked();
         }
         
         CallResearchUI(targetSlot);
