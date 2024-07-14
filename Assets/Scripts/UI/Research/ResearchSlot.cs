@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UniRx;
 
 public enum ResearchState
 {
@@ -71,10 +72,9 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    [SerializeField]
-    protected ResearchState curState;
+    public ReactiveProperty<ResearchState> _curState { get; protected set; } = new ReactiveProperty<ResearchState>();
 
-    public ResearchState _CurState { get => curState; }
+    public ResearchState _CurState { get => _curState.Value; }
 
     [SerializeField]
     private ResearchSlot[] prevResearch = null;
@@ -94,18 +94,18 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     private void OnEnable()
     {
         if (outLineFrame != null)
-            outLineFrame.SetActive(curState is ResearchState.Complete or ResearchState.InProgress);
+            outLineFrame.SetActive(_curState.Value is ResearchState.Complete or ResearchState.InProgress);
 
         if (inProgressFrame != null)
-            inProgressFrame.SetActive(curState == ResearchState.InProgress);
+            inProgressFrame.SetActive(_curState.Value == ResearchState.InProgress);
 
         CheckResearchUnlock();
 
-        if (curState == ResearchState.Impossible)
+        if (_curState.Value == ResearchState.Impossible)
             SetImPossible();
-        else if (curState == ResearchState.Complete)
+        else if (_curState.Value == ResearchState.Complete)
             SetComplete();
-        else if (curState == ResearchState.Incomplete)
+        else if (_curState.Value == ResearchState.Incomplete)
             SetDefault();
         else
             iconImg.color = Color.white;
@@ -116,7 +116,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
 
     public void CheckResearchUnlock()
     {
-        if (curState == ResearchState.Complete || curState == ResearchState.InProgress)
+        if (_curState.Value == ResearchState.Complete || _curState.Value == ResearchState.InProgress)
             return;
 
         bool unlock = true;
@@ -128,9 +128,9 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         }
 
         if (unlock)
-            curState = ResearchState.Incomplete;
+            _curState.Value = ResearchState.Incomplete;
         else
-            curState = ResearchState.Impossible;
+            _curState.Value = ResearchState.Impossible;
     }
 
     public override void CallPopUpUI()
@@ -138,12 +138,12 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         base.CallPopUpUI();
 
         if (targetSlot != null)
-            _ResearchUI._ResearchPopup?.SetPopUp(this, iconImg.sprite, curState);
+            _ResearchUI._ResearchPopup?.SetPopUp(this, iconImg.sprite, _curState.Value);
     }
 
     public void SetResearchState(ResearchState state)
     {
-        curState = state;
+        _curState.Value = state;
         inProgressFrame.SetActive(state == ResearchState.InProgress);
     }
 
@@ -153,13 +153,13 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
 
         selectedFrame.SetActive(false);
 
-        if (curState == ResearchState.Impossible)
+        if (_curState.Value == ResearchState.Impossible)
             SetImPossible();
-        else if (curState == ResearchState.Incomplete)
+        else if (_curState.Value == ResearchState.Incomplete)
             SetDefault();
-        else if (curState == ResearchState.Complete)
+        else if (_curState.Value == ResearchState.Complete)
             SetComplete();
-        else if (curState == ResearchState.InProgress)
+        else if (_curState.Value == ResearchState.InProgress)
             inProgressFrame.SetActive(true);
     }
 
@@ -197,14 +197,14 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     {
         outLineFrame.SetActive(true);
         selectedFrame.SetActive(true);
-        iconImg.color = curState == ResearchState.Impossible ? impossibleColor : Color.white;
+        iconImg.color = _curState.Value == ResearchState.Impossible ? impossibleColor : Color.white;
     }
 
     public void OnClick()
     {
         if (isClicked) return;
 
-        //if (curState == ResearchState.Complete)
+        //if (curState.Value == ResearchState.Complete)
         //    return;
 
         if (targetSlot != null)
@@ -225,7 +225,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         
         if (isClicked) return;
 
-        if(curState is ResearchState.Incomplete or ResearchState.Impossible)
+        if(_curState.Value is ResearchState.Incomplete or ResearchState.Impossible)
         {
             frameImg.color = mouseOverColor;
             iconImg.color = mouseOverColor;
@@ -240,9 +240,9 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         
         if (isClicked) return;
 
-        if (curState == ResearchState.Incomplete)
+        if (_curState.Value == ResearchState.Incomplete)
             SetDefault();
-        else if (curState == ResearchState.Impossible)
+        else if (_curState.Value == ResearchState.Impossible)
             SetImPossible();
         else
             iconImg.color = Color.white;
@@ -270,7 +270,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
 
     private void Start()
     {
-        if (curState == ResearchState.None && imgGroup != null)
+        if (_curState.Value == ResearchState.None && imgGroup != null)
             imgGroup.SetActive(false);
         else
         {

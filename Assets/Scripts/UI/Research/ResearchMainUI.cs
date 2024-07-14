@@ -15,7 +15,7 @@ public class ResearchMainUI : MonoBehaviour
 
     private Coroutine researchCoroutine;
 
-    private List<string> completedResearchs = new List<string>();
+    private List<string> completedResearchs;
 
     private IEnumerator IResearch(ResearchSlot curResearch, float additionalTime)
     {
@@ -110,6 +110,24 @@ public class ResearchMainUI : MonoBehaviour
             }
             else if(!string.IsNullOrEmpty(data.curResearch) && slot._ResearchId == data.curResearch)
                 StartResearch(slot, data.curResearchTime);
+        }
+    }
+
+    private void Awake()
+    {
+        if(completedResearchs == null)
+        {
+            completedResearchs = new List<string>() { "r_m10001" };
+            ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
+            foreach (ResearchSlot slot in slots)
+            {
+                if (!completedResearchs.Contains(slot._ResearchId))
+                    continue;
+
+                slot.SetResearchState(ResearchState.Complete);
+                Research research = slot.GetComponent<Research>();
+                research?.ActiveResearch();
+            }
         }
     }
 }
