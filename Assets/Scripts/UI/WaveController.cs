@@ -112,6 +112,9 @@ public class WaveController : MonoBehaviour
                 yield return null;
             }
 
+            if (GameManager.Instance.spawnLock)
+                yield break;
+
             BattlerPooling.Instance.SpawnAdventurer(data.target);
         }
 
