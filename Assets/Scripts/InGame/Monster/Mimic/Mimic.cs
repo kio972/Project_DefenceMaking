@@ -6,8 +6,17 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
 
-public class Mimic : Monster
+public class Mimic : Monster, IHide
 {
+    public bool canAttackbyTrap { get => true; }
+
+    public virtual void HideAction()
+    {
+        Battler curTarget = BattleCheck();
+        if (curTarget != null)
+            ChangeState(FSMPatrol.Instance);
+    }
+
     [SerializeField]
     private int seduceTargetCount = 1;
     protected int curSeduceCount = 0;

@@ -6,6 +6,13 @@ using Spine.Unity;
 using UnityEngine.UIElements;
 using UniRx;
 
+public interface IHide
+{
+    public bool canAttackbyTrap { get; }
+    public void HideAction();
+}
+
+
 public enum AttackType
 {
     Melee,
@@ -259,8 +266,8 @@ public class Battler : FSM<Battler>
         if (attacker == null)
             return;
 
-        if (attacker.attackType == AttackType.Melee)
-            return;
+        //if (attacker.attackType == AttackType.Melee)
+        //    return;
 
         if(chaseTarget == null)
             chaseTarget = attacker;
@@ -317,8 +324,6 @@ public class Battler : FSM<Battler>
         if (attacker != null && attacker.isDead)
             return;
 
-        UpdateChaseTarget(attacker);
-
         bool isCritical = false;
 
         int finalDamage = damage - armor;
@@ -335,6 +340,15 @@ public class Battler : FSM<Battler>
             shield = 0;
             if (curHp <= 0)
                 Dead();
+        }
+
+        if ((object)CurState == FSMHide.Instance)
+            ChangeState(FSMPatrol.Instance);
+
+        if ((object)CurState == FSMPatrol.Instance)
+        {
+            UpdateChaseTarget(attacker);
+            ChangeState(FSMChase.Instance);
         }
     }
 
@@ -775,7 +789,7 @@ public class Battler : FSM<Battler>
         return validTargets;
     }
 
-    private void RemoveOutCaseTargets(List<Battler> targets)
+    protected virtual void RemoveOutCaseTargets(List<Battler> targets)
     {
         List<Battler> removeList = new List<Battler>();
         foreach (Battler battler in rangedTargets)
@@ -817,10 +831,25 @@ public class Battler : FSM<Battler>
 
     public Battler BattleCheck(bool holdBackCheck = true)
     {
+        //Battler curTarget = null;
+        List<Battler> curTargets = GetRangedTargets(transform.position, attackRange);
+        ModifyBattlerList(curTargets, holdBackCheck);
+        //foreach(Battler battle in rangedTargets)
+        //{
+        //    if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
+        //        curTarget = battle;
+        //    else if (Vector3.Distance(transform.position, battle.transform.position) <
+        //        Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")
+        //        curTarget = battle;
+        //}
+
+        return GetPriorityTarget();
+    }
+
+    protected virtual Battler GetPriorityTarget()
+    {
         Battler curTarget = null;
-        List<Battler> rangedTargets = GetRangedTargets(transform.position, attackRange);
-        ModifyBattlerList(rangedTargets, holdBackCheck);
-        foreach(Battler battle in this.rangedTargets)
+        foreach (Battler battle in rangedTargets)
         {
             if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
                 curTarget = battle;
@@ -828,7 +857,6 @@ public class Battler : FSM<Battler>
                 Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")
                 curTarget = battle;
         }
-
         return curTarget;
     }
 

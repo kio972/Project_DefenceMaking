@@ -8,15 +8,22 @@ using UniRx.Triggers;
 
 public class MimicFreak : MimicRecover
 {
-    private bool hideState;
     private readonly float freakRange = 1f;
+
+    public override void HideAction()
+    {
+        Battler curTarget = BattleCheck();
+        if (curTarget != null)
+        {
+            ChangeState(FSMPatrol.Instance);
+            FreakEnemy();
+        }
+    }
 
     public override void Init()
     {
         base.Init();
         curSeduceCount = 0;
-        hideState = true;
-
     }
 
     private void FreakEnemy()
@@ -27,15 +34,5 @@ public class MimicFreak : MimicRecover
             target.GetCC(this, 30f);
             target.ChangeState(FSMCC.Instance);
         }
-    }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (hideState && (object)CurState != FSMHide.Instance)
-            FreakEnemy();
-
-        hideState = (object)CurState == FSMHide.Instance;
     }
 }
