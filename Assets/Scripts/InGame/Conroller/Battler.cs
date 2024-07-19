@@ -804,8 +804,6 @@ public class Battler : FSM<Battler>
 
     private void ModifyBattlerList(List<Battler> targets, bool holdBackCheck)
     {
-        RemoveOutCaseTargets(targets);
-
         foreach (Battler battler in targets)
         {
             if (rangedTargets.Contains(battler))
@@ -827,6 +825,8 @@ public class Battler : FSM<Battler>
             else
                 rangedTargets.Add(battler);
         }
+
+        RemoveOutCaseTargets(targets);
     }
 
     public Battler BattleCheck(bool holdBackCheck = true)

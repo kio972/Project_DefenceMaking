@@ -275,19 +275,39 @@ public class NodeManager : IngameSingleton<NodeManager>
             tileDictionary.Add(type, new List<Tile>());
     }
 
+    private List<System.Func<GameObject, bool>> setTileEvents = new List<System.Func<GameObject, bool>>();
+    public void AddSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Add(newEvent);
+
     public void SetTile(Environment environment)
     {
         environments.Add(environment);
+        foreach (var events in setTileEvents)
+            events?.Invoke(environment.gameObject);
     }
 
-    public void SetTile(Tile tile, bool value)
+    public void SetTile(Tile tile)
     {
         if (tileDictionary == null)
             TileDictionary_Init();
-        if (value)
-            tileDictionary[tile._TileType].Add(tile);
-        else
-            tileDictionary[tile._TileType].Remove(tile);
+
+        tileDictionary[tile._TileType].Add(tile);
+        
+        foreach (var events in setTileEvents)
+            events?.Invoke(tile.gameObject);
+    }
+    
+    private List<System.Func<GameObject, bool>> removeTileEvents = new List<System.Func<GameObject, bool>>();
+    public void AddRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Add(newEvent);
+
+    public void RemoveTile(Tile tile)
+    {
+        if (tileDictionary == null)
+            TileDictionary_Init();
+
+        tileDictionary[tile._TileType].Remove(tile);
+
+        foreach (var events in removeTileEvents)
+            events?.Invoke(tile.gameObject);
     }
 
     public void DormantTileCheck()

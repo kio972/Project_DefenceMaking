@@ -378,7 +378,7 @@ public class Tile : MonoBehaviour
         trap?.DestroyTrap();
         Destroy(this.gameObject, 1.0f);
 
-        NodeManager.Instance.SetTile(this, false);
+        NodeManager.Instance.RemoveTile(this);
     }
 
     public TileData GetTileData()
@@ -415,7 +415,7 @@ public class Tile : MonoBehaviour
         if(playAnim)
             tileAnimator?.SetTrigger("Set");
 
-        NodeManager.Instance.SetTile(this, true);
+        NodeManager.Instance.SetTile(this);
     }
 
     private void Update()
