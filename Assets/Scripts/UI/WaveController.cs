@@ -92,11 +92,15 @@ public class WaveController : MonoBehaviour
             curWaves.Add(new SpawnData(curWaves.Count + 1, targets[i]));
     }
 
+    public void UpdateWaveText()
+    {
+        waveText.text = (GameManager.Instance.CurWave + 1).ToString("D2");
+    }
+
     public IEnumerator ISpawnWave(int waveIndex, System.Action callback = null)
     {
         float spawnWaitTime = CalSpawnWaitTime(curWaves.Count);
-
-        waveText.text = (waveIndex + (GameManager.Instance.loop * DataManager.Instance.WaveLevelTable.Count) + 1).ToString("D2");
+        //waveText.text = (waveIndex + (GameManager.Instance.loop * DataManager.Instance.WaveLevelTable.Count) + 1).ToString("D2");
         waveFill?.SetWaveGauge(waveIndex, 0, curWaves.Count);
         float curTime = GameManager.Instance.Timer;
         foreach(SpawnData data in curWaves)

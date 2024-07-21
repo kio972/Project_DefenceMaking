@@ -5,26 +5,26 @@ using UnityEngine.Tilemaps;
 
 public class Test : MonoBehaviour
 {
-    public QuestInfo infomer;
-    public Quest targetQuest;
+    private List<System.Func<bool>> events = new List<System.Func<bool>>();
 
-    private void SetQuest()
+    private bool Event1()
     {
-
-
-        if (targetQuest == null || infomer == null)
-            return;
-
-        infomer.SetQuest(targetQuest);
+        print("Event1");
+        return false;
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T)) { SetQuest(); }
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            GameManager.Instance.king.AddStatusEffect<Poison>(new Poison(GameManager.Instance.king, 100000));
+        if(Input.GetKeyDown(KeyCode.Q))
+            events.Add(Event1);
 
+        if (Input.GetKeyDown(KeyCode.W))
+            events.Remove(Event1);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            foreach (var item in events)
+                item.Invoke();
         }
     }
 }

@@ -27,6 +27,8 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public List<CompleteRoom> roomTiles = new List<CompleteRoom>();
 
+    public HashSet<TileNode> hiddenTiles = new HashSet<TileNode>();
+
     public List<Tile> dormantTile = new List<Tile>();
 
     public Dictionary<TileType, List<Tile>> tileDictionary = null;
@@ -267,6 +269,39 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     #endregion
 
+    public HashSet<TileNode> GetDistanceNodes(int dist)
+    {
+        HashSet<TileNode> targetTiles = new HashSet<TileNode>(activeNodes);
+        if (dist == 0 || targetTiles.Count == 0)
+            return targetTiles;
+
+        HashSet<TileNode> searchedNode = new HashSet<TileNode>();
+
+        for(int i = 0; i < dist; i++)
+        {
+            foreach (TileNode node in targetTiles)
+                searchedNode.Add(node);
+            HashSet<TileNode> prevNodes = new HashSet<TileNode>(targetTiles);
+
+            targetTiles.Clear();
+            foreach (TileNode node in prevNodes)
+            {
+                foreach(Direction direction in System.Enum.GetValues(typeof(Direction)))
+                {
+                    if (!node.neighborNodeDic.ContainsKey(direction))
+                        continue;
+
+                    TileNode next = node.neighborNodeDic[direction];
+                    if (searchedNode.Contains(next))
+                        continue;
+                    targetTiles.Add(next);
+                }
+            }
+        }
+
+        return targetTiles;
+    }
+
     private void TileDictionary_Init()
     {
         tileDictionary = new Dictionary<TileType, List<Tile>>();
@@ -277,6 +312,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private List<System.Func<GameObject, bool>> setTileEvents = new List<System.Func<GameObject, bool>>();
     public void AddSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Add(newEvent);
+    public void RemoveSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Remove(newEvent);
 
     public void SetTile(Environment environment)
     {
@@ -298,6 +334,7 @@ public class NodeManager : IngameSingleton<NodeManager>
     
     private List<System.Func<GameObject, bool>> removeTileEvents = new List<System.Func<GameObject, bool>>();
     public void AddRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Add(newEvent);
+    public void RemoveRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Remove(newEvent);
 
     public void RemoveTile(Tile tile)
     {

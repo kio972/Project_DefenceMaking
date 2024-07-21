@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using System.Linq;
 
 
 
@@ -17,6 +17,28 @@ public class MapBuilder : MonoBehaviour
 
     [SerializeField]
     private int emptyNodeSize = 4;
+
+    private void SetHiddenTile(int dist)
+    {
+        List<TileNode> nodes = NodeManager.Instance.GetDistanceNodes(dist).ToList();
+        TileNode targetNode = null;
+        while (nodes.Count > 0)
+        {
+            targetNode = nodes[Random.Range(0, nodes.Count)];
+            if (NodeManager.Instance.hiddenTiles.Contains(targetNode))
+                nodes.Remove(targetNode);
+            else
+                break;
+        }
+
+        if (targetNode == null)
+            return;
+
+        TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
+        GameObject targetPrefab = GetRandomPrefab();
+        hidden = Instantiate(hidden);
+        hidden.Init(targetNode, targetPrefab);
+    }
 
     private void SetRamdomTileToRandomNode(TileNode tileNode, Tile targetTilePrefab, int range)
     {
@@ -67,9 +89,10 @@ public class MapBuilder : MonoBehaviour
         GameObject pathPrefab = Resources.Load<GameObject>("Prefab/Tile/RoadTile0");
         GameObject pathPrefab2 = Resources.Load<GameObject>("Prefab/Tile/RoadTile6");
         GameObject endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
+        GameObject roomPrefab = Resources.Load<GameObject>("Prefab/Tile/RoomTile1");
 
         //NodeManager.Instance.ResetNode();
-        
+
         Tile startTile = Instantiate(startPointPrefab)?.GetComponent<Tile>();
         startTile.Init(NodeManager.Instance.startPoint, false, false, false);
 
@@ -103,6 +126,13 @@ public class MapBuilder : MonoBehaviour
         endTile.RotateTile(true);
         NodeManager.Instance.endPoint = endTile.curNode;
         endTile.Movable = true;
+
+        nextNode = nextNode.neighborNodeDic[Direction.LeftDown];
+        nextNode = nextNode.neighborNodeDic[Direction.RightDown];
+
+        Tile roomTile = Instantiate(roomPrefab)?.GetComponent<Tile>();
+        roomTile.Init(nextNode, false, false, false);
+        roomTile.RotateTile(true);
     }
 
     private bool IsStartPointValid(TileNode node)
@@ -133,6 +163,22 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
+    private GameObject GetRandomPrefab()
+    {
+        int index = DataManager.Instance.PathCard_Indexs[Random.Range(0, DataManager.Instance.PathCard_Indexs.Count)];
+        int isRoom = Random.Range(0, 2);
+        if (isRoom == 1)
+            index = DataManager.Instance.RoomCard_Indexs[Random.Range(0, DataManager.Instance.RoomCard_Indexs.Count)];
+
+        string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+
+        GameObject targetTilePrefab = Resources.Load<GameObject>("Prefab/Tile/" + prefabName);
+        if (targetTilePrefab != null)
+            return targetTilePrefab;
+        else
+            return GetRandomPrefab();
+    }
+
     public void SetRandomTile(int range)
     {
         int index = DataManager.Instance.PathCard_Indexs[Random.Range(0, DataManager.Instance.PathCard_Indexs.Count)];
@@ -149,7 +195,7 @@ public class MapBuilder : MonoBehaviour
             return;
         }
 
-        SetRamdomTileToRandomNode(NodeManager.Instance.endPoint, targetTilePrefab, range);
+        //SetRamdomTileToRandomNode(NodeManager.Instance.endPoint, targetTilePrefab, range);
     }
 
     public void SetRamdomTile(int count, int range)
@@ -209,7 +255,11 @@ public class MapBuilder : MonoBehaviour
 
             Tutorial tutorial = FindObjectOfType<Tutorial>();
             if (tutorial == null)
-                SetRamdomTile(4, 5);
+            {
+                SetHiddenTile(3);
+                SetHiddenTile(3);
+                SetHiddenTile(3);
+            }
         }
 
         InputManager.Instance.Call();

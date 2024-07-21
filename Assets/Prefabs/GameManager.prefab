@@ -45,8 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNumber: 0
+  defaultSpeed: 100
   gameSpeed: 3640
-  gold: 100
+  gold: 50
+  herb1: 0
+  herb2: 0
+  herb3: 0
+  herb1Max: 0
+  herb2Max: 0
+  herb3Max: 0
   startCardNumber: 6
   cardDeckController: {fileID: 0}
   speedController: {fileID: 0}
@@ -55,11 +62,13 @@ MonoBehaviour:
   mapBuilder: {fileID: 0}
   cameraCanvas: {fileID: 0}
   worldCanvas: {fileID: 0}
-  king_Hp: 20
+  notificationBar: {fileID: 0}
+  research: {fileID: 0}
+  shop: {fileID: 0}
   isInBattle: 0
-  adventurersList: []
   adventurer_entered_BossRoom: []
-  monsterList: []
+  monsterSpawner: []
+  trapList: []
   king: {fileID: 0}
   timeScale: 0
   researchLevel: 1
@@ -68,5 +77,6 @@ MonoBehaviour:
   speedLock: 0
   spawnLock: 0
   cardLock: 0
+  tileLock: 0
   loop: 0
   ingameUI: {fileID: 0}

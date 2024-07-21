@@ -252,7 +252,7 @@ public class GameManager : IngameSingleton<GameManager>
         timer += InGameDeltaTime;
         if (timer > 720f && dailyIncome)
         {
-            gold += 100 + PassiveManager.Instance.income_Weight;
+            gold += 50 + PassiveManager.Instance.income_Weight;
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
             dailyIncome = false;
         }
@@ -260,11 +260,12 @@ public class GameManager : IngameSingleton<GameManager>
         if(timer > 1440f)
         {
             //재화수급
-            gold += 100 + PassiveManager.Instance.income_Weight;
+            gold += 50 + PassiveManager.Instance.income_Weight;
             timer = 0f;
             dailyIncome = true;
             curWave++;
             SetWaveSpeed(curWave);
+            waveController?.UpdateWaveText();
             if (!spawnLock && !allWaveSpawned)
             {
                 //몬스터 웨이브 스폰
