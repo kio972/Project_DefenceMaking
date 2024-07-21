@@ -11,6 +11,8 @@ public class FogOfWarController : MonoBehaviour
 
     private Dictionary<GameObject, int> tileSightDic = new Dictionary<GameObject, int>();
 
+    private List<GameObject> tileSights = new List<GameObject>();
+
     private bool AddFogReveal(GameObject tileObject)
     {
         if (tileObject == null || csFogWar == null)
@@ -18,18 +20,24 @@ public class FogOfWarController : MonoBehaviour
 
         csFogWar.FogRevealer newSight = new csFogWar.FogRevealer(tileObject.transform, tileSight, false);
         int index = csFogWar.AddFogRevealer(newSight);
-        tileSightDic.Add(tileObject, index);
+        //tileSightDic.Add(tileObject, index);
+        tileSights.Add(tileObject);
         return true;
     }
 
     private bool RemoveFogReveal(GameObject tileObject)
     {
-        if (tileObject == null || csFogWar == null || !tileSightDic.ContainsKey(tileObject))
+        if (tileObject == null || csFogWar == null)
             return false;
 
-        int index = tileSightDic[tileObject];
+        //int index = tileSightDic[tileObject];
+        //csFogWar.RemoveFogRevealer(index);
+        //tileSightDic.Remove(tileObject);
+        int index = tileSights.FindIndex(x => x == tileObject);
+        if (index == -1)
+            return false;
         csFogWar.RemoveFogRevealer(index);
-        tileSightDic.Remove(tileObject);
+        tileSights.Remove(tileObject);
 
         return true;
     }

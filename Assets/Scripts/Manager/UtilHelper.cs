@@ -11,6 +11,30 @@ using Cysharp.Threading.Tasks;
 
 public static class UtilHelper
 {
+    public static (int q, int r, int s) OffsetToCube(int row, int col)
+    {
+        int q = col - (row + (row & 1)) / 2;
+        int r = row;
+        int s = -q - r;
+        return (q, r, s);
+    }
+
+    public static int HexDistanceFromOrigin(int q, int r, int s) => (Mathf.Abs(q) + Mathf.Abs(r) + Mathf.Abs(s)) / 2;
+    public static int HexDistance(int q1, int r1, int s1, int q2, int r2, int s2) => (Mathf.Abs(q1 - q2) + Mathf.Abs(r1 - r2) + Mathf.Abs(s1 - s2)) / 2;
+
+    public static int GetTileDistance(int row, int col)
+    {
+        var (q, r, s) = OffsetToCube(col, row);
+        return HexDistanceFromOrigin(q, r, s);
+    }
+
+    public static int GetTileDistance(int originRow, int originCol, int targetRow, int targetCol)
+    {
+        var (originQ, originR, originS) = OffsetToCube(originRow, originCol);
+        var (targetQ, targetR, targetS) = OffsetToCube(targetRow, targetCol);
+        return HexDistance(originQ, originR, originS, targetQ, targetR, targetS);
+    }
+
     public static IEnumerator MoveToTargetPos(Transform moveTarget, Vector3 targetPos, float lerpTime = 0.5f)
     {
         targetPos.y = moveTarget.position.y;

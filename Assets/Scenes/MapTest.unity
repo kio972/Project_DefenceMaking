@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 617724299}
   - component: {fileID: 617724297}
   m_Layer: 0
-  m_Name: FogWar
+  m_Name: FogOfWar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,17 +477,17 @@ MonoBehaviour:
   FogRefreshRate: 10
   fogPlaneHeight: 0
   fogPlaneMaterial: {fileID: 2100000, guid: 36b93ac6fcf129c449491654e397fe4a, type: 2}
-  fogColor: {r: 0.019607844, g: 0.05882353, b: 0.09803922, a: 1}
-  fogPlaneAlpha: 1
+  fogColor: {r: 0, g: 0, b: 0, a: 1}
+  fogPlaneAlpha: 0.7
   fogLerpSpeed: 2.5
   fogPlaneTextureLerpTarget: {fileID: 0}
   fogPlaneTextureLerpBuffer: {fileID: 0}
   LevelDataToLoad: {fileID: 0}
   saveDataOnScan: 1
   levelNameToSave: Default
-  levelDimensionX: 125
-  levelDimensionY: 125
-  unitScale: 0.8
+  levelDimensionX: 200
+  levelDimensionY: 200
+  unitScale: 0.5
   scanSpacingPerUnit: 0.25
   rayStartHeight: 3
   rayMaxDistance: 5
@@ -495,7 +495,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16
   ignoreTriggers: 1
-  drawGizmos: 1
+  drawGizmos: 0
   LogOutOfRange: 0
 --- !u!4 &617724298
 Transform:
@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d6d90195ec04e4183b6ce63eff1431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileSight: 2
 --- !u!223 &700440500 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 18214539605571416, guid: 8f6ad7d167e311b41b436e3c3444dacc, type: 3}
