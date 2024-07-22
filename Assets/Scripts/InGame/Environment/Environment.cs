@@ -16,7 +16,7 @@ public class Environment : MonoBehaviour
     private EnvironmentType environmentType;
 
     [SerializeField]
-    private float value;
+    protected float value;
 
     private TileNode curNode;
     public TileNode _CurNode { get => curNode; }
@@ -38,6 +38,9 @@ public class Environment : MonoBehaviour
                 break;
             case EnvironmentType.slow:
                 PassiveManager.Instance.slowedTile.Add(node, value);
+                break;
+            case EnvironmentType.custom:
+                CustomFunc();
                 break;
         }
     }

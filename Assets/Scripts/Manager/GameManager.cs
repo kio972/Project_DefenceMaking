@@ -111,7 +111,7 @@ public class GameManager : IngameSingleton<GameManager>
             totalMana += node.curTile.RoomMana;
         }
 
-        this.totalMana = totalMana;
+        this.totalMana = totalMana + PassiveManager.Instance.GetAdditionalMana();
     }
 
     public void IncreaseWave()

@@ -18,6 +18,17 @@ public class MapBuilder : MonoBehaviour
     [SerializeField]
     private int emptyNodeSize = 4;
 
+    private bool CheckNearHiddenTile(TileNode targetNode, HashSet<TileNode> hiddenTileList, int dist)
+    {
+        foreach(TileNode node in hiddenTileList)
+        {
+            if (UtilHelper.GetTileDistance(targetNode.row, targetNode.col, node.row, node.col) <= dist)
+                return true;
+        }
+
+        return false;
+    }
+
     private void SetHiddenTile(int dist)
     {
         List<TileNode> nodes = NodeManager.Instance.GetDistanceNodes(dist).ToList();
@@ -25,7 +36,8 @@ public class MapBuilder : MonoBehaviour
         while (nodes.Count > 0)
         {
             targetNode = nodes[Random.Range(0, nodes.Count)];
-            if (NodeManager.Instance.hiddenTiles.Contains(targetNode))
+            bool isNearHiddenTile = CheckNearHiddenTile(targetNode, NodeManager.Instance.hiddenTiles, 3);
+            if (NodeManager.Instance.hiddenTiles.Contains(targetNode) || isNearHiddenTile)
                 nodes.Remove(targetNode);
             else
                 break;

@@ -19,6 +19,8 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int income_Weight = 0;
     public Dictionary<TileNode, float> slowedTile = new Dictionary<TileNode, float>();
 
+    public Dictionary<TileNode, int> manaTile = new Dictionary<TileNode, int>();
+
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
     public Dictionary<string, bool> deployAvailableTable = new Dictionary<string, bool>();
@@ -175,6 +177,22 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         }
 
         return slowRate;
+    }
+
+    public int GetAdditionalMana()
+    {
+        int value = 0;
+        foreach(var node in manaTile.Keys)
+        {
+            foreach (TileNode neighborNode in node.neighborNodeDic.Values)
+            {
+                if (neighborNode.curTile == null)
+                    continue;
+                value += manaTile[node];
+            }
+        }
+
+        return value;
     }
 
     public void Init()

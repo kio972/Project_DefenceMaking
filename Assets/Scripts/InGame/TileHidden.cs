@@ -1,21 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class TileHidden : MonoBehaviour
 {
     private TileNode _curNode;
     private GameObject _targetPrefab;
 
-    private void OnDisable()
+    private CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+    private void OnDestroy()
     {
-        NodeManager.Instance.RemoveSetTileEvent(CheckReval);
+        tokenSource.Cancel();
+        tokenSource.Dispose();
     }
 
     private bool CheckReval(GameObject obj)
     {
+        CheckReval().Forget();
+        return true;
+    }
+
+    private async UniTaskVoid CheckReval()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
         if (!NodeManager.Instance.GetDistanceNodes(1).Contains(_curNode) && !NodeManager.Instance.GetDistanceNodes(2).Contains(_curNode))
-            return false;
+            return;
 
         GameObject newObject = Instantiate(_targetPrefab);
 
@@ -27,7 +41,7 @@ public class TileHidden : MonoBehaviour
         }
 
         Environment environment = newObject.GetComponent<Environment>();
-        if(environment != null)
+        if (environment != null)
         {
             environment.Init(_curNode);
         }
@@ -35,8 +49,9 @@ public class TileHidden : MonoBehaviour
         NodeManager.Instance.hiddenTiles.Remove(_curNode);
 
         gameObject.SetActive(false);
-        Destroy(this, 0.1f);
-        return true;
+        await UniTask.Yield();
+        NodeManager.Instance.RemoveSetTileEvent(CheckReval);
+        Destroy(gameObject);
     }
 
     public void Init(TileNode curNode, GameObject targetPrefab)
