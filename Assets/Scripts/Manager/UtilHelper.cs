@@ -11,6 +11,21 @@ using Cysharp.Threading.Tasks;
 
 public static class UtilHelper
 {
+    public static List<T> ShuffleList<T>(List<T> list)
+    {
+        System.Random random = new System.Random();
+        List<T> values = new List<T>(list);
+        for (int i = values.Count - 1; i > 0; i--)
+        {
+            int k = random.Next(i + 1);
+            T value = values[k];
+            values[k] = values[i];
+            values[i] = value;
+        }
+
+        return values;
+    }
+
     public static (int q, int r, int s) OffsetToCube(int row, int col)
     {
         int q = col - (row + (row & 1)) / 2;
@@ -80,6 +95,41 @@ public static class UtilHelper
 
         return count;
     }
+
+    public static async UniTask ScaleEffect(Transform target, Vector3 targetScale, float lerpTime, CancellationTokenSource cancellationToken)
+    {
+        await UniTask.Yield(cancellationToken.Token);
+
+        float elapsedTime = 0f;
+        Vector3 originPositioin = target.transform.localScale;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            target.transform.localScale = Vector3.Lerp(originPositioin, targetScale, t * t * t * (t * (6f * t - 15f) + 10f));
+            await UniTask.Yield(cancellationToken.Token);
+        }
+
+        target.transform.localScale = targetScale;
+    }
+
+    public static async UniTask MoveEffect(Transform target, Vector3 targetPosition, float lerpTime, CancellationTokenSource cancellationToken)
+    {
+        await UniTask.Yield(cancellationToken.Token);
+
+        float elapsedTime = 0f;
+        Vector3 originPositioin = target.transform.position;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            target.position = Vector3.Lerp(originPositioin, targetPosition, t * t * t * (t * (6f * t - 15f) + 10f));
+            await UniTask.Yield(cancellationToken.Token);
+        }
+
+        target.position = targetPosition;
+    }
+
 
     public static IEnumerator IMoveEffect(RectTransform transform, Vector3 targetPosition, float lerpTime, System.Action callback = null)
     {

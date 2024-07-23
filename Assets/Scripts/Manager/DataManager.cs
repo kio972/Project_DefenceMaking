@@ -35,6 +35,7 @@ public class DataManager : Singleton<DataManager>
     private List<int> monsterCard_Indexs;
     private List<int> trapCard_Indexs;
     private List<int> environmentCard_Indexs;
+    private List<int> herbCard_Indexs;
 
     private List<int> pathCard_Indexs;
     private List<int> roomCard_Indexs;
@@ -155,6 +156,16 @@ public class DataManager : Singleton<DataManager>
             if (environmentCard_Indexs == null)
                 environmentCard_Indexs = Find_Typeof_Index(deckList, "type", "environment");
             return environmentCard_Indexs;
+        }
+    }
+
+    public List<int> HerbCard_Indexs
+    {
+        get
+        {
+            if (herbCard_Indexs == null)
+                herbCard_Indexs = Find_Typeof_Index(deckList, "type", "herb");
+            return herbCard_Indexs;
         }
     }
 

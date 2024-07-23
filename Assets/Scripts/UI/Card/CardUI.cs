@@ -44,11 +44,13 @@ public class CardUI : MonoBehaviour
                 return "cardFrame_05";
             case "environment":
                 return "cardFrame_03";
+            case "herb":
+                return "cardFrame1_monster";
         }
-        return null;
+        return "";
     }
 
-    private void SetCardUI(Card targetCard)
+    public void SetCardUI(Card targetCard)
     {
         Sprite frame1 = SpriteList.Instance.LoadSprite(GetFrameName(targetCard.cardFrame));
         card_Frame.sprite = frame1;

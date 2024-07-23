@@ -5,26 +5,18 @@ using UnityEngine.Tilemaps;
 
 public class Test : MonoBehaviour
 {
-    private List<System.Func<bool>> events = new List<System.Func<bool>>();
-
-    private bool Event1()
-    {
-        print("Event1");
-        return false;
-    }
+    public int count = 5;
+    public CardPackEffect cardPackEffect;
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
-            events.Add(Event1);
-
-        if (Input.GetKeyDown(KeyCode.W))
-            events.Remove(Event1);
-
-        if (Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            foreach (var item in events)
-                item.Invoke();
+            List<Card> cards = new List<Card>();
+            for(int i = 0; i < count; i++)
+                cards.Add(new Card(DataManager.Instance.Deck_Table[i], 0));
+
+            cardPackEffect.ShowEffect(cards);
         }
     }
 }
