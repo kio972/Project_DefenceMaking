@@ -15,7 +15,7 @@ public class CardController : CardFramework
         //GameManager.Instance.cardDeckController.cards.Remove(this.transform);
         GameManager.Instance.cardDeckController.SetCardPosition();
 
-        CardUI cardUI = GetComponent<CardUI>();
+        CardUIEffect cardUI = GetComponent<CardUIEffect>();
         cardUI?.DiscardEffect(isRecycle);
     }
 

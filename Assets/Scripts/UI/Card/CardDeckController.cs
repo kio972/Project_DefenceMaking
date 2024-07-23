@@ -371,7 +371,7 @@ public class CardDeckController : MonoBehaviour
         {
             startPositions[i] = cards[i].position;
             startRotations[i] = cards[i].rotation;
-            CardUI temp = cards[i].GetComponent<CardUI>();
+            CardUIEffect temp = cards[i].GetComponent<CardUIEffect>();
             temp.originPos = cardPos[i];
             temp.originRot = UtilHelper.AlignUpWithVector(cardRot[i]);
             temp.originSiblingIndex = i;
@@ -460,7 +460,7 @@ public class CardDeckController : MonoBehaviour
 
         hand_CardNumber++;
         CardFramework card = Instantiate(cardPrefab, cardZone).GetComponent<CardFramework>();
-        CardUI cardUI = card.GetComponent<CardUI>();
+        CardUIEffect cardUI = card.GetComponent<CardUIEffect>();
         card.Init(targetCard);
         cardUI?.DrawEffect();
         card.transform.position = transform.position;
