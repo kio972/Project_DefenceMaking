@@ -227,7 +227,7 @@ public class Battler : FSM<Battler>
     {
         crossedNodes = new List<TileNode>();
         prevTile = null;
-        curTile = null;
+        //curTile = null;
         nextTile = null;
         lastCrossRoad = null;
         directPass = false;
