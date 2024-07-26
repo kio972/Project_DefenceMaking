@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
+using UniRx;
 
 public enum TileType
 {
@@ -178,20 +178,13 @@ public class Tile : MonoBehaviour
         SetTileVisible(true);
     }
 
-    private void InstanceTwin()
-    {
-        twin = Instantiate(this, transform);
-        twin.isTwin = true;
-        twin.waitToMove = false;
-        twin.transform.rotation = transform.rotation;
-    }
-
     public void EndMove(TileNode curNode)
     {
         bool resetNode = true;
         if (curNode != null && curNode.setAvail)
         {
             transform.rotation = twin.transform.rotation;
+            rotationCount.Value = twin.rotationCount.Value;
             pathDirection = new List<Direction>(twin.pathDirection);
             roomDirection = new List<Direction>(twin.roomDirection);
 
@@ -209,11 +202,17 @@ public class Tile : MonoBehaviour
         EndMoveing(resetNode);
     }
 
+    public ReactiveProperty<int> rotationCount { get; private set; } = new ReactiveProperty<int>(0);
     private void RotateDirection(bool reverse = false)
     {
         float rate = 60f;
         if (reverse)
             rate *= -1f;
+        int nextvalue = rotationCount.Value + (reverse ? -1 : 1);
+        if (nextvalue < 0)
+            nextvalue += 6;
+        nextvalue %= 6;
+        rotationCount.Value = nextvalue;
         transform.rotation *= Quaternion.Euler(0f, rate, 0f);
     }
 
@@ -267,17 +266,16 @@ public class Tile : MonoBehaviour
     {
         if (twin == null)
         {
-            InstanceTwin();
-            NodeManager.Instance.SetActiveNode(this.curNode, false);
+            twin = Instantiate(this, transform);
+            twin.isTwin = true;
+            twin.waitToMove = false;
         }
-        else if (!twin.gameObject.activeSelf)
-        {
-            twin.gameObject.SetActive(true);
-            twin.transform.rotation = transform.rotation;
-            twin.pathDirection = new List<Direction>(pathDirection);
-            twin.roomDirection = new List<Direction>(roomDirection);
-            NodeManager.Instance.SetActiveNode(this.curNode, false);
-        }
+        twin.gameObject.SetActive(true);
+        twin.pathDirection = new List<Direction>(pathDirection);
+        twin.roomDirection = new List<Direction>(roomDirection);
+        twin.transform.rotation = transform.rotation;
+        twin.rotationCount.Value = rotationCount.Value;
+        NodeManager.Instance.SetActiveNode(this.curNode, false);
     }
 
     public void ReadyForMove()
