@@ -5,8 +5,37 @@ using UnityEngine.UI;
 using TMPro;
 using UniRx;
 
+public struct ItemInfo
+{
+    public string itemId;
+    public string itemName;
+    public string itemDesc;
+    public int originPrice;
+    public int curPrice;
+    public float increaseMin;
+    public float increaseMax;
+    public float decreaseMin;
+    public float decreaseMax;
+
+    public ItemInfo(Dictionary<string, object> data)
+    {
+        itemId = data["id"].ToString();
+        itemName = data["Name"].ToString();
+        itemDesc = data["Desc"].ToString();
+        originPrice = System.Convert.ToInt32(data["Price"]);
+        curPrice = originPrice;
+        float.TryParse(data["IncreaseMin"].ToString(), out increaseMin);
+        float.TryParse(data["IncreaseMax"].ToString(), out increaseMax);
+        float.TryParse(data["DecreaseMin"].ToString(), out decreaseMin);
+        float.TryParse(data["DecreaseMax"].ToString(), out decreaseMax);
+    }
+}
+
 public class ItemSlot : FluctItem
 {
+    [SerializeField]
+    private string itemId;
+
     [SerializeField]
     private Image itemIcon;
     [SerializeField]
@@ -14,7 +43,7 @@ public class ItemSlot : FluctItem
     [SerializeField]
     private TextMeshProUGUI itemPrice;
     [SerializeField]
-    private Button buyBtn;
+    private Button btn;
     [SerializeField]
     private GameObject soldOut;
 
@@ -27,9 +56,13 @@ public class ItemSlot : FluctItem
     private string sellScript;
 
     [SerializeField]
-    private FluctType fluctType; 
+    private FluctType fluctType;
 
     private Item item;
+
+    public Image ItemIcon { get => itemIcon; }
+
+    public ItemInfo itemInfo { get; private set; }
     private Item _Item
     {
         get
@@ -40,7 +73,7 @@ public class ItemSlot : FluctItem
         }
     }
 
-    Refreshable refresh;
+    IRefreshableItem refresh;
 
     private ShopUI _ShopUI
     {
@@ -61,6 +94,17 @@ public class ItemSlot : FluctItem
     private bool isRefreshable = true;
 
     private int _saledPrice { get => Mathf.FloorToInt(curPrice.Value * (1 - PassiveManager.Instance._shopSaleAmount.Value / 100f)); }
+
+    [SerializeField]
+    private ShopSlotInfo slotInfo;
+
+    public void OnClick()
+    {
+        if (item is IMalPoongSunOnClick script)
+            script.PlayOnClickScript();
+
+        slotInfo?.UpdateInfo(this, IsSoldOut);
+    }
 
     public void BuyItem()
     {
@@ -84,6 +128,7 @@ public class ItemSlot : FluctItem
             _ShopUI?.PlayScript(buyScript);
 
         isSoldOut.Value = true;
+        slotInfo?.UpdateInfo(this, IsSoldOut);
     }
 
     private int DecreasePrice()
@@ -144,19 +189,31 @@ public class ItemSlot : FluctItem
         itemPrice.text = curPrice.ToString();
     }
 
+    private void SetItemInfo()
+    {
+        if (string.IsNullOrEmpty(itemId))
+            return;
+
+        itemInfo = new ItemInfo(DataManager.Instance.shopListDic[itemId]);
+        increaseMin = itemInfo.increaseMin;
+        increaseMax = itemInfo.increaseMax;
+        decreaseMin = itemInfo.decreaseMin;
+        decreaseMax = itemInfo.decreaseMax;
+        originPrice = itemInfo.originPrice;
+        curPrice.Value = itemInfo.curPrice;
+    }
+
     public void Init()
     {
-        refresh = GetComponent<Refreshable>();
-        if (buyBtn != null)
-            buyBtn.onClick.AddListener(BuyItem);
+        SetItemInfo();
+
+        refresh = GetComponent<IRefreshableItem>();
+        if (btn != null)
+            btn.onClick.AddListener(OnClick);
 
         curPrice.Subscribe(_ => itemPrice.text = _saledPrice.ToString());
         PassiveManager.Instance._shopSaleAmount.Subscribe(_ => itemPrice.text = _saledPrice.ToString());
-        isSoldOut.Subscribe(_ =>
-        {
-            buyBtn.gameObject.SetActive(!_);
-            soldOut?.SetActive(_);
-        });
+        isSoldOut.Subscribe(_ => soldOut?.SetActive(_));
 
         curPrice.Value = originPrice;
         refresh?.RefreshItem();

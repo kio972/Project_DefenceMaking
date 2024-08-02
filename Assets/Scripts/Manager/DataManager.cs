@@ -20,6 +20,8 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> quest_Table;
     private List<Dictionary<string, object>> questMessage_Table;
 
+    private List<Dictionary<string, object>> shop_Table;
+
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
@@ -29,18 +31,18 @@ public class DataManager : Singleton<DataManager>
     public List<Dictionary<string, object>> ScriptsMalpongsun_Table { get => scriptsMalpongsun_Table; }
     public List<Dictionary<string, object>> Quest_Table { get => quest_Table; }
     public List<Dictionary<string, object>> QuestMessage_Table { get => questMessage_Table; }
+    public List<Dictionary<string, object>> Shop_Table { get => shop_Table; }
 
+    public List<int> tileCard_Indexs { get; private set; }
+    public List<int> monsterCard_Indexs { get; private set; }
+    public List<int> trapCard_Indexs { get; private set; }
+    public List<int> environmentCard_Indexs { get; private set; }
+    public List<int> herbCard_Indexs { get; private set; }
 
-    private List<int> tileCard_Indexs;
-    private List<int> monsterCard_Indexs;
-    private List<int> trapCard_Indexs;
-    private List<int> environmentCard_Indexs;
-    private List<int> herbCard_Indexs;
-
-    private List<int> pathCard_Indexs;
-    private List<int> roomCard_Indexs;
-    private List<int> roomPartCard_Index;
-    private List<int> roomTypeCard_Indexs;
+    public List<int> pathCard_Indexs { get; private set; }
+    public List<int> roomCard_Indexs { get; private set; }
+    public List<int> roomPartCard_Index { get; private set; }
+    public List<int> roomTypeCard_Indexs { get; private set; }
 
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
@@ -102,70 +104,12 @@ public class DataManager : Singleton<DataManager>
         {
             if(roomTypeCard_Indexs == null)
             {
-                roomTypeCard_Indexs = new List<int>(RoomCard_Indexs);
-                foreach (int val in RoomPartCard_Indexs)
+                roomTypeCard_Indexs = new List<int>(roomCard_Indexs);
+                foreach (int val in roomPartCard_Index)
                     roomTypeCard_Indexs.Add(val);
             }
 
             return roomTypeCard_Indexs;
-        }
-    }
-
-    public List<int> TileCard_Indexs
-    {
-        get
-        {
-            if(tileCard_Indexs == null)
-                tileCard_Indexs = Find_Typeof_Index(deckList, "cardtype", "tile");
-            return tileCard_Indexs;
-        }
-    }
-    public List<int> PathCard_Indexs
-    {
-        get
-        {
-            if (pathCard_Indexs == null)
-                pathCard_Indexs = Find_Typeof_Index(deckList, "type", "road");
-            return pathCard_Indexs;
-        }
-    }
-    public List<int> RoomCard_Indexs
-    {
-        get
-        {
-            if (roomCard_Indexs == null)
-                roomCard_Indexs = Find_Typeof_Index(deckList, "type", "room");
-            return roomCard_Indexs;
-        }
-    }
-
-    public List<int> RoomPartCard_Indexs
-    {
-        get
-        {
-            if (roomPartCard_Index == null)
-                roomPartCard_Index = Find_Typeof_Index(deckList, "type", "roomPart");
-            return roomPartCard_Index;
-        }
-    }
-
-    public List<int> EnvironmentCard_Indexs
-    {
-        get
-        {
-            if (environmentCard_Indexs == null)
-                environmentCard_Indexs = Find_Typeof_Index(deckList, "type", "environment");
-            return environmentCard_Indexs;
-        }
-    }
-
-    public List<int> HerbCard_Indexs
-    {
-        get
-        {
-            if (herbCard_Indexs == null)
-                herbCard_Indexs = Find_Typeof_Index(deckList, "type", "herb");
-            return herbCard_Indexs;
         }
     }
 
@@ -177,25 +121,6 @@ public class DataManager : Singleton<DataManager>
 
         string language = SettingManager.Instance.language.ToString();
         return language_Table[index][language].ToString();
-    }
-
-    public List<int> MonsterCard_Indexs
-    {
-        get
-        {
-            if (monsterCard_Indexs == null)
-                monsterCard_Indexs = Find_Typeof_Index(deckList, "cardtype", "monster");
-            return monsterCard_Indexs;
-        }
-    }
-    public List<int> TrapCard_Indexs
-    {
-        get
-        {
-            if (trapCard_Indexs == null)
-                trapCard_Indexs = Find_Typeof_Index(deckList, "cardtype", "trap");
-            return trapCard_Indexs;
-        }
     }
 
     private List<int> Find_Typeof_Index(List<Dictionary<string, object>> table, string key, string value)
@@ -242,6 +167,8 @@ public class DataManager : Singleton<DataManager>
         return scriptsMalpongsun_Table[index];
     }
 
+    public Dictionary<string, Dictionary<string, object>> shopListDic { get; private set; }
+
     // csv파일 주소(Resource폴더 내)
     private readonly string wave_Table_DataPath = "Data/waveData";
     private readonly string deckList_DataPath = "Data/deckList";
@@ -254,6 +181,48 @@ public class DataManager : Singleton<DataManager>
     private readonly string scriptsMalpongsun_Table_DataPath = "Data/scriptMalpongsunData";
     private readonly string quest_Table_DataPath = "Data/questData";
     private readonly string questMessage_Table_DataPath = "Data/questMessageData";
+    private readonly string shop_Table_DataPath = "Data/shopListData";
+
+    private void SortShopList()
+    {
+        shopListDic = new Dictionary<string, Dictionary<string, object>>();
+        foreach(var item in shop_Table)
+            shopListDic.Add(item["id"].ToString(), item);
+    }
+
+    private void SortDeckList()
+    {
+        tileCard_Indexs = new List<int>();
+        monsterCard_Indexs = new List<int>();
+        trapCard_Indexs = new List<int>();
+
+        pathCard_Indexs = new List<int>();
+        roomCard_Indexs = new List<int>();
+        roomPartCard_Index = new List<int>();
+        environmentCard_Indexs = new List<int>();
+        herbCard_Indexs = new List<int>();
+
+        for(int i = 0; i < deckList.Count; i++)
+        {
+            if(deckList[i]["cardtype"].ToString() == "tile")
+                tileCard_Indexs.Add(i);
+            if (deckList[i]["cardtype"].ToString() == "monster")
+                monsterCard_Indexs.Add(i);
+            if (deckList[i]["cardtype"].ToString() == "trap")
+                trapCard_Indexs.Add(i);
+
+            if (deckList[i]["type"].ToString() == "road")
+                pathCard_Indexs.Add(i);
+            if (deckList[i]["type"].ToString() == "room")
+                roomCard_Indexs.Add(i);
+            if (deckList[i]["type"].ToString() == "roomPart")
+                roomPartCard_Index.Add(i);
+            if (deckList[i]["type"].ToString() == "environment")
+                environmentCard_Indexs.Add(i);
+            if (deckList[i]["type"].ToString() == "herb")
+                herbCard_Indexs.Add(i);
+        }
+    }
 
     private void Init()
     {
@@ -269,5 +238,9 @@ public class DataManager : Singleton<DataManager>
         scriptsMalpongsun_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scriptsMalpongsun_Table_DataPath));
         quest_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(quest_Table_DataPath));
         questMessage_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(questMessage_Table_DataPath));
+        shop_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(shop_Table_DataPath));
+
+        SortDeckList();
+        SortShopList();
     }
 }

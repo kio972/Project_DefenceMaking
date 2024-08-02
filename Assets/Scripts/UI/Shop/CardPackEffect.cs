@@ -12,6 +12,9 @@ public class CardPackEffect : MonoBehaviour
     private Transform deckPos;
 
     [SerializeField]
+    private Image fadeImg;
+
+    [SerializeField]
     private Image packImg;
 
     [SerializeField]
@@ -47,7 +50,7 @@ public class CardPackEffect : MonoBehaviour
         for (int i = 0; i < cards.Count; i++)
         {
             if (i >= cardObjects.Count)
-                cardObjects.Add(Instantiate(cardEx, transform));
+                cardObjects.Add(Instantiate(cardEx, cardEx.transform.parent));
             cardObjects[i].SetCardUI(cards[i]);
             cardObjects[i].transform.SetAsFirstSibling();
             cardObjects[i].gameObject.SetActive(true);
@@ -67,19 +70,20 @@ public class CardPackEffect : MonoBehaviour
             targetPositions.Add(originPos + new Vector3(xSpacing * 30 * (i % 5 + 1) + xOffset, yOrigin - (i / 5 * ySpacing)));
         }
     }
-
+    readonly Color fadeColor = new Color(0, 0, 0, 0.8f);
     private async UniTaskVoid SetCards(List<Card> cards)
     {
         InitCards(cards);
         gameObject.SetActive(true);
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
+        await UtilHelper.IColorEffect(fadeImg.transform, Color.clear, fadeColor, 0.5f);
+        //await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
         for (int i = cards.Count - 1; i >= 0; i--)
             await UtilHelper.MoveEffect(cardObjects[i].transform, targetPositions[i], lerpTime, cancellationToken);
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
         packImg.gameObject.SetActive(false);
-
+        UtilHelper.IColorEffect(fadeImg.transform, fadeColor, Color.clear, 0.3f).Forget();
         float toDeckLerpTime = 0.2f;
         for (int i = 0; i < cards.Count; i++)
         {

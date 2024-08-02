@@ -419,17 +419,17 @@ public class CardDeckController : MonoBehaviour
         // 길타일 3
         // 방타일 1
         // 방조각 2
-        List<int> pathPool = DataManager.Instance.PathCard_Indexs;
+        List<int> pathPool = DataManager.Instance.pathCard_Indexs;
         DrawTypeCard(pathPool, 3);
-        List<int> roomPool = new List<int>(DataManager.Instance.RoomCard_Indexs);
+        List<int> roomPool = new List<int>(DataManager.Instance.roomCard_Indexs);
         roomPool.RemoveAt(0);
         DrawTypeCard(roomPool);
         //List<int> trapPool = DataManager.Instance.TrapCard_Indexs;
         //DrawTypeCard(trapPool);
         //List<int> monsterPool = DataManager.Instance.MonsterCard_Indexs;
         //DrawTypeCard(monsterPool);
-        DrawTypeCard(DataManager.Instance.RoomPartCard_Indexs);
-        DrawTypeCard(DataManager.Instance.EnvironmentCard_Indexs);
+        DrawTypeCard(DataManager.Instance.roomPartCard_Index);
+        DrawTypeCard(DataManager.Instance.environmentCard_Indexs);
 
     }
 

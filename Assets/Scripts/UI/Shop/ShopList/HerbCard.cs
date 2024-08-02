@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-public class HerbCard : MonoBehaviour, Item, Refreshable
+public class HerbCard : MonoBehaviour, Item, IRefreshableItem
 {
     [SerializeField]
     private bool isSuperial;
@@ -65,7 +65,7 @@ public class HerbCard : MonoBehaviour, Item, Refreshable
     {
         List<int> targets = new List<int>();
         string targetGrade = isSuperial ? "rare" : "normal";
-        foreach(int herb in DataManager.Instance.HerbCard_Indexs)
+        foreach(int herb in DataManager.Instance.herbCard_Indexs)
         {
             if (DataManager.Instance.Deck_Table[herb]["grade"].ToString() == targetGrade)
                 targets.Add(herb);

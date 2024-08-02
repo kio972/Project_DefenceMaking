@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Text;
 using System.Linq;
 
-public class CardPack : MonoBehaviour, Item, Refreshable
+public class CardPack : MonoBehaviour, Item, IRefreshableItem
 {
     [SerializeField]
     private int pathNumber;
@@ -80,13 +80,13 @@ public class CardPack : MonoBehaviour, Item, Refreshable
     {
         List<int> cardIndexs = new List<int>();
         for (int i = 0; i < path; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.PathCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(DataManager.Instance.pathCard_Indexs));
         for (int i = 0; i < singleRoom; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.RoomCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(DataManager.Instance.roomCard_Indexs));
         for (int i = 0; i < partRoom; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.RoomPartCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(DataManager.Instance.roomPartCard_Index));
         for (int i = 0; i < environment; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.EnvironmentCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(DataManager.Instance.environmentCard_Indexs));
 
         foreach (int cardIndex in cardIndexs)
             curCards.Add(new Card(DataManager.Instance.Deck_Table[cardIndex], cardIndex));

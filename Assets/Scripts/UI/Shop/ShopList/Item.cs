@@ -7,7 +7,12 @@ public interface Item
     public void UseItem();
 }
 
-public interface Refreshable
+public interface IRefreshableItem
 {
     public void RefreshItem();
+}
+
+public interface IMalPoongSunOnClick
+{
+    public void PlayOnClickScript();
 }
