@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class Slime : Monster
 {
@@ -8,6 +10,17 @@ public class Slime : Monster
     private TileNode splitedNode = null;
     private TileNode slime_curNode = null;
     private bool skipedFirst = false;
+
+    private float splitElapsed = 0;
+
+    private CancellationTokenSource source;
+
+    public override void Dead()
+    {
+        source.Cancel();
+        source.Dispose();
+        base.Dead();
+    }
 
     public void UpgradeSplitCount(int value)
     {
@@ -21,6 +34,7 @@ public class Slime : Monster
         RotationAxis.localScale = Vector3.one;
         splitedNode = null;
         slime_curNode = null;
+        source = new CancellationTokenSource();
     }
 
     private bool IsTileChanged()
@@ -46,8 +60,17 @@ public class Slime : Monster
         return nextNodes;
     }
 
-    private void ExcuteSplit(List<TileNode> nextNodes)
+    private async UniTaskVoid ExcuteSplit(List<TileNode> nextNodes)
     {
+        _Animator.SetTrigger("Split");
+        splitElapsed = 1.5f;
+        while(splitElapsed > 0)
+        {
+            _Animator.SetFloat("AttackSpeed", GameManager.Instance.timeScale);
+            splitElapsed -= Time.deltaTime * GameManager.Instance.timeScale;
+            await UniTask.Yield(source.Token);
+        }
+        
         splitCount--;
         splitedNode = curTile;
         bool isOdd = curHp % 2 == 1;
@@ -72,6 +95,9 @@ public class Slime : Monster
 
     public override void Patrol()
     {
+        if(splitElapsed > 0)
+            return;
+
         base.Patrol();
         if (splitCount <= 0 || curHp < 2)
             return;
@@ -83,7 +109,6 @@ public class Slime : Monster
         if (nextNodes.Count < 2)
             return;
 
-        //ChangeState(FSMSkill.Instance);
-        ExcuteSplit(nextNodes);
+        ExcuteSplit(nextNodes).Forget();
     }
 }
