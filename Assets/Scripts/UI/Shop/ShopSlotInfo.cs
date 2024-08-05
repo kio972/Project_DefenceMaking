@@ -30,6 +30,9 @@ public class ShopSlotInfo : MonoBehaviour
     [SerializeField]
     private Sprite[] bgSprites;
 
+    [SerializeField]
+    private ItemSlot initSlot;
+
     private void SetSoldOutImg(bool isSoldOut)
     {
         int index = isSoldOut ? 1 : 0;
@@ -38,7 +41,7 @@ public class ShopSlotInfo : MonoBehaviour
         buyText.text = isSoldOut ? "품절" : "구매";
     }
 
-    public void UpdateInfo(ItemSlot data, bool isSoldOut)
+    public void UpdateInfo(ItemSlot data)
     {
         curslot = data;
 
@@ -49,8 +52,8 @@ public class ShopSlotInfo : MonoBehaviour
 
         card_Cost.text = data._CurPrice.ToString();
 
-        _isSoldOut = isSoldOut;
-        SetSoldOutImg(isSoldOut);
+        _isSoldOut = data.IsSoldOut;
+        SetSoldOutImg(_isSoldOut);
     }
 
     public void Buy()
@@ -64,5 +67,11 @@ public class ShopSlotInfo : MonoBehaviour
             _isSoldOut = true;
             SetSoldOutImg(true);
         }
+    }
+
+    private void OnEnable()
+    {
+        if (initSlot != null)
+            UpdateInfo(initSlot);
     }
 }

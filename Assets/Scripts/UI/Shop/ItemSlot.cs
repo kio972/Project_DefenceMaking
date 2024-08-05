@@ -103,7 +103,7 @@ public class ItemSlot : FluctItem
         if (item is IMalPoongSunOnClick script)
             script.PlayOnClickScript();
 
-        slotInfo?.UpdateInfo(this, IsSoldOut);
+        slotInfo?.UpdateInfo(this);
     }
 
     public void BuyItem()
@@ -128,7 +128,7 @@ public class ItemSlot : FluctItem
             _ShopUI?.PlayScript(buyScript);
 
         isSoldOut.Value = true;
-        slotInfo?.UpdateInfo(this, IsSoldOut);
+        slotInfo?.UpdateInfo(this);
     }
 
     private int DecreasePrice()
