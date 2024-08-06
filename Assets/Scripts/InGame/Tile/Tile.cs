@@ -110,6 +110,7 @@ public class Tile : MonoBehaviour
 
     public void MoveTile(TileNode nextNode, bool isActive = true)
     {
+        //curNode?.SetFog(true);
         if(curNode != null)
         {
             curNode.curTile = null;
@@ -119,6 +120,7 @@ public class Tile : MonoBehaviour
         transform.SetParent(nextNode.transform, false);
 
         curNode = nextNode;
+        //curNode?.SetFog(false);
         if(isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
             NodeManager.Instance.SetActiveNode(nextNode, true);
 
@@ -144,6 +146,9 @@ public class Tile : MonoBehaviour
             if(tileType == TileType.Room_Single || tileType == TileType.Room || tileType == TileType.Door)
                 NodeManager.Instance.RoomCheck(this);
         }
+
+        NodeManager.Instance.UpdateMinMaxRowCol(curNode.row, curNode.col);
+        NodeManager.Instance.UpdateSightNode();
     }
 
     private void SetTileVisible(bool value)

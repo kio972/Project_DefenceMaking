@@ -1,39 +1,37 @@
+using FischlWorks_FogWar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
+using static FischlWorks_FogWar.csFogWar;
+using static System.Net.Mime.MediaTypeNames;
 
 public class FogOfWar : MonoBehaviour
 {
     [SerializeField]
-    private Transform levelMidPoint = null;
+    private Camera fogCam;
+    [SerializeField]
+    private RenderTexture texture;
+    [SerializeField]
+    private Material fogPlaneMaterial;
 
-    [Range(0, 100)]
-    private float fogPlaneHeight = 1;
-    [SerializeField]
-    private Material fogPlaneMaterial = null;
-
-    private GameObject fogPlane = null;
-    [SerializeField]
-    private Texture2D fogPlaneTextureLerpTarget = null;
-    [SerializeField]
-    private Texture2D fogPlaneTextureLerpBuffer = null;
+    private GameObject fogPlane;
 
     [SerializeField]
-    [Range(1, 300)]
-    private int levelDimensionX = 11;
+    private Texture2D fogPlaneTextureLerpTarget;
     [SerializeField]
-    [Range(1, 300)]
-    private int levelDimensionY = 11;
-    [SerializeField]
-    private float unitScale = 1;
+    private Texture2D fogPlaneTextureLerpBuffer;
 
     [SerializeField]
-    [Range(1, 30)]
-    private float FogRefreshRate = 10;
+    private Transform planeTransform;
+
     [SerializeField]
-    [Range(1, 5)]
-    private float fogLerpSpeed = 2.5f;
-    private float FogRefreshRateTimer = 0;
+    private float fogPlaneHeight = 0;
+
+    [SerializeField]
+    private Color fogColor = Color.black;
 
     private void InitializeFog()
     {
@@ -42,107 +40,76 @@ public class FogOfWar : MonoBehaviour
         fogPlane.name = "[RUNTIME] Fog_Plane";
 
         fogPlane.transform.position = new Vector3(
-            levelMidPoint.position.x,
-            levelMidPoint.position.y + fogPlaneHeight,
-            levelMidPoint.position.z);
+            planeTransform.position.x,
+            planeTransform.position.y + fogPlaneHeight,
+            planeTransform.position.z);
 
-        fogPlane.transform.localScale = new Vector3(
-            (levelDimensionX * unitScale) / 10.0f,
-            1,
-            (levelDimensionY * unitScale) / 10.0f);
+        fogPlane.transform.SetParent(transform);
 
-        fogPlaneTextureLerpTarget = new Texture2D(levelDimensionX, levelDimensionY);
-        fogPlaneTextureLerpBuffer = new Texture2D(levelDimensionX, levelDimensionY);
+        fogPlane.transform.localScale = planeTransform.localScale;
+
+        fogPlaneTextureLerpTarget = new Texture2D(texture.width, texture.height);
+        fogPlaneTextureLerpBuffer = new Texture2D(texture.width, texture.height);
 
         fogPlaneTextureLerpBuffer.wrapMode = TextureWrapMode.Clamp;
-
         fogPlaneTextureLerpBuffer.filterMode = FilterMode.Bilinear;
 
         fogPlane.GetComponent<MeshRenderer>().material = new Material(fogPlaneMaterial);
 
-        fogPlane.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", fogPlaneTextureLerpBuffer);
+        fogPlane.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", fogPlaneTextureLerpTarget);
 
         fogPlane.GetComponent<MeshCollider>().enabled = false;
     }
 
-    private void UpdateFogPlaneTextureBuffer()
-    {
-        for (int xIterator = 0; xIterator < levelDimensionX; xIterator++)
-        {
-            for (int yIterator = 0; yIterator < levelDimensionY; yIterator++)
-            {
-                Color bufferPixel = fogPlaneTextureLerpBuffer.GetPixel(xIterator, yIterator);
-                Color targetPixel = fogPlaneTextureLerpTarget.GetPixel(xIterator, yIterator);
+    Color[] color;
 
-                fogPlaneTextureLerpBuffer.SetPixel(xIterator, yIterator, Color.Lerp(
-                    bufferPixel,
-                    targetPixel,
-                    fogLerpSpeed * Time.deltaTime));
+    private Color[] GetColors(Texture2D renderTexture)
+    {
+        if(color == null)
+            color = new Color[renderTexture.width * renderTexture.height];
+        for (int height = 0; height < renderTexture.height; height++)
+        {
+            for(int width = 0; width < renderTexture.width; width++)
+            {
+                //float pixelAlpha = renderTexture.GetPixel(width, height);
+                color[height * width + width] = renderTexture.GetPixel(width, height);
             }
         }
 
-        fogPlaneTextureLerpBuffer.Apply();
+        return color;
     }
 
     private void UpdateFogField()
     {
-        //shadowcaster.ResetTileVisibility();
+        fogCam.Render();
+        RenderTexture.active = texture;
+        //Texture2D texture2D = new Texture2D(texture.width, texture.height);
+        //Graphics.Blit(fogPlaneTextureLerpTarget, texture);
+        fogPlaneTextureLerpTarget.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+        //texture2D.Apply();
 
-        //foreach (FogRevealer fogRevealer in fogRevealers)
-        //{
-        //    fogRevealer.GetCurrentLevelCoordinates(this);
+        for(int i = 0; i < fogPlaneTextureLerpTarget.width; i++)
+        {
+            for(int j = 0; j < fogPlaneTextureLerpTarget.height; j++)
+            {
+                Color pixelColor = fogPlaneTextureLerpTarget.GetPixel(0, 0);
+                fogPlaneTextureLerpTarget.SetPixel(i, j, new Color(1, 1, 1, 1 - pixelColor.a));
+            }
+        }
 
-        //    shadowcaster.ProcessLevelData(
-        //        fogRevealer._CurrentLevelCoordinates,
-        //        Mathf.RoundToInt(fogRevealer._SightRange / unitScale));
-        //}
-
-        //UpdateFogPlaneTextureTarget();
+        //fogPlaneTextureLerpTarget.SetPixels(GetColors(texture2D));
+        fogPlaneTextureLerpTarget.Apply();
     }
 
-    private void UpdateFog()
+    private void Start()
     {
-        fogPlane.transform.position = new Vector3(
-            levelMidPoint.position.x,
-            levelMidPoint.position.y + fogPlaneHeight,
-            levelMidPoint.position.z);
-
-        FogRefreshRateTimer += Time.deltaTime;
-
-        if (FogRefreshRateTimer < 1 / FogRefreshRate)
-        {
-            UpdateFogPlaneTextureBuffer();
-
-            return;
-        }
-        else
-        {
-            // This is to cancel out minor excess values
-            FogRefreshRateTimer -= 1 / FogRefreshRate;
-        }
-
-        //foreach (FogRevealer fogRevealer in fogRevealers)
-        //{
-        //    if (fogRevealer._UpdateOnlyOnMove == false)
-        //    {
-        //        break;
-        //    }
-
-        //    Vector2Int currentLevelCoordinates = fogRevealer.GetCurrentLevelCoordinates(this);
-
-        //    if (currentLevelCoordinates != fogRevealer._LastSeenAt)
-        //    {
-        //        break;
-        //    }
-
-        //    if (fogRevealer == fogRevealers.Last())
-        //    {
-        //        return;
-        //    }
-        //}
-
+        InitializeFog();
         UpdateFogField();
+    }
 
-        UpdateFogPlaneTextureBuffer();
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.J))
+            UpdateFogField();
     }
 }

@@ -60,6 +60,23 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
+    int directSight = 2;
+    int inDirectSight = 1;
+
+    public void UpdateSightNode()
+    {
+        HashSet<TileNode> allNodes = GetDistanceNodes(directSight + inDirectSight, true);
+        foreach (TileNode node in allNodes)
+        {
+            node.SetFog(true);
+            node.SetFogAlpha(0.8f);
+        }
+
+        HashSet<TileNode> directNodes = GetDistanceNodes(directSight, true);
+        foreach (TileNode node in directNodes)
+            node.SetFog(false);
+    }
+
     public CompleteRoom GetRoomByNode(TileNode targetNode)
     {
         foreach(CompleteRoom room in roomTiles)
@@ -269,7 +286,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     #endregion
 
-    public HashSet<TileNode> GetDistanceNodes(int dist)
+    public HashSet<TileNode> GetDistanceNodes(int dist, bool containAll = false)
     {
         HashSet<TileNode> targetTiles = new HashSet<TileNode>(activeNodes);
         if (dist == 0 || targetTiles.Count == 0)
@@ -299,7 +316,13 @@ public class NodeManager : IngameSingleton<NodeManager>
             }
         }
 
-        return targetTiles;
+        foreach (TileNode node in targetTiles)
+            searchedNode.Add(node);
+
+        if(containAll)
+            return searchedNode;
+        else
+            return targetTiles;
     }
 
     private void TileDictionary_Init()
@@ -670,7 +693,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             emptyNodes.Add(node);
     }
 
-    private void UpdateMinMaxRowCol(int row, int col)
+    public void UpdateMinMaxRowCol(int row, int col)
     {
         if (row < minRow)
             minRow = row;
@@ -688,7 +711,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         TileNode newNode = Resources.Load<TileNode>("Prefab/Tile/EmptyTile");
         newNode = Instantiate(newNode);
         newNode.Init(index[0], index[1]);
-        UpdateMinMaxRowCol(index[0], index[1]);
+        //UpdateMinMaxRowCol(index[0], index[1]);
         newNode.transform.position = position;
         if(parent != null)
             newNode.transform.SetParent(parent);

@@ -33,6 +33,29 @@ public class TileNode : MonoBehaviour
     [SerializeField]
     private RoadEmptyMaterialProperties guideColor;
 
+    [SerializeField]
+    private GameObject fog;
+
+    public void SetFog(bool value)
+    {
+        if (fog == null)
+            return;
+
+        fog.gameObject.SetActive(value);
+        if (value)
+            SetFogAlpha(1f);
+    }
+
+    public void SetFogAlpha(float alpha)
+    {
+        if (fog == null)
+            return;
+
+        MeshRenderer renderer = fog.GetComponent<MeshRenderer>();
+        Color color = renderer.material.GetColor("_BaseColor");
+        renderer.material.SetColor("_BaseColor", new Color(color.r, color.g, color.b, alpha));
+    }
+
     public void DeActiveGuide()
     {
         guideObject.gameObject.SetActive(false);
