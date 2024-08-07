@@ -411,8 +411,8 @@ public class Tile : MonoBehaviour
         if(tileAnimator == null)
             tileAnimator = GetComponentInChildren<Animator>();
         NodeManager.Instance.SetActiveNode(targetNode, true);
-        MoveTile(targetNode);
         isDormant = dormant;
+        MoveTile(targetNode);
         movable = tileType == TileType.End ? true : false;
         this.removable = removable;
         if(isDormant)

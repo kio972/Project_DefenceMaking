@@ -73,17 +73,16 @@ public class NodeManager : IngameSingleton<NodeManager>
     public void RemoveSightNode(TileNode node)
     {
         HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
-        HashSet<TileNode> direct = GetDistanceNodeFromNode(node, directSight, true);
 
         foreach (var item in inDirect)
         {
-            //item.RemoveRevealNode(node, false);
-            _inDirectSightNodes.Remove(item);
-        }
-        foreach (var item in direct)
-        {
-            //item.RemoveRevealNode(node, true);
-            _directSightNodes.Remove(item);
+            item.revealNodes.Remove(node);
+            if(item.revealNodes.Count == 0)
+            {
+                item.RestoreFog();
+                _directSightNodes.Remove(item);
+                directSightNodes.Remove(item);
+            }
         }
     }
 
@@ -92,7 +91,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
         foreach(var item in inDirect)
         {
-            //item.AddRevealNode(node, false);
             if (_inDirectSightNodes.Contains(item))
                 continue;
 
@@ -103,7 +101,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         HashSet<TileNode> direct = GetDistanceNodeFromNode(node, directSight, true);
         foreach (var item in direct)
         {
-            //item.AddRevealNode(node, true);
+            item.revealNodes.Add(node);
             if (_directSightNodes.Contains(item))
                 continue;
 

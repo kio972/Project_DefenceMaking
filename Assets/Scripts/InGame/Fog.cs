@@ -17,6 +17,19 @@ public class Fog : MonoBehaviour
 
     private CancellationTokenSource cacelTokensource = new CancellationTokenSource();
 
+    public void RestoreFog()
+    {
+        if (_state != FogState.Opened)
+            return;
+
+
+        cacelTokensource.Cancel();
+        cacelTokensource = new CancellationTokenSource();
+        OpenFog(0.8f, 0).Forget();
+
+        _state = FogState.Half;
+    }
+
     public void SetFog(FogState state)
     {
         if ((int)state <= (int)_state)

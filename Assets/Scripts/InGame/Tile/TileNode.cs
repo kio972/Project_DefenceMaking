@@ -37,8 +37,7 @@ public class TileNode : MonoBehaviour
     [SerializeField]
     private Fog fog;
 
-    public HashSet<TileNode> directRevealNode = new HashSet<TileNode>();
-    public HashSet<TileNode> inDirectRevealNode = new HashSet<TileNode>();
+    public HashSet<TileNode> revealNodes = new HashSet<TileNode>();
 
     public void RemoveRevealNode(TileNode node, bool isDirect)
     {
@@ -60,11 +59,13 @@ public class TileNode : MonoBehaviour
     }
 
 
+    public void RestoreFog()
+    {
+        fog?.RestoreFog();
+    }
+
     public void SetFog(FogState state)
     {
-        if (fog == null)
-            return;
-
         fog?.SetFog(state);
     }
 
