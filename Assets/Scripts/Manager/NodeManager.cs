@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public enum GuideState
@@ -63,19 +64,59 @@ public class NodeManager : IngameSingleton<NodeManager>
     int directSight = 2;
     int inDirectSight = 1;
 
-    public void UpdateSightNode()
+    private HashSet<TileNode> _directSightNodes = new HashSet<TileNode>();
+    private HashSet<TileNode> _inDirectSightNodes = new HashSet<TileNode>();
+
+    public ReactiveCollection<TileNode> directSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
+    public ReactiveCollection<TileNode> inDirectSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
+
+    public void RemoveSightNode(TileNode node)
     {
-        HashSet<TileNode> allNodes = GetDistanceNodes(directSight + inDirectSight, true);
-        foreach (TileNode node in allNodes)
+        HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
+        HashSet<TileNode> direct = GetDistanceNodeFromNode(node, directSight, true);
+
+        foreach (var item in inDirect)
         {
-            node.SetFog(true);
-            node.SetFogAlpha(0.8f);
+            //item.RemoveRevealNode(node, false);
+            _inDirectSightNodes.Remove(item);
+        }
+        foreach (var item in direct)
+        {
+            //item.RemoveRevealNode(node, true);
+            _directSightNodes.Remove(item);
+        }
+    }
+
+    public void AddSightNode(TileNode node)
+    {
+        HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
+        foreach(var item in inDirect)
+        {
+            //item.AddRevealNode(node, false);
+            if (_inDirectSightNodes.Contains(item))
+                continue;
+
+            _inDirectSightNodes.Add(item);
+            inDirectSightNodes.Add(item);
         }
 
-        HashSet<TileNode> directNodes = GetDistanceNodes(directSight, true);
-        foreach (TileNode node in directNodes)
-            node.SetFog(false);
+        HashSet<TileNode> direct = GetDistanceNodeFromNode(node, directSight, true);
+        foreach (var item in direct)
+        {
+            //item.AddRevealNode(node, true);
+            if (_directSightNodes.Contains(item))
+                continue;
+
+            _directSightNodes.Add(item);
+            directSightNodes.Add(item);
+        }
     }
+
+    //public void UpdateSightNode()
+    //{
+    //    _inDirectSightNodes = GetDistanceNodes(directSight + inDirectSight, true);
+    //    _directSightNodes = GetDistanceNodes(directSight, true);
+    //}
 
     public CompleteRoom GetRoomByNode(TileNode targetNode)
     {
@@ -286,6 +327,49 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     #endregion
 
+    private void SearchDistanceNode(int dist, HashSet<TileNode> targetNodes, HashSet<TileNode> searchedNodes)
+    {
+        for (int i = 0; i < dist; i++)
+        {
+            foreach (TileNode node in targetNodes)
+                searchedNodes.Add(node);
+            HashSet<TileNode> prevNodes = new HashSet<TileNode>(targetNodes);
+
+            targetNodes.Clear();
+            foreach (TileNode node in prevNodes)
+            {
+                foreach (Direction direction in System.Enum.GetValues(typeof(Direction)))
+                {
+                    if (!node.neighborNodeDic.ContainsKey(direction))
+                        continue;
+
+                    TileNode next = node.neighborNodeDic[direction];
+                    if (searchedNodes.Contains(next))
+                        continue;
+                    targetNodes.Add(next);
+                }
+            }
+        }
+
+        foreach (TileNode node in targetNodes)
+            searchedNodes.Add(node);
+    }
+
+    public HashSet<TileNode> GetDistanceNodeFromNode(TileNode originNode, int dist, bool containAll = false)
+    {
+        HashSet<TileNode> targetTiles = new HashSet<TileNode>() { originNode };
+        if (dist == 0 || originNode == null)
+            return targetTiles;
+
+        HashSet<TileNode> searchedNode = new HashSet<TileNode>();
+        SearchDistanceNode(dist, targetTiles, searchedNode);
+
+        if (containAll)
+            return searchedNode;
+        else
+            return targetTiles;
+    }
+
     public HashSet<TileNode> GetDistanceNodes(int dist, bool containAll = false)
     {
         HashSet<TileNode> targetTiles = new HashSet<TileNode>(activeNodes);
@@ -293,33 +377,9 @@ public class NodeManager : IngameSingleton<NodeManager>
             return targetTiles;
 
         HashSet<TileNode> searchedNode = new HashSet<TileNode>();
+        SearchDistanceNode(dist, targetTiles, searchedNode);
 
-        for(int i = 0; i < dist; i++)
-        {
-            foreach (TileNode node in targetTiles)
-                searchedNode.Add(node);
-            HashSet<TileNode> prevNodes = new HashSet<TileNode>(targetTiles);
-
-            targetTiles.Clear();
-            foreach (TileNode node in prevNodes)
-            {
-                foreach(Direction direction in System.Enum.GetValues(typeof(Direction)))
-                {
-                    if (!node.neighborNodeDic.ContainsKey(direction))
-                        continue;
-
-                    TileNode next = node.neighborNodeDic[direction];
-                    if (searchedNode.Contains(next))
-                        continue;
-                    targetTiles.Add(next);
-                }
-            }
-        }
-
-        foreach (TileNode node in targetTiles)
-            searchedNode.Add(node);
-
-        if(containAll)
+        if (containAll)
             return searchedNode;
         else
             return targetTiles;
@@ -368,6 +428,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
         foreach (var events in removeTileEvents)
             events?.Invoke(tile.gameObject);
+        RemoveSightNode(tile.curNode);
     }
 
     public void DormantTileCheck()

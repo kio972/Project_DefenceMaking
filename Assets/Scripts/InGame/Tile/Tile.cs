@@ -113,6 +113,7 @@ public class Tile : MonoBehaviour
         //curNode?.SetFog(true);
         if(curNode != null)
         {
+            NodeManager.Instance.RemoveSightNode(curNode);
             curNode.curTile = null;
             NodeManager.Instance.SetActiveNode(curNode, false);
         }
@@ -120,8 +121,9 @@ public class Tile : MonoBehaviour
         transform.SetParent(nextNode.transform, false);
 
         curNode = nextNode;
+        NodeManager.Instance.AddSightNode(curNode);
         //curNode?.SetFog(false);
-        if(isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
+        if (isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
             NodeManager.Instance.SetActiveNode(nextNode, true);
 
         nextNode.curTile = this;
@@ -148,7 +150,7 @@ public class Tile : MonoBehaviour
         }
 
         NodeManager.Instance.UpdateMinMaxRowCol(curNode.row, curNode.col);
-        NodeManager.Instance.UpdateSightNode();
+        //NodeManager.Instance.UpdateSightNode();
     }
 
     private void SetTileVisible(bool value)

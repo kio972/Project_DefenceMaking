@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -34,26 +35,37 @@ public class TileNode : MonoBehaviour
     private RoadEmptyMaterialProperties guideColor;
 
     [SerializeField]
-    private GameObject fog;
+    private Fog fog;
 
-    public void SetFog(bool value)
+    public HashSet<TileNode> directRevealNode = new HashSet<TileNode>();
+    public HashSet<TileNode> inDirectRevealNode = new HashSet<TileNode>();
+
+    public void RemoveRevealNode(TileNode node, bool isDirect)
     {
-        if (fog == null)
-            return;
+        //if(isDirect)
+        //    directRevealNode.Remove(node);
+        //inDirectRevealNode.Remove(node);
 
-        fog.gameObject.SetActive(value);
-        if (value)
-            SetFogAlpha(1f);
+        //if(inDirectRevealNode.Count == 0)
+        //    NodeManager.Instance.inDirectSightNodes.Remove(node);
+        //if(directRevealNode.Count == 0)
+        //    NodeManager.Instance.directSightNodes.Remove(node);
     }
 
-    public void SetFogAlpha(float alpha)
+    public void AddRevealNode(TileNode node, bool isDirect)
+    {
+        //if(isDirect)
+        //    directRevealNode.Add(node);
+        //inDirectRevealNode.Add(node);
+    }
+
+
+    public void SetFog(FogState state)
     {
         if (fog == null)
             return;
 
-        MeshRenderer renderer = fog.GetComponent<MeshRenderer>();
-        Color color = renderer.material.GetColor("_BaseColor");
-        renderer.material.SetColor("_BaseColor", new Color(color.r, color.g, color.b, alpha));
+        fog?.SetFog(state);
     }
 
     public void DeActiveGuide()

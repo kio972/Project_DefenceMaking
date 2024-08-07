@@ -54,7 +54,7 @@ MonoBehaviour:
   guideObject: {fileID: 3012625460389150315}
   setAvail: 0
   guideColor: {fileID: 2049308113081056789}
-  fog: {fileID: 5068692037026024842}
+  fog: {fileID: 1805950834069021168}
 --- !u!1001 &689747315844935782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 45c2113b77de2214cb94986f65c756cc, type: 2}
     - target: {fileID: 919132149155446097, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_Name
-      value: Empty_Hex
+      value: Fog
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_Layer
@@ -257,6 +257,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -843934191664982851, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
+--- !u!114 &1805950834069021168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068692037026024842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c51f7f0b96c6714085d1ab4fb52fd39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5556399748853389104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
@@ -331,7 +343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_Name
-      value: Empty_Hex (1)
+      value: Empty_Hex
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cafd69b960b2b5d45958d29d11525a72, type: 3}
       propertyPath: m_Layer

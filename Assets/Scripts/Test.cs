@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UniRx;
+
 
 public class Test : MonoBehaviour
 {
-    public int count = 5;
-    public CardPackEffect cardPackEffect;
 
-    private void Update()
+    private void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            List<Card> cards = new List<Card>();
-            for(int i = 0; i < count; i++)
-                cards.Add(new Card(DataManager.Instance.Deck_Table[i], 0));
-
-            cardPackEffect.ShowEffect(cards);
-        }
+        Test2.Instance.tests.ObserveAdd().Select(_ => true).Subscribe(_ => print("Added"));
+        Test2.Instance.tests.ObserveRemove().Select(_ => true).Subscribe(_ => print("Removed"));
     }
+
+    
 }
