@@ -29,6 +29,8 @@ public class ShopSlotInfo : MonoBehaviour
     private Sprite[] btnSprites;
     [SerializeField]
     private Sprite[] bgSprites;
+    [SerializeField]
+    private GameObject soldOutImage;
 
     [SerializeField]
     private ItemSlot initSlot;
@@ -39,6 +41,7 @@ public class ShopSlotInfo : MonoBehaviour
         buyBtn.sprite = btnSprites[index];
         bgImg.sprite = bgSprites[index];
         buyText.text = isSoldOut ? "품절" : "구매";
+        soldOutImage.SetActive(isSoldOut);
     }
 
     public void UpdateInfo(ItemSlot data)
