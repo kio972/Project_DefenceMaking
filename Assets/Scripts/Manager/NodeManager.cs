@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public enum GuideState
@@ -10,21 +11,24 @@ public enum GuideState
     Tile,
     Environment,
     Movable,
+    Spawner,
 }
 
 public class NodeManager : IngameSingleton<NodeManager>
 {
     //활성화 노드들의 이웃노드 중 비활성화 노드
-    public List<TileNode> virtualNodes = new List<TileNode>();
+    public HashSet<TileNode> virtualNodes = new HashSet<TileNode>();
     //활성화 상태의 노드
-    private List<TileNode> activeNodes = new List<TileNode>();
-    public List<TileNode> _ActiveNodes { get => activeNodes; }
+    private HashSet<TileNode> activeNodes = new HashSet<TileNode>();
+    public HashSet<TileNode> _ActiveNodes { get => activeNodes; }
 
-    public List<TileNode> emptyNodes = new List<TileNode>();
+    public HashSet<TileNode> emptyNodes = new HashSet<TileNode>();
 
-    public List<TileNode> allNodes = new List<TileNode>();
+    public HashSet<TileNode> allNodes = new HashSet<TileNode>();
 
     public List<CompleteRoom> roomTiles = new List<CompleteRoom>();
+
+    public HashSet<TileNode> hiddenTiles = new HashSet<TileNode>();
 
     public List<Tile> dormantTile = new List<Tile>();
 
@@ -57,6 +61,61 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
+    int directSight = 2;
+    int inDirectSight = 1;
+
+    private HashSet<TileNode> _directSightNodes = new HashSet<TileNode>();
+    private HashSet<TileNode> _inDirectSightNodes = new HashSet<TileNode>();
+
+    public ReactiveCollection<TileNode> directSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
+    public ReactiveCollection<TileNode> inDirectSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
+
+    public void RemoveSightNode(TileNode node)
+    {
+        HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
+
+        foreach (var item in inDirect)
+        {
+            item.revealNodes.Remove(node);
+            if(item.revealNodes.Count == 0)
+            {
+                item.RestoreFog();
+                _directSightNodes.Remove(item);
+                directSightNodes.Remove(item);
+            }
+        }
+    }
+
+    public void AddSightNode(TileNode node)
+    {
+        HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
+        foreach(var item in inDirect)
+        {
+            if (_inDirectSightNodes.Contains(item))
+                continue;
+
+            _inDirectSightNodes.Add(item);
+            inDirectSightNodes.Add(item);
+        }
+
+        HashSet<TileNode> direct = GetDistanceNodeFromNode(node, directSight, true);
+        foreach (var item in direct)
+        {
+            item.revealNodes.Add(node);
+            if (_directSightNodes.Contains(item))
+                continue;
+
+            _directSightNodes.Add(item);
+            directSightNodes.Add(item);
+        }
+    }
+
+    //public void UpdateSightNode()
+    //{
+    //    _inDirectSightNodes = GetDistanceNodes(directSight + inDirectSight, true);
+    //    _directSightNodes = GetDistanceNodes(directSight, true);
+    //}
+
     public CompleteRoom GetRoomByNode(TileNode targetNode)
     {
         foreach(CompleteRoom room in roomTiles)
@@ -72,9 +131,9 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void ResetNode()
     {
-        activeNodes = new List<TileNode>();
-        emptyNodes = new List<TileNode>();
-        allNodes = new List<TileNode>();
+        activeNodes = new HashSet<TileNode>();
+        emptyNodes = new HashSet<TileNode>();
+        allNodes = new HashSet<TileNode>();
         roomTiles = new List<CompleteRoom>();
         dormantTile = new List<Tile>();
     }
@@ -120,6 +179,9 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.Trap:
                 SetTrapAvail();
                 break;
+            case GuideState.Spawner:
+                SetSpawnerAvail();
+                break;
             case GuideState.Monster:
                 SetMonsterAvail();
                 break;
@@ -158,7 +220,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    private bool IsMonsterSetable(TileNode node)
+    private bool IsSpawnerSetable(TileNode node)
     {
         if (node.curTile != null)
         {
@@ -172,13 +234,32 @@ public class NodeManager : IngameSingleton<NodeManager>
         return false;
     }
 
+    private bool IsMonsterSetable(TileNode node)
+    {
+        return node.curTile != null && node != startPoint && node != endPoint;
+    }
+
+    private void SetSpawnerAvail()
+    {
+        foreach (TileNode node in activeNodes)
+        {
+            if (IsSpawnerSetable(node))
+            {
+                List<TileNode> path = PathFinder.FindPath(node);
+                node.SetAvail(path != null);
+            }
+            else
+                node.SetAvail(false);
+        }
+    }
+
     private void SetMonsterAvail()
     {
         foreach (TileNode node in activeNodes)
         {
             if (IsMonsterSetable(node))
             {
-                List<TileNode> path = PathFinder.Instance.FindPath(node);
+                List<TileNode> path = PathFinder.FindPath(node);
                 node.SetAvail(path != null);
             }
             else
@@ -244,6 +325,64 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     #endregion
 
+    private void SearchDistanceNode(int dist, HashSet<TileNode> targetNodes, HashSet<TileNode> searchedNodes)
+    {
+        for (int i = 0; i < dist; i++)
+        {
+            foreach (TileNode node in targetNodes)
+                searchedNodes.Add(node);
+            HashSet<TileNode> prevNodes = new HashSet<TileNode>(targetNodes);
+
+            targetNodes.Clear();
+            foreach (TileNode node in prevNodes)
+            {
+                foreach (Direction direction in System.Enum.GetValues(typeof(Direction)))
+                {
+                    if (!node.neighborNodeDic.ContainsKey(direction))
+                        continue;
+
+                    TileNode next = node.neighborNodeDic[direction];
+                    if (searchedNodes.Contains(next))
+                        continue;
+                    targetNodes.Add(next);
+                }
+            }
+        }
+
+        foreach (TileNode node in targetNodes)
+            searchedNodes.Add(node);
+    }
+
+    public HashSet<TileNode> GetDistanceNodeFromNode(TileNode originNode, int dist, bool containAll = false)
+    {
+        HashSet<TileNode> targetTiles = new HashSet<TileNode>() { originNode };
+        if (dist == 0 || originNode == null)
+            return targetTiles;
+
+        HashSet<TileNode> searchedNode = new HashSet<TileNode>();
+        SearchDistanceNode(dist, targetTiles, searchedNode);
+
+        if (containAll)
+            return searchedNode;
+        else
+            return targetTiles;
+    }
+
+    public HashSet<TileNode> GetDistanceNodes(int dist, bool containAll = false)
+    {
+        HashSet<TileNode> targetTiles = new HashSet<TileNode>(activeNodes);
+        if (dist == 0 || targetTiles.Count == 0)
+            return targetTiles;
+
+        HashSet<TileNode> searchedNode = new HashSet<TileNode>();
+        SearchDistanceNode(dist, targetTiles, searchedNode);
+
+        if (containAll)
+            return searchedNode;
+        else
+            return targetTiles;
+    }
+
     private void TileDictionary_Init()
     {
         tileDictionary = new Dictionary<TileType, List<Tile>>();
@@ -252,19 +391,42 @@ public class NodeManager : IngameSingleton<NodeManager>
             tileDictionary.Add(type, new List<Tile>());
     }
 
+    private List<System.Func<GameObject, bool>> setTileEvents = new List<System.Func<GameObject, bool>>();
+    public void AddSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Add(newEvent);
+    public void RemoveSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Remove(newEvent);
+
     public void SetTile(Environment environment)
     {
         environments.Add(environment);
+        foreach (var events in setTileEvents)
+            events?.Invoke(environment.gameObject);
     }
 
-    public void SetTile(Tile tile, bool value)
+    public void SetTile(Tile tile)
     {
         if (tileDictionary == null)
             TileDictionary_Init();
-        if (value)
-            tileDictionary[tile._TileType].Add(tile);
-        else
-            tileDictionary[tile._TileType].Remove(tile);
+
+        tileDictionary[tile._TileType].Add(tile);
+        
+        foreach (var events in setTileEvents)
+            events?.Invoke(tile.gameObject);
+    }
+    
+    private List<System.Func<GameObject, bool>> removeTileEvents = new List<System.Func<GameObject, bool>>();
+    public void AddRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Add(newEvent);
+    public void RemoveRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Remove(newEvent);
+
+    public void RemoveTile(Tile tile)
+    {
+        if (tileDictionary == null)
+            TileDictionary_Init();
+
+        tileDictionary[tile._TileType].Remove(tile);
+
+        foreach (var events in removeTileEvents)
+            events?.Invoke(tile.gameObject);
+        RemoveSightNode(tile.curNode);
     }
 
     public void DormantTileCheck()
@@ -438,6 +600,21 @@ public class NodeManager : IngameSingleton<NodeManager>
         return new int[2] { row, col };
     }
 
+    public CompleteRoom FindRoom(int row, int col)
+    {
+        TileNode point = FindNode(row, col);
+        foreach(CompleteRoom room in roomTiles)
+        {
+            foreach(Tile tile in room._IncludeRooms)
+            {
+                if (tile.curNode == point)
+                    return room;
+            }
+        }
+
+        return null;
+    }
+
     public TileNode FindNode(int row, int col)
     {
         foreach(TileNode node in allNodes)
@@ -549,7 +726,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void SetVirtualNode(bool withoutDormant = false)
     {
-        virtualNodes = new List<TileNode>();
+        virtualNodes = new HashSet<TileNode>();
 
         //activeNodes의 이웃타일들 전부 가상노드에 추가
         //이웃타일이 이미 activeNode에있다면 추가하지않음
@@ -569,13 +746,13 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void SetEmptyNode()
     {
-        emptyNodes = new List<TileNode>();
+        emptyNodes = new HashSet<TileNode>();
         TileNode[] nodes = FindObjectsOfType<TileNode>();
         foreach (TileNode node in nodes)
             emptyNodes.Add(node);
     }
 
-    private void UpdateMinMaxRowCol(int row, int col)
+    public void UpdateMinMaxRowCol(int row, int col)
     {
         if (row < minRow)
             minRow = row;
@@ -593,7 +770,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         TileNode newNode = Resources.Load<TileNode>("Prefab/Tile/EmptyTile");
         newNode = Instantiate(newNode);
         newNode.Init(index[0], index[1]);
-        UpdateMinMaxRowCol(index[0], index[1]);
+        //UpdateMinMaxRowCol(index[0], index[1]);
         newNode.transform.position = position;
         if(parent != null)
             newNode.transform.SetParent(parent);

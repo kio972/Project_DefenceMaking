@@ -21,7 +21,7 @@ public class TutoHelpBtn : MonoBehaviour
             researchMain.SetActive(true);
         else if(stage == 2)
         {
-            List<int> roomPool = new List<int>(DataManager.Instance.RoomCard_Indexs);
+            List<int> roomPool = new List<int>(DataManager.Instance.roomCard_Indexs);
             roomPool.RemoveAt(0);
             GameManager.Instance.cardDeckController.DrawCard(roomPool[Random.Range(0, roomPool.Count)]);
             gameObject.SetActive(false);

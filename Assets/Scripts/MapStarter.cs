@@ -6,6 +6,9 @@ public class MapStarter : MonoBehaviour
 {
     void Start()
     {
-        GameManager.Instance.Init();
+        if(SaveManager.Instance.playerData == null)
+            GameManager.Instance.Init();
+        else
+            GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
     }
 }

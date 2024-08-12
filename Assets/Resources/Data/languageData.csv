@@ -44,6 +44,8 @@ announce_ingame_tileconnect,시작 타일과 마왕 타일이 연결되어 있�
 announce_ingame_handfull,손 패가 가득 찼습니다.,Your hand is full.
 announce_common_developing,개발중인 기능입니다.,This feature is in development.
 announce_confirm_gotitle,타이틀로 나가시겠습니까?,Are you sure?
+announce_confirm_savegame,게임이 성공적으로 저장되었습니다.,Your game has been saved.
+announce_confirm_loadgame,게임을 불러오시겠습니까?,Are you sure?
 announce_confirm_exitgame,게임을 종료하시겠습니까?,Are you sure?
 announce_warning_nosave,(주의)현재 게임 데이터는 저장되지 않습니다.,(Warning) Current game data will not be saved.
 card_tile_road1,직선 길,A straight path
@@ -87,8 +89,8 @@ card_tile_roadroom8,길이 이어진 방,Room with a Room
 card_tile_roadroom9,길이 이어진 방,Room with a Room
 card_tile_roadroom10,길이 이어진 방,Room with a Room
 card_desc_rock,"크고 단단한 바위
-설치시 모든 몬스터의 HP + 1","Large Hard Rock
-+1 HP for all monsters upon installation"
+모든 몬스터의 HP + 1","Large Hard Rock
++1 HP for all monsters upon"
 card_desc_goldmine,"반짝이는 금광
 보상금 + 5","Shiny Gold Mine
 Reward + 5"
@@ -103,6 +105,24 @@ card_desc_lonelyrock,"외톨이 바위
 모든 몬스터 HP + 15","Lonely Rocks
 A rock is stronger when it is alone.
 All monsters have +15 HP"
+card_desc_blackherbgarden,"흑색 허브를 키우는 곳
+3일 마다 흑색 허브 +1","Place to grow black herbs
+Black Herbs +1 every 3 days"
+card_desc_purpleherbgarden,"자색 허브를 키우는 곳
+3일 마다 자색 허브 +1","Place to grow purple herbs
+Purple Herbs +1 every 3 days"
+card_desc_whiteherbgarden,"백색 허브를 키우는 곳
+3일 마다 백색 허브 +1","Place to grow white herbs
+White Herbs +1 every 3 days"
+card_desc_blackherbfarm,"흑색 허브를 생산하는 곳
+3일 마다 흑색 허브 + 10","Place that produces black herbs
+Black herbs + 10 every 3 days"
+card_desc_purpleherbfarm,"자색 허브를 생산하는 곳
+3일 마다 자색 허브 + 10","Place that produces purple herbs
+Purple herbs + 10 every 3 days"
+card_desc_whiteherbfarm,"백색 허브를 생산하는 곳
+3일 마다 백색 허브 + 10","Place that produces white herbs
+White herbs + 10 every 3 days"
 card_desc_swamp2(Temp),강화된 늪(임시),Swmap+(Temp)
 card_desc_gold2(Temp),강화된 금광(임시),Gold+(Temp)
 card_desc_manastone2(Temp),강화된 마력석(임시),Mana Stone+(Temp)
@@ -114,6 +134,12 @@ card_name_lonelyrock,외톨이 바위,Lonely Rock
 card_name_swamp2(Temp),강화된 늪(임시),Swmap+(Temp)
 card_name_gold2(Temp),강화된 금광(임시),Gold+(Temp)
 card_name_manastone2(Temp),강화된 마력석(임시),Mana Stone+(Temp)
+card_name_blackherbgarden,흑색 허브 텃밭,Black Herb Garden
+card_name_purpleherbgarden,자색 허브 텃밭,Purple Herb Garden
+card_name_whiteherbgarden,백색 허브 텃밭,White Herb Garden
+card_name_blackherbfarm,흑색 허브 생산지,Black Herb Farm
+card_name_purpleherbfarm,자색 허브 생산지,Purple Herb Farm
+card_name_whiteherbgfarm,백색 허브 생산지,White Herb Farm
 trap_spin,칼날 함정,Spin Trap
 trap_spear,창 함정,Spear Trap
 trap_saw,톱날 함정,Saw Trap
@@ -154,18 +180,18 @@ mimic_normal_desc,최하급 미믹,Lowest level mimic
 mimic_rare_desc,하급 미믹,Low level mimic
 mimic_epic_desc,중급 미믹,Intermediate level mimic
 mimic_legend_desc,상급 미믹,High level mimic
-warrior_R,일반 전사,Normal warrior
-warrior_B,베테랑 전사,Veteran warrior
-warrior_P,영웅 전사,Heroic warrior
-warrior_O,전설 전사,Legendary warrior
-archer_R,일반 궁수,Normal archer
-archer_B,베테랑 궁수,Veteran archer
-archer_P,영웅 궁수,Heroic archer
-archer_O,전설 궁수,Legendary archer
-thief_R,일반 도적,Normal rogue
-thief_B,베테랑 도적,Veteran rogue
-thief_P,영웅 도적,Heroic rogue
-thief_D,전설 도적,Legendary rogue
+warrior_normal,일반 전사,Normal warrior
+warrior_rare,베테랑 전사,Veteran warrior
+warrior_epic,영웅 전사,Heroic warrior
+warrior_legend,전설 전사,Legendary warrior
+archer_normal,일반 궁수,Normal archer
+archer_rare,베테랑 궁수,Veteran archer
+archer_epic,영웅 궁수,Heroic archer
+archer_legend,전설 궁수,Legendary archer
+thief_normal,일반 도적,Normal rogue
+thief_rare,베테랑 도적,Veteran rogue
+thief_epic,영웅 도적,Heroic rogue
+thief_legend,전설 도적,Legendary rogue
 research_name_monster_slime1,슬라임 가능!,Slime Possible!
 research_name_monster_slime2,슬라임 강화!,Slime Enhance!
 research_name_monster_slime3,슬라임 가능!!,Slime Possible!!
@@ -258,3 +284,33 @@ research_name_monster_dragon2_desc,드래곤 소환 속도 10% 증가,
 research_name_monster_dragon3_desc,드래곤 요구 마력 -1,
 research_name_monster_dragon4_desc,드래곤 전설 등급 소환 가능,
 research_name_monster_dragon5_desc,드래곤 요구 마력 -1,
+shop_item0001_name,마계 하급 복권,
+shop_item0002_name,마계 중급 복권,
+shop_item0003_name,마계 상급 복권,
+shop_item0004_name,길 카드 팩,
+shop_item0005_name,방 카드 팩,
+shop_item0006_name,환경요소 카드 팩,
+shop_item0007_name,길 카드만 팩,
+shop_item0008_name,방 카드만 팩,
+shop_item0009_name,환경요소 카드만 팩,
+shop_item0010_name,허브 텃밭 카드 팩,
+shop_item0011_name,허브 생산지 카드 팩,
+shop_item0001_desc,10~100 골드 랜덤 보상,
+shop_item0002_desc,10~1000 골드 랜덤 보상,
+shop_item0003_desc,10~10000 골드 랜덤 보상,
+shop_item0004_desc,"10장의 카드가 담겨있는 카드팩
+길 카드의 비중이 높다.",
+shop_item0005_desc,"10장의 카드가 담겨있는 카드팩
+방 카드의 비중이 높다.",
+shop_item0006_desc,"10장의 카드가 담겨있는 카드팩
+환경요소 카드의 비중이 높다.",
+shop_item0007_desc,"10장의 카드가 담겨있는 카드팩
+길 카드만 담겨있다.",
+shop_item0008_desc,"10장의 카드가 담겨있는 카드팩
+방 카드만 담겨있다.",
+shop_item0009_desc,"10장의 카드가 담겨있는 카드팩
+환경요소 카드만 담겨있다.",
+shop_item0010_desc,"3장의 허브 텃밭 카드가 담겨있는 카드팩
+어떤 허브 텃밭이 나올지는 모른다.",
+shop_item0011_desc,"3장의 허브 생산지 카드가 담겨있는 카드팩
+어떤 허브 생산지가 나올지는 모른다.",

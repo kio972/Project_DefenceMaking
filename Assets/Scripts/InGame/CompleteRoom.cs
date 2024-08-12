@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CompleteRoom
 {
-    public List<Tile> includeRooms;
+    private List<Tile> includeRooms;
     public int totalMana;
 
     private List<MonsterSpawner> spawners = new List<MonsterSpawner>();

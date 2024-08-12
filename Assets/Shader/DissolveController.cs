@@ -18,11 +18,14 @@ public class DissolveController : MonoBehaviour
     Image imageComp;
     float currentTime = 0;
 
+    private Material material = null;
 
     // Start is called before the first frame update
     void Start()
     {
         imageComp = GetComponent<Image>();
+        material = Instantiate(imageComp.material);
+        imageComp.material = material;
         imageComp.material.SetColor("_Color", burnColor);
     }
 

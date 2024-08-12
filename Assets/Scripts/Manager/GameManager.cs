@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class GameManager : IngameSingleton<GameManager>
 {
     [SerializeField]
     private int stageNumber;
+    [SerializeField]
     private float defaultSpeed = 100f;
     public float DefaultSpeed { get => defaultSpeed; }
+
+    public float InGameDeltaTime { get => Time.deltaTime * defaultSpeed * timeScale; }
 
     public float gameSpeed = 100f;
 
@@ -33,6 +37,8 @@ public class GameManager : IngameSingleton<GameManager>
     public Canvas worldCanvas;
     public NotificationControl notificationBar;
 
+    public ResearchMainUI research;
+    public ShopUI shop;
 
     //public int king_Hp = 20;
     private bool dailyIncome = true;
@@ -49,7 +55,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public bool isInBattle = false;
 
-    public List<Adventurer> adventurersList = new List<Adventurer>();
+
+    public ReactiveCollection<Adventurer> adventurersList = new ReactiveCollection<Adventurer>();
 
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
@@ -104,7 +111,7 @@ public class GameManager : IngameSingleton<GameManager>
             totalMana += node.curTile.RoomMana;
         }
 
-        this.totalMana = totalMana;
+        this.totalMana = totalMana + PassiveManager.Instance.GetAdditionalMana();
     }
 
     public void IncreaseWave()
@@ -242,10 +249,10 @@ public class GameManager : IngameSingleton<GameManager>
 
         UpdateBossRoom();
 
-        timer += Time.deltaTime * defaultSpeed * timeScale;
-        if(timer > 720f && dailyIncome)
+        timer += InGameDeltaTime;
+        if (timer > 720f && dailyIncome)
         {
-            gold += 100 + PassiveManager.Instance.income_Weight;
+            gold += 50 + PassiveManager.Instance.income_Weight;
             AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
             dailyIncome = false;
         }
@@ -253,10 +260,12 @@ public class GameManager : IngameSingleton<GameManager>
         if(timer > 1440f)
         {
             //재화수급
-            gold += 100 + PassiveManager.Instance.income_Weight;
+            gold += 50 + PassiveManager.Instance.income_Weight;
             timer = 0f;
             dailyIncome = true;
             curWave++;
+            SetWaveSpeed(curWave);
+            waveController?.UpdateWaveText();
             if (!spawnLock && !allWaveSpawned)
             {
                 //몬스터 웨이브 스폰
@@ -281,15 +290,15 @@ public class GameManager : IngameSingleton<GameManager>
         }
     }
 
-    private void SetWaveSpeed()
+    private void SetWaveSpeed(int wave = 0)
     {
-        if (stageNumber == 0)
-        {
-            defaultSpeed = gameSpeed / 60f;
-            return;
-        }
+        //if (stageNumber == 0)
+        //{
+        //    defaultSpeed = gameSpeed / 60f;
+        //    return;
+        //}
 
-        float.TryParse(DataManager.Instance.TimeRate_Table[stageNumber - 1]["time magnification"].ToString(), out defaultSpeed);
+        float.TryParse(DataManager.Instance.TimeRate_Table[wave]["time magnification"].ToString(), out defaultSpeed);
         defaultSpeed = defaultSpeed / 60f;
     }
 
@@ -311,7 +320,7 @@ public class GameManager : IngameSingleton<GameManager>
         }
     }
 
-    public void ForceInit()
+    public void Awake()
     {
         if (ingameUI == null)
             ingameUI = FindObjectOfType<InGameUI>();
@@ -319,9 +328,11 @@ public class GameManager : IngameSingleton<GameManager>
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
 
-        SetWaveSpeed();
+        if (research == null)
+            research = FindObjectOfType<ResearchMainUI>(true);
 
-        isInit = true;
+        if (shop == null)
+            shop = FindObjectOfType<ShopUI>(true);
     }    
 
     public void Init()
@@ -329,11 +340,11 @@ public class GameManager : IngameSingleton<GameManager>
         mapBuilder.Init();
         SpawnKing();
         SetWaveSpeed();
-        if (ingameUI == null)
-            ingameUI = FindObjectOfType<InGameUI>();
+
         ingameUI?.Init();
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
+        cardDeckController.Init();
         cardDeckController.Invoke("Mulligan", 1f);
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
@@ -342,6 +353,58 @@ public class GameManager : IngameSingleton<GameManager>
         if (popUpMessage == null)
             popUpMessage = FindObjectOfType<PopUpMessage>(true);
 
+        isInit = true;
+    }
+
+    public void LoadGame(PlayerData data)
+    {
+        if(data == null)
+        {
+            Init();
+            return;
+        }
+
+        ingameUI?.Init(false);
+
+        curWave = data.curWave;
+        timer = data.curTime;
+        gold = data.gold;
+        herb1 = data.herb1;
+        herb2 = data.herb2;
+        herb3 = data.herb3;
+
+        foreach (TileData tile in data.tiles)
+            mapBuilder.SetTile(tile);
+        foreach (TileData tile in data.environments)
+            mapBuilder.SetTile(tile, true);
+
+        NodeManager.Instance.SetGuideState(GuideState.None);
+
+        BattlerData king = data.devil;
+        NodeManager.Instance.endPoint = NodeManager.Instance.FindNode(king.row, king.col);
+        SpawnKing();
+        this.king.curHp = king.curHp;
+
+        cardDeckController.LoadData(data.cardIdes, data.deckLists);
+
+        foreach(BattlerData enemy in data.enemys)
+        {
+            Adventurer target = BattlerPooling.Instance.SpawnAdventurer(enemy.id, "id");
+            target.LoadData(enemy);
+        }
+
+        foreach (BattlerData ally in data.allies)
+        {
+            Monster target = BattlerPooling.Instance.SpawnMonster(ally.id, NodeManager.Instance.FindNode(ally.row, ally.col), "id");
+            target.LoadData(ally);
+        }
+
+        waveController.SpawnWave(curWave);
+
+        research.LoadData(data);
+        shop.LoadData(data);
+        QuestManager.Instance.LoadGame(data);
+        SetWaveSpeed(curWave);
         isInit = true;
     }
 }

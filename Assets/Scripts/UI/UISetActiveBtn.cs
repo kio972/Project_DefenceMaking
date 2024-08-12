@@ -5,9 +5,9 @@ using UnityEngine;
 public class UISetActiveBtn : MonoBehaviour
 {
     [SerializeField]
-    GameObject targetObject;
+    protected GameObject targetObject;
 
-    public void SetActive(bool value)
+    public virtual void SetActive(bool value)
     {
         if (value)
             UIManager.Instance.AddTab(targetObject);

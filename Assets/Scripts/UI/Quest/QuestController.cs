@@ -15,7 +15,7 @@ public class QuestController : MonoBehaviour
     {
         get
         {
-            foreach(QuestInfo questInfo in subInformer)
+            foreach (QuestInfo questInfo in subInformer)
             {
                 if (!questInfo.gameObject.activeSelf)
                     return questInfo;
@@ -27,7 +27,10 @@ public class QuestController : MonoBehaviour
     }
 
     private Quest mainQuest;
+    public Quest _MainQuest { get => mainQuest; }
+
     private List<Quest> subQuest = new List<Quest>();
+    public List<Quest> _SubQuest { get => subQuest; }
 
     private Dictionary<int, List<Dictionary<string, object>>> questDic;
     private Dictionary<int, List<Dictionary<string, object>>> _QuestDic
@@ -82,12 +85,12 @@ public class QuestController : MonoBehaviour
         layoutGroup.enabled = true;
     }
 
-    public void StartQuest(int questID)
+    public void StartQuest(int questID, List<int> startVal)
     {
         Quest curQuest = LoadQuest(questID);
         if (curQuest == null)
             return;
-        curQuest.Init(_QuestDic[questID]);
+        curQuest.Init(_QuestDic[questID], startVal);
         if (curQuest._IsMainQuest)
             SetMainQuest(curQuest);
         else

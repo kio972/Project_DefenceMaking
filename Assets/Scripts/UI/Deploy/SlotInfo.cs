@@ -41,8 +41,11 @@ public class SlotInfo : MonoBehaviour
     private GameObject trapInfo;
 
 
+    private DeploySlot curslot;
+
     public void UpdateInfo(DeploySlot data)
     {
+        curslot = data;
         string type = "monster";
         if (data.cardType == CardType.Trap)
             type = "trap";
@@ -84,9 +87,13 @@ public class SlotInfo : MonoBehaviour
         }
     }
 
-    public void UpdateInfo(string id)
+    private DeployUI delpoyUI;
+
+    public void Deploy()
     {
-        int index = UtilHelper.Find_Data_Index(id, DataManager.Instance.Battler_Table, "id");
-        
+        if (delpoyUI == null)
+            delpoyUI = GetComponentInParent<DeployUI>();
+
+        delpoyUI.DeployReady(curslot.cardType, curslot._name, curslot.prefabName, curslot.cost);
     }
 }

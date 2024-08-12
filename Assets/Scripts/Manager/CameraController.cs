@@ -25,6 +25,9 @@ public class CameraController : MonoBehaviour
 
     public bool useScreenMove = true;
 
+    [SerializeField]
+    private Camera stackCam;
+
     public void ResetCamPos(bool isStartPoint = false)
     {
         Vector3 position = NodeManager.Instance.endPoint.transform.position;
@@ -188,5 +191,7 @@ public class CameraController : MonoBehaviour
 
         if (MouseWheelCheck())
             SetCam();
+
+        stackCam.orthographicSize = Camera.main.orthographicSize;
     }
 }

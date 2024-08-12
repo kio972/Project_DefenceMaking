@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-public class Lotto : MonoBehaviour, Item
+public class Lotto : MonoBehaviour, Item, IMalPoongSunOnClick
 {
     [SerializeField]
     private ShopUI shopUI;
@@ -35,6 +35,8 @@ public class Lotto : MonoBehaviour, Item
 
         return target[randomIndex];
     }
+
+    public void PlayOnClickScript() => OnClick();
 
     public void OnClick()
     {

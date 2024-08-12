@@ -46,7 +46,7 @@ public class PopUIControl : MonoBehaviour
         if (scrollRect != null)
             scrollRect.movementType = ScrollRect.MovementType.Clamped;
         contentRect.transform.position = originTransform.position;
-        popUpRect.gameObject.SetActive(false);
+        //popUpRect.gameObject.SetActive(false);
         curTarget = null;
     }
 
@@ -77,20 +77,20 @@ public class PopUIControl : MonoBehaviour
         curTarget = target;
         SetPopUp(target != null);
 
-        if(IsMoveAvail(target))
-        {
-            if (moveCoroutine != null)
-                StopCoroutine(moveCoroutine);
+        //if(IsMoveAvail(target))
+        //{
+        //    if (moveCoroutine != null)
+        //        StopCoroutine(moveCoroutine);
 
-            Vector3 targetPos = originTransform.position;
-            if (target != null)
-            {
-                float direction = guideTransform.position.x - target.transform.position.x;
-                targetPos = contentRect.transform.position;
-                targetPos.x += direction;
-            }
+        //    Vector3 targetPos = originTransform.position;
+        //    if (target != null)
+        //    {
+        //        float direction = guideTransform.position.x - target.transform.position.x;
+        //        targetPos = contentRect.transform.position;
+        //        targetPos.x += direction;
+        //    }
 
-            moveCoroutine = StartCoroutine(UtilHelper.MoveToTargetPos(contentRect, targetPos, lerpTime));
-        }
+        //    moveCoroutine = StartCoroutine(UtilHelper.MoveToTargetPos(contentRect, targetPos, lerpTime));
+        //}
     }
 }

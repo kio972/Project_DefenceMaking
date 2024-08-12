@@ -2,24 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UniRx;
+
 
 public class Test : MonoBehaviour
 {
-    public QuestInfo infomer;
-    public Quest targetQuest;
 
-    private void SetQuest()
+    private void Awake()
     {
-
-
-        if (targetQuest == null || infomer == null)
-            return;
-
-        infomer.SetQuest(targetQuest);
+        Test2.Instance.tests.ObserveAdd().Select(_ => true).Subscribe(_ => print("Added"));
+        Test2.Instance.tests.ObserveRemove().Select(_ => true).Subscribe(_ => print("Removed"));
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T)) { SetQuest(); }
-    }
+    
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UniRx;
 public class PassiveManager : IngameSingleton<PassiveManager>
 {
     public int monsterHp_Weight = 0;
@@ -18,6 +18,8 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public float enemySlow_Weight = 0;
     public int income_Weight = 0;
     public Dictionary<TileNode, float> slowedTile = new Dictionary<TileNode, float>();
+
+    public Dictionary<TileNode, int> manaTile = new Dictionary<TileNode, int>();
 
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
@@ -40,6 +42,54 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     private int tileDestructIncome = 0;
     public int _TileDesturctIncome { get => tileDestructIncome; }
+
+    public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
+
+    public int devilAuraRange { get; private set; } = 0;
+    public int devilAuraPower { get; private set; } = 0;
+
+    public ReactiveProperty<int> _slimeSplit_Weight { get; private set; } = new ReactiveProperty<int>(0);
+
+    public bool isGoblinHealActive { get; private set; } = false;
+
+    public int golemHoldback_Weight { get; private set; } = 0;
+
+    public bool isMimicBuffActive { get; private set; } = false;
+
+    public void MimicBuffActive()
+    {
+        isMimicBuffActive = true;
+    }
+
+    public void GolemHoldbackUp(int value)
+    {
+        golemHoldback_Weight += value;
+        foreach (Golem golem in GameManager.Instance._MonsterList)
+            golem.UpdateHoldBack(value);
+    }
+
+    public void GoblinHealActive()
+    {
+        isGoblinHealActive = true;
+    }
+
+    public void UpgradeSlimeSplit(int value)
+    {
+        _slimeSplit_Weight.Value += value;
+        foreach (Slime slime in GameManager.Instance._MonsterList)
+            slime.UpgradeSplitCount(value);
+    }
+
+    public void UpgradeDevilAura(int range, int value)
+    {
+        devilAuraRange = range;
+        devilAuraPower = value;
+    }
+
+    public void UpgradeShopSale(int value)
+    {
+        _shopSaleAmount.Value += value;
+    }
 
     public void UpgradeTileDestructInCome(int value)
     {
@@ -127,6 +177,22 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         }
 
         return slowRate;
+    }
+
+    public int GetAdditionalMana()
+    {
+        int value = 0;
+        foreach(var node in manaTile.Keys)
+        {
+            foreach (TileNode neighborNode in node.neighborNodeDic.Values)
+            {
+                if (neighborNode.curTile == null)
+                    continue;
+                value += manaTile[node];
+            }
+        }
+
+        return value;
     }
 
     public void Init()

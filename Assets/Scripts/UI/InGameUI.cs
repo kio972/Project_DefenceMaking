@@ -86,11 +86,20 @@ public class InGameUI : MonoBehaviour
         downCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiDown, targetPos, lerpTime));
     }
 
-    public void Init()
+    public void Init(bool playAnim = true)
     {
-        SetTopUI(true, 1f);
-        SetRightUI(true, 1f);
-        SetDownUI(true, 1f);
+        if (playAnim)
+        {
+            SetTopUI(true, 1f);
+            SetRightUI(true, 1f);
+            SetDownUI(true, 1f);
+        }
+        else
+        {
+            uiTop.anchoredPosition = originPos_uiTop;
+            uiRight.anchoredPosition = originPos_uiRight;
+            uiDown.anchoredPosition = originPos_uiDown;
+        }
     }
     
     private void Awake()

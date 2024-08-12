@@ -121,14 +121,17 @@ public class DeployUI : MonoBehaviour
                     return;
                 }
 
-                //BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
-                MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
-                monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
-                monsterSpawner.Init(curNode, curObject.name, room);
+                BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
                 AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
             }
             else if (curType == CardType.Trap)
             {
+                if(GameManager.Instance.IsAdventurererOnTile(curNode))
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("적이 있는 타일에는 설치할 수 없습니다.");
+                    return;
+                }
+
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
                 AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
@@ -198,7 +201,7 @@ public class DeployUI : MonoBehaviour
         switch (unitType)
         {
             case CardType.Monster:
-                NodeManager.Instance.SetGuideState(GuideState.Monster);
+                NodeManager.Instance.SetGuideState(GuideState.Spawner);
                 break;
             case CardType.Trap:
                 NodeManager.Instance.SetGuideState(GuideState.Trap);

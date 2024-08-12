@@ -75,7 +75,7 @@ public class DeckSupply : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         GameManager.Instance.gold -= price;
 
-        deckController.AddCard(DataManager.Instance.PathCard_Indexs[Random.Range(0, DataManager.Instance.PathCard_Indexs.Count)]);
+        deckController.AddCard(DataManager.Instance.pathCard_Indexs[Random.Range(0, DataManager.Instance.pathCard_Indexs.Count)]);
         DeckSupplyEffect();
     }
 
@@ -86,8 +86,8 @@ public class DeckSupply : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         GameManager.Instance.gold -= price;
         
-        List<int> pool = new List<int>(DataManager.Instance.RoomCard_Indexs);
-        foreach (int val in DataManager.Instance.RoomPartCard_Indexs)
+        List<int> pool = new List<int>(DataManager.Instance.roomCard_Indexs);
+        foreach (int val in DataManager.Instance.roomPartCard_Index)
             pool.Add(val);
 
         deckController.AddCard(pool[Random.Range(0, pool.Count)]);
@@ -101,7 +101,7 @@ public class DeckSupply : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         GameManager.Instance.gold -= price;
 
-        deckController.AddCard(DataManager.Instance.EnvironmentCard_Indexs[Random.Range(0, DataManager.Instance.EnvironmentCard_Indexs.Count)]);
+        deckController.AddCard(DataManager.Instance.environmentCard_Indexs[Random.Range(0, DataManager.Instance.environmentCard_Indexs.Count)]);
         DeckSupplyEffect();
     }
 

@@ -58,6 +58,7 @@ public class FSMKing : FSMSingleton<FSMKing>, CharState<Battler>
 
     public void Exit(Battler e)
     {
-        EffectPooling.Instance.PlayEffect("DarkBall", e.transform, new Vector3(0, 0.5f, 0), 0.4f, e.curTarget.transform.position);
+        if(e.curTarget != null)
+            EffectPooling.Instance.PlayEffect("DarkBall", e.transform, new Vector3(0, 0.5f, 0), 0.4f, e.curTarget.transform.position);
     }
 }

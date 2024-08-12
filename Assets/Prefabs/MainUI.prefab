@@ -1888,7 +1888,7 @@ GameObject:
   - component: {fileID: 6782832441141403536}
   - component: {fileID: 6782832441141403537}
   - component: {fileID: 6782832441141403542}
-  - component: {fileID: 1198562175}
+  - component: {fileID: 6368218398841838804}
   - component: {fileID: 3966294134661860169}
   m_Layer: 5
   m_Name: Button (1)
@@ -2000,7 +2000,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1198562175
+--- !u!114 &6368218398841838804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6782832441141403540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a420065dde4b3ef4da1d155be9c6e91d, type: 3}
+  m_Script: {fileID: 11500000, guid: aeb4d85773d8b5e4f8be336151a7e7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 6782832441141403542}
@@ -2044,6 +2044,7 @@ GameObject:
   - component: {fileID: 6782832441593275468}
   - component: {fileID: 6782832441593275469}
   - component: {fileID: 6782832441593275458}
+  - component: {fileID: 8684430896049296323}
   - component: {fileID: 5164854446335913660}
   m_Layer: 5
   m_Name: Button
@@ -2154,19 +2155,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6782832441593275469}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6782832442512046343}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &8684430896049296323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782832441593275456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cda0db8e5cb5db4188c884c08acb59f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn: {fileID: 6782832441593275458}
+  sceneName: MapScene
 --- !u!114 &5164854446335913660
 MonoBehaviour:
   m_ObjectHideFlags: 0

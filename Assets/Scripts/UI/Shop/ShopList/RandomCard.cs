@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-public class RandomCard : MonoBehaviour, Item, Refreshable
+public class RandomCard : MonoBehaviour, Item, IRefreshableItem
 {
     [SerializeField]
     private TileType targetType;
 
     private int targetIndex;
+    public int _TargetIndex { get => targetIndex; }
     StringBuilder targetName = new StringBuilder();
 
     [SerializeField]
@@ -61,13 +62,13 @@ public class RandomCard : MonoBehaviour, Item, Refreshable
         switch (targetType)
         {
             case TileType.Path:
-                targetIndex = GetRandomIndex(DataManager.Instance.PathCard_Indexs);
+                targetIndex = GetRandomIndex(DataManager.Instance.pathCard_Indexs);
                 break;
             case TileType.Room:
                 targetIndex = GetRandomIndex(DataManager.Instance.RoomTypeCard_Indexs);
                 break;
             case TileType.Environment:
-                targetIndex = GetRandomIndex(DataManager.Instance.EnvironmentCard_Indexs);
+                targetIndex = GetRandomIndex(DataManager.Instance.environmentCard_Indexs);
                 break;
         }
 

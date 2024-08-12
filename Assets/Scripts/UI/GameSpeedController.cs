@@ -58,7 +58,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_Tile_Connected(TileNode tile)
     {
-        if (PathFinder.Instance.FindPath(tile) == null)
+        if (PathFinder.FindPath(tile) == null)
             return false;
         else
             return true;
@@ -66,7 +66,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_Game_Continuable()
     {
-        if (PathFinder.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
+        if (PathFinder.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
             return false;
 
         //foreach(Battler target in GameManager.Instance.monsterList)
@@ -74,7 +74,7 @@ public class GameSpeedController : MonoBehaviour
         //    if (target.CurTile == NodeManager.Instance.endPoint)
         //        continue;
 
-        //    if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
+        //    if (PathFinder.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
         //        return false;
         //}
 
@@ -83,7 +83,7 @@ public class GameSpeedController : MonoBehaviour
         //    if (target.CurTile == NodeManager.Instance.endPoint)
         //        continue;
 
-        //    if (PathFinder.Instance.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
+        //    if (PathFinder.FindPath(target.CurTile, NodeManager.Instance.endPoint) == null)
         //        return false;
         //}
 
@@ -100,7 +100,7 @@ public class GameSpeedController : MonoBehaviour
             if (tile.curTile.IsDormant)
                 continue;
 
-            if (PathFinder.Instance.FindPath(tile) == null)
+            if (PathFinder.FindPath(tile) == null)
                 return false;
         }
 

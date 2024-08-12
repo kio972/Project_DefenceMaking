@@ -6,9 +6,50 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public static class UtilHelper
 {
+    public static List<T> ShuffleList<T>(List<T> list)
+    {
+        System.Random random = new System.Random();
+        List<T> values = new List<T>(list);
+        for (int i = values.Count - 1; i > 0; i--)
+        {
+            int k = random.Next(i + 1);
+            T value = values[k];
+            values[k] = values[i];
+            values[i] = value;
+        }
+
+        return values;
+    }
+
+    public static (int q, int r, int s) OffsetToCube(int row, int col)
+    {
+        int q = col - (row + (row & 1)) / 2;
+        int r = row;
+        int s = -q - r;
+        return (q, r, s);
+    }
+
+    public static int HexDistanceFromOrigin(int q, int r, int s) => (Mathf.Abs(q) + Mathf.Abs(r) + Mathf.Abs(s)) / 2;
+    public static int HexDistance(int q1, int r1, int s1, int q2, int r2, int s2) => (Mathf.Abs(q1 - q2) + Mathf.Abs(r1 - r2) + Mathf.Abs(s1 - s2)) / 2;
+
+    public static int GetTileDistance(int row, int col)
+    {
+        var (q, r, s) = OffsetToCube(col, row);
+        return HexDistanceFromOrigin(q, r, s);
+    }
+
+    public static int GetTileDistance(int originRow, int originCol, int targetRow, int targetCol)
+    {
+        var (originQ, originR, originS) = OffsetToCube(originRow, originCol);
+        var (targetQ, targetR, targetS) = OffsetToCube(targetRow, targetCol);
+        return HexDistance(originQ, originR, originS, targetQ, targetR, targetS);
+    }
+
     public static IEnumerator MoveToTargetPos(Transform moveTarget, Vector3 targetPos, float lerpTime = 0.5f)
     {
         targetPos.y = moveTarget.position.y;
@@ -54,6 +95,41 @@ public static class UtilHelper
 
         return count;
     }
+
+    public static async UniTask ScaleEffect(Transform target, Vector3 targetScale, float lerpTime, CancellationTokenSource cancellationToken)
+    {
+        await UniTask.Yield(cancellationToken.Token);
+
+        float elapsedTime = 0f;
+        Vector3 originPositioin = target.transform.localScale;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            target.transform.localScale = Vector3.Lerp(originPositioin, targetScale, t * t * t * (t * (6f * t - 15f) + 10f));
+            await UniTask.Yield(cancellationToken.Token);
+        }
+
+        target.transform.localScale = targetScale;
+    }
+
+    public static async UniTask MoveEffect(Transform target, Vector3 targetPosition, float lerpTime, CancellationTokenSource cancellationToken)
+    {
+        await UniTask.Yield(cancellationToken.Token);
+
+        float elapsedTime = 0f;
+        Vector3 originPositioin = target.transform.position;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            target.position = Vector3.Lerp(originPositioin, targetPosition, t * t * t * (t * (6f * t - 15f) + 10f));
+            await UniTask.Yield(cancellationToken.Token);
+        }
+
+        target.position = targetPosition;
+    }
+
 
     public static IEnumerator IMoveEffect(RectTransform transform, Vector3 targetPosition, float lerpTime, System.Action callback = null)
     {
@@ -105,7 +181,24 @@ public static class UtilHelper
         callback?.Invoke();
     }
 
-    public static IEnumerator IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
+    public static async UniTask IMoveEffect(Transform transform, Vector3 originPositioin, Vector3 targetPosition, float lerpTime, CancellationToken cancellationToken, System.Action callback = null)
+    {
+        //targetPosition = originPositioin + targetPosition;
+        await UniTask.Yield();
+        float elapsedTime = 0f;
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+
+            transform.position = Vector3.Lerp(originPositioin, targetPosition, Mathf.Sin(t * Mathf.PI * 0.5f));
+            await UniTask.Yield(cancellationToken);
+        }
+        await UniTask.Yield(cancellationToken);
+        callback?.Invoke();
+    }
+
+    public static async UniTask IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
     {
         Image[] cardImgs = transform.GetComponentsInChildren<Image>();
         TextMeshProUGUI[] texts = transform.GetComponentsInChildren<TextMeshProUGUI>();
@@ -114,6 +207,8 @@ public static class UtilHelper
             temp1.color = startColor;
         foreach (TextMeshProUGUI temp2 in texts)
             temp2.color = startColor;
+
+        await UniTask.Yield();
 
         while (elapsedTime < lerpTime)
         {
@@ -133,9 +228,32 @@ public static class UtilHelper
                 text.color = currentColor;
             }
 
-            yield return null;
+            await UniTask.Yield();
         }
-        yield return null;
+        await UniTask.Yield();
+
+        callback?.Invoke();
+    }
+
+    public static async UniTask IScaleEffect(Transform transform, Vector3 startScale, Vector3 targetScale, float lerpTime, CancellationToken cancellationToken, System.Action callback = null)
+    {
+        //뽑히는 카드의 스케일 조정
+        //lerpTime에 걸쳐 transform.scale을 0에서 1로 변경
+        float elapsedTime = 0f;
+        transform.localScale = startScale;
+
+        await UniTask.Yield();
+
+        while (elapsedTime < lerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);
+            Vector3 currentScale = Vector3.Lerp(startScale, targetScale, t);
+            transform.localScale = currentScale;
+
+            await UniTask.Yield(cancellationToken);
+        }
+        await UniTask.Yield(cancellationToken);
 
         callback?.Invoke();
     }

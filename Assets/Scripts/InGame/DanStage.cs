@@ -12,11 +12,14 @@ public class DanStage : MonoBehaviour
             yield return null;
 
         GameManager.Instance.Init();
-        QuestManager.Instance.Init();
+        QuestManager.Instance.InitQuest();
     }
 
     void Start()
     {
-        StartCoroutine(ITutorial());
+        if (SaveManager.Instance.playerData == null)
+            StartCoroutine(ITutorial());
+        else
+            GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
     }
 }

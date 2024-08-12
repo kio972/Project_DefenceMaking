@@ -17,32 +17,40 @@ public struct WaveData
     }
 }
 
+public struct SpawnData
+{
+    public int order;
+    public string target;
+    public SpawnData(int order, string target)
+    {
+        this.order = order;
+        this.target = target;
+    }
+}
+
 public class WaveController : MonoBehaviour
 {
+    private List<SpawnData> curWaves = new List<SpawnData>();
+
     [SerializeField]
     private TextMeshProUGUI waveText;
     [SerializeField]
     private WaveGauge waveFill;
 
-    private List<string> delayedTargets = new List<string>();
-
-    public bool HaveDelayedTarget { get { return delayedTargets.Count != 0; } }
-
     public float WaveProgress { get { return waveFill.WaveRate; } }
 
     public void AddDelayedTarget(string adventurerName)
     {
-        delayedTargets.Add(adventurerName);
+        curWaves.Add(new SpawnData(curWaves.Count + 1, adventurerName));
     }
 
     private float CalSpawnWaitTime(int allAmount, float restrictTime = 720f)
     {
-        float spawnTime = 2f;
-        restrictTime = 720 / (GameManager.Instance.DefaultSpeed);
+        float spawnTime = 2f * GameManager.Instance.DefaultSpeed;
+        restrictTime = 720;
         if (allAmount * spawnTime > restrictTime)
-        {
             spawnTime = restrictTime / allAmount;
-        }
+
         return spawnTime;
     }
 
@@ -70,38 +78,52 @@ public class WaveController : MonoBehaviour
         return curWave;
     }
 
-    public IEnumerator ISpawnWave(int waveIndex, List<WaveData> curWave, System.Action callback = null)
+    private void CalculateWaves(List<WaveData> waveData)
     {
-        List<WaveData> waves = new List<WaveData>(PassiveManager.Instance.adventurerRaiseTable);
-        foreach(WaveData wave in curWave)
-            waves.Add(wave);
+        List<string> targets = new List<string>();
+        foreach (WaveData data in waveData)
+            for (int i = 0; i < data.number; i++)
+                targets.Add(data.adventurerName);
+        foreach (WaveData data in PassiveManager.Instance.adventurerRaiseTable)
+            for (int i = 0; i < data.number; i++)
+                targets.Add(data.adventurerName);
 
-        waveText.text = (waveIndex + (GameManager.Instance.loop * DataManager.Instance.WaveLevelTable.Count) + 1).ToString("D2");
-        int maxEnemyNumber = 0;
-        int curEnemyNumber = 0;
-        foreach(WaveData waveData in waves)
-            maxEnemyNumber += waveData.number;
-        waveFill?.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
-        float spawnWaitTime = CalSpawnWaitTime(maxEnemyNumber);
-        foreach (WaveData waveData in waves)
+        for (int i = 0; i < targets.Count; i++)
+            curWaves.Add(new SpawnData(curWaves.Count + 1, targets[i]));
+    }
+
+    public void UpdateWaveText()
+    {
+        waveText.text = (GameManager.Instance.CurWave + 1).ToString("D2");
+    }
+
+    public IEnumerator ISpawnWave(int waveIndex, System.Action callback = null)
+    {
+        float spawnWaitTime = CalSpawnWaitTime(curWaves.Count);
+        //waveText.text = (waveIndex + (GameManager.Instance.loop * DataManager.Instance.WaveLevelTable.Count) + 1).ToString("D2");
+        waveFill?.SetWaveGauge(waveIndex, 0, curWaves.Count);
+        float curTime = GameManager.Instance.Timer;
+        foreach(SpawnData data in curWaves)
         {
-            for(int i = 0; i < waveData.number; i++)
+            float targetTime = data.order * spawnWaitTime;
+            if (targetTime < curTime)
+                continue;
+
+            waveFill?.SetWaveGauge(waveIndex, data.order - 1, curWaves.Count);
+            while (curTime < targetTime)
             {
-                float elapsedTime = 0f;
-                while (elapsedTime < spawnWaitTime)
-                {
-                    elapsedTime += Time.deltaTime * GameManager.Instance.timeScale;
-                    yield return null;
-                }
-
-                //모험가 스폰
-                BattlerPooling.Instance.SpawnAdventurer(waveData.adventurerName);
-
-                curEnemyNumber++;
-
-                waveFill?.SetWaveGauge(waveIndex, curEnemyNumber, maxEnemyNumber);
+                curTime = GameManager.Instance.Timer;
+                yield return null;
             }
+
+            if (GameManager.Instance.spawnLock)
+                yield break;
+
+            BattlerPooling.Instance.SpawnAdventurer(data.target);
         }
+
+        waveFill?.SetWaveGauge(waveIndex, curWaves.Count, curWaves.Count);
+        curWaves = new List<SpawnData>();
 
         callback?.Invoke();
         yield return null;
@@ -112,26 +134,14 @@ public class WaveController : MonoBehaviour
         List<WaveData> waveData = new List<WaveData>();
         if (curWave >= 0 && curWave < DataManager.Instance.WaveLevelTable.Count)
             waveData = new List<WaveData>(DataManager.Instance.WaveLevelTable[curWave]);
-        else
-            curWave--;
-        if(delayedTargets.Count > 0)
-        {
-            foreach(string targetName in delayedTargets)
-                waveData.Add(new WaveData(targetName, 1));
-            delayedTargets.Clear();
-        }
 
-        if (waveData.Count == 0)
+        CalculateWaves(waveData);
+        if (curWaves.Count == 0)
             return;
 
         if (curWave + 1 >= DataManager.Instance.WaveLevelTable.Count)
-            StartCoroutine(ISpawnWave(curWave, waveData, () => { GameManager.Instance.AllWaveSpawned = true; }));
+            StartCoroutine(ISpawnWave(curWave, () => { GameManager.Instance.AllWaveSpawned = true; }));
         else
-            StartCoroutine(ISpawnWave(curWave, waveData));
-    }
-
-    public void Init()
-    {
-
+            StartCoroutine(ISpawnWave(curWave));
     }
 }

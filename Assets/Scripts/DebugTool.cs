@@ -6,18 +6,34 @@ using TMPro;
 
 public class DebugTool : MonoBehaviour
 {
-    [SerializeField]
-    CardDeckController cardDeckController;
-    public int cardIndex;
+    public int waveIndex = 1;
+    int goldIndex = 0;
+    int gold { get { goldIndex = goldIndex % 3; if (goldIndex == 0) return 100; else if (goldIndex == 1) return 1000; else return 10000; } }
 
-    public int waveIndex;
-
-    Button getCardBtn;
-
-    private int prevIndex;
+    readonly int[] herbAmount = { 1, 10, 100 };
 
     [SerializeField]
-    TextMeshProUGUI text;
+    private TextMeshProUGUI waveText;
+
+    public void RemoveAlly()
+    {
+        List<Monster> monsterList = new List<Monster>(GameManager.Instance._MonsterList);
+        foreach (var item in monsterList)
+        {
+            item.ChangeState(FSMDead.Instance);
+            item.Dead();
+        }
+    }
+
+    public void RemoveEnemy()
+    {
+        List<Adventurer> adventurersList = new List<Adventurer>(GameManager.Instance.adventurersList);
+        foreach (var item in adventurersList)
+        {
+            item.ChangeState(FSMDead.Instance);
+            item.Dead();
+        }
+    }
 
     public void WinGame()
     {
@@ -31,92 +47,30 @@ public class DebugTool : MonoBehaviour
 
     public void SetWave()
     {
-        GameManager.Instance.SetWave(waveIndex);
+        GameManager.Instance.SetWave(waveIndex - 1);
     }
 
-    public void GetCard()
+    public void GetGold(int index)
     {
-        cardDeckController.DrawCard(cardIndex);
-    }
-
-    int goldIndex = 0;
-    [SerializeField]
-    TextMeshProUGUI goldText;
-    int gold { get { goldIndex = goldIndex % 3; if (goldIndex == 0) return 100; else if (goldIndex == 1) return 1000; else return 10000; } }
-    public void SetGoldIndex(bool isRight)
-    {
-        if (isRight)
-            goldIndex++;
-        else
-            goldIndex--;
-
-        goldText.text = $"{gold}{"골드"}";
-    }
-
-    public void GetGold()
-    {
+        goldIndex = index;
         GameManager.Instance.gold += gold;
     }
 
-    int herbIndex = 0;
-    [SerializeField]
-    TextMeshProUGUI herbText;
-    
-    public void SetHerbIndex(bool isRight)
+    public void GetHerb1(int index) { GameManager.Instance.herb1 += herbAmount[index]; }
+    public void GetHerb2(int index) { GameManager.Instance.herb2 += herbAmount[index]; }
+    public void GetHerb3(int index) { GameManager.Instance.herb3 += herbAmount[index]; }
+
+    public void IncreaseWave()
     {
-        if (isRight)
-            herbIndex++;
-        else
-            herbIndex--;
-        herbIndex = herbIndex % 3;
-        if (herbIndex == 0)
-            herbText.text = "흑색 허브(1개)";
-        else if(herbIndex == 1)
-            herbText.text = "자색 허브(1개)";
-        else
-            herbText.text = "백색 허브(1개)";
+        waveIndex++;
+        waveIndex = Mathf.Min(waveIndex, DataManager.Instance.WaveLevelTable.Count);
+        if (waveText != null) waveText.text = waveIndex.ToString();
     }
 
-    public void GetHerb()
+    public void DecreaseWave()
     {
-        if (herbIndex == 0)
-            GameManager.Instance.herb1++;
-        else if (herbIndex == 1)
-            GameManager.Instance.herb2++;
-        else
-            GameManager.Instance.herb3++;
+        waveIndex--;
+        waveIndex = Mathf.Max(1, waveIndex);
+        if (waveText != null) waveText.text = waveIndex.ToString();
     }
-
-    public void DecreaseIndex()
-    {
-        cardIndex--;
-    }
-
-    public void IncreaseIndex()
-    {
-        cardIndex++;
-    }
-
-    private void Awake()
-    {
-        if (text != null)
-            text.text = DataManager.Instance.Deck_Table[cardIndex]["prefab"].ToString();
-    }
-
-    public void Update()
-    {
-        if(prevIndex != cardIndex)
-        {
-            if (cardIndex >= DataManager.Instance.Deck_Table.Count)
-                cardIndex = 0;
-            else if (cardIndex < 0)
-                cardIndex = DataManager.Instance.Deck_Table.Count - 1;
-
-            prevIndex = cardIndex;
-            if (text != null)
-                text.text = DataManager.Instance.Deck_Table[cardIndex]["prefab"].ToString();
-
-        }
-    }
-
 }

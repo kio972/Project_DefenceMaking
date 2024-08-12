@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class ResultController : MonoBehaviour
 {
@@ -19,13 +20,13 @@ public class ResultController : MonoBehaviour
     private void TitleBtnOn()
     {
         titleBtn.gameObject.SetActive(true);
-        StartCoroutine(UtilHelper.IColorEffect(titleBtn, Color.clear, Color.white, 0.5f));
+        UtilHelper.IColorEffect(titleBtn, Color.clear, Color.white, 0.5f).Forget();
     }
 
     private void FadeOn()
     {
         fade.gameObject.SetActive(true);
-        StartCoroutine(UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, 0.9f), 2f, () => { TitleBtnOn(); }));
+        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, 0.9f), 2f, () => TitleBtnOn()).Forget();
     }
 
     public void GameWin()

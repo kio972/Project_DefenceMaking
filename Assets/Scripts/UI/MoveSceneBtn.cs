@@ -8,7 +8,7 @@ public class MoveSceneBtn : MonoBehaviour
     [SerializeField]
     private Button btn;
     public string sceneName;
-    private void MoveScene()
+    protected virtual void MoveScene()
     {
         SceneController.Instance.MoveScene(sceneName);
     }

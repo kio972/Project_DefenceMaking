@@ -13,12 +13,67 @@ public class SaveManager : Singleton<SaveManager>
     // --- 저장용 클래스 변수 --- //
     public SettingData settingData = new SettingData();
 
-    public PlayerData playerData = new PlayerData();
+    public PlayerData playerData = null;
+
+    private void SaveAssetData(PlayerData playerData)
+    {
+        playerData.curWave = GameManager.Instance.CurWave;
+        playerData.curTime = GameManager.Instance.Timer;
+        playerData.gold = GameManager.Instance.gold;
+        playerData.herb1 = GameManager.Instance.herb1;
+        playerData.herb2 = GameManager.Instance.herb2;
+        playerData.herb3 = GameManager.Instance.herb3;
+    }
+
+    private void SaveTileData(PlayerData playerData)
+    {
+        playerData.tiles = new List<TileData>();
+        foreach (TileNode node in NodeManager.Instance._ActiveNodes)
+        {
+            if (node.curTile != null)
+                playerData.tiles.Add(node.curTile.GetTileData());
+        }
+
+        playerData.environments = new List<TileData>();
+        foreach (Environment environment in NodeManager.Instance.environments)
+        {
+            TileData tile = new TileData();
+            tile.id = environment.name.ToString().Replace("(Clone)", "");
+            tile.row = environment._CurNode.row;
+            tile.col = environment._CurNode.col;
+            playerData.environments.Add(tile);
+        }
+    }
 
     public void SavePlayerData()
     {
-        string json = JsonConvert.SerializeObject(playerData);
-        string filePath = Application.persistentDataPath + "/" + playerDataFileName;
+        playerData = new PlayerData();
+
+        SaveAssetData(playerData);
+        SaveTileData(playerData);
+
+        playerData.deckLists = new List<int>(GameManager.Instance.cardDeckController._CardDeck);
+        playerData.cardIdes = new List<int>(GameManager.Instance.cardDeckController._HandCards);
+
+        playerData.enemys = new List<BattlerData>();
+        foreach (Battler enemy in GameManager.Instance.adventurersList)
+            playerData.enemys.Add(enemy.GetData());
+        playerData.allies = new List<BattlerData>();
+        foreach (Battler monster in GameManager.Instance._MonsterList)
+            playerData.allies.Add(monster.GetData());
+        playerData.devil = GameManager.Instance.king.GetData();
+
+        GameManager.Instance.research?.SaveData(playerData);
+        GameManager.Instance.shop?.SaveData(playerData);
+        QuestManager.Instance.SaveGame(playerData);
+
+        SaveDataJsonCovnert(playerData, playerDataFileName);
+    }
+
+    public void SaveDataJsonCovnert(object data, string fileName)
+    {
+        string json = JsonConvert.SerializeObject(data);
+        string filePath = Application.persistentDataPath + "/" + fileName;
         print(filePath);
         // 이미 저장된 파일이 있다면 덮어쓰고, 없다면 새로 만들어서 저장
         File.WriteAllText(filePath, json);
@@ -26,7 +81,7 @@ public class SaveManager : Singleton<SaveManager>
 
     public void LoadPlayerData()
     {
-        playerData = LoadData<PlayerData>(playerDataFileName);
+        playerData = LoadDataJsonConvert<PlayerData>(playerDataFileName);
     }
 
     public void LoadSettingData()
@@ -90,6 +145,19 @@ public class SaveManager : Singleton<SaveManager>
     }
 
     // 불러오기
+    public T LoadDataJsonConvert<T>(string fileName) where T : new()
+    {
+        string filePath = Application.persistentDataPath + "/" + fileName;
+
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+        else
+            return GenerateNewData<T>();
+    }
+
     public T LoadData<T>(string fileName) where T : new()
     {
         string filePath = Application.persistentDataPath + "/" + fileName;

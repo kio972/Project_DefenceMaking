@@ -13,11 +13,11 @@ public class FSMChase : FSMSingleton<FSMChase>, CharState<Battler>
     private bool AttackCheck(Battler e)
     {
         //1.1
-        Battler curTarget = e.BattleCheck();
+        Battler curTarget = e.BattleCheck(false);
         if (curTarget != null)
         {
-            e.ChangeState(FSMAttack.Instance);
             e.curTarget = curTarget;
+            e.ChangeState(FSMAttack.Instance);
             return true;
         }
 
@@ -48,6 +48,13 @@ public class FSMChase : FSMSingleton<FSMChase>, CharState<Battler>
 
         if (AttackCheck(e))
             return;
+
+        if(e.chaseTarget == null || e.chaseTarget.isDead)
+        {
+            e.chaseTarget = null;
+            e.ChangeState(FSMPatrol.Instance);
+            return;
+        }
 
         e.Chase();
     }

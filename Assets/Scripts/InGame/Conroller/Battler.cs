@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UIElements;
+using UniRx;
+
+public interface IHide
+{
+    public bool canAttackbyTrap { get; }
+    public void HideAction();
+}
+
 
 public enum AttackType
 {
@@ -17,6 +25,11 @@ public enum UnitType
     Player,
 }
 
+public enum CCType
+{
+    KnockBack,
+}
+
 public class Battler : FSM<Battler>
 {
     protected string _name;
@@ -24,12 +37,49 @@ public class Battler : FSM<Battler>
     protected int minDamage;
     protected int maxDamage;
     public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
+    public int TempDamage(int baseDamage)
+    {
+        int resultDamage = baseDamage;
+
+        float damageRate = 0;
+        foreach (var item in _effects)
+        {
+            if (item is IAttackPowerRateEffect rateEffect)
+                damageRate += rateEffect.attackRate;
+        }
+
+        int bonusDamage = 0;
+        foreach (var item in _effects)
+        {
+            if (item is IAttackPowerEffect effect)
+                bonusDamage += effect.attackDamage;
+        }
+
+        resultDamage *= Mathf.FloorToInt(1 + (damageRate / 100));
+        resultDamage += bonusDamage;
+
+        return resultDamage;
+    }
+
     public int curHp;
     public int maxHp;
     public int armor;
-    public float attackSpeed;
-    public float attackRange;
+    public int shield;
+    public float attackSpeed { get; protected set; } = 1;
+    public float TempAttackSpeed(float baseAttackSpeed)
+    {
+        float attackSpeedRate = 0;
+        foreach (var item in _effects)
+        {
+            if (item is IAttackSpeedEffect rateEffect)
+                attackSpeedRate += rateEffect.attackSpeedRate;
+        }
 
+        return baseAttackSpeed * (1 + (attackSpeedRate / 100));
+    }
+
+
+    public float attackRange;
     public float attackCoolTime = 0;
     public float curAttackCoolTime = 0;
 
@@ -45,6 +95,10 @@ public class Battler : FSM<Battler>
     private AttackType attackType = AttackType.Melee;
 
     private HpBar hpBar;
+
+    protected List<CCType> cc_Emmunes = new List<CCType>();
+
+    public ReactiveCollection<StatusEffect> _effects { get; private set; } = new ReactiveCollection<StatusEffect>();
 
     [SerializeField]
     private Transform rotatonAxis;
@@ -69,6 +123,7 @@ public class Battler : FSM<Battler>
     public TileNode NextTile { get => nextTile; }
     protected TileNode lastCrossRoad;
     protected bool directPass = false;
+    public TileNode directPassNode { get; protected set; } = null;
 
     protected Animator animator;
     public Animator _Animator { get => animator; }
@@ -105,9 +160,57 @@ public class Battler : FSM<Battler>
         }
     }
 
+    public bool HaveEffect<T>() where T : StatusEffect
+    {
+        foreach (var item in _effects)
+        {
+            if(item is T)
+                return true;
+        }
+        return false;
+    }
+
+    public bool HaveEffect<T>(out StatusEffect statusEffect) where T : StatusEffect
+    {
+        statusEffect = null;
+        foreach (var item in _effects)
+        {
+            if (item is T)
+            {
+                statusEffect = item;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void RemoveStatusEffect<T>() where T : StatusEffect
+    {
+        if(HaveEffect<T>(out StatusEffect effect))
+            RemoveStatusEffect(effect);
+    }
+
+    public void RemoveStatusEffect(StatusEffect effect)
+    {
+        if(_effects.Contains(effect))
+        {
+            effect.DeActiveEffect();
+            _effects.Remove(effect);
+        }
+    }
+
+    public void AddStatusEffect<T>(StatusEffect effect) where T : StatusEffect
+    {
+        StatusEffect targetEffect;
+        if (HaveEffect<T>(out targetEffect))
+            targetEffect.UpdateEffect(effect._originDuration);
+        else
+            _effects.Add(effect);
+    }
+
     public bool CCEscape()
     {
-        ccTime -= Time.deltaTime * GameManager.Instance.timeScale;
+        ccTime -= GameManager.Instance.InGameDeltaTime;
         if (ccTime <= 0)
             return true;
 
@@ -124,7 +227,7 @@ public class Battler : FSM<Battler>
     {
         crossedNodes = new List<TileNode>();
         prevTile = null;
-        curTile = null;
+        //curTile = null;
         nextTile = null;
         lastCrossRoad = null;
         directPass = false;
@@ -138,6 +241,7 @@ public class Battler : FSM<Battler>
     protected virtual void RemoveBody()
     {
         gameObject.transform.position = Vector3.up * 1000f;
+        _effects.Clear();
         animator?.Rebind();
         Invoke("SetActiveFalse", 0.1f);
     }
@@ -146,6 +250,11 @@ public class Battler : FSM<Battler>
     {
         hpBar?.UpdateHp();
         isDead = true;
+
+        foreach (var item in _effects)
+            item.DeActiveEffect();
+        _effects.Clear();
+
         StopAllCoroutines();
         Invoke("RemoveBody", 2.5f);
         if(deadSound != null)
@@ -157,15 +266,15 @@ public class Battler : FSM<Battler>
         if (attacker == null)
             return;
 
-        if (attacker.attackType == AttackType.Melee)
-            return;
+        //if (attacker.attackType == AttackType.Melee)
+        //    return;
 
         if(chaseTarget == null)
             chaseTarget = attacker;
         else
         {
-            float originDist = PathFinder.Instance.GetBattlerDistance(this, chaseTarget);
-            float updateDist = PathFinder.Instance.GetBattlerDistance(this, attacker);
+            float originDist = PathFinder.GetBattlerDistance(this, chaseTarget);
+            float updateDist = PathFinder.GetBattlerDistance(this, attacker);
             if (updateDist < originDist)
                 chaseTarget = attacker;
         }
@@ -196,14 +305,24 @@ public class Battler : FSM<Battler>
         DamageTextPooling.Instance.TextEffect(transform.position, damage, fontSize, color, isCritical);
     }
 
+    public virtual void GetHeal(int heal, Battler healer)
+    {
+        if (isDead)
+            return;
+        if (healer != null && healer.isDead)
+            return;
+
+        curHp = Mathf.Min(curHp + heal, maxHp);
+        const float fontSize = 27f;
+        DamageTextPooling.Instance.TextEffect(transform.position, heal, fontSize, Color.green, false, true);
+    }
+
     public virtual void GetDamage(int damage, Battler attacker)
     {
         if (isDead)
             return;
         if (attacker != null && attacker.isDead)
             return;
-
-        UpdateChaseTarget(attacker);
 
         bool isCritical = false;
 
@@ -213,9 +332,24 @@ public class Battler : FSM<Battler>
 
         PlayDamageText(finalDamage, unitType, isCritical);
 
-        curHp -= finalDamage;
-        if (curHp <= 0)
-            Dead();
+        if(shield >= finalDamage)
+            shield -= finalDamage;
+        else
+        {
+            curHp -= Mathf.Abs(shield - finalDamage);
+            shield = 0;
+            if (curHp <= 0)
+                Dead();
+        }
+
+        if ((object)CurState == FSMHide.Instance)
+            ChangeState(FSMPatrol.Instance);
+
+        if ((object)CurState == FSMPatrol.Instance)
+        {
+            UpdateChaseTarget(attacker);
+            ChangeState(FSMChase.Instance);
+        }
     }
 
     public void RotateCharacter(Vector3 targetPos)
@@ -312,12 +446,17 @@ public class Battler : FSM<Battler>
         directPass = false;
     }
 
+    public void DirectPass()
+    {
+        DirectPass(directPassNode);
+    }
+
     protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
         if (nextTile == null || nextTile.curTile == null)
         {
-            List<TileNode> path = PathFinder.Instance.FindPath(curTile, targetTile);
+            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else
@@ -357,6 +496,8 @@ public class Battler : FSM<Battler>
 
     protected float collapseCool = 0;
 
+    public virtual void UseSkill() { }
+
     private void ReturnToBase()
     {
         StopAllCoroutines();
@@ -371,7 +512,7 @@ public class Battler : FSM<Battler>
 
     public virtual void Patrol()
     {
-        if (PathFinder.Instance.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        if (PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
             if (collapseCool >= 5f)
@@ -432,8 +573,7 @@ public class Battler : FSM<Battler>
             if (animator != null)
             {
                 animator.SetBool("Attack", false);
-                animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
-                
+                UpdateAttackSpeed();
             }
             return;
         }
@@ -443,21 +583,22 @@ public class Battler : FSM<Battler>
     {
         if (animator != null)
         {
-            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+            UpdateAttackSpeed();
             animator.SetTrigger("Attack");
         }
     }
 
-    private void SplashAttack(Battler mainTarget)
+    private void SplashAttack(Battler mainTarget, int baseDamage)
     {
         List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
         splashTargets.Remove(mainTarget);
+        int damage = Mathf.CeilToInt(baseDamage * splashDamage);
         foreach (Battler target in splashTargets)
-            target.GetDamage(splashDamage, this);
+            target.GetDamage(damage, this);
     }
 
     //애니메이션 이벤트에서 작동
-    public void Attack()
+    public virtual void Attack()
     {
         if (attackSound != null)
             AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance._FxVolume);
@@ -467,9 +608,11 @@ public class Battler : FSM<Battler>
 
         if (curTarget != null && !curTarget.isDead)
         {
-            curTarget.GetDamage(Damage, this);
+            int baseDamage = Damage;
+            int tempDamage = TempDamage(baseDamage);
+            curTarget.GetDamage(baseDamage + tempDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget);
+                SplashAttack(curTarget, baseDamage + tempDamage);
         }
     }
 
@@ -487,10 +630,12 @@ public class Battler : FSM<Battler>
         _name = DataManager.Instance.Battler_Table[index]["name"].ToString();
         maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["hp"]);
         curHp = maxHp;
-
+        shield = 0;
         minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMin"]);
         maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMax"]);
-        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out attackSpeed);
+        float tempAttackSpeed = 1f;
+        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
+        attackSpeed = tempAttackSpeed;
         armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
         float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
@@ -509,6 +654,7 @@ public class Battler : FSM<Battler>
         isDead = false;
 
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
+        _effects = new ReactiveCollection<StatusEffect>();
         SetRotation();
 
         if (animator == null)
@@ -612,36 +758,8 @@ public class Battler : FSM<Battler>
         if (target.CurTile == null)
             return false;
 
-        if (PathFinder.Instance.GetBattlerDistance(this, target) > attackRange)
+        if (PathFinder.GetBattlerDistance(this, target) > attackRange)
             return false;
-
-        //if (attackType == AttackType.Melee)
-        //{
-        //    //근거리일경우 : 서로의 타일이 길로 이어진 타일인지 확인
-        //    if (UtilHelper.CalCulateDistance(transform, target.transform) > attackRange)
-        //        return false;
-
-        //}
-        //else if(attackType == AttackType.Ranged)
-        //{
-        //    //원거리일경우 : 서로의 타일 사이에 방의 벽으로 막혀있지 않은지 확인
-        //    Vector3 dir = (target.transform.position - transform.position).normalized;
-        //    float dist = (target.transform.position - transform.position).magnitude;
-        //    Direction direction = UtilHelper.CheckClosestDirection(dir);
-        //    if (direction == Direction.None)
-        //        return false;
-        //    int tileDistance = (int)dist + 1;
-        //    TileNode curTileNode = this.curTile;
-        //    for(int i = 0; i < tileDistance; i++)
-        //    {
-        //        //curTile로부터 direction방향의 노드로 이동하며 타겟노드와 일치하는지 확인
-        //        //방의 벽으로 막혀있는지 여부 확인 코드 추가 필요
-        //        if (curTileNode == target.curTile)
-        //            return true;
-        //        curTileNode = curTile.neighborNodeDic[direction];
-        //    }
-        //    return false;
-        //}
 
         return true;
     }
@@ -649,7 +767,7 @@ public class Battler : FSM<Battler>
     public void UpdateAttackSpeed()
     {
         if (animator != null)
-            animator.SetFloat("AttackSpeed", attackSpeed * GameManager.Instance.timeScale);
+            animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
     }
 
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)
@@ -671,12 +789,12 @@ public class Battler : FSM<Battler>
         return validTargets;
     }
 
-    private void RemoveOutCaseTargets(List<Battler> targets)
+    protected virtual void RemoveOutCaseTargets(List<Battler> targets)
     {
         List<Battler> removeList = new List<Battler>();
         foreach (Battler battler in rangedTargets)
         {
-            if (battler.isDead || !targets.Contains(battler))
+            if (battler.isDead || !targets.Contains(battler) || (object)battler.CurState == FSMHide.Instance)
                 removeList.Add(battler);
         }
 
@@ -684,10 +802,8 @@ public class Battler : FSM<Battler>
             rangedTargets.Remove(battler);
     }
 
-    private void ModifyBattlerList(List<Battler> targets)
+    private void ModifyBattlerList(List<Battler> targets, bool holdBackCheck)
     {
-        RemoveOutCaseTargets(targets);
-
         foreach (Battler battler in targets)
         {
             if (rangedTargets.Contains(battler))
@@ -696,27 +812,44 @@ public class Battler : FSM<Battler>
             if(battler.unitType == UnitType.Player && battler.tag != "King")
             {
                 Monster target = battler.GetComponent<Monster>();
-                if (!target.CanHoldBack && !target.rangedTargets.Contains(this))
+                if (!target.CanHoldBack && !target.rangedTargets.Contains(this) && holdBackCheck)
                     continue;
             }
 
             if(this.unitType == UnitType.Player && this.tag != "King")
             {
                 Monster monster = GetComponent<Monster>();
-                if(monster.CanHoldBack)
+                if(monster.CanHoldBack || !holdBackCheck)
                     rangedTargets.Add(battler);
             }
             else
                 rangedTargets.Add(battler);
         }
+
+        RemoveOutCaseTargets(targets);
     }
 
-    public Battler BattleCheck()
+    public Battler BattleCheck(bool holdBackCheck = true)
+    {
+        //Battler curTarget = null;
+        List<Battler> curTargets = GetRangedTargets(transform.position, attackRange);
+        ModifyBattlerList(curTargets, holdBackCheck);
+        //foreach(Battler battle in rangedTargets)
+        //{
+        //    if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
+        //        curTarget = battle;
+        //    else if (Vector3.Distance(transform.position, battle.transform.position) <
+        //        Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")
+        //        curTarget = battle;
+        //}
+
+        return GetPriorityTarget();
+    }
+
+    protected virtual Battler GetPriorityTarget()
     {
         Battler curTarget = null;
-        List<Battler> rangedTargets = GetRangedTargets(transform.position, attackRange);
-        ModifyBattlerList(rangedTargets);
-        foreach(Battler battle in this.rangedTargets)
+        foreach (Battler battle in rangedTargets)
         {
             if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
                 curTarget = battle;
@@ -724,7 +857,6 @@ public class Battler : FSM<Battler>
                 Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")
                 curTarget = battle;
         }
-
         return curTarget;
     }
 
@@ -740,5 +872,52 @@ public class Battler : FSM<Battler>
         }
 
         FSMUpdate();
+    }
+
+    public void LoadData(BattlerData data)
+    {
+        curTile = NodeManager.Instance.FindNode(data.row, data.col);
+        if(data.nextRow != -1)
+            nextTile = NodeManager.Instance.FindNode(data.nextRow, data.nextCol);
+
+        if (data.lastCrossedRow != -1)
+            lastCrossRoad = NodeManager.Instance.FindNode(data.lastCrossedRow, data.lastCrossedCol);
+
+        for (int i = 0; i < data.crossedRow.Count; i++)
+            crossedNodes.Add(NodeManager.Instance.FindNode(data.crossedRow[i], data.crossedCol[i]));
+
+        transform.position = new Vector3(data.pos_x, transform.position.y, data.pos_z);
+        curHp = data.curHp;
+        maxHp = data.maxHp;
+        hpBar.UpdateHp();
+    }
+
+    public BattlerData GetData()
+    {
+        BattlerData target = new BattlerData();
+        target.id = battlerID;
+        target.curHp = curHp;
+        target.maxHp = maxHp;
+        target.pos_x = transform.position.x;
+        target.pos_z = transform.position.z;
+
+        target.row = curTile.row;
+        target.col = curTile.col;
+
+        target.crossedRow = new List<int>();
+        target.crossedCol = new List<int>();
+        foreach (TileNode node in crossedNodes)
+        {
+            target.crossedRow.Add(node.row);
+            target.crossedCol.Add(node.col);
+        }
+        
+        target.nextRow = nextTile != null ? nextTile.row : -1;
+        target.nextCol = nextTile != null ? nextTile.col : -1;
+
+        target.lastCrossedRow = lastCrossRoad != null ? lastCrossRoad.row : -1;
+        target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;
+
+        return target;
     }
 }

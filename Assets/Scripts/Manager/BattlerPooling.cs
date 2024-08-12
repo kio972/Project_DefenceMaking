@@ -68,9 +68,9 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         return null;
     }
 
-    public void SpawnTrap(string trapName, TileNode targetTile)
+    public void SpawnTrap(string trapName, TileNode targetTile, string key = "name")
     {
-        int trapIndex = UtilHelper.Find_Data_Index(trapName, DataManager.Instance.Battler_Table, "name");
+        int trapIndex = UtilHelper.Find_Data_Index(trapName, DataManager.Instance.Battler_Table, key);
         string prefab = DataManager.Instance.Battler_Table[trapIndex]["prefab"].ToString();
         string trapId = DataManager.Instance.Battler_Table[trapIndex]["id"].ToString();
 
@@ -98,9 +98,9 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         return null;
     }
 
-    public Monster SpawnMonster(string monsterName, TileNode startTile)
+    public Monster SpawnMonster(string monsterName, TileNode startTile, string key = "name")
     {
-        int monsterIndex = UtilHelper.Find_Data_Index(monsterName, DataManager.Instance.Battler_Table, "name");
+        int monsterIndex = UtilHelper.Find_Data_Index(monsterName, DataManager.Instance.Battler_Table, key);
         string prefab = DataManager.Instance.Battler_Table[monsterIndex]["prefab"].ToString();
         string monsterId = DataManager.Instance.Battler_Table[monsterIndex]["id"].ToString();
 
@@ -113,8 +113,8 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
             monsterPool.Add(monster);
         }
 
-        monster.Init();
         monster.SetStartPoint(startTile);
+        monster.Init();
         monster.gameObject.SetActive(true);
 
         return monster;
@@ -131,13 +131,13 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         return null;
     }
 
-    public void SpawnAdventurer(string adventurerName)
+    public Adventurer SpawnAdventurer(string adventurerName, string key = "name")
     {
         //1. 현재 adventurerPool에 해당 adventurerId의 activeSelf == false인 타겟 탐색
         //2. 1번의 타겟이 존재한다면 Init시켜주고, SetActive(true)
         //3. 존재하지 않는다면 새로 Instantiate
 
-        int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.Battler_Table, "name");
+        int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.Battler_Table, key);
         string prefab = DataManager.Instance.Battler_Table[adventurerIndex]["prefab"].ToString();
         string adventurerId = DataManager.Instance.Battler_Table[adventurerIndex]["id"].ToString();
 
@@ -152,5 +152,14 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
 
         adventurer.Init();
         adventurer.gameObject.SetActive(true);
+        return adventurer;
+    }
+
+    public MonsterSpawner SetSpawner(TileNode curNode, string targetName, CompleteRoom room)
+    {
+        MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
+        monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
+        monsterSpawner.Init(curNode, targetName, room);
+        return monsterSpawner;
     }
 }

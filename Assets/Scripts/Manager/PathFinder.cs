@@ -14,24 +14,24 @@ public struct Node
     public Node(TileNode tileNode, TileNode prevNode, TileNode startTile, TileNode endTile, List<Node> closedNode)
     {
         this.tileNode = tileNode;
-        gCost = PathFinder.Instance.GetGCost(prevNode, startTile, closedNode);
-        HCost = PathFinder.Instance.GetHCost(tileNode.transform.position, endTile.transform.position);
+        gCost = PathFinder.GetGCost(prevNode, startTile, closedNode);
+        HCost = PathFinder.GetHCost(tileNode.transform.position, endTile.transform.position);
         FCost = gCost + HCost;
         this.prevNode = prevNode;
     }
 }
 
-public class PathFinder : Singleton<PathFinder>
+public static class PathFinder
 {
-    
-    public float GetHCost(Vector3 curPos, Vector3 endPos)
+
+    public static float GetHCost(Vector3 curPos, Vector3 endPos)
     {
         // 추정거리 = 직선거리
         return (curPos - endPos).magnitude;
     }
 
     // 목표거리 -> 현재노드로부터 전노드거리를 전노드가 시작노드일때까지 더함
-    public float GetGCost(TileNode prevTile, TileNode startTile, List<Node> closedNode)
+    public static float GetGCost(TileNode prevTile, TileNode startTile, List<Node> closedNode)
     {
         float dist = 1;
         //노드중 prevTile을 계속 찾고, 노드의 prevTile이 startTile이면 반환
@@ -60,9 +60,9 @@ public class PathFinder : Singleton<PathFinder>
         return dist;
     }
 
-    
 
-    private bool IsInNode(TileNode targetTile, List<Node> targetNode)
+
+    private static bool IsInNode(TileNode targetTile, List<Node> targetNode)
     {
         foreach (Node node in targetNode)
         {
@@ -73,7 +73,7 @@ public class PathFinder : Singleton<PathFinder>
         return false;
     }
 
-    private Node FindNode(TileNode targetTile, List<Node> targetNode)
+    private static Node FindNode(TileNode targetTile, List<Node> targetNode)
     {
         foreach (Node node in targetNode)
         {
@@ -84,7 +84,7 @@ public class PathFinder : Singleton<PathFinder>
         return new Node();
     }
 
-    private void CheckNodeOpened(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
+    private static void CheckNodeOpened(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
     {
         List<TileNode> neighborTiles = new List<TileNode>(curTile.neighborNodeDic.Values);
         foreach (TileNode tile in neighborTiles)
@@ -111,7 +111,7 @@ public class PathFinder : Singleton<PathFinder>
         resultOpenNode = openNode;
     }
 
-    private void CheckNode(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
+    private static void CheckNode(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
     {
         List<TileNode> neighborTiles = UtilHelper.GetConnectedNodes(curTile);
         foreach(TileNode tile in neighborTiles)
@@ -138,7 +138,7 @@ public class PathFinder : Singleton<PathFinder>
         resultOpenNode = openNode;
     }
 
-    public List<TileNode> CalculateFinalPath(TileNode startTile, TileNode endTile, List<Node> closedNode)
+    public static List<TileNode> CalculateFinalPath(TileNode startTile, TileNode endTile, List<Node> closedNode)
     {
         List<TileNode> finalPath = new List<TileNode>();
         finalPath.Add(endTile);
@@ -153,7 +153,7 @@ public class PathFinder : Singleton<PathFinder>
         return finalPath;
     }
 
-    public List<TileNode> FindPath(TileNode startTile, TileNode endTile = null)
+    public static List<TileNode> FindPath(TileNode startTile, TileNode endTile = null)
     {
         if(endTile == null)
             endTile = NodeManager.Instance.endPoint;
@@ -190,7 +190,7 @@ public class PathFinder : Singleton<PathFinder>
         return finalNode;
     }
 
-    public int GetNodeDistance(TileNode startTile, TileNode endTile)
+    public static int GetNodeDistance(TileNode startTile, TileNode endTile)
     {
         if (startTile == endTile)
             return -1;
@@ -219,7 +219,7 @@ public class PathFinder : Singleton<PathFinder>
         return finalNode.Count;
     }
 
-    public float GetBattlerDistance(Battler origin, Battler target)
+    public static float GetBattlerDistance(Battler origin, Battler target)
     {
         if (origin.CurTile == target.CurTile)
         {
