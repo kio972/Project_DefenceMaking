@@ -403,11 +403,18 @@ public class CardDeckController : MonoBehaviour
         if (cardPool == null)
             return;
 
+        List<int> targetCards = new List<int>(cardPool);
         for (int i = 0; i < drawNumber; i++)
         {
-            int randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
-            while (!cardDeck.Contains(randomIndex))
-                randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+            int randomIndex = targetCards[UnityEngine.Random.Range(0, targetCards.Count)];
+            while (targetCards.Count != 0)
+            {
+                randomIndex = targetCards[UnityEngine.Random.Range(0, targetCards.Count)];
+                if (cardDeck.Contains(randomIndex))
+                    break;
+                targetCards.Remove(randomIndex);
+            }
+
             DrawCard(randomIndex);
         }
     }

@@ -204,6 +204,9 @@ public class DataManager : Singleton<DataManager>
 
         for(int i = 0; i < deckList.Count; i++)
         {
+            if (string.IsNullOrEmpty(deckList[i]["prefab"].ToString()))
+                continue;
+
             if(deckList[i]["cardtype"].ToString() == "tile")
                 tileCard_Indexs.Add(i);
             if (deckList[i]["cardtype"].ToString() == "monster")
