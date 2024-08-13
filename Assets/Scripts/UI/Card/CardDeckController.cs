@@ -48,6 +48,8 @@ public struct Card
                 return CardType.Environment;
             case "monster":
                 return CardType.Monster;
+            case "herb":
+                return CardType.Environment;
         }
         return CardType.None;
     }
