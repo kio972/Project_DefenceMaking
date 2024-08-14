@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609608640754181932}
   - component: {fileID: 731201648133819105}
+  - component: {fileID: 1748938990273999140}
   m_Layer: 0
   m_Name: EndTile
   m_TagString: Untagged
@@ -55,6 +56,35 @@ MonoBehaviour:
   twin: {fileID: 0}
   trap: {fileID: 0}
   IsBigRoom: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  startMoveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  endMoveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onRotateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1748938990273999140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609608640754181931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a22be6069e381e4c9f937f747bbfaf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: f0e9cc4f9c8e27f4e817f8ed289e3a64, type: 3}
+  rotateSound: {fileID: 8300000, guid: f0e9cc4f9c8e27f4e817f8ed289e3a64, type: 3}
+  moveStartSound: {fileID: 8300000, guid: f0e9cc4f9c8e27f4e817f8ed289e3a64, type: 3}
+  moveSuccessSound: {fileID: 8300000, guid: f0e9cc4f9c8e27f4e817f8ed289e3a64, type: 3}
+  moveCancelSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
 --- !u!1 &5255829649292745741
 GameObject:
   m_ObjectHideFlags: 0

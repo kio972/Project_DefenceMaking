@@ -80,6 +80,7 @@ public class InputManager : IngameSingleton<InputManager>
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null)
             {
+                node.curTile.OnClick();
                 ClickTile(node.curTile);
             }
             else

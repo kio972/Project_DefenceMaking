@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UniRx;
+using UnityEngine.Events;
 
 public enum TileType
 {
@@ -95,6 +96,16 @@ public class Tile : MonoBehaviour
     
     private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
 
+    public UnityEvent onClickEvent { get; private set; } = new UnityEvent();
+    public UnityEvent startMoveEvent { get; private set; } = new UnityEvent();
+    public UnityEvent<bool> endMoveEvent { get; private set; } = new UnityEvent<bool>();
+    public UnityEvent onRotateEvent { get; private set; } = new UnityEvent();
+
+    public void OnClick()
+    {
+        onClickEvent.Invoke();
+    }
+
     public int GetUnClosedCount()
     {
         // 불완전 연결인 상태인 타일 개수를 반환하는 함수
@@ -183,12 +194,13 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(this.curNode, true);
         NodeManager.Instance.SetGuideState(GuideState.None);
         SetTileVisible(true);
+        endMoveEvent?.Invoke(!resetNode);
     }
 
     public void EndMove(TileNode curNode)
     {
-        bool resetNode = true;
-        if (curNode != null && curNode.setAvail)
+        bool canSetTile = curNode != null && curNode.setAvail;
+        if (canSetTile)
         {
             transform.rotation = twin.transform.rotation;
             rotationCount.Value = twin.rotationCount.Value;
@@ -199,14 +211,13 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(curNode, true);
             MoveTile(curNode);
 
-            AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
-            resetNode = false;
+            //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
 
             //if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
             //    GameManager.Instance.speedController.SetSpeedPrev(false);
         }
-
-        EndMoveing(resetNode);
+        
+        EndMoveing(!canSetTile);
     }
 
     public ReactiveProperty<int> rotationCount { get; private set; } = new ReactiveProperty<int>(0);
@@ -261,6 +272,8 @@ public class Tile : MonoBehaviour
         if (rotation < 0)
             rotation = 5;
         rotation %= 6;
+
+        onRotateEvent.Invoke();
     }
 
     public void ResetTwin()
@@ -302,7 +315,8 @@ public class Tile : MonoBehaviour
         curNode.SetAvail(true);
         waitToMove = true;
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+        startMoveEvent.Invoke();
+        //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
     public TileNode TileMoveCheck()
