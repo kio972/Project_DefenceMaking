@@ -81,7 +81,7 @@ public class CardPackEffect : MonoBehaviour
         for (int i = cards.Count - 1; i >= 0; i--)
             await UtilHelper.MoveEffect(cardObjects[i].transform, targetPositions[i], lerpTime, cancellationToken);
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(2f));
         packImg.gameObject.SetActive(false);
         UtilHelper.IColorEffect(fadeImg.transform, fadeColor, Color.clear, 0.3f).Forget();
         float toDeckLerpTime = 0.2f;
