@@ -205,6 +205,10 @@ public class CardDeckController : MonoBehaviour
         // 최소진폭 ~ 최대진폭
         // 최소거리 ~ 최대거리
         float invert = 1f;
+
+        float magintude = (startPos - endPos).magnitude;
+        points = Mathf.CeilToInt(magintude / 50f);
+
         if (endPos.x > startPos.x)
             invert *= -1f;
 
