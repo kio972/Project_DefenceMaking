@@ -13,6 +13,8 @@ public class ResearchMainUI : MonoBehaviour
 
     public float CurProgressTime { get => curProgressTime; }
 
+    public float CurProgressRate { get => curResearch == null ? -1 : 1 - (curProgressTime / curResearch._ResearchData.requiredTime); }
+
     private Coroutine researchCoroutine;
 
     private List<string> completedResearchs;
