@@ -80,11 +80,19 @@ public class QuestManager : IngameSingleton<QuestManager>
                 continue;
             }
 
-            QuestWatcher watcher = questWatcher.Dequeue();
+            QuestWatcher watcher = questWatcher.Peek();
             if (GameManager.Instance.CurWave < watcher.startRound - 1 || !clearedQuests.Contains(watcher.condition))
+            {
+                questWatcher.Dequeue();
                 questWatcher.Enqueue(watcher);
+            }
             else
+            {
                 _QuestMessage.SetMessage(questMsgDic[watcher.id]);
+                while(_QuestMessage.gameObject.activeSelf)
+                    yield return null;
+                questWatcher.Dequeue();
+            }
 
             yield return null;
         }
@@ -117,9 +125,12 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         data.curQuests = new List<QuestData>();
         QuestData main = new QuestData();
-        main.id = questController._MainQuest._QuestID;
-        main.curVal = questController._MainQuest._CurClearNum;
-        data.curQuests.Add(main);
+        if(_QuestController._MainQuest != null)
+        {
+            main.id = questController._MainQuest._QuestID;
+            main.curVal = questController._MainQuest._CurClearNum;
+            data.curQuests.Add(main);
+        }
 
         foreach (Quest quest in questController._SubQuest)
         {
