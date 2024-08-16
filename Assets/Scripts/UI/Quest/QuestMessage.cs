@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 public class QuestMessage : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class QuestMessage : MonoBehaviour
     private Image img;
     [SerializeField]
     private Image fade;
+
+    [SerializeField]
+    private float fadeAlpha;
 
     [SerializeField]
     private Sprite[] sprites;
@@ -90,6 +94,7 @@ public class QuestMessage : MonoBehaviour
     {
         closing = true;
 
+        UtilHelper.IColorEffect(fade.transform, new Color(0, 0, 0, fadeAlpha), Color.clear, 0.1f).Forget();
         yield return StartCoroutine(SetAlpha(false, 0.1f));
 
         float targetTime = dissolveController.disappareGoaltime;
@@ -132,10 +137,8 @@ public class QuestMessage : MonoBehaviour
             StartQuest(targetQuest[1]);
     }
 
-    public void SetMessage(Dictionary<string, object> data)
+    private void ResetUIColors()
     {
-        dissolveController.isAppare = true;
-        gameObject.SetActive(true);
         TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
         Image[] imgs = GetComponentsInChildren<Image>();
         foreach (TextMeshProUGUI text in textMeshProUGUIs)
@@ -146,6 +149,15 @@ public class QuestMessage : MonoBehaviour
                 continue;
             img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
         }
+    }
+
+    public void SetMessage(Dictionary<string, object> data)
+    {
+        fade.gameObject.SetActive(true);
+        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.1f, () => fade.gameObject.SetActive(false)).Forget();
+        dissolveController.isAppare = true;
+        gameObject.SetActive(true);
+        ResetUIColors();
         GameManager.Instance.SetPause(true);
 
         if (data == null)
