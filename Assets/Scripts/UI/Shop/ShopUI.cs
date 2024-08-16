@@ -50,6 +50,9 @@ public class ShopUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
+        if (value)
+            InputManager.Instance.ResetTileClick();
+
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
 

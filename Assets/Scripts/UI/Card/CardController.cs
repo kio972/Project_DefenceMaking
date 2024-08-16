@@ -29,7 +29,7 @@ public class CardController : CardFramework
             GameManager.Instance.cardDeckController.AddCard(cardIndex);
         }
         else
-            base.SetObjectOnMap();
+            base.SetObjectOnMap(cancel);
 
         if (instancedObject == null)
             RemoveCard(recycle);
