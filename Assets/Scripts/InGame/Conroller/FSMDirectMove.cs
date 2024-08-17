@@ -6,8 +6,7 @@ public class FSMDirectMove : FSMSingleton<FSMDirectMove>, CharState<Battler>
 {
     public void Enter(Battler e)
     {
-        if (e._Animator != null)
-            e._Animator.SetBool("Move", true);
+        
     }
 
     public void Excute(Battler e)
@@ -29,7 +28,6 @@ public class FSMDirectMove : FSMSingleton<FSMDirectMove>, CharState<Battler>
 
     public void Exit(Battler e)
     {
-        if (e._Animator != null)
-            e._Animator.SetBool("Move", false);
+        
     }
 }

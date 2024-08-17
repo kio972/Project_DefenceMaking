@@ -667,13 +667,12 @@ public class Battler : FSM<Battler>
         SetRotation();
 
         if (animator == null)
-        {
             animator = GetComponentInChildren<Animator>();
-            if(!isAnimUniRxSubscribed)
-            {
-                isAnimUniRxSubscribed = true;
-                SubscribeAnimation();
-            }
+
+        if (animator != null && !isAnimUniRxSubscribed)
+        {
+            isAnimUniRxSubscribed = true;
+            SubscribeAnimation();
         }
 
         if (curTile == null)
@@ -954,5 +953,13 @@ public class Battler : FSM<Battler>
         {
             UpdateAttackSpeed();
         }).AddTo(gameObject);
+
+        SubscribeStateAnimation();
+    }
+
+    protected void SubscribeStateAnimation()
+    {
+        _CurState.Where(_ => animator.ContainsParam("Move")).
+            Subscribe(_ => animator.SetBool("Move", (object)_ == FSMPatrol.Instance || FSMChase.Instance || FSMDirectMove.Instance));
     }
 }

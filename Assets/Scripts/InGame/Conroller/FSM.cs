@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public interface CharState<T>
@@ -17,6 +18,8 @@ public class FSM<T> : MonoBehaviour
     private CharState<T> curState;
     private CharState<T> prevState;
 
+
+    public ReactiveProperty<CharState<T>> _CurState = new ReactiveProperty<CharState<T>>();
     public CharState<T> CurState { get { return curState; } }
     public CharState<T> PrevState { get { return prevState; } }
 
@@ -44,6 +47,7 @@ public class FSM<T> : MonoBehaviour
         if (prevState != null)
             prevState.Exit(owner);
         curState = nextState;
+        _CurState.Value = nextState;
         if (curState != null)
             curState.Enter(owner);
     }

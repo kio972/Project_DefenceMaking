@@ -150,8 +150,8 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
             adventurerPool.Add(adventurer);
         }
 
-        adventurer.Init();
         adventurer.gameObject.SetActive(true);
+        adventurer.Init();
         return adventurer;
     }
 

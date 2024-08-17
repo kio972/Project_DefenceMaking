@@ -14,9 +14,18 @@ public class Goblin : Monster
 
         var tiles = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint);
         int count = 0;
+
+
         TileNode targetTile = null;
         tiles.Remove(curTile);
         tiles.Remove(NodeManager.Instance.endPoint);
+        float curToEndDistance = UtilHelper.CalCulateDistance(transform, NodeManager.Instance.endPoint.transform);
+        if(curToEndDistance < tiles.Count)
+            tiles.RemoveAt(0);
+
+        if (tiles.Count == 0)
+            return;
+
         foreach(var tile in tiles)
         {
             if (count >= 5)
