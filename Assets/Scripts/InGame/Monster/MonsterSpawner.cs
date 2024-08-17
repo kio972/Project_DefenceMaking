@@ -65,7 +65,7 @@ public class MonsterSpawner : MonoBehaviour
         this.requiredMana = Convert.ToInt32(data["requiredMagicpower"]);
         MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
         this.requiredMana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
-        this.spawnCoolTime = Convert.ToInt32(data["duration"]);
+        this.spawnCoolTime = Convert.ToInt32(data["spawnTime"]);
         curCoolTime = spawnCoolTime;
         
         isUpdate = true;

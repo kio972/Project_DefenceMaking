@@ -279,6 +279,9 @@ public class DeployUI : MonoBehaviour
 
         foreach (Dictionary<string, object> data in DataManager.Instance.Battler_Table)
         {
+            if (string.IsNullOrEmpty(data["prefab"].ToString()))
+                continue;
+
             string id = data["id"].ToString();
             if (id[2] != 'm' && id[2] != 't')
                 continue;

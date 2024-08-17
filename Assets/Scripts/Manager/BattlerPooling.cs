@@ -138,6 +138,8 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         //3. 존재하지 않는다면 새로 Instantiate
 
         int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.Battler_Table, key);
+        if (adventurerIndex == -1)
+            return null;
         string prefab = DataManager.Instance.Battler_Table[adventurerIndex]["prefab"].ToString();
         string adventurerId = DataManager.Instance.Battler_Table[adventurerIndex]["id"].ToString();
 
