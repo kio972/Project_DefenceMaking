@@ -58,6 +58,7 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
     {
         foreach (Card curCard in curCards)
             GameManager.Instance.cardDeckController.AddCard(curCard.cardIndex);
+        packEffect?.SetCardPackSprite(transform);
         packEffect?.ShowEffect(curCards);
     }
 

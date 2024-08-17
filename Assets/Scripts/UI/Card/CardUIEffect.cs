@@ -21,12 +21,25 @@ public class CardUIEffect : MonoBehaviour
     public Vector3 originPos;
     public Quaternion originRot;
 
+    public bool useSiblingArrange = true;
     public int originSiblingIndex = -1;
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
-    private CancellationTokenSource _scaleToken = new();
-    private CancellationTokenSource _moveToken = new();
+    private CancellationTokenSource _scaleToken;
+    private CancellationTokenSource _moveToken;
+
+    public void ResetEffect()
+    {
+        effectTarget.localScale = Vector3.one;
+        if (useSiblingArrange)
+            effectTarget.position = originPos;
+    }
+
+    public void SetDrawState(bool value)
+    {
+        drawEnd = value;
+    }
 
     public void OnPointerEnter()
     {
@@ -38,11 +51,12 @@ public class CardUIEffect : MonoBehaviour
 
         _moveToken.Cancel();
         _scaleToken.Cancel();
-        _moveToken = new();
-        _scaleToken = new();
+        _moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
 
         UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one * 1.5f, mouseOverTime, _scaleToken.Token).Forget();
-        UtilHelper.IMoveEffect(effectTarget, effectTarget.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime, _moveToken.Token).Forget();
+        if(useSiblingArrange)
+            UtilHelper.IMoveEffect(effectTarget, effectTarget.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime, _moveToken.Token).Forget();
 
         effectTarget.rotation = Quaternion.identity;
         transform.SetAsLastSibling();
@@ -57,11 +71,14 @@ public class CardUIEffect : MonoBehaviour
 
         _moveToken.Cancel();
         _scaleToken.Cancel();
-        _moveToken = new();
-        _scaleToken = new();
+        _moveToken.Dispose();
+        _scaleToken.Dispose();
+        _moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
 
         UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one, mouseOverTime, _scaleToken.Token).Forget();
-        UtilHelper.IMoveEffect(effectTarget, effectTarget.position, originPos, mouseOverTime, _moveToken.Token).Forget();
+        if(useSiblingArrange)
+            UtilHelper.IMoveEffect(effectTarget, effectTarget.position, originPos, mouseOverTime, _moveToken.Token).Forget();
 
         effectTarget.rotation = originRot;
         if (originSiblingIndex != -1)
@@ -87,8 +104,10 @@ public class CardUIEffect : MonoBehaviour
         drawEnd = false;
         _moveToken.Cancel();
         _scaleToken.Cancel();
-        _moveToken = new();
-        _scaleToken = new();
+        _moveToken.Dispose();
+        _scaleToken.Dispose();
+        _moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
 
         float lerpTime = 0.4f;
         UtilHelper.IColorEffect(transform, Color.white, new Color(1, 1, 1, 0), lerpTime).Forget();
@@ -109,12 +128,19 @@ public class CardUIEffect : MonoBehaviour
         drawEnd = false;
 
         _scaleToken.Cancel();
-        _scaleToken = new();
+        _scaleToken.Dispose();
+        _scaleToken = new CancellationTokenSource();
 
         float lerpTime = 0.5f;
         await UtilHelper.IScaleEffect(transform, Vector3.zero, Vector3.one, lerpTime, _scaleToken.Token);
 
         drawEnd = true;
+    }
+
+    private void OnEnable()
+    {
+        _moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
     }
 
     private void Start()
