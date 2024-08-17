@@ -18,10 +18,10 @@ public class Goblin : Monster
 
         TileNode targetTile = null;
         tiles.Remove(curTile);
-        tiles.Remove(NodeManager.Instance.endPoint);
         float curToEndDistance = UtilHelper.CalCulateDistance(transform, NodeManager.Instance.endPoint.transform);
         if(curToEndDistance < tiles.Count)
             tiles.RemoveAt(0);
+        tiles.Remove(NodeManager.Instance.endPoint);
 
         if (tiles.Count == 0)
             return;
