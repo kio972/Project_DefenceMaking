@@ -11,6 +11,15 @@ using Cysharp.Threading.Tasks;
 
 public static class UtilHelper
 {
+    public static bool ContainsParam(this Animator _Anim, string _ParamName)
+    {
+        foreach (AnimatorControllerParameter param in _Anim.parameters)
+        {
+            if (param.name == _ParamName) return true;
+        }
+        return false;
+    }
+
     public static List<T> ShuffleList<T>(List<T> list)
     {
         System.Random random = new System.Random();

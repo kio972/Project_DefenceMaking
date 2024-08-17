@@ -68,7 +68,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public PlayerBattleMain king;
 
-    public float timeScale;
+    public float timeScale { get => _timeScale.Value; set => _timeScale.Value = value; }
+    public ReactiveProperty<float> _timeScale = new ReactiveProperty<float>(1);
 
     private bool updateNeed = true;
 

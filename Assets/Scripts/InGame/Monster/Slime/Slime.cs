@@ -66,7 +66,6 @@ public class Slime : Monster
         splitElapsed = 1.5f;
         while(splitElapsed > 0)
         {
-            _Animator.SetFloat("AttackSpeed", GameManager.Instance.timeScale);
             splitElapsed -= Time.deltaTime * GameManager.Instance.timeScale;
             await UniTask.Yield(source.Token);
         }

@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine.Unity;
-using UnityEngine.UIElements;
 using UniRx;
+using UniRx.Triggers;
 using System.Threading;
 
 public interface IHide
@@ -33,6 +32,8 @@ public enum CCType
 
 public class Battler : FSM<Battler>
 {
+    private bool isAnimUniRxSubscribed = false;
+
     protected CancellationTokenSource unitaskCancelTokenSource = new CancellationTokenSource();
 
     protected string _name;
@@ -662,11 +663,18 @@ public class Battler : FSM<Battler>
         curTarget = null;
 
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
-        _effects = new ReactiveCollection<StatusEffect>();
+        _effects.Clear();
         SetRotation();
 
         if (animator == null)
+        {
             animator = GetComponentInChildren<Animator>();
+            if(!isAnimUniRxSubscribed)
+            {
+                isAnimUniRxSubscribed = true;
+                SubscribeAnimation();
+            }
+        }
 
         if (curTile == null)
         {
@@ -772,7 +780,7 @@ public class Battler : FSM<Battler>
         return true;
     }
 
-    public void UpdateAttackSpeed()
+    private void UpdateAttackSpeed()
     {
         if (animator != null)
             animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
@@ -927,5 +935,24 @@ public class Battler : FSM<Battler>
         target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;
 
         return target;
+    }
+
+    private void SubscribeAnimation()
+    {
+        GameManager.Instance._timeScale.Where(_ => animator.ContainsParam("Move"))
+            .Subscribe(_ =>
+            {
+                animator.SetBool("Move", _ != 0);
+            }).AddTo(gameObject);
+
+        GameManager.Instance._timeScale.Subscribe(_ =>
+        {
+            UpdateAttackSpeed();
+        }).AddTo(gameObject);
+
+        _effects.ObserveCountChanged().Subscribe(_ =>
+        {
+            UpdateAttackSpeed();
+        }).AddTo(gameObject);
     }
 }

@@ -8,8 +8,6 @@ public class Thief : Adventurer, IHide
 
     public void HideAction()
     {
-        animator.SetBool("Move", GameManager.Instance.timeScale != 0);
-
         if(CurTile == NodeManager.Instance.endPoint)
             ChangeState(FSMPatrol.Instance);
         else

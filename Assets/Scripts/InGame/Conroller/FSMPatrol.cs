@@ -66,17 +66,6 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
 
     public void Excute(Battler e)
     {
-        if (e._Animator != null)
-        {
-            bool moveState = e._Animator.GetBool("Move");
-            float moveSpeed = GameManager.Instance.timeScale;
-            e._Animator.SetFloat("MoveSpeed", moveSpeed);
-            if (moveSpeed == 0 && moveState)
-                e._Animator.SetBool("Move", false);
-            else if (moveSpeed != 0 && !moveState)
-                e._Animator.SetBool("Move", true);
-        }
-
         if (NeedChange(e))
             return;
 

@@ -53,11 +53,4 @@ public class Adventurer : Battler
         Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-
-    public override void Update()
-    {
-        base.Update();
-
-        UpdateAttackSpeed();
-    }
 }
