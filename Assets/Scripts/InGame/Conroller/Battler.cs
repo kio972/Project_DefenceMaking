@@ -680,6 +680,14 @@ public class Battler : FSM<Battler>
             curTile = NodeManager.Instance.startPoint;
             transform.position = curTile.transform.position;
         }
+
+        RandomizePosition();
+    }
+
+    private void RandomizePosition()
+    {
+        float targetZ = UnityEngine.Random.Range(-0.001f, 0.001f);
+        animator.transform.localPosition = new Vector3(0, 0, targetZ);
     }
 
     private Quaternion TargetRoation(int camera_Level)
