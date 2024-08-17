@@ -617,7 +617,7 @@ public class Battler : FSM<Battler>
         {
             int baseDamage = Damage;
             int tempDamage = TempDamage(baseDamage);
-            curTarget.GetDamage(baseDamage + tempDamage, this);
+            curTarget.GetDamage(tempDamage, this);
             if (splashAttack)
                 SplashAttack(curTarget, baseDamage + tempDamage);
         }
