@@ -5,6 +5,7 @@ using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UIElements;
 using UniRx;
+using System.Threading;
 
 public interface IHide
 {
@@ -32,6 +33,8 @@ public enum CCType
 
 public class Battler : FSM<Battler>
 {
+    protected CancellationTokenSource unitaskCancelTokenSource = new CancellationTokenSource();
+
     protected string _name;
 
     protected int minDamage;
@@ -255,6 +258,9 @@ public class Battler : FSM<Battler>
             item.DeActiveEffect();
         _effects.Clear();
 
+        unitaskCancelTokenSource.Cancel();
+        unitaskCancelTokenSource.Dispose();
+        unitaskCancelTokenSource = new CancellationTokenSource();
         StopAllCoroutines();
         Invoke("RemoveBody", 2.5f);
         if(deadSound != null)
@@ -652,6 +658,8 @@ public class Battler : FSM<Battler>
     public virtual void Init()
     {
         isDead = false;
+        chaseTarget = null;
+        curTarget = null;
 
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         _effects = new ReactiveCollection<StatusEffect>();

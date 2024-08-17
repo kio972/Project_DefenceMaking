@@ -1,12 +1,14 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Goblin : Monster
 {
     private bool isSkillActived = false;
-
-    private void RunAway()
+    
+    private async UniTaskVoid RunAway()
     {
         curTarget = null;
 
@@ -25,7 +27,10 @@ public class Goblin : Monster
         }
 
         directPassNode = targetTile;
+        animator.SetBool("RunAway", true);
         ChangeState(FSMDirectMove.Instance);
+        await UniTask.WaitUntil(() => (object)CurState != FSMDirectMove.Instance, default, unitaskCancelTokenSource.Token);
+        animator.SetBool("RunAway", false);
     }
 
     public override void GetDamage(int damage, Battler attacker)
@@ -34,7 +39,7 @@ public class Goblin : Monster
         if(!isSkillActived && (float)curHp / maxHp < 0.2f)
         {
             isSkillActived = true;
-            RunAway();
+            RunAway().Forget();
         }
     }
 
