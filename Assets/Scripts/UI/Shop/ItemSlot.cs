@@ -35,6 +35,7 @@ public class ItemSlot : FluctItem
 {
     [SerializeField]
     private string itemId;
+    public string ItemId { get => itemId; }
 
     [SerializeField]
     private Image itemIcon;

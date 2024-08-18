@@ -50,3 +50,11 @@ public class QusetCondition_m2012 : QuestCondition
         }
     }
 }
+
+public class QusetCondition_m2013 : QuestCondition
+{
+    public override bool IsConditionPassed()
+    {
+        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2004").Count() >= 1;
+    }
+}

@@ -94,7 +94,7 @@ public class QuestMessage : MonoBehaviour
     {
         closing = true;
 
-        UtilHelper.IColorEffect(fade.transform, new Color(0, 0, 0, fadeAlpha), Color.clear, 0.1f).Forget();
+        UtilHelper.IColorEffect(fade.transform, new Color(0, 0, 0, fadeAlpha), Color.clear, 0.1f, () => fade.gameObject.SetActive(false)).Forget();
         yield return StartCoroutine(SetAlpha(false, 0.1f));
 
         float targetTime = dissolveController.disappareGoaltime;
@@ -154,7 +154,7 @@ public class QuestMessage : MonoBehaviour
     public void SetMessage(Dictionary<string, object> data)
     {
         fade.gameObject.SetActive(true);
-        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.1f, () => fade.gameObject.SetActive(false)).Forget();
+        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.1f).Forget();
         dissolveController.isAppare = true;
         gameObject.SetActive(true);
         ResetUIColors();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResearchMainUI : MonoBehaviour
@@ -17,7 +18,8 @@ public class ResearchMainUI : MonoBehaviour
 
     private Coroutine researchCoroutine;
 
-    private List<string> completedResearchs;
+    private List<string> _completedResearchs;
+    public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
     private IEnumerator IResearch(ResearchSlot curResearch, float additionalTime)
     {
@@ -46,7 +48,7 @@ public class ResearchMainUI : MonoBehaviour
         Research[] research = curResearch.GetComponents<Research>();
         foreach(var item in research)
             item?.ActiveResearch();
-        completedResearchs.Add(curResearch._ResearchId);
+        _completedResearchs.Add(curResearch._ResearchId);
         this.curResearch = null;
     }
 
@@ -92,7 +94,7 @@ public class ResearchMainUI : MonoBehaviour
 
     public void SaveData(PlayerData data)
     {
-        data.researchIdes = new List<string>(completedResearchs);
+        data.researchIdes = new List<string>(_completedResearchs);
         if(curResearch != null)
         {
             data.curResearch = curResearch._ResearchId;
@@ -102,12 +104,12 @@ public class ResearchMainUI : MonoBehaviour
 
     public void LoadData(PlayerData data)
     {
-        completedResearchs = new List<string>(data.researchIdes);
+        _completedResearchs = new List<string>(data.researchIdes);
 
         ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
         foreach (ResearchSlot slot in slots)
         {
-            if (completedResearchs.Contains(slot._ResearchId))
+            if (_completedResearchs.Contains(slot._ResearchId))
             {
                 slot.SetResearchState(ResearchState.Complete);
                 Research research = slot.GetComponent<Research>();
@@ -120,13 +122,13 @@ public class ResearchMainUI : MonoBehaviour
 
     private void Awake()
     {
-        if(completedResearchs == null)
+        if(_completedResearchs == null)
         {
-            completedResearchs = new List<string>() { "r_m10001" };
+            _completedResearchs = new List<string>() { "r_m10001" };
             ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
             foreach (ResearchSlot slot in slots)
             {
-                if (!completedResearchs.Contains(slot._ResearchId))
+                if (!_completedResearchs.Contains(slot._ResearchId))
                     continue;
 
                 slot.SetResearchState(ResearchState.Complete);
