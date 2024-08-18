@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 
 public class Trap : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class Trap : MonoBehaviour
 
     private bool isInit = false;
 
+    public ReactiveProperty<int> curDuration = new ReactiveProperty<int>();
+    public ReactiveProperty<int> maxDuration = new ReactiveProperty<int>();
+
     public void DestroyTrap()
     {
         curTile.trap = null;
@@ -59,6 +63,7 @@ public class Trap : MonoBehaviour
         }
 
         attackCount++;
+        curDuration.Value = duration - attackCount;
         AudioManager.Instance.Play2DSound("Attack_trap", SettingManager.Instance._FxVolume);
 
         foreach (Battler removeTarget in removeTargets)
@@ -112,6 +117,10 @@ public class Trap : MonoBehaviour
 
         GameManager.Instance.trapList.Add(this);
         targetList = new List<Battler>();
+
+        maxDuration.Value = duration;
+        curDuration.Value = duration;
+        HPBarPooling.Instance.GetTrapHpBar(this);
         isInit = true;
     }
 
