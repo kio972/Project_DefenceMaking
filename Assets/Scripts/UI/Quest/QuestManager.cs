@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,27 @@ public struct QuestWatcher
     public string id;
     public int startRound;
     public string condition;
+    public QuestCondition customCondition;
+
+    private QuestCondition CustomCondition(string id)
+    {
+        id = id.Replace("q_", "QusetCondition_");
+        Type questType = Type.GetType(id);
+
+        if (questType != null && typeof(QuestCondition).IsAssignableFrom(questType))
+            return (QuestCondition)Activator.CreateInstance(questType);
+        else
+            return null;
+    }
 
     public QuestWatcher(string id, int startRound, string condition)
     {
         this.id = id;
         this.startRound = startRound;
         this.condition = condition;
+        customCondition = null;
+        if(this.condition == "custom")
+            customCondition = CustomCondition(id);
     }
 }
 
@@ -34,18 +50,20 @@ public class QuestManager : IngameSingleton<QuestManager>
             return questMessage;
         }
     }
-    QuestController questController;
-    QuestController _QuestController
+    QuestController _questController;
+    public QuestController questController
     {
         get
         {
-            if (questController == null)
-                questController = FindObjectOfType<QuestController>(true);
-            return questController;
+            if (_questController == null)
+                _questController = FindObjectOfType<QuestController>(true);
+            return _questController;
         }
     }
 
     HashSet<string> clearedQuests = new HashSet<string>();
+
+
 
     public void EndQuest(Quest quest, bool isClear)
     {
@@ -58,7 +76,7 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         int id;
         if(int.TryParse(questID.Replace("q", ""), out id))
-            _QuestController.StartQuest(id, startVal);
+            questController.StartQuest(id, startVal);
     }
 
     public void EnqueueQuest(string msgID)
@@ -68,6 +86,21 @@ public class QuestManager : IngameSingleton<QuestManager>
 
         Dictionary<string, object> data = questMsgDic[msgID];
         questWatcher.Enqueue(new QuestWatcher(data["ID"].ToString(), System.Convert.ToInt32(data["StartRound"]), data["Condition"].ToString()));
+    }
+
+    private bool IsQuestConditionPassed(QuestWatcher questWatcher)
+    {
+        if (GameManager.Instance.CurWave < questWatcher.startRound - 1)
+            return false;
+
+        if (questWatcher.condition == "custom")
+            return questWatcher.customCondition.IsConditionPassed();
+
+        if (string.IsNullOrEmpty(questWatcher.condition) && questWatcher.condition != "-")
+            if (!clearedQuests.Contains(questWatcher.condition))
+                return false;
+
+        return true;
     }
 
     private IEnumerator IQuestManage()
@@ -81,7 +114,8 @@ public class QuestManager : IngameSingleton<QuestManager>
             }
 
             QuestWatcher watcher = questWatcher.Peek();
-            if (GameManager.Instance.CurWave < watcher.startRound - 1 || !clearedQuests.Contains(watcher.condition))
+            bool isStartable = IsQuestConditionPassed(watcher);
+            if (!isStartable)
             {
                 questWatcher.Dequeue();
                 questWatcher.Enqueue(watcher);
@@ -106,7 +140,7 @@ public class QuestManager : IngameSingleton<QuestManager>
         foreach (Dictionary<string, object> data in DataManager.Instance.QuestMessage_Table)
         {
             questMsgDic.Add(data["ID"].ToString(), data);
-            if (autoEnqueue && data["Condition"].ToString() == "-")
+            if (autoEnqueue && (data["Condition"].ToString() is "-" or "custom"))
                 EnqueueQuest(data["ID"].ToString());
         }
         clearedQuests.Add("-");
@@ -125,14 +159,14 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         data.curQuests = new List<QuestData>();
         QuestData main = new QuestData();
-        if(_QuestController._MainQuest != null)
+        if(questController._MainQuest != null)
         {
-            main.id = questController._MainQuest._QuestID;
-            main.curVal = questController._MainQuest._CurClearNum;
+            main.id = _questController._MainQuest._QuestID;
+            main.curVal = _questController._MainQuest._CurClearNum;
             data.curQuests.Add(main);
         }
 
-        foreach (Quest quest in questController._SubQuest)
+        foreach (Quest quest in _questController._SubQuest)
         {
             QuestData sub = new QuestData();
             sub.id = quest._QuestID;

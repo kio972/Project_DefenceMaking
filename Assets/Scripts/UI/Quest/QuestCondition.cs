@@ -1,51 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using TMPro;
 
-public class QuestCondition : MonoBehaviour
+public abstract class QuestCondition
 {
-    [SerializeField]
-    private GameObject checkBox;
-    [SerializeField]
-    private TextMeshProUGUI text;
+    public abstract bool IsConditionPassed();
+}
 
-    public Quest quest = null;
-    private int index = 0;
-    private bool isClear = false;
-
-    public void SetText()
+public class QusetCondition_m2001 : QuestCondition
+{
+    public override bool IsConditionPassed()
     {
-        if (quest._ClearNum[index] > 0)
-            text.text = $"{quest._ClearInfo[index]}{" (남은 라운드 "}{quest._CurClearNum[index]}{")"}";
-        else if (quest._ClearNum[index] < 0)
-            text.text = $"{quest._ClearInfo[index]}{" ("}{quest._CurClearNum[index]}{" / "}{Mathf.Abs(quest._ClearNum[index])}{")"}";
+        return QuestManager.Instance.questController._MainQuest._QuestID == "q1001";
+    }
+}
+
+public class QusetCondition_m2003 : QuestCondition
+{
+    public override bool IsConditionPassed()
+    {
+        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2002").Count() >= 1;
+    }
+}
+
+public class QusetCondition_m2007 : QuestCondition
+{
+    public override bool IsConditionPassed()
+    {
+        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2006").Count() >= 1;
+    }
+}
+
+public class QusetCondition_m2012 : QuestCondition
+{
+    private int prevHiddenTileCount = -1;
+
+    public override bool IsConditionPassed()
+    {
+        if (prevHiddenTileCount == -1)
+            prevHiddenTileCount = NodeManager.Instance.hiddenTiles.Count;
+
+        if(NodeManager.Instance.hiddenTiles.Count < prevHiddenTileCount)
+            return true;
         else
-            text.text = quest._ClearInfo[index];
-    }
-
-    public void SetQuest(Quest quest, int index)
-    {
-        this.quest = quest;
-        this.index = index;
-        text.color = Color.white;
-        text.fontStyle = FontStyles.Normal;
-        checkBox.SetActive(false);
-        isClear = false;
-    }
-
-    void Update()
-    {
-        if (quest == null || isClear)
-            return;
-
-        SetText();
-        if(quest._IsComplete[index])
         {
-            checkBox.SetActive(true);
-            text.fontStyle = FontStyles.Strikethrough;
-            text.color = Color.gray;
-            isClear = true;
+            prevHiddenTileCount = NodeManager.Instance.hiddenTiles.Count;
+            return false;
         }
     }
 }

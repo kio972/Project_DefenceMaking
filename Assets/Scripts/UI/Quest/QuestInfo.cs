@@ -32,7 +32,7 @@ public class QuestInfo : MonoBehaviour
     private Animator animator;
     private Animator _Animator { get { if (animator == null) animator = GetComponentInChildren<Animator>(); return animator; } }
     [SerializeField]
-    List<QuestCondition> conditions;
+    List<QuestConditionUI> conditions;
 
     private void DeActive()
     {
@@ -51,7 +51,7 @@ public class QuestInfo : MonoBehaviour
     public void SetQuestText(Quest quest)
     {
         questName.text = quest._QuestName;
-        foreach (QuestCondition condition in conditions)
+        foreach (QuestConditionUI condition in conditions)
             condition.gameObject.SetActive(false);
 
         for(int i = 0; i < quest._ClearInfo.Count; i++)
