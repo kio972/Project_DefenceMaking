@@ -29,15 +29,27 @@ public class ResultController : MonoBehaviour
         UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, 0.9f), 2f, () => TitleBtnOn()).Forget();
     }
 
-    public void GameWin()
+    public async UniTaskVoid GameWin()
     {
+        if(GameManager.Instance.LastSpawnedAdventurer != null)
+            FindObjectOfType<CameraController>()?.CamMoveToPos(GameManager.Instance.LastSpawnedAdventurer.transform.position);
+        else
+            FindObjectOfType<CameraController>()?.ResetCamPos();
+        await UniTask.Delay(System.TimeSpan.FromSeconds(2.5f));
+
+        StoryManager.Instance.EnqueueScript("Dan900");
+
+        await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
+
         FadeOn();
         victory.gameObject.SetActive(true);
         defeat.gameObject.SetActive(false);
     }
 
-    public void GameDefeat()
+    public async UniTaskVoid GameDefeat()
     {
+        FindObjectOfType<CameraController>()?.ResetCamPos();
+        await UniTask.Delay(System.TimeSpan.FromSeconds(2.5f));
         FadeOn();
         victory.gameObject.SetActive(false);
         defeat.gameObject.SetActive(true);

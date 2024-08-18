@@ -154,6 +154,9 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
 
         adventurer.gameObject.SetActive(true);
         adventurer.Init();
+
+        GameManager.Instance.LastSpawnedAdventurer = adventurer;
+
         return adventurer;
     }
 

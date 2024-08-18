@@ -101,6 +101,8 @@ public class GameManager : IngameSingleton<GameManager>
     public int _TotalMana { get => totalMana; }
     public int _CurMana { get => curMana; set { curMana = value; } }
 
+    public Adventurer LastSpawnedAdventurer;
+
     public void UpdateTotalMana()
     {
         int totalMana = 0;
@@ -173,25 +175,14 @@ public class GameManager : IngameSingleton<GameManager>
         return false;
     }
 
-    private IEnumerator WinTextWait()
-    {
-        StoryManager.Instance.EnqueueScript("Dan900");
-
-        while (!StoryManager.Instance.IsScriptQueueEmpty)
-            yield return null;
-
-        ResultController result = FindObjectOfType<ResultController>(true);
-        if (result != null)
-            result.GameWin();
-    }
-
     public void WinGame()
     {
         updateNeed = false;
         speedController.SetSpeedZero();
-        StartCoroutine(WinTextWait());
-        
-        
+
+        ResultController result = FindObjectOfType<ResultController>(true);
+        if (result != null)
+            result.GameWin().Forget();
     }
 
     public void LoseGame()
@@ -201,7 +192,7 @@ public class GameManager : IngameSingleton<GameManager>
 
         ResultController result = FindObjectOfType<ResultController>(true);
         if (result != null)
-            result.GameDefeat();
+            result.GameDefeat().Forget();
     }
 
     private void UpdateBossRoom()
