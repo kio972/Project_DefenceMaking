@@ -48,7 +48,12 @@ public class FluctTimer : MonoBehaviour
 
         foreach (FluctItem item in items)
         {
-            if (item is IRefreshableItem refreshableItem)
+            ItemSlot slot = item.GetComponent<ItemSlot>();
+            if (slot != null && slot.IsRefreshable)
+                slot.IsSoldOut = false;
+
+            IRefreshableItem refreshableItem = item.GetComponent<IRefreshableItem>();
+            if (refreshableItem != null)
                 refreshableItem.RefreshItem();
         }
 
