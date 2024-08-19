@@ -24,9 +24,9 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
     public void WhileEffect()
     {
         int targetCount = 0;
-        foreach (Goblin goblin in GameManager.Instance._MonsterList)
+        foreach (Monster goblin in GameManager.Instance._MonsterList)
         {
-            if (goblin == _battler)
+            if (goblin is not Goblin || goblin == _battler)
                 continue;
 
             float dist = UtilHelper.CalCulateDistance(_battler.transform, goblin.transform);
