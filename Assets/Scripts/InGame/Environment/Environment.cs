@@ -43,5 +43,7 @@ public class Environment : MonoBehaviour
                 CustomFunc();
                 break;
         }
+
+        NodeManager.Instance.AddSightNode(curNode);
     }
 }
