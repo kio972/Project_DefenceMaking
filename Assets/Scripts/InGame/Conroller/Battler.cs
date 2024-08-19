@@ -661,6 +661,7 @@ public class Battler : FSM<Battler>
         isDead = false;
         chaseTarget = null;
         curTarget = null;
+        moveSpeed = 1f;
 
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         _effects.Clear();
