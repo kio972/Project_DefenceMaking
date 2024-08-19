@@ -128,7 +128,7 @@ public class Tile : MonoBehaviour
 
         nextNode.curTile = this;
         transform.position = nextNode.transform.position;
-        NodeManager.Instance.ExpandEmptyNode(nextNode, 4);
+        NodeManager.Instance.ExpandEmptyNode(nextNode, 20);
 
         if (tileType == TileType.End)
         {
