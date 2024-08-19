@@ -122,7 +122,7 @@ public class QuestManager : IngameSingleton<QuestManager>
             }
             else
             {
-                _QuestMessage.SetMessage(questMsgDic[watcher.id]);
+                _QuestMessage.SetMessage(questMsgDic[watcher.id]).Forget();
                 while(_QuestMessage.gameObject.activeSelf)
                     yield return null;
                 questWatcher.Dequeue();

@@ -37,6 +37,8 @@ public class QuestMessage : MonoBehaviour
 
     private bool closing = false;
 
+    private readonly Color mainBtnColor = new Color(0.8f, 0.5f, 0.4f);
+    private readonly Color subBtnColor = new Color(0.63f, 0.55f, 0.52f);
     private IEnumerator SetAlpha(bool value, float lerpTime, float waitTime = 0)
     {
         TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
@@ -151,7 +153,7 @@ public class QuestMessage : MonoBehaviour
         }
     }
 
-    public void SetMessage(Dictionary<string, object> data)
+    public async UniTaskVoid SetMessage(Dictionary<string, object> data)
     {
         fade.gameObject.SetActive(true);
         UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.1f).Forget();
@@ -165,6 +167,7 @@ public class QuestMessage : MonoBehaviour
 
         titleText.text = data["MessageTitle"].ToString();
         messageText.text = data["MessageText"].ToString();
+
         string[] buttonTexts = data["MessageButtonText"].ToString().Split('/');
         select1.transform.parent.gameObject.SetActive(true);
         select1.text = buttonTexts[0];
@@ -180,9 +183,18 @@ public class QuestMessage : MonoBehaviour
             select2.transform.parent.gameObject.SetActive(true);
         }
 
-        if(img != null)
-            img.sprite = sprites[data["Type"].ToString() == "main" ? 0 : Random.Range(1, 4)];
+        bool isMain = data["Type"].ToString() == "main";
+        if (img != null)
+            img.sprite = sprites[isMain ? 0 : Random.Range(1, 4)];
+        select1.transform.parent.GetComponent<Image>().color = isMain ? mainBtnColor : subBtnColor;
+        select2.transform.parent.GetComponent<Image>().color = isMain ? mainBtnColor : subBtnColor;
 
         titleText.text = data["MessageTitle"].ToString();
+
+        select1.transform.parent.GetComponent<Button>().interactable = false;
+        select2.transform.parent.GetComponent<Button>().interactable = false;
+        await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime));
+        select1.transform.parent.GetComponent<Button>().interactable = true;
+        select2.transform.parent.GetComponent<Button>().interactable = true;
     }
 }
