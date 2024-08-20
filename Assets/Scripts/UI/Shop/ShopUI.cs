@@ -57,7 +57,10 @@ public class ShopUI : MonoBehaviour
         GameManager.Instance.SetPause(value);
 
         if(value)
+        {
             PlayScript("Shop000");
+            AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance.fxVolume);
+        }
     }
 
     private bool initState = false;

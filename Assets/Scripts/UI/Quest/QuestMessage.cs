@@ -94,6 +94,9 @@ public class QuestMessage : MonoBehaviour
 
     private IEnumerator Resume(string id)
     {
+        string closeClip = "Quest_Paper_Burn_" + Random.Range(1, 3).ToString();
+        AudioManager.Instance.Play2DSound(closeClip, SettingManager.Instance.fxVolume);
+
         closing = true;
 
         UtilHelper.IColorEffect(fade.transform, new Color(0, 0, 0, fadeAlpha), Color.clear, 0.1f, () => fade.gameObject.SetActive(false)).Forget();
@@ -193,6 +196,11 @@ public class QuestMessage : MonoBehaviour
 
         select1.transform.parent.GetComponent<Button>().interactable = false;
         select2.transform.parent.GetComponent<Button>().interactable = false;
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.1f));
+        string openClip = "Quest_Paper_Open_" + Random.Range(1, 4).ToString();
+        AudioManager.Instance.Play2DSound(openClip, SettingManager.Instance.fxVolume);
+
         await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime));
         select1.transform.parent.GetComponent<Button>().interactable = true;
         select2.transform.parent.GetComponent<Button>().interactable = true;

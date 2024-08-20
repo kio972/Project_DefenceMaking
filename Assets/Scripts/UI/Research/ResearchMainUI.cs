@@ -45,6 +45,8 @@ public class ResearchMainUI : MonoBehaviour
         //if (popup.gameObject.activeSelf && popup._CurResearch == curResearch._ResearchData)
         //    curResearch.CallPopUpUI();
         GameManager.Instance.notificationBar?.SetMesseage(curResearch._ResearchData.researchName + " 연구 완료", NotificationType.Research);
+        AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance.fxVolume);
+
         Research[] research = curResearch.GetComponents<Research>();
         foreach(var item in research)
             item?.ActiveResearch();
@@ -79,6 +81,9 @@ public class ResearchMainUI : MonoBehaviour
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
+
+        string researchUISound = (value ? "Tech_research_Open" : "Tech_research_Close");
+        AudioManager.Instance.Play2DSound(researchUISound, SettingManager.Instance.fxVolume);
     }
 
     public void Update()

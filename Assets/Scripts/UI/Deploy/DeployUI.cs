@@ -48,17 +48,6 @@ public class DeployUI : MonoBehaviour
             slot.UpdateMana();
     }
 
-    public void SetActive(bool value)
-    {
-        if (value)
-            InputManager.Instance.ResetTileClick();
-
-        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
-        if (value)
-            SetItem();
-    }
-
     public void SetActive(bool value, bool updateItem = true)
     {
         if (value)
@@ -66,8 +55,11 @@ public class DeployUI : MonoBehaviour
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
-        if(value && updateItem)
+        if (value && updateItem)
             SetItem();
+
+        if (value)
+            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance.fxVolume);
     }
 
     public void DeployEnd()

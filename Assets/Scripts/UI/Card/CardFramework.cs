@@ -179,11 +179,13 @@ public class CardFramework : MonoBehaviour
             {
                 Tile tile = instancedObject.GetComponent<Tile>();
                 tile.RotateTile();
+                AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
             }
             else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
             {
                 Tile tile = instancedObject.GetComponent<Tile>();
+                AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 tile.RotateTile(true);
                 NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
             }

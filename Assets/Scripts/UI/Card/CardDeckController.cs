@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using TMPro;
+using Unity.VisualScripting;
 
 public struct Card
 {
@@ -347,19 +348,28 @@ public class CardDeckController : MonoBehaviour
         if (hand_CardNumber >= maxCardNumber)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("손 패가 가득 찼습니다");
+            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance.uiVolume);
             return;
         }
 
         if (GameManager.Instance.gold < _CardPrice)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
+            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance.uiVolume);
+            return;
+        }
+
+        if (cardDeck.Count < 1)
+        {
+            GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
+            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance.uiVolume);
             return;
         }
 
         GameManager.Instance.gold -= _CardPrice;
         DrawCard();
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance.uiVolume);
     }
 
     private IEnumerator ISetCardPosition()

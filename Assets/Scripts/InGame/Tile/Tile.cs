@@ -164,7 +164,7 @@ public class Tile : MonoBehaviour
 
     private void UpdateMoveTilePos(TileNode curNode)
     {
-        if (curNode != null && NodeManager.Instance.emptyNodes.Contains(curNode) || curNode == this.curNode)
+        if (curNode != null && NodeManager.Instance.virtualNodes.Contains(curNode) || curNode == this.curNode)
             twin.transform.position = curNode.transform.position;
         else
             twin.transform.position = new Vector3(0, 10000, 0);
@@ -199,7 +199,7 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(curNode, true);
             MoveTile(curNode);
 
-            AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+            //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
             resetNode = false;
 
             //if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
@@ -302,7 +302,7 @@ public class Tile : MonoBehaviour
         curNode.SetAvail(true);
         waitToMove = true;
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
     }
 
     public TileNode TileMoveCheck()
@@ -434,9 +434,15 @@ public class Tile : MonoBehaviour
         {
             TileNode curTile = TileMoveCheck();
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
+            {
+                AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 twin.RotateTile();
+            }
             else if(Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+            {
+                AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateTile(true);
+            }
             if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
             {
                 EndMoveing();

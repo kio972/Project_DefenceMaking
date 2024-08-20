@@ -57,8 +57,11 @@ public class FluctTimer : MonoBehaviour
                 refreshableItem.RefreshItem();
         }
 
-        if (!string.IsNullOrEmpty(fluctMessage))
+        if (!string.IsNullOrEmpty(refreshMessage))
+        {
             GameManager.Instance.notificationBar?.SetMesseage(refreshMessage, NotificationType.Shop);
+            AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance.fxVolume);
+        }
     }
 
     private void FluctPrice()

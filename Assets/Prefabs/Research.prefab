@@ -4358,6 +4358,7 @@ GameObject:
   - component: {fileID: 3767534467723572551}
   - component: {fileID: 447792010497126241}
   - component: {fileID: 8434682436950564631}
+  - component: {fileID: 2538481398960167554}
   m_Layer: 5
   m_Name: InteractBtn
   m_TagString: Untagged
@@ -4483,6 +4484,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2538481398960167554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525500434296123509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 0
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip: {fileID: 0}
+  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
+  soundOnUnHoverClip: {fileID: 0}
 --- !u!1 &2537938379732876574
 GameObject:
   m_ObjectHideFlags: 0
@@ -6201,6 +6220,7 @@ GameObject:
   - component: {fileID: 3847518822882134344}
   - component: {fileID: 9030144605949326949}
   - component: {fileID: 2222126413748001356}
+  - component: {fileID: 8192113789757450282}
   m_Layer: 5
   m_Name: Devil
   m_TagString: Untagged
@@ -6329,6 +6349,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8192113789757450282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608633904980244258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 0
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip: {fileID: 0}
+  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
+  soundOnUnHoverClip: {fileID: 0}
 --- !u!1 &3680044969983033018
 GameObject:
   m_ObjectHideFlags: 0
@@ -8945,6 +8983,7 @@ GameObject:
   - component: {fileID: 941444609288619493}
   - component: {fileID: 3735400077710011278}
   - component: {fileID: 5550383225313433105}
+  - component: {fileID: 7459097167678857778}
   m_Layer: 5
   m_Name: Tile
   m_TagString: Untagged
@@ -9073,6 +9112,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7459097167678857778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160063182246729766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 0
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip: {fileID: 0}
+  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
+  soundOnUnHoverClip: {fileID: 0}
 --- !u!1 &5204635657591372832
 GameObject:
   m_ObjectHideFlags: 0
@@ -9134,7 +9191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 1f00d81473581584e82b1324b8babd14, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13286,7 +13343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 1f00d81473581584e82b1324b8babd14, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -14131,7 +14188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 1f00d81473581584e82b1324b8babd14, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -16259,6 +16316,7 @@ GameObject:
   - component: {fileID: 1405058964651321890}
   - component: {fileID: 7403870698059739458}
   - component: {fileID: 3673259865050550435}
+  - component: {fileID: 5499921549662191517}
   m_Layer: 5
   m_Name: Monster
   m_TagString: Untagged
@@ -16387,6 +16445,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5499921549662191517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8883632333814158158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 0
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip: {fileID: 0}
+  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
+  soundOnUnHoverClip: {fileID: 0}
 --- !u!1 &8884392510775674656
 GameObject:
   m_ObjectHideFlags: 0
