@@ -183,7 +183,7 @@ public class DeployUI : MonoBehaviour
     {
         curNode = UtilHelper.RayCastTile();
 
-        if (curNode != null && curNode.GuideActive)
+        if (curNode != null && curNode.GuideActive && !curNode.curTile.HaveSpawner)
         {
             curObject.transform.SetParent(curNode.transform, true);
             curObject.transform.position = curNode.transform.position;
