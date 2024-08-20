@@ -59,9 +59,9 @@ public class MonsterSpawner : MonoBehaviour
 
         monsterIndex = UtilHelper.Find_Data_Index(targetName, DataManager.Instance.Battler_Table, "name");
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
-        Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString());
+        Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString() + "_Spawner");
         bgImg.sprite = illur;
-        fillImg.sprite = illur;
+        //fillImg.sprite = illur;
         this.requiredMana = Convert.ToInt32(data["requiredMagicpower"]);
         MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
         this.requiredMana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
@@ -80,7 +80,7 @@ public class MonsterSpawner : MonoBehaviour
 
         if(curCoolTime > spawnCoolTime)
         {
-            fillImg.fillAmount = 0f;
+            fillImg.fillAmount = 1f;
             if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 return;
 
@@ -89,6 +89,6 @@ public class MonsterSpawner : MonoBehaviour
         }
 
         curCoolTime += Time.deltaTime * GameManager.Instance.timeScale;
-        fillImg.fillAmount = 1 - (curCoolTime / spawnCoolTime);
+        fillImg.fillAmount = (curCoolTime / spawnCoolTime);
     }
 }
