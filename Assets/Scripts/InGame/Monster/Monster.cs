@@ -22,7 +22,7 @@ public class Monster : Battler
     [SerializeField]
     protected int holdBackCount = 1;
 
-    private int requiredMana;
+    protected int requiredMana;
     public int _RequiredMana { get => requiredMana; }
 
     MonsterType monsterType;

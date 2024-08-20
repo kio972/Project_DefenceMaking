@@ -85,12 +85,19 @@ public class Slime : Monster
         Monster monster = BattlerPooling.Instance.SpawnMonster(curData.id, NodeManager.Instance.FindNode(curData.row, curData.col), "id");
         monster.LoadData(curData);
         Slime newSlime = monster.GetComponent<Slime>();
+        newSlime.ExcuteCloneMana();
         newSlime.RotationAxis.localScale = RotationAxis.localScale;
         newSlime.splitCount = this.splitCount;
         newSlime.splitedNode = this.splitedNode;
         newSlime.nextTile = nextNodes[Random.Range(0, nextNodes.Count)];
 
         if (isOdd) { curHp++; maxHp++; }
+    }
+
+    private void ExcuteCloneMana()
+    {
+        GameManager.Instance._CurMana = GameManager.Instance._CurMana - requiredMana;
+        requiredMana = 0;
     }
 
     public override void Patrol()
