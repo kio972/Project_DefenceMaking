@@ -60,7 +60,7 @@ public class FluctTimer : MonoBehaviour
         if (!string.IsNullOrEmpty(refreshMessage))
         {
             GameManager.Instance.notificationBar?.SetMesseage(refreshMessage, NotificationType.Shop);
-            AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
         }
     }
 

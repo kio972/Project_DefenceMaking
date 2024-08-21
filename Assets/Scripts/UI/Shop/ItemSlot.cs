@@ -111,14 +111,14 @@ public class ItemSlot : FluctItem
         if (GameManager.Instance.gold < _saledPrice)
         {
             _ShopUI?.PlayScript("Shop034");
-            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance.uiVolume);
+            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
         {
             _ShopUI?.PlayScript("Shop035");
-            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance.uiVolume);
+            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance._UIVolume);
             return;
         }
 
@@ -131,7 +131,7 @@ public class ItemSlot : FluctItem
 
         isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
-        AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance.uiVolume);
+        AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
     }
 
     private int DecreasePrice()

@@ -244,8 +244,8 @@ public class GameManager : IngameSingleton<GameManager>
         timer += InGameDeltaTime;
         if (timer > 720f && dailyIncome)
         {
-            gold += 50 + PassiveManager.Instance.income_Weight;
-            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance.fxVolume);
+            //gold += 50 + PassiveManager.Instance.income_Weight;
+            //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance.fxVolume);
             dailyIncome = false;
         }
 
@@ -267,7 +267,7 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             //NodeManager.Instance.LockMovableTiles();
 
-            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume);
         }
     }
 

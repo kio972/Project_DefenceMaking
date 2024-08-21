@@ -95,7 +95,7 @@ public class QuestMessage : MonoBehaviour
     private IEnumerator Resume(string id)
     {
         string closeClip = "Quest_Paper_Burn_" + Random.Range(1, 3).ToString();
-        AudioManager.Instance.Play2DSound(closeClip, SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound(closeClip, SettingManager.Instance._FxVolume);
 
         closing = true;
 
@@ -199,7 +199,7 @@ public class QuestMessage : MonoBehaviour
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.1f));
         string openClip = "Quest_Paper_Open_" + Random.Range(1, 4).ToString();
-        AudioManager.Instance.Play2DSound(openClip, SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound(openClip, SettingManager.Instance._FxVolume);
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime));
         select1.transform.parent.GetComponent<Button>().interactable = true;

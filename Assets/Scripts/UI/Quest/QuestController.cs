@@ -74,7 +74,7 @@ public class QuestController : MonoBehaviour
         mainQuest = quest;
         mainInfomer.SetQuest(quest);
 
-        AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
     }
 
     private void SetSubQuest(Quest quest)
@@ -86,7 +86,7 @@ public class QuestController : MonoBehaviour
         next.transform.SetAsLastSibling();
         layoutGroup.enabled = true;
 
-        AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
     }
 
     public void StartQuest(int questID, List<int> startVal)

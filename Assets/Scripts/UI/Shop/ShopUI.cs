@@ -59,7 +59,7 @@ public class ShopUI : MonoBehaviour
         if(value)
         {
             PlayScript("Shop000");
-            AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
         }
     }
 

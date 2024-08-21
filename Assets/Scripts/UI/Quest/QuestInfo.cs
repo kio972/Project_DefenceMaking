@@ -47,7 +47,7 @@ public class QuestInfo : MonoBehaviour
         //Invoke("DeActive", 1f);
 
         string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
-        AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance.fxVolume);
+        AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
 
         curQuest = null;
     }

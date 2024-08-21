@@ -59,7 +59,7 @@ public class DeployUI : MonoBehaviour
             SetItem();
 
         if (value)
-            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
     }
 
     public void SetActive(bool value, bool updateItem = true)
@@ -73,7 +73,7 @@ public class DeployUI : MonoBehaviour
             SetItem();
 
         if (value)
-            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance.fxVolume);
+            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
     }
 
     public void DeployEnd()
