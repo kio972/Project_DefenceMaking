@@ -44,6 +44,10 @@ public class DataManager : Singleton<DataManager>
     public List<int> roomPartCard_Index { get; private set; }
     public List<int> roomTypeCard_Indexs { get; private set; }
 
+    public Dictionary<string, int> deckListIndex { get; private set; }
+
+    public Dictionary<string, Dictionary<string, object>> shopListDic { get; private set; }
+
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
@@ -167,26 +171,10 @@ public class DataManager : Singleton<DataManager>
         return scriptsMalpongsun_Table[index];
     }
 
-    public Dictionary<string, Dictionary<string, object>> shopListDic { get; private set; }
-
-    // csv파일 주소(Resource폴더 내)
-    private readonly string wave_Table_DataPath = "Data/waveData";
-    private readonly string deckList_DataPath = "Data/deckList";
-    private readonly string battler_Table_DataPath = "Data/battlerTable";
-    private readonly string timeRate_Table_DataPath = "Data/timeData";
-    private readonly string language_Table_DataPath = "Data/languageData";
-    private readonly string scripts_Table_DataPath = "Data/scriptData";
-    private readonly string buff_Table_DataPath = "Data/buffData";
-    private readonly string research_Table_DataPath = "Data/researchData";
-    private readonly string scriptsMalpongsun_Table_DataPath = "Data/scriptMalpongsunData";
-    private readonly string quest_Table_DataPath = "Data/questData";
-    private readonly string questMessage_Table_DataPath = "Data/questMessageData";
-    private readonly string shop_Table_DataPath = "Data/shopListData";
-
     private void SortShopList()
     {
         shopListDic = new Dictionary<string, Dictionary<string, object>>();
-        foreach(var item in shop_Table)
+        foreach (var item in shop_Table)
             shopListDic.Add(item["id"].ToString(), item);
     }
 
@@ -202,12 +190,14 @@ public class DataManager : Singleton<DataManager>
         environmentCard_Indexs = new List<int>();
         herbCard_Indexs = new List<int>();
 
-        for(int i = 0; i < deckList.Count; i++)
+        deckListIndex = new Dictionary<string, int>();
+
+        for (int i = 0; i < deckList.Count; i++)
         {
             if (string.IsNullOrEmpty(deckList[i]["prefab"].ToString()))
                 continue;
 
-            if(deckList[i]["cardtype"].ToString() == "tile")
+            if (deckList[i]["cardtype"].ToString() == "tile")
                 tileCard_Indexs.Add(i);
             if (deckList[i]["cardtype"].ToString() == "monster")
                 monsterCard_Indexs.Add(i);
@@ -224,8 +214,26 @@ public class DataManager : Singleton<DataManager>
                 environmentCard_Indexs.Add(i);
             if (deckList[i]["type"].ToString() == "herb")
                 herbCard_Indexs.Add(i);
+
+            deckListIndex.Add(deckList[i]["id"].ToString(), i);
         }
     }
+
+
+
+    // csv파일 주소(Resource폴더 내)
+    private readonly string wave_Table_DataPath = "Data/waveData";
+    private readonly string deckList_DataPath = "Data/deckList";
+    private readonly string battler_Table_DataPath = "Data/battlerTable";
+    private readonly string timeRate_Table_DataPath = "Data/timeData";
+    private readonly string language_Table_DataPath = "Data/languageData";
+    private readonly string scripts_Table_DataPath = "Data/scriptData";
+    private readonly string buff_Table_DataPath = "Data/buffData";
+    private readonly string research_Table_DataPath = "Data/researchData";
+    private readonly string scriptsMalpongsun_Table_DataPath = "Data/scriptMalpongsunData";
+    private readonly string quest_Table_DataPath = "Data/questData";
+    private readonly string questMessage_Table_DataPath = "Data/questMessageData";
+    private readonly string shop_Table_DataPath = "Data/shopListData";
 
     private void Init()
     {

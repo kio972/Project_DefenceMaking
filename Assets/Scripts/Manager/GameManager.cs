@@ -337,7 +337,8 @@ public class GameManager : IngameSingleton<GameManager>
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
         cardDeckController.Init();
-        cardDeckController.Invoke("Mulligan", 1f);
+        //cardDeckController.Invoke("Mulligan", 1f);
+        cardDeckController.Invoke("MulliganFixed", 1f);
         speedController.SetSpeedZero();
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);

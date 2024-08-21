@@ -435,7 +435,16 @@ public class CardDeckController : MonoBehaviour
         }
     }
 
-    
+    private readonly List<string> mulliganList = new List<string>()
+    {
+        "c10006", "c10009", "c10011", "c11002", "c13002"
+    };
+
+    public void MulliganFixed()
+    {
+        foreach(var card in mulliganList)
+            DrawCard(DataManager.Instance.deckListIndex[card]);
+    }
 
     public void Mulligan()
     {
