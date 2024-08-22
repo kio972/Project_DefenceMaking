@@ -28,22 +28,46 @@ public class Quest2001 : Quest
 
 public class Quest2002 : Quest
 {
-    private int curPathCount = -1;
+    private bool isInit;
+
+    private bool IncreaseCount(GameObject tile)
+    {
+        if (tile.GetComponent<TileHidden>() != null)
+            return false;
+
+        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().curNode == NodeManager.Instance.endPoint)
+            return false;
+
+        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
+            return false;
+
+        curClearNum[0]++;
+        return true;
+    }
 
     public override void CheckCondition()
     {
-        if (curPathCount == -1)
-            curPathCount = NodeManager.Instance.tileDictionary[TileType.Path].Count;
-        curClearNum[0] += (NodeManager.Instance.tileDictionary[TileType.Path].Count - curPathCount);
-        curPathCount = NodeManager.Instance.tileDictionary[TileType.Path].Count;
+        if (!isInit)
+        {
+            NodeManager.Instance.AddSetTileEvent(IncreaseCount);
+            isInit = true;
+        }
+
         if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
+    }
+
+    public override void FailQuest()
+    {
+        base.FailQuest();
+        NodeManager.Instance.RemoveSetTileEvent(IncreaseCount);
     }
 
     public override void CompleteQuest()
     {
         base.CompleteQuest();
         GameManager.Instance.gold += 100;
+        NodeManager.Instance.RemoveSetTileEvent(IncreaseCount);
     }
 }
 
@@ -57,11 +81,6 @@ public class Quest2003 : Quest
             curNode = NodeManager.Instance.endPoint;
 
         if (curNode != NodeManager.Instance.endPoint)
-            curClearNum[0]++;
-
-        curNode = NodeManager.Instance.endPoint;
-
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
     }
 
@@ -72,26 +91,26 @@ public class Quest2003 : Quest
     }
 }
 
-public class Quest2004 : Quest
-{
-    private int curRoomCount = -1;
+//public class Quest2004 : Quest
+//{
+//    private int curRoomCount = -1;
 
-    public override void CheckCondition()
-    {
-        if (curRoomCount == -1)
-            curRoomCount = NodeManager.Instance.tileDictionary[TileType.Room].Count + NodeManager.Instance.tileDictionary[TileType.Room_Single].Count + NodeManager.Instance.tileDictionary[TileType.Door].Count;
-        curClearNum[0] += NodeManager.Instance.tileDictionary[TileType.Room].Count + NodeManager.Instance.tileDictionary[TileType.Room_Single].Count + NodeManager.Instance.tileDictionary[TileType.Door].Count - curRoomCount;
-        curRoomCount = NodeManager.Instance.tileDictionary[TileType.Room].Count + NodeManager.Instance.tileDictionary[TileType.Room_Single].Count + NodeManager.Instance.tileDictionary[TileType.Door].Count;
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
-            isComplete[0] = true;
-    }
+//    public override void CheckCondition()
+//    {
+//        if (curRoomCount == -1)
+//            curRoomCount = NodeManager.Instance.tileDictionary[TileType.Room].Count + NodeManager.Instance.tileDictionary[TileType.Room_Single].Count + NodeManager.Instance.tileDictionary[TileType.Door].Count;
+//        curClearNum[0] += NodeManager.Instance.tileDictionary[TileType.Room].Count + NodeManager.Instance.tileDictionary[TileType.Room_Single].Count + NodeManager.Instance.tileDictionary[TileType.Door].Count - curRoomCount;
+//        curRoomCount = NodeManager.Instance.tileDictionary[TileType.Room].Count + NodeManager.Instance.tileDictionary[TileType.Room_Single].Count + NodeManager.Instance.tileDictionary[TileType.Door].Count;
+//        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+//            isComplete[0] = true;
+//    }
 
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        GameManager.Instance.gold += 100;
-    }
-}
+//    public override void CompleteQuest()
+//    {
+//        base.CompleteQuest();
+//        GameManager.Instance.gold += 100;
+//    }
+//}
 
 public class Quest2005 : Quest
 {
@@ -115,27 +134,27 @@ public class Quest2005 : Quest
     }
 }
 
-public class Quest2006 : Quest
-{
-    private int curEnvironmentCount = -1;
+//public class Quest2006 : Quest
+//{
+//    private int curEnvironmentCount = -1;
 
-    public override void CheckCondition()
-    {
-        if (curEnvironmentCount == -1)
-            curEnvironmentCount = NodeManager.Instance.environments.Count;
-        curClearNum[0] += NodeManager.Instance.environments.Count - curEnvironmentCount;
-        curEnvironmentCount = NodeManager.Instance.environments.Count;
+//    public override void CheckCondition()
+//    {
+//        if (curEnvironmentCount == -1)
+//            curEnvironmentCount = NodeManager.Instance.environments.Count;
+//        curClearNum[0] += NodeManager.Instance.environments.Count - curEnvironmentCount;
+//        curEnvironmentCount = NodeManager.Instance.environments.Count;
 
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
-            isComplete[0] = true;
-    }
+//        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+//            isComplete[0] = true;
+//    }
 
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        GameManager.Instance.gold += 300;
-    }
-}
+//    public override void CompleteQuest()
+//    {
+//        base.CompleteQuest();
+//        GameManager.Instance.gold += 300;
+//    }
+//}
 
 public class Quest2007 : Quest
 {
@@ -358,5 +377,22 @@ public class Quest2013 : Quest
     {
         base.CompleteQuest();
         GameManager.Instance.herb1 += 10;
+    }
+}
+
+
+public class Quest2014 : Quest
+{
+    public override void CheckCondition()
+    {
+        isComplete[0] = true;
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.herb1 += 10;
+        GameManager.Instance.herb2 += 10;
+        GameManager.Instance.herb3 += 10;
     }
 }
