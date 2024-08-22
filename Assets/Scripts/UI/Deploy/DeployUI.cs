@@ -13,6 +13,10 @@ public class DeployUI : MonoBehaviour
 
     [SerializeField]
     GameObject uiPage;
+
+    [SerializeField]
+    GameObject btnBlocker;
+
     public int DeployStep
     {
         get
@@ -89,15 +93,16 @@ public class DeployUI : MonoBehaviour
         NodeManager.Instance.SetManaGuide(false);
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
-        UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
+        //UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
         UIManager.Instance.CloseTab(exitBtn.gameObject);
         GameManager.Instance.cardLock = false;
-        GameManager.Instance.SetPause(true);
+        //GameManager.Instance.SetPause(true);
 
         if (ingameUI == null)
             ingameUI = GetComponentInParent<InGameUI>();
         ingameUI?.SetRightUI(true);
         ingameUI?.SetDownUI(true);
+        btnBlocker.SetActive(false);
     }
 
     private bool HaveMana(CompleteRoom room, out int outMana)
@@ -237,7 +242,8 @@ public class DeployUI : MonoBehaviour
         SetGuideState(curType);
         GameManager.Instance.cardLock = true;
         UIManager.Instance.CloseTab(uiPage);
-        UIManager.Instance.SetTab(exitBtn.gameObject, true, () => { DeployEnd(); }); 
+        UIManager.Instance.SetTab(exitBtn.gameObject, true, () => { DeployEnd(); });
+        btnBlocker.SetActive(true);
     }
 
     public void SetItem()
