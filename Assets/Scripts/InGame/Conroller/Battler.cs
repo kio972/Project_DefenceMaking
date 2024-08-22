@@ -599,7 +599,7 @@ public class Battler : FSM<Battler>
     {
         List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
         splashTargets.Remove(mainTarget);
-        int damage = Mathf.CeilToInt(baseDamage * splashDamage);
+        int damage = Mathf.CeilToInt((float)baseDamage * splashDamage / 100f);
         foreach (Battler target in splashTargets)
             target.GetDamage(damage, this);
     }
@@ -619,7 +619,7 @@ public class Battler : FSM<Battler>
             int tempDamage = TempDamage(baseDamage);
             curTarget.GetDamage(tempDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget, baseDamage + tempDamage);
+                SplashAttack(curTarget, tempDamage);
         }
     }
 
