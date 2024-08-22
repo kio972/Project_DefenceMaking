@@ -339,7 +339,7 @@ public class GameManager : IngameSingleton<GameManager>
         cardDeckController.Init();
         //cardDeckController.Invoke("Mulligan", 1f);
         cardDeckController.Invoke("MulliganFixed", 1f);
-        speedController.SetSpeedZero();
+        speedController.SetSpeedNormal();
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);
 
@@ -398,6 +398,7 @@ public class GameManager : IngameSingleton<GameManager>
         shop.LoadData(data);
         QuestManager.Instance.LoadGame(data);
         SetWaveSpeed(curWave);
+        speedController.SetSpeedZero();
         isInit = true;
     }
 }
