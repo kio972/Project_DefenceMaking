@@ -191,10 +191,10 @@ public class CardFramework : MonoBehaviour
             }
         }
 
-        DrawLine();
-
         if (CancelInput())
             SetObjectOnMap(true);
+
+        DrawLine();
     }
 
     public void CallCard()

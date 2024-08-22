@@ -88,7 +88,7 @@ public class MonsterSpawner : MonoBehaviour
             curCoolTime = 0f;
         }
 
-        curCoolTime += Time.deltaTime * GameManager.Instance.timeScale;
+        curCoolTime += GameManager.Instance.InGameDeltaTime;
         fillImg.fillAmount = (curCoolTime / spawnCoolTime);
     }
 }

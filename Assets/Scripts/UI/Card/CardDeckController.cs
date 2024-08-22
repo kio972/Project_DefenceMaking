@@ -443,7 +443,10 @@ public class CardDeckController : MonoBehaviour
     public void MulliganFixed()
     {
         foreach(var card in mulliganList)
+        {
+            AddCard(DataManager.Instance.deckListIndex[card]);
             DrawCard(DataManager.Instance.deckListIndex[card]);
+        }
     }
 
     public void Mulligan()
