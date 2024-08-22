@@ -64,6 +64,7 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
 
     public void RefreshItem()
     {
+        curCards = new List<Card>();
         List<int> targets = new List<int>();
         string targetGrade = isSuperial ? "rare" : "normal";
         foreach(int herb in DataManager.Instance.herbCard_Indexs)

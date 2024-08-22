@@ -64,8 +64,11 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void GolemHoldbackUp(int value)
     {
         golemHoldback_Weight += value;
-        foreach (Golem golem in GameManager.Instance._MonsterList)
-            golem.UpdateHoldBack(value);
+        foreach (var target in GameManager.Instance._MonsterList)
+        {
+            if(target is Golem golem)
+                golem.UpdateHoldBack(value);
+        }
     }
 
     public void GoblinHealActive()
@@ -76,8 +79,11 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void UpgradeSlimeSplit(int value)
     {
         _slimeSplit_Weight.Value += value;
-        foreach (Slime slime in GameManager.Instance._MonsterList)
-            slime.UpgradeSplitCount(value);
+        foreach (var target in GameManager.Instance._MonsterList)
+        {
+            if(target is Slime slime)
+                slime.UpgradeSplitCount(value);
+        }
     }
 
     public void UpgradeDevilAura(int range, int value)

@@ -58,6 +58,18 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup layoutGroup;
 
+    public bool IsQuestStarted(string questID)
+    {
+        if (mainQuest != null && mainQuest._QuestID == questID)
+            return true;
+
+        foreach (var quest in subQuest)
+            if (quest._QuestID == questID)
+                return true;
+
+        return false;
+    }
+
     private Quest LoadQuest(int questID)
     {
         string questClassName = "Quest" + questID.ToString(); // 퀘스트 클래스의 이름

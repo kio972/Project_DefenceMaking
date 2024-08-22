@@ -63,7 +63,10 @@ public class QuestManager : IngameSingleton<QuestManager>
 
     HashSet<string> clearedQuests = new HashSet<string>();
 
-
+    public bool IsQuestClear(string questId)
+    {
+        return clearedQuests.Contains(questId);
+    }
 
     public void EndQuest(Quest quest, bool isClear)
     {

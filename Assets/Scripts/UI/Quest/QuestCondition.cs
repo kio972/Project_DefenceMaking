@@ -24,13 +24,13 @@ public class QusetCondition_m2003 : QuestCondition
     }
 }
 
-public class QusetCondition_m2007 : QuestCondition
-{
-    public override bool IsConditionPassed()
-    {
-        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2006").Count() >= 1;
-    }
-}
+//public class QusetCondition_m2007 : QuestCondition
+//{
+//    public override bool IsConditionPassed()
+//    {
+//        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2006").Count() >= 1;
+//    }
+//}
 
 public class QusetCondition_m2012 : QuestCondition
 {

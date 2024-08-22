@@ -85,9 +85,12 @@ public class ShopUI : MonoBehaviour
         Init();
     }
 
+    [SerializeField]
+    private GameObject btnObject;
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Input.GetKeyDown(KeyCode.F3) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);

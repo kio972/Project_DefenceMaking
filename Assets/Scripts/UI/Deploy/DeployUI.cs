@@ -305,12 +305,15 @@ public class DeployUI : MonoBehaviour
         initState = true;
     }
 
+    [SerializeField]
+    private GameObject btnObject;
+
     public void Update()
     {
         if (curObject != null)
             UpdateDeployState();
 
-        if (Input.GetKeyDown(KeyCode.F2))
+        if (Input.GetKeyDown(KeyCode.F1) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);

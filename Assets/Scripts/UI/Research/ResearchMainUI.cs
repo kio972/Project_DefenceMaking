@@ -47,11 +47,12 @@ public class ResearchMainUI : MonoBehaviour
         GameManager.Instance.notificationBar?.SetMesseage(curResearch._ResearchData.researchName + " 연구 완료", NotificationType.Research);
         AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
 
+        this.curResearch = null;
+        _completedResearchs.Add(curResearch._ResearchId);
         Research[] research = curResearch.GetComponents<Research>();
         foreach(var item in research)
             item?.ActiveResearch();
-        _completedResearchs.Add(curResearch._ResearchId);
-        this.curResearch = null;
+        
     }
 
     public bool StartResearch(ResearchSlot target, float additionalTime = 0)
@@ -86,9 +87,12 @@ public class ResearchMainUI : MonoBehaviour
         AudioManager.Instance.Play2DSound(researchUISound, SettingManager.Instance._FxVolume);
     }
 
+    [SerializeField]
+    private GameObject btnObject;
+
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F2) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);
