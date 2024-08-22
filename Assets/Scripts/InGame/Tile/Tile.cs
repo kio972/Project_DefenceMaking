@@ -443,7 +443,7 @@ public class Tile : MonoBehaviour
                 AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateTile(true);
             }
-            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
+            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
             {
                 EndMoveing();
             }

@@ -47,7 +47,7 @@ public class CardFramework : MonoBehaviour
 
     private bool CancelInput()
     {
-        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.F1) || Input.GetKeyDown(KeyCode.F2) || Input.GetKeyDown(KeyCode.F3);
+        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.F1) || Input.GetKeyDown(KeyCode.F2) || Input.GetKeyDown(KeyCode.F3) || Input.GetKeyDown(KeyCode.Escape);
     }
 
     private void SetTile(TileNode curNode)
