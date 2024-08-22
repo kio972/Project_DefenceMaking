@@ -6,7 +6,7 @@ using System.Threading;
 
 public class Slime : Monster
 {
-    private int splitCount = 2;
+    private int splitCount = 1;
     private TileNode splitedNode = null;
     private TileNode slime_curNode = null;
     private bool skipedFirst = false;
@@ -31,7 +31,7 @@ public class Slime : Monster
     {
         base.Init();
         splitElapsed = 0;
-        splitCount = 2 + PassiveManager.Instance._slimeSplit_Weight.Value;
+        splitCount = 1 + PassiveManager.Instance._slimeSplit_Weight.Value;
         RotationAxis.localScale = Vector3.one;
         splitedNode = null;
         slime_curNode = curTile;
@@ -64,6 +64,7 @@ public class Slime : Monster
     private async UniTaskVoid ExcuteSplit(List<TileNode> nextNodes)
     {
         _Animator.SetTrigger("Split");
+        _Animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
         splitElapsed = 1.5f;
         while(splitElapsed > 0)
         {
