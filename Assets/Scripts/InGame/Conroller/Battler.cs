@@ -833,20 +833,18 @@ public class Battler : FSM<Battler>
             if (rangedTargets.Contains(battler))
                 continue;
 
-            if(battler.unitType == UnitType.Player && battler.tag != "King")
+            if(battler is Monster target && holdBackCheck)
             {
-                Monster target = battler.GetComponent<Monster>();
-                if (!target.CanHoldBack && !target.rangedTargets.Contains(this) && holdBackCheck)
+                if (!target.CanHoldBack && !target.rangedTargets.Contains(this))
                     continue;
             }
 
-            if(this.unitType == UnitType.Player && this.tag != "King")
-            {
-                Monster monster = GetComponent<Monster>();
-                if(monster.CanHoldBack || !holdBackCheck)
-                    rangedTargets.Add(battler);
-            }
-            else
+            //if(this is Monster monster)
+            //{
+            //    if(monster.CanHoldBack || !holdBackCheck)
+            //        rangedTargets.Add(battler);
+            //}
+            //else
                 rangedTargets.Add(battler);
         }
 
@@ -867,7 +865,10 @@ public class Battler : FSM<Battler>
         //        curTarget = battle;
         //}
 
-        return GetPriorityTarget();
+        Battler target = GetPriorityTarget();
+        if(target is Monster monster)
+            monster.holdBackTargets.Add(this);
+        return target;
     }
 
     protected virtual Battler GetPriorityTarget()

@@ -29,6 +29,8 @@ public class Monster : Battler
 
     private int resurrectCount;
 
+    public List<Battler> holdBackTargets = new List<Battler>();
+
     public override float MoveSpeed
     {
         get
@@ -45,8 +47,12 @@ public class Monster : Battler
     {
         get
         {
-            bool isListHaveEmpty = rangedTargets.Count < holdBackCount;
-            return isListHaveEmpty;
+            List<Battler> curHoldBackTargets = new List<Battler>(holdBackTargets);
+            foreach(var target in curHoldBackTargets)
+                if(target.isDead)
+                    holdBackTargets.Remove(target);
+
+            return holdBackTargets.Count < holdBackCount;
         }
     }
 
