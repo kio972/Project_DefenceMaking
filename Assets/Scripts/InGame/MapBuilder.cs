@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 
 
@@ -37,7 +38,7 @@ public class MapBuilder : MonoBehaviour
             return false;
 
         curTileSetCount = 0;
-        SetHiddenTile(3);
+        SetHiddenTile(3).Forget();
         return true;
     }
 
@@ -52,8 +53,9 @@ public class MapBuilder : MonoBehaviour
         return false;
     }
 
-    private void SetHiddenTile(int dist)
+    private async UniTaskVoid SetHiddenTile(int dist)
     {
+        await UniTask.Yield();
         List<TileNode> nodes = NodeManager.Instance.GetDistanceNodes(dist).ToList();
         TileNode targetNode = null;
         while (nodes.Count > 0)
@@ -291,9 +293,9 @@ public class MapBuilder : MonoBehaviour
             Tutorial tutorial = FindObjectOfType<Tutorial>();
             if (tutorial == null)
             {
-                SetHiddenTile(3);
-                SetHiddenTile(3);
-                SetHiddenTile(3);
+                SetHiddenTile(3).Forget();
+                SetHiddenTile(3).Forget();
+                SetHiddenTile(3).Forget();
             }
         }
 

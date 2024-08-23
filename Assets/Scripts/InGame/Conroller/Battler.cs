@@ -586,7 +586,7 @@ public class Battler : FSM<Battler>
         }
     }
 
-    public void Play_AttackAnimation()
+    public virtual void Play_AttackAnimation()
     {
         if (animator != null)
         {

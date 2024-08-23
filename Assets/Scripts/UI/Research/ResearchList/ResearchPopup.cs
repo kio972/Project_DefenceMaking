@@ -180,7 +180,7 @@ public class ResearchPopup : MonoBehaviour
         if (!HaveAsset())
         {
             GameManager.Instance.popUpMessage.ToastMsg("연구 재화가 부족합니다.");
-            AudioManager.Instance.Play2DSound("Tech_research_Fail_01", SettingManager.Instance._UIVolume);
+            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
@@ -197,7 +197,7 @@ public class ResearchPopup : MonoBehaviour
         else
             GameManager.Instance.popUpMessage.ToastMsg("연구가 이미 진행중입니다.");
 
-        AudioManager.Instance.Play2DSound(isStart ? "UI_Click_DownPitch_01" : "Tech_research_Fail_01", SettingManager.Instance._UIVolume);
+        AudioManager.Instance.Play2DSound(isStart ? "UI_Click_01" : "UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
     }
 
     private void StopResearch()

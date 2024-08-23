@@ -81,6 +81,7 @@ public class InputManager : IngameSingleton<InputManager>
             if (node != null && node.curTile != null)
             {
                 ClickTile(node.curTile);
+                AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
             }
             else
                 ResetTileClick();

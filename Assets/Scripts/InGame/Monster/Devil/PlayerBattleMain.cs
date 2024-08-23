@@ -33,8 +33,12 @@ public class PlayerBattleMain : Battler
         Vector3 exitNode = NodeManager.Instance.endPoint.neighborNodeDic[endTileExitDirection].transform.position;
         RotateCharacter(exitNode);
     }
-
-
+    public override void Play_AttackAnimation()
+    {
+        base.Play_AttackAnimation();
+        if (curTarget != null)
+            EffectPooling.Instance.PlayEffect("DarkBall", transform, new Vector3(0, 0.5f, 0), 0.4f, curTarget.transform.position);
+    }
 
     public override void Update()
     {
