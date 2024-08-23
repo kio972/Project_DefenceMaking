@@ -13,7 +13,14 @@ public enum MonsterType
     undead,
 }
 
-public class Monster : Battler
+public interface IHoldbacker
+{
+    HashSet<Battler> holdBackTargets { get; }
+    bool CanHoldBack { get; }
+    void AddHoldBackTarget(Battler target);
+}
+
+public class Monster : Battler, IHoldbacker
 {
     private int monsterIndex = -1;
 
@@ -29,7 +36,9 @@ public class Monster : Battler
 
     private int resurrectCount;
 
-    public List<Battler> holdBackTargets = new List<Battler>();
+    private HashSet<Battler> _holdBackTargets = new HashSet<Battler>();
+
+    public HashSet<Battler> holdBackTargets { get => _holdBackTargets; }
 
     public override float MoveSpeed
     {
@@ -47,15 +56,20 @@ public class Monster : Battler
     {
         get
         {
-            List<Battler> curHoldBackTargets = new List<Battler>(holdBackTargets);
+            List<Battler> curHoldBackTargets = new List<Battler>(_holdBackTargets);
             foreach(var target in curHoldBackTargets)
                 if(target.isDead)
-                    holdBackTargets.Remove(target);
+                    _holdBackTargets.Remove(target);
 
-            return holdBackTargets.Count < holdBackCount;
+            return _holdBackTargets.Count < holdBackCount;
         }
     }
 
+    public void AddHoldBackTarget(Battler target)
+    {
+        _holdBackTargets.Add(target);
+        GameManager.Instance.holdBackedABattlers.Add(target);
+    }
 
     public override void Dead()
     {

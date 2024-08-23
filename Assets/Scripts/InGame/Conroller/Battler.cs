@@ -114,6 +114,7 @@ public class Battler : FSM<Battler>
 
     public Battler chaseTarget;
     public Battler curTarget;
+    public Battler prevTarget;
 
     public Vector3 lastPoint;
 
@@ -266,6 +267,8 @@ public class Battler : FSM<Battler>
         Invoke("RemoveBody", 2.5f);
         if(deadSound != null)
             AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
+        if(GameManager.Instance.holdBackedABattlers.Contains(this))
+            GameManager.Instance.holdBackedABattlers.Remove(this);
     }
 
     private void UpdateChaseTarget(Battler attacker)
@@ -817,6 +820,8 @@ public class Battler : FSM<Battler>
         {
             if (battler.isDead || !targets.Contains(battler) || (object)battler.CurState == FSMHide.Instance)
                 removeList.Add(battler);
+            if (battler is IHoldbacker holdbacker && !holdbacker.CanHoldBack && !holdbacker.holdBackTargets.Contains(this))
+                removeList.Add(battler);
         }
 
         foreach (Battler battler in removeList)
@@ -830,9 +835,9 @@ public class Battler : FSM<Battler>
             if (rangedTargets.Contains(battler))
                 continue;
 
-            if(battler is Monster target && holdBackCheck)
+            if(battler is IHoldbacker holdbacker && holdBackCheck)
             {
-                if (!target.CanHoldBack && !target.rangedTargets.Contains(this))
+                if (!holdbacker.CanHoldBack && !battler.rangedTargets.Contains(this))
                     continue;
             }
 
@@ -863,17 +868,21 @@ public class Battler : FSM<Battler>
         //}
 
         Battler target = GetPriorityTarget();
-        if(target is Monster monster)
-            monster.holdBackTargets.Add(this);
+        if(target is IHoldbacker holdbackable && !GameManager.Instance.holdBackedABattlers.Contains(this))
+            holdbackable.AddHoldBackTarget(this);
         return target;
     }
 
     protected virtual Battler GetPriorityTarget()
     {
+        //전에 때렸던 타겟이 사거리 내에 있다면 최우선타겟으로 삼는다.
+        if(prevTarget != null && rangedTargets.Contains(prevTarget))
+            return prevTarget;
+
         Battler curTarget = null;
         foreach (Battler battle in rangedTargets)
         {
-            if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
+            if (curTarget == null)
                 curTarget = battle;
             else if (Vector3.Distance(transform.position, battle.transform.position) <
                 Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")

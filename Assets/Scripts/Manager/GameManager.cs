@@ -103,6 +103,10 @@ public class GameManager : IngameSingleton<GameManager>
 
     public Adventurer LastSpawnedAdventurer;
 
+    private HashSet<Battler> _holdBackedBattlers = new HashSet<Battler>();
+    public HashSet<Battler> holdBackedABattlers { get => _holdBackedBattlers; }
+
+
     public void UpdateTotalMana()
     {
         int totalMana = 0;

@@ -44,6 +44,9 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
 
     public void Exit(Battler e)
     {
+        e.prevTarget = e.curTarget;
+        if (e.prevTarget.isDead)
+            e.prevTarget = null;
         e.curTarget = null;
         e.curAttackCoolTime = e.attackCoolTime;
     }
