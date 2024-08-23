@@ -80,6 +80,7 @@ public class CardPackEffect : MonoBehaviour
     private async UniTaskVoid SetCards(List<Card> cards)
     {
         InitCards(cards);
+        confirmBtn.SetActive(false);
         gameObject.SetActive(true);
         UIManager.Instance.SetTab(gameObject, true);
         await UtilHelper.IColorEffect(fadeImg.transform, Color.clear, fadeColor, 0.5f);
@@ -99,7 +100,7 @@ public class CardPackEffect : MonoBehaviour
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
         confirmBtn.SetActive(true);
-        await UniTask.WaitUntil(() => !confirmBtn.activeSelf || Input.GetKeyDown(KeyCode.Escape));
+        await UniTask.WaitUntil(() => !confirmBtn.activeSelf || Input.GetKeyDown(KeyCode.Escape), default, cancellationToken.Token);
         confirmBtn.SetActive(false);
 
         foreach (CardUI card in cardObjects)
