@@ -38,6 +38,6 @@ public class Poison : Debuff, IWhileEffect, IStackable
             return;
 
         tick = 0f;
-        _battler.GetDamage(3, null);
+        _battler.GetDamage(3 + _battler.armor, null);
     }
 }
