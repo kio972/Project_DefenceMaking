@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Linq;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CardPackEffect : MonoBehaviour
 {
@@ -80,6 +81,7 @@ public class CardPackEffect : MonoBehaviour
     {
         InitCards(cards);
         gameObject.SetActive(true);
+        UIManager.Instance.SetTab(gameObject, true);
         await UtilHelper.IColorEffect(fadeImg.transform, Color.clear, fadeColor, 0.5f);
         //await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
@@ -97,7 +99,7 @@ public class CardPackEffect : MonoBehaviour
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
         confirmBtn.SetActive(true);
-        await UniTask.WaitUntil(() => !confirmBtn.activeSelf || Input.GetKeyDown(KeyCode.Return));
+        await UniTask.WaitUntil(() => !confirmBtn.activeSelf || Input.GetKeyDown(KeyCode.Escape));
         confirmBtn.SetActive(false);
 
         foreach (CardUI card in cardObjects)
@@ -119,6 +121,8 @@ public class CardPackEffect : MonoBehaviour
                 UtilHelper.MoveEffect(cardObjects[i].transform, deckPos.position, toDeckLerpTime, cancellationToken).Forget();
         }
         gameObject.SetActive(false);
+        UIManager.Instance.SetTab(gameObject, false);
+
     }
 
     public void SetCardPackSprite(Transform packTransform)

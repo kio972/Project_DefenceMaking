@@ -90,7 +90,7 @@ public class ShopUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F3) && btnObject.activeSelf)
+        if (Input.GetKeyDown(KeyCode.F3) && btnObject.activeSelf && !GetComponentInChildren<CardPackEffect>(true).gameObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);
