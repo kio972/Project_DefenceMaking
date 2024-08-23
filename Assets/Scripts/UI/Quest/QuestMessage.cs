@@ -101,6 +101,7 @@ public class QuestMessage : MonoBehaviour
 
         UtilHelper.IColorEffect(fade.transform, new Color(0, 0, 0, fadeAlpha), Color.clear, 0.1f, () => fade.gameObject.SetActive(false)).Forget();
         yield return StartCoroutine(SetAlpha(false, 0.1f));
+        GameManager.Instance.SetPause(false);
 
         float targetTime = dissolveController.disappareGoaltime;
         float elapsedTime = 0f;
@@ -111,7 +112,6 @@ public class QuestMessage : MonoBehaviour
         }
 
         QuestManager.Instance.StartQuest(id);
-        GameManager.Instance.SetPause(false);
         closing = false;
         gameObject.SetActive(false);
     }
