@@ -6,6 +6,18 @@ public class Thief : Adventurer, IHide
 {
     public virtual bool canAttackbyTrap { get => true; }
 
+    public override void GetDamage(int damage, Battler attacker)
+    {
+        int curHp = this.curHp;
+        base.GetDamage(damage, attacker);
+
+        if (this.curHp < curHp && (object)CurState == FSMHide.Instance)
+        {
+            ChangeState(FSMPatrol.Instance);
+            GetCC(attacker, 0.5f);
+        }
+    }
+
     public void HideAction()
     {
         if(CurTile == NodeManager.Instance.endPoint)

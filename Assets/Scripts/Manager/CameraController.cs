@@ -184,6 +184,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        stackCam.orthographicSize = Camera.main.orthographicSize;
+
         if (GameManager.Instance.isPause)
             return;
 
@@ -191,7 +193,5 @@ public class CameraController : MonoBehaviour
 
         if (MouseWheelCheck())
             SetCam();
-
-        stackCam.orthographicSize = Camera.main.orthographicSize;
     }
 }

@@ -349,9 +349,6 @@ public class Battler : FSM<Battler>
                 Dead();
         }
 
-        if ((object)CurState == FSMHide.Instance)
-            ChangeState(FSMPatrol.Instance);
-
         if ((object)CurState == FSMPatrol.Instance)
         {
             UpdateChaseTarget(attacker);
