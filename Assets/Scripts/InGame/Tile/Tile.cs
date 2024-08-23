@@ -244,23 +244,12 @@ public class Tile : MonoBehaviour
         return newDirection;
     }
 
-    private int rotation = 0;
-    public int _Rotation { get => rotation; }
-
     public void RotateTile(bool reverse = false)
     {
         pathDirection = RotateDirection(pathDirection, reverse);
         roomDirection = RotateDirection(roomDirection, reverse);
         RotateDirection(reverse);
         NodeManager.Instance.SetGuideState(GuideState.Tile, this);
-
-        if (reverse)
-            rotation--;
-        else
-            rotation++;
-        if (rotation < 0)
-            rotation = 5;
-        rotation %= 6;
     }
 
     public void ResetTwin()
@@ -392,7 +381,7 @@ public class Tile : MonoBehaviour
         tile.id = name.ToString().Replace("(Clone)", "");
         tile.row = curNode.row;
         tile.col = curNode.col;
-        tile.rotation = rotation;
+        tile.rotation = rotationCount.Value;
         tile.isDormant = isDormant;
         tile.isRemovable = removable;
         tile.trapId = trap != null ? trap.BattlerID : "";
