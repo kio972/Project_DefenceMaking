@@ -78,6 +78,13 @@ public class CardDeckController : MonoBehaviour
     private Sprite emptyDeckImg;
 
     [SerializeField]
+    private Image cardCountImg;
+    [SerializeField]
+    private Sprite cardCountSprite;
+    [SerializeField]
+    private Sprite emptycardCountSprite;
+    
+    [SerializeField]
     private Transform cardZone;
     [SerializeField]
     private Transform cardZoom;
@@ -161,9 +168,15 @@ public class CardDeckController : MonoBehaviour
 
         deckCountText.text = (cardDeck.Count).ToString();
         if (cardDeck.Count < 10)
+        {
+            cardCountImg.sprite = emptycardCountSprite;
             deckCountText.color = Color.red;
+        }
         else
-            deckCountText.color = Color.black;
+        {
+            cardCountImg.sprite = cardCountSprite;
+            deckCountText.color = Color.white;
+        }
 
         if (cardDeck.Count <= 0)
             deckBtnImg.sprite = emptyDeckImg;

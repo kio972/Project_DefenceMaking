@@ -7039,10 +7039,10 @@ RectTransform:
   m_Father: {fileID: 8308870059101137204}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8308870057611087104
 CanvasRenderer:
@@ -7066,7 +7066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7074,15 +7074,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97a869447a59c1e4b883838bdbcb986a, type: 2}
+  m_sharedMaterial: {fileID: 2186946242765391702, guid: 97a869447a59c1e4b883838bdbcb986a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7099,8 +7099,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7359,11 +7359,11 @@ RectTransform:
   m_Father: {fileID: 8308870059192340228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5, y: -5}
-  m_SizeDelta: {x: 55, y: 55}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 70, y: 29}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8308870059101137194
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7386,13 +7386,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 1f00d81473581584e82b1324b8babd14, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5182875eac325c347b7bc5257b786d16, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 310190f252f9982459d6631cb55e127e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7416,7 +7416,7 @@ GameObject:
   - component: {fileID: 8308870059192340282}
   - component: {fileID: 8308870059192340229}
   - component: {fileID: 8308870059192340281}
-  - component: {fileID: 2939572769211614370}
+  - component: {fileID: 8407059725422319677}
   m_Layer: 5
   m_Name: DeckButton
   m_TagString: Untagged
@@ -7468,6 +7468,9 @@ MonoBehaviour:
   deckDrawBtn: {fileID: 8308870059192340229}
   originDeckImg: {fileID: 21300000, guid: f585abeeb2e17eb499d1a47208cc3866, type: 3}
   emptyDeckImg: {fileID: 21300000, guid: 555145d7993ad5e4095ff3a01498d249, type: 3}
+  cardCountImg: {fileID: 8308870059101137205}
+  cardCountSprite: {fileID: 21300000, guid: 310190f252f9982459d6631cb55e127e, type: 3}
+  emptycardCountSprite: {fileID: 21300000, guid: 0943d2845d943ac4a9d13c83e85b8cc8, type: 3}
   cardZone: {fileID: 8308870057585902955}
   cardZoom: {fileID: 8308870058781293845}
   pointPadding: 2
@@ -7478,7 +7481,7 @@ MonoBehaviour:
   lineRendererPoint: 10
   lineAmplitude: 1
   deckCountText: {fileID: 8308870057611087107}
-  recycle: {fileID: 2939572769211614370}
+  recycle: {fileID: 8407059725422319677}
 --- !u!114 &8308870059192340282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7571,7 +7574,7 @@ MonoBehaviour:
   soundOnClip: {fileID: 8300000, guid: b6874f6c9870040078ab808c561d09a7, type: 3}
   soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
   soundOnUnHoverClip: {fileID: 0}
---- !u!114 &2939572769211614370
+--- !u!114 &8407059725422319677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
