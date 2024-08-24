@@ -297,6 +297,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     private void SetTileAvail(Tile targetTile)
     {
         SetVirtualNode(targetTile._TileType == TileType.End);
+        if(targetTile._TileType == TileType.End)
+            virtualNodes.Add(endPoint);
 
         List<Direction> targetNode_PathDirection = targetTile.PathDirection;
         List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;

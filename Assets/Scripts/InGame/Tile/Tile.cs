@@ -165,7 +165,7 @@ public class Tile : MonoBehaviour
     private void UpdateMoveTilePos(TileNode curNode)
     {
         if (curNode != null && NodeManager.Instance.virtualNodes.Contains(curNode) || curNode == this.curNode)
-            twin.transform.position = curNode.transform.position;
+            twin.transform.position = curNode.transform.position + new Vector3(0, 0.01f, 0);
         else
             twin.transform.position = new Vector3(0, 10000, 0);
 
@@ -271,7 +271,7 @@ public class Tile : MonoBehaviour
         twin.roomDirection = new List<Direction>(roomDirection);
         twin.transform.rotation = transform.rotation;
         twin.rotationCount.Value = rotationCount.Value;
-        NodeManager.Instance.SetActiveNode(this.curNode, false);
+        //NodeManager.Instance.SetActiveNode(this.curNode, false);
     }
 
     public void ReadyForMove()
@@ -281,10 +281,10 @@ public class Tile : MonoBehaviour
         switch (tileType)
         {
             case TileType.End:
-                NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+                NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
                 break;
             default:
-                NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+                NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
                 break;
         }
 
@@ -432,6 +432,7 @@ public class Tile : MonoBehaviour
                 AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateTile(true);
             }
+
             if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
             {
                 EndMoveing();

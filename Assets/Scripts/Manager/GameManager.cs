@@ -271,7 +271,7 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             //NodeManager.Instance.LockMovableTiles();
 
-            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume);
+            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.7f);
         }
     }
 
