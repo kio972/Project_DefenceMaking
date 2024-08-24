@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class DeployUI : MonoBehaviour
 {
@@ -41,6 +42,8 @@ public class DeployUI : MonoBehaviour
 
     [SerializeField]
     private Button exitBtn;
+    [SerializeField]
+    private GameObject deployingWindow;
 
     private List<DeploySlot> deployItems = new List<DeploySlot>();
 
@@ -80,7 +83,7 @@ public class DeployUI : MonoBehaviour
             AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
     }
 
-    public void DeployEnd()
+    public async UniTaskVoid DeployEnd()
     {
         if (curObject == null)
             return;
@@ -90,11 +93,10 @@ public class DeployUI : MonoBehaviour
         curType = CardType.None;
         curNode = null;
 
-        NodeManager.Instance.SetManaGuide(false);
-        InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
+        NodeManager.Instance.SetManaGuide(false);
         //UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
-        UIManager.Instance.CloseTab(exitBtn.gameObject);
+        UIManager.Instance.CloseTab(deployingWindow.gameObject);
         GameManager.Instance.cardLock = false;
         //GameManager.Instance.SetPause(true);
 
@@ -103,6 +105,9 @@ public class DeployUI : MonoBehaviour
         ingameUI?.SetRightUI(true);
         ingameUI?.SetDownUI(true);
         btnBlocker.SetActive(false);
+
+        await UniTask.WaitUntil(() => !Input.GetKey(KeyCode.Mouse0));
+        InputManager.Instance.settingCard = false;
     }
 
     private bool HaveMana(CompleteRoom room, out int outMana)
@@ -156,8 +161,11 @@ public class DeployUI : MonoBehaviour
             GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
 
-            //DeployEnd();
+            if (!Input.GetKey(KeyCode.LeftShift))
+                DeployEnd();
         }
+        else if(curNode != null || curNode.curTile == null)
+            DeployEnd();
     }
 
     public void UpdateDeployState()
@@ -166,7 +174,9 @@ public class DeployUI : MonoBehaviour
         NodeManager.Instance.SetManaGuide(curType == CardType.Monster);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
             SetObjectOnMap();
+        }
         else if(Input.GetKeyDown(KeyCode.Mouse1))
             DeployEnd();
     }
@@ -242,7 +252,7 @@ public class DeployUI : MonoBehaviour
         SetGuideState(curType);
         GameManager.Instance.cardLock = true;
         UIManager.Instance.CloseTab(uiPage);
-        UIManager.Instance.SetTab(exitBtn.gameObject, true, () => { DeployEnd(); });
+        UIManager.Instance.SetTab(deployingWindow.gameObject, true, () => { DeployEnd(); });
         btnBlocker.SetActive(true);
     }
 
