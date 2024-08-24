@@ -160,7 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: ec7545368d42e4fa5b2bee31f2f7d46f, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 0176727a269d4427c8b424fb2737e9a5, type: 3}
+  - {fileID: 8300000, guid: 8f9afdb829dc043cfaa2d7d64b5e36d6, type: 3}
+  - {fileID: 8300000, guid: 8abb00a9728dd4079a48f62c653d3165, type: 3}
+  deadSoundMult: 1
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,16 +327,14 @@ MonoBehaviour:
   hpPivot: {fileID: 3491947175668925710}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
-  deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m20002
   attackEffect: {fileID: 0}
   isHide: 0
   holdBackCount: 1
-  holdBackTargets: []
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0

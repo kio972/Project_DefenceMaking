@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7318116232214203766}
   - component: {fileID: 2103541630921623617}
   - component: {fileID: 9014006541645648792}
-  - component: {fileID: 211097834948814203}
+  - component: {fileID: 7130279185671457149}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &211097834948814203
+--- !u!114 &7130279185671457149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,7 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: ee77b49554ebf4811b35879e7d4717ad, type: 3}
+  - {fileID: 8300000, guid: fbb4fbd777cdf426aae4cb4f7db493c5, type: 3}
+  - {fileID: 8300000, guid: beaa72496a31e4936887dd529f173fec, type: 3}
+  - {fileID: 8300000, guid: ec7545368d42e4fa5b2bee31f2f7d46f, type: 3}
+  attackSoundMult: 1
+  deadSounds: []
+  deadSoundMult: 1
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,8 +331,6 @@ MonoBehaviour:
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
-  deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m30004
   attackEffect: {fileID: 9054858531674775054, guid: 766ea6773c111c34db0c3af775050a15, type: 3}
   isHide: 0

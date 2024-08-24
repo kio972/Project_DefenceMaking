@@ -142,11 +142,6 @@ public class Battler : FSM<Battler>
     private Coroutine rotLevelCoroutine = null;
 
     [SerializeField]
-    private AudioClip attackSound;
-    [SerializeField]
-    private AudioClip deadSound;
-
-    [SerializeField]
     protected string battlerID;
 
     [SerializeField]
@@ -265,8 +260,6 @@ public class Battler : FSM<Battler>
         unitaskCancelTokenSource = new CancellationTokenSource();
         StopAllCoroutines();
         Invoke("RemoveBody", 2.5f);
-        if(deadSound != null)
-            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
         if(GameManager.Instance.holdBackedABattlers.Contains(this))
             GameManager.Instance.holdBackedABattlers.Remove(this);
     }
@@ -607,9 +600,6 @@ public class Battler : FSM<Battler>
     //애니메이션 이벤트에서 작동
     public virtual void Attack()
     {
-        if (attackSound != null)
-            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance._FxVolume);
-
         if (attackEffect != null)
             EffectPooling.Instance.PlayEffect(attackEffect, curTarget.transform, Vector3.zero, 0.9f);
 

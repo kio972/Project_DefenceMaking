@@ -123,12 +123,7 @@ public class AudioManager : Singleton<AudioManager>
         if (clipDic.ContainsKey(name) == false)
             return;
 
-        AudioSource audioSource = Pooling();
-        audioSource.clip = clipDic[name];
-        audioSource.spatialBlend = 0;
-        audioSource.volume = volume;
-        audioSource.Play();
-        StartCoroutine(IDeactiveAudio(audioSource));
+        Play(clipDic[name], spatialBelnd, volume, position);
     }
 
     public void Play(AudioClip clip, float spatialBelnd, float volume, Vector3 position)
@@ -138,8 +133,11 @@ public class AudioManager : Singleton<AudioManager>
 
         AudioSource audioSource = Pooling();
         audioSource.clip = clip;
-        audioSource.spatialBlend = 0;
+        audioSource.spatialBlend = spatialBelnd;
         audioSource.volume = volume;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        audioSource.minDistance = 2;
+        audioSource.maxDistance = 10;
         audioSource.Play();
         StartCoroutine(IDeactiveAudio(audioSource));
     }
@@ -157,6 +155,11 @@ public class AudioManager : Singleton<AudioManager>
     public void Play3DSound(string name, Vector3 position, float volume = 1.0f)
     {
         Play(name, 1, volume, position);
+    }
+
+    public void Play3DSound(AudioClip clip, Vector3 position, float volume = 1.0f)
+    {
+        Play(clip, 1, volume, position);
     }
 
 

@@ -63,11 +63,10 @@ MonoBehaviour:
   hpPivot: {fileID: 3736713600125128576}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: a1d88aed740410048badb875702f2c2a, type: 3}
-  deadSound: {fileID: 8300000, guid: 3f6cf1f982a7e1b4587dc0fff38527e6, type: 3}
   battlerID: s_a10002
   attackEffect: {fileID: 0}
 --- !u!136 &5018297080547852682
@@ -260,7 +259,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: -3469633884032424613}
+  attackSounds:
+  - {fileID: 8300000, guid: 57e6d4c625a6048bfb4b60ede74842c1, type: 3}
+  - {fileID: 8300000, guid: 57c3935e925354ff8ac7a24272d29608, type: 3}
+  - {fileID: 8300000, guid: fa6ffe47854a0452696036d11ce1acdf, type: 3}
+  - {fileID: 8300000, guid: 02c05fac8e9cf41db93bb55236237122, type: 3}
+  - {fileID: 8300000, guid: a68cf48d5db704f8fb005c3d838cdd63, type: 3}
+  - {fileID: 8300000, guid: 36fd5994126484c48b93dd7b56483636, type: 3}
+  attackSoundMult: 1
+  deadSounds: []
+  deadSoundMult: 1
 --- !u!1 &6060128528388781653
 GameObject:
   m_ObjectHideFlags: 0

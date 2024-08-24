@@ -30,6 +30,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Camera stackCam2;
 
+    [SerializeField]
+    private AudioListener audioListener;
+
     public void ResetCamPos(bool isStartPoint = false)
     {
         Vector3 position = NodeManager.Instance.endPoint.transform.position;
@@ -188,6 +191,7 @@ public class CameraController : MonoBehaviour
     {
         stackCam.orthographicSize = Camera.main.orthographicSize;
         stackCam2.orthographicSize = Camera.main.orthographicSize;
+        audioListener.transform.localPosition = Vector3.up * Camera.main.orthographicSize;
 
         if (GameManager.Instance.isPause)
             return;

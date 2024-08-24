@@ -44,6 +44,7 @@ public class ResultController : MonoBehaviour
         FadeOn();
         victory.gameObject.SetActive(true);
         defeat.gameObject.SetActive(false);
+        AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
     }
 
     public async UniTaskVoid GameDefeat()
@@ -53,5 +54,6 @@ public class ResultController : MonoBehaviour
         FadeOn();
         victory.gameObject.SetActive(false);
         defeat.gameObject.SetActive(true);
+        AudioManager.Instance.Play2DSound("Defeat_icon_01", SettingManager.Instance._FxVolume);
     }
 }

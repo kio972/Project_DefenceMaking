@@ -35,6 +35,9 @@ public class Trap : MonoBehaviour
     public ReactiveProperty<int> curDuration = new ReactiveProperty<int>();
     public ReactiveProperty<int> maxDuration = new ReactiveProperty<int>();
 
+    [SerializeField]
+    AudioClip attackSound;
+
     public void DestroyTrap()
     {
         curTile.trap = null;
@@ -64,7 +67,7 @@ public class Trap : MonoBehaviour
 
         attackCount++;
         curDuration.Value = duration - attackCount;
-        AudioManager.Instance.Play2DSound("Attack_trap", SettingManager.Instance._FxVolume);
+        AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);
