@@ -30,6 +30,11 @@ public class MonsterSpawner : MonoBehaviour
 
     private CompleteRoom curRoom;
 
+    public void CheckTargetCollapsed()
+    {
+        isUpdate = PathFinder.FindPath(tile, NodeManager.Instance.endPoint) != null;
+    }
+
     public void UpdatePassive()
     {
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
@@ -70,7 +75,7 @@ public class MonsterSpawner : MonoBehaviour
         
         isUpdate = true;
         GameManager.Instance.monsterSpawner.Add(this);
-        curRoom.SetSpawner(this, true);
+        curRoom?.SetSpawner(this, true);
     }
 
     private void Update()

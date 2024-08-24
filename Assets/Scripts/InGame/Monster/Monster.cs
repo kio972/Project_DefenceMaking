@@ -117,17 +117,22 @@ public class Monster : Battler, IHoldbacker
             NodeAction(nextTile);
     }
 
-    public override void Patrol()
+    protected override void CollapseLogic()
     {
-        if(PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        if (isCollapsed)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
-            if(collapseCool >= 1f)
+            if (collapseCool >= 1f)
             {
                 collapseCool = 0f;
                 GetDamage(Mathf.RoundToInt(maxHp * 0.05f), null);
             }
         }
+    }
+
+    public override void Patrol()
+    {
+        CollapseLogic();
 
         if (directPass)
             DirectPass(lastCrossRoad);

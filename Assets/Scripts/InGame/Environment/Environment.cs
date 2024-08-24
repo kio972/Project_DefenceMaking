@@ -25,6 +25,7 @@ public class Environment : MonoBehaviour
 
     public void Init(TileNode node)
     {
+        transform.SetParent(node.transform, false);
         transform.position = node.transform.position;
         NodeManager.Instance.SetTile(this);
         curNode = node;

@@ -7,6 +7,8 @@ using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using Cysharp.Threading.Tasks;
+using System.Threading;
+using Unity.VisualScripting;
 
 public enum CardType
 {
@@ -164,7 +166,7 @@ public class CardFramework : MonoBehaviour
     private void DrawLine(bool value = true)
     {
         //라인렌더러로 선표시
-        Vector3 startPos = transform.position;
+        Vector3 startPos = value ? transform.position : Vector3.zero;
 
         GameManager.Instance.cardDeckController.DrawGuide(startPos, value);
 
@@ -239,9 +241,11 @@ public class CardFramework : MonoBehaviour
         _cardInfo.Value = targetCard;
     }
 
+    private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+
     private async UniTaskVoid WaitForCard()
     {
-        await UniTask.Yield();
+        await UniTask.Yield(_tokenSource.Token);
 
         if (InputManager.Instance.settingCard) return;
 
@@ -249,7 +253,7 @@ public class CardFramework : MonoBehaviour
         while(!CancelInput() && !SetInput())
         {
             UpdateObjectState();
-            await UniTask.Yield();
+            await UniTask.Yield(_tokenSource.Token);
         }
 
         if (CancelInput())
@@ -266,5 +270,17 @@ public class CardFramework : MonoBehaviour
         Image image = GetComponent<Image>();
         var startStream = image.OnPointerDownAsObservable()
             .Subscribe(_ => WaitForCard().Forget());
+    }
+
+    private void OnEnable()
+    {
+        _tokenSource = new CancellationTokenSource();
+    }
+
+    private void OnDisable()
+    {
+        EndCard();
+        _tokenSource.Cancel();
+        _tokenSource.Dispose();
     }
 }

@@ -151,6 +151,7 @@ public class Tile : MonoBehaviour
 
         NodeManager.Instance.UpdateMinMaxRowCol(curNode.row, curNode.col);
         //NodeManager.Instance.UpdateSightNode();
+        GameManager.Instance.CheckBattlerCollapsed();
     }
 
     private void SetTileVisible(bool value)
@@ -373,6 +374,7 @@ public class Tile : MonoBehaviour
         Destroy(this.gameObject, 1.0f);
 
         NodeManager.Instance.RemoveTile(this);
+        GameManager.Instance.CheckBattlerCollapsed();
     }
 
     public TileData GetTileData()

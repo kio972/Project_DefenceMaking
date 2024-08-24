@@ -107,6 +107,16 @@ public class GameManager : IngameSingleton<GameManager>
     public HashSet<Battler> holdBackedABattlers { get => _holdBackedBattlers; }
 
 
+    public void CheckBattlerCollapsed()
+    {
+        foreach(Adventurer adventurer in adventurersList)
+            adventurer.CheckTargetCollapsed();
+        foreach(Monster monster in monsterList)
+            monster.CheckTargetCollapsed();
+        foreach (MonsterSpawner spawner in monsterSpawner)
+            spawner.CheckTargetCollapsed();
+    }
+
     public void UpdateTotalMana()
     {
         int totalMana = 0;
@@ -397,6 +407,7 @@ public class GameManager : IngameSingleton<GameManager>
         }
 
         waveController.SpawnWave(curWave);
+        waveController.UpdateWaveText();
 
         research.LoadData(data);
         shop.LoadData(data);

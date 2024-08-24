@@ -189,10 +189,6 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        stackCam.orthographicSize = Camera.main.orthographicSize;
-        stackCam2.orthographicSize = Camera.main.orthographicSize;
-        audioListener.transform.localPosition = Vector3.up * Camera.main.orthographicSize;
-
         if (GameManager.Instance.isPause)
             return;
 
@@ -200,5 +196,12 @@ public class CameraController : MonoBehaviour
 
         if (MouseWheelCheck())
             SetCam();
+    }
+
+    private void FixedUpdate()
+    {
+        stackCam.orthographicSize = Camera.main.orthographicSize;
+        stackCam2.orthographicSize = Camera.main.orthographicSize;
+        audioListener.transform.localPosition = Vector3.up * Camera.main.orthographicSize;
     }
 }

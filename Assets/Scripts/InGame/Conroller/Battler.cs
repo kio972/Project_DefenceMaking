@@ -510,9 +510,16 @@ public class Battler : FSM<Battler>
         GameManager.Instance.waveController.AddDelayedTarget(_name);
     }
 
-    public virtual void Patrol()
+    protected bool isCollapsed = false;
+
+    public void CheckTargetCollapsed()
     {
-        if (PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        isCollapsed = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null;
+    }
+
+    protected virtual void CollapseLogic()
+    {
+        if (isCollapsed)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
             if (collapseCool >= 5f)
@@ -521,6 +528,11 @@ public class Battler : FSM<Battler>
                 ReturnToBase();
             }
         }
+    }
+
+    public virtual void Patrol()
+    {
+        CollapseLogic();
 
         if (directPass)
             DirectPass(NodeManager.Instance.endPoint);
@@ -652,15 +664,14 @@ public class Battler : FSM<Battler>
         isDead = false;
         chaseTarget = null;
         curTarget = null;
-        moveSpeed = 1f;
-
+        isCollapsed = false;
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         _effects.Clear();
         SetRotation();
 
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
-
+        animator.SetBool("Move", GameManager.Instance.timeScale != 0);
         if (animator != null && !isAnimUniRxSubscribed)
         {
             isAnimUniRxSubscribed = true;
