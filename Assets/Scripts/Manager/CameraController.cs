@@ -27,6 +27,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Camera stackCam;
+    [SerializeField]
+    private Camera stackCam2;
 
     public void ResetCamPos(bool isStartPoint = false)
     {
@@ -185,6 +187,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         stackCam.orthographicSize = Camera.main.orthographicSize;
+        stackCam2.orthographicSize = Camera.main.orthographicSize;
 
         if (GameManager.Instance.isPause)
             return;

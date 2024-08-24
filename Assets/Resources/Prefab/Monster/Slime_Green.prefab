@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1741330864995389144}
   - component: {fileID: 369148983642836712}
   - component: {fileID: 4378080337354003984}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,6 +321,7 @@ MonoBehaviour:
   hpPivot: {fileID: 3894766720182730850}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
@@ -330,7 +331,6 @@ MonoBehaviour:
   attackEffect: {fileID: 0}
   isHide: 0
   holdBackCount: 1
-  holdBackTargets: []
 --- !u!136 &5368589034228258637
 CapsuleCollider:
   m_ObjectHideFlags: 0

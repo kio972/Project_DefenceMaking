@@ -136,7 +136,7 @@ public class Battler : FSM<Battler>
     [SerializeField]
     private Transform attackZone;
 
-    protected List<Battler> rangedTargets = new List<Battler>();
+    protected HashSet<Battler> rangedTargets = new HashSet<Battler>();
 
     private int prevRotLevel = -1;
     private Coroutine rotLevelCoroutine = null;
@@ -547,8 +547,8 @@ public class Battler : FSM<Battler>
             return null;
         else
         {
-            Battler closestTarget = rangedTargets[0];
-            float dist = (transform.position - closestTarget.transform.position).magnitude;
+            Battler closestTarget = null;
+            float dist = Mathf.Infinity;
             foreach(Battler target in rangedTargets)
             {
                 float targetDist = (transform.position - target.transform.position).magnitude;
@@ -646,7 +646,8 @@ public class Battler : FSM<Battler>
         armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
         float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
-        float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange);
+        if(float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange))
+            attackRange += UnityEngine.Random.Range(-0.01f, 0.01f);
 
         float.TryParse(DataManager.Instance.Battler_Table[index]["splashRange"].ToString(), out splashRange);
         if (splashRange > 0)
@@ -820,8 +821,6 @@ public class Battler : FSM<Battler>
         {
             if (battler.isDead || !targets.Contains(battler) || (object)battler.CurState == FSMHide.Instance)
                 removeList.Add(battler);
-            if (battler is IHoldbacker holdbacker && !holdbacker.CanHoldBack && !holdbacker.holdBackTargets.Contains(this))
-                removeList.Add(battler);
         }
 
         foreach (Battler battler in removeList)
@@ -832,22 +831,14 @@ public class Battler : FSM<Battler>
     {
         foreach (Battler battler in targets)
         {
-            if (rangedTargets.Contains(battler))
-                continue;
-
-            if(battler is IHoldbacker holdbacker && holdBackCheck)
+            rangedTargets.Add(battler);
+            
+            if(holdBackCheck && battler is IHoldbacker holdbacker)
             {
-                if (!holdbacker.CanHoldBack && !battler.rangedTargets.Contains(this))
-                    continue;
+                //해당 개체가 저지가능상태가 아니고, this를 저지하고 있는 중이 아니라면 대상에서 제외시킨다.
+                if (!holdbacker.CanHoldBack && !holdbacker.holdBackTargets.Contains(this))
+                    rangedTargets.Remove(battler);
             }
-
-            //if(this is Monster monster)
-            //{
-            //    if(monster.CanHoldBack || !holdBackCheck)
-            //        rangedTargets.Add(battler);
-            //}
-            //else
-                rangedTargets.Add(battler);
         }
 
         RemoveOutCaseTargets(targets);
