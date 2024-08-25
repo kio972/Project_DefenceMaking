@@ -6,6 +6,12 @@ using UniRx;
 using UniRx.Triggers;
 using System.Threading;
 
+public interface ISaveLoadBattler
+{
+    BattlerData GetData();
+    void LoadData(BattlerData data);
+}
+
 public interface IHide
 {
     public bool canAttackbyTrap { get; }
@@ -30,7 +36,7 @@ public enum CCType
     KnockBack,
 }
 
-public class Battler : FSM<Battler>
+public class Battler : FSM<Battler>, ISaveLoadBattler
 {
     private bool isAnimUniRxSubscribed = false;
 
@@ -897,7 +903,7 @@ public class Battler : FSM<Battler>
         FSMUpdate();
     }
 
-    public void LoadData(BattlerData data)
+    public virtual void LoadData(BattlerData data)
     {
         curTile = NodeManager.Instance.FindNode(data.row, data.col);
         if(data.nextRow != -1)
@@ -915,7 +921,7 @@ public class Battler : FSM<Battler>
         hpBar.UpdateHp();
     }
 
-    public BattlerData GetData()
+    public virtual BattlerData GetData()
     {
         BattlerData target = new BattlerData();
         target.id = battlerID;

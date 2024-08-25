@@ -29,6 +29,8 @@ public struct BattlerData
 
     public List<int> crossedRow;
     public List<int> crossedCol;
+
+    public Dictionary<string, object> additionalData;
 }
 
 public struct TileData

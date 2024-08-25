@@ -57,10 +57,18 @@ public class SaveManager : Singleton<SaveManager>
 
         playerData.enemys = new List<BattlerData>();
         foreach (Battler enemy in GameManager.Instance.adventurersList)
-            playerData.enemys.Add(enemy.GetData());
+        {
+            if(enemy is ISaveLoadBattler battler)
+                playerData.enemys.Add(battler.GetData());
+        }
+
         playerData.allies = new List<BattlerData>();
         foreach (Battler monster in GameManager.Instance._MonsterList)
-            playerData.allies.Add(monster.GetData());
+        {
+            if (monster is ISaveLoadBattler battler)
+                playerData.allies.Add(battler.GetData());
+        }
+
         playerData.devil = GameManager.Instance.king.GetData();
 
         GameManager.Instance.research?.SaveData(playerData);

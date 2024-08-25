@@ -31,4 +31,20 @@ public class Thief : Adventurer, IHide
         base.Init();
         ChangeState(FSMHide.Instance);
     }
+
+    public override BattlerData GetData()
+    {
+        BattlerData data = base.GetData();
+        data.additionalData = new Dictionary<string, object>();
+        data.additionalData.Add("hideState", (object)CurState == FSMHide.Instance);
+        return base.GetData();
+    }
+
+    public override void LoadData(BattlerData data)
+    {
+        base.LoadData(data);
+        bool hideState = System.Convert.ToBoolean(data.additionalData["hideState"]);
+        if(!hideState)
+            ChangeState(FSMPatrol.Instance);
+    }
 }

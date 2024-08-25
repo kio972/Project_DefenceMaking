@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class QuestMessage : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class QuestMessage : MonoBehaviour
 
     private readonly Color mainBtnColor = new Color(0.8f, 0.5f, 0.4f);
     private readonly Color subBtnColor = new Color(0.63f, 0.55f, 0.52f);
+
+    private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
     private IEnumerator SetAlpha(bool value, float lerpTime, float waitTime = 0)
     {
         TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
@@ -197,12 +201,18 @@ public class QuestMessage : MonoBehaviour
         select1.transform.parent.GetComponent<Button>().interactable = false;
         select2.transform.parent.GetComponent<Button>().interactable = false;
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.1f));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.1f), false, default, cancellationTokenSource.Token);
         string openClip = "Quest_Paper_Open_" + Random.Range(1, 4).ToString();
         AudioManager.Instance.Play2DSound(openClip, SettingManager.Instance._FxVolume);
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime), false, default, cancellationTokenSource.Token);
         select1.transform.parent.GetComponent<Button>().interactable = true;
         select2.transform.parent.GetComponent<Button>().interactable = true;
+    }
+
+    private void OnDestroy()
+    {
+        cancellationTokenSource.Cancel();
+        cancellationTokenSource.Dispose();
     }
 }

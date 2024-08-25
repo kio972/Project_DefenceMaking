@@ -119,4 +119,21 @@ public class Slime : Monster
 
         ExcuteSplit(nextNodes).Forget();
     }
+
+    public override BattlerData GetData()
+    {
+        BattlerData data = base.GetData();
+        data.additionalData = new Dictionary<string, object>();
+        data.additionalData.Add("splitCount", splitCount);
+        data.additionalData.Add("curScale", RotationAxis.localScale.x);
+        return data;
+    }
+
+    public override void LoadData(BattlerData data)
+    {
+        base.LoadData(data);
+        splitCount = System.Convert.ToInt32(data.additionalData["splitCount"]);
+        float curScale = float.Parse(data.additionalData["curScale"].ToString());
+        RotationAxis.localScale = new Vector3(curScale, curScale, curScale);
+    }
 }
