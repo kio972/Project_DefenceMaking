@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAttackSpeedEffect
+public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAttackSpeedEffect, IStackable
 {
     private int number = 0;
     private float _buffDist = 0;
@@ -12,6 +12,16 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
 
     public int attackDamage { get => _attackDamage[number]; set => throw new System.NotImplementedException(); }
     public int attackSpeedRate { get => _attackSpeed[number]; set => throw new System.NotImplementedException(); }
+
+
+    private int _stackCount;
+    private int _maxStack = 5;
+    public int stackCount { get => _stackCount; set => _stackCount = Mathf.Min(value, _maxStack); }
+
+    public void StackEffect(float duration)
+    {
+
+    }
 
     public GoblinSwarm(Battler battler, int duration, float buffDist) : base(battler, duration)
     {
@@ -36,8 +46,8 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
         }
 
         number = Mathf.Min(targetCount, _attackDamage.Length - 1);
-
-        if(number == 0)
+        stackCount = number;
+        if (number == 0)
         {
             _battler.RemoveStatusEffect(this);
             DeActiveEffect();
