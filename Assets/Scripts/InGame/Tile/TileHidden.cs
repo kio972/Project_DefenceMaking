@@ -47,6 +47,7 @@ public class TileHidden : MonoBehaviour
         }
 
         NodeManager.Instance.hiddenTiles.Remove(_curNode);
+        AudioManager.Instance.Play2DSound("Demon_Attack_A", SettingManager.Instance._FxVolume);
 
         gameObject.SetActive(false);
         await UniTask.Yield();

@@ -144,7 +144,7 @@ public class DeployUI : MonoBehaviour
                 }
 
                 BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
-                AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
+                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
             else if (curType == CardType.Trap)
             {

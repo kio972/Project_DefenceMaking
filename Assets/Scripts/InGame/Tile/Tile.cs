@@ -152,6 +152,9 @@ public class Tile : MonoBehaviour
         NodeManager.Instance.UpdateMinMaxRowCol(curNode.row, curNode.col);
         //NodeManager.Instance.UpdateSightNode();
         GameManager.Instance.CheckBattlerCollapsed();
+
+        if(GameManager.Instance.IsInit)
+            AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
     }
 
     private void SetTileVisible(bool value)
@@ -368,6 +371,8 @@ public class Tile : MonoBehaviour
         NodeManager.Instance.SetActiveNode(curNode, false);
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
+
+        AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.262", SettingManager.Instance._FxVolume);
 
         GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
         trap?.DestroyTrap();

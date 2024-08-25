@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +17,9 @@ public class AudioManager : Singleton<AudioManager>
 
     private ClipController bgmClips;
     private ClipController sfxClips;
+
+    private Dictionary<string, int> soundActiveDic = new Dictionary<string, int>();
+    private Dictionary<string, bool> soundActiveFrameDic = new Dictionary<string, bool>();
 
     private void OnApplicationFocus(bool focus)
     {
@@ -115,6 +120,7 @@ public class AudioManager : Singleton<AudioManager>
     IEnumerator IDeactiveAudio(AudioSource audio)
     {
         yield return new WaitForSeconds(audio.clip.length);
+        soundActiveDic[audio.clip.name]--;
         audio.gameObject.SetActive(false);
     }
 
@@ -131,6 +137,9 @@ public class AudioManager : Singleton<AudioManager>
         if (clip == null)
             return;
 
+        if (soundActiveDic.ContainsKey(clip.name) && soundActiveDic[clip.name] > 5)
+            return;
+
         AudioSource audioSource = Pooling();
         audioSource.clip = clip;
         audioSource.spatialBlend = spatialBelnd;
@@ -139,6 +148,13 @@ public class AudioManager : Singleton<AudioManager>
         audioSource.minDistance = 2;
         audioSource.maxDistance = 10;
         audioSource.Play();
+        if (!soundActiveDic.ContainsKey(clip.name))
+        {
+            soundActiveDic.Add(clip.name, 0);
+            soundActiveFrameDic.Add(clip.name, false);
+        }
+        soundActiveDic[clip.name]++;
+        soundActiveFrameDic[clip.name] = true;
         StartCoroutine(IDeactiveAudio(audioSource));
     }
 
