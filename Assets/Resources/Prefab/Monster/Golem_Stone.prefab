@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7318116232214203766}
   - component: {fileID: 2103541630921623617}
   - component: {fileID: 9014006541645648792}
-  - component: {fileID: 7752790188197616698}
+  - component: {fileID: 2967735519595125094}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &7752790188197616698
+--- !u!114 &2967735519595125094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,8 +166,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: beaa72496a31e4936887dd529f173fec, type: 3}
   - {fileID: 8300000, guid: ec7545368d42e4fa5b2bee31f2f7d46f, type: 3}
   attackSoundMult: 1
-  deadSounds: []
-  deadSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 60134c8ec42bd4f2aa2ba7c4af6cdd8a, type: 3}
+  - {fileID: 8300000, guid: 2944c54af88104b4da1fae82cc1baa29, type: 3}
+  deadSoundMult: 0.5
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +337,7 @@ MonoBehaviour:
   attackEffect: {fileID: 9054858531674775054, guid: 766ea6773c111c34db0c3af775050a15, type: 3}
   isHide: 0
   holdBackCount: 1
+  summonSound: {fileID: 8300000, guid: 9ea03113ba88b47cb81fe5129e4266c5, type: 3}
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0

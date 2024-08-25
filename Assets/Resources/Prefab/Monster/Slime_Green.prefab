@@ -165,7 +165,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 56f702c862b304af1a3dd8701e586d12, type: 3}
   - {fileID: 8300000, guid: 05019a5400c724794804e508be725196, type: 3}
   - {fileID: 8300000, guid: a9e260fb6508f4a2ba1d7f8cf472872e, type: 3}
-  deadSounds: []
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 4027f8ddf52774545a81eae02e8a6a9b, type: 3}
+  - {fileID: 8300000, guid: 7d9a919b5c01045659da1ad85ff86291, type: 3}
+  - {fileID: 8300000, guid: ed62bfff6df5f4ef59c468492da2b1de, type: 3}
+  - {fileID: 8300000, guid: fad36d84a44e04d369fc0f6b71ecf855, type: 3}
+  deadSoundMult: 1
 --- !u!1 &2568095751473028518
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,6 +339,7 @@ MonoBehaviour:
   attackEffect: {fileID: 0}
   isHide: 0
   holdBackCount: 1
+  summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
 --- !u!136 &5368589034228258637
 CapsuleCollider:
   m_ObjectHideFlags: 0

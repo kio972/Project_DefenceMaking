@@ -191,7 +191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 8945118246915258461}
+  attackSounds:
+  - {fileID: 8300000, guid: 8362aaa0085de43aab0313854598737a, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 7fc769a6660244b80947c239f7f5812f, type: 3}
+  deadSoundMult: 1
 --- !u!1 &3936675834573604408
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,11 +268,10 @@ MonoBehaviour:
   hpPivot: {fileID: 3976440122746867361}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 0}
-  deadSound: {fileID: 0}
   battlerID: s_p10001
   attackEffect: {fileID: 0}
 --- !u!136 &7141161965367787149

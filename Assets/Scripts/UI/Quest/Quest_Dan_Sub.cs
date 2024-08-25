@@ -204,6 +204,7 @@ public class Quest2008 : Quest
 
     public override void FailQuest()
     {
+        isComplete[0] = true;
         CompleteQuest();
     }
 
