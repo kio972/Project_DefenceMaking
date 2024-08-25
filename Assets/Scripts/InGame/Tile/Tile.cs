@@ -351,7 +351,9 @@ public class Tile : MonoBehaviour
 
             // ∫∏ªÛ»πµÊ
             NodeManager.Instance.dormantTile.Remove(this);
-            GameManager.Instance.gold += 100;
+            //GameManager.Instance.gold += 100;
+            IRewardObject rewardObject = GetComponentInChildren<IRewardObject>();
+            rewardObject?.GetReward();
         }
     }
 
@@ -412,7 +414,12 @@ public class Tile : MonoBehaviour
         movable = tileType == TileType.End ? true : false;
         this.removable = removable;
         if(isDormant)
+        {
             NodeManager.Instance.dormantTile.Add(this);
+            GameObject goldBox = Resources.Load<GameObject>("Prefab/Objects/GoldBox");
+            goldBox = Instantiate(goldBox, transform, true);
+            goldBox.transform.position = transform.position;
+        }
         if(playAnim)
             tileAnimator?.SetTrigger("Set");
 
