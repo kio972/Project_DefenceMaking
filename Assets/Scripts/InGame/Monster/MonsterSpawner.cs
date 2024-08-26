@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,8 @@ public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField]
     private Image bgImg;
-    [SerializeField]
-    private Image fillImg;
+
+    public ReactiveProperty<float> _spawnRate { get; private set; } = new ReactiveProperty<float>();
 
     private float spawnCoolTime;
 
@@ -76,6 +77,7 @@ public class MonsterSpawner : MonoBehaviour
         isUpdate = true;
         GameManager.Instance.monsterSpawner.Add(this);
         curRoom?.SetSpawner(this, true);
+        HPBarPooling.Instance.GetSpawnerBar(this);
     }
 
     private void Update()
@@ -85,7 +87,7 @@ public class MonsterSpawner : MonoBehaviour
 
         if(curCoolTime > spawnCoolTime)
         {
-            fillImg.fillAmount = 1f;
+            _spawnRate.Value = 1;
             if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 return;
 
@@ -94,6 +96,6 @@ public class MonsterSpawner : MonoBehaviour
         }
 
         curCoolTime += GameManager.Instance.InGameDeltaTime;
-        fillImg.fillAmount = (curCoolTime / spawnCoolTime);
+        _spawnRate.Value = curCoolTime / spawnCoolTime;
     }
 }

@@ -62,7 +62,7 @@ public class GameManager : IngameSingleton<GameManager>
 
     private List<Monster> monsterList = new List<Monster>();
     public List<Monster> _MonsterList { get => monsterList; }
-    public List<MonsterSpawner> monsterSpawner = new List<MonsterSpawner>();
+    public HashSet<MonsterSpawner> monsterSpawner = new HashSet<MonsterSpawner>();
 
     public List<Trap> trapList = new List<Trap>();
 

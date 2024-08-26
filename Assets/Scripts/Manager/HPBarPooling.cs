@@ -9,6 +9,8 @@ public class HPBarPooling : IngameSingleton<HPBarPooling>
 
     List<TrapDurationBar> trapHpbar = new List<TrapDurationBar>();
 
+    List<SpawnerGauge> spawnerGauges = new List<SpawnerGauge>();
+
     private T GetNext<T>(List<T> targetHpbars, string prefabPath) where T : MonoBehaviour
     {
         T hpbar = null;
@@ -30,6 +32,13 @@ public class HPBarPooling : IngameSingleton<HPBarPooling>
         }
 
         return hpbar;
+    }
+
+    public SpawnerGauge GetSpawnerBar(MonsterSpawner spawner)
+    {
+        SpawnerGauge hpBar = GetNext(spawnerGauges, "Prefab/UI/hp_bar_Spawner");
+        hpBar.Init(spawner);
+        return hpBar;
     }
 
     public TrapDurationBar GetTrapHpBar(Trap trap)
