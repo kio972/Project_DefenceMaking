@@ -43,8 +43,11 @@ public class Thief : Adventurer, IHide
     public override void LoadData(BattlerData data)
     {
         base.LoadData(data);
-        bool hideState = System.Convert.ToBoolean(data.additionalData["hideState"]);
-        if(!hideState)
-            ChangeState(FSMPatrol.Instance);
+        if(data.additionalData != null && data.additionalData.Count > 0)
+        {
+            bool hideState = System.Convert.ToBoolean(data.additionalData["hideState"]);
+            if (!hideState)
+                ChangeState(FSMPatrol.Instance);
+        }
     }
 }

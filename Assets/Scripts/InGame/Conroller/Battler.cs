@@ -674,7 +674,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         _effects.Clear();
         SetRotation();
-
+        moveSpeed = 1;
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
         animator.SetBool("Move", GameManager.Instance.timeScale != 0);

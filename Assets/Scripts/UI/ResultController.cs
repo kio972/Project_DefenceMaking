@@ -50,7 +50,15 @@ public class ResultController : MonoBehaviour
     public async UniTaskVoid GameDefeat()
     {
         FindObjectOfType<CameraController>()?.ResetCamPos();
-        await UniTask.Delay(System.TimeSpan.FromSeconds(2.5f));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
+        if (GameManager.Instance.king.isDead)
+            await UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
+        else
+        {
+            StoryManager.Instance.EnqueueScript("Dan800");
+            await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
+        }
+
         FadeOn();
         victory.gameObject.SetActive(false);
         defeat.gameObject.SetActive(true);

@@ -13,13 +13,15 @@ public class Adventurer : Battler
     protected override void RemoveBody()
     {
         base.RemoveBody();
-        GameManager.Instance.adventurersList.Remove(this);
     }
 
     public override void Dead()
     {
         base.Dead();
         GameManager.Instance.gold += reward;
+        GameManager.Instance.adventurersList.Remove(this);
+        if (GameManager.Instance.LastSpawnedAdventurer == this && GameManager.Instance.adventurersList.Count > 0)
+            GameManager.Instance.LastSpawnedAdventurer = GameManager.Instance.adventurersList[0];
     }
 
     public override void Init()
