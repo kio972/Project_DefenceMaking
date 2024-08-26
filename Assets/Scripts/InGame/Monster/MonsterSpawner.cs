@@ -31,6 +31,8 @@ public class MonsterSpawner : MonoBehaviour
 
     private CompleteRoom curRoom;
 
+    public bool isEmpty = false;
+
     public void CheckTargetCollapsed()
     {
         isUpdate = PathFinder.FindPath(tile, NodeManager.Instance.endPoint) != null;
@@ -50,7 +52,7 @@ public class MonsterSpawner : MonoBehaviour
     public void Dead()
     {
         isUpdate = false;
-        curRoom.SetSpawner(this, false);
+        curRoom?.SetSpawner(this, false);
         GameManager.Instance.monsterSpawner.Remove(this);
         Destroy(this.gameObject);
     }
@@ -66,7 +68,8 @@ public class MonsterSpawner : MonoBehaviour
         monsterIndex = UtilHelper.Find_Data_Index(targetName, DataManager.Instance.Battler_Table, "name");
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
         Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString() + "_Spawner");
-        bgImg.sprite = illur;
+        if(bgImg != null)
+            bgImg.sprite = illur;
         //fillImg.sprite = illur;
         this.requiredMana = Convert.ToInt32(data["requiredMagicpower"]);
         MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
@@ -77,12 +80,11 @@ public class MonsterSpawner : MonoBehaviour
         isUpdate = true;
         GameManager.Instance.monsterSpawner.Add(this);
         curRoom?.SetSpawner(this, true);
-        HPBarPooling.Instance.GetSpawnerBar(this);
     }
 
     private void Update()
     {
-        if (!isUpdate)
+        if (!isUpdate || isEmpty)
             return;
 
         if(curCoolTime > spawnCoolTime)

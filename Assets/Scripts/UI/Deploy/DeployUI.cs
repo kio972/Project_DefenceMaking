@@ -132,7 +132,7 @@ public class DeployUI : MonoBehaviour
                 return;
             }
 
-            if (curType == CardType.Monster)
+            if (curType == CardType.Spawner)
             {
                 CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
                 int requiredMana;
@@ -157,28 +157,47 @@ public class DeployUI : MonoBehaviour
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
                 AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
+            else if(curType == CardType.Monster)
+            {
+                CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
+                int requiredMana;
+
+                if (!HaveMana(room, out requiredMana))
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    return;
+                }
+                if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("보유중인 마나가 부족합니다");
+                    return;
+                }
+
+                BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
+                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+            }
 
             GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
 
             if (!Input.GetKey(KeyCode.LeftShift))
-                DeployEnd();
+                DeployEnd().Forget();
         }
         else if(curNode != null || curNode.curTile == null)
-            DeployEnd();
+            DeployEnd().Forget();
     }
 
     public void UpdateDeployState()
     {
         UpdateObjectPosition();
-        NodeManager.Instance.SetManaGuide(curType == CardType.Monster);
+        NodeManager.Instance.SetManaGuide(curType is CardType.Monster or CardType.Spawner);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetObjectOnMap();
         }
         else if(Input.GetKeyDown(KeyCode.Mouse1))
-            DeployEnd();
+            DeployEnd().Forget();
     }
 
     public void SetGuideObject(CardType unitType, string targetName, string prefabName)
@@ -199,7 +218,7 @@ public class DeployUI : MonoBehaviour
             guideObjects.Add(prefabName, guideObject);
         }
 
-        if (unitType == CardType.Monster)
+        if (unitType is CardType.Monster or CardType.Spawner)
         {
             Monster monster = guideObject.GetComponent<Monster>();
             monster.SetRotation();
@@ -230,6 +249,9 @@ public class DeployUI : MonoBehaviour
             case CardType.Monster:
                 NodeManager.Instance.SetGuideState(GuideState.Spawner);
                 break;
+            case CardType.Spawner:
+                NodeManager.Instance.SetGuideState(GuideState.Spawner);
+                break;
             case CardType.Trap:
                 NodeManager.Instance.SetGuideState(GuideState.Trap);
                 break;
@@ -252,7 +274,7 @@ public class DeployUI : MonoBehaviour
         SetGuideState(curType);
         GameManager.Instance.cardLock = true;
         UIManager.Instance.CloseTab(uiPage);
-        UIManager.Instance.SetTab(deployingWindow.gameObject, true, () => { DeployEnd(); });
+        UIManager.Instance.SetTab(deployingWindow.gameObject, true, () => { DeployEnd().Forget(); });
         btnBlocker.SetActive(true);
     }
 

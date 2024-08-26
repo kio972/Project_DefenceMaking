@@ -17,6 +17,7 @@ public enum CardType
     Monster,
     Trap,
     Environment,
+    Spawner,
 }
 
 public enum CardGrade

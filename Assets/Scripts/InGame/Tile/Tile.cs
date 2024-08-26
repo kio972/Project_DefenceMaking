@@ -85,7 +85,7 @@ public class Tile : MonoBehaviour
 
     private MonsterSpawner spawner;
     public MonsterSpawner _Spanwer { get => spawner; }
-    public bool HaveSpawner { get { return spawner == null ? false : true; } }
+    public bool HaveSpawner { get => spawner != null && !spawner.isEmpty; }
 
     public bool IsBigRoom = false;
 
@@ -380,6 +380,8 @@ public class Tile : MonoBehaviour
         trap?.DestroyTrap();
         Destroy(this.gameObject, 1.0f);
 
+        if (spawner != null)
+            RemoveSpawner();
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
     }

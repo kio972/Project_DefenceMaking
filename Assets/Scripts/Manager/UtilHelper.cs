@@ -319,6 +319,9 @@ public static class UtilHelper
             case CardType.Monster:
                 targetPrefabPath += "Monster";
                 break;
+            case CardType.Spawner:
+                targetPrefabPath += "Monster";
+                break;
             case CardType.Trap:
                 targetPrefabPath += "Trap";
                 break;

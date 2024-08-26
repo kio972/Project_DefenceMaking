@@ -5,6 +5,8 @@ using Cysharp.Threading.Tasks;
 using System.Linq;
 using UniRx;
 using UniRx.Triggers;
+using System.Threading;
+using System;
 
 public class Mimic : Monster, IHide
 {
@@ -55,5 +57,29 @@ public class Mimic : Monster, IHide
         base.Init();
         curSeduceCount = 0;
         Seduce();
+        CheckNodeOut(curTile).Forget();
+    }
+
+    private async UniTaskVoid CheckNodeOut(TileNode curNode)
+    {
+        MonsterSpawner emptySpawner = new GameObject().AddComponent<MonsterSpawner>();
+        emptySpawner.Init(curNode, _name, NodeManager.Instance.FindRoom(curNode.row, curNode.col));
+        emptySpawner.isEmpty = true;
+        await UniTask.WaitUntil(() => curTile != curNode || isDead);
+        curNode.curTile.RemoveSpawner();
+    }
+
+    public override void LoadData(BattlerData data)
+    {
+        base.LoadData(data);
+        curSeduceCount = System.Convert.ToInt32(data.additionalData["curSeduceCount"]);
+    }
+
+    public override BattlerData GetData()
+    {
+        BattlerData data = base.GetData();
+        data.additionalData = new Dictionary<string, object>();
+        data.additionalData.Add("curSeduceCount", curSeduceCount);
+        return base.GetData();
     }
 }

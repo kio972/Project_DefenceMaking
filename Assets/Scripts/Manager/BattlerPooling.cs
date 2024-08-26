@@ -165,6 +165,7 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         MonsterSpawner monsterSpawner = Resources.Load<MonsterSpawner>("Prefab/Monster/MonsterSpawner");
         monsterSpawner = Instantiate(monsterSpawner, GameManager.Instance.worldCanvas.transform);
         monsterSpawner.Init(curNode, targetName, room);
+        HPBarPooling.Instance.GetSpawnerBar(monsterSpawner);
         return monsterSpawner;
     }
 }
