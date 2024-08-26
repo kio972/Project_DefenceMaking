@@ -163,7 +163,7 @@ public class QuestMessage : MonoBehaviour
     public async UniTaskVoid SetMessage(Dictionary<string, object> data)
     {
         fade.gameObject.SetActive(true);
-        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.1f).Forget();
+        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.5f).Forget();
         dissolveController.isAppare = true;
         gameObject.SetActive(true);
         ResetUIColors();
