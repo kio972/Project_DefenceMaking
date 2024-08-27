@@ -183,7 +183,7 @@ public class DeployUI : MonoBehaviour
             if (!Input.GetKey(KeyCode.LeftShift))
                 DeployEnd().Forget();
         }
-        else if(curNode != null || curNode.curTile == null)
+        else if(curNode == null || curNode.curTile == null)
             DeployEnd().Forget();
     }
 
