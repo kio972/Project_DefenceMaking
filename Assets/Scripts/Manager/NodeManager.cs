@@ -294,16 +294,44 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     }
 
+    private void SetEndTileGuide()
+    {
+        SetVirtualNode(true);
+        virtualNodes.Add(endPoint);
+        ResetAvail();
+        foreach (TileNode node in virtualNodes)
+        {
+            if (node == null)
+                continue;
+            node.UpdateNodeConnectionState();
+
+            int connectedPathCount = 0;
+            int connectedRoomCount = 0;
+            foreach (int val in node.connectionState.Values)
+            {
+                if (val == 1)
+                    connectedPathCount++;
+                else if (val == 2)
+                    connectedRoomCount++;
+            }
+            
+            bool isAvail = connectedPathCount == 1 && connectedRoomCount == 0 ? true : false;
+            node.SetAvail(isAvail);
+        }
+    }
+
     private void SetTileAvail(Tile targetTile)
     {
-        SetVirtualNode(targetTile._TileType == TileType.End);
         if(targetTile._TileType == TileType.End)
-            virtualNodes.Add(endPoint);
+        {
+            SetEndTileGuide();
+            return;
+        }
+
+        SetVirtualNode();
 
         List<Direction> targetNode_PathDirection = targetTile.PathDirection;
         List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
-
-        List<TileNode> availTile = new List<TileNode>();
 
         ResetAvail();
         foreach (TileNode node in virtualNodes)

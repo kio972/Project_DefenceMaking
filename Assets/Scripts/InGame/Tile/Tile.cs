@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 public enum TileType
 {
@@ -91,7 +92,7 @@ public class Tile : MonoBehaviour
 
     private Renderer tileRenderer;
 
-    private bool isTwin = false;
+    protected bool isTwin = false;
     
     private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
 
@@ -278,7 +279,7 @@ public class Tile : MonoBehaviour
         //NodeManager.Instance.SetActiveNode(this.curNode, false);
     }
 
-    public void ReadyForMove()
+    public async UniTaskVoid ReadyForMove()
     {
         SetTwin();
         InputManager.Instance.movingTile = true;
@@ -293,9 +294,11 @@ public class Tile : MonoBehaviour
         }
 
         curNode.SetAvail(true);
-        waitToMove = true;
-
+        TileMoveCheck();
+        await UniTask.WaitUntil(() => !Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey) && !Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey));
         //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+        waitToMove = true;
+        print("end");
     }
 
     public TileNode TileMoveCheck()
@@ -428,7 +431,7 @@ public class Tile : MonoBehaviour
         NodeManager.Instance.SetTile(this);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isTwin)
             return;

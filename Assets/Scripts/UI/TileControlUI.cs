@@ -36,7 +36,7 @@ public class TileControlUI : MonoBehaviour
             return;
         if (curTile.MovableNow)
         {
-            curTile.ReadyForMove();
+            curTile.ReadyForMove().Forget();
         }
         else
             GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 움직일 수 없습니다!");

@@ -39,25 +39,27 @@ public class TileNode : MonoBehaviour
 
     public HashSet<TileNode> revealNodes = new HashSet<TileNode>();
 
-    public void RemoveRevealNode(TileNode node, bool isDirect)
+    public Dictionary<Direction, int> connectionState { get; private set; } = new Dictionary<Direction, int>();
+
+
+    public void UpdateNodeConnectionState()
     {
-        //if(isDirect)
-        //    directRevealNode.Remove(node);
-        //inDirectRevealNode.Remove(node);
+        foreach(var direction in neighborNodeDic.Keys)
+        {
+            if(!connectionState.ContainsKey(direction))
+                connectionState.Add(direction, 0);
 
-        //if(inDirectRevealNode.Count == 0)
-        //    NodeManager.Instance.inDirectSightNodes.Remove(node);
-        //if(directRevealNode.Count == 0)
-        //    NodeManager.Instance.directSightNodes.Remove(node);
+            if (neighborNodeDic[direction] == null || neighborNodeDic[direction].curTile == null)
+                continue;
+
+            if (neighborNodeDic[direction].curTile.PathDirection.Contains(UtilHelper.ReverseDirection(direction)))
+                connectionState[direction] = 1;
+            else if(neighborNodeDic[direction].curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(direction)))
+                connectionState[direction] = 2;
+            else
+                connectionState[direction] = 0;
+        }
     }
-
-    public void AddRevealNode(TileNode node, bool isDirect)
-    {
-        //if(isDirect)
-        //    directRevealNode.Add(node);
-        //inDirectRevealNode.Add(node);
-    }
-
 
     public void RestoreFog()
     {
