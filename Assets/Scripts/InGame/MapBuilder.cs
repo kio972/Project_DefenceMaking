@@ -33,7 +33,6 @@ public class MapBuilder : MonoBehaviour
             return false;
 
         curTileSetCount++;
-        print(curTileSetCount);
         if (curTileSetCount < forHiddenTileCount)
             return false;
 

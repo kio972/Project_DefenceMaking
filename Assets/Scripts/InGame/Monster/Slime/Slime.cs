@@ -6,7 +6,7 @@ using System.Threading;
 
 public class Slime : Monster
 {
-    private int splitCount = 1;
+    private int splitCount = 0;
     private TileNode splitedNode = null;
     private TileNode slime_curNode = null;
     private bool skipedFirst = false;
@@ -31,7 +31,7 @@ public class Slime : Monster
     {
         base.Init();
         splitElapsed = 0;
-        splitCount = 1 + PassiveManager.Instance._slimeSplit_Weight.Value;
+        splitCount = 0 + PassiveManager.Instance._slimeSplit_Weight.Value;
         RotationAxis.localScale = Vector3.one;
         splitedNode = null;
         slime_curNode = curTile;

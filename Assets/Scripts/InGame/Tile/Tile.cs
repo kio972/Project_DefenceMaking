@@ -298,7 +298,6 @@ public class Tile : MonoBehaviour
         await UniTask.WaitUntil(() => !Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey) && !Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey));
         //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
         waitToMove = true;
-        print("end");
     }
 
     public TileNode TileMoveCheck()
