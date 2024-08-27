@@ -10,7 +10,7 @@ public class GoblinWarrior : Goblin
     {
         while (!isDead)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f), false, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             if (HaveEffect<GoblinSwarm>())
                 continue;
 

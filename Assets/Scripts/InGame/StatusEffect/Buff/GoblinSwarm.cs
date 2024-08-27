@@ -31,8 +31,18 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
         effectType = EffectType.Buff;
     }
 
+    private float scanCoolTime = 0.3f;
+    private float elapsedTime = 0.3f;
+
     public void WhileEffect()
     {
+        if(elapsedTime < scanCoolTime)
+        {
+            elapsedTime += Time.deltaTime;
+            return;
+        }
+
+        elapsedTime = 0;
         int targetCount = 0;
         foreach (Monster goblin in GameManager.Instance._MonsterList)
         {

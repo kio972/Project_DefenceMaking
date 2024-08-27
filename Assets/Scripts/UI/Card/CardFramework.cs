@@ -280,8 +280,8 @@ public class CardFramework : MonoBehaviour
 
     private void OnDisable()
     {
-        EndCard();
         _tokenSource.Cancel();
         _tokenSource.Dispose();
+        //EndCard();
     }
 }

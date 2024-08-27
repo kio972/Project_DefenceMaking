@@ -11,9 +11,9 @@ public class Test : MonoBehaviour
     public int endWave = 20;
     private async UniTaskVoid Start()
     {
-        await UniTask.WaitUntil(() => GameManager.Instance.IsInit);
+        await UniTask.WaitUntil(() => GameManager.Instance.IsInit, default, cancellationToken: this.GetCancellationTokenOnDestroy());
 
-        await UniTask.WaitUntil(() => GameManager.Instance.CurWave >= endWave);
+        await UniTask.WaitUntil(() => GameManager.Instance.CurWave >= endWave, default, cancellationToken: this.GetCancellationTokenOnDestroy());
         int curCount = GameManager.Instance.adventurersList.Count;
         while(true)
         {

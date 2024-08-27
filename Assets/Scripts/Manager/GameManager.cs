@@ -343,6 +343,9 @@ public class GameManager : IngameSingleton<GameManager>
 
     public void Init()
     {
+        if (mapBuilder == null)
+            return;
+
         mapBuilder.Init();
         SpawnKing();
         SetWaveSpeed();

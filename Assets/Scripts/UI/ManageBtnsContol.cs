@@ -19,7 +19,7 @@ public class ManageBtnsContol : MonoBehaviour
 
     public async UniTaskVoid WaitForQuest(GameObject target, string questId)
     {
-        await UniTask.WaitUntil(() => QuestManager.Instance.questController.IsQuestStarted(questId));
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController.IsQuestStarted(questId), default, cancellationToken: this.GetCancellationTokenOnDestroy());
         target.SetActive(true);
     }
 

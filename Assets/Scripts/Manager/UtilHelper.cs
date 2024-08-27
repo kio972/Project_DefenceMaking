@@ -209,6 +209,7 @@ public static class UtilHelper
 
     public static async UniTask IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
     {
+        GameObject gameObject = transform.gameObject;
         Image[] cardImgs = transform.GetComponentsInChildren<Image>();
         TextMeshProUGUI[] texts = transform.GetComponentsInChildren<TextMeshProUGUI>();
         float elapsedTime = 0f;
@@ -237,7 +238,7 @@ public static class UtilHelper
                 text.color = currentColor;
             }
 
-            await UniTask.Yield();
+            await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
         await UniTask.Yield();
 

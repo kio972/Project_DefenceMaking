@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Unity.VisualScripting;
+using UniRx.Triggers;
 
 public class Dantalian : PlayerBattleMain
 {
@@ -28,7 +30,7 @@ public class Dantalian : PlayerBattleMain
     {
         while(!isDead)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(0.3f));
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.3f), false, cancellationToken : gameObject.GetCancellationTokenOnDestroy());
 
             if (PassiveManager.Instance.devilAuraRange == 0 || PassiveManager.Instance.devilAuraPower == 0)
                 continue;
