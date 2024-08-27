@@ -48,12 +48,20 @@ public class FluctTimer : MonoBehaviour
 
         foreach (FluctItem item in items)
         {
-            if (item is IRefreshableItem refreshableItem)
+            ItemSlot slot = item.GetComponent<ItemSlot>();
+            if (slot != null && slot.IsRefreshable)
+                slot.IsSoldOut = false;
+
+            IRefreshableItem refreshableItem = item.GetComponent<IRefreshableItem>();
+            if (refreshableItem != null)
                 refreshableItem.RefreshItem();
         }
 
-        if (!string.IsNullOrEmpty(fluctMessage))
+        if (!string.IsNullOrEmpty(refreshMessage))
+        {
             GameManager.Instance.notificationBar?.SetMesseage(refreshMessage, NotificationType.Shop);
+            AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+        }
     }
 
     private void FluctPrice()

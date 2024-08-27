@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 
 
@@ -18,6 +19,29 @@ public class MapBuilder : MonoBehaviour
     [SerializeField]
     private int emptyNodeSize = 4;
 
+    private int curTileSetCount = 0;
+    private int forHiddenTileCount = 10;
+    private bool SetHiddenTileContinuous(GameObject tile)
+    {
+        if (tile.GetComponent<TileHidden>() != null)
+            return false;
+
+        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().curNode == NodeManager.Instance.endPoint)
+            return false;
+
+        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
+            return false;
+
+        curTileSetCount++;
+        print(curTileSetCount);
+        if (curTileSetCount < forHiddenTileCount)
+            return false;
+
+        curTileSetCount = 0;
+        SetHiddenTile(3).Forget();
+        return true;
+    }
+
     private bool CheckNearHiddenTile(TileNode targetNode, HashSet<TileNode> hiddenTileList, int dist)
     {
         foreach(TileNode node in hiddenTileList)
@@ -29,8 +53,9 @@ public class MapBuilder : MonoBehaviour
         return false;
     }
 
-    private void SetHiddenTile(int dist)
+    private async UniTaskVoid SetHiddenTile(int dist)
     {
+        await UniTask.Yield();
         List<TileNode> nodes = NodeManager.Instance.GetDistanceNodes(dist).ToList();
         TileNode targetNode = null;
         while (nodes.Count > 0)
@@ -49,7 +74,7 @@ public class MapBuilder : MonoBehaviour
         TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
         GameObject targetPrefab = GetRandomPrefab();
         hidden = Instantiate(hidden);
-        hidden.Init(targetNode, targetPrefab);
+        hidden.Init(targetNode, targetPrefab).Forget();
     }
 
     private void SetRamdomTileToRandomNode(TileNode tileNode, Tile targetTilePrefab, int range)
@@ -268,11 +293,13 @@ public class MapBuilder : MonoBehaviour
             Tutorial tutorial = FindObjectOfType<Tutorial>();
             if (tutorial == null)
             {
-                SetHiddenTile(3);
-                SetHiddenTile(3);
-                SetHiddenTile(3);
+                SetHiddenTile(3).Forget();
+                SetHiddenTile(3).Forget();
+                SetHiddenTile(3).Forget();
             }
         }
+
+        NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
 
         InputManager.Instance.Call();
     }

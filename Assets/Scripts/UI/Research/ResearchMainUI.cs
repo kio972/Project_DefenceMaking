@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResearchMainUI : MonoBehaviour
@@ -13,9 +14,12 @@ public class ResearchMainUI : MonoBehaviour
 
     public float CurProgressTime { get => curProgressTime; }
 
+    public float CurProgressRate { get => curResearch == null ? -1 : 1 - (curProgressTime / curResearch._ResearchData.requiredTime); }
+
     private Coroutine researchCoroutine;
 
-    private List<string> completedResearchs;
+    private List<string> _completedResearchs;
+    public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
     private IEnumerator IResearch(ResearchSlot curResearch, float additionalTime)
     {
@@ -41,11 +45,14 @@ public class ResearchMainUI : MonoBehaviour
         //if (popup.gameObject.activeSelf && popup._CurResearch == curResearch._ResearchData)
         //    curResearch.CallPopUpUI();
         GameManager.Instance.notificationBar?.SetMesseage(curResearch._ResearchData.researchName + " 연구 완료", NotificationType.Research);
+        AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+
+        this.curResearch = null;
+        _completedResearchs.Add(curResearch._ResearchId);
         Research[] research = curResearch.GetComponents<Research>();
         foreach(var item in research)
             item?.ActiveResearch();
-        completedResearchs.Add(curResearch._ResearchId);
-        this.curResearch = null;
+        
     }
 
     public bool StartResearch(ResearchSlot target, float additionalTime = 0)
@@ -70,13 +77,22 @@ public class ResearchMainUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
+        if (value)
+        {
+            InputManager.Instance.ResetTileClick();
+            AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
+        }
+
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
     }
 
+    [SerializeField]
+    private GameObject btnObject;
+
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F2) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);
@@ -87,7 +103,7 @@ public class ResearchMainUI : MonoBehaviour
 
     public void SaveData(PlayerData data)
     {
-        data.researchIdes = new List<string>(completedResearchs);
+        data.researchIdes = new List<string>(_completedResearchs);
         if(curResearch != null)
         {
             data.curResearch = curResearch._ResearchId;
@@ -97,12 +113,12 @@ public class ResearchMainUI : MonoBehaviour
 
     public void LoadData(PlayerData data)
     {
-        completedResearchs = new List<string>(data.researchIdes);
+        _completedResearchs = new List<string>(data.researchIdes);
 
         ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
         foreach (ResearchSlot slot in slots)
         {
-            if (completedResearchs.Contains(slot._ResearchId))
+            if (_completedResearchs.Contains(slot._ResearchId))
             {
                 slot.SetResearchState(ResearchState.Complete);
                 Research research = slot.GetComponent<Research>();
@@ -115,13 +131,13 @@ public class ResearchMainUI : MonoBehaviour
 
     private void Awake()
     {
-        if(completedResearchs == null)
+        if(_completedResearchs == null)
         {
-            completedResearchs = new List<string>() { "r_m10001" };
+            _completedResearchs = new List<string>() { "r_m10001" };
             ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
             foreach (ResearchSlot slot in slots)
             {
-                if (!completedResearchs.Contains(slot._ResearchId))
+                if (!_completedResearchs.Contains(slot._ResearchId))
                     continue;
 
                 slot.SetResearchState(ResearchState.Complete);

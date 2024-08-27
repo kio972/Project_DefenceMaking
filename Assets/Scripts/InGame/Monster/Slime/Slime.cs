@@ -6,7 +6,7 @@ using System.Threading;
 
 public class Slime : Monster
 {
-    private int splitCount = 2;
+    private int splitCount = 1;
     private TileNode splitedNode = null;
     private TileNode slime_curNode = null;
     private bool skipedFirst = false;
@@ -30,10 +30,11 @@ public class Slime : Monster
     public override void Init()
     {
         base.Init();
-        splitCount = 2 + PassiveManager.Instance._slimeSplit_Weight.Value;
+        splitElapsed = 0;
+        splitCount = 1 + PassiveManager.Instance._slimeSplit_Weight.Value;
         RotationAxis.localScale = Vector3.one;
         splitedNode = null;
-        slime_curNode = null;
+        slime_curNode = curTile;
         source = new CancellationTokenSource();
     }
 
@@ -63,10 +64,10 @@ public class Slime : Monster
     private async UniTaskVoid ExcuteSplit(List<TileNode> nextNodes)
     {
         _Animator.SetTrigger("Split");
+        _Animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
         splitElapsed = 1.5f;
         while(splitElapsed > 0)
         {
-            _Animator.SetFloat("AttackSpeed", GameManager.Instance.timeScale);
             splitElapsed -= Time.deltaTime * GameManager.Instance.timeScale;
             await UniTask.Yield(source.Token);
         }
@@ -85,12 +86,19 @@ public class Slime : Monster
         Monster monster = BattlerPooling.Instance.SpawnMonster(curData.id, NodeManager.Instance.FindNode(curData.row, curData.col), "id");
         monster.LoadData(curData);
         Slime newSlime = monster.GetComponent<Slime>();
+        newSlime.ExcuteCloneMana();
         newSlime.RotationAxis.localScale = RotationAxis.localScale;
         newSlime.splitCount = this.splitCount;
         newSlime.splitedNode = this.splitedNode;
         newSlime.nextTile = nextNodes[Random.Range(0, nextNodes.Count)];
 
         if (isOdd) { curHp++; maxHp++; }
+    }
+
+    private void ExcuteCloneMana()
+    {
+        GameManager.Instance._CurMana = GameManager.Instance._CurMana - requiredMana;
+        requiredMana = 0;
     }
 
     public override void Patrol()
@@ -110,5 +118,22 @@ public class Slime : Monster
             return;
 
         ExcuteSplit(nextNodes).Forget();
+    }
+
+    public override BattlerData GetData()
+    {
+        BattlerData data = base.GetData();
+        data.additionalData = new Dictionary<string, object>();
+        data.additionalData.Add("splitCount", splitCount);
+        data.additionalData.Add("curScale", RotationAxis.localScale.x);
+        return data;
+    }
+
+    public override void LoadData(BattlerData data)
+    {
+        base.LoadData(data);
+        splitCount = System.Convert.ToInt32(data.additionalData["splitCount"]);
+        float curScale = float.Parse(data.additionalData["curScale"].ToString());
+        RotationAxis.localScale = new Vector3(curScale, curScale, curScale);
     }
 }

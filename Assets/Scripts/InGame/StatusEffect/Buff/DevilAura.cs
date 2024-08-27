@@ -13,6 +13,7 @@ public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
         Init(battler, duration);
         _originDuration = 0;
         effectType = EffectType.Buff;
+        this.devilTransform = devilTransform;
     }
 
     public void WhileEffect()

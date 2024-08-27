@@ -35,6 +35,7 @@ public class ItemSlot : FluctItem
 {
     [SerializeField]
     private string itemId;
+    public string ItemId { get => itemId; }
 
     [SerializeField]
     private Image itemIcon;
@@ -73,8 +74,6 @@ public class ItemSlot : FluctItem
         }
     }
 
-    IRefreshableItem refresh;
-
     private ShopUI _ShopUI
     {
         get
@@ -92,6 +91,7 @@ public class ItemSlot : FluctItem
     private bool isTileItem = false;
     [SerializeField]
     private bool isRefreshable = true;
+    public bool IsRefreshable { get => isRefreshable; }
 
     private int _saledPrice { get => Mathf.FloorToInt(curPrice.Value * (1 - PassiveManager.Instance._shopSaleAmount.Value / 100f)); }
 
@@ -111,12 +111,14 @@ public class ItemSlot : FluctItem
         if (GameManager.Instance.gold < _saledPrice)
         {
             _ShopUI?.PlayScript("Shop034");
+            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
         {
             _ShopUI?.PlayScript("Shop035");
+            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
@@ -129,6 +131,7 @@ public class ItemSlot : FluctItem
 
         isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
+        AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
     }
 
     private int DecreasePrice()
@@ -171,7 +174,6 @@ public class ItemSlot : FluctItem
         }
 
         itemPrice.text = curPrice.ToString();
-        refresh?.RefreshItem();
 
         if(isRefreshable)
             isSoldOut.Value = false;
@@ -207,7 +209,7 @@ public class ItemSlot : FluctItem
     {
         SetItemInfo();
 
-        refresh = GetComponent<IRefreshableItem>();
+        
         if (btn != null)
             btn.onClick.AddListener(OnClick);
 
@@ -216,6 +218,7 @@ public class ItemSlot : FluctItem
         isSoldOut.Subscribe(_ => soldOut?.SetActive(_));
 
         curPrice.Value = originPrice;
+        IRefreshableItem refresh = GetComponent<IRefreshableItem>();
         refresh?.RefreshItem();
     }
 }

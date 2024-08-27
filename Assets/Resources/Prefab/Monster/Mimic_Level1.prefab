@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7149043362582349741}
   - component: {fileID: 6106281517710490074}
   - component: {fileID: 8606471000500584252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
-  zSpacing: 0
+  zSpacing: -0.001
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
@@ -160,7 +160,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: e8be002f8cbcd4ce08603a78ec3a9392, type: 3}
+  - {fileID: 8300000, guid: 60fc32af3416d495aa02997a7a2c6b4a, type: 3}
+  - {fileID: 8300000, guid: 9aaaaa6fc1f5c4ed5ad40f0703e4efc7, type: 3}
+  - {fileID: 8300000, guid: ad4c4262fbb4c454fbaba2810c01bc04, type: 3}
+  attackSoundMult: 0.8
+  deadSounds:
+  - {fileID: 8300000, guid: fa459b5a9a1c34e0a9be1b8781f85a3e, type: 3}
+  - {fileID: 8300000, guid: 738026eb9f1a24f7dbe21edd5b6977d9, type: 3}
+  - {fileID: 8300000, guid: 8ff2ee75bccbd4a7780ff06ce3ba13a2, type: 3}
+  deadSoundMult: 1
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +318,6 @@ MonoBehaviour:
   maxHp: 1
   armor: 0
   shield: 0
-  attackSpeed: 1
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
@@ -321,15 +330,15 @@ MonoBehaviour:
   hpPivot: {fileID: 3491947175668925710}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
-  deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m40001
   attackEffect: {fileID: 0}
   isHide: 1
   holdBackCount: 1
+  summonSound: {fileID: 8300000, guid: 21636bb31c25a4b169dfc0bc23dc6317, type: 3}
   seduceTargetCount: 1
 --- !u!136 &7389840894960381613
 CapsuleCollider:

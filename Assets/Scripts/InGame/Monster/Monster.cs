@@ -13,7 +13,14 @@ public enum MonsterType
     undead,
 }
 
-public class Monster : Battler
+public interface IHoldbacker
+{
+    HashSet<Battler> holdBackTargets { get; }
+    bool CanHoldBack { get; }
+    void AddHoldBackTarget(Battler target);
+}
+
+public class Monster : Battler, IHoldbacker
 {
     private int monsterIndex = -1;
 
@@ -22,12 +29,19 @@ public class Monster : Battler
     [SerializeField]
     protected int holdBackCount = 1;
 
-    private int requiredMana;
+    protected int requiredMana;
     public int _RequiredMana { get => requiredMana; }
 
     MonsterType monsterType;
 
     private int resurrectCount;
+
+    private HashSet<Battler> _holdBackTargets = new HashSet<Battler>();
+
+    public HashSet<Battler> holdBackTargets { get => _holdBackTargets; }
+
+    [SerializeField]
+    private AudioClip summonSound;
 
     public override float MoveSpeed
     {
@@ -45,11 +59,20 @@ public class Monster : Battler
     {
         get
         {
-            bool isListHaveEmpty = rangedTargets.Count < holdBackCount;
-            return isListHaveEmpty;
+            List<Battler> curHoldBackTargets = new List<Battler>(_holdBackTargets);
+            foreach(var target in curHoldBackTargets)
+                if(target.isDead)
+                    _holdBackTargets.Remove(target);
+
+            return _holdBackTargets.Count < holdBackCount;
         }
     }
 
+    public void AddHoldBackTarget(Battler target)
+    {
+        _holdBackTargets.Add(target);
+        GameManager.Instance.holdBackedABattlers.Add(target);
+    }
 
     public override void Dead()
     {
@@ -97,17 +120,22 @@ public class Monster : Battler
             NodeAction(nextTile);
     }
 
-    public override void Patrol()
+    protected override void CollapseLogic()
     {
-        if(PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        if (isCollapsed)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
-            if(collapseCool >= 1f)
+            if (collapseCool >= 1f)
             {
                 collapseCool = 0f;
                 GetDamage(Mathf.RoundToInt(maxHp * 0.05f), null);
             }
         }
+    }
+
+    public override void Patrol()
+    {
+        CollapseLogic();
 
         if (directPass)
             DirectPass(lastCrossRoad);
@@ -165,7 +193,8 @@ public class Monster : Battler
     public override void Init()
     {
         base.Init();
-
+        if(GameManager.Instance.IsInit)
+            AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
         ResetNode();
 
         monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");

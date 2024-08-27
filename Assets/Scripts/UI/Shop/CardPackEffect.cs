@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Linq;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CardPackEffect : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class CardPackEffect : MonoBehaviour
 
     [SerializeField]
     private float lerpTime = 0.1f;
+
+    [SerializeField]
+    private GameObject confirmBtn;
 
     private void InitCards(List<Card> cards)
     {
@@ -69,22 +73,46 @@ public class CardPackEffect : MonoBehaviour
             cardObjects[i].transform.position = cardPos;
             targetPositions.Add(originPos + new Vector3(xSpacing * 30 * (i % 5 + 1) + xOffset, yOrigin - (i / 5 * ySpacing)));
         }
+
+        cardEx.gameObject.SetActive(false);
     }
     readonly Color fadeColor = new Color(0, 0, 0, 0.8f);
     private async UniTaskVoid SetCards(List<Card> cards)
     {
         InitCards(cards);
+        confirmBtn.SetActive(false);
         gameObject.SetActive(true);
+        UIManager.Instance.SetTab(gameObject, true);
         await UtilHelper.IColorEffect(fadeImg.transform, Color.clear, fadeColor, 0.5f);
         //await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
+        foreach(CardUI card in cardObjects)
+            card.GetComponent<CardUIEffect>()?.SetDrawState(false);
+
         for (int i = cards.Count - 1; i >= 0; i--)
+        {
+            AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._FxVolume);
             await UtilHelper.MoveEffect(cardObjects[i].transform, targetPositions[i], lerpTime, cancellationToken);
+        }
+
+        foreach (CardUI card in cardObjects)
+            card.GetComponent<CardUIEffect>()?.SetDrawState(true);
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
+        confirmBtn.SetActive(true);
+        await UniTask.WaitUntil(() => !confirmBtn.activeSelf || Input.GetKeyDown(KeyCode.Escape), default, cancellationToken.Token);
+        confirmBtn.SetActive(false);
+
+        foreach (CardUI card in cardObjects)
+        {
+            card.GetComponent<CardUIEffect>()?.SetDrawState(false);
+            card.GetComponent<CardUIEffect>()?.ResetEffect();
+        }
+
         packImg.gameObject.SetActive(false);
         UtilHelper.IColorEffect(fadeImg.transform, fadeColor, Color.clear, 0.3f).Forget();
-        float toDeckLerpTime = 0.2f;
+        float toDeckLerpTime = 0.5f;
+        AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._FxVolume);
         for (int i = 0; i < cards.Count; i++)
         {
             UtilHelper.ScaleEffect(cardObjects[i].transform, Vector3.one * 0.3f, toDeckLerpTime, cancellationToken).Forget();
@@ -94,6 +122,17 @@ public class CardPackEffect : MonoBehaviour
                 UtilHelper.MoveEffect(cardObjects[i].transform, deckPos.position, toDeckLerpTime, cancellationToken).Forget();
         }
         gameObject.SetActive(false);
+        UIManager.Instance.SetTab(gameObject, false);
+
+    }
+
+    public void SetCardPackSprite(Transform packTransform)
+    {
+        ItemSlot itemSlot = packTransform.GetComponent<ItemSlot>();
+        if (itemSlot == null)
+            return;
+
+        packImg.sprite = itemSlot.ItemIcon.sprite;
     }
 
     public void ShowEffect(List<Card> cards)

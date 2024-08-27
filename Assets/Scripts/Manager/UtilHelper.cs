@@ -11,6 +11,15 @@ using Cysharp.Threading.Tasks;
 
 public static class UtilHelper
 {
+    public static bool ContainsParam(this Animator _Anim, string _ParamName)
+    {
+        foreach (AnimatorControllerParameter param in _Anim.parameters)
+        {
+            if (param.name == _ParamName) return true;
+        }
+        return false;
+    }
+
     public static List<T> ShuffleList<T>(List<T> list)
     {
         System.Random random = new System.Random();
@@ -200,6 +209,7 @@ public static class UtilHelper
 
     public static async UniTask IColorEffect(Transform transform, Color startColor, Color targetColor, float lerpTime, System.Action callback = null)
     {
+        GameObject gameObject = transform.gameObject;
         Image[] cardImgs = transform.GetComponentsInChildren<Image>();
         TextMeshProUGUI[] texts = transform.GetComponentsInChildren<TextMeshProUGUI>();
         float elapsedTime = 0f;
@@ -228,7 +238,7 @@ public static class UtilHelper
                 text.color = currentColor;
             }
 
-            await UniTask.Yield();
+            await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
         await UniTask.Yield();
 
@@ -308,6 +318,9 @@ public static class UtilHelper
                 targetPrefabPath += "Tile";
                 break;
             case CardType.Monster:
+                targetPrefabPath += "Monster";
+                break;
+            case CardType.Spawner:
                 targetPrefabPath += "Monster";
                 break;
             case CardType.Trap:

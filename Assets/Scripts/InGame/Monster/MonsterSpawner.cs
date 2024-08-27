@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,8 @@ public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField]
     private Image bgImg;
-    [SerializeField]
-    private Image fillImg;
+
+    public ReactiveProperty<float> _spawnRate { get; private set; } = new ReactiveProperty<float>();
 
     private float spawnCoolTime;
 
@@ -30,6 +31,13 @@ public class MonsterSpawner : MonoBehaviour
 
     private CompleteRoom curRoom;
 
+    public bool isEmpty = false;
+
+    public void CheckTargetCollapsed()
+    {
+        isUpdate = PathFinder.FindPath(tile, NodeManager.Instance.endPoint) != null;
+    }
+
     public void UpdatePassive()
     {
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
@@ -44,7 +52,7 @@ public class MonsterSpawner : MonoBehaviour
     public void Dead()
     {
         isUpdate = false;
-        curRoom.SetSpawner(this, false);
+        curRoom?.SetSpawner(this, false);
         GameManager.Instance.monsterSpawner.Remove(this);
         Destroy(this.gameObject);
     }
@@ -59,28 +67,29 @@ public class MonsterSpawner : MonoBehaviour
 
         monsterIndex = UtilHelper.Find_Data_Index(targetName, DataManager.Instance.Battler_Table, "name");
         Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
-        Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString());
-        bgImg.sprite = illur;
-        fillImg.sprite = illur;
+        Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString() + "_Spawner");
+        if(bgImg != null)
+            bgImg.sprite = illur;
+        //fillImg.sprite = illur;
         this.requiredMana = Convert.ToInt32(data["requiredMagicpower"]);
         MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
         this.requiredMana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
-        this.spawnCoolTime = Convert.ToInt32(data["duration"]);
+        this.spawnCoolTime = Convert.ToInt32(data["spawnTime"]);
         curCoolTime = spawnCoolTime;
         
         isUpdate = true;
         GameManager.Instance.monsterSpawner.Add(this);
-        curRoom.SetSpawner(this, true);
+        curRoom?.SetSpawner(this, true);
     }
 
     private void Update()
     {
-        if (!isUpdate)
+        if (!isUpdate || isEmpty)
             return;
 
         if(curCoolTime > spawnCoolTime)
         {
-            fillImg.fillAmount = 0f;
+            _spawnRate.Value = 1;
             if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 return;
 
@@ -88,7 +97,7 @@ public class MonsterSpawner : MonoBehaviour
             curCoolTime = 0f;
         }
 
-        curCoolTime += Time.deltaTime * GameManager.Instance.timeScale;
-        fillImg.fillAmount = 1 - (curCoolTime / spawnCoolTime);
+        curCoolTime += GameManager.Instance.InGameDeltaTime;
+        _spawnRate.Value = curCoolTime / spawnCoolTime;
     }
 }

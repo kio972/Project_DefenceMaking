@@ -47,6 +47,8 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     public int devilAuraRange { get; private set; } = 0;
     public int devilAuraPower { get; private set; } = 0;
+    public bool devilDetection { get; private set; } = false;
+
 
     public ReactiveProperty<int> _slimeSplit_Weight { get; private set; } = new ReactiveProperty<int>(0);
 
@@ -64,8 +66,11 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void GolemHoldbackUp(int value)
     {
         golemHoldback_Weight += value;
-        foreach (Golem golem in GameManager.Instance._MonsterList)
-            golem.UpdateHoldBack(value);
+        foreach (var target in GameManager.Instance._MonsterList)
+        {
+            if(target is Golem golem)
+                golem.UpdateHoldBack(value);
+        }
     }
 
     public void GoblinHealActive()
@@ -76,8 +81,16 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void UpgradeSlimeSplit(int value)
     {
         _slimeSplit_Weight.Value += value;
-        foreach (Slime slime in GameManager.Instance._MonsterList)
-            slime.UpgradeSplitCount(value);
+        foreach (var target in GameManager.Instance._MonsterList)
+        {
+            if(target is Slime slime)
+                slime.UpgradeSplitCount(value);
+        }
+    }
+
+    public void UpgradeDevilDetection()
+    {
+        devilDetection = true;
     }
 
     public void UpgradeDevilAura(int range, int value)

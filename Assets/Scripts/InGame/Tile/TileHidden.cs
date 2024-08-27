@@ -47,6 +47,7 @@ public class TileHidden : MonoBehaviour
         }
 
         NodeManager.Instance.hiddenTiles.Remove(_curNode);
+        AudioManager.Instance.Play2DSound("Demon_Attack_B", SettingManager.Instance._FxVolume);
 
         gameObject.SetActive(false);
         await UniTask.Yield();
@@ -54,7 +55,7 @@ public class TileHidden : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Init(TileNode curNode, GameObject targetPrefab)
+    public async UniTaskVoid Init(TileNode curNode, GameObject targetPrefab)
     {
         _curNode = curNode;
         _targetPrefab = targetPrefab;
@@ -62,6 +63,7 @@ public class TileHidden : MonoBehaviour
         transform.SetParent(_curNode.transform, false);
 
         NodeManager.Instance.hiddenTiles.Add(_curNode);
+        await UniTask.Yield();
         NodeManager.Instance.AddSetTileEvent(CheckReval);
     }
 }

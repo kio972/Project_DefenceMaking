@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class DeployUI : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class DeployUI : MonoBehaviour
 
     [SerializeField]
     GameObject uiPage;
+
+    [SerializeField]
+    GameObject btnBlocker;
+
     public int DeployStep
     {
         get
@@ -37,6 +42,8 @@ public class DeployUI : MonoBehaviour
 
     [SerializeField]
     private Button exitBtn;
+    [SerializeField]
+    private GameObject deployingWindow;
 
     private List<DeploySlot> deployItems = new List<DeploySlot>();
 
@@ -50,21 +57,33 @@ public class DeployUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
+        if (value)
+            InputManager.Instance.ResetTileClick();
+
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
         if (value)
             SetItem();
+
+        if (value)
+            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
     }
 
     public void SetActive(bool value, bool updateItem = true)
     {
+        if (value)
+            InputManager.Instance.ResetTileClick();
+
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
-        if(value && updateItem)
+        if (value && updateItem)
             SetItem();
+
+        if (value)
+            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
     }
 
-    public void DeployEnd()
+    public async UniTaskVoid DeployEnd()
     {
         if (curObject == null)
             return;
@@ -74,18 +93,21 @@ public class DeployUI : MonoBehaviour
         curType = CardType.None;
         curNode = null;
 
-        NodeManager.Instance.SetManaGuide(false);
-        InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
-        UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
-        UIManager.Instance.CloseTab(exitBtn.gameObject);
+        NodeManager.Instance.SetManaGuide(false);
+        //UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
+        UIManager.Instance.CloseTab(deployingWindow.gameObject);
         GameManager.Instance.cardLock = false;
-        GameManager.Instance.SetPause(true);
+        //GameManager.Instance.SetPause(true);
 
         if (ingameUI == null)
             ingameUI = GetComponentInParent<InGameUI>();
         ingameUI?.SetRightUI(true);
         ingameUI?.SetDownUI(true);
+        btnBlocker.SetActive(false);
+
+        await UniTask.WaitUntil(() => !Input.GetKey(KeyCode.Mouse0));
+        InputManager.Instance.settingCard = false;
     }
 
     private bool HaveMana(CompleteRoom room, out int outMana)
@@ -110,7 +132,7 @@ public class DeployUI : MonoBehaviour
                 return;
             }
 
-            if (curType == CardType.Monster)
+            if (curType == CardType.Spawner)
             {
                 CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
                 int requiredMana;
@@ -122,7 +144,7 @@ public class DeployUI : MonoBehaviour
                 }
 
                 BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
-                AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
+                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
             else if (curType == CardType.Trap)
             {
@@ -135,23 +157,47 @@ public class DeployUI : MonoBehaviour
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
                 AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
             }
+            else if(curType == CardType.Monster)
+            {
+                CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
+                int requiredMana;
+
+                if (!HaveMana(room, out requiredMana))
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    return;
+                }
+                if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
+                {
+                    GameManager.Instance.popUpMessage.ToastMsg("보유중인 마나가 부족합니다");
+                    return;
+                }
+
+                BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
+                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+            }
 
             GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
 
-            //DeployEnd();
+            if (!Input.GetKey(KeyCode.LeftShift))
+                DeployEnd().Forget();
         }
+        else if(curNode != null || curNode.curTile == null)
+            DeployEnd().Forget();
     }
 
     public void UpdateDeployState()
     {
         UpdateObjectPosition();
-        NodeManager.Instance.SetManaGuide(curType == CardType.Monster);
+        NodeManager.Instance.SetManaGuide(curType is CardType.Monster or CardType.Spawner);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
             SetObjectOnMap();
+        }
         else if(Input.GetKeyDown(KeyCode.Mouse1))
-            DeployEnd();
+            DeployEnd().Forget();
     }
 
     public void SetGuideObject(CardType unitType, string targetName, string prefabName)
@@ -172,7 +218,7 @@ public class DeployUI : MonoBehaviour
             guideObjects.Add(prefabName, guideObject);
         }
 
-        if (unitType == CardType.Monster)
+        if (unitType is CardType.Monster or CardType.Spawner)
         {
             Monster monster = guideObject.GetComponent<Monster>();
             monster.SetRotation();
@@ -185,7 +231,7 @@ public class DeployUI : MonoBehaviour
     {
         curNode = UtilHelper.RayCastTile();
 
-        if (curNode != null && curNode.GuideActive)
+        if (curNode != null && curNode.GuideActive && curNode.curTile != null && !curNode.curTile.HaveSpawner)
         {
             curObject.transform.SetParent(curNode.transform, true);
             curObject.transform.position = curNode.transform.position;
@@ -201,6 +247,9 @@ public class DeployUI : MonoBehaviour
         switch (unitType)
         {
             case CardType.Monster:
+                NodeManager.Instance.SetGuideState(GuideState.Spawner);
+                break;
+            case CardType.Spawner:
                 NodeManager.Instance.SetGuideState(GuideState.Spawner);
                 break;
             case CardType.Trap:
@@ -225,7 +274,8 @@ public class DeployUI : MonoBehaviour
         SetGuideState(curType);
         GameManager.Instance.cardLock = true;
         UIManager.Instance.CloseTab(uiPage);
-        UIManager.Instance.SetTab(exitBtn.gameObject, true, () => { DeployEnd(); }); 
+        UIManager.Instance.SetTab(deployingWindow.gameObject, true, () => { DeployEnd().Forget(); });
+        btnBlocker.SetActive(true);
     }
 
     public void SetItem()
@@ -273,6 +323,9 @@ public class DeployUI : MonoBehaviour
 
         foreach (Dictionary<string, object> data in DataManager.Instance.Battler_Table)
         {
+            if (string.IsNullOrEmpty(data["prefab"].ToString()))
+                continue;
+
             string id = data["id"].ToString();
             if (id[2] != 'm' && id[2] != 't')
                 continue;
@@ -284,12 +337,15 @@ public class DeployUI : MonoBehaviour
         initState = true;
     }
 
+    [SerializeField]
+    private GameObject btnObject;
+
     public void Update()
     {
         if (curObject != null)
             UpdateDeployState();
 
-        if (Input.GetKeyDown(KeyCode.F2))
+        if (Input.GetKeyDown(KeyCode.F1) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2103541630921623617}
   - component: {fileID: 9014006541645648792}
   - component: {fileID: 211097834948814203}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
-  zSpacing: 0
+  zSpacing: -0.001
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
@@ -160,7 +160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: ee77b49554ebf4811b35879e7d4717ad, type: 3}
+  - {fileID: 8300000, guid: fbb4fbd777cdf426aae4cb4f7db493c5, type: 3}
+  - {fileID: 8300000, guid: beaa72496a31e4936887dd529f173fec, type: 3}
+  - {fileID: 8300000, guid: ec7545368d42e4fa5b2bee31f2f7d46f, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 60134c8ec42bd4f2aa2ba7c4af6cdd8a, type: 3}
+  - {fileID: 8300000, guid: 2944c54af88104b4da1fae82cc1baa29, type: 3}
+  deadSoundMult: 0.5
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,15 +329,15 @@ MonoBehaviour:
   hpPivot: {fileID: 3491947175668925710}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
-  deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m30002
   attackEffect: {fileID: 9054858531674775054, guid: 766ea6773c111c34db0c3af775050a15, type: 3}
   isHide: 0
   holdBackCount: 1
+  summonSound: {fileID: 8300000, guid: 9ea03113ba88b47cb81fe5129e4266c5, type: 3}
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0

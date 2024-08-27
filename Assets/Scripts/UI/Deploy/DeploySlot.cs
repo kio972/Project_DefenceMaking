@@ -26,6 +26,7 @@ public class DeploySlot : MonoBehaviour
     public string rate;
 
     public CardType cardType;
+    public MonsterType monsterType = MonsterType.none;
 
     [SerializeField]
     private Button deployBtn;
@@ -90,19 +91,22 @@ public class DeploySlot : MonoBehaviour
     {
         id = data["id"].ToString();
         _name = data["name"].ToString();
-        cardType = (id[2] == 't' ? CardType.Trap : CardType.Monster);
+        cardType = (id[2] == 't' ? CardType.Trap : CardType.Spawner);
+        if (id.Contains("s_m4"))
+            cardType = CardType.Monster;
+
         minDamage = Convert.ToInt32(data["attackPowerMin"]);
         maxDamage = Convert.ToInt32(data["attackPowerMax"]);
         mana = 0;
 
         rate = data["rate"].ToString();
 
-        if (cardType == CardType.Monster)
+        if (cardType is CardType.Monster or CardType.Spawner)
         {
             hp = Convert.ToInt32(data["hp"]);
             defense = Convert.ToInt32(data["armor"]);
             float.TryParse(data["requiredMagicpower"].ToString(), out mana);
-            MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
+            monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
             mana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
         }
         

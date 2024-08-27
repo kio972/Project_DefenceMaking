@@ -24,6 +24,6 @@ public class FogOfWar : MonoBehaviour
 
         var mergedStream = Observable.Merge(addStream, removeStream, addStream2, removeStream2);
 
-        mergedStream.ThrottleFrame(1).Subscribe(_ => UpdateFog());
+        mergedStream.ThrottleFrame(1).Subscribe(_ => UpdateFog()).AddTo(gameObject);
     }
 }

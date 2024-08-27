@@ -1,20 +1,31 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Goblin : Monster
 {
     private bool isSkillActived = false;
-
-    private void RunAway()
+    
+    private async UniTaskVoid RunAway()
     {
         curTarget = null;
 
         var tiles = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint);
         int count = 0;
+
+
         TileNode targetTile = null;
         tiles.Remove(curTile);
+        float curToEndDistance = UtilHelper.CalCulateDistance(transform, NodeManager.Instance.endPoint.transform);
+        if(curToEndDistance < tiles.Count)
+            tiles.RemoveAt(0);
         tiles.Remove(NodeManager.Instance.endPoint);
+
+        if (tiles.Count == 0)
+            return;
+
         foreach(var tile in tiles)
         {
             if (count >= 5)
@@ -25,7 +36,10 @@ public class Goblin : Monster
         }
 
         directPassNode = targetTile;
+        animator.SetBool("RunAway", true);
         ChangeState(FSMDirectMove.Instance);
+        await UniTask.WaitUntil(() => (object)CurState != FSMDirectMove.Instance, default, unitaskCancelTokenSource.Token);
+        animator.SetBool("RunAway", false);
     }
 
     public override void GetDamage(int damage, Battler attacker)
@@ -34,7 +48,7 @@ public class Goblin : Monster
         if(!isSkillActived && (float)curHp / maxHp < 0.2f)
         {
             isSkillActived = true;
-            RunAway();
+            RunAway().Forget();
         }
     }
 

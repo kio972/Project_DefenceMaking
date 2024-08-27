@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 212620903782179506}
   - component: {fileID: 1741330864995389144}
   - component: {fileID: 369148983642836712}
-  - component: {fileID: 4378080337354003984}
-  m_Layer: 0
+  - component: {fileID: 7474327663389617768}
+  m_Layer: 6
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ MonoBehaviour:
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
-  zSpacing: 0
+  zSpacing: -0.001
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
@@ -149,7 +149,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &4378080337354003984
+--- !u!114 &7474327663389617768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,7 +161,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: 56f702c862b304af1a3dd8701e586d12, type: 3}
+  - {fileID: 8300000, guid: 05019a5400c724794804e508be725196, type: 3}
+  - {fileID: 8300000, guid: a9e260fb6508f4a2ba1d7f8cf472872e, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 4027f8ddf52774545a81eae02e8a6a9b, type: 3}
+  - {fileID: 8300000, guid: 7d9a919b5c01045659da1ad85ff86291, type: 3}
+  - {fileID: 8300000, guid: ed62bfff6df5f4ef59c468492da2b1de, type: 3}
+  - {fileID: 8300000, guid: fad36d84a44e04d369fc0f6b71ecf855, type: 3}
+  deadSoundMult: 0.6
 --- !u!1 &2568095751473028518
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,15 +331,15 @@ MonoBehaviour:
   hpPivot: {fileID: 3894766720182730850}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: 6f5019e4f7e6a98499412bf76699e3d3, type: 3}
-  deadSound: {fileID: 8300000, guid: 3d3fb4095b632804f99465e95efbe5e7, type: 3}
   battlerID: s_m10002
   attackEffect: {fileID: 0}
   isHide: 0
   holdBackCount: 1
+  summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
 --- !u!136 &5368589034228258637
 CapsuleCollider:
   m_ObjectHideFlags: 0

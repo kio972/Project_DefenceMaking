@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 
 public class Test : MonoBehaviour
 {
-
-    private void Awake()
+    public int endWave = 20;
+    private async UniTaskVoid Start()
     {
-        Test2.Instance.tests.ObserveAdd().Select(_ => true).Subscribe(_ => print("Added"));
-        Test2.Instance.tests.ObserveRemove().Select(_ => true).Subscribe(_ => print("Removed"));
-    }
+        await UniTask.WaitUntil(() => GameManager.Instance.IsInit, default, cancellationToken: this.GetCancellationTokenOnDestroy());
 
-    
+        await UniTask.WaitUntil(() => GameManager.Instance.CurWave >= endWave, default, cancellationToken: this.GetCancellationTokenOnDestroy());
+        int curCount = GameManager.Instance.adventurersList.Count;
+        while(true)
+        {
+            if (GameManager.Instance.adventurersList.Count > curCount)
+                break;
+            curCount = GameManager.Instance.adventurersList.Count;
+            await UniTask.Yield();
+        }
+
+        await UniTask.WaitUntil(() => GameManager.Instance.adventurersList.Count <= 0);
+        GameManager.Instance.WinGame();
+    }
 }

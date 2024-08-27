@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using TMPro;
+using Unity.VisualScripting;
 
 public struct Card
 {
@@ -48,6 +49,8 @@ public struct Card
                 return CardType.Environment;
             case "monster":
                 return CardType.Monster;
+            case "herb":
+                return CardType.Environment;
         }
         return CardType.None;
     }
@@ -74,6 +77,13 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private Sprite emptyDeckImg;
 
+    [SerializeField]
+    private Image cardCountImg;
+    [SerializeField]
+    private Sprite cardCountSprite;
+    [SerializeField]
+    private Sprite emptycardCountSprite;
+    
     [SerializeField]
     private Transform cardZone;
     [SerializeField]
@@ -158,9 +168,15 @@ public class CardDeckController : MonoBehaviour
 
         deckCountText.text = (cardDeck.Count).ToString();
         if (cardDeck.Count < 10)
+        {
+            cardCountImg.sprite = emptycardCountSprite;
             deckCountText.color = Color.red;
+        }
         else
-            deckCountText.color = Color.black;
+        {
+            cardCountImg.sprite = cardCountSprite;
+            deckCountText.color = Color.white;
+        }
 
         if (cardDeck.Count <= 0)
             deckBtnImg.sprite = emptyDeckImg;
@@ -203,6 +219,10 @@ public class CardDeckController : MonoBehaviour
         // 최소진폭 ~ 최대진폭
         // 최소거리 ~ 최대거리
         float invert = 1f;
+
+        float magintude = (startPos - endPos).magnitude;
+        points = Mathf.CeilToInt(magintude / 50f);
+
         if (endPos.x > startPos.x)
             invert *= -1f;
 
@@ -341,19 +361,28 @@ public class CardDeckController : MonoBehaviour
         if (hand_CardNumber >= maxCardNumber)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("손 패가 가득 찼습니다");
+            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         if (GameManager.Instance.gold < _CardPrice)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
+            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            return;
+        }
+
+        if (cardDeck.Count < 1)
+        {
+            GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
+            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         GameManager.Instance.gold -= _CardPrice;
         DrawCard();
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
     }
 
     private IEnumerator ISetCardPosition()
@@ -403,16 +432,35 @@ public class CardDeckController : MonoBehaviour
         if (cardPool == null)
             return;
 
+        List<int> targetCards = new List<int>(cardPool);
         for (int i = 0; i < drawNumber; i++)
         {
-            int randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
-            while (!cardDeck.Contains(randomIndex))
-                randomIndex = cardPool[UnityEngine.Random.Range(0, cardPool.Count)];
+            int randomIndex = targetCards[UnityEngine.Random.Range(0, targetCards.Count)];
+            while (targetCards.Count != 0)
+            {
+                randomIndex = targetCards[UnityEngine.Random.Range(0, targetCards.Count)];
+                if (cardDeck.Contains(randomIndex))
+                    break;
+                targetCards.Remove(randomIndex);
+            }
+
             DrawCard(randomIndex);
         }
     }
 
-    
+    private readonly List<string> mulliganList = new List<string>()
+    {
+        "c10006", "c10009", "c10011", "c11002", "c13002"
+    };
+
+    public void MulliganFixed()
+    {
+        foreach(var card in mulliganList)
+        {
+            AddCard(DataManager.Instance.deckListIndex[card]);
+            DrawCard(DataManager.Instance.deckListIndex[card]);
+        }
+    }
 
     public void Mulligan()
     {

@@ -123,7 +123,7 @@ public class GameSpeedController : MonoBehaviour
         if (GameManager.Instance.speedLock)
             return;
 
-        if (!Is_Game_Continuable())
+        if (!Is_Game_Continuable() && GameManager.Instance.IsInit)
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
             GameManager.Instance.popUpMessage?.ToastMsg(desc);
@@ -138,7 +138,7 @@ public class GameSpeedController : MonoBehaviour
     {
         if (!Is_Game_Continuable())
         {
-            if (showPopUp)
+            if (showPopUp && GameManager.Instance.IsInit)
             {
                 string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
                 GameManager.Instance.popUpMessage?.ToastMsg(desc);
@@ -155,7 +155,7 @@ public class GameSpeedController : MonoBehaviour
         if (GameManager.Instance.speedLock)
             return;
 
-        if (!Is_Game_Continuable())
+        if (!Is_Game_Continuable() && GameManager.Instance.IsInit)
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
             GameManager.Instance.popUpMessage?.ToastMsg(desc);
@@ -170,7 +170,7 @@ public class GameSpeedController : MonoBehaviour
     {
         if (!Is_Game_Continuable())
         {
-            if(showPopUp)
+            if(showPopUp && GameManager.Instance.IsInit)
             {
                 string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
                 GameManager.Instance.popUpMessage?.ToastMsg(desc);

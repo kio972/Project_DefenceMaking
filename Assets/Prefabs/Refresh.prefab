@@ -62,7 +62,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   fluctTime: 10
+  refreashTime: 3
   text: {fileID: 3747144718594405148}
+  refreshMessage: 
   fluctMessage: 
 --- !u!1 &2017098346009623023
 GameObject:
@@ -130,10 +132,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9
+  m_text: 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6d5bca52357e2c847b2a94c355acc09e, type: 2}
-  m_sharedMaterial: {fileID: -7728803947815060664, guid: 6d5bca52357e2c847b2a94c355acc09e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97a869447a59c1e4b883838bdbcb986a, type: 2}
+  m_sharedMaterial: {fileID: 2186946242765391702, guid: 97a869447a59c1e4b883838bdbcb986a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -193,7 +195,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.061157227, y: 0, z: 0.32617188, w: 0}
+  m_margin: {x: 0, y: 3, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

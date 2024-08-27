@@ -7,6 +7,8 @@ using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using Cysharp.Threading.Tasks;
+using System.Threading;
+using Unity.VisualScripting;
 
 public enum CardType
 {
@@ -15,6 +17,7 @@ public enum CardType
     Monster,
     Trap,
     Environment,
+    Spawner,
 }
 
 public enum CardGrade
@@ -47,7 +50,7 @@ public class CardFramework : MonoBehaviour
 
     private bool CancelInput()
     {
-        return Input.GetKeyDown(KeyCode.Mouse1);
+        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.F1) || Input.GetKeyDown(KeyCode.F2) || Input.GetKeyDown(KeyCode.F3) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
     }
 
     private void SetTile(TileNode curNode)
@@ -164,7 +167,7 @@ public class CardFramework : MonoBehaviour
     private void DrawLine(bool value = true)
     {
         //라인렌더러로 선표시
-        Vector3 startPos = transform.position;
+        Vector3 startPos = value ? transform.position : Vector3.zero;
 
         GameManager.Instance.cardDeckController.DrawGuide(startPos, value);
 
@@ -179,20 +182,22 @@ public class CardFramework : MonoBehaviour
             {
                 Tile tile = instancedObject.GetComponent<Tile>();
                 tile.RotateTile();
+                AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
             }
             else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
             {
                 Tile tile = instancedObject.GetComponent<Tile>();
+                AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 tile.RotateTile(true);
                 NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
             }
         }
 
-        DrawLine();
-
         if (CancelInput())
             SetObjectOnMap(true);
+
+        DrawLine();
     }
 
     public void CallCard()
@@ -237,9 +242,11 @@ public class CardFramework : MonoBehaviour
         _cardInfo.Value = targetCard;
     }
 
+    private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+
     private async UniTaskVoid WaitForCard()
     {
-        await UniTask.Yield();
+        await UniTask.Yield(_tokenSource.Token);
 
         if (InputManager.Instance.settingCard) return;
 
@@ -247,11 +254,11 @@ public class CardFramework : MonoBehaviour
         while(!CancelInput() && !SetInput())
         {
             UpdateObjectState();
-            await UniTask.Yield();
+            await UniTask.Yield(_tokenSource.Token);
         }
 
         if (CancelInput())
-            SetObjectOnMap(false);
+            SetObjectOnMap(true);
         else
             SetObjectOnMap();
         
@@ -264,5 +271,17 @@ public class CardFramework : MonoBehaviour
         Image image = GetComponent<Image>();
         var startStream = image.OnPointerDownAsObservable()
             .Subscribe(_ => WaitForCard().Forget());
+    }
+
+    private void OnEnable()
+    {
+        _tokenSource = new CancellationTokenSource();
+    }
+
+    private void OnDisable()
+    {
+        _tokenSource.Cancel();
+        _tokenSource.Dispose();
+        //EndCard();
     }
 }

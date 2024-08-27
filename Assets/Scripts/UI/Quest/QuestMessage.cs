@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class QuestMessage : MonoBehaviour
 {
@@ -29,9 +31,17 @@ public class QuestMessage : MonoBehaviour
     private Image fade;
 
     [SerializeField]
+    private float fadeAlpha;
+
+    [SerializeField]
     private Sprite[] sprites;
 
     private bool closing = false;
+
+    private readonly Color mainBtnColor = new Color(0.8f, 0.5f, 0.4f);
+    private readonly Color subBtnColor = new Color(0.63f, 0.55f, 0.52f);
+
+    private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
     private IEnumerator SetAlpha(bool value, float lerpTime, float waitTime = 0)
     {
@@ -88,9 +98,14 @@ public class QuestMessage : MonoBehaviour
 
     private IEnumerator Resume(string id)
     {
+        string closeClip = "Quest_Paper_Burn_" + Random.Range(1, 3).ToString();
+        AudioManager.Instance.Play2DSound(closeClip, SettingManager.Instance._FxVolume);
+
         closing = true;
 
+        UtilHelper.IColorEffect(fade.transform, new Color(0, 0, 0, fadeAlpha), Color.clear, 0.1f, () => fade.gameObject.SetActive(false)).Forget();
         yield return StartCoroutine(SetAlpha(false, 0.1f));
+        GameManager.Instance.SetPause(false);
 
         float targetTime = dissolveController.disappareGoaltime;
         float elapsedTime = 0f;
@@ -101,7 +116,6 @@ public class QuestMessage : MonoBehaviour
         }
 
         QuestManager.Instance.StartQuest(id);
-        GameManager.Instance.SetPause(false);
         closing = false;
         gameObject.SetActive(false);
     }
@@ -132,10 +146,8 @@ public class QuestMessage : MonoBehaviour
             StartQuest(targetQuest[1]);
     }
 
-    public void SetMessage(Dictionary<string, object> data)
+    private void ResetUIColors()
     {
-        dissolveController.isAppare = true;
-        gameObject.SetActive(true);
         TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
         Image[] imgs = GetComponentsInChildren<Image>();
         foreach (TextMeshProUGUI text in textMeshProUGUIs)
@@ -146,6 +158,15 @@ public class QuestMessage : MonoBehaviour
                 continue;
             img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
         }
+    }
+
+    public async UniTaskVoid SetMessage(Dictionary<string, object> data)
+    {
+        fade.gameObject.SetActive(true);
+        UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, fadeAlpha), 0.5f).Forget();
+        dissolveController.isAppare = true;
+        gameObject.SetActive(true);
+        ResetUIColors();
         GameManager.Instance.SetPause(true);
 
         if (data == null)
@@ -153,6 +174,7 @@ public class QuestMessage : MonoBehaviour
 
         titleText.text = data["MessageTitle"].ToString();
         messageText.text = data["MessageText"].ToString();
+
         string[] buttonTexts = data["MessageButtonText"].ToString().Split('/');
         select1.transform.parent.gameObject.SetActive(true);
         select1.text = buttonTexts[0];
@@ -168,9 +190,29 @@ public class QuestMessage : MonoBehaviour
             select2.transform.parent.gameObject.SetActive(true);
         }
 
-        if(img != null)
-            img.sprite = sprites[data["Type"].ToString() == "main" ? 0 : Random.Range(1, 4)];
+        bool isMain = data["Type"].ToString() == "main";
+        if (img != null)
+            img.sprite = sprites[isMain ? 0 : Random.Range(1, 4)];
+        select1.transform.parent.GetComponent<Image>().color = isMain ? mainBtnColor : subBtnColor;
+        select2.transform.parent.GetComponent<Image>().color = isMain ? mainBtnColor : subBtnColor;
 
         titleText.text = data["MessageTitle"].ToString();
+
+        select1.transform.parent.GetComponent<Button>().interactable = false;
+        select2.transform.parent.GetComponent<Button>().interactable = false;
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.1f), false, default, cancellationTokenSource.Token);
+        string openClip = "Quest_Paper_Open_" + Random.Range(1, 4).ToString();
+        AudioManager.Instance.Play2DSound(openClip, SettingManager.Instance._FxVolume);
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime), false, default, cancellationTokenSource.Token);
+        select1.transform.parent.GetComponent<Button>().interactable = true;
+        select2.transform.parent.GetComponent<Button>().interactable = true;
+    }
+
+    private void OnDestroy()
+    {
+        cancellationTokenSource.Cancel();
+        cancellationTokenSource.Dispose();
     }
 }

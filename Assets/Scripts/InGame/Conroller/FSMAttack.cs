@@ -35,8 +35,6 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
         if (NeedChange(e))
             return;
 
-        e.UpdateAttackSpeed();
-
         if (!e._Animator.GetCurrentAnimatorStateInfo(0).IsTag("ATTACK") && !e._Animator.IsInTransition(0))
         {
             e._Animator.ResetTrigger("Attack");
@@ -46,7 +44,10 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
 
     public void Exit(Battler e)
     {
+        e.prevTarget = e.curTarget;
         e.curTarget = null;
         e.curAttackCoolTime = e.attackCoolTime;
+        if (e.prevTarget != null && e.prevTarget.isDead)
+            e.prevTarget = null;
     }
 }

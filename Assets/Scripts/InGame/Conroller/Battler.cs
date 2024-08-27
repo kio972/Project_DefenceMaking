@@ -2,9 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine.Unity;
-using UnityEngine.UIElements;
 using UniRx;
+using UniRx.Triggers;
+using System.Threading;
+
+public interface ISaveLoadBattler
+{
+    BattlerData GetData();
+    void LoadData(BattlerData data);
+}
 
 public interface IHide
 {
@@ -30,8 +36,12 @@ public enum CCType
     KnockBack,
 }
 
-public class Battler : FSM<Battler>
+public class Battler : FSM<Battler>, ISaveLoadBattler
 {
+    private bool isAnimUniRxSubscribed = false;
+
+    protected CancellationTokenSource unitaskCancelTokenSource = new CancellationTokenSource();
+
     protected string _name;
 
     protected int minDamage;
@@ -110,6 +120,7 @@ public class Battler : FSM<Battler>
 
     public Battler chaseTarget;
     public Battler curTarget;
+    public Battler prevTarget;
 
     public Vector3 lastPoint;
 
@@ -131,15 +142,10 @@ public class Battler : FSM<Battler>
     [SerializeField]
     private Transform attackZone;
 
-    protected List<Battler> rangedTargets = new List<Battler>();
+    protected HashSet<Battler> rangedTargets = new HashSet<Battler>();
 
     private int prevRotLevel = -1;
     private Coroutine rotLevelCoroutine = null;
-
-    [SerializeField]
-    private AudioClip attackSound;
-    [SerializeField]
-    private AudioClip deadSound;
 
     [SerializeField]
     protected string battlerID;
@@ -255,10 +261,13 @@ public class Battler : FSM<Battler>
             item.DeActiveEffect();
         _effects.Clear();
 
+        unitaskCancelTokenSource.Cancel();
+        unitaskCancelTokenSource.Dispose();
+        unitaskCancelTokenSource = new CancellationTokenSource();
         StopAllCoroutines();
         Invoke("RemoveBody", 2.5f);
-        if(deadSound != null)
-            AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
+        if(GameManager.Instance.holdBackedABattlers.Contains(this))
+            GameManager.Instance.holdBackedABattlers.Remove(this);
     }
 
     private void UpdateChaseTarget(Battler attacker)
@@ -341,9 +350,6 @@ public class Battler : FSM<Battler>
             if (curHp <= 0)
                 Dead();
         }
-
-        if ((object)CurState == FSMHide.Instance)
-            ChangeState(FSMPatrol.Instance);
 
         if ((object)CurState == FSMPatrol.Instance)
         {
@@ -510,9 +516,16 @@ public class Battler : FSM<Battler>
         GameManager.Instance.waveController.AddDelayedTarget(_name);
     }
 
-    public virtual void Patrol()
+    protected bool isCollapsed = false;
+
+    public void CheckTargetCollapsed()
     {
-        if (PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null)
+        isCollapsed = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null;
+    }
+
+    protected virtual void CollapseLogic()
+    {
+        if (isCollapsed)
         {
             collapseCool += Time.deltaTime * GameManager.Instance.timeScale;
             if (collapseCool >= 5f)
@@ -521,6 +534,11 @@ public class Battler : FSM<Battler>
                 ReturnToBase();
             }
         }
+    }
+
+    public virtual void Patrol()
+    {
+        CollapseLogic();
 
         if (directPass)
             DirectPass(NodeManager.Instance.endPoint);
@@ -540,8 +558,8 @@ public class Battler : FSM<Battler>
             return null;
         else
         {
-            Battler closestTarget = rangedTargets[0];
-            float dist = (transform.position - closestTarget.transform.position).magnitude;
+            Battler closestTarget = null;
+            float dist = Mathf.Infinity;
             foreach(Battler target in rangedTargets)
             {
                 float targetDist = (transform.position - target.transform.position).magnitude;
@@ -579,7 +597,7 @@ public class Battler : FSM<Battler>
         }
     }
 
-    public void Play_AttackAnimation()
+    public virtual void Play_AttackAnimation()
     {
         if (animator != null)
         {
@@ -592,7 +610,7 @@ public class Battler : FSM<Battler>
     {
         List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
         splashTargets.Remove(mainTarget);
-        int damage = Mathf.CeilToInt(baseDamage * splashDamage);
+        int damage = Mathf.CeilToInt((float)baseDamage * splashDamage / 100f);
         foreach (Battler target in splashTargets)
             target.GetDamage(damage, this);
     }
@@ -600,9 +618,6 @@ public class Battler : FSM<Battler>
     //애니메이션 이벤트에서 작동
     public virtual void Attack()
     {
-        if (attackSound != null)
-            AudioManager.Instance.Play2DSound(attackSound, SettingManager.Instance._FxVolume);
-
         if (attackEffect != null)
             EffectPooling.Instance.PlayEffect(attackEffect, curTarget.transform, Vector3.zero, 0.9f);
 
@@ -610,9 +625,9 @@ public class Battler : FSM<Battler>
         {
             int baseDamage = Damage;
             int tempDamage = TempDamage(baseDamage);
-            curTarget.GetDamage(baseDamage + tempDamage, this);
+            curTarget.GetDamage(tempDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget, baseDamage + tempDamage);
+                SplashAttack(curTarget, tempDamage);
         }
     }
 
@@ -639,7 +654,8 @@ public class Battler : FSM<Battler>
         armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
         float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
-        float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange);
+        if(float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange))
+            attackRange += UnityEngine.Random.Range(-0.01f, 0.01f);
 
         float.TryParse(DataManager.Instance.Battler_Table[index]["splashRange"].ToString(), out splashRange);
         if (splashRange > 0)
@@ -652,19 +668,35 @@ public class Battler : FSM<Battler>
     public virtual void Init()
     {
         isDead = false;
-
+        chaseTarget = null;
+        curTarget = null;
+        isCollapsed = false;
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
-        _effects = new ReactiveCollection<StatusEffect>();
+        _effects.Clear();
         SetRotation();
-
+        moveSpeed = 1;
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+        animator.SetBool("Move", GameManager.Instance.timeScale != 0);
+        if (animator != null && !isAnimUniRxSubscribed)
+        {
+            isAnimUniRxSubscribed = true;
+            SubscribeAnimation();
+        }
 
         if (curTile == null)
         {
             curTile = NodeManager.Instance.startPoint;
             transform.position = curTile.transform.position;
         }
+
+        RandomizePosition();
+    }
+
+    private void RandomizePosition()
+    {
+        float targetZ = UnityEngine.Random.Range(-0.001f, 0.001f);
+        animator.transform.localPosition = new Vector3(0, 0, targetZ);
     }
 
     private Quaternion TargetRoation(int camera_Level)
@@ -764,7 +796,7 @@ public class Battler : FSM<Battler>
         return true;
     }
 
-    public void UpdateAttackSpeed()
+    private void UpdateAttackSpeed()
     {
         if (animator != null)
             animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
@@ -806,24 +838,14 @@ public class Battler : FSM<Battler>
     {
         foreach (Battler battler in targets)
         {
-            if (rangedTargets.Contains(battler))
-                continue;
-
-            if(battler.unitType == UnitType.Player && battler.tag != "King")
+            rangedTargets.Add(battler);
+            
+            if(holdBackCheck && battler is IHoldbacker holdbacker)
             {
-                Monster target = battler.GetComponent<Monster>();
-                if (!target.CanHoldBack && !target.rangedTargets.Contains(this) && holdBackCheck)
-                    continue;
+                //해당 개체가 저지가능상태가 아니고, this를 저지하고 있는 중이 아니라면 대상에서 제외시킨다.
+                if (!holdbacker.CanHoldBack && !holdbacker.holdBackTargets.Contains(this))
+                    rangedTargets.Remove(battler);
             }
-
-            if(this.unitType == UnitType.Player && this.tag != "King")
-            {
-                Monster monster = GetComponent<Monster>();
-                if(monster.CanHoldBack || !holdBackCheck)
-                    rangedTargets.Add(battler);
-            }
-            else
-                rangedTargets.Add(battler);
         }
 
         RemoveOutCaseTargets(targets);
@@ -843,15 +865,22 @@ public class Battler : FSM<Battler>
         //        curTarget = battle;
         //}
 
-        return GetPriorityTarget();
+        Battler target = GetPriorityTarget();
+        if(target is IHoldbacker holdbackable && !GameManager.Instance.holdBackedABattlers.Contains(this))
+            holdbackable.AddHoldBackTarget(this);
+        return target;
     }
 
     protected virtual Battler GetPriorityTarget()
     {
+        //전에 때렸던 타겟이 사거리 내에 있다면 최우선타겟으로 삼는다.
+        if(prevTarget != null && rangedTargets.Contains(prevTarget))
+            return prevTarget;
+
         Battler curTarget = null;
         foreach (Battler battle in rangedTargets)
         {
-            if (curTarget == null) //사거리 내에 들어온 유일한 타겟일경우에만 지정가능하도록한다.
+            if (curTarget == null)
                 curTarget = battle;
             else if (Vector3.Distance(transform.position, battle.transform.position) <
                 Vector3.Distance(transform.position, curTarget.transform.position) && battle.tag != "King")
@@ -874,7 +903,7 @@ public class Battler : FSM<Battler>
         FSMUpdate();
     }
 
-    public void LoadData(BattlerData data)
+    public virtual void LoadData(BattlerData data)
     {
         curTile = NodeManager.Instance.FindNode(data.row, data.col);
         if(data.nextRow != -1)
@@ -892,7 +921,7 @@ public class Battler : FSM<Battler>
         hpBar.UpdateHp();
     }
 
-    public BattlerData GetData()
+    public virtual BattlerData GetData()
     {
         BattlerData target = new BattlerData();
         target.id = battlerID;
@@ -919,5 +948,32 @@ public class Battler : FSM<Battler>
         target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;
 
         return target;
+    }
+
+    private void SubscribeAnimation()
+    {
+        GameManager.Instance._timeScale.Where(_ => animator.ContainsParam("Move"))
+            .Subscribe(_ =>
+            {
+                animator.SetBool("Move", _ != 0);
+            }).AddTo(gameObject);
+
+        GameManager.Instance._timeScale.Subscribe(_ =>
+        {
+            UpdateAttackSpeed();
+        }).AddTo(gameObject);
+
+        _effects.ObserveCountChanged().Subscribe(_ =>
+        {
+            UpdateAttackSpeed();
+        }).AddTo(gameObject);
+
+        SubscribeStateAnimation();
+    }
+
+    protected void SubscribeStateAnimation()
+    {
+        _CurState.Where(_ => animator.ContainsParam("Move")).
+            Subscribe(_ => animator.SetBool("Move", (object)_ == FSMPatrol.Instance || FSMChase.Instance || FSMDirectMove.Instance));
     }
 }

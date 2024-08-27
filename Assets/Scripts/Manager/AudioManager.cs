@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +17,9 @@ public class AudioManager : Singleton<AudioManager>
 
     private ClipController bgmClips;
     private ClipController sfxClips;
+
+    private Dictionary<string, int> soundActiveDic = new Dictionary<string, int>();
+    private Dictionary<string, bool> soundActiveFrameDic = new Dictionary<string, bool>();
 
     private void OnApplicationFocus(bool focus)
     {
@@ -115,6 +120,7 @@ public class AudioManager : Singleton<AudioManager>
     IEnumerator IDeactiveAudio(AudioSource audio)
     {
         yield return new WaitForSeconds(audio.clip.length);
+        soundActiveDic[audio.clip.name]--;
         audio.gameObject.SetActive(false);
     }
 
@@ -123,12 +129,7 @@ public class AudioManager : Singleton<AudioManager>
         if (clipDic.ContainsKey(name) == false)
             return;
 
-        AudioSource audioSource = Pooling();
-        audioSource.clip = clipDic[name];
-        audioSource.spatialBlend = 0;
-        audioSource.volume = volume;
-        audioSource.Play();
-        StartCoroutine(IDeactiveAudio(audioSource));
+        Play(clipDic[name], spatialBelnd, volume, position);
     }
 
     public void Play(AudioClip clip, float spatialBelnd, float volume, Vector3 position)
@@ -136,11 +137,24 @@ public class AudioManager : Singleton<AudioManager>
         if (clip == null)
             return;
 
+        if (soundActiveDic.ContainsKey(clip.name) && soundActiveDic[clip.name] > 5)
+            return;
+
         AudioSource audioSource = Pooling();
         audioSource.clip = clip;
-        audioSource.spatialBlend = 0;
+        audioSource.spatialBlend = spatialBelnd;
         audioSource.volume = volume;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        audioSource.minDistance = 2;
+        audioSource.maxDistance = 10;
         audioSource.Play();
+        if (!soundActiveDic.ContainsKey(clip.name))
+        {
+            soundActiveDic.Add(clip.name, 0);
+            soundActiveFrameDic.Add(clip.name, false);
+        }
+        soundActiveDic[clip.name]++;
+        soundActiveFrameDic[clip.name] = true;
         StartCoroutine(IDeactiveAudio(audioSource));
     }
 
@@ -157,6 +171,11 @@ public class AudioManager : Singleton<AudioManager>
     public void Play3DSound(string name, Vector3 position, float volume = 1.0f)
     {
         Play(name, 1, volume, position);
+    }
+
+    public void Play3DSound(AudioClip clip, Vector3 position, float volume = 1.0f)
+    {
+        Play(clip, 1, volume, position);
     }
 
 

@@ -6,10 +6,20 @@ public class Thief : Adventurer, IHide
 {
     public virtual bool canAttackbyTrap { get => true; }
 
+    public override void GetDamage(int damage, Battler attacker)
+    {
+        int curHp = this.curHp;
+        base.GetDamage(damage, attacker);
+
+        if (this.curHp < curHp && (object)CurState == FSMHide.Instance)
+        {
+            ChangeState(FSMPatrol.Instance);
+            GetCC(attacker, 0.5f);
+        }
+    }
+
     public void HideAction()
     {
-        animator.SetBool("Move", GameManager.Instance.timeScale != 0);
-
         if(CurTile == NodeManager.Instance.endPoint)
             ChangeState(FSMPatrol.Instance);
         else
@@ -20,5 +30,24 @@ public class Thief : Adventurer, IHide
     {
         base.Init();
         ChangeState(FSMHide.Instance);
+    }
+
+    public override BattlerData GetData()
+    {
+        BattlerData data = base.GetData();
+        data.additionalData = new Dictionary<string, object>();
+        data.additionalData.Add("hideState", (object)CurState == FSMHide.Instance);
+        return base.GetData();
+    }
+
+    public override void LoadData(BattlerData data)
+    {
+        base.LoadData(data);
+        if(data.additionalData != null && data.additionalData.Count > 0)
+        {
+            bool hideState = System.Convert.ToBoolean(data.additionalData["hideState"]);
+            if (!hideState)
+                ChangeState(FSMPatrol.Instance);
+        }
     }
 }

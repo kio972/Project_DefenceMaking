@@ -58,6 +58,18 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup layoutGroup;
 
+    public bool IsQuestStarted(string questID)
+    {
+        if (mainQuest != null && mainQuest._QuestID == questID)
+            return true;
+
+        foreach (var quest in subQuest)
+            if (quest._QuestID == questID)
+                return true;
+
+        return false;
+    }
+
     private Quest LoadQuest(int questID)
     {
         string questClassName = "Quest" + questID.ToString(); // 퀘스트 클래스의 이름
@@ -73,6 +85,8 @@ public class QuestController : MonoBehaviour
     {
         mainQuest = quest;
         mainInfomer.SetQuest(quest);
+
+        AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
     }
 
     private void SetSubQuest(Quest quest)
@@ -83,6 +97,8 @@ public class QuestController : MonoBehaviour
         layoutGroup.enabled = false;
         next.transform.SetAsLastSibling();
         layoutGroup.enabled = true;
+
+        AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
     }
 
     public void StartQuest(int questID, List<int> startVal)

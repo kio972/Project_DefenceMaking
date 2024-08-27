@@ -28,7 +28,7 @@ public abstract class Quest
     private bool isMainQuest = false;
     public bool _IsMainQuest { get => isMainQuest; }
 
-    private bool isEnd = false;
+    protected bool isEnd = false;
     public bool _IsEnd { get => isEnd; }
     public bool _IsClear { get { return isEnd && !isComplete.Contains(false) ? true : false; } }
 

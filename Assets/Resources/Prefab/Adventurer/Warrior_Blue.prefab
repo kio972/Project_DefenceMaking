@@ -126,7 +126,7 @@ MonoBehaviour:
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
-  zSpacing: 0
+  zSpacing: -0.001
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
@@ -160,7 +160,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: -3469633884032424613}
+  attackSounds:
+  - {fileID: 8300000, guid: b815cbd8b853c46f3b44cf0f5d6fa672, type: 3}
+  - {fileID: 8300000, guid: 87003694a32ed4e3eaa6b38845575530, type: 3}
+  - {fileID: 8300000, guid: d8784a308f422430dba0722e615026e2, type: 3}
+  - {fileID: 8300000, guid: 19b8110894c7c4eb0b0f09e22b3c465d, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 69a07dc71919f4c208c2b2ff7fcb7cb6, type: 3}
+  deadSoundMult: 0.6
 --- !u!1 &2060345853617806872
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,8 +219,10 @@ MonoBehaviour:
   curHp: 12
   maxHp: 12
   armor: 0
-  attackSpeed: 1
+  shield: 0
   attackRange: 0
+  attackCoolTime: 0
+  curAttackCoolTime: 0
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -222,12 +232,11 @@ MonoBehaviour:
   hpPivot: {fileID: 3736713600125128576}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: a1d88aed740410048badb875702f2c2a, type: 3}
-  deadSound: {fileID: 8300000, guid: 3f6cf1f982a7e1b4587dc0fff38527e6, type: 3}
-  battlerID: s_a10002
+  battlerID: s_a20004
   attackEffect: {fileID: 0}
 --- !u!136 &5018297080547852682
 CapsuleCollider:

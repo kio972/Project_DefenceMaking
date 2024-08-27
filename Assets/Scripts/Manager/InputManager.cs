@@ -58,6 +58,12 @@ public class InputManager : IngameSingleton<InputManager>
 
     public void ClickTile(Tile curTile)
     {
+        if(this.curTile == curTile && curTile.Movable)
+        {
+            curTile.ReadyForMove();
+            return;
+        }
+
         this.curTile = curTile;
         NodeManager.Instance.SetGuideState(GuideState.Movable, curTile);
         TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
@@ -81,6 +87,7 @@ public class InputManager : IngameSingleton<InputManager>
             if (node != null && node.curTile != null)
             {
                 ClickTile(node.curTile);
+                AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
             }
             else
                 ResetTileClick();

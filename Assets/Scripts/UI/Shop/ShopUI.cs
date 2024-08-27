@@ -50,11 +50,17 @@ public class ShopUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
+        if (value)
+            InputManager.Instance.ResetTileClick();
+
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         GameManager.Instance.SetPause(value);
 
         if(value)
+        {
             PlayScript("Shop000");
+            AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
+        }
     }
 
     private bool initState = false;
@@ -79,9 +85,12 @@ public class ShopUI : MonoBehaviour
         Init();
     }
 
+    [SerializeField]
+    private GameObject btnObject;
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Input.GetKeyDown(KeyCode.F3) && btnObject.activeSelf && !GetComponentInChildren<CardPackEffect>(true).gameObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);

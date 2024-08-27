@@ -32,7 +32,7 @@ public class QuestInfo : MonoBehaviour
     private Animator animator;
     private Animator _Animator { get { if (animator == null) animator = GetComponentInChildren<Animator>(); return animator; } }
     [SerializeField]
-    List<QuestCondition> conditions;
+    List<QuestConditionUI> conditions;
 
     private void DeActive()
     {
@@ -45,13 +45,17 @@ public class QuestInfo : MonoBehaviour
         _Animator.SetBool("IsClear", curQuest._IsClear);
         _Animator.SetTrigger("End");
         //Invoke("DeActive", 1f);
+
+        string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
+        AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
+
         curQuest = null;
     }
 
     public void SetQuestText(Quest quest)
     {
         questName.text = quest._QuestName;
-        foreach (QuestCondition condition in conditions)
+        foreach (QuestConditionUI condition in conditions)
             condition.gameObject.SetActive(false);
 
         for(int i = 0; i < quest._ClearInfo.Count; i++)

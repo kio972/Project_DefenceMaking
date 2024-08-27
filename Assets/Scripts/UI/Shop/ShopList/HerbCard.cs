@@ -58,11 +58,13 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
     {
         foreach (Card curCard in curCards)
             GameManager.Instance.cardDeckController.AddCard(curCard.cardIndex);
+        packEffect?.SetCardPackSprite(transform);
         packEffect?.ShowEffect(curCards);
     }
 
     public void RefreshItem()
     {
+        curCards = new List<Card>();
         List<int> targets = new List<int>();
         string targetGrade = isSuperial ? "rare" : "normal";
         foreach(int herb in DataManager.Instance.herbCard_Indexs)

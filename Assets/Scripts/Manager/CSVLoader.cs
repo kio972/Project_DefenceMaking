@@ -60,45 +60,66 @@ public class CSVLoader
     {
         string str = textFile.text;
 
-        string[] lines = str.Split('\r');
-        string[] heads = lines[0].Split(',');
-
-        for (int i = 1; i < lines.Length; i++)
-            lines[i] = lines[i].Remove(0, 1);
-
-        List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
+        str = str.Replace("\r\n", "\n");
+        var fields = new List<string>();
+        bool inQuotes = false;
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < lines.Length; i++)
+
+        for (int i = 0; i < str.Length; i++)
         {
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            string[] col = lines[i].Split(',');
-            col[col.Length - 1] = col[col.Length - 1].Replace("\r", "");
-            int headIndex = 0;
-            for (int j = 0; j < col.Length; j++)
+            char c = str[i];
+
+            if (c == '"')
             {
-                sb.Clear();
-                sb.Append(col[j]);
-                bool isNeedCorrect = IsNeedCorrect(j, col, heads.Length);
-                int loopTime = 0;
-                if (isNeedCorrect)
-                    loopTime = CorrectCells(sb, j, col, heads.Length, loopTime);
-
-                string value = sb.ToString();
-                value = value.Replace("\"\"", "<DQ>");
-                value = value.Replace("\"", "");
-                value = value.Replace("<DQ>", "\"");
-
-                if(!dic.ContainsKey(heads[headIndex]))
-                    dic.Add(heads[headIndex], value);
-
-                if (isNeedCorrect)
-                    j += loopTime;
-                headIndex++;
+                // 다음 문자가 따옴표일 경우(즉, 이중 따옴표), 그것은 따옴표 자체를 의미
+                if (inQuotes && i + 1 < str.Length && str[i + 1] == '"')
+                {
+                    sb.Append('"');
+                    i++; // 따옴표를 스킵
+                }
+                else
+                    inQuotes = !inQuotes; // 따옴표 상태를 반전
             }
-
-            list.Add(dic);
+            else if (c == ',' && !inQuotes)
+            {
+                // 쉼표를 만났고 따옴표 안이 아닐 경우 필드가 끝났음을 의미
+                fields.Add(sb.ToString());
+                sb.Clear();
+            }
+            else if (c == '\n' && !inQuotes)
+            {
+                // 엔터를 만났고 따옴표 안이 아닐 경우 필드가 끝났음을 의미
+                fields.Add(sb.ToString());
+                sb.Clear();
+            }
+            else
+                sb.Append(c); // 문자를 필드에 추가
         }
 
+        fields.Add(sb.ToString()); // 마지막 필드를 추가
+
+        List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
+        int headCount = str.Split('\n')[0].Split(',').Length;
+        int curCount = 0;
+        List<string> heads = new List<string>();
+        Dictionary<string, object> dic = new Dictionary<string, object>();
+        foreach (var field in fields)
+        {
+            if (heads.Count < headCount)
+                heads.Add(field);
+            else
+                dic.Add(heads[curCount], field);
+
+            curCount++;
+            if (curCount == headCount)
+            {
+                curCount = 0;
+                list.Add(dic);
+                dic = new Dictionary<string, object>();
+            }
+        }
+
+        list.RemoveAt(0);
         return list;
     }
 }

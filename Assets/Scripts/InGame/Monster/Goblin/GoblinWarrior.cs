@@ -10,13 +10,13 @@ public class GoblinWarrior : Goblin
     {
         while (!isDead)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f), false, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             if (HaveEffect<GoblinSwarm>())
                 continue;
 
-            foreach (Goblin goblin in GameManager.Instance._MonsterList)
+            foreach (Monster goblin in GameManager.Instance._MonsterList)
             {
-                if (goblin == this)
+                if (goblin == this || goblin is not Goblin)
                     continue;
 
                 float dist = UtilHelper.CalCulateDistance(transform, goblin.transform);

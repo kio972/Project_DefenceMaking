@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4671960975518701823}
   - component: {fileID: 5706195325358999830}
   - component: {fileID: 1890781341106017348}
-  - component: {fileID: 5668618775938844837}
+  - component: {fileID: 6834645794935873396}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -120,13 +120,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: a3c69c8bf36b65c4a8c27add79b4f534, type: 2}
-  initialSkinName: black
+  initialSkinName: legend
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
-  zSpacing: 0
+  zSpacing: -0.001
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
@@ -148,7 +148,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &5668618775938844837
+--- !u!114 &6834645794935873396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,7 +160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: -3469633884032424613}
+  attackSounds:
+  - {fileID: 8300000, guid: eea00d58a026d49a4abf50b4d3ae57e2, type: 3}
+  - {fileID: 8300000, guid: ae9188dafb83b4c8ca7d8acc7abbd4b1, type: 3}
+  - {fileID: 8300000, guid: 110736bc322854b4993ef943ed2e45f1, type: 3}
+  - {fileID: 8300000, guid: 33e392734ac9c462bbc980e2afc4782e, type: 3}
+  - {fileID: 8300000, guid: 536b89ed4bd964014bf87b1deb016489, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: ee4488e44e3a347d59acb94a66b46d49, type: 3}
+  deadSoundMult: 0.6
 --- !u!1 &2060345853617806872
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7454690159383220687}
-  - component: {fileID: -3469633884032424613}
+  - component: {fileID: 8069193011018747120}
   - component: {fileID: 5018297080547852682}
   - component: {fileID: -7463750327690883626}
   m_Layer: 6
@@ -196,7 +205,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3469633884032424613
+--- !u!114 &8069193011018747120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,7 +214,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2060345853617806872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c983529d044c4cf4e9199b21ebb48e78, type: 3}
+  m_Script: {fileID: 11500000, guid: 377595a42c7b133429e5fcce7a840194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 12
@@ -224,12 +233,11 @@ MonoBehaviour:
   hpPivot: {fileID: 3736713600125128576}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: a1d88aed740410048badb875702f2c2a, type: 3}
-  deadSound: {fileID: 8300000, guid: 3f6cf1f982a7e1b4587dc0fff38527e6, type: 3}
-  battlerID: s_a30004
+  battlerID: s_a40003
   attackEffect: {fileID: 0}
 --- !u!136 &5018297080547852682
 CapsuleCollider:

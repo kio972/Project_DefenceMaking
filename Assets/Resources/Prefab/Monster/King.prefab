@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3976440122746867361}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HpPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4050704818054284067}
   - component: {fileID: 6646922155541554632}
   - component: {fileID: 5650871661538000912}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ MonoBehaviour:
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
-  zSpacing: 0
+  zSpacing: -0.001
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
@@ -191,7 +191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battler: {fileID: 8945118246915258461}
+  attackSounds:
+  - {fileID: 8300000, guid: 8362aaa0085de43aab0313854598737a, type: 3}
+  attackSoundMult: 1
+  deadSounds:
+  - {fileID: 8300000, guid: 4c920cfdfdbe0492db421adf796fa497, type: 3}
+  deadSoundMult: 1
 --- !u!1 &3936675834573604408
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,9 +207,9 @@ GameObject:
   m_Component:
   - component: {fileID: 82694215407906673}
   - component: {fileID: 6512068704573270428}
-  - component: {fileID: 8945118246915258461}
+  - component: {fileID: 3948474705470342204}
   - component: {fileID: 7141161965367787149}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: King
   m_TagString: King
   m_Icon: {fileID: 0}
@@ -235,7 +240,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3936675834573604408}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &8945118246915258461
+--- !u!114 &3948474705470342204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,13 +249,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3936675834573604408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20d5552b892d03d4086c0f5117d40dcf, type: 3}
+  m_Script: {fileID: 11500000, guid: c825cc29ce860984399595f6efbe6dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 20
   maxHp: 20
   armor: 0
-  attackSpeed: 0
+  shield: 0
   attackRange: 0
   attackCoolTime: 1
   curAttackCoolTime: 0
@@ -263,11 +268,10 @@ MonoBehaviour:
   hpPivot: {fileID: 3976440122746867361}
   chaseTarget: {fileID: 0}
   curTarget: {fileID: 0}
+  prevTarget: {fileID: 0}
   lastPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   attackZone: {fileID: 0}
-  attackSound: {fileID: 0}
-  deadSound: {fileID: 0}
   battlerID: s_p10001
   attackEffect: {fileID: 0}
 --- !u!136 &7141161965367787149
@@ -293,7 +297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1677496451540108331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5186736132288342304}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RotationAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -62,13 +62,14 @@ public class GameManager : IngameSingleton<GameManager>
 
     private List<Monster> monsterList = new List<Monster>();
     public List<Monster> _MonsterList { get => monsterList; }
-    public List<MonsterSpawner> monsterSpawner = new List<MonsterSpawner>();
+    public HashSet<MonsterSpawner> monsterSpawner = new HashSet<MonsterSpawner>();
 
     public List<Trap> trapList = new List<Trap>();
 
     public PlayerBattleMain king;
 
-    public float timeScale;
+    public float timeScale { get => _timeScale.Value; set => _timeScale.Value = value; }
+    public ReactiveProperty<float> _timeScale = new ReactiveProperty<float>(1);
 
     private bool updateNeed = true;
 
@@ -99,6 +100,22 @@ public class GameManager : IngameSingleton<GameManager>
 
     public int _TotalMana { get => totalMana; }
     public int _CurMana { get => curMana; set { curMana = value; } }
+
+    public Adventurer LastSpawnedAdventurer;
+
+    private HashSet<Battler> _holdBackedBattlers = new HashSet<Battler>();
+    public HashSet<Battler> holdBackedABattlers { get => _holdBackedBattlers; }
+
+
+    public void CheckBattlerCollapsed()
+    {
+        foreach(Adventurer adventurer in adventurersList)
+            adventurer.CheckTargetCollapsed();
+        foreach(Monster monster in monsterList)
+            monster.CheckTargetCollapsed();
+        foreach (MonsterSpawner spawner in monsterSpawner)
+            spawner.CheckTargetCollapsed();
+    }
 
     public void UpdateTotalMana()
     {
@@ -172,25 +189,14 @@ public class GameManager : IngameSingleton<GameManager>
         return false;
     }
 
-    private IEnumerator WinTextWait()
-    {
-        StoryManager.Instance.EnqueueScript("Dan900");
-
-        while (!StoryManager.Instance.IsScriptQueueEmpty)
-            yield return null;
-
-        ResultController result = FindObjectOfType<ResultController>(true);
-        if (result != null)
-            result.GameWin();
-    }
-
     public void WinGame()
     {
         updateNeed = false;
         speedController.SetSpeedZero();
-        StartCoroutine(WinTextWait());
-        
-        
+
+        ResultController result = FindObjectOfType<ResultController>(true);
+        if (result != null)
+            result.GameWin().Forget();
     }
 
     public void LoseGame()
@@ -200,7 +206,7 @@ public class GameManager : IngameSingleton<GameManager>
 
         ResultController result = FindObjectOfType<ResultController>(true);
         if (result != null)
-            result.GameDefeat();
+            result.GameDefeat().Forget();
     }
 
     private void UpdateBossRoom()
@@ -252,8 +258,8 @@ public class GameManager : IngameSingleton<GameManager>
         timer += InGameDeltaTime;
         if (timer > 720f && dailyIncome)
         {
-            gold += 50 + PassiveManager.Instance.income_Weight;
-            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
+            //gold += 50 + PassiveManager.Instance.income_Weight;
+            //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance.fxVolume);
             dailyIncome = false;
         }
 
@@ -275,7 +281,7 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             //NodeManager.Instance.LockMovableTiles();
 
-            AudioManager.Instance.Play2DSound("Alert_time", SettingManager.Instance._FxVolume);
+            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
         }
     }
 
@@ -337,6 +343,9 @@ public class GameManager : IngameSingleton<GameManager>
 
     public void Init()
     {
+        if (mapBuilder == null)
+            return;
+
         mapBuilder.Init();
         SpawnKing();
         SetWaveSpeed();
@@ -345,8 +354,9 @@ public class GameManager : IngameSingleton<GameManager>
         AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
         cardDeckController.Init();
-        cardDeckController.Invoke("Mulligan", 1f);
-        speedController.SetSpeedZero();
+        //cardDeckController.Invoke("Mulligan", 1f);
+        cardDeckController.Invoke("MulliganFixed", 1f);
+        speedController.SetSpeedNormal();
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);
 
@@ -400,11 +410,13 @@ public class GameManager : IngameSingleton<GameManager>
         }
 
         waveController.SpawnWave(curWave);
+        waveController.UpdateWaveText();
 
         research.LoadData(data);
         shop.LoadData(data);
         QuestManager.Instance.LoadGame(data);
         SetWaveSpeed(curWave);
+        speedController.SetSpeedZero();
         isInit = true;
     }
 }

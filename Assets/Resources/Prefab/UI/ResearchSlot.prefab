@@ -229,7 +229,6 @@ MonoBehaviour:
   targetSlot: {fileID: 6725244234986947998}
   frameImg: {fileID: 5648661459538452643}
   iconImg: {fileID: 8300259188968005654}
-  curState: 0
   prevResearch: []
 --- !u!1 &4598847282204651286
 GameObject:
@@ -359,6 +358,7 @@ GameObject:
   - component: {fileID: 7842272194316176046}
   - component: {fileID: 336079911662334243}
   - component: {fileID: 5648661459538452643}
+  - component: {fileID: 2104242375181505791}
   m_Layer: 5
   m_Name: IconFrame
   m_TagString: Untagged
@@ -471,6 +471,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2104242375181505791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6715845843587437934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 1
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip: {fileID: 8300000, guid: 5a4ae5288afe74a6b9dee98a89313fa8, type: 3}
+  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
+  soundOnUnHoverClip: {fileID: 0}
 --- !u!1 &7893572992132476203
 GameObject:
   m_ObjectHideFlags: 0

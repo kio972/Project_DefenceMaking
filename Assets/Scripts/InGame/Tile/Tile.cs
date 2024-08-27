@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 public enum TileType
 {
@@ -85,13 +86,13 @@ public class Tile : MonoBehaviour
 
     private MonsterSpawner spawner;
     public MonsterSpawner _Spanwer { get => spawner; }
-    public bool HaveSpawner { get { return spawner == null ? false : true; } }
+    public bool HaveSpawner { get => spawner != null && !spawner.isEmpty; }
 
     public bool IsBigRoom = false;
 
     private Renderer tileRenderer;
 
-    private bool isTwin = false;
+    protected bool isTwin = false;
     
     private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
 
@@ -128,7 +129,7 @@ public class Tile : MonoBehaviour
 
         nextNode.curTile = this;
         transform.position = nextNode.transform.position;
-        NodeManager.Instance.ExpandEmptyNode(nextNode, 4);
+        NodeManager.Instance.ExpandEmptyNode(nextNode, 20);
 
         if (tileType == TileType.End)
         {
@@ -151,6 +152,10 @@ public class Tile : MonoBehaviour
 
         NodeManager.Instance.UpdateMinMaxRowCol(curNode.row, curNode.col);
         //NodeManager.Instance.UpdateSightNode();
+        GameManager.Instance.CheckBattlerCollapsed();
+
+        if(GameManager.Instance.IsInit)
+            AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
     }
 
     private void SetTileVisible(bool value)
@@ -164,8 +169,8 @@ public class Tile : MonoBehaviour
 
     private void UpdateMoveTilePos(TileNode curNode)
     {
-        if (curNode != null && NodeManager.Instance.emptyNodes.Contains(curNode) || curNode == this.curNode)
-            twin.transform.position = curNode.transform.position;
+        if (curNode != null && NodeManager.Instance.virtualNodes.Contains(curNode) || curNode == this.curNode)
+            twin.transform.position = curNode.transform.position + new Vector3(0, 0.01f, 0);
         else
             twin.transform.position = new Vector3(0, 10000, 0);
 
@@ -199,7 +204,7 @@ public class Tile : MonoBehaviour
             NodeManager.Instance.SetActiveNode(curNode, true);
             MoveTile(curNode);
 
-            AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+            //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
             resetNode = false;
 
             //if (SettingManager.Instance.autoPlay == AutoPlaySetting.setTile || SettingManager.Instance.autoPlay == AutoPlaySetting.always)
@@ -244,23 +249,12 @@ public class Tile : MonoBehaviour
         return newDirection;
     }
 
-    private int rotation = 0;
-    public int _Rotation { get => rotation; }
-
     public void RotateTile(bool reverse = false)
     {
         pathDirection = RotateDirection(pathDirection, reverse);
         roomDirection = RotateDirection(roomDirection, reverse);
         RotateDirection(reverse);
         NodeManager.Instance.SetGuideState(GuideState.Tile, this);
-
-        if (reverse)
-            rotation--;
-        else
-            rotation++;
-        if (rotation < 0)
-            rotation = 5;
-        rotation %= 6;
     }
 
     public void ResetTwin()
@@ -282,27 +276,29 @@ public class Tile : MonoBehaviour
         twin.roomDirection = new List<Direction>(roomDirection);
         twin.transform.rotation = transform.rotation;
         twin.rotationCount.Value = rotationCount.Value;
-        NodeManager.Instance.SetActiveNode(this.curNode, false);
+        //NodeManager.Instance.SetActiveNode(this.curNode, false);
     }
 
-    public void ReadyForMove()
+    public async UniTaskVoid ReadyForMove()
     {
         SetTwin();
         InputManager.Instance.movingTile = true;
         switch (tileType)
         {
             case TileType.End:
-                NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+                NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
                 break;
             default:
-                NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+                NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
                 break;
         }
 
         curNode.SetAvail(true);
+        TileMoveCheck();
+        await UniTask.WaitUntil(() => !Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey) && !Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey));
+        //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
         waitToMove = true;
-
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+        print("end");
     }
 
     public TileNode TileMoveCheck()
@@ -358,7 +354,9 @@ public class Tile : MonoBehaviour
 
             // ∫∏ªÛ»πµÊ
             NodeManager.Instance.dormantTile.Remove(this);
-            GameManager.Instance.gold += 100;
+            //GameManager.Instance.gold += 100;
+            IRewardObject rewardObject = GetComponentInChildren<IRewardObject>();
+            rewardObject?.GetReward();
         }
     }
 
@@ -379,11 +377,16 @@ public class Tile : MonoBehaviour
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
 
+        AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.262", SettingManager.Instance._FxVolume);
+
         GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
         trap?.DestroyTrap();
         Destroy(this.gameObject, 1.0f);
 
+        if (spawner != null)
+            RemoveSpawner();
         NodeManager.Instance.RemoveTile(this);
+        GameManager.Instance.CheckBattlerCollapsed();
     }
 
     public TileData GetTileData()
@@ -392,7 +395,7 @@ public class Tile : MonoBehaviour
         tile.id = name.ToString().Replace("(Clone)", "");
         tile.row = curNode.row;
         tile.col = curNode.col;
-        tile.rotation = rotation;
+        tile.rotation = rotationCount.Value;
         tile.isDormant = isDormant;
         tile.isRemovable = removable;
         tile.trapId = trap != null ? trap.BattlerID : "";
@@ -416,14 +419,19 @@ public class Tile : MonoBehaviour
         movable = tileType == TileType.End ? true : false;
         this.removable = removable;
         if(isDormant)
+        {
             NodeManager.Instance.dormantTile.Add(this);
+            GameObject goldBox = Resources.Load<GameObject>("Prefab/Objects/GoldBox");
+            goldBox = Instantiate(goldBox, transform, true);
+            goldBox.transform.position = transform.position;
+        }
         if(playAnim)
             tileAnimator?.SetTrigger("Set");
 
         NodeManager.Instance.SetTile(this);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isTwin)
             return;
@@ -434,10 +442,17 @@ public class Tile : MonoBehaviour
         {
             TileNode curTile = TileMoveCheck();
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
+            {
+                AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 twin.RotateTile();
+            }
             else if(Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+            {
+                AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateTile(true);
-            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
+            }
+
+            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
             {
                 EndMoveing();
             }

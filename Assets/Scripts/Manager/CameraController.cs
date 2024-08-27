@@ -27,6 +27,11 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Camera stackCam;
+    [SerializeField]
+    private Camera stackCam2;
+
+    [SerializeField]
+    private AudioListener audioListener;
 
     public void ResetCamPos(bool isStartPoint = false)
     {
@@ -191,7 +196,12 @@ public class CameraController : MonoBehaviour
 
         if (MouseWheelCheck())
             SetCam();
+    }
 
+    private void FixedUpdate()
+    {
         stackCam.orthographicSize = Camera.main.orthographicSize;
+        stackCam2.orthographicSize = Camera.main.orthographicSize;
+        audioListener.transform.localPosition = Vector3.up * Camera.main.orthographicSize;
     }
 }
