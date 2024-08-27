@@ -340,6 +340,13 @@ public class NodeManager : IngameSingleton<NodeManager>
                 continue;
 
             bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection, true);
+            foreach (Direction dir in targetNode_PathDirection)
+                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                    isConnected = false;
+            foreach (Direction dir in targetNode_RoomDirection)
+                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                    isConnected = false;
+
             node.SetAvail(isConnected);
         }
     }

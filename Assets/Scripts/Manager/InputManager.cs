@@ -60,7 +60,7 @@ public class InputManager : IngameSingleton<InputManager>
     {
         if(this.curTile == curTile && curTile.Movable)
         {
-            curTile.ReadyForMove();
+            curTile.ReadyForMove().Forget();
             return;
         }
 

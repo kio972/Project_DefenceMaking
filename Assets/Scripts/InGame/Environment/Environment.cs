@@ -28,7 +28,9 @@ public class Environment : MonoBehaviour
         transform.SetParent(node.transform, false);
         transform.position = node.transform.position;
         NodeManager.Instance.SetTile(this);
+        NodeManager.Instance.SetActiveNode(node, true);
         curNode = node;
+        curNode.environment = this;
         switch(environmentType)
         {
             case EnvironmentType.monsterHp:

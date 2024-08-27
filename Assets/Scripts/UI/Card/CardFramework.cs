@@ -64,7 +64,7 @@ public class CardFramework : MonoBehaviour
             //    GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
     }
 
     private void SetEnvironment(TileNode curNode)
@@ -72,15 +72,14 @@ public class CardFramework : MonoBehaviour
         Environment environment = instancedObject.GetComponent<Environment>();
         if (environment != null)
         {
-            NodeManager.Instance.emptyNodes.Remove(curNode);
-            NodeManager.Instance.SetActiveNode(curNode, true);
             environment.Init(curNode);
 
-            if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
-                GameManager.Instance.speedController.SetSpeedPrev(false);
+            //if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
+            //    GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
+        if (GameManager.Instance.IsInit)
+            AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
     }
 
     private void SetMonster(TileNode curNode)
