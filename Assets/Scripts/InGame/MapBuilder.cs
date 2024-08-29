@@ -19,10 +19,16 @@ public class MapBuilder : MonoBehaviour
     [SerializeField]
     private int emptyNodeSize = 4;
 
-    private int curTileSetCount = 0;
+    private int _curTileSetCount = 0;
     private int forHiddenTileCount = 10;
+    
+    public int curTileSetCount { get => _curTileSetCount; set => _curTileSetCount = value; }
+
     private bool SetHiddenTileContinuous(GameObject tile)
     {
+        if (!GameManager.Instance.IsInit)
+            return false;
+
         if (tile.GetComponent<TileHidden>() != null)
             return false;
 
@@ -32,11 +38,11 @@ public class MapBuilder : MonoBehaviour
         if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
             return false;
 
-        curTileSetCount++;
-        if (curTileSetCount < forHiddenTileCount)
+        _curTileSetCount++;
+        if (_curTileSetCount < forHiddenTileCount)
             return false;
 
-        curTileSetCount = 0;
+        _curTileSetCount = 0;
         SetHiddenTile(3).Forget();
         return true;
     }
@@ -67,6 +73,19 @@ public class MapBuilder : MonoBehaviour
                 break;
         }
 
+        if (targetNode == null)
+            return;
+
+        TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
+        GameObject targetPrefab = GetRandomPrefab();
+        hidden = Instantiate(hidden);
+        hidden.Init(targetNode, targetPrefab).Forget();
+    }
+
+    public async UniTaskVoid SetHiddenTile(TileData tile)
+    {
+        await UniTask.Yield();
+        TileNode targetNode = NodeManager.Instance.FindNode(tile.row, tile.col);
         if (targetNode == null)
             return;
 

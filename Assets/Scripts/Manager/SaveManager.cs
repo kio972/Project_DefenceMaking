@@ -43,6 +43,18 @@ public class SaveManager : Singleton<SaveManager>
             tile.col = environment._CurNode.col;
             playerData.environments.Add(tile);
         }
+
+        playerData.hiddenTiles = new List<TileData>();
+        foreach(TileNode tileHidden in NodeManager.Instance.hiddenTiles)
+        {
+            TileData tile = new TileData();
+            tile.id = "HiddenTile";
+            tile.row = tileHidden.row;
+            tile.col = tileHidden.col;
+            playerData.hiddenTiles.Add(tile);
+        }
+
+        playerData.nextHiddenTileCount = GameManager.Instance.mapBuilder.curTileSetCount;
     }
 
     public void SavePlayerData()

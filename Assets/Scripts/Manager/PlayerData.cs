@@ -66,6 +66,8 @@ public class PlayerData
     //타일 관련
     public List<TileData> tiles;
     public List<TileData> environments;
+    public List<TileData> hiddenTiles;
+    public int nextHiddenTileCount;
 
     //손패
     public List<int> cardIdes;

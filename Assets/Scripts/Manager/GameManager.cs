@@ -387,6 +387,9 @@ public class GameManager : IngameSingleton<GameManager>
             mapBuilder.SetTile(tile);
         foreach (TileData tile in data.environments)
             mapBuilder.SetTile(tile, true);
+        foreach (TileData tile in data.hiddenTiles)
+            mapBuilder.SetHiddenTile(tile).Forget();
+        mapBuilder.curTileSetCount = data.nextHiddenTileCount;
 
         NodeManager.Instance.SetGuideState(GuideState.None);
 
