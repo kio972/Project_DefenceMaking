@@ -39,7 +39,23 @@ public class Tile : MonoBehaviour
     public TileNode curNode;
 
     private bool removable = false;
-    public bool IsRemovable { get { return !removable || isDormant ? false : true; } }
+    public bool IsRemovable
+    {
+        get
+        {
+            bool isRemovable = removable && !isDormant;
+            foreach(var room in NodeManager.Instance.roomTiles)
+            {
+                if(room._IncludeRooms.Contains(this))
+                {
+                    isRemovable = false;
+                    break;
+                }
+            }
+
+            return isRemovable;
+        }
+    }
 
     public bool IsRemovableNow
     {
