@@ -125,7 +125,8 @@ public class GameManager : IngameSingleton<GameManager>
             if (node.curTile == null || node.curTile.IsDormant)
                 continue;
 
-            totalMana += node.curTile.RoomMana;
+            //totalMana += node.curTile.RoomMana;
+            totalMana++;
         }
 
         this.totalMana = totalMana + PassiveManager.Instance.GetAdditionalMana();

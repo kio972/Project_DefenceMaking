@@ -46,7 +46,7 @@ public class Tile : MonoBehaviour
             bool isRemovable = removable && !isDormant;
             foreach(var room in NodeManager.Instance.roomTiles)
             {
-                if(room._IncludeRooms.Contains(this))
+                if(room._IncludeRooms.Count > 1 && room._IncludeRooms.Contains(this))
                 {
                     isRemovable = false;
                     break;
@@ -402,6 +402,7 @@ public class Tile : MonoBehaviour
             RemoveSpawner();
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
+        GameManager.Instance.UpdateTotalMana();
     }
 
     public TileData GetTileData()
