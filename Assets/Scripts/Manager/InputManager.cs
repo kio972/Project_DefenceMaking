@@ -58,11 +58,10 @@ public class InputManager : IngameSingleton<InputManager>
 
     public void ClickTile(Tile curTile)
     {
-        if(this.curTile == curTile)
+        if(this.curTile == curTile && curTile.curNode == NodeManager.Instance.endPoint)
         {
             TileControlUI tileControl = FindObjectOfType<TileControlUI>();
-            if (tileControl != null)
-                tileControl.MoveTile();
+            tileControl?.MoveTile();
             return;
         }
 
