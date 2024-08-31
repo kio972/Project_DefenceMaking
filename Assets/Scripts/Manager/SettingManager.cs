@@ -40,6 +40,10 @@ public enum ControlKey
 
     key_BasicControl,
     key_CancelControl,
+
+    key_Deploy,
+    key_Research,
+    key_Shop,
 }
 
 public class BindKey
@@ -89,9 +93,13 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_RotateLeft = new BindKey(ControlKey.key_RotateTile, KeyCode.Q);
     public BindKey key_RotateRight = new BindKey(ControlKey.key_RotateTile, KeyCode.E);
 
+    public BindKey key_Deploy = new BindKey(ControlKey.key_Deploy, KeyCode.F1);
+    public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.F2);
+    public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.F3);
+
     public List<BindKey> bindKeys;
 
-    private List<KeyCode> invalidKeys = new List<KeyCode>()
+    private HashSet<KeyCode> invalidKeys = new HashSet<KeyCode>()
     {
         KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.Mouse2, KeyCode.Mouse3, KeyCode.Mouse4, KeyCode.Mouse5, KeyCode.Mouse6,
         KeyCode.Escape, KeyCode.Return, KeyCode.Backspace, KeyCode.LeftWindows, KeyCode.RightWindows,
@@ -99,6 +107,16 @@ public class SettingManager : Singleton<SettingManager>
         KeyCode.Tab, KeyCode.CapsLock, KeyCode.LeftShift, KeyCode.RightShift, KeyCode.LeftControl, KeyCode.RightControl,
         KeyCode.LeftAlt, KeyCode.RightAlt, KeyCode.Menu,
     };
+
+    public BindKey GetBindKey(ControlKey taregt)
+    {
+        foreach (BindKey bindkey in bindKeys)
+        {
+            if (bindkey._ControlKey == taregt)
+                return bindkey;
+        }
+        return null;
+    }
 
     public KeyCode GetKey(ControlKey taregt)
     {
@@ -259,6 +277,9 @@ public class SettingManager : Singleton<SettingManager>
         bindKeys.Add(key_SpeedControl_Zero);
         bindKeys.Add(key_SpeedControl_One);
         bindKeys.Add(key_SpeedControl_Double);
+        bindKeys.Add(key_Deploy);
+        bindKeys.Add(key_Research);
+        bindKeys.Add(key_Shop);
     }
 
     public void Init()

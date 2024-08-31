@@ -50,7 +50,7 @@ public class CardFramework : MonoBehaviour
 
     private bool CancelInput()
     {
-        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.F1) || Input.GetKeyDown(KeyCode.F2) || Input.GetKeyDown(KeyCode.F3) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
+        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
     }
 
     private void SetTile(TileNode curNode)

@@ -92,7 +92,7 @@ public class ResearchMainUI : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F2) && btnObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);

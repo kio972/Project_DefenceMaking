@@ -345,7 +345,7 @@ public class DeployUI : MonoBehaviour
         if (curObject != null)
             UpdateDeployState();
 
-        if (Input.GetKeyDown(KeyCode.F1) && btnObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) && btnObject.activeSelf)
         {
             if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 SetActive(true);
