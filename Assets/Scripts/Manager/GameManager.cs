@@ -125,11 +125,12 @@ public class GameManager : IngameSingleton<GameManager>
             if (node.curTile == null || node.curTile.IsDormant)
                 continue;
 
-            //totalMana += node.curTile.RoomMana;
             totalMana++;
+            if (PassiveManager.Instance.manaTile.ContainsKey(node) && node.curTile._TileType == TileType.Path)
+                totalMana += PassiveManager.Instance.manaTile[node];
         }
 
-        this.totalMana = totalMana + PassiveManager.Instance.GetAdditionalMana();
+        this.totalMana = totalMana;
     }
 
     public void IncreaseWave()
@@ -340,6 +341,10 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (shop == null)
             shop = FindObjectOfType<ShopUI>(true);
+
+        var manaStream1 =  PassiveManager.Instance.manaTile.ObserveAdd().AsObservable().Select(_ => true);
+        var manaStream2 = PassiveManager.Instance.manaTile.ObserveRemove().AsObservable().Select(_ => true);
+        Observable.Merge(manaStream1, manaStream2).Subscribe(_ => UpdateTotalMana()).AddTo(gameObject);
     }    
 
     public void Init()

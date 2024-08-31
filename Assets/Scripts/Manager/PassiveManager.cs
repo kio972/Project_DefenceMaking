@@ -19,7 +19,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int income_Weight = 0;
     public Dictionary<TileNode, float> slowedTile = new Dictionary<TileNode, float>();
 
-    public Dictionary<TileNode, int> manaTile = new Dictionary<TileNode, int>();
+    public ReactiveDictionary<TileNode, int> manaTile { get; private set; } = new ReactiveDictionary<TileNode, int>();
 
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
@@ -57,6 +57,18 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int golemHoldback_Weight { get; private set; } = 0;
 
     public bool isMimicBuffActive { get; private set; } = false;
+
+    public void AddManaStone(TileNode node, int manaAmount)
+    {
+        foreach(var item in node.neighborNodeDic.Values)
+        {
+            if(item == null) continue;
+
+            if (!manaTile.ContainsKey(item))
+                manaTile.Add(item, 0);
+            manaTile[item] += manaAmount;
+        }
+    }
 
     public void MimicBuffActive()
     {
@@ -190,26 +202,5 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         }
 
         return slowRate;
-    }
-
-    public int GetAdditionalMana()
-    {
-        int value = 0;
-        foreach(var node in manaTile.Keys)
-        {
-            foreach (TileNode neighborNode in node.neighborNodeDic.Values)
-            {
-                if (neighborNode.curTile == null)
-                    continue;
-                value += manaTile[node];
-            }
-        }
-
-        return value;
-    }
-
-    public void Init()
-    {
-        //세이브파일에서 수치 받아오는 함수 추가예정
     }
 }

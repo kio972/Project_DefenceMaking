@@ -464,6 +464,11 @@ public class NodeManager : IngameSingleton<NodeManager>
         foreach (var events in removeTileEvents)
             events?.Invoke(tile.gameObject);
         RemoveSightNode(tile.curNode);
+        if (tile._TileType == TileType.Room_Single)
+        {
+            var item = FindRoom(tile.curNode.row, tile.curNode.col);
+            roomTiles.Remove(item);
+        }
     }
 
     public void DormantTileCheck()
