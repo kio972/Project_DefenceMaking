@@ -415,12 +415,7 @@ public class Tile : MonoBehaviour
         tile.isDormant = isDormant;
         tile.isRemovable = removable;
         tile.trapId = trap != null ? trap.BattlerID : "";
-        
-        if(spawner != null)
-        {
-            tile.spawnerId = spawner._TargetName;
-            tile.spawnerCool = spawner._CurCoolTime;
-        }
+        tile.trapDuration = trap != null ? trap.Duration : 0;
 
         return tile;
     }

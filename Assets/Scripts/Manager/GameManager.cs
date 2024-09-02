@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using UnityEditor.Experimental.GraphView;
 
 public class GameManager : IngameSingleton<GameManager>
 {
@@ -396,6 +397,12 @@ public class GameManager : IngameSingleton<GameManager>
         foreach (TileData tile in data.hiddenTiles)
             mapBuilder.SetHiddenTile(tile).Forget();
         mapBuilder.curTileSetCount = data.nextHiddenTileCount;
+
+        foreach(SpawnerData spawnerData in data.spawners)
+        {
+            MonsterSpawner spawner = BattlerPooling.Instance.SetSpawner(NodeManager.Instance.FindNode(spawnerData.row, spawnerData.col), spawnerData.spawnerId, NodeManager.Instance.FindRoom(spawnerData.row, spawnerData.col));
+            spawner._CurCoolTime = spawnerData.spawnerCool;
+        }
 
         NodeManager.Instance.SetGuideState(GuideState.None);
 

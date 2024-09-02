@@ -285,12 +285,7 @@ public class MapBuilder : MonoBehaviour
                 instance.RotateTile();
             instance.Init(node, tile.isDormant, tile.isRemovable, false);
             if (!string.IsNullOrEmpty(tile.trapId))
-                BattlerPooling.Instance.SpawnTrap(tile.trapId, node, "id");
-            if (!string.IsNullOrEmpty(tile.spawnerId))
-            {
-                MonsterSpawner spawner = BattlerPooling.Instance.SetSpawner(node, tile.spawnerId, NodeManager.Instance.FindRoom(node.row, node.col));
-                spawner._CurCoolTime = tile.spawnerCool;
-            }
+                BattlerPooling.Instance.SpawnTrap(tile.trapId, node, "id", tile.trapDuration);
         }
     }
 

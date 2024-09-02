@@ -68,7 +68,7 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         return null;
     }
 
-    public void SpawnTrap(string trapName, TileNode targetTile, string key = "name")
+    public void SpawnTrap(string trapName, TileNode targetTile, string key = "name", int startDuration = 0)
     {
         int trapIndex = UtilHelper.Find_Data_Index(trapName, DataManager.Instance.Battler_Table, key);
         string prefab = DataManager.Instance.Battler_Table[trapIndex]["prefab"].ToString();
@@ -83,7 +83,7 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
             trapPool.Add(trap);
         }
 
-        trap.Init(targetTile.curTile);
+        trap.Init(targetTile.curTile, startDuration);
         trap.gameObject.SetActive(true);
     }
 

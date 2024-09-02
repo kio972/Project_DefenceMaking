@@ -42,6 +42,13 @@ public struct TileData
     public bool isDormant;
     public bool isRemovable;
     public string trapId;
+    public int trapDuration;
+}
+
+public struct SpawnerData
+{
+    public int row;
+    public int col;
     public string spawnerId;
     public float spawnerCool;
 }
@@ -68,6 +75,8 @@ public class PlayerData
     public List<TileData> environments;
     public List<TileData> hiddenTiles;
     public int nextHiddenTileCount;
+
+    public List<SpawnerData> spawners;
 
     //¼ÕÆÐ
     public List<int> cardIdes;

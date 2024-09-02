@@ -18,6 +18,7 @@ public class MonsterSpawner : MonoBehaviour
     public float _CurCoolTime { get => curCoolTime; set => curCoolTime = value; }
 
     private TileNode tile;
+    public TileNode CurTile { get => tile; }
 
     private bool isUpdate = false;
 

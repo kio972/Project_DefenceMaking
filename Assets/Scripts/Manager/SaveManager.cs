@@ -25,6 +25,20 @@ public class SaveManager : Singleton<SaveManager>
         playerData.herb3 = GameManager.Instance.herb3;
     }
 
+    private void SaveSpanwerData(PlayerData playerData)
+    {
+        playerData.spawners = new List<SpawnerData>();
+        foreach(MonsterSpawner spawner in GameManager.Instance.monsterSpawner)
+        {
+            SpawnerData spawnerData = new SpawnerData();
+            spawnerData.row = spawner.CurTile.row;
+            spawnerData.col = spawner.CurTile.col;
+            spawnerData.spawnerId = spawner._TargetName;
+            spawnerData.spawnerCool = spawner._CurCoolTime;
+            playerData.spawners.Add(spawnerData);
+        }
+    }
+
     private void SaveTileData(PlayerData playerData)
     {
         playerData.tiles = new List<TileData>();
@@ -63,6 +77,7 @@ public class SaveManager : Singleton<SaveManager>
 
         SaveAssetData(playerData);
         SaveTileData(playerData);
+        SaveSpanwerData(playerData);
 
         playerData.deckLists = new List<int>(GameManager.Instance.cardDeckController._CardDeck);
         playerData.cardIdes = new List<int>(GameManager.Instance.cardDeckController._HandCards);
