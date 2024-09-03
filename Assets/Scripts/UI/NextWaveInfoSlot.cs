@@ -21,7 +21,7 @@ public class NextWaveInfoSlot : MonoBehaviour
             im.sprite = sprite;
 
         lowCount.SetActive(true);
-        midCount.SetActive(waveData.number > 5);
-        highCount.SetActive(waveData.number > 10);
+        //midCount.SetActive(waveData.number > 5);
+        //highCount.SetActive(waveData.number > 10);
     }
 }
