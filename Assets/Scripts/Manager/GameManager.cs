@@ -16,8 +16,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public float gameSpeed = 100f;
 
-    float timer = 0f;
-    public float Timer { get => timer; }
+    public ReactiveProperty<float> timer { get; private set; } = new ReactiveProperty<float>(0f);
+    public float Timer { get => timer.Value; }
 
     public int gold = 0;
     public int herb1 = 0;
@@ -222,8 +222,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public void SkipDay()
     {
-        if(timer < 1350f)
-            timer = 1350f;
+        if(timer.Value < 1350f)
+            timer.Value = 1350f;
     }
 
     // Update is called once per frame
@@ -258,19 +258,19 @@ public class GameManager : IngameSingleton<GameManager>
 
         UpdateBossRoom();
 
-        timer += InGameDeltaTime;
-        if (timer > 720f && dailyIncome)
+        timer.Value += InGameDeltaTime;
+        if (timer.Value > 720f && dailyIncome)
         {
             //gold += 50 + PassiveManager.Instance.income_Weight;
             //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance.fxVolume);
             dailyIncome = false;
         }
 
-        if(timer > 1440f)
+        if(timer.Value > 1440f)
         {
             //재화수급
             gold += 50 + PassiveManager.Instance.income_Weight;
-            timer = 0f;
+            timer.Value = 0f;
             dailyIncome = true;
             curWave++;
             SetWaveSpeed(curWave);
@@ -384,7 +384,7 @@ public class GameManager : IngameSingleton<GameManager>
         ingameUI?.Init(false);
 
         curWave = data.curWave;
-        timer = data.curTime;
+        timer.Value = data.curTime;
         gold = data.gold;
         herb1 = data.herb1;
         herb2 = data.herb2;
