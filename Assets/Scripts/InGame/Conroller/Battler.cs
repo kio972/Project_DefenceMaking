@@ -126,7 +126,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public bool isDead = false;
 
-    protected List<TileNode> crossedNodes = new List<TileNode>();
+    protected HashSet<TileNode> crossedNodes = new HashSet<TileNode>();
     protected TileNode prevTile;
     protected TileNode curTile;
     protected TileNode nextTile;
@@ -231,7 +231,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void ResetNode()
     {
-        crossedNodes = new List<TileNode>();
+        crossedNodes.Clear();
         prevTile = null;
         //curTile = null;
         nextTile = null;
@@ -407,6 +407,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
         nextNodes.Remove(prevTile);
+        nextNodes.Remove(NodeManager.Instance.startPoint);
         if (crossedNodes != null)
         {
             foreach (TileNode node in crossedNodes)
@@ -427,8 +428,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     protected virtual void NodeAction(TileNode nextNode)
     {
         this.nextTile = null;
-        if (!crossedNodes.Contains(curTile))
-            crossedNodes.Add(curTile);
+        crossedNodes.Add(curTile);
 
         // 마왕성 이동 중 유효타일이 발생시 directPass = false;
         if (directPass && FindNextNode(curTile) != null)
@@ -446,7 +446,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     protected void ResetPaths()
     {
-        crossedNodes = new List<TileNode>();
+        crossedNodes.Clear();
         lastCrossRoad = null;
         prevTile = null;
         directPass = false;

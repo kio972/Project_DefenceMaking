@@ -425,6 +425,7 @@ public class GameManager : IngameSingleton<GameManager>
             target.LoadData(ally);
         }
 
+        SetWaveSpeed(curWave);
         waveController.SpawnWave(curWave);
         waveController.UpdateWaveText();
 
