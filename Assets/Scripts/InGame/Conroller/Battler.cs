@@ -131,7 +131,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     protected TileNode curTile;
     protected TileNode nextTile;
     public TileNode CurTile { get => curTile; }
-    public TileNode NextTile { get => nextTile; }
+    public TileNode NextTile { get => nextTile; set => nextTile = value; }
     protected TileNode lastCrossRoad;
     protected bool directPass = false;
     public TileNode directPassNode { get; protected set; } = null;
@@ -429,6 +429,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         this.nextTile = null;
         crossedNodes.Add(curTile);
+        transform.position = curTile.transform.position;
 
         // 마왕성 이동 중 유효타일이 발생시 directPass = false;
         if (directPass && FindNextNode(curTile) != null)
@@ -463,6 +464,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         if (nextTile == null || nextTile.curTile == null)
         {
             List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
+
+            //이미 다음노드로 이동중이었다면 현재노드는 제외
+            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
+                path.Remove(curTile);
+            
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else

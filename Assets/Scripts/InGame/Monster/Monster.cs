@@ -104,6 +104,9 @@ public class Monster : Battler, IHoldbacker
         if (nextTile == null || nextTile.curTile == null)
         {
             List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
+            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
+                path.Remove(curTile);
+
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else
