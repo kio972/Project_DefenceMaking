@@ -226,7 +226,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public void GetCC(Battler attacker, float time)
     {
         this.ccTime = time;
-        
+        this.ChangeState(FSMCC.Instance);
     }
 
     public void ResetNode()
