@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,8 +9,8 @@ public class InputManager : IngameSingleton<InputManager>
 
     public TileNode testTile;
 
-    private bool _settingCard = false;
-    public bool settingCard { get => _settingCard; set => _settingCard = value; }
+    public ReactiveProperty<bool> _settingCard { get; private set; } = new ReactiveProperty<bool>(false);
+    public bool settingCard { get => _settingCard.Value; set => _settingCard.Value = value; }
 
     public bool movingTile = false;
 
@@ -73,7 +74,7 @@ public class InputManager : IngameSingleton<InputManager>
 
     public void TileClickCheck()
     {
-        if (_settingCard)
+        if (_settingCard.Value)
             return;
 
         if (Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey))
