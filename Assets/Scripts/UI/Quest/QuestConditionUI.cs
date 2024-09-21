@@ -30,7 +30,8 @@ public class QuestConditionUI : MonoBehaviour
         this.index = index;
         text.color = Color.white;
         text.fontStyle = FontStyles.Normal;
-        checkBox.SetActive(false);
+        if(checkBox != null)
+            checkBox.SetActive(false);
         isClear = false;
     }
 
@@ -42,7 +43,8 @@ public class QuestConditionUI : MonoBehaviour
         SetText();
         if(quest._IsComplete[index])
         {
-            checkBox.SetActive(true);
+            if (checkBox != null)
+                checkBox.SetActive(true);
             text.fontStyle = FontStyles.Strikethrough;
             text.color = Color.gray;
             isClear = true;
