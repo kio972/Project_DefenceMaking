@@ -34,6 +34,9 @@ public class QuestInfo : MonoBehaviour
     [SerializeField]
     List<QuestConditionUI> conditions;
 
+    [SerializeField]
+    private GameObject alarmObject;
+
     private void DeActive()
     {
         gameObject.SetActive(false);
@@ -74,6 +77,7 @@ public class QuestInfo : MonoBehaviour
         gameObject.SetActive(true);
         _Animator.Rebind();
         isTimerOn = true;
+        alarmObject.SetActive(false);
         UpdateTimer();
     }
 
@@ -85,15 +89,21 @@ public class QuestInfo : MonoBehaviour
         if (questTimer != null)
             questTimer.fillAmount = curQuest._TimeRemain;
 
-        if (curQuest._TimeRemain > 0.4f)
+        if (curQuest._TimeRemain > 0.34f)
             questTimer.color = idleColor;
-        else if (curQuest._TimeRemain > 0.15f)
+        else if (curQuest._TimeRemain > 0.17f)
             questTimer.color = midColor;
         else
+        {
             questTimer.color = alertColor;
+            alarmObject.SetActive(true);
+        }
 
         if (curQuest._TimeRemain <= 0)
+        {
             isTimerOn = false;
+            alarmObject.SetActive(false);
+        }
     }
 
     private void Update()
