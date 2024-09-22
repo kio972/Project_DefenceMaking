@@ -7,7 +7,7 @@ public class ToolTipText : MonoBehaviour
 {
     TextMeshProUGUI toolTipText;
 
-    private string[] toolTipEx = { "툴팁 테스트1", "툴팁 테스트2", "툴팁 테스트3" };
+    private string[] toolTipEx = { "적은 0시에 침입합니다.", "모든 마왕이 마족으로부터 존경받지는 않습니다.", "단탈리온 마왕성은 인간 나라의 영토 내에 존재합니다.", "단탈리온은 토벌 우선순위 최하위입니다." };
     int prevIndex = -1;
 
     private void Awake()
