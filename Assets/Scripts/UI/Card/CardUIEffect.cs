@@ -148,7 +148,7 @@ public class CardUIEffect : MonoBehaviour
         Image image = GetComponent<Image>();
         if(image != null)
         {
-            image.OnPointerEnterAsObservable().Where(_ => !GameManager.Instance.cardLock && drawEnd).Subscribe(_ => OnPointerEnter());
+            image.OnPointerEnterAsObservable().Where(_ => !GameManager.Instance.cardLock && drawEnd && !InputManager.Instance.settingCard).Subscribe(_ => OnPointerEnter());
             image.OnPointerExitAsObservable().Where(_ => drawEnd).Subscribe(_ => OnPointerExit());
         }
     }

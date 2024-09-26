@@ -92,32 +92,32 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    private void SetEndTileMoveGuide(Vector3 targetPos, Vector3 endPos)
-    {
-        if (InputManager.Instance._CurTile == NodeManager.Instance.endPoint.curTile)
-        {
-            if (InputManager.Instance.movingTile)
-            {
-                arrowDown.SetActive(true);
-                arrowDown.transform.position = Camera.main.WorldToScreenPoint(targetPos);
-                arrowRight2.gameObject.SetActive(false);
-                rotationInfo.gameObject.SetActive(true);
-            }
-            else
-            {
-                arrowDown.SetActive(false);
-                arrowRight2.gameObject.SetActive(true);
-                rotationInfo.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            arrowDown.transform.position = Camera.main.WorldToScreenPoint(endPos);
-            arrowDown.gameObject.SetActive(true);
-            arrowRight2.gameObject.SetActive(false);
-            rotationInfo.gameObject.SetActive(false);
-        }
-    }
+    //private void SetEndTileMoveGuide(Vector3 targetPos, Vector3 endPos)
+    //{
+    //    if (InputManager.Instance._CurTile == NodeManager.Instance.endPoint.curTile)
+    //    {
+    //        if (InputManager.Instance.movingTile)
+    //        {
+    //            arrowDown.SetActive(true);
+    //            arrowDown.transform.position = Camera.main.WorldToScreenPoint(targetPos);
+    //            arrowRight2.gameObject.SetActive(false);
+    //            rotationInfo.gameObject.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            arrowDown.SetActive(false);
+    //            arrowRight2.gameObject.SetActive(true);
+    //            rotationInfo.gameObject.SetActive(false);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        arrowDown.transform.position = Camera.main.WorldToScreenPoint(endPos);
+    //        arrowDown.gameObject.SetActive(true);
+    //        arrowRight2.gameObject.SetActive(false);
+    //        rotationInfo.gameObject.SetActive(false);
+    //    }
+    //}
 
     private IEnumerator Dan001()
     {
@@ -142,7 +142,7 @@ public class Tutorial : MonoBehaviour
 
         while (true)
         {
-            SetEndTileMoveGuide(targetPos, endPos);
+            //SetEndTileMoveGuide(targetPos, endPos);
 
             if ((endPos - NodeManager.Instance.endPoint.transform.position).magnitude > 0.2f)
                 break;

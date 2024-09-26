@@ -12,9 +12,6 @@ public class InputManager : IngameSingleton<InputManager>
     public ReactiveProperty<bool> _settingCard { get; private set; } = new ReactiveProperty<bool>(false);
     public bool settingCard { get => _settingCard.Value; set => _settingCard.Value = value; }
 
-    public bool movingTile = false;
-
-    private GameObject endPointPrefab = null;
     public TileNode curMoveObject = null;
 
     TileControlUI tileControlUI = null;
@@ -128,12 +125,6 @@ public class InputManager : IngameSingleton<InputManager>
         {
             GameManager.Instance.speedController.SetSpeedFast();
         }
-    }
-
-    void Init()
-    {
-        if (endPointPrefab == null)
-            endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
     }
 
     // Update is called once per frame

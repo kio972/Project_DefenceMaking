@@ -31,6 +31,7 @@ public class TileControlUI : MonoBehaviour
 
     public void MoveTile()
     {
+        InputManager.Instance.settingCard = true;
         Tile curTile = InputManager.Instance._CurTile;
         if (curTile == null)
             return;
