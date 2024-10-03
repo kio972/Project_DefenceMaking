@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class TooltipUI : MonoBehaviour
 {
-    
+
+    public void SetUI(TooltipObject tooltipObject)
+    {
+
+    }
 }
