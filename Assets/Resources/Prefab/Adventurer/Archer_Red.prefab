@@ -113,6 +113,8 @@ GameObject:
   - component: {fileID: 4383217014043702367}
   - component: {fileID: 1126983552592219004}
   - component: {fileID: 5211035001452038656}
+  - component: {fileID: 5025915098931328894}
+  - component: {fileID: 3298534474287754901}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -270,6 +272,34 @@ MonoBehaviour:
   deadSounds:
   - {fileID: 8300000, guid: ee4488e44e3a347d59acb94a66b46d49, type: 3}
   deadSoundMult: 0.6
+--- !u!136 &5025915098931328894
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554826399069124451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 5.5124063
+  m_Height: 13.919996
+  m_Direction: 1
+  m_Center: {x: 0.70560646, y: 6.015241, z: 0}
+--- !u!114 &3298534474287754901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554826399069124451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 2
+  _subLevel: 0
 --- !u!1 &6060128528388781653
 GameObject:
   m_ObjectHideFlags: 0

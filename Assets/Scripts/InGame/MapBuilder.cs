@@ -314,6 +314,6 @@ public class MapBuilder : MonoBehaviour
 
         NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
 
-        InputManager.Instance.Call();
+        InputManager input = InputManager.Instance;
     }
 }

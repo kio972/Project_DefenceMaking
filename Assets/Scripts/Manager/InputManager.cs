@@ -19,28 +19,12 @@ public class InputManager : IngameSingleton<InputManager>
     private Tile curTile = null;
     public Tile _CurTile { get => curTile; }
 
-    private void ReadySetTile(TileNode curTile)
+
+    List<IInput> inputs = new List<IInput>();
+
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // 충돌된 오브젝트 처리
-                GameObject hitObject = hit.collider.gameObject;
-                //Debug.Log("Hit object: " + hitObject.name);
-                print(hitObject.name);
-            }
-
-        }
-
-    }
-
-    public void Call()
-    {
-        //InputManager Instance 생성 함수
+        inputs.Add(new TooltipInput());
     }
 
     public void ResetTileClick()
@@ -137,5 +121,11 @@ public class InputManager : IngameSingleton<InputManager>
         CameraResetCheck();
         if(!GameManager.Instance.tileLock)
             TileClickCheck();
+
+        foreach(IInput input in inputs)
+        {
+            if(input.IsCheckValid)
+                input.CheckInput();
+        }
     }
 }

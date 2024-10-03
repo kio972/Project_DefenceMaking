@@ -283,6 +283,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1761951135917856600}
   - component: {fileID: 1189771311097513545}
+  - component: {fileID: 7499730602969736657}
+  - component: {fileID: 4287226840729490114}
   m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
@@ -357,3 +359,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!136 &7499730602969736657
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628082457840854611}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 4.695
+  m_Height: 16.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 8.25, z: 0}
+--- !u!114 &4287226840729490114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628082457840854611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 2
+  _subLevel: 4
