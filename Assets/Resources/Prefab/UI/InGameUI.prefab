@@ -639,6 +639,7 @@ GameObject:
   - component: {fileID: 3399535930784986116}
   - component: {fileID: 6629264655617309148}
   - component: {fileID: 5278942756553052754}
+  - component: {fileID: 6781193318684301948}
   m_Layer: 5
   m_Name: Texts
   m_TagString: Untagged
@@ -763,6 +764,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6781193318684301948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172365203342420071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 0
 --- !u!1 &1258197274634618382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3128,6 +3143,8 @@ MonoBehaviour:
   tileRemoveBtn: {fileID: 7316681249162689291}
   exitBtn: {fileID: 5985999677633436299}
   spawnerRemoveBtn: {fileID: 2839474665220046767}
+  toolTip_header: {fileID: 3154549535967978654}
+  toolTip_desc: {fileID: 6781193318684301948}
 --- !u!1 &3928919424709064872
 GameObject:
   m_ObjectHideFlags: 0
@@ -9204,6 +9221,7 @@ GameObject:
   - component: {fileID: 3211147138998737590}
   - component: {fileID: 325697526658566698}
   - component: {fileID: 8926291976792884437}
+  - component: {fileID: 3154549535967978654}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -9286,8 +9304,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9328,6 +9346,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3154549535967978654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8905944810108974816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 0
 --- !u!1 &9016333699566616123
 GameObject:
   m_ObjectHideFlags: 0

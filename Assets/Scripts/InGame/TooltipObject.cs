@@ -14,6 +14,11 @@ public enum ToolTipType
     Etc,
 }
 
+public interface IToolTipEffect
+{
+    void ShowEffect(bool value);
+}
+
 [RequireComponent(typeof(Collider))]
 public class TooltipObject : MonoBehaviour
 {
@@ -24,4 +29,7 @@ public class TooltipObject : MonoBehaviour
     [SerializeField]
     private int _subLevel = 0;
     public int subLevel { get => _subLevel; }
+
+    public string toolTipKey_header;
+    public string toolTipKey_descs;
 }

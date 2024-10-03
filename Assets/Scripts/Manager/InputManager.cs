@@ -20,11 +20,13 @@ public class InputManager : IngameSingleton<InputManager>
     public Tile _CurTile { get => curTile; }
 
 
-    List<IInput> inputs = new List<IInput>();
+    List<IInput> _inputs = new List<IInput>();
+    public List<IInput> inputs { get => _inputs; }
+
 
     private void Awake()
     {
-        inputs.Add(new TooltipInput());
+        _inputs.Add(new TooltipInput());
     }
 
     public void ResetTileClick()
@@ -119,10 +121,10 @@ public class InputManager : IngameSingleton<InputManager>
 
         SpeedControlCheck();
         CameraResetCheck();
-        if(!GameManager.Instance.tileLock)
-            TileClickCheck();
+        //if(!GameManager.Instance.tileLock)
+        //    TileClickCheck();
 
-        foreach(IInput input in inputs)
+        foreach(IInput input in _inputs)
         {
             if(input.IsCheckValid)
                 input.CheckInput();

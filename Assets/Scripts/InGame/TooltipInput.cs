@@ -21,6 +21,8 @@ public class TooltipInput : IInput
         {
             if (GameManager.Instance.tileLock)
                 return false;
+            if (InputManager.Instance.settingCard)
+                return false;
 
             return true;
         }
@@ -28,7 +30,23 @@ public class TooltipInput : IInput
 
     private void ShowIndex(TooltipObject target)
     {
-        Debug.Log(target.name);
+        TileControlUI tileControl = MonoBehaviour.FindObjectOfType<TileControlUI>();
+        tileControl?.SetButton(target);
+
+        IToolTipEffect curEffect = target.GetComponent<IToolTipEffect>();
+        curEffect?.ShowEffect(true);
+    }
+
+    public void ForceReset()
+    {
+        if (prevTarget != null)
+        {
+            IToolTipEffect prevEffect = prevTarget.GetComponent<IToolTipEffect>();
+            prevEffect?.ShowEffect(false);
+        }
+
+        prevTarget = null;
+        curIndex = 0;
     }
 
     private void ResetInput()
@@ -48,12 +66,12 @@ public class TooltipInput : IInput
             TooltipObject tooltipObject = hitObject.GetComponent<TooltipObject>();
             if (tooltipObject == null)
                 continue;
-            if (tooltipObject.toolTipType == ToolTipType.Tile)
-            {
-                TileNode tileNode = tooltipObject.GetComponentInParent<TileNode>();
-                if(tileNode == null || tileNode.curTile == null)
-                    continue;
-            }
+            //if (tooltipObject.toolTipType == ToolTipType.Tile)
+            //{
+            //    TileNode tileNode = tooltipObject.GetComponentInParent<TileNode>();
+            //    if(tileNode == null || tileNode.curTile == null)
+            //        continue;
+            //}
 
             targets.Add(tooltipObject);
         }
@@ -68,19 +86,46 @@ public class TooltipInput : IInput
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
+            if (prevTarget != null)
+            {
+                IToolTipEffect prevEffect = prevTarget.GetComponent<IToolTipEffect>();
+                prevEffect?.ShowEffect(false);
+            }
+
             List<TooltipObject> tooltipObjects = GetTooltipObjects();
 
             if (tooltipObjects.Count <= 0 || prevTarget != tooltipObjects[0])
                 ResetInput();
 
             if (tooltipObjects.Count <= 0)
+            {
+                TileControlUI tileControl = MonoBehaviour.FindObjectOfType<TileControlUI>();
+                tileControl?.CloseAll();
                 return;
+            }
 
-            prevTarget = tooltipObjects[0];
+            if(prevTarget != null && prevTarget.toolTipType == ToolTipType.Devil && tooltipObjects[0].toolTipType == ToolTipType.Devil)
+            {
+                TileControlUI tileControl = MonoBehaviour.FindObjectOfType<TileControlUI>();
+                tileControl?.MoveTile(NodeManager.Instance.endPoint.curTile);
+                return;
+            }
+
             if (curIndex >= tooltipObjects.Count)
                 curIndex = 0;
             ShowIndex(tooltipObjects[curIndex]);
+
+            prevTarget = tooltipObjects[0];
             curIndex++;
+        }
+        else if(Input.GetKeyDown(SettingManager.Instance.key_CancelControl._CurKey))
+        {
+            if (prevTarget == null)
+                return;
+
+            IToolTipEffect prevEffect = prevTarget.GetComponent<IToolTipEffect>();
+            prevEffect?.ShowEffect(false);
+            ResetInput();
         }
     }
 }
