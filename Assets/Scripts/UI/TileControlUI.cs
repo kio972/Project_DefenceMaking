@@ -116,6 +116,12 @@ public class TileControlUI : MonoBehaviour
             SetButton(tooltipObject.GetComponentInParent<Tile>());
         else if(tooltipObject.toolTipType == ToolTipType.Devil)
             SetButton(NodeManager.Instance.endPoint.curTile);
+        else
+        {
+            if (inGameUI == null)
+                inGameUI = GetComponentInParent<InGameUI>();
+            inGameUI?.SwitchRightToTileUI(true);
+        }
     }
 
     public void SetButton(Tile targetTile)

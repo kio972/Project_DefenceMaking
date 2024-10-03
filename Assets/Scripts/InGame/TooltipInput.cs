@@ -15,6 +15,8 @@ public class TooltipInput : IInput
     private TooltipObject prevTarget = null;
     private int curIndex = 0;
 
+    private TooltipObject curTarget;
+
     public bool IsCheckValid
     {
         get
@@ -39,9 +41,9 @@ public class TooltipInput : IInput
 
     public void ForceReset()
     {
-        if (prevTarget != null)
+        if (curTarget != null)
         {
-            IToolTipEffect prevEffect = prevTarget.GetComponent<IToolTipEffect>();
+            IToolTipEffect prevEffect = curTarget.GetComponent<IToolTipEffect>();
             prevEffect?.ShowEffect(false);
         }
 
@@ -86,9 +88,9 @@ public class TooltipInput : IInput
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            if (prevTarget != null)
+            if (curTarget != null)
             {
-                IToolTipEffect prevEffect = prevTarget.GetComponent<IToolTipEffect>();
+                IToolTipEffect prevEffect = curTarget.GetComponent<IToolTipEffect>();
                 prevEffect?.ShowEffect(false);
             }
 
@@ -113,17 +115,18 @@ public class TooltipInput : IInput
 
             if (curIndex >= tooltipObjects.Count)
                 curIndex = 0;
-            ShowIndex(tooltipObjects[curIndex]);
+            curTarget = tooltipObjects[curIndex];
+            ShowIndex(curTarget);
 
             prevTarget = tooltipObjects[0];
             curIndex++;
         }
         else if(Input.GetKeyDown(SettingManager.Instance.key_CancelControl._CurKey))
         {
-            if (prevTarget == null)
+            if (curTarget == null)
                 return;
 
-            IToolTipEffect prevEffect = prevTarget.GetComponent<IToolTipEffect>();
+            IToolTipEffect prevEffect = curTarget.GetComponent<IToolTipEffect>();
             prevEffect?.ShowEffect(false);
             ResetInput();
         }
