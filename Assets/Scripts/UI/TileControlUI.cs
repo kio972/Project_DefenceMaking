@@ -112,6 +112,9 @@ public class TileControlUI : MonoBehaviour
         tileRemoveBtn.SetActive(false);
         exitBtn.SetActive(true);
 
+        toolTip_header?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_header);
+        toolTip_desc?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_descs);
+
         if (tooltipObject.toolTipType == ToolTipType.Tile)
             SetButton(tooltipObject.GetComponentInParent<Tile>());
         else if(tooltipObject.toolTipType == ToolTipType.Devil)
