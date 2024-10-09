@@ -30,8 +30,20 @@ public class TooltipInput : IInput
         }
     }
 
+    private void SpawnerKeyInject(TooltipObject target)
+    {
+        MonsterSpawner spawner = target.GetComponentInParent<MonsterSpawner>();
+        if(spawner == null) return;
+        target.toolTipKey_header = "tooltip_spawner_" + spawner._TargetKey + "_0";
+        target.toolTipKey_descs = "tooltip_spawner_" + spawner._TargetKey + "_1";
+    }
+
     private void ShowIndex(TooltipObject target)
     {
+        if (target.toolTipType == ToolTipType.Spawner)
+            SpawnerKeyInject(target);
+        
+
         TileControlUI tileControl = MonoBehaviour.FindObjectOfType<TileControlUI>();
         tileControl?.SetButton(target);
 

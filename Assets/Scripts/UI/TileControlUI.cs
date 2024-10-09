@@ -83,7 +83,7 @@ public class TileControlUI : MonoBehaviour
 
     public void RemoveSpawner()
     {
-        Tile curTile = InputManager.Instance._CurTile;
+        Tile curTile = curToolTipTile;
         if (curTile == null)
             return;
 
@@ -94,7 +94,7 @@ public class TileControlUI : MonoBehaviour
 
     public void RemoveTile()
     {
-        Tile curTile = InputManager.Instance._CurTile;
+        Tile curTile = curToolTipTile;
         if (curTile == null)
             return;
         if(curTile.IsRemovableNow)
