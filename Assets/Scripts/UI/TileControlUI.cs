@@ -56,16 +56,7 @@ public class TileControlUI : MonoBehaviour
 
     public void MoveTile()
     {
-        InputManager.Instance.settingCard = true;
-        Tile curTile = curToolTipTile;
-        if (curTile == null)
-            return;
-        if (curTile.MovableNow)
-        {
-            curTile.ReadyForMove().Forget();
-        }
-        else
-            GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 움직일 수 없습니다!");
+        MoveTile(curToolTipTile);
     }
 
     public void MoveTile(Tile curTile)
@@ -75,6 +66,7 @@ public class TileControlUI : MonoBehaviour
             return;
         if (curTile.MovableNow)
         {
+            CloseAllBtn();
             curTile.ReadyForMove().Forget();
         }
         else

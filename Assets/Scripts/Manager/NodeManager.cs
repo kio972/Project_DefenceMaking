@@ -205,6 +205,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private void ShowSelectedTile(Tile targetTile)
     {
+        if (targetTile == null) return;
         targetTile.curNode.SetGuideColor(Color.yellow);
     }
 
@@ -242,14 +243,19 @@ public class NodeManager : IngameSingleton<NodeManager>
     private void SetSpawnerAvail()
     {
         foreach (TileNode node in activeNodes)
+            node.SetAvail(false);
+
+        foreach (CompleteRoom room in roomTiles)
         {
-            if (IsSpawnerSetable(node))
+            foreach(Tile tile in room._IncludeRooms)
             {
-                List<TileNode> path = PathFinder.FindPath(node);
-                node.SetAvail(path != null);
+                TileNode node = tile.curNode;
+                if (IsSpawnerSetable(node))
+                {
+                    List<TileNode> path = PathFinder.FindPath(node);
+                    node.SetAvail(path != null);
+                }
             }
-            else
-                node.SetAvail(false);
         }
     }
 
