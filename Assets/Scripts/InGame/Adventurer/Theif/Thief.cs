@@ -14,7 +14,7 @@ public class Thief : Adventurer, IHide
         if (this.curHp < curHp && (object)CurState == FSMHide.Instance)
         {
             ChangeState(FSMPatrol.Instance);
-            GetCC(attacker, 0.5f);
+            GetCC(attacker, 0.5f * GameManager.Instance.DefaultSpeed);
         }
     }
 
