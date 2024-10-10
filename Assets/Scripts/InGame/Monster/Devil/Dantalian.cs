@@ -26,6 +26,12 @@ public class Dantalian : PlayerBattleMain
             base.RemoveOutCaseTargets(targets);
     }
 
+    private async UniTaskVoid DetectCheck()
+    {
+        await UniTask.WaitUntil(() => PassiveManager.Instance.devilDetection, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        AddStatusEffect<Detect>(new Detect(this, 0));
+    }
+
     private async UniTaskVoid DevilAuraEffect()
     {
         while(!isDead)
@@ -55,6 +61,7 @@ public class Dantalian : PlayerBattleMain
         base.Init();
 
         DevilAuraEffect().Forget();
+        DetectCheck().Forget();
     }
 
 }

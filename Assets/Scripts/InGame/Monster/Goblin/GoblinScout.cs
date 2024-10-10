@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GoblinScout : Goblin
 {
+    public override void Init()
+    {
+        base.Init();
+        AddStatusEffect<Detect>(new Detect(this, 0));
+    }
+
     protected override void RemoveOutCaseTargets(List<Battler> targets)
     {
         List<Battler> removeList = new List<Battler>();

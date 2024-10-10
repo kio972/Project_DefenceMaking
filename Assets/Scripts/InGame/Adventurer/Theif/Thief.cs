@@ -30,6 +30,7 @@ public class Thief : Adventurer, IHide
     {
         base.Init();
         ChangeState(FSMHide.Instance);
+        AddStatusEffect<Stealth>(new Stealth(this, 0));
     }
 
     public override BattlerData GetData()

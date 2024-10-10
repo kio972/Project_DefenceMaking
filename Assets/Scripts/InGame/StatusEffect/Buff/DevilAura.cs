@@ -13,7 +13,6 @@ public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
         Init(battler, duration);
         _originDuration = 0;
         effectType = EffectType.Buff;
-        this.devilTransform = devilTransform;
     }
 
     private float scanCoolTime = 0.3f;
