@@ -6,6 +6,8 @@ using System.Threading;
 using Unity.VisualScripting;
 using UniRx.Triggers;
 
+
+
 public class Dantalian : PlayerBattleMain
 {
     protected override void RemoveOutCaseTargets(List<Battler> targets)
@@ -54,7 +56,6 @@ public class Dantalian : PlayerBattleMain
             }
         }
     }
-
 
     public override void Init()
     {

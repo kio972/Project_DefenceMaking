@@ -8,6 +8,25 @@ public class TileEnd : Tile
 {
     TileNode prevTile = null;
 
+    public void ForceRotate()
+    {
+        Direction targetDirection = Direction.None;
+        foreach (var direction in curNode.connectionState.Keys)
+        {
+            if (curNode.connectionState[direction] == 1)
+            {
+                targetDirection = direction;
+                break;
+            }
+        }
+
+        if (this.PathDirection[0] == targetDirection)
+            return;
+
+        while (this.PathDirection[0] != targetDirection)
+            this.RotateTile();
+    }
+
     private void AutoRotate(TileNode curTile)
     {
         if (prevTile == curTile)

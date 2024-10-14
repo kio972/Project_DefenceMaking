@@ -11,6 +11,8 @@ public class GameManager : IngameSingleton<GameManager>
     private float defaultSpeed = 100f;
     public float DefaultSpeed { get => defaultSpeed; }
 
+    public float TotalTime { get => curWave * 1440f + Timer; }
+
     public float InGameDeltaTime { get => Time.deltaTime * defaultSpeed * timeScale; }
 
     public float gameSpeed = 100f;

@@ -300,11 +300,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     }
 
-    private void SetEndTileGuide()
+    public List<TileNode> GetEndTileMovableNodes()
     {
+        List<TileNode> nodes = new List<TileNode>();
         SetVirtualNode(true);
         virtualNodes.Add(endPoint);
-        ResetAvail();
         foreach (TileNode node in virtualNodes)
         {
             if (node == null)
@@ -320,10 +320,23 @@ public class NodeManager : IngameSingleton<NodeManager>
                 else if (val == 2)
                     connectedRoomCount++;
             }
-            
+
             bool isAvail = connectedPathCount == 1 && connectedRoomCount == 0 ? true : false;
-            node.SetAvail(isAvail);
+            if (isAvail)
+                nodes.Add(node);
         }
+        return nodes;
+    }
+
+    private void SetEndTileGuide()
+    {
+        List<TileNode> movableNodes = GetEndTileMovableNodes();
+        ResetAvail();
+        foreach (TileNode node in virtualNodes)
+            node?.SetAvail(false);
+
+        foreach (TileNode node in movableNodes)
+            node.SetAvail(true);
     }
 
     private void SetTileAvail(Tile targetTile)
