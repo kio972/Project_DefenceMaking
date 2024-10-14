@@ -1,43 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 public interface ISkill
 {
-    public float coolRate { get; }
-    public bool isReady { get; }
+    public ReactiveProperty<float> coolRate { get; }
+    public ReactiveProperty<bool> isReady { get; }
     public bool UseSkill();
 }
 
 public class EmergencyEscape : ISkill
 {
     private float coolTime = 4320f;
-    private float nextTime = 0;
+    private float curCoolTime = 0;
 
-    public float coolRate
-    {
-        get
-        {
-            if (GameManager.Instance.TotalTime >= nextTime)
-                return 0;
-            else
-                return (nextTime - GameManager.Instance.TotalTime) / coolTime;
-        }
-    }
+    private Battler king;
 
-    public bool isReady
-    {
-        get
-        {
-            if (GameManager.Instance.king.curHp < 5)
-                return false;
+    public ReactiveProperty<float> coolRate { get; } = new ReactiveProperty<float>(0);
 
-            if (GameManager.Instance.TotalTime < nextTime)
-                return false;
-
-            return true;
-        }
-    }
+    public ReactiveProperty<bool> isReady { get; } = new ReactiveProperty<bool>(false);
 
     public bool UseSkill()
     {
@@ -61,7 +44,24 @@ public class EmergencyEscape : ISkill
         if (cameraController != null)
             cameraController.CamMoveToPos(kingTile.transform.position);
 
-        nextTime = GameManager.Instance.TotalTime + coolTime;
+        king.GetDamage(5, null);
+        curCoolTime = coolTime;
         return true;
+    }
+
+    private void Start()
+    {
+        king = GameManager.Instance.king;
+        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp < 5).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
+
+        var coolTimeStream = Observable.EveryUpdate().Where(_ => curCoolTime > 0)
+            .Subscribe(_ =>
+            {
+                curCoolTime -= GameManager.Instance.InGameDeltaTime;
+                if (curCoolTime < 0)
+                    curCoolTime = 0;
+
+                coolRate.Value = curCoolTime <= 0 ? 0 : curCoolTime / coolTime;
+            }).AddTo(king.gameObject);
     }
 }

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class PlayerBattleMain : Battler
 {
+    public ReactiveCollection<ISkill> skills = new ReactiveCollection<ISkill>();
+
     public void SetTile(TileNode node)
     {
         curTile = node;
