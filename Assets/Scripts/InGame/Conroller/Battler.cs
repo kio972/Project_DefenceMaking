@@ -832,7 +832,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         List<Battler> removeList = new List<Battler>();
         foreach (Battler battler in rangedTargets)
         {
-            if (battler.isDead || !targets.Contains(battler) || (object)battler.CurState == FSMHide.Instance)
+            if (battler.HaveEffect<Stealth>() && !this.HaveEffect<Detect>())
+                removeList.Add(battler);
+            else if (battler.isDead || !targets.Contains(battler))
                 removeList.Add(battler);
         }
 

@@ -58,6 +58,7 @@ public class Mimic : Monster, IHide
         curSeduceCount = 0;
         Seduce();
         CheckNodeOut(curTile).Forget();
+        AddStatusEffect<Stealth>(new Stealth(this, 0));
     }
 
     private async UniTaskVoid CheckNodeOut(TileNode curNode)

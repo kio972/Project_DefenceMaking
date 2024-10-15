@@ -10,19 +10,6 @@ public class GoblinScout : Goblin
         AddStatusEffect<Detect>(new Detect(this, 0));
     }
 
-    protected override void RemoveOutCaseTargets(List<Battler> targets)
-    {
-        List<Battler> removeList = new List<Battler>();
-        foreach (Battler battler in rangedTargets)
-        {
-            if (battler.isDead || !targets.Contains(battler))
-                removeList.Add(battler);
-        }
-
-        foreach (Battler battler in removeList)
-            rangedTargets.Remove(battler);
-    }
-
     protected override Battler GetPriorityTarget()
     {
         Battler curTarget = null;

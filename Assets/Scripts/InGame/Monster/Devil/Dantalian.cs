@@ -10,24 +10,6 @@ using UniRx.Triggers;
 
 public class Dantalian : PlayerBattleMain
 {
-    protected override void RemoveOutCaseTargets(List<Battler> targets)
-    {
-        if (PassiveManager.Instance.devilDetection)
-        {
-            List<Battler> removeList = new List<Battler>();
-            foreach (Battler battler in rangedTargets)
-            {
-                if (battler.isDead || !targets.Contains(battler))
-                    removeList.Add(battler);
-            }
-
-            foreach (Battler battler in removeList)
-                rangedTargets.Remove(battler);
-        }
-        else
-            base.RemoveOutCaseTargets(targets);
-    }
-
     private async UniTaskVoid DetectCheck()
     {
         await UniTask.WaitUntil(() => PassiveManager.Instance.devilDetection, cancellationToken: gameObject.GetCancellationTokenOnDestroy());

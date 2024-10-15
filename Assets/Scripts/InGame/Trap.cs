@@ -79,11 +79,8 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
-        if((object)battle.CurState == FSMHide.Instance)
-        {
-            if (battle is IHide hider && !hider.canAttackbyTrap)
-                return;
-        }
+        if(battle.HaveEffect<Stealth_sup>())
+            return;
 
         targetList.Add(battle);
     }
