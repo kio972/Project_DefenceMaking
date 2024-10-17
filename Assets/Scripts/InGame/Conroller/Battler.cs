@@ -5,6 +5,8 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using System.Threading;
+using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 public interface ISaveLoadBattler
 {
@@ -227,6 +229,15 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         this.ccTime = time;
         this.ChangeState(FSMCC.Instance);
+        _Animator.SetBool("Move", false);
+    }
+
+
+    public void KnockBack(Battler attacker, TileNode targetTile, Vector3 destPos, float lerpTime)
+    {
+        curTile = targetTile;
+        GetCC(attacker, lerpTime + 30);
+        ExcuteMoveToPos(destPos, lerpTime).Forget();
     }
 
     public void ResetNode()
@@ -434,6 +445,23 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         // 마왕성 이동 중 유효타일이 발생시 directPass = false;
         if (directPass && FindNextNode(curTile) != null)
             directPass = false;
+    }
+
+    protected async UniTaskVoid ExcuteMoveToPos(Vector3 destPos, float lerpTime)
+    {
+        Vector3 startPos = transform.position;
+        float elapsedTime = 0f;
+        while(elapsedTime < lerpTime)
+        {
+            elapsedTime += GameManager.Instance.InGameDeltaTime;
+            Vector3 nextPos = Vector3.Lerp(startPos, destPos, elapsedTime / lerpTime);
+            nextPos.y += (Mathf.Sin(elapsedTime / lerpTime * Mathf.PI) * 0.2f);
+            transform.position = nextPos;
+
+            await UniTask.Yield(unitaskCancelTokenSource.Token);
+        }
+
+        transform.position = destPos;
     }
 
     protected void ExcuteMove(TileNode nextNode)

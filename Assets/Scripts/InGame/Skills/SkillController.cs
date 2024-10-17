@@ -18,7 +18,7 @@ public class SkillController : MonoBehaviour
         if (skill.IsPassive)
             return;
 
-        SkillBtn newSkill = Instantiate(skillPrefab);
+        SkillBtn newSkill = Instantiate(skillPrefab, transform);
         newSkill.Init(skill);
         skillSlots.Add(newSkill);
         newSkill.gameObject.SetActive(true);

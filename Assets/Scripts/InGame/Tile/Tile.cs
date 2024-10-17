@@ -157,8 +157,8 @@ public class Tile : MonoBehaviour
         NodeManager.Instance.DormantTileCheck();
         GameManager.Instance.UpdateTotalMana();
 
-        if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_Game_Continuable())
-            GameManager.Instance.speedController.SetSpeedZero();
+        //if(GameManager.Instance.IsInit && !GameManager.Instance.speedController.Is_Game_Continuable())
+        //    GameManager.Instance.speedController.SetSpeedZero();
 
         if (isActive)
         {

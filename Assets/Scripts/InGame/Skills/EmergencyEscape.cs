@@ -17,6 +17,32 @@ public class EmergencyEscape : ISkill
 
     public ReactiveProperty<bool> isReady { get; } = new ReactiveProperty<bool>(false);
 
+    private void KnockBackOthers(TileNode targetNode)
+    {
+        TileNode enterance = null;
+        foreach(var direction in targetNode.neighborNodeDic.Keys)
+        {
+            TileNode neighbor = targetNode.neighborNodeDic[direction];
+            if (neighbor.curTile != null && neighbor.curTile.PathDirection.Contains(UtilHelper.ReverseDirection(direction)))
+            {
+                enterance = neighbor;
+                break;
+            }
+        }
+
+        List<Battler> targets = new List<Battler>();
+        foreach(var target in GameManager.Instance.adventurersList)
+            if (target.CurTile == targetNode)
+                targets.Add(target);
+
+        foreach (var target in GameManager.Instance._MonsterList)
+            if (target.CurTile == targetNode)
+                targets.Add(target);
+
+        foreach(var target in targets)
+            target.KnockBack(king, enterance, enterance.transform.position, 30);
+    }
+
     public bool UseSkill()
     {
         var nodes = NodeManager.Instance.GetEndTileMovableNodes();
@@ -29,6 +55,8 @@ public class EmergencyEscape : ISkill
 
         var kingTile = NodeManager.Instance.endPoint.curTile;
         var nextNode = nodes[randomPoint];
+
+        KnockBackOthers(NodeManager.Instance.endPoint);
 
         kingTile.MoveTile(nextNode);
         if (kingTile is TileEnd endTile)
@@ -47,7 +75,8 @@ public class EmergencyEscape : ISkill
     public void SkillInit()
     {
         king = GameManager.Instance.king;
-        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp < 5).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
+        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp <= 5).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
+        var hpStream2 = Observable.EveryLateUpdate().Where(_ => king.curHp > 5 && coolRate.Value == 0).Subscribe(_ => { isReady.Value = true; }).AddTo(king.gameObject);
 
         var coolTimeStream = Observable.EveryUpdate().Where(_ => curCoolTime > 0)
             .Subscribe(_ =>
