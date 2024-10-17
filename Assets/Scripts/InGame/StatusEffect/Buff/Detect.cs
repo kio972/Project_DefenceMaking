@@ -8,7 +8,6 @@ public class Detect : StatusEffect
     public Detect(Battler battler, int duration) : base(battler, duration)
     {
         Init(battler, duration);
-        _originDuration = 0;
         effectType = EffectType.Buff;
     }
 }

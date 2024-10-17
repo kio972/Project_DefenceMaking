@@ -9,7 +9,7 @@ public class DevilAuraSkill : ISkill
 {
     public bool IsPassive { get => true; }
 
-    private float coolTime = 4320f;
+    private float coolTime = 0.2f;
     private float curCoolTime = 0;
 
     private Battler king;
@@ -48,7 +48,7 @@ public class DevilAuraSkill : ISkill
     {
         while (!king.isDead)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(0.3f), false, cancellationToken: king.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(System.TimeSpan.FromSeconds(coolTime), false, cancellationToken: king.GetCancellationTokenOnDestroy());
 
             UseSkill();
         }
