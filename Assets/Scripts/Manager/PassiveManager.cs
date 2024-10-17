@@ -45,9 +45,9 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
 
-    public int devilAuraRange { get; private set; } = 0;
-    public int devilAuraPower { get; private set; } = 0;
-    public bool devilDetection { get; private set; } = false;
+    //public int devilAuraRange { get; private set; } = 0;
+    //public int devilAuraPower { get; private set; } = 0;
+    //public bool devilDetection { get; private set; } = false;
 
 
     public ReactiveProperty<int> _slimeSplit_Weight { get; private set; } = new ReactiveProperty<int>(0);
@@ -100,16 +100,11 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         }
     }
 
-    public void UpgradeDevilDetection()
-    {
-        devilDetection = true;
-    }
-
-    public void UpgradeDevilAura(int range, int value)
-    {
-        devilAuraRange = range;
-        devilAuraPower = value;
-    }
+    //public void UpgradeDevilAura(int range, int value)
+    //{
+    //    devilAuraRange = range;
+    //    devilAuraPower = value;
+    //}
 
     public void UpgradeShopSale(int value)
     {

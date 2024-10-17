@@ -15,6 +15,9 @@ public class SkillController : MonoBehaviour
 
     private void AddSkill(ISkill skill)
     {
+        if (skill.IsPassive)
+            return;
+
         SkillBtn newSkill = Instantiate(skillPrefab);
         newSkill.Init(skill);
         skillSlots.Add(newSkill);

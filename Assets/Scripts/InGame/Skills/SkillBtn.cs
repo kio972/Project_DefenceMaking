@@ -17,6 +17,7 @@ public class SkillBtn : MonoBehaviour
     public void Init(ISkill skill)
     {
         _skill = skill;
+        _skill.SkillInit();
         _skill.isReady.Subscribe(_ => _coolTimeFill.gameObject.SetActive(_));
         _skill.coolRate.Subscribe(_ => _coolTimeFill.fillAmount = _).AddTo(gameObject);
     }

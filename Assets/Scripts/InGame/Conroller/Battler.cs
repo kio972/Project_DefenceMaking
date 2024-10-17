@@ -176,14 +176,14 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         return false;
     }
 
-    public bool HaveEffect<T>(out StatusEffect statusEffect) where T : StatusEffect
+    public bool HaveEffect<T>(out T statusEffect) where T : StatusEffect
     {
         statusEffect = null;
         foreach (var item in _effects)
         {
-            if (item is T)
+            if (item is T targetEffect)
             {
-                statusEffect = item;
+                statusEffect = targetEffect;
                 return true;
             }
         }
@@ -192,7 +192,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void RemoveStatusEffect<T>() where T : StatusEffect
     {
-        if(HaveEffect<T>(out StatusEffect effect))
+        if(HaveEffect<T>(out T effect))
             RemoveStatusEffect(effect);
     }
 
@@ -207,7 +207,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void AddStatusEffect<T>(StatusEffect effect) where T : StatusEffect
     {
-        StatusEffect targetEffect;
+        T targetEffect;
         if (HaveEffect<T>(out targetEffect))
             targetEffect.UpdateEffect(effect._originDuration);
         else

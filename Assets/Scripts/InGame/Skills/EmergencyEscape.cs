@@ -4,15 +4,10 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public interface ISkill
-{
-    public ReactiveProperty<float> coolRate { get; }
-    public ReactiveProperty<bool> isReady { get; }
-    public bool UseSkill();
-}
-
 public class EmergencyEscape : ISkill
 {
+    public bool IsPassive { get => false; }
+
     private float coolTime = 4320f;
     private float curCoolTime = 0;
 
@@ -49,7 +44,7 @@ public class EmergencyEscape : ISkill
         return true;
     }
 
-    private void Start()
+    public void SkillInit()
     {
         king = GameManager.Instance.king;
         var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp < 5).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);

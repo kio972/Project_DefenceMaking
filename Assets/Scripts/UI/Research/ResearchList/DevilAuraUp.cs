@@ -11,6 +11,17 @@ public class DevilAuraUp : MonoBehaviour, Research
 
     public void ActiveResearch()
     {
-        PassiveManager.Instance.UpgradeDevilAura(range, value);
+        var king = GameManager.Instance.king;
+        if(king.HaveSkill(out DevilAuraSkill skill))
+        {
+            skill.SetDevilAuraValue(range, value);
+        }
+        else
+        {
+            DevilAuraSkill devilAura = new DevilAuraSkill();
+            king.skills.Add(devilAura);
+            devilAura.SetDevilAuraValue(range, value);
+            devilAura.SkillInit();
+        }
     }
 }
