@@ -283,6 +283,9 @@ public class Tile : MonoBehaviour
         if (twin == null)
         {
             twin = Instantiate(this, transform);
+            Collider[] colliders = twin.GetComponentsInChildren<Collider>();
+            foreach (Collider collider in colliders)
+                collider.enabled = false;
             twin.isTwin = true;
             twin.waitToMove = false;
         }
@@ -307,7 +310,7 @@ public class Tile : MonoBehaviour
                 break;
         }
 
-        curNode.SetAvail(true);
+        //curNode.SetAvail(true);
         TileMoveCheck();
         await UniTask.WaitUntil(() => !Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey) && !Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey));
         //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
@@ -398,6 +401,8 @@ public class Tile : MonoBehaviour
 
         if (spawner != null)
             RemoveSpawner();
+        curNode.curTile = null;
+
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
         GameManager.Instance.UpdateTotalMana();

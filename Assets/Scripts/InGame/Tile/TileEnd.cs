@@ -44,6 +44,9 @@ public class TileEnd : Tile
             }
         }
 
+        if (targetDirection == Direction.None)
+            return;
+
         if (twin.PathDirection[0] == targetDirection)
             return;
 

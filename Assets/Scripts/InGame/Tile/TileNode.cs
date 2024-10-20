@@ -50,12 +50,18 @@ public class TileNode : MonoBehaviour
             if(!connectionState.ContainsKey(direction))
                 connectionState.Add(direction, 0);
 
-            if (neighborNodeDic[direction] == null || neighborNodeDic[direction].curTile == null || neighborNodeDic[direction].curTile.IsDormant)
+            Tile targetTile = neighborNodeDic[direction].curTile;
+            if (targetTile == null || targetTile.IsDormant)
+            {
+                connectionState[direction] = 0;
                 continue;
+            }
 
-            if (neighborNodeDic[direction].curTile.PathDirection.Contains(UtilHelper.ReverseDirection(direction)))
+            if(targetTile._TileType == TileType.End)
+                connectionState[direction] = 0;
+            else if (targetTile.PathDirection.Contains(UtilHelper.ReverseDirection(direction)))
                 connectionState[direction] = 1;
-            else if(neighborNodeDic[direction].curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(direction)))
+            else if(targetTile.RoomDirection.Contains(UtilHelper.ReverseDirection(direction)))
                 connectionState[direction] = 2;
             else
                 connectionState[direction] = 0;
