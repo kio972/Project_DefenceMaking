@@ -98,6 +98,7 @@ public class DeployUI : MonoBehaviour
         //UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
         UIManager.Instance.CloseTab(deployingWindow.gameObject);
         GameManager.Instance.cardLock = false;
+        GameManager.Instance.speedController.SetSpeedPrev();
         //GameManager.Instance.SetPause(true);
 
         if (ingameUI == null)
