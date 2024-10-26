@@ -25,4 +25,6 @@ public class SettingData
     public int key_SpeedControl_Zero = 32;
     public int key_SpeedControl_One = 49;
     public int key_SpeedControl_Double = 50;
+
+    public int stageState = 0;
 }

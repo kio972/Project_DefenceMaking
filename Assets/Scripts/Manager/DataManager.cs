@@ -22,6 +22,8 @@ public class DataManager : Singleton<DataManager>
 
     private List<Dictionary<string, object>> shop_Table;
 
+    private List<Dictionary<string, object>> start_deckTable;
+
     public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
     public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
@@ -32,6 +34,8 @@ public class DataManager : Singleton<DataManager>
     public List<Dictionary<string, object>> Quest_Table { get => quest_Table; }
     public List<Dictionary<string, object>> QuestMessage_Table { get => questMessage_Table; }
     public List<Dictionary<string, object>> Shop_Table { get => shop_Table; }
+
+    public List<Dictionary<string, object>> Start_deckTable { get => start_deckTable; }
 
     public List<int> tileCard_Indexs { get; private set; }
     public List<int> monsterCard_Indexs { get; private set; }
@@ -234,6 +238,18 @@ public class DataManager : Singleton<DataManager>
     private readonly string quest_Table_DataPath = "Data/questData";
     private readonly string questMessage_Table_DataPath = "Data/questMessageData";
     private readonly string shop_Table_DataPath = "Data/shopListData";
+
+    public void SetStageData(TextAsset waveData, TextAsset deckListData, TextAsset scriptData, TextAsset questData, TextAsset questMessageData)
+    {
+        wave_Table = CSVLoader.LoadCSV(waveData);
+        start_deckTable = CSVLoader.LoadCSV(deckListData);
+        scripts_Table = CSVLoader.LoadCSV(scriptData);
+        quest_Table = CSVLoader.LoadCSV(questData);
+        questMessage_Table = CSVLoader.LoadCSV(questMessageData);
+
+        SortDeckList();
+        SortShopList();
+    }
 
     private void Init()
     {

@@ -17,7 +17,7 @@ public class MapBuilder : MonoBehaviour
     private int startPathSize = 3;
 
     [SerializeField]
-    private int emptyNodeSize = 4;
+    protected int emptyNodeSize = 4;
 
     private int _curTileSetCount = 0;
     private int forHiddenTileCount = 10;
@@ -136,7 +136,7 @@ public class MapBuilder : MonoBehaviour
         newTile.Init(targetNode, true);
     }
 
-    private void SetBasicTile()
+    protected virtual void SetBasicTile()
     {
         //스타트포인트부터 스타트포인트 - 직선길 - 직선길  직선길 - 직선길 - 마왕방
         //print(NodeManager.Instance.startPoint.transform.position);
@@ -188,6 +188,16 @@ public class MapBuilder : MonoBehaviour
         Tile roomTile = Instantiate(roomPrefab)?.GetComponent<Tile>();
         roomTile.Init(nextNode, false, false, false);
         roomTile.RotateTile(true);
+
+        Tutorial tutorial = FindObjectOfType<Tutorial>();
+        if (tutorial == null)
+        {
+            SetHiddenTile(3).Forget();
+            SetHiddenTile(3).Forget();
+            SetHiddenTile(3).Forget();
+        }
+
+        NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
     }
 
     private bool IsStartPointValid(TileNode node)
@@ -300,19 +310,7 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
 
         if(setmap)
-        {
             SetBasicTile();
-
-            Tutorial tutorial = FindObjectOfType<Tutorial>();
-            if (tutorial == null)
-            {
-                SetHiddenTile(3).Forget();
-                SetHiddenTile(3).Forget();
-                SetHiddenTile(3).Forget();
-            }
-        }
-
-        NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
 
         InputManager input = InputManager.Instance;
     }

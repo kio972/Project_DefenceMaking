@@ -73,6 +73,8 @@ public class StoryManager : MonoBehaviour
     [SerializeField]
     private Button skipBtn;
 
+    public MonoBehaviour triggerZone;
+
     public void SkipScript()
     {
         if(!isSkip)
@@ -385,5 +387,6 @@ public class StoryManager : MonoBehaviour
         nameText.text = "";
         targetText.text = "";
         blocker.gameObject.SetActive(false);
+        triggerZone = this;
     }
 }

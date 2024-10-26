@@ -97,6 +97,8 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.F2);
     public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.F3);
 
+    public int stageState = 0;
+
     public List<BindKey> bindKeys;
 
     private HashSet<KeyCode> invalidKeys = new HashSet<KeyCode>()

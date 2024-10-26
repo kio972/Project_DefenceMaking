@@ -364,7 +364,7 @@ public class GameManager : IngameSingleton<GameManager>
         cardDeckController.Init();
         //cardDeckController.Invoke("Mulligan", 1f);
         cardDeckController.Invoke("MulliganFixed", 1f);
-        speedController.SetSpeedNormal();
+        speedController.SetSpeedNormal(false);
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);
 
