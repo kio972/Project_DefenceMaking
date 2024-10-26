@@ -217,6 +217,8 @@ public class DeployUI : MonoBehaviour
             guideObject = Instantiate(targetPrefab);
             guideObject.name = targetName;
             guideObjects.Add(prefabName, guideObject);
+            Battler battler = guideObject.GetComponent<Battler>();
+            if(battler != null) Destroy(battler);
         }
 
         if (unitType is CardType.Monster or CardType.Spawner)

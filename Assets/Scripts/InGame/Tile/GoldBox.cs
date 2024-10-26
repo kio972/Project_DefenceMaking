@@ -10,6 +10,20 @@ public interface IRewardObject
 
 public class GoldBox : MonoBehaviour, IRewardObject
 {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isFinish)
+            return;
+
+        Battler battle = other.GetComponent<Battler>();
+        if (battle == null || battle.unitType == UnitType.Enemy) return;
+
+        GetReward();
+        isFinish = true;
+    }
+
+    private bool isFinish = false;
+
     private async UniTaskVoid ExcuteGetReward()
     {
         GameManager.Instance.gold += 100;

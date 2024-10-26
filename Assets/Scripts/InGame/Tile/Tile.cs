@@ -371,8 +371,8 @@ public class Tile : MonoBehaviour
             // ∫∏ªÛ»πµÊ
             NodeManager.Instance.dormantTile.Remove(this);
             //GameManager.Instance.gold += 100;
-            IRewardObject rewardObject = GetComponentInChildren<IRewardObject>();
-            rewardObject?.GetReward();
+            //IRewardObject rewardObject = GetComponentInChildren<IRewardObject>();
+            //rewardObject?.GetReward();
         }
     }
 
