@@ -5,79 +5,79 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
-    private List<Dictionary<string, object>> wave_Table;
-    private List<Dictionary<string, object>> deckList;
+    #region CommonData
     private List<Dictionary<string, object>> battler_Table;
     private List<Dictionary<string, object>> timeRate_Table;
     private List<Dictionary<string, object>> language_Table;
-    private List<Dictionary<string, object>> scripts_Table;
-
-    private List<Dictionary<string, object>> buff_Table;
-
     private List<Dictionary<string, object>> research_Table;
     private List<Dictionary<string, object>> scriptsMalpongsun_Table;
-
-    private List<Dictionary<string, object>> quest_Table;
-    private List<Dictionary<string, object>> questMessage_Table;
-
+    private List<Dictionary<string, object>> buff_Table;
     private List<Dictionary<string, object>> shop_Table;
+    private List<Dictionary<string, object>> deckList;
 
-    private List<Dictionary<string, object>> start_deckTable;
-
-    public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
-    public List<Dictionary<string, object>> Deck_Table { get => deckList; }
     public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
     public List<Dictionary<string, object>> TimeRate_Table { get => timeRate_Table; }
     public List<Dictionary<string, object>> Language_Table { get => language_Table; }
     public List<Dictionary<string, object>> Research_Table { get => research_Table; }
     public List<Dictionary<string, object>> ScriptsMalpongsun_Table { get => scriptsMalpongsun_Table; }
-    public List<Dictionary<string, object>> Quest_Table { get => quest_Table; }
-    public List<Dictionary<string, object>> QuestMessage_Table { get => questMessage_Table; }
     public List<Dictionary<string, object>> Shop_Table { get => shop_Table; }
-
-    public List<Dictionary<string, object>> Start_deckTable { get => start_deckTable; }
+    public List<Dictionary<string, object>> Deck_Table { get => deckList; }
 
     public List<int> tileCard_Indexs { get; private set; }
     public List<int> monsterCard_Indexs { get; private set; }
     public List<int> trapCard_Indexs { get; private set; }
     public List<int> environmentCard_Indexs { get; private set; }
     public List<int> herbCard_Indexs { get; private set; }
-
     public List<int> pathCard_Indexs { get; private set; }
     public List<int> roomCard_Indexs { get; private set; }
     public List<int> roomPartCard_Index { get; private set; }
     public List<int> roomTypeCard_Indexs { get; private set; }
-
     public Dictionary<string, int> deckListIndex { get; private set; }
-
     public Dictionary<string, Dictionary<string, object>> shopListDic { get; private set; }
+    public Dictionary<string, Dictionary<string, object>> languageDic { get; private set; }
+    #endregion
 
+    #region StageData
+    private List<Dictionary<string, object>> wave_Table;
+    private List<Dictionary<string, object>> scripts_Table;
+    private List<Dictionary<string, object>> quest_Table;
+    private List<Dictionary<string, object>> questMessage_Table;
+    private List<Dictionary<string, object>> start_deckTable;
+
+
+    public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
+    public List<Dictionary<string, object>> Quest_Table { get => quest_Table; }
+    public List<Dictionary<string, object>> QuestMessage_Table { get => questMessage_Table; }
+    public List<Dictionary<string, object>> Start_deckTable { get => start_deckTable; }
     public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
-
     private Dictionary<int, List<WaveData>> waveLevelTable = null;
+    #endregion
 
     public Dictionary<int, List<WaveData>> WaveLevelTable
     {
         get
         {
-            if(waveLevelTable == null)
-            {
-                waveLevelTable = new Dictionary<int, List<WaveData>>();
-                foreach(Dictionary<string, object> data in wave_Table)
-                {
-                    int level = Convert.ToInt32(data["level"]);
-                    string adventurerName = data["enemy"].ToString();
-                    int number = Convert.ToInt32(data["number"]);
-                    WaveData waveData = new WaveData(adventurerName, number);
-                    if (!waveLevelTable.ContainsKey(level))
-                        waveLevelTable.Add(level, new List<WaveData>());
-                    waveLevelTable[level].Add(waveData);
-                }
-            }
+            if (waveLevelTable == null)
+                InitLevelTable();
 
             return waveLevelTable;
+        }
+    }
+
+    private void InitLevelTable()
+    {
+        waveLevelTable = new Dictionary<int, List<WaveData>>();
+        foreach (Dictionary<string, object> data in wave_Table)
+        {
+            int level = Convert.ToInt32(data["level"]);
+            string adventurerName = data["enemy"].ToString();
+            int number = Convert.ToInt32(data["number"]);
+            WaveData waveData = new WaveData(adventurerName, number);
+            if (!waveLevelTable.ContainsKey(level))
+                waveLevelTable.Add(level, new List<WaveData>());
+            waveLevelTable[level].Add(waveData);
         }
     }
 
@@ -123,23 +123,16 @@ public class DataManager : Singleton<DataManager>
 
     public string GetDescription(string key)
     {
-        int index = UtilHelper.Find_Data_Index(key, language_Table, "id");
-        if (index == -1)
+        //int index = UtilHelper.Find_Data_Index(key, language_Table, "id");
+        //if (index == -1)
+        //    return key;
+        //string language = SettingManager.Instance.language.ToString();
+        //return language_Table[index][language].ToString();
+
+        if (!languageDic.ContainsKey(key))
             return key;
 
-        string language = SettingManager.Instance.language.ToString();
-        return language_Table[index][language].ToString();
-    }
-
-    private List<int> Find_Typeof_Index(List<Dictionary<string, object>> table, string key, string value)
-    {
-        List<int> indexs = new List<int>();
-        for (int i = 0; i < table.Count; i++)
-        {
-            if (deckList[i][key].ToString() == value)
-                indexs.Add(i);
-        }
-        return indexs;
+        return languageDic[key][SettingManager.Instance.language.ToString()].ToString();
     }
 
     private Dictionary<int, Dictionary<char, Dictionary<string, object>>> sortedBuffTable = null;
@@ -223,7 +216,12 @@ public class DataManager : Singleton<DataManager>
         }
     }
 
-
+    private void SortLanguageList()
+    {
+        languageDic = new Dictionary<string, Dictionary<string, object>>();
+        foreach (var item in language_Table)
+            languageDic.Add(item["id"].ToString(), item);
+    }
 
     // csv파일 주소(Resource폴더 내)
     private readonly string wave_Table_DataPath = "Data/waveData";
@@ -247,8 +245,7 @@ public class DataManager : Singleton<DataManager>
         quest_Table = CSVLoader.LoadCSV(questData);
         questMessage_Table = CSVLoader.LoadCSV(questMessageData);
 
-        SortDeckList();
-        SortShopList();
+        InitLevelTable();
     }
 
     private void Init()
@@ -269,5 +266,6 @@ public class DataManager : Singleton<DataManager>
 
         SortDeckList();
         SortShopList();
+        SortLanguageList();
     }
 }
