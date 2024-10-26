@@ -16,8 +16,19 @@ public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
         this.devilTransform = devilTransform;
     }
 
+    private float scanCoolTime = 0.3f;
+    private float elapsedTime = 0.3f;
+
     public void WhileEffect()
     {
+        if (elapsedTime < scanCoolTime)
+        {
+            elapsedTime += Time.deltaTime;
+            return;
+        }
+
+        elapsedTime = 0;
+
         float dist = UtilHelper.CalCulateDistance(_battler.transform, devilTransform);
         if (dist > PassiveManager.Instance.devilAuraRange)
         {

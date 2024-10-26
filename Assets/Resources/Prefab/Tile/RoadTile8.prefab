@@ -50,11 +50,9 @@ MonoBehaviour:
   tileType: 1
   roomMana: 1
   curNode: {fileID: 0}
-  movable: 0
   waitToMove: 0
   twin: {fileID: 0}
   trap: {fileID: 0}
-  haveMonster: 0
   IsBigRoom: 0
 --- !u!1001 &7544438346107353865
 PrefabInstance:
@@ -146,6 +144,14 @@ PrefabInstance:
     - target: {fileID: 2024124981890878287, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_Name
       value: Road8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
+      propertyPath: toolTipKey_descs
+      value: tooltip_road009_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
+      propertyPath: toolTipKey_header
+      value: tooltip_road009_0
       objectReference: {fileID: 0}
     - target: {fileID: 8937943421281466749, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_Materials.Array.data[0]

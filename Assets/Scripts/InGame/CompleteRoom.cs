@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class CompleteRoom
 {
@@ -11,6 +12,10 @@ public class CompleteRoom
     public List<Tile> _IncludeRooms { get => includeRooms; }
     public int _RemainingMana { get { return totalMana - _SpendedMana; } }
     public Tile HeadRoom { get { return CalculateMidTile(); } }
+
+    bool isSingleRoom;
+
+    CompositeDisposable disposables = new CompositeDisposable();
 
     private int _SpendedMana
     {
@@ -58,9 +63,29 @@ public class CompleteRoom
         return resultTile;
     }
 
+    ~CompleteRoom()
+    {
+        disposables.Dispose();
+    }
+
     public CompleteRoom(List<Tile> targetTiles, bool singleRoom = false)
     {
         includeRooms = targetTiles;
-        totalMana = singleRoom ? 3 : includeRooms.Count;
+        this.isSingleRoom = singleRoom;
+        CalculateTotalMana();
+
+        var manaStream1 = PassiveManager.Instance.manaTile.ObserveAdd().AsObservable().Select(_ => _.Key.gameObject);
+        var manaStream2 = PassiveManager.Instance.manaTile.ObserveRemove().AsObservable().Select(_ => _.Key.gameObject);
+        Observable.Merge(manaStream1, manaStream2).Subscribe(_ => CalculateTotalMana()).AddTo(disposables);
+    }
+
+    private void CalculateTotalMana()
+    {
+        totalMana = isSingleRoom ? 3 : includeRooms.Count;
+        foreach (Tile tile in includeRooms)
+        {
+            if (PassiveManager.Instance.manaTile.ContainsKey(tile.curNode))
+                totalMana += PassiveManager.Instance.manaTile[tile.curNode];
+        }
     }
 }

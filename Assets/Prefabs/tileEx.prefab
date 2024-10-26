@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 8389793656803905256}
   - component: {fileID: 8937943421281466749}
   - component: {fileID: 7069260262680337687}
+  - component: {fileID: 3250585197341116231}
+  - component: {fileID: 6094935589187936367}
+  - component: {fileID: 6525793943005644655}
   m_Layer: 0
   m_Name: tileEx
   m_TagString: Untagged
@@ -107,6 +110,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!64 &3250585197341116231
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3756969188314493728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -740777132133512028, guid: 0a57fca37ad6da4469d21e9f7540081f, type: 3}
+--- !u!114 &6094935589187936367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3756969188314493728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 6
+  _subLevel: 0
+  toolTipKey_header: 
+  toolTipKey_descs: 
+--- !u!114 &6525793943005644655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3756969188314493728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbe704448c5b1947ae53dd2da64aa00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5405534044863145817
 PrefabInstance:
   m_ObjectHideFlags: 0

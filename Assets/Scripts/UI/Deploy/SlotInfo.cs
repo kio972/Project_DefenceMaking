@@ -57,7 +57,7 @@ public class SlotInfo : MonoBehaviour
         card_Rank.sprite = cardRank;
 
         card_Name.ChangeLangauge(SettingManager.Instance.language, data._name);
-        card_Description.ChangeLangauge(SettingManager.Instance.language, data._name + "_desc");
+        card_Description.ChangeLangauge(SettingManager.Instance.language, data._name + "_1");
 
         card_illust.sprite = data.illur;
 

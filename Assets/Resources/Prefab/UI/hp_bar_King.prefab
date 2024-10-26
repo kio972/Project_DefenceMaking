@@ -75,7 +75,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1000}
   m_SizeDelta: {x: 180, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9217911784183224243
@@ -96,6 +96,7 @@ MonoBehaviour:
   shield_Bar: {fileID: 1591527351822886254}
   delayTime: 1
   lerpTime: 0.2
+  status: {fileID: 0}
 --- !u!1 &5416609680614605443
 GameObject:
   m_ObjectHideFlags: 0

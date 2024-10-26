@@ -6,7 +6,7 @@ public class FSMDirectMove : FSMSingleton<FSMDirectMove>, CharState<Battler>
 {
     public void Enter(Battler e)
     {
-        
+        e.NextTile = null;
     }
 
     public void Excute(Battler e)

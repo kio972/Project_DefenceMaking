@@ -126,12 +126,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public bool isDead = false;
 
-    protected List<TileNode> crossedNodes = new List<TileNode>();
+    protected HashSet<TileNode> crossedNodes = new HashSet<TileNode>();
     protected TileNode prevTile;
     protected TileNode curTile;
     protected TileNode nextTile;
     public TileNode CurTile { get => curTile; }
-    public TileNode NextTile { get => nextTile; }
+    public TileNode NextTile { get => nextTile; set => nextTile = value; }
     protected TileNode lastCrossRoad;
     protected bool directPass = false;
     public TileNode directPassNode { get; protected set; } = null;
@@ -226,12 +226,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public void GetCC(Battler attacker, float time)
     {
         this.ccTime = time;
-        
+        this.ChangeState(FSMCC.Instance);
     }
 
     public void ResetNode()
     {
-        crossedNodes = new List<TileNode>();
+        crossedNodes.Clear();
         prevTile = null;
         //curTile = null;
         nextTile = null;
@@ -407,6 +407,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
         nextNodes.Remove(prevTile);
+        nextNodes.Remove(NodeManager.Instance.startPoint);
         if (crossedNodes != null)
         {
             foreach (TileNode node in crossedNodes)
@@ -427,8 +428,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     protected virtual void NodeAction(TileNode nextNode)
     {
         this.nextTile = null;
-        if (!crossedNodes.Contains(curTile))
-            crossedNodes.Add(curTile);
+        crossedNodes.Add(curTile);
+        transform.position = curTile.transform.position;
 
         // 마왕성 이동 중 유효타일이 발생시 directPass = false;
         if (directPass && FindNextNode(curTile) != null)
@@ -446,7 +447,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     protected void ResetPaths()
     {
-        crossedNodes = new List<TileNode>();
+        crossedNodes.Clear();
         lastCrossRoad = null;
         prevTile = null;
         directPass = false;
@@ -463,6 +464,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         if (nextTile == null || nextTile.curTile == null)
         {
             List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
+
+            //이미 다음노드로 이동중이었다면 현재노드는 제외
+            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
+                path.Remove(curTile);
+            
             if (path != null && path.Count > 0)
                 nextTile = path[0];
             else

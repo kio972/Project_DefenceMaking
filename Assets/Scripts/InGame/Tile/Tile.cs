@@ -39,7 +39,23 @@ public class Tile : MonoBehaviour
     public TileNode curNode;
 
     private bool removable = false;
-    public bool IsRemovable { get { return !removable || isDormant ? false : true; } }
+    public bool IsRemovable
+    {
+        get
+        {
+            bool isRemovable = removable && !isDormant;
+            foreach(var room in NodeManager.Instance.roomTiles)
+            {
+                if(room._IncludeRooms.Count > 1 && room._IncludeRooms.Contains(this))
+                {
+                    isRemovable = false;
+                    break;
+                }
+            }
+
+            return isRemovable;
+        }
+    }
 
     public bool IsRemovableNow
     {
@@ -182,7 +198,6 @@ public class Tile : MonoBehaviour
         twin.gameObject.SetActive(false);
         waitToMove = false;
         InputManager.Instance.settingCard = false;
-        InputManager.Instance.movingTile = false;
         InputManager.Instance.ResetTileClick();
         if (resetNode)
             NodeManager.Instance.SetActiveNode(this.curNode, true);
@@ -282,7 +297,6 @@ public class Tile : MonoBehaviour
     public async UniTaskVoid ReadyForMove()
     {
         SetTwin();
-        InputManager.Instance.movingTile = true;
         switch (tileType)
         {
             case TileType.End:
@@ -298,7 +312,6 @@ public class Tile : MonoBehaviour
         await UniTask.WaitUntil(() => !Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey) && !Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey));
         //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
         waitToMove = true;
-        print("end");
     }
 
     public TileNode TileMoveCheck()
@@ -387,6 +400,7 @@ public class Tile : MonoBehaviour
             RemoveSpawner();
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
+        GameManager.Instance.UpdateTotalMana();
     }
 
     public TileData GetTileData()
@@ -399,12 +413,7 @@ public class Tile : MonoBehaviour
         tile.isDormant = isDormant;
         tile.isRemovable = removable;
         tile.trapId = trap != null ? trap.BattlerID : "";
-        
-        if(spawner != null)
-        {
-            tile.spawnerId = spawner._TargetName;
-            tile.spawnerCool = spawner._CurCoolTime;
-        }
+        tile.trapDuration = trap != null ? trap.Duration : 0;
 
         return tile;
     }

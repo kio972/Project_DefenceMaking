@@ -205,6 +205,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private void ShowSelectedTile(Tile targetTile)
     {
+        if (targetTile == null) return;
         targetTile.curNode.SetGuideColor(Color.yellow);
     }
 
@@ -242,14 +243,19 @@ public class NodeManager : IngameSingleton<NodeManager>
     private void SetSpawnerAvail()
     {
         foreach (TileNode node in activeNodes)
+            node.SetAvail(false);
+
+        foreach (CompleteRoom room in roomTiles)
         {
-            if (IsSpawnerSetable(node))
+            foreach(Tile tile in room._IncludeRooms)
             {
-                List<TileNode> path = PathFinder.FindPath(node);
-                node.SetAvail(path != null);
+                TileNode node = tile.curNode;
+                if (IsSpawnerSetable(node))
+                {
+                    List<TileNode> path = PathFinder.FindPath(node);
+                    node.SetAvail(path != null);
+                }
             }
-            else
-                node.SetAvail(false);
         }
     }
 
@@ -339,7 +345,14 @@ public class NodeManager : IngameSingleton<NodeManager>
             if (node == null)
                 continue;
 
-            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection, targetTile._TileType != TileType.End);
+            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection, true);
+            foreach (Direction dir in targetNode_PathDirection)
+                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                    isConnected = false;
+            foreach (Direction dir in targetNode_RoomDirection)
+                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                    isConnected = false;
+
             node.SetAvail(isConnected);
         }
     }
@@ -457,6 +470,11 @@ public class NodeManager : IngameSingleton<NodeManager>
         foreach (var events in removeTileEvents)
             events?.Invoke(tile.gameObject);
         RemoveSightNode(tile.curNode);
+        if (tile._TileType == TileType.Room_Single)
+        {
+            var item = FindRoom(tile.curNode.row, tile.curNode.col);
+            roomTiles.Remove(item);
+        }
     }
 
     public void DormantTileCheck()

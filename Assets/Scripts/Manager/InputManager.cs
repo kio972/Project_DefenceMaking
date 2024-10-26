@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,12 +9,9 @@ public class InputManager : IngameSingleton<InputManager>
 
     public TileNode testTile;
 
-    private bool _settingCard = false;
-    public bool settingCard { get => _settingCard; set => _settingCard = value; }
+    public ReactiveProperty<bool> _settingCard { get; private set; } = new ReactiveProperty<bool>(false);
+    public bool settingCard { get => _settingCard.Value; set => _settingCard.Value = value; }
 
-    public bool movingTile = false;
-
-    private GameObject endPointPrefab = null;
     public TileNode curMoveObject = null;
 
     TileControlUI tileControlUI = null;
@@ -21,28 +19,14 @@ public class InputManager : IngameSingleton<InputManager>
     private Tile curTile = null;
     public Tile _CurTile { get => curTile; }
 
-    private void ReadySetTile(TileNode curTile)
+
+    List<IInput> _inputs = new List<IInput>();
+    public List<IInput> inputs { get => _inputs; }
+
+
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // 충돌된 오브젝트 처리
-                GameObject hitObject = hit.collider.gameObject;
-                //Debug.Log("Hit object: " + hitObject.name);
-                print(hitObject.name);
-            }
-
-        }
-
-    }
-
-    public void Call()
-    {
-        //InputManager Instance 생성 함수
+        _inputs.Add(new TooltipInput());
     }
 
     public void ResetTileClick()
@@ -58,9 +42,10 @@ public class InputManager : IngameSingleton<InputManager>
 
     public void ClickTile(Tile curTile)
     {
-        if(this.curTile == curTile && curTile.Movable)
+        if(this.curTile == curTile && curTile.curNode == NodeManager.Instance.endPoint)
         {
-            curTile.ReadyForMove();
+            TileControlUI tileControl = FindObjectOfType<TileControlUI>();
+            tileControl?.MoveTile();
             return;
         }
 
@@ -72,7 +57,7 @@ public class InputManager : IngameSingleton<InputManager>
 
     public void TileClickCheck()
     {
-        if (_settingCard)
+        if (_settingCard.Value)
             return;
 
         if (Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey))
@@ -128,12 +113,6 @@ public class InputManager : IngameSingleton<InputManager>
         }
     }
 
-    void Init()
-    {
-        if (endPointPrefab == null)
-            endPointPrefab = Resources.Load<GameObject>("Prefab/Tile/EndTile");
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -142,7 +121,13 @@ public class InputManager : IngameSingleton<InputManager>
 
         SpeedControlCheck();
         CameraResetCheck();
-        if(!GameManager.Instance.tileLock)
-            TileClickCheck();
+        //if(!GameManager.Instance.tileLock)
+        //    TileClickCheck();
+
+        foreach(IInput input in _inputs)
+        {
+            if(input.IsCheckValid)
+                input.CheckInput();
+        }
     }
 }

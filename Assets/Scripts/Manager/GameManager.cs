@@ -15,8 +15,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public float gameSpeed = 100f;
 
-    float timer = 0f;
-    public float Timer { get => timer; }
+    public ReactiveProperty<float> timer { get; private set; } = new ReactiveProperty<float>(0f);
+    public float Timer { get => timer.Value; }
 
     public int gold = 0;
     public int herb1 = 0;
@@ -125,10 +125,12 @@ public class GameManager : IngameSingleton<GameManager>
             if (node.curTile == null || node.curTile.IsDormant)
                 continue;
 
-            totalMana += node.curTile.RoomMana;
+            totalMana++;
+            if (PassiveManager.Instance.manaTile.ContainsKey(node) && node.curTile._TileType == TileType.Path)
+                totalMana += PassiveManager.Instance.manaTile[node];
         }
 
-        this.totalMana = totalMana + PassiveManager.Instance.GetAdditionalMana();
+        this.totalMana = totalMana;
     }
 
     public void IncreaseWave()
@@ -219,8 +221,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public void SkipDay()
     {
-        if(timer < 1350f)
-            timer = 1350f;
+        if(timer.Value < 1350f)
+            timer.Value = 1350f;
     }
 
     // Update is called once per frame
@@ -255,19 +257,19 @@ public class GameManager : IngameSingleton<GameManager>
 
         UpdateBossRoom();
 
-        timer += InGameDeltaTime;
-        if (timer > 720f && dailyIncome)
+        timer.Value += InGameDeltaTime;
+        if (timer.Value > 720f && dailyIncome)
         {
             //gold += 50 + PassiveManager.Instance.income_Weight;
             //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance.fxVolume);
             dailyIncome = false;
         }
 
-        if(timer > 1440f)
+        if(timer.Value > 1440f)
         {
             //재화수급
             gold += 50 + PassiveManager.Instance.income_Weight;
-            timer = 0f;
+            timer.Value = 0f;
             dailyIncome = true;
             curWave++;
             SetWaveSpeed(curWave);
@@ -339,6 +341,10 @@ public class GameManager : IngameSingleton<GameManager>
 
         if (shop == null)
             shop = FindObjectOfType<ShopUI>(true);
+
+        var manaStream1 =  PassiveManager.Instance.manaTile.ObserveAdd().AsObservable().Select(_ => true);
+        var manaStream2 = PassiveManager.Instance.manaTile.ObserveRemove().AsObservable().Select(_ => true);
+        Observable.Merge(manaStream1, manaStream2).Subscribe(_ => UpdateTotalMana()).AddTo(gameObject);
     }    
 
     public void Init()
@@ -377,7 +383,7 @@ public class GameManager : IngameSingleton<GameManager>
         ingameUI?.Init(false);
 
         curWave = data.curWave;
-        timer = data.curTime;
+        timer.Value = data.curTime;
         gold = data.gold;
         herb1 = data.herb1;
         herb2 = data.herb2;
@@ -387,6 +393,15 @@ public class GameManager : IngameSingleton<GameManager>
             mapBuilder.SetTile(tile);
         foreach (TileData tile in data.environments)
             mapBuilder.SetTile(tile, true);
+        foreach (TileData tile in data.hiddenTiles)
+            mapBuilder.SetHiddenTile(tile).Forget();
+        mapBuilder.curTileSetCount = data.nextHiddenTileCount;
+
+        foreach(SpawnerData spawnerData in data.spawners)
+        {
+            MonsterSpawner spawner = BattlerPooling.Instance.SetSpawner(NodeManager.Instance.FindNode(spawnerData.row, spawnerData.col), spawnerData.spawnerId, NodeManager.Instance.FindRoom(spawnerData.row, spawnerData.col));
+            spawner._CurCoolTime = spawnerData.spawnerCool;
+        }
 
         NodeManager.Instance.SetGuideState(GuideState.None);
 
@@ -409,6 +424,7 @@ public class GameManager : IngameSingleton<GameManager>
             target.LoadData(ally);
         }
 
+        SetWaveSpeed(curWave);
         waveController.SpawnWave(curWave);
         waveController.UpdateWaveText();
 

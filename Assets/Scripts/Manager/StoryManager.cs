@@ -261,7 +261,9 @@ public class StoryManager : MonoBehaviour
                     SetIllust(illustPos, track0, track1);
                     if(conver != "")
                     {
-                        yield return StartCoroutine("PrintScript", conver);
+                        //yield return StartCoroutine(PrintScript(conver));
+                        targetText.text = conver;
+                        yield return null;
                         if (isSkip)
                             break;
                         if(act != "NoWait")

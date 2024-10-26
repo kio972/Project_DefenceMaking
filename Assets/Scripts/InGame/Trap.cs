@@ -16,6 +16,7 @@ public class Trap : MonoBehaviour
     public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
 
     private int duration;
+    public int Duration { get { return curDuration.Value; } }
     private float attackSpeed;
     private int attackCount = 0;
     private int maxTarget = 1;
@@ -95,7 +96,7 @@ public class Trap : MonoBehaviour
         targetList.Remove(battle);
     }
 
-    public void Init(Tile curTile)
+    public void Init(Tile curTile, int startDuration = 0)
     {
         trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
 
@@ -122,7 +123,7 @@ public class Trap : MonoBehaviour
         targetList = new List<Battler>();
 
         maxDuration.Value = duration;
-        curDuration.Value = duration;
+        curDuration.Value = startDuration == 0 ? duration : startDuration;
         HPBarPooling.Instance.GetTrapHpBar(this);
         isInit = true;
     }

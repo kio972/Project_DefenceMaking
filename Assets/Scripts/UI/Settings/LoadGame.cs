@@ -15,7 +15,7 @@ public class LoadGame : UISetActiveBtn
         {
             UIManager.Instance.AddTab(targetObject);
             SaveManager.Instance.LoadPlayerData();
-            bool haveData = SaveManager.Instance.playerData != new PlayerData();
+            bool haveData = SaveManager.Instance.playerData.tiles != null;
             noData?.SetActive(!haveData);
             confirm.SetActive(haveData);
         }

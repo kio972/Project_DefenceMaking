@@ -44,6 +44,9 @@ public class SpriteList : MonoBehaviour
 
     public Sprite LoadSprite(string spriteName)
     {
+        if (string.IsNullOrEmpty(spriteName))
+            return null;
+
         if (spriteDic.ContainsKey(spriteName))
             return spriteDic[spriteName];
 

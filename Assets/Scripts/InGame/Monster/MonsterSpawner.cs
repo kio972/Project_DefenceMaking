@@ -18,11 +18,22 @@ public class MonsterSpawner : MonoBehaviour
     public float _CurCoolTime { get => curCoolTime; set => curCoolTime = value; }
 
     private TileNode tile;
+    public TileNode CurTile { get => tile; }
 
     private bool isUpdate = false;
 
     private string targetName;
     public string _TargetName { get => targetName; }
+    public string _TargetKey
+    {
+        get
+        {
+            string key = targetName.Split('_')[0];
+            string number = DataManager.Instance.Battler_Table[monsterIndex]["id"].ToString();
+            number = number[number.Length - 1].ToString();
+            return key + number;
+        }
+    }
 
     private int requiredMana;
     public int _RequiredMana { get => requiredMana; }

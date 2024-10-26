@@ -7,7 +7,7 @@ using UnityEngine;
 public class Goblin : Monster
 {
     private bool isSkillActived = false;
-    
+
     private async UniTaskVoid RunAway()
     {
         curTarget = null;
@@ -15,12 +15,8 @@ public class Goblin : Monster
         var tiles = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint);
         int count = 0;
 
-
         TileNode targetTile = null;
         tiles.Remove(curTile);
-        float curToEndDistance = UtilHelper.CalCulateDistance(transform, NodeManager.Instance.endPoint.transform);
-        if(curToEndDistance < tiles.Count)
-            tiles.RemoveAt(0);
         tiles.Remove(NodeManager.Instance.endPoint);
 
         if (tiles.Count == 0)
@@ -40,6 +36,8 @@ public class Goblin : Monster
         ChangeState(FSMDirectMove.Instance);
         await UniTask.WaitUntil(() => (object)CurState != FSMDirectMove.Instance, default, unitaskCancelTokenSource.Token);
         animator.SetBool("RunAway", false);
+        if(PassiveManager.Instance.isGoblinHealActive)
+            GetHeal(Mathf.RoundToInt(maxHp * 0.2f), this);
     }
 
     public override void GetDamage(int damage, Battler attacker)

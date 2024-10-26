@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public static class UtilHelper
 {
@@ -511,6 +512,26 @@ public static class UtilHelper
             return GetPathConnection(curNode);
     }
 
+    public static List<GameObject> RayCastLayer(HashSet<int> targetLayer)
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return null;
+
+        List<GameObject> result = new List<GameObject>();
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray).OrderBy(h => h.distance).ToArray();
+
+        foreach (RaycastHit hit in hits)
+        {
+            GameObject hitObject = hit.collider.gameObject;
+            if (targetLayer.Contains(hitObject.layer))
+                result.Add(hitObject);
+        }
+
+        return result;
+    }
+
     public static TileNode RayCastTile()
     {
         if (EventSystem.current.IsPointerOverGameObject())
@@ -524,8 +545,7 @@ public static class UtilHelper
             GameObject hitObject = hit.collider.gameObject;
             TileNode tile = hitObject.GetComponentInParent<TileNode>();
             if (tile != null)
-                if (tile != null)
-                    return tile;
+                return tile;
         }
 
         return null;
