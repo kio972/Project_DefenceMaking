@@ -80,7 +80,7 @@ public class PlayerBattleMain : Battler
     {
         base.Init();
 
-        int index = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        int index = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
         if(index != -1)
         {
             InitStats(index);

@@ -33,7 +33,7 @@ public class Adventurer : Battler
         transform.position = NodeManager.Instance.startPoint.transform.position;
         curTile = NodeManager.Instance.startPoint;
 
-        adventurerIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        adventurerIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
         if(adventurerIndex != -1)
         {
             InitStats(adventurerIndex);
@@ -42,7 +42,7 @@ public class Adventurer : Battler
             minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.adventurerDamageRate_Weight) / 100));
             maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.adventurerDamageRate_Weight) / 100));
 
-            reward = Convert.ToInt32(DataManager.Instance.Battler_Table[adventurerIndex]["reward"]);
+            reward = Convert.ToInt32(DataManager.Instance.battler_Table[adventurerIndex]["reward"]);
         }
 
         GameManager.Instance.adventurersList.Add(this);

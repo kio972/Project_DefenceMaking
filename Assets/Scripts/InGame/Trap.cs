@@ -95,13 +95,13 @@ public class Trap : MonoBehaviour
 
     public void Init(Tile curTile, int startDuration = 0)
     {
-        trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
 
-        minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPowerMin"]);
-        maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPowerMax"]);
-        attackSpeed = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackSpeed"]);
-        duration = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["duration"]);
-        maxTarget = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["targetCount"]);
+        minDamage = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["attackPowerMin"]);
+        maxDamage = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["attackPowerMax"]);
+        attackSpeed = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["attackSpeed"]);
+        duration = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["duration"]);
+        maxTarget = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["targetCount"]);
 
         this.curTile = curTile;
         curTile.trap = this;

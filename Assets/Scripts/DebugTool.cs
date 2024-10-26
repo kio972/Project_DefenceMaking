@@ -63,7 +63,7 @@ public class DebugTool : MonoBehaviour
     public void IncreaseWave()
     {
         waveIndex++;
-        waveIndex = Mathf.Min(waveIndex, DataManager.Instance.WaveLevelTable.Count);
+        waveIndex = Mathf.Min(waveIndex, DataManager.Instance.waveLevelTable.Count);
         if (waveText != null) waveText.text = waveIndex.ToString();
     }
 

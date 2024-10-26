@@ -200,14 +200,14 @@ public class Monster : Battler, IHoldbacker
             AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
         ResetNode();
 
-        monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
         if(monsterIndex != -1)
         {
             InitStats(monsterIndex);
 
-            monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), DataManager.Instance.Battler_Table[monsterIndex]["type"].ToString());
-            holdBackCount = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["holdbackCount"]);
-            requiredMana = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["requiredMagicpower"]);
+            monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), DataManager.Instance.battler_Table[monsterIndex]["type"].ToString());
+            holdBackCount = Convert.ToInt32(DataManager.Instance.battler_Table[monsterIndex]["holdbackCount"]);
+            requiredMana = Convert.ToInt32(DataManager.Instance.battler_Table[monsterIndex]["requiredMagicpower"]);
 
             ModifyPassive();
             curHp = maxHp;

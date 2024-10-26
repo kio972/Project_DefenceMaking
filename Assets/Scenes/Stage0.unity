@@ -2395,6 +2395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 752236460}
   - component: {fileID: 752236461}
+  - component: {fileID: 752236462}
   m_Layer: 0
   m_Name: Stage0
   m_TagString: Untagged
@@ -2429,7 +2430,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f780ae895521384c9c4972cfcafe1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waveData: {fileID: 0}
+--- !u!114 &752236462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752236459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91d3b4b5c7eefe4cac6d2d4008eea55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waveData: {fileID: 4900000, guid: 98f78f01fca5fa04987019235f042baf, type: 3}
+  _timeRateData: {fileID: 4900000, guid: 94fe63ade6906d143b658b311339d398, type: 3}
   _deckListData: {fileID: 4900000, guid: 248592e5f1335a8449c16c6d23822a6c, type: 3}
   _scriptData: {fileID: 4900000, guid: 62b664def1b87e640bd2f652e11066df, type: 3}
   _questData: {fileID: 4900000, guid: d06169645a8bceb42b2e1f31b1c1f3e1, type: 3}

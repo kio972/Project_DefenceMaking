@@ -60,7 +60,7 @@ public class LanguageText : MonoBehaviour
             return;
 
         // 1. text의 key값으로 인덱스 불러오기
-        int index = UtilHelper.Find_Data_Index(keyStr, DataManager.Instance.Language_Table, "id");
+        int index = UtilHelper.Find_Data_Index(keyStr, DataManager.Instance.language_Table, "id");
         if (index == -1)
         {
             _Text.text = keyStr;
@@ -68,7 +68,7 @@ public class LanguageText : MonoBehaviour
         }
 
         string targetLanguage = language.ToString();
-        Dictionary<string, object> data = DataManager.Instance.Language_Table[index];
+        Dictionary<string, object> data = DataManager.Instance.language_Table[index];
         if(!data.ContainsKey(targetLanguage))
         {
             _Text.text = keyStr;

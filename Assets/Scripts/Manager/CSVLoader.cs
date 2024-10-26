@@ -58,6 +58,9 @@ public class CSVLoader
 
     public static List<Dictionary<string, object>> LoadCSV(TextAsset textFile)
     {
+        if (textFile == null)
+            return null;
+
         string str = textFile.text;
 
         str = str.Replace("\r\n", "\n");

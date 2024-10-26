@@ -6,22 +6,22 @@ using UnityEngine;
 public class DataManager : Singleton<DataManager>
 {
     #region CommonData
-    private List<Dictionary<string, object>> battler_Table;
-    private List<Dictionary<string, object>> timeRate_Table;
-    private List<Dictionary<string, object>> language_Table;
-    private List<Dictionary<string, object>> research_Table;
-    private List<Dictionary<string, object>> scriptsMalpongsun_Table;
-    private List<Dictionary<string, object>> buff_Table;
-    private List<Dictionary<string, object>> shop_Table;
-    private List<Dictionary<string, object>> deckList;
+    private List<Dictionary<string, object>> _battler_Table;
+    private List<Dictionary<string, object>> _timeRate_Table;
+    private List<Dictionary<string, object>> _language_Table;
+    private List<Dictionary<string, object>> _research_Table;
+    private List<Dictionary<string, object>> _scriptsMalpongsun_Table;
+    private List<Dictionary<string, object>> _buff_Table;
+    private List<Dictionary<string, object>> _shop_Table;
+    private List<Dictionary<string, object>> _deckList;
 
-    public List<Dictionary<string, object>> Battler_Table { get => battler_Table; }
-    public List<Dictionary<string, object>> TimeRate_Table { get => timeRate_Table; }
-    public List<Dictionary<string, object>> Language_Table { get => language_Table; }
-    public List<Dictionary<string, object>> Research_Table { get => research_Table; }
-    public List<Dictionary<string, object>> ScriptsMalpongsun_Table { get => scriptsMalpongsun_Table; }
-    public List<Dictionary<string, object>> Shop_Table { get => shop_Table; }
-    public List<Dictionary<string, object>> Deck_Table { get => deckList; }
+    public List<Dictionary<string, object>> battler_Table { get => _battler_Table; }
+    public List<Dictionary<string, object>> timeRate_Table { get => _timeRate_Table; }
+    public List<Dictionary<string, object>> language_Table { get => _language_Table; }
+    public List<Dictionary<string, object>> research_Table { get => _research_Table; }
+    public List<Dictionary<string, object>> scriptsMalpongsun_Table { get => _scriptsMalpongsun_Table; }
+    public List<Dictionary<string, object>> shop_Table { get => _shop_Table; }
+    public List<Dictionary<string, object>> deck_Table { get => _deckList; }
 
     public List<int> tileCard_Indexs { get; private set; }
     public List<int> monsterCard_Indexs { get; private set; }
@@ -38,38 +38,28 @@ public class DataManager : Singleton<DataManager>
     #endregion
 
     #region StageData
-    private List<Dictionary<string, object>> wave_Table;
-    private List<Dictionary<string, object>> scripts_Table;
-    private List<Dictionary<string, object>> quest_Table;
-    private List<Dictionary<string, object>> questMessage_Table;
-    private List<Dictionary<string, object>> start_deckTable;
+    private List<Dictionary<string, object>> _wave_Table;
+    private List<Dictionary<string, object>> _scripts_Table;
+    private List<Dictionary<string, object>> _quest_Table;
+    private List<Dictionary<string, object>> _questMessage_Table;
+    private List<Dictionary<string, object>> _start_deckTable;
+    private List<Dictionary<string, object>> _hiddenTile_Table;
 
-
-    public List<Dictionary<string, object>> Wave_Table { get => wave_Table; }
-    public List<Dictionary<string, object>> Quest_Table { get => quest_Table; }
-    public List<Dictionary<string, object>> QuestMessage_Table { get => questMessage_Table; }
-    public List<Dictionary<string, object>> Start_deckTable { get => start_deckTable; }
-    public List<Dictionary<string, object>> Scripts_Table { get => scripts_Table; }
+    public List<Dictionary<string, object>> wave_Table { get => _wave_Table; }
+    public List<Dictionary<string, object>> quest_Table { get => _quest_Table; }
+    public List<Dictionary<string, object>> questMessage_Table { get => _questMessage_Table; }
+    public List<Dictionary<string, object>> start_deckTable { get => _start_deckTable; }
+    public List<Dictionary<string, object>> scripts_Table { get => _scripts_Table; }
+    public List<Dictionary<string, object>> hiddenTile_Table { get => _hiddenTile_Table; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
-    private Dictionary<int, List<WaveData>> waveLevelTable = null;
+    public Dictionary<int, List<WaveData>> waveLevelTable { get; private set; }
     #endregion
-
-    public Dictionary<int, List<WaveData>> WaveLevelTable
-    {
-        get
-        {
-            if (waveLevelTable == null)
-                InitLevelTable();
-
-            return waveLevelTable;
-        }
-    }
 
     private void InitLevelTable()
     {
         waveLevelTable = new Dictionary<int, List<WaveData>>();
-        foreach (Dictionary<string, object> data in wave_Table)
+        foreach (Dictionary<string, object> data in _wave_Table)
         {
             int level = Convert.ToInt32(data["level"]);
             string adventurerName = data["enemy"].ToString();
@@ -84,7 +74,7 @@ public class DataManager : Singleton<DataManager>
     private void InitScripts()
     {
         scriptsDic = new Dictionary<string, List<Dictionary<string, object>>>();
-        foreach (Dictionary<string, object> script in scripts_Table)
+        foreach (Dictionary<string, object> script in _scripts_Table)
         {
             string id = script["id"].ToString();
             if (!scriptsDic.ContainsKey(id))
@@ -144,7 +134,7 @@ public class DataManager : Singleton<DataManager>
             if(sortedBuffTable == null)
             {
                 sortedBuffTable = new Dictionary<int, Dictionary<char, Dictionary<string, object>>>();
-                foreach (Dictionary<string, object> value in buff_Table)
+                foreach (Dictionary<string, object> value in _buff_Table)
                 {
                     string[] split = value["id"].ToString().Split('_');
                     int loop = Convert.ToInt32(split[0]);
@@ -161,17 +151,17 @@ public class DataManager : Singleton<DataManager>
 
     public Dictionary<string, object> GetMalpoongsunScript(string id)
     {
-        int index = UtilHelper.Find_Data_Index(id, scriptsMalpongsun_Table, "id");
+        int index = UtilHelper.Find_Data_Index(id, _scriptsMalpongsun_Table, "id");
         if (index == -1)
             return null;
 
-        return scriptsMalpongsun_Table[index];
+        return _scriptsMalpongsun_Table[index];
     }
 
     private void SortShopList()
     {
         shopListDic = new Dictionary<string, Dictionary<string, object>>();
-        foreach (var item in shop_Table)
+        foreach (var item in _shop_Table)
             shopListDic.Add(item["id"].ToString(), item);
     }
 
@@ -189,80 +179,82 @@ public class DataManager : Singleton<DataManager>
 
         deckListIndex = new Dictionary<string, int>();
 
-        for (int i = 0; i < deckList.Count; i++)
+        for (int i = 0; i < _deckList.Count; i++)
         {
-            if (string.IsNullOrEmpty(deckList[i]["prefab"].ToString()))
+            if (string.IsNullOrEmpty(_deckList[i]["prefab"].ToString()))
                 continue;
 
-            if (deckList[i]["cardtype"].ToString() == "tile")
+            if (_deckList[i]["cardtype"].ToString() == "tile")
                 tileCard_Indexs.Add(i);
-            if (deckList[i]["cardtype"].ToString() == "monster")
+            if (_deckList[i]["cardtype"].ToString() == "monster")
                 monsterCard_Indexs.Add(i);
-            if (deckList[i]["cardtype"].ToString() == "trap")
+            if (_deckList[i]["cardtype"].ToString() == "trap")
                 trapCard_Indexs.Add(i);
 
-            if (deckList[i]["type"].ToString() == "road")
+            if (_deckList[i]["type"].ToString() == "road")
                 pathCard_Indexs.Add(i);
-            if (deckList[i]["type"].ToString() == "room")
+            if (_deckList[i]["type"].ToString() == "room")
                 roomCard_Indexs.Add(i);
-            if (deckList[i]["type"].ToString() == "roomPart")
+            if (_deckList[i]["type"].ToString() == "roomPart")
                 roomPartCard_Index.Add(i);
-            if (deckList[i]["type"].ToString() == "environment")
+            if (_deckList[i]["type"].ToString() == "environment")
                 environmentCard_Indexs.Add(i);
-            if (deckList[i]["type"].ToString() == "herb")
+            if (_deckList[i]["type"].ToString() == "herb")
                 herbCard_Indexs.Add(i);
 
-            deckListIndex.Add(deckList[i]["id"].ToString(), i);
+            deckListIndex.Add(_deckList[i]["id"].ToString(), i);
         }
     }
 
     private void SortLanguageList()
     {
         languageDic = new Dictionary<string, Dictionary<string, object>>();
-        foreach (var item in language_Table)
+        foreach (var item in _language_Table)
             languageDic.Add(item["id"].ToString(), item);
     }
 
     // csv파일 주소(Resource폴더 내)
-    private readonly string wave_Table_DataPath = "Data/waveData";
+    //private readonly string wave_Table_DataPath = "Data/waveData";
     private readonly string deckList_DataPath = "Data/deckList";
     private readonly string battler_Table_DataPath = "Data/battlerTable";
-    private readonly string timeRate_Table_DataPath = "Data/timeData";
+    //private readonly string timeRate_Table_DataPath = "Data/timeData";
     private readonly string language_Table_DataPath = "Data/languageData";
-    private readonly string scripts_Table_DataPath = "Data/scriptData";
+    //private readonly string scripts_Table_DataPath = "Data/scriptData";
     private readonly string buff_Table_DataPath = "Data/buffData";
     private readonly string research_Table_DataPath = "Data/researchData";
     private readonly string scriptsMalpongsun_Table_DataPath = "Data/scriptMalpongsunData";
-    private readonly string quest_Table_DataPath = "Data/questData";
-    private readonly string questMessage_Table_DataPath = "Data/questMessageData";
+    //private readonly string quest_Table_DataPath = "Data/questData";
+    //private readonly string questMessage_Table_DataPath = "Data/questMessageData";
     private readonly string shop_Table_DataPath = "Data/shopListData";
 
-    public void SetStageData(TextAsset waveData, TextAsset deckListData, TextAsset scriptData, TextAsset questData, TextAsset questMessageData)
+    public void SetStageData(TextAsset waveData, TextAsset timeRateData, TextAsset deckListData, TextAsset scriptData, TextAsset questData, TextAsset questMessageData, TextAsset hiddenTileData)
     {
-        wave_Table = CSVLoader.LoadCSV(waveData);
-        start_deckTable = CSVLoader.LoadCSV(deckListData);
-        scripts_Table = CSVLoader.LoadCSV(scriptData);
-        quest_Table = CSVLoader.LoadCSV(questData);
-        questMessage_Table = CSVLoader.LoadCSV(questMessageData);
+        _wave_Table = CSVLoader.LoadCSV(waveData);
+        _timeRate_Table = CSVLoader.LoadCSV(timeRateData);
+        _start_deckTable = CSVLoader.LoadCSV(deckListData);
+        _scripts_Table = CSVLoader.LoadCSV(scriptData);
+        _quest_Table = CSVLoader.LoadCSV(questData);
+        _questMessage_Table = CSVLoader.LoadCSV(questMessageData);
 
         InitLevelTable();
+        InitScripts();
     }
 
     private void Init()
     {
         // csv파일 불러오는 함수
-        wave_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(wave_Table_DataPath));
-        deckList = CSVLoader.LoadCSV(Resources.Load<TextAsset>(deckList_DataPath));
-        battler_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(battler_Table_DataPath));
-        timeRate_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(timeRate_Table_DataPath));
-        language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
-        scripts_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scripts_Table_DataPath));
-        buff_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(buff_Table_DataPath));
-        research_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(research_Table_DataPath));
-        scriptsMalpongsun_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scriptsMalpongsun_Table_DataPath));
-        quest_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(quest_Table_DataPath));
-        questMessage_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(questMessage_Table_DataPath));
-        shop_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(shop_Table_DataPath));
+        //wave_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(wave_Table_DataPath));
+        _deckList = CSVLoader.LoadCSV(Resources.Load<TextAsset>(deckList_DataPath));
+        _battler_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(battler_Table_DataPath));
+        //timeRate_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(timeRate_Table_DataPath));
+        _language_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(language_Table_DataPath));
+        //scripts_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scripts_Table_DataPath));
+        _buff_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(buff_Table_DataPath));
+        _research_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(research_Table_DataPath));
+        _scriptsMalpongsun_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(scriptsMalpongsun_Table_DataPath));
+        //quest_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(quest_Table_DataPath));
+        //questMessage_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(questMessage_Table_DataPath));
+        _shop_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(shop_Table_DataPath));
 
         SortDeckList();
         SortShopList();

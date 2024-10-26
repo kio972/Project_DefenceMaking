@@ -40,7 +40,7 @@ public class QuestController : MonoBehaviour
             if(questDic == null)
             {
                 questDic = new Dictionary<int, List<Dictionary<string, object>>>();
-                foreach (Dictionary<string, object> data in DataManager.Instance.Quest_Table)
+                foreach (Dictionary<string, object> data in DataManager.Instance.quest_Table)
                 {
                     int index;
                     if(int.TryParse(data["ID"].ToString().Replace("q", ""), out index))

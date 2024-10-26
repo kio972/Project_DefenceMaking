@@ -41,8 +41,8 @@ public class NextWaveInfo : MonoBehaviour
         Dictionary<string, CardGrade> waveGrade = new Dictionary<string, CardGrade>();
         foreach (WaveData wave in waveData)
         {
-            int index = UtilHelper.Find_Data_Index(wave.adventurerName, DataManager.Instance.Battler_Table, "name");
-            string type = DataManager.Instance.Battler_Table[index]["type"].ToString();
+            int index = UtilHelper.Find_Data_Index(wave.adventurerName, DataManager.Instance.battler_Table, "name");
+            string type = DataManager.Instance.battler_Table[index]["type"].ToString();
 
             if (!waveCounts.ContainsKey(type))
             {
@@ -52,7 +52,7 @@ public class NextWaveInfo : MonoBehaviour
             }
 
             waveCounts[type] += wave.number; //같은 종류의 모험가수 합산
-            if (System.Enum.TryParse(DataManager.Instance.Battler_Table[index]["rate"].ToString(), out CardGrade grade))
+            if (System.Enum.TryParse(DataManager.Instance.battler_Table[index]["rate"].ToString(), out CardGrade grade))
             {
                 if ((int)grade > (int)waveGrade[type]) //등급이 높은 모험가를 대상 모험가로 지정
                 {
@@ -72,10 +72,10 @@ public class NextWaveInfo : MonoBehaviour
     private bool UpdateWaveInfo()
     {
         int nextWave = GameManager.Instance.CurWave + 1;
-        if (nextWave < 0 || nextWave >= DataManager.Instance.WaveLevelTable.Count)
+        if (nextWave < 0 || nextWave >= DataManager.Instance.waveLevelTable.Count)
             return false;
 
-        List<WaveData> waveData = waveData = new List<WaveData>(DataManager.Instance.WaveLevelTable[nextWave]);
+        List<WaveData> waveData = waveData = new List<WaveData>(DataManager.Instance.waveLevelTable[nextWave]);
         if (waveData.Count <= 0)
             return false;
 

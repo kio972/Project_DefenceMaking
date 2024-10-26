@@ -70,9 +70,9 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
 
     public void SpawnTrap(string trapName, TileNode targetTile, string key = "name", int startDuration = 0)
     {
-        int trapIndex = UtilHelper.Find_Data_Index(trapName, DataManager.Instance.Battler_Table, key);
-        string prefab = DataManager.Instance.Battler_Table[trapIndex]["prefab"].ToString();
-        string trapId = DataManager.Instance.Battler_Table[trapIndex]["id"].ToString();
+        int trapIndex = UtilHelper.Find_Data_Index(trapName, DataManager.Instance.battler_Table, key);
+        string prefab = DataManager.Instance.battler_Table[trapIndex]["prefab"].ToString();
+        string trapId = DataManager.Instance.battler_Table[trapIndex]["id"].ToString();
 
         Trap trap = GetTrapInPool(trapId);
 
@@ -100,9 +100,9 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
 
     public Monster SpawnMonster(string monsterName, TileNode startTile, string key = "name")
     {
-        int monsterIndex = UtilHelper.Find_Data_Index(monsterName, DataManager.Instance.Battler_Table, key);
-        string prefab = DataManager.Instance.Battler_Table[monsterIndex]["prefab"].ToString();
-        string monsterId = DataManager.Instance.Battler_Table[monsterIndex]["id"].ToString();
+        int monsterIndex = UtilHelper.Find_Data_Index(monsterName, DataManager.Instance.battler_Table, key);
+        string prefab = DataManager.Instance.battler_Table[monsterIndex]["prefab"].ToString();
+        string monsterId = DataManager.Instance.battler_Table[monsterIndex]["id"].ToString();
 
         Monster monster = GetMonsterInPool(monsterId);
 
@@ -137,11 +137,11 @@ public class BattlerPooling : IngameSingleton<BattlerPooling>
         //2. 1번의 타겟이 존재한다면 Init시켜주고, SetActive(true)
         //3. 존재하지 않는다면 새로 Instantiate
 
-        int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.Battler_Table, key);
+        int adventurerIndex = UtilHelper.Find_Data_Index(adventurerName, DataManager.Instance.battler_Table, key);
         if (adventurerIndex == -1)
             return null;
-        string prefab = DataManager.Instance.Battler_Table[adventurerIndex]["prefab"].ToString();
-        string adventurerId = DataManager.Instance.Battler_Table[adventurerIndex]["id"].ToString();
+        string prefab = DataManager.Instance.battler_Table[adventurerIndex]["prefab"].ToString();
+        string adventurerId = DataManager.Instance.battler_Table[adventurerIndex]["id"].ToString();
 
         Adventurer adventurer = GetAdventurerInPool(adventurerId);
 

@@ -51,7 +51,7 @@ public class GameManager : IngameSingleton<GameManager>
         get
         {
             int loopVal = curWave == -1 ? 1 : 0;
-            return (loop * DataManager.Instance.WaveLevelTable.Count) + curWave + loopVal;
+            return (loop * DataManager.Instance.waveLevelTable.Count) + curWave + loopVal;
         }
     }
 
@@ -308,7 +308,7 @@ public class GameManager : IngameSingleton<GameManager>
         //    return;
         //}
 
-        float.TryParse(DataManager.Instance.TimeRate_Table[wave]["time magnification"].ToString(), out defaultSpeed);
+        float.TryParse(DataManager.Instance.timeRate_Table[wave]["time magnification"].ToString(), out defaultSpeed);
         defaultSpeed = defaultSpeed / 60f;
     }
 

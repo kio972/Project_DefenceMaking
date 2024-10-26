@@ -140,7 +140,7 @@ public class QuestManager : IngameSingleton<QuestManager>
         if (initState)
             return;
         initState = true;
-        foreach (Dictionary<string, object> data in DataManager.Instance.QuestMessage_Table)
+        foreach (Dictionary<string, object> data in DataManager.Instance.questMessage_Table)
         {
             questMsgDic.Add(data["ID"].ToString(), data);
             if (autoEnqueue && (data["Condition"].ToString() is "-" or "custom"))

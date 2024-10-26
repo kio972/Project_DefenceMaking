@@ -60,17 +60,17 @@ public class WaveController : MonoBehaviour
         //key값이 "level"인 인덱스를 찾고
         List<int> indexList = new List<int>();
 
-        for(int i = 0; i < DataManager.Instance.Wave_Table.Count; i++)
+        for(int i = 0; i < DataManager.Instance.wave_Table.Count; i++)
         {
-            if (Convert.ToInt32(DataManager.Instance.Wave_Table[i]["level"]) == waveIndex)
+            if (Convert.ToInt32(DataManager.Instance.wave_Table[i]["level"]) == waveIndex)
                 indexList.Add(i);
         }
 
         List<WaveData> curWave = new List<WaveData>();
         foreach(int i in indexList)
         {
-            string adventurerName = DataManager.Instance.Wave_Table[i]["adventure"].ToString();
-            int number = Convert.ToInt32(DataManager.Instance.Wave_Table[i]["num"]);
+            string adventurerName = DataManager.Instance.wave_Table[i]["adventure"].ToString();
+            int number = Convert.ToInt32(DataManager.Instance.wave_Table[i]["num"]);
             WaveData waveData = new WaveData(adventurerName, number);
             curWave.Add(waveData);
         }
@@ -132,14 +132,14 @@ public class WaveController : MonoBehaviour
     public void SpawnWave(int curWave)
     {
         List<WaveData> waveData = new List<WaveData>();
-        if (curWave >= 0 && curWave < DataManager.Instance.WaveLevelTable.Count)
-            waveData = new List<WaveData>(DataManager.Instance.WaveLevelTable[curWave]);
+        if (curWave >= 0 && curWave < DataManager.Instance.waveLevelTable.Count)
+            waveData = new List<WaveData>(DataManager.Instance.waveLevelTable[curWave]);
 
         CalculateWaves(waveData);
         if (curWaves.Count == 0)
             return;
 
-        if (curWave + 1 >= DataManager.Instance.WaveLevelTable.Count)
+        if (curWave + 1 >= DataManager.Instance.waveLevelTable.Count)
             StartCoroutine(ISpawnWave(curWave, () => { GameManager.Instance.AllWaveSpawned = true; }));
         else
             StartCoroutine(ISpawnWave(curWave));

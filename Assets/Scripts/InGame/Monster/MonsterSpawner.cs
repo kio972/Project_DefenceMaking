@@ -29,7 +29,7 @@ public class MonsterSpawner : MonoBehaviour
         get
         {
             string key = targetName.Split('_')[0];
-            string number = DataManager.Instance.Battler_Table[monsterIndex]["id"].ToString();
+            string number = DataManager.Instance.battler_Table[monsterIndex]["id"].ToString();
             number = number[number.Length - 1].ToString();
             return key + number;
         }
@@ -51,7 +51,7 @@ public class MonsterSpawner : MonoBehaviour
 
     public void UpdatePassive()
     {
-        Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
+        Dictionary<string, object> data = DataManager.Instance.battler_Table[monsterIndex];
         this.requiredMana = Convert.ToInt32(data["requiredMagicpower"]);
         this.spawnCoolTime = Convert.ToInt32(data["duration"]);
         
@@ -76,8 +76,8 @@ public class MonsterSpawner : MonoBehaviour
         this.targetName = targetName;
         curNode.curTile.AddSpawner(this);
 
-        monsterIndex = UtilHelper.Find_Data_Index(targetName, DataManager.Instance.Battler_Table, "name");
-        Dictionary<string, object> data = DataManager.Instance.Battler_Table[monsterIndex];
+        monsterIndex = UtilHelper.Find_Data_Index(targetName, DataManager.Instance.battler_Table, "name");
+        Dictionary<string, object> data = DataManager.Instance.battler_Table[monsterIndex];
         Sprite illur = SpriteList.Instance.LoadSprite(data["prefab"].ToString() + "_Spawner");
         if(bgImg != null)
             bgImg.sprite = illur;

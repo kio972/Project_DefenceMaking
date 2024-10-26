@@ -5,17 +5,6 @@ using UnityEngine;
 
 public class Stage0_Story : MonoBehaviour
 {
-    [SerializeField]
-    private TextAsset _waveData;
-    [SerializeField]
-    private TextAsset _deckListData;
-    [SerializeField]
-    private TextAsset _scriptData;
-    [SerializeField]
-    private TextAsset _questData;
-    [SerializeField]
-    private TextAsset _questMessageData;
-
     private readonly string _Entry0 = "Tuto000";
     private readonly string _Entry1 = "Tuto001";
     private readonly string _Entry2 = "Tuto002";

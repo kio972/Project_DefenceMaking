@@ -118,8 +118,8 @@ public class ShopUI : MonoBehaviour
         {
             if (data.itemsData[i].id != -1)
             {
-                object target = DataManager.Instance.Deck_Table[data.itemsData[i].id]["text_name"];
-                itemSlots[i].SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.Deck_Table[data.itemsData[i].id]["prefab"].ToString()), DataManager.Instance.GetDescription(target.ToString()));
+                object target = DataManager.Instance.deck_Table[data.itemsData[i].id]["text_name"];
+                itemSlots[i].SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[data.itemsData[i].id]["prefab"].ToString()), DataManager.Instance.GetDescription(target.ToString()));
             }
 
             itemSlots[i]._CurPrice = data.itemsData[i].curVal;

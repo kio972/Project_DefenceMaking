@@ -69,14 +69,14 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
         string targetGrade = isSuperial ? "rare" : "normal";
         foreach(int herb in DataManager.Instance.herbCard_Indexs)
         {
-            if (DataManager.Instance.Deck_Table[herb]["grade"].ToString() == targetGrade)
+            if (DataManager.Instance.deck_Table[herb]["grade"].ToString() == targetGrade)
                 targets.Add(herb);
         }
 
         for(int i = 0; i < number; i++)
         {
             int cardIndex = GetRandomIndex(targets);
-            curCards.Add(new Card(DataManager.Instance.Deck_Table[cardIndex], cardIndex));
+            curCards.Add(new Card(DataManager.Instance.deck_Table[cardIndex], cardIndex));
         }
 
         //_ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.Deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));

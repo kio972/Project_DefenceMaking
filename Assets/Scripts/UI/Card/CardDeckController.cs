@@ -346,7 +346,7 @@ public class CardDeckController : MonoBehaviour
     private Card ReturnDeck(int target)
     {
         cardDeck.Remove(target);
-        Card card = new Card(DataManager.Instance.Deck_Table[target], target);
+        Card card = new Card(DataManager.Instance.deck_Table[target], target);
         return card;
     }
 
@@ -521,14 +521,14 @@ public class CardDeckController : MonoBehaviour
     private void SetDeck()
     {
         cardDeck = new List<int>();
-        for(int i = 0; i < DataManager.Instance.Deck_Table.Count; i++)
+        for(int i = 0; i < DataManager.Instance.deck_Table.Count; i++)
         {
-            Card cardCheck = new Card(DataManager.Instance.Deck_Table[i], i);
+            Card cardCheck = new Card(DataManager.Instance.deck_Table[i], i);
             GameObject cardPrefab = UtilHelper.GetCardPrefab(cardCheck.cardType, cardCheck.cardPrefabName);
             if (cardPrefab == null)
                 continue;
 
-            int cardNumber = Convert.ToInt32(DataManager.Instance.Deck_Table[i]["startNumber"]);
+            int cardNumber = Convert.ToInt32(DataManager.Instance.deck_Table[i]["startNumber"]);
             for (int j = 0; j < cardNumber; j++)
                 cardDeck.Add(i);
         }

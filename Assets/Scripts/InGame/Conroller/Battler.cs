@@ -676,25 +676,25 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     protected virtual void InitStats(int index)
     {
-        _name = DataManager.Instance.Battler_Table[index]["name"].ToString();
-        maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["hp"]);
+        _name = DataManager.Instance.battler_Table[index]["name"].ToString();
+        maxHp = Convert.ToInt32(DataManager.Instance.battler_Table[index]["hp"]);
         curHp = maxHp;
         shield = 0;
-        minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMin"]);
-        maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMax"]);
+        minDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["attackPowerMin"]);
+        maxDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["attackPowerMax"]);
         float tempAttackSpeed = 1f;
-        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
+        float.TryParse(DataManager.Instance.battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
         attackSpeed = tempAttackSpeed;
-        armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
-        float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
+        armor = Convert.ToInt32(DataManager.Instance.battler_Table[index]["armor"]);
+        float.TryParse(DataManager.Instance.battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
-        if(float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange))
+        if(float.TryParse(DataManager.Instance.battler_Table[index]["attackRange"].ToString(), out attackRange))
             attackRange += UnityEngine.Random.Range(-0.01f, 0.01f);
 
-        float.TryParse(DataManager.Instance.Battler_Table[index]["splashRange"].ToString(), out splashRange);
+        float.TryParse(DataManager.Instance.battler_Table[index]["splashRange"].ToString(), out splashRange);
         if (splashRange > 0)
         {
-            splashDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["splashPower"]);
+            splashDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["splashPower"]);
             splashAttack = true;
         }
     }

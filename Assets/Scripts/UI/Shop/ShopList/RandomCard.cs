@@ -72,9 +72,9 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem
                 break;
         }
 
-        object target = DataManager.Instance.Deck_Table[targetIndex]["text_name"];
+        object target = DataManager.Instance.deck_Table[targetIndex]["text_name"];
         targetName.Clear();
         targetName.Append(target.ToString());
-        _ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.Deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));
+        _ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));
     }
 }

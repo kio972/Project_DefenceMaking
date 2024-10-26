@@ -90,7 +90,7 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
             cardIndexs.Add(GetRandomIndex(DataManager.Instance.environmentCard_Indexs));
 
         foreach (int cardIndex in cardIndexs)
-            curCards.Add(new Card(DataManager.Instance.Deck_Table[cardIndex], cardIndex));
+            curCards.Add(new Card(DataManager.Instance.deck_Table[cardIndex], cardIndex));
 
         curCards = UtilHelper.ShuffleList(curCards);
     }

@@ -16,8 +16,8 @@ public struct ResearchData
 
     public ResearchData(string id)
     {
-        researchIndex = UtilHelper.Find_Data_Index(id, DataManager.Instance.Research_Table, "id");
-        Dictionary<string, object> data = DataManager.Instance.Research_Table[researchIndex];
+        researchIndex = UtilHelper.Find_Data_Index(id, DataManager.Instance.research_Table, "id");
+        Dictionary<string, object> data = DataManager.Instance.research_Table[researchIndex];
 
         researchName = data["Name"].ToString();
         researchDesc = data["Content"].ToString();

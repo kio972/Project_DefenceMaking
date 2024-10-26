@@ -235,7 +235,7 @@ public class MapBuilder : MonoBehaviour
         if (isRoom == 1)
             index = DataManager.Instance.roomCard_Indexs[Random.Range(0, DataManager.Instance.roomCard_Indexs.Count)];
 
-        string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+        string prefabName = DataManager.Instance.deck_Table[index]["prefab"].ToString();
 
         GameObject targetTilePrefab = Resources.Load<GameObject>("Prefab/Tile/" + prefabName);
         if (targetTilePrefab != null)
@@ -251,7 +251,7 @@ public class MapBuilder : MonoBehaviour
         if(isRoom == 1)
             index = DataManager.Instance.roomCard_Indexs[Random.Range(0, DataManager.Instance.roomCard_Indexs.Count)];
 
-        string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+        string prefabName = DataManager.Instance.deck_Table[index]["prefab"].ToString();
 
         Tile targetTilePrefab = Resources.Load<Tile>("Prefab/Tile/" + prefabName);
         if(targetTilePrefab == null)

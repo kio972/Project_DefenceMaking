@@ -2395,6 +2395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 752236460}
   - component: {fileID: 752236461}
+  - component: {fileID: 752236462}
   m_Layer: 0
   m_Name: MapStart
   m_TagString: Untagged
@@ -2429,6 +2430,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d454331d85af5d4dbaa0fa736fb780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &752236462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752236459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91d3b4b5c7eefe4cac6d2d4008eea55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waveData: {fileID: 4900000, guid: bc1f3db02528eb849944850426a7d96f, type: 3}
+  _deckListData: {fileID: 4900000, guid: d0cb0c8b8f99dee43ab08d8fc770ed74, type: 3}
+  _scriptData: {fileID: 4900000, guid: 9d7903450659061479c6da1e78df1a31, type: 3}
+  _questData: {fileID: 4900000, guid: e4e962c1378032e41b5b2687a2750e8f, type: 3}
+  _questMessageData: {fileID: 4900000, guid: 150524e96fb21a248b87c788817621e0, type: 3}
 --- !u!1 &887567697
 GameObject:
   m_ObjectHideFlags: 0

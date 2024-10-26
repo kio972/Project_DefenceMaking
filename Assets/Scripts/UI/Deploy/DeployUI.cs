@@ -113,7 +113,7 @@ public class DeployUI : MonoBehaviour
 
     private bool HaveMana(CompleteRoom room, out int outMana)
     {
-        Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.Battler_Table, "name")];
+        Dictionary<string, object> data = DataManager.Instance.battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.battler_Table, "name")];
         int requireMana = Convert.ToInt32(data["requiredMagicpower"]);
         MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
         requireMana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
@@ -324,7 +324,7 @@ public class DeployUI : MonoBehaviour
         foreach (DeploySlot slot in deployItems)
             slot.gameObject.SetActive(false);
 
-        foreach (Dictionary<string, object> data in DataManager.Instance.Battler_Table)
+        foreach (Dictionary<string, object> data in DataManager.Instance.battler_Table)
         {
             if (string.IsNullOrEmpty(data["prefab"].ToString()))
                 continue;
