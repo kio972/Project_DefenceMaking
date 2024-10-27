@@ -71,6 +71,7 @@ public class InputManager : IngameSingleton<InputManager>
             TileNode node = UtilHelper.RayCastTile();
             if (node != null && node.curTile != null)
             {
+                node.curTile.OnClick();
                 ClickTile(node.curTile);
                 AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
             }
