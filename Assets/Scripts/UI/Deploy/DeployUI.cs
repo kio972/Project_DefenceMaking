@@ -224,7 +224,7 @@ public class DeployUI : MonoBehaviour
         if (unitType is CardType.Monster or CardType.Spawner)
         {
             Monster monster = guideObject.GetComponent<Monster>();
-            monster.SetRotation();
+            monster?.SetRotation();
         }
 
         curObject = guideObject;

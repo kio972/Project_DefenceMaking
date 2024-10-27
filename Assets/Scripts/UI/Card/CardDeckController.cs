@@ -521,16 +521,21 @@ public class CardDeckController : MonoBehaviour
     private void SetDeck()
     {
         cardDeck = new List<int>();
-        for(int i = 0; i < DataManager.Instance.deck_Table.Count; i++)
+        foreach(var data in DataManager.Instance.start_deckTable)
         {
-            Card cardCheck = new Card(DataManager.Instance.deck_Table[i], i);
+            int cardNumber = Convert.ToInt32(data["startNumber"]);
+            if (cardNumber == 0)
+                continue;
+
+            int index = DataManager.Instance.deckListIndex[data["id"].ToString()];
+
+            Card cardCheck = new Card(DataManager.Instance.deck_Table[index], index);
             GameObject cardPrefab = UtilHelper.GetCardPrefab(cardCheck.cardType, cardCheck.cardPrefabName);
             if (cardPrefab == null)
                 continue;
 
-            int cardNumber = Convert.ToInt32(DataManager.Instance.deck_Table[i]["startNumber"]);
             for (int j = 0; j < cardNumber; j++)
-                cardDeck.Add(i);
+                cardDeck.Add(index);
         }
     }
 
