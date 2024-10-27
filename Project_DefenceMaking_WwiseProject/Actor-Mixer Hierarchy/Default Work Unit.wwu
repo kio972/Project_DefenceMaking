@@ -1,6 +1,941 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{AEEB4062-0C31-47FB-B63F-951342C02777}" SchemaVersion="119">
 	<AudioObjects>
-		<WorkUnit Name="Default Work Unit" ID="{AEEB4062-0C31-47FB-B63F-951342C02777}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{AEEB4062-0C31-47FB-B63F-951342C02777}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="Blue_Attack" ID="{EC5BCCF1-122C-4F11-B51C-117D80A3E43A}" ShortID="647241443">
+					<PropertyList>
+						<Property Name="Pitch" Type="int32">
+							<ValueList>
+								<Value>10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Attack_Mimic_1" ID="{E9FFA0D4-25EB-4CD0-B117-CA244568ED64}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="814039165"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Mimic_2" ID="{5B4839DE-860B-412A-A6A4-847C2A264F30}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="429787325"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Mimic_3" ID="{51151698-2506-4C43-923F-29EC9ED496D3}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1059749253"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Mimic_4" ID="{6B6B1FB5-26F0-48F1-BF60-3F424B290A79}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_4.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="214310157"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_slime_1" ID="{CACC6AAB-18BA-4E0F-878A-7E183A58CB1F}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_slime_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1034664849"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_slime_2" ID="{3F5877CD-7DAF-440D-8C2E-776894C362A3}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_slime_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="302101275"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_slime_3" ID="{6EEF6D9B-CBBB-40A3-8AC4-5765259ED2E1}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_slime_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="206087936"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_StoneGolem_1" ID="{ED374EFF-6E9B-4F0A-8FEE-2E9DE2481787}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="687693806"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_StoneGolem_2" ID="{FA6CF4E4-92D0-4191-BD37-025375A41A0B}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="204957617"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_StoneGolem_3" ID="{E56D94D1-A8C4-46EE-8294-779FA48F73E8}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="292140083"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_StoneGolem_4" ID="{EA6E7606-F649-4466-942A-AC262FD3A4C0}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_4.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="647783814"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Trap_A_1" ID="{1E033AA0-F51A-4866-B116-A5781BF8E612}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1007309864"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Trap_A_2" ID="{9F6E1B64-01ED-4D6E-94D8-3C517D95CC9C}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="830176880"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Trap_A_3" ID="{64A26A56-1475-4C42-9B7F-D7A8623F8026}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="772774625"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Attack_Trap_A_4" ID="{6156196C-4F75-4599-BAA2-421E4369820E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_4.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="358418718"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="attack_trap_B_A" ID="{3190A4B2-9E8E-453F-BFEF-C4D449C13847}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\attack_trap_B_A.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="899887520"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="attack_trap_B_B" ID="{78BCCA9A-443D-46BB-B749-DE172D1675A4}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\attack_trap_B_B.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="804715862"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="attack_trap_C_01" ID="{F6AAEC4A-5586-4272-939D-C1E2B98FC621}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\attack_trap_C_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="839393464"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Blue_Attack_01" ID="{7EBB4B05-A23B-424E-9DF6-F1819422C39E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1062015631"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Blue_Attack_02" ID="{046AE32C-F3C6-478C-8192-B0A9A59DAAAF}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="317685592"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Blue_Attack_03" ID="{24CC16FF-A799-4C97-844A-0D4C4EB870CF}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1042784421"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Blue_Attack_04" ID="{829F40A4-3CB9-4686-AEBD-7193AD3C961A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="527658891"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Boss_Attack_1" ID="{D499A2B2-C15F-4135-AD3D-F27A0DBE5C2A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="268701896"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Boss_Attack_2" ID="{AEAC6B6E-C435-47C1-B5E1-03188B2D2C32}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="934822932"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Boss_Attack_3" ID="{FD76C654-335D-42A7-A6B3-C52980E6E80D}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1014626425"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Boss_Attack_4" ID="{798F0127-7A3F-44DA-8E80-6D875839B789}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_4.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="23287247"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Boss_Attack_5" ID="{3DEE7444-5A30-42E8-BCD1-2C20F0DDEBE8}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_5.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="802321252"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Boss_Attack_6" ID="{795FE541-80D6-4AAF-A43E-FED78794A0E4}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_6.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="864828636"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Bow_Attack_1" ID="{8940F36E-BA07-4247-B8AD-34F83F8BD18C}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="334509457"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Bow_Attack_2" ID="{27AEBBBD-0277-435C-AC47-7EC3E70D3C6F}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="57288591"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Bow_Attack_3" ID="{32C8833B-A853-4840-80CD-0740426AE7A6}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="566017947"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Bow_Attack_4" ID="{3B37C8AC-1A12-44BF-AC99-C2E32E5A2052}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_4.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="801659901"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Bow_Attack_5" ID="{D6924CBE-043B-43F1-983A-CAB34C27A545}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_5.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="541346238"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Bow_Attack_6" ID="{CB0E7752-FE58-48AF-97FB-39F4E9CE17C8}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_6.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="791612428"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Goblin_1" ID="{2ED258C5-1B6F-4267-8C5B-8DF072A3FCFE}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Goblin_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="521920848"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Goblin_2" ID="{77F8AF41-E955-4BED-99F3-B93A4696E299}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Goblin_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="276987492"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Goblin_3" ID="{C2987EC4-60FC-447B-A959-100D7CD0AB74}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Goblin_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="864979988"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Mimic_1" ID="{A177369A-C89C-4357-8391-90B936475A2E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Mimic_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="366968059"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Mimic_2" ID="{A7AA92D2-728C-43FA-A7E7-9DE56C0C76F1}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Mimic_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="678540100"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Mimic_3" ID="{1E0DCB42-5785-4C4B-89C1-3DFA7B5AA678}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Mimic_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="706602841"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Slime_01" ID="{10B52B26-E4CA-451D-96B1-2A6253FF0484}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="389848744"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Slime_02" ID="{80F31C77-E7B3-449E-89D2-20287BEACA93}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="717215919"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Slime_03" ID="{6A4BD504-F45B-42C5-B30D-88192EA03EA3}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="798905109"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_Slime_04" ID="{2B9FA56B-9E55-4081-A9A7-1558F8D310F7}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="24769414"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_StoneGolem_01" ID="{AD18C41C-91B7-4D5F-9852-6F8021B959DF}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_StoneGolem_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="928994727"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Death_StoneGolem_02" ID="{ECA6EBE0-CA2F-494C-BD20-E1A6E7EED989}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Death_StoneGolem_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="989079363"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Defeat_icon_01" ID="{B49FC6E4-F035-4CDE-9392-9CE1E05769F4}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Defeat_icon_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="530046110"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Demon_Attack_A" ID="{1E1CE12B-F288-4892-8B81-B3CC99A71DBA}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Demon_Attack_A.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="32914987"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Demon_Attack_B" ID="{CA9202B7-4147-44AF-9409-2C162CE48D4B}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Demon_Attack_B.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="748118312"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Demon_Attack_C" ID="{B6215385-63F1-449D-A947-4A9DA8153686}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Demon_Attack_C.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="694581761"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Demon_Death_Layed" ID="{2C7A2957-7E45-47AB-B7A3-9B33F5DC49D5}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Demon_Death_Layed.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="682537168"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Demon_Death_Simple" ID="{244DCBFA-23A8-4FDA-80A9-4EEC4783681D}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Demon_Death_Simple.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="177515525"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="ESM_ACV_Vocals_male_pain_fatal_injury_bright_higher_pitch" ID="{AF80653E-DD95-4977-8114-83C1E08C2425}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\ESM_ACV_Vocals_male_pain_fatal_injury_bright_higher_pitch.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="904511644"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="ESM_ACV_Vocals_male_pain_light_injury_grunt_03" ID="{A56A7C15-34F1-40F3-ABC8-DA70652A22DD}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\ESM_ACV_Vocals_male_pain_light_injury_grunt_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="548106727"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="ESM_ACV_Vocals_male_pain_medium_heavy_damage_distressed_03" ID="{B783C223-EC60-47CF-979B-6B9C4FDC4EEF}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\ESM_ACV_Vocals_male_pain_medium_heavy_damage_distressed_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="978388835"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="FistHitDoor_ZA01_261" ID="{28968928-D46A-4667-B739-83440A2EBEDE}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\FistHitDoor_ZA01.261.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="910281137"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="FistHitDoor_ZA01_262" ID="{579346DA-E8F5-4886-AC4C-41145836A2A4}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\FistHitDoor_ZA01.262.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="72471963"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Ninja_Attack_1" ID="{1B09914F-FCD7-4B11-BF3A-5A5F065DCEAE}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="18172962"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Ninja_Attack_2" ID="{A184C6B3-7414-4C7B-A454-344EA75AEAA7}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="358453868"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Ninja_Attack_3" ID="{E52419FB-90C1-4635-B33A-AD7F5FBEA931}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="53029552"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Ninja_Attack_4" ID="{7228EE3C-7D3A-4D46-9A61-D44BAB8B1F4D}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_4.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="203122389"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Ninja_Attack_5" ID="{974D38D0-08CB-48BD-BF21-4959C2098CC6}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_5.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="311677868"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Purple_Attack_01" ID="{46729742-EACF-4337-9CA3-CBD5448BE0AA}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="311853606"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Purple_Attack_02" ID="{6D768BF7-5C88-4B39-B9B3-2F328169DEA4}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="328175843"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Purple_Attack_03" ID="{53727805-8CFE-4377-8ABE-50AD9F885F04}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="141217091"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Purple_Attack_04" ID="{61E2FF25-7D63-4F9E-A81F-6769A0C8B861}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="685401252"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Purple_Attack_05" ID="{EE344E1D-E64B-4532-8984-326AFFB37F25}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_05.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="370660564"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Purple_Attack_06" ID="{BD06AFE9-5869-44AB-9582-A740751FA1CE}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_06.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="29266210"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Bodyfall_01" ID="{28AC4B6D-1BB7-4E83-8859-7CE91A25A58A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Bodyfall_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="339991924"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Bodyfall_02" ID="{58D54592-0EF5-4628-80A9-FA54B4997238}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Bodyfall_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="417548550"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Bodyfall_03" ID="{11C4366C-729F-42C4-9BD1-5F4404696E11}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Bodyfall_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="417928998"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_FeMale_01" ID="{DC32A112-E5AF-44CD-BE7D-A55B698C0CC3}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="588136305"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_FeMale_02" ID="{17F0876D-E04B-4616-B22E-391F1A07CFF5}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="31546145"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_FeMale_03" ID="{EFD87C49-1D78-4B22-BA85-EB0105BC285C}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="444046635"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_FeMale_04" ID="{B3C100C2-72FA-4BD1-80DA-CCFA5BA8431A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="515509363"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_FeMale_05" ID="{F9AA1CD3-3E8C-471D-854A-B4A3C5E07A83}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_05.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="608542086"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Male_01" ID="{4D3A50E6-21CC-492F-91C3-B9FFE3A381E6}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="68263430"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Male_02" ID="{EE86F994-2EF8-4FD9-BB57-79F8C564B5AE}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="307143203"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Male_03" ID="{4EEA5761-C784-4AC1-8828-245AEC4C1251}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="422393216"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Male_04" ID="{8FC137A7-B2E9-4939-9923-E66671D3EFE2}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="62693893"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_death_Male_05" ID="{318BB002-0030-4F4A-8596-69B6E61A8A40}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_05.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="227165688"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_Spell_01" ID="{9F626B13-03D8-41FC-83FD-F1B51BE8A149}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="942004608"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_Spell_02" ID="{99FD059C-A4CB-4FCA-A051-270509F39144}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="919157309"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_Spell_03" ID="{EFF9FB86-D3A1-4600-85E9-68832E46725F}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="448759925"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Raider_Spell_04" ID="{A8EC5CF3-9830-45FC-AC36-328B32D923E8}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="427307433"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Summoned_goblin_01" ID="{8B6A48ED-7258-49D6-9AA0-360899310A74}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Summoned_goblin_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="241856485"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Summoned_Mimic_01" ID="{659643A0-0E5E-4329-B776-E95839CDD8D7}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Summoned_Mimic_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="512535478"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Summoned_slime_01" ID="{6B251565-7189-4057-9C88-7135A4EB5578}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Summoned_slime_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="724506159"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Summoned_Stonegolem_01" ID="{D89E781D-DE92-4918-9468-1BA0551B239E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Summoned_Stonegolem_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="832495152"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Sword_Attack_01" ID="{A254CB49-4DAC-4C0A-8BBF-C2BD0F5EE894}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="137180229"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Sword_Attack_02" ID="{D9851464-4F96-4BD1-ABB7-58EEC7092F28}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1070166207"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Sword_Attack_03" ID="{16AF8E68-B3F3-48BD-9893-B24603C628AB}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1022678959"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Sword_Attack_04" ID="{7E83FA1C-58AA-430A-A6EB-FF122B604FFE}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="512485381"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Victory_icon_01" ID="{619E3EF8-C9E5-4F42-BE74-0A592EC360C1}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\Object_Sound\Victory_icon_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="143610120"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Alert_time" ID="{8AB3D82B-2FF4-4056-A3F3-44B967DAC07F}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Alert_time.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="948726479"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Card_Tile_E" ID="{2232128B-8B62-489D-B307-764D9E0E0D0C}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Card_Tile_E.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="852640175"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Card_Tile_Q" ID="{0562884B-9BCB-43A6-BAB7-B15BD80295E5}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Card_Tile_Q.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="719849091"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Click_card_01" ID="{14B87DB7-B207-496B-9E63-76E3FD8D1AC5}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Click_card_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="304640450"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Click_tile_01" ID="{39FBEAE0-1307-403F-941D-1C0E2A5F3443}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Click_tile_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="246560223"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Complete_Tech" ID="{8454A1AC-4031-4E1F-A115-55691A96AF48}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Complete_Tech.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="165427303"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Hidden_tile_01" ID="{785D15C8-0366-40D5-A219-CEF6B6F94267}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Hidden_tile_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="189911624"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Hidden_tile_02" ID="{AC079603-374E-446B-AC59-CB1C9440C4DB}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Hidden_tile_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="862618640"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Hidden_tile_03" ID="{69DF6D51-D074-4A99-8CA3-D0CE1FD86E9E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Hidden_tile_03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="193079804"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Open_Store" ID="{7D63B251-2239-4A77-8CB3-41E0541B9FF9}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Open_Store.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="576348307"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quest_Paper_Burn_1" ID="{B62EB617-5F20-4C3E-B88F-0E302CDD8823}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Burn_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="145495737"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quest_Paper_Burn_2" ID="{F7B1931F-9834-4786-B417-90132CD5115A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Burn_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="35117451"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quest_Paper_Open_1" ID="{86E06FBB-29B8-42BA-9490-E48B7757687A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Open_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="505254956"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quest_Paper_Open_2" ID="{E46D4D24-A13E-45FD-9BC5-E6BE2418B29A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Open_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="629197326"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quest_Paper_Open_3" ID="{424A8226-2177-4394-849D-3CAF07A7B527}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Open_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1028839070"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Close_Failed_1" ID="{E494F20B-2A79-4E07-AAC1-FB45BDAEDF0E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Failed_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="319117382"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Close_Failed_2" ID="{1C17E1D6-AA4B-41C5-BBA4-8BF3E389AEF1}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Failed_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="437425014"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Close_Sussed_1" ID="{49B98174-6695-47D2-AA25-53BB4CC9A5BD}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Sussed_1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="457607963"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Close_Sussed_2" ID="{C87494DE-52F2-444D-9B74-C15B85381E62}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Sussed_2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="549030579"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Close_Sussed_3" ID="{C0E44EC7-2742-4749-ACE2-9B1E3B35847D}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Sussed_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="934287172"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Creat_01" ID="{F43B8821-3F60-4EF7-AF2D-643F7BC29D60}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Creat_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="536749135"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Quset_Creat_02" ID="{FF8110B9-060C-4914-BECC-DDAD7741507F}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Quset_Creat_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="210275174"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Recruit_Open_steel" ID="{254987F7-029E-4407-8346-F88AB9918189}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Recruit_Open_steel.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="22198623"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Recruit_Open_wood" ID="{544D1B4D-294D-4D3D-9196-2123FCDBD49B}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Recruit_Open_wood.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="978787827"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Set_trap_01" ID="{30891E7B-9A13-4540-8A9D-CED5A45AFDC3}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Set_trap_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="856674717"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Set_trap_02" ID="{A49F633B-FF53-4B58-9DBE-40E1944BF2C2}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Set_trap_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="101270978"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Tech_research_Close" ID="{6EA9479C-D5A5-46A8-B89D-884DA112B8EB}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Close.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="87113873"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Tech_research_Fail-PitchII_02" ID="{BA19D156-154A-4A77-A8C7-FCD252BF67CF}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Fail-PitchII_02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="741335801"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Tech_research_Fail_01" ID="{D3066F9E-4360-4FBF-B7A9-30157854AA8E}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Fail_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="672317067"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Tech_research_Open" ID="{F0D2AE8C-2E0F-498B-8247-BD025AF493DC}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Open.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="356757889"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="Time_Over_CruchBell-01" ID="{5EA58C94-4AC1-4A41-9041-83225F64F0F3}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\Time_Over_CruchBell-01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="983595184"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="UI_Click_01" ID="{A92F9A6C-BDAF-4021-9568-F25E3BA55C1D}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\UI_Click_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="378400303"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="UI_Click_DownPitch_01" ID="{244D128F-FAEA-4F01-8198-DDE69B541532}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\UI_Click_DownPitch_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="592689357"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="UI_MouseOver" ID="{5597B331-C220-4BF7-92BC-F891C863E2ED}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\UI_MouseOver.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="54241840"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="UI_MouseOver_01" ID="{52142FCE-C37C-4510-8F3A-0481412387F0}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\UI_MouseOver_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="141504077"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="UI_Scprit" ID="{39713238-4D7E-470E-BB53-E2135FC18F7A}">
+							<Language>SFX</Language>
+							<AudioFile>Sound_Rework\UI_Sound\UI_Scprit.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="171277269"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Blue_Attack_01" ID="{7EBB4B05-A23B-424E-9DF6-F1819422C39E}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
 	</AudioObjects>
 </WwiseDocument>

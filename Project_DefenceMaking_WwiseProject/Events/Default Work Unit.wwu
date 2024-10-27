@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{4933C4BA-4210-4446-B828-D574474EB50A}" SchemaVersion="119">
 	<Events>
-		<WorkUnit Name="Default Work Unit" ID="{4933C4BA-4210-4446-B828-D574474EB50A}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{4933C4BA-4210-4446-B828-D574474EB50A}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Enemy_Farmer_TypeA_Attack" ID="{A8863C6A-8F86-463A-B8D4-F500472AC1DC}">
+					<ChildrenList>
+						<Action Name="" ID="{65DB558B-7202-49A8-82E6-03AFBA158247}" ShortID="80209909">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Blue_Attack" ID="{EC5BCCF1-122C-4F11-B51C-117D80A3E43A}" WorkUnitID="{AEEB4062-0C31-47FB-B63F-951342C02777}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
 	</Events>
 </WwiseDocument>

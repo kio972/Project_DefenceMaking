@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{3192E760-E25B-401A-AD80-8E641995C179}" SchemaVersion="119">
 	<SoundBanks>
-		<WorkUnit Name="Default Work Unit" ID="{3192E760-E25B-401A-AD80-8E641995C179}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{3192E760-E25B-401A-AD80-8E641995C179}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Object_Sound" ID="{EA40E152-B8C8-4040-9F74-18CEB542541C}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Enemy_Farmer_TypeA_Attack" ID="{A8863C6A-8F86-463A-B8D4-F500472AC1DC}" WorkUnitID="{4933C4BA-4210-4446-B828-D574474EB50A}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
 	</SoundBanks>
 </WwiseDocument>

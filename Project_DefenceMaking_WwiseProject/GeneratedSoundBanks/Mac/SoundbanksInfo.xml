@@ -9,6 +9,23 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
+		<SoundBank Id="1021273952" Type="User" Language="SFX" Hash="{0F719883-CEAA-4903-E9B9-B5906F772E7E}">
+			<ShortName>Object_Sound</ShortName>
+			<Path>Object_Sound.bnk</Path>
+			<Media>
+				<File Id="1062015631" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Sound_Rework\Object_Sound\Blue_Attack_01.wav</ShortName>
+					<CachePath>SFX/Sound_Rework/Object_Sound/Blue_Attack_01_818F3B66.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1226658030" Name="Enemy_Farmer_TypeA_Attack" DurationType="OneShot" DurationMin="0.4083014" DurationMax="0.4083014">
+					<MediaRefs>
+						<MediaRef Id="1062015631"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
 		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{D326F752-7CA2-0A14-FDB1-63ECE89D0199}">
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
@@ -23,5 +40,5 @@
 			</Busses>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{6C0CB101-D74B-DE5C-AD81-F4CF05FD2B8E}</FileHash>
+	<FileHash>{B896DBF6-EA11-DAD7-6C77-3885D2637CBC}</FileHash>
 </SoundBanksInfo>
