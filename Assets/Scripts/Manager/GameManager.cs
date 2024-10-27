@@ -89,7 +89,9 @@ public class GameManager : IngameSingleton<GameManager>
     public bool speedLock = false;
     public bool spawnLock = false;
     public bool cardLock = false;
+    public bool drawLock = false;
     public bool tileLock = false;
+    public bool timerLock = false;
 
     public int loop = 0;
 
@@ -258,6 +260,8 @@ public class GameManager : IngameSingleton<GameManager>
         //}
 
         UpdateBossRoom();
+        if(timerLock)
+            return;
 
         timer.Value += InGameDeltaTime;
         if (timer.Value > 720f && dailyIncome)
@@ -363,7 +367,7 @@ public class GameManager : IngameSingleton<GameManager>
 
         cardDeckController.Init();
         //cardDeckController.Invoke("Mulligan", 1f);
-        cardDeckController.Invoke("MulliganFixed", 1f);
+        //cardDeckController.Invoke("MulliganFixed", 1f);
         speedController.SetSpeedNormal(false);
         waveController.SpawnWave(curWave);
         NodeManager.Instance.SetGuideState(GuideState.None);

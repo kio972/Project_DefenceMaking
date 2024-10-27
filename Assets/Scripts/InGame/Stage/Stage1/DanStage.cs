@@ -12,6 +12,7 @@ public class DanStage : MonoBehaviour
             yield return null;
 
         GameManager.Instance.Init();
+        GameManager.Instance.cardDeckController.Invoke("MulliganFixed", 1f);
         QuestManager.Instance.InitQuest();
     }
 

@@ -151,12 +151,12 @@ public class QuestManager : IngameSingleton<QuestManager>
         StartCoroutine(IQuestManage());
     }
 
-    private void Update()
-    {
-        if (initState)
-            return;
-        InitQuest();
-    }
+    //private void Update()
+    //{
+    //    if (initState)
+    //        return;
+    //    InitQuest();
+    //}
 
     public void SaveGame(PlayerData data)
     {

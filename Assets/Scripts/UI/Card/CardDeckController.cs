@@ -358,6 +358,9 @@ public class CardDeckController : MonoBehaviour
 
     public void DrawDeck()
     {
+        if (GameManager.Instance.drawLock)
+            return;
+
         if (hand_CardNumber >= maxCardNumber)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("¼Õ ÆÐ°¡ °¡µæ Ã¡½À´Ï´Ù");

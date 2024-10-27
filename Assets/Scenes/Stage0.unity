@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &257458720 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4926227850491565855, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}
+  m_PrefabInstance: {fileID: 8308870058223373658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &306963414
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +379,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EmptyTile
       objectReference: {fileID: 0}
+    - target: {fileID: 1609608640754181931, guid: fb6c27ba843ba1a44832723bcb45c3cf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1609608640754181932, guid: fb6c27ba843ba1a44832723bcb45c3cf, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -416,6 +425,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1609608640754181932, guid: fb6c27ba843ba1a44832723bcb45c3cf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068692037026024842, guid: fb6c27ba843ba1a44832723bcb45c3cf, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2430,6 +2443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f780ae895521384c9c4972cfcafe1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deployBtn: {fileID: 1712866489}
+  researchBtn: {fileID: 1537017391}
+  shopBtn: {fileID: 257458720}
 --- !u!114 &752236462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2448,6 +2464,7 @@ MonoBehaviour:
   _scriptData: {fileID: 4900000, guid: 62b664def1b87e640bd2f652e11066df, type: 3}
   _questData: {fileID: 4900000, guid: d06169645a8bceb42b2e1f31b1c1f3e1, type: 3}
   _questMessageData: {fileID: 4900000, guid: c203c670447f64c498ec5c7308e483d3, type: 3}
+  _hiddenTileData: {fileID: 0}
 --- !u!1 &887567697
 GameObject:
   m_ObjectHideFlags: 0
@@ -2947,6 +2964,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f627a45bc37ba7e478dcd67d07afc1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1537017391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6291475513315956292, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}
+  m_PrefabInstance: {fileID: 8308870058223373658}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1712866489 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3280690890912017448, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}
+  m_PrefabInstance: {fileID: 8308870058223373658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1745784634
 GameObject:
   m_ObjectHideFlags: 0
@@ -3643,6 +3670,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5923318148491750117, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200075041918288710, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7786164014614416253, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}
