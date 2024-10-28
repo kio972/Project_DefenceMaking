@@ -97,7 +97,7 @@ public class QuestManager : IngameSingleton<QuestManager>
             return false;
 
         if (questWatcher.condition == "custom")
-            return questWatcher.customCondition.IsConditionPassed();
+            return questWatcher.customCondition != null && questWatcher.customCondition.IsConditionPassed();
 
         if (string.IsNullOrEmpty(questWatcher.condition) && questWatcher.condition != "-")
             if (!clearedQuests.Contains(questWatcher.condition))

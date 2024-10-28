@@ -58,16 +58,21 @@ public class Stage0_Story : MonoBehaviour
             GameManager.Instance.cardDeckController.AddCard(directPath);
         int crossRoad = DataManager.Instance.deckListIndex["c10007"];
         GameManager.Instance.cardDeckController.AddCard(crossRoad);
-        int room0 = DataManager.Instance.deckListIndex["c11001"];
-        GameManager.Instance.cardDeckController.AddCard(room0);
-        int room1 = DataManager.Instance.deckListIndex["c11002"];
-        GameManager.Instance.cardDeckController.AddCard(room1);
-        int room2 = DataManager.Instance.deckListIndex["c11003"];
-        GameManager.Instance.cardDeckController.AddCard(room2);
+        
         int road2 = DataManager.Instance.deckListIndex["c10003"];
         int road4 = DataManager.Instance.deckListIndex["c10005"];
         int road8 = DataManager.Instance.deckListIndex["c10009"];
         int road10 = DataManager.Instance.deckListIndex["c10011"];
+        GameManager.Instance.cardDeckController.AddCard(road2);
+        GameManager.Instance.cardDeckController.AddCard(road4);
+        GameManager.Instance.cardDeckController.AddCard(road8);
+        GameManager.Instance.cardDeckController.AddCard(road10);
+        int room0 = DataManager.Instance.deckListIndex["c11001"];
+        int room1 = DataManager.Instance.deckListIndex["c11002"];
+        int room2 = DataManager.Instance.deckListIndex["c11003"];
+        GameManager.Instance.cardDeckController.AddCard(room0);
+        GameManager.Instance.cardDeckController.AddCard(room1);
+        GameManager.Instance.cardDeckController.AddCard(room2);
 
 
         await UniTask.WaitForSeconds(2.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
@@ -148,10 +153,16 @@ public class Stage0_Story : MonoBehaviour
 
         //시작패 드로우
         GameManager.Instance.cardDeckController.DrawCard(directPath);
-
+        GameManager.Instance.cardDeckController.DrawCard(road2);
+        GameManager.Instance.cardDeckController.DrawCard(road4);
+        GameManager.Instance.cardDeckController.DrawCard(road8);
+        GameManager.Instance.cardDeckController.DrawCard(road10);
+        GameManager.Instance.cardDeckController.DrawCard(room0);
+        GameManager.Instance.cardDeckController.DrawCard(room1);
+        GameManager.Instance.cardDeckController.DrawCard(room2);
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        GameManager.Instance.waveController.SpawnWave(0);
+        //GameManager.Instance.waveController.SpawnWave(0);
         QuestManager.Instance.InitQuest();
     }
 }
