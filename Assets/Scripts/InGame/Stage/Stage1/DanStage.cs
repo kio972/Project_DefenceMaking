@@ -13,6 +13,7 @@ public class DanStage : MonoBehaviour
 
         GameManager.Instance.Init();
         GameManager.Instance.cardDeckController.Invoke("MulliganFixed", 1f);
+        GameManager.Instance.research.ForceActiveResearch("r_m10001");
         QuestManager.Instance.InitQuest();
     }
 

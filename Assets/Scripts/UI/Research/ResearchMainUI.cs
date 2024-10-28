@@ -1,3 +1,4 @@
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,7 +9,7 @@ public class ResearchMainUI : MonoBehaviour
     [SerializeField]
     GameObject uiPage;
 
-    private ResearchSlot curResearch;
+    public ResearchSlot curResearch { get; private set; }
 
     private float curProgressTime;
 
@@ -129,14 +130,28 @@ public class ResearchMainUI : MonoBehaviour
         }
     }
 
+    public void ForceActiveResearch(string id)
+    {
+        ResearchSlot slot = researchDic[id];
+        slot.SetResearchState(ResearchState.Complete);
+        Research research = slot.GetComponent<Research>();
+        research?.ActiveResearch();
+    }
+
+    private Dictionary<string, ResearchSlot> researchDic = new Dictionary<string, ResearchSlot>();
+
     private void Awake()
     {
         if(_completedResearchs == null)
         {
-            _completedResearchs = new List<string>() { "r_m10001" };
+            _completedResearchs = new List<string>();
             ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
             foreach (ResearchSlot slot in slots)
             {
+                if (string.IsNullOrEmpty(slot._ResearchId) || researchDic.ContainsKey(slot._ResearchId))
+                    continue;
+
+                researchDic.Add(slot._ResearchId, slot);
                 if (!_completedResearchs.Contains(slot._ResearchId))
                     continue;
 
