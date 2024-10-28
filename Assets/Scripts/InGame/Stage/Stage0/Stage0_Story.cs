@@ -34,8 +34,6 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
     }
 
-
-
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
@@ -54,24 +52,37 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.drawLock = true;
         GameManager.Instance.speedLock = true;
 
+        //튜토리얼 카드 추가
+        int directPath = DataManager.Instance.deckListIndex["c10001"];
+        for (int i = 0; i < 4; i++)
+            GameManager.Instance.cardDeckController.AddCard(directPath);
+        int crossRoad = DataManager.Instance.deckListIndex["c10007"];
+        GameManager.Instance.cardDeckController.AddCard(crossRoad);
+        int room0 = DataManager.Instance.deckListIndex["c11001"];
+        GameManager.Instance.cardDeckController.AddCard(room0);
+        int room1 = DataManager.Instance.deckListIndex["c11002"];
+        GameManager.Instance.cardDeckController.AddCard(room1);
+        int room2 = DataManager.Instance.deckListIndex["c11003"];
+        GameManager.Instance.cardDeckController.AddCard(room2);
+        int road2 = DataManager.Instance.deckListIndex["c10003"];
+        int road4 = DataManager.Instance.deckListIndex["c10005"];
+        int road8 = DataManager.Instance.deckListIndex["c10009"];
+        int road10 = DataManager.Instance.deckListIndex["c10011"];
+
+
         await UniTask.WaitForSeconds(2.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto0);
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto1);
         
-        int directPath = DataManager.Instance.deckListIndex["c10001"];
-        for(int i = 0; i < 3; i++)
-        {
-            GameManager.Instance.cardDeckController.AddCard(directPath);
+        
+        for (int i = 0; i < 3; i++)
             GameManager.Instance.cardDeckController.DrawCard(directPath);
-        }
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto2);
 
         //StoryManager.Instance.triggerZone = this;
-        int crossRoad = DataManager.Instance.deckListIndex["c10007"];
-        GameManager.Instance.cardDeckController.AddCard(crossRoad);
         GameManager.Instance.cardDeckController.DrawCard(crossRoad);
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
@@ -87,7 +98,7 @@ public class Stage0_Story : MonoBehaviour
         deployBtn.SetActive(true);
 
         ////GameManager.Instance.cameraController.ResetCamPos();
-        await UniTask.WaitUntil(() => GameManager.Instance.gold < 50, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => GameManager.Instance.trapList.Count > 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto5);
 
@@ -106,23 +117,23 @@ public class Stage0_Story : MonoBehaviour
 
         await PlayScript(_Tuto7);
         researchBtn.SetActive(true);
-        await UniTask.WaitUntil(() => GameManager.Instance.gold < 50, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+
+        await UniTask.WaitUntil(() => GameManager.Instance.research.curResearch != null && !GameManager.Instance.isPause, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
         GameManager.Instance.speedLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
         GameManager.Instance.speedLock = true;
 
-        await UniTask.WaitUntil(() => GameManager.Instance.research.completedResearchs.Count >= 1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => GameManager.Instance.research.completedResearchs.Contains("r_m10001"), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto8);
 
-        int room = DataManager.Instance.deckListIndex["c11002"];
-        GameManager.Instance.cardDeckController.AddCard(room);
-        GameManager.Instance.cardDeckController.DrawCard(room);
+        GameManager.Instance.cardDeckController.DrawCard(room1);
 
-        await UniTask.WaitUntil(() => GameManager.Instance.adventurersList.Count == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         deployBtn.SetActive(true);
-        await UniTask.WaitUntil(() => GameManager.Instance.gold < 50, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => GameManager.Instance.monsterSpawner.Count > 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto9);
@@ -136,6 +147,8 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.speedController.SetSpeedNormal();
 
         //시작패 드로우
+        GameManager.Instance.cardDeckController.DrawCard(directPath);
+
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         GameManager.Instance.waveController.SpawnWave(0);

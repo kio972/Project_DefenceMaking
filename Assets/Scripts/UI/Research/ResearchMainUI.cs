@@ -29,11 +29,12 @@ public class ResearchMainUI : MonoBehaviour
         float startTime = (GameManager.Instance.CurWave * 1440) + GameManager.Instance.Timer;
         float endTime = startTime + curResearch._ResearchData.requiredTime - additionalTime;
         curResearch.SetResearchState(ResearchState.InProgress);
+        float curTime = startTime;
         yield return null;
         
         while(true)
         {
-            float curTime = (GameManager.Instance.CurWave * 1440) + GameManager.Instance.Timer;
+            curTime += GameManager.Instance.InGameDeltaTime;
             if(curTime >= endTime)
                 break;
             curProgressTime = endTime - curTime;
