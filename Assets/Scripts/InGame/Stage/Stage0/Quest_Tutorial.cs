@@ -38,7 +38,10 @@ public class Quest0101 : Quest
             prevPos = GameManager.Instance.cameraController.transform.position;
 
         if ((GameManager.Instance.cameraController.transform.position - prevPos).magnitude > 0.1f)
+        {
+            curClearNum[0]++;
             isComplete[0] = true;
+        }
     }
 
     public override void CompleteQuest()
@@ -58,7 +61,10 @@ public class Quest0102 : Quest
             prevTimeScale = GameManager.Instance.timeScale;
 
         if (prevTimeScale != GameManager.Instance.timeScale)
+        {
+            curClearNum[0]++;
             isComplete[0] = true;
+        }
     }
 
     public override void CompleteQuest()
@@ -78,7 +84,10 @@ public class Quest0103 : Quest
             curNode = NodeManager.Instance.endPoint;
 
         if (curNode != NodeManager.Instance.endPoint)
+        {
+            curClearNum[0]++;
             isComplete[0] = true;
+        }
     }
 
     public override void CompleteQuest()
@@ -122,13 +131,13 @@ public class Quest0104 : Quest
         if (!isComplete[0] && curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
 
-        if (isComplete[1] = false && GameManager.Instance._MonsterList.Count > monsterCount)
+        if (!isComplete[1] && GameManager.Instance._MonsterList.Count > monsterCount)
         {
             curClearNum[1]++;
             isComplete[1] = true;
         }
 
-        if (isComplete[2] = false && GameManager.Instance.monsterSpawner.Count > spawnerCount)
+        if (!isComplete[2] && GameManager.Instance.monsterSpawner.Count > spawnerCount)
         {
             curClearNum[2]++;
             isComplete[2] = true;
@@ -187,17 +196,20 @@ public class Quest0106 : Quest
     {
         if (cardCount == -1 || deckCount == -1)
         {
+            CardDeckController deckBtn = MonoBehaviour.FindObjectOfType<CardDeckController>(true);
+            if (deckBtn != null) deckBtn.gameObject.SetActive(true);
+
             cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
             deckCount = GameManager.Instance.cardDeckController.cardDeckCount;
         }
 
-        if (isComplete[0] = false && GameManager.Instance.cardDeckController.hand_CardNumber > cardCount)
+        if (!isComplete[0] && GameManager.Instance.cardDeckController.hand_CardNumber > cardCount)
         {
             curClearNum[0]++;
             isComplete[0] = true;
         }
 
-        if (isComplete[1] = false && GameManager.Instance.cardDeckController.hand_CardNumber < cardCount && GameManager.Instance.cardDeckController.cardDeckCount > deckCount)
+        if (!isComplete[1] && GameManager.Instance.cardDeckController.hand_CardNumber < cardCount && GameManager.Instance.cardDeckController.cardDeckCount > deckCount)
         {
             curClearNum[1]++;
             isComplete[1] = true;
@@ -225,7 +237,7 @@ public class Quest0107 : Quest
         {
             for(int i = 0; i < shopList.Length; i++)
             {
-                if (shopList[i] != packs[i].IsSoldOut && shopList[i])
+                if (shopList[i] != packs[i].IsSoldOut && packs[i].IsSoldOut)
                     return true;
             }
 
@@ -237,7 +249,10 @@ public class Quest0107 : Quest
     {
         if (shopList == null)
         {
-            ItemSlot[] packs = GameManager.Instance.shop.GetComponentsInChildren<ItemSlot>(true);
+            ManageBtnsContol manageBtnsContol = MonoBehaviour.FindObjectOfType<ManageBtnsContol>();
+            if (manageBtnsContol != null)
+                manageBtnsContol.shopBtn.SetActive(true);
+            packs = GameManager.Instance.shop.GetComponentsInChildren<ItemSlot>(true);
             shopList = new bool[packs.Length];
             for(int i = 0; i < packs.Length; i++)
                 shopList[i] = packs[i].IsSoldOut;

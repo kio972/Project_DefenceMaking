@@ -31,13 +31,13 @@ public class ResultController : MonoBehaviour
 
     public async UniTaskVoid GameWin()
     {
-        if(GameManager.Instance.LastSpawnedAdventurer != null)
-            FindObjectOfType<CameraController>()?.CamMoveToPos(GameManager.Instance.LastSpawnedAdventurer.transform.position);
-        else
-            FindObjectOfType<CameraController>()?.ResetCamPos();
-        await UniTask.Delay(System.TimeSpan.FromSeconds(2.5f));
+        //if(GameManager.Instance.LastSpawnedAdventurer != null)
+        //    FindObjectOfType<CameraController>()?.CamMoveToPos(GameManager.Instance.LastSpawnedAdventurer.transform.position);
+        //else
+        //    FindObjectOfType<CameraController>()?.ResetCamPos();
+        //await UniTask.Delay(System.TimeSpan.FromSeconds(2.5f));
 
-        StoryManager.Instance.EnqueueScript("Dan900");
+        //StoryManager.Instance.EnqueueScript("Dan900");
 
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
 

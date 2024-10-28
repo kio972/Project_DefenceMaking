@@ -312,8 +312,8 @@ public class GameManager : IngameSingleton<GameManager>
         //    return;
         //}
 
-        float.TryParse(DataManager.Instance.timeRate_Table[wave]["time magnification"].ToString(), out defaultSpeed);
-        defaultSpeed = defaultSpeed / 60f;
+        if(float.TryParse(DataManager.Instance.timeRate_Table[wave]["time magnification"].ToString(), out defaultSpeed))
+            defaultSpeed = defaultSpeed / 60f;
     }
 
     public void SetPause(bool value)

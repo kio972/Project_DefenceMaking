@@ -72,7 +72,7 @@ public class QuestController : MonoBehaviour
 
     private Quest LoadQuest(int questID)
     {
-        string questClassName = "Quest" + questID.ToString(); // 퀘스트 클래스의 이름
+        string questClassName = "Quest" + questID.ToString("0000"); // 퀘스트 클래스의 이름
         Type questType = Type.GetType(questClassName);
 
         if (questType != null && typeof(Quest).IsAssignableFrom(questType))

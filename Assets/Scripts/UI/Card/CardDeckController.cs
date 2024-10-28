@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using TMPro;
 using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public struct Card
 {
@@ -119,7 +121,7 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private float lineAmplitude = 1f;
 
-    private Coroutine set_CardPos_Coroutine = null;
+    private CancellationTokenSource cancellationTokenSource;
 
     [SerializeField]
     private TextMeshProUGUI deckCountText;
@@ -318,9 +320,10 @@ public class CardDeckController : MonoBehaviour
 
     public void SetCardPosition()
     {
-        if (set_CardPos_Coroutine != null)
-            StopCoroutine(set_CardPos_Coroutine);
-        set_CardPos_Coroutine = StartCoroutine(ISetCardPosition());
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+        cancellationTokenSource = new CancellationTokenSource();
+        ISetCardPosition().Forget();
     }
 
     private List<Vector3> GetCardPosition()
@@ -388,7 +391,7 @@ public class CardDeckController : MonoBehaviour
         AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
     }
 
-    private IEnumerator ISetCardPosition()
+    private async UniTaskVoid ISetCardPosition()
     {
         //모든 카드들의 위치를 lerpTime에 걸쳐 조정
         //모든 카드들의 회전값을 lerpTime에 걸쳐 조정
@@ -426,7 +429,7 @@ public class CardDeckController : MonoBehaviour
                 cards[i].transform.rotation = currentRotation;
             }
 
-            yield return null;
+            await UniTask.Yield(cancellationTokenSource.Token);
         }
     }
 
