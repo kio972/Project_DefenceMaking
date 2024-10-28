@@ -91,13 +91,13 @@ public class CardDeckController : MonoBehaviour
 
     public Transform CardZone { get => cardZone; }
 
-    private List<int> cardDeck;
-    public List<int> _CardDeck { get => cardDeck; }
+    private List<int> _cardDeck;
+    public List<int> cardDeck { get => _cardDeck; }
 
-    public int _CardDeckCount { get => cardDeck.Count; }
+    public int cardDeckCount { get => _cardDeck.Count; }
 
-    private List<int> handCards = new List<int>();
-    public List<int> _HandCards { get => handCards; }
+    private List<int> _handCards = new List<int>();
+    public List<int> handCards { get => _handCards; }
     
     private bool initState = false;
 
@@ -157,7 +157,7 @@ public class CardDeckController : MonoBehaviour
 
     public void AddCard(int index)
     {
-        cardDeck.Add(index);
+        _cardDeck.Add(index);
         UpdateDeckCount();
     }
 
@@ -166,8 +166,8 @@ public class CardDeckController : MonoBehaviour
         if (deckCountText == null)
             return;
 
-        deckCountText.text = (cardDeck.Count).ToString();
-        if (cardDeck.Count < 10)
+        deckCountText.text = (_cardDeck.Count).ToString();
+        if (_cardDeck.Count < 10)
         {
             cardCountImg.sprite = emptycardCountSprite;
             deckCountText.color = Color.red;
@@ -178,7 +178,7 @@ public class CardDeckController : MonoBehaviour
             deckCountText.color = Color.white;
         }
 
-        if (cardDeck.Count <= 0)
+        if (_cardDeck.Count <= 0)
             deckBtnImg.sprite = emptyDeckImg;
         else
             deckBtnImg.sprite = originDeckImg;
@@ -345,14 +345,14 @@ public class CardDeckController : MonoBehaviour
 
     private Card ReturnDeck(int target)
     {
-        cardDeck.Remove(target);
+        _cardDeck.Remove(target);
         Card card = new Card(DataManager.Instance.deck_Table[target], target);
         return card;
     }
 
     private Card ReturnDeck()
     {
-        int random = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+        int random = _cardDeck[UnityEngine.Random.Range(0, _cardDeck.Count)];
         return ReturnDeck(random);
     }
 
@@ -375,7 +375,7 @@ public class CardDeckController : MonoBehaviour
             return;
         }
 
-        if (cardDeck.Count < 1)
+        if (_cardDeck.Count < 1)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
             AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
@@ -442,7 +442,7 @@ public class CardDeckController : MonoBehaviour
             while (targetCards.Count != 0)
             {
                 randomIndex = targetCards[UnityEngine.Random.Range(0, targetCards.Count)];
-                if (cardDeck.Contains(randomIndex))
+                if (_cardDeck.Contains(randomIndex))
                     break;
                 targetCards.Remove(randomIndex);
             }
@@ -486,15 +486,15 @@ public class CardDeckController : MonoBehaviour
 
     public void DrawCard(int cardIndex)
     {
-        if (cardDeck.Count < 1) return;
-        if (!cardDeck.Contains(cardIndex)) return;
+        if (_cardDeck.Count < 1) return;
+        if (!_cardDeck.Contains(cardIndex)) return;
 
         InstantiateCard(ReturnDeck(cardIndex));
     }
 
     public void DrawCard()
     {
-        if(cardDeck.Count < 1) return;
+        if(_cardDeck.Count < 1) return;
 
         InstantiateCard(ReturnDeck());
     }
@@ -502,7 +502,7 @@ public class CardDeckController : MonoBehaviour
     public void DiscardCard(Transform cardTransform, int cardId)
     {
         cards.Remove(cardTransform);
-        handCards.Remove(cardId);
+        _handCards.Remove(cardId);
     }
 
     private void InstantiateCard(Card targetCard)
@@ -516,14 +516,14 @@ public class CardDeckController : MonoBehaviour
         cardUI?.DrawEffect();
         card.transform.position = transform.position;
         cards.Add(card.transform);
-        handCards.Add(targetCard.cardIndex);
+        _handCards.Add(targetCard.cardIndex);
         SetCardPosition();
         UpdateDeckCount();
     }
 
     private void SetDeck()
     {
-        cardDeck = new List<int>();
+        _cardDeck = new List<int>();
         foreach(var data in DataManager.Instance.start_deckTable)
         {
             int cardNumber = Convert.ToInt32(data["startNumber"]);
@@ -538,7 +538,7 @@ public class CardDeckController : MonoBehaviour
                 continue;
 
             for (int j = 0; j < cardNumber; j++)
-                cardDeck.Add(index);
+                _cardDeck.Add(index);
         }
     }
 
@@ -547,7 +547,7 @@ public class CardDeckController : MonoBehaviour
         if (!initState)
             Init();
 
-        cardDeck = new List<int>(deckLists);
+        _cardDeck = new List<int>(deckLists);
         foreach(int id in cardIdes)
         {
             AddCard(id);

@@ -8,6 +8,22 @@ public abstract class QuestCondition
     public abstract bool IsConditionPassed();
 }
 
+public class QusetCondition_m0106 : QuestCondition
+{
+    public override bool IsConditionPassed()
+    {
+        return GameManager.Instance.cardDeckController.hand_CardNumber == 0;
+    }
+}
+
+public class QusetCondition_m0107 : QuestCondition
+{
+    public override bool IsConditionPassed()
+    {
+        return GameManager.Instance.cardDeckController.cardDeckCount == 0;
+    }
+}
+
 public class QusetCondition_m2001 : QuestCondition
 {
     public override bool IsConditionPassed()

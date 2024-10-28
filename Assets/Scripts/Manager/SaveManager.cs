@@ -79,8 +79,8 @@ public class SaveManager : Singleton<SaveManager>
         SaveTileData(playerData);
         SaveSpanwerData(playerData);
 
-        playerData.deckLists = new List<int>(GameManager.Instance.cardDeckController._CardDeck);
-        playerData.cardIdes = new List<int>(GameManager.Instance.cardDeckController._HandCards);
+        playerData.deckLists = new List<int>(GameManager.Instance.cardDeckController.cardDeck);
+        playerData.cardIdes = new List<int>(GameManager.Instance.cardDeckController.handCards);
 
         playerData.enemys = new List<BattlerData>();
         foreach (Battler enemy in GameManager.Instance.adventurersList)

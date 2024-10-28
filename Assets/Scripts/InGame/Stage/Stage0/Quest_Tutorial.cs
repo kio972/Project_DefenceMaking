@@ -188,7 +188,7 @@ public class Quest0106 : Quest
         if (cardCount == -1 || deckCount == -1)
         {
             cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
-            deckCount = GameManager.Instance.cardDeckController._CardDeckCount;
+            deckCount = GameManager.Instance.cardDeckController.cardDeckCount;
         }
 
         if (isComplete[0] = false && GameManager.Instance.cardDeckController.hand_CardNumber > cardCount)
@@ -197,14 +197,14 @@ public class Quest0106 : Quest
             isComplete[0] = true;
         }
 
-        if (isComplete[1] = false && GameManager.Instance.cardDeckController.hand_CardNumber < cardCount && GameManager.Instance.cardDeckController._CardDeckCount > deckCount)
+        if (isComplete[1] = false && GameManager.Instance.cardDeckController.hand_CardNumber < cardCount && GameManager.Instance.cardDeckController.cardDeckCount > deckCount)
         {
             curClearNum[1]++;
             isComplete[1] = true;
         }
 
         cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
-        deckCount = GameManager.Instance.cardDeckController._CardDeckCount;
+        deckCount = GameManager.Instance.cardDeckController.cardDeckCount;
     }
 
     public override void CompleteQuest()
