@@ -1,0 +1,249 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Quest0001 : Quest
+{
+    public override void CheckCondition()
+    {
+        curClearNum[0] = _ClearNum[0] - Mathf.FloorToInt(_CurTime / 1440);
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.WinGame();
+    }
+
+    public override void FailQuest()
+    {
+        CompleteQuest();
+    }
+
+    public override void UpdateQuest()
+    {
+        if (_CurTime > _TimeLimit)
+            isComplete[0] = true;
+        base.UpdateQuest();
+    }
+}
+
+public class Quest0101 : Quest
+{
+    Vector3 prevPos = Vector3.zero;
+
+    public override void CheckCondition()
+    {
+        if(prevPos == Vector3.zero)
+            prevPos = GameManager.Instance.cameraController.transform.position;
+
+        if ((GameManager.Instance.cameraController.transform.position - prevPos).magnitude > 0.1f)
+            isComplete[0] = true;
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
+
+public class Quest0102 : Quest
+{
+    float prevTimeScale = -1;
+
+    public override void CheckCondition()
+    {
+        if (prevTimeScale == -1)
+            prevTimeScale = GameManager.Instance.timeScale;
+
+        if (prevTimeScale != GameManager.Instance.timeScale)
+            isComplete[0] = true;
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
+
+public class Quest0103 : Quest
+{
+    private TileNode curNode = null;
+
+    public override void CheckCondition()
+    {
+        if (curNode == null)
+            curNode = NodeManager.Instance.endPoint;
+
+        if (curNode != NodeManager.Instance.endPoint)
+            isComplete[0] = true;
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
+
+public class Quest0104 : Quest
+{
+    private bool isInit;
+
+    private bool IncreaseCount(GameObject tile)
+    {
+        if (tile.GetComponent<TileHidden>() != null)
+            return false;
+
+        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().curNode == NodeManager.Instance.endPoint)
+            return false;
+
+        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
+            return false;
+
+        curClearNum[0]++;
+        return true;
+    }
+
+    public override void CheckCondition()
+    {
+        if (!isInit)
+        {
+            NodeManager.Instance.AddSetTileEvent(IncreaseCount);
+            isInit = true;
+        }
+
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+
+    public override void FailQuest()
+    {
+        base.FailQuest();
+        NodeManager.Instance.RemoveSetTileEvent(IncreaseCount);
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+        NodeManager.Instance.RemoveSetTileEvent(IncreaseCount);
+    }
+}
+
+public class Quest0105 : Quest
+{
+    private int monsterCount = -1;
+    private int spawnerCount = -1;
+
+    public override void CheckCondition()
+    {
+        if (monsterCount == -1 || spawnerCount == -1)
+        {
+            monsterCount = GameManager.Instance._MonsterList.Count;
+            spawnerCount = GameManager.Instance.monsterSpawner.Count;
+        }
+
+        if (isComplete[0] = false && GameManager.Instance._MonsterList.Count > monsterCount)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+
+        if (isComplete[1] = false && GameManager.Instance.monsterSpawner.Count > spawnerCount)
+        {
+            curClearNum[1]++;
+            isComplete[1] = true;
+        }
+
+        monsterCount = GameManager.Instance._MonsterList.Count;
+        spawnerCount = GameManager.Instance.monsterSpawner.Count;
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
+
+public class Quest0106 : Quest
+{
+    private int cardCount = -1;
+    private int deckCount = -1;
+
+    public override void CheckCondition()
+    {
+        if (cardCount == -1 || deckCount == -1)
+        {
+            cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
+            deckCount = GameManager.Instance.cardDeckController._CardDeckCount;
+        }
+
+        if (isComplete[0] = false && GameManager.Instance.cardDeckController.hand_CardNumber > cardCount)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+
+        if (isComplete[1] = false && GameManager.Instance.cardDeckController.hand_CardNumber < cardCount && GameManager.Instance.cardDeckController._CardDeckCount > deckCount)
+        {
+            curClearNum[1]++;
+            isComplete[1] = true;
+        }
+
+        cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
+        deckCount = GameManager.Instance.cardDeckController._CardDeckCount;
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
+
+public class Quest0107 : Quest
+{
+    private bool[] shopList = null;
+    private ItemSlot[] packs;
+
+    private bool IsItemSold
+    {
+        get
+        {
+            for(int i = 0; i < shopList.Length; i++)
+            {
+                if (shopList[i] != packs[i].IsSoldOut && shopList[i])
+                    return true;
+            }
+
+            return false;
+        }
+    }
+
+    public override void CheckCondition()
+    {
+        if (shopList == null)
+        {
+            ItemSlot[] packs = GameManager.Instance.shop.GetComponentsInChildren<ItemSlot>(true);
+            shopList = new bool[packs.Length];
+            for(int i = 0; i < packs.Length; i++)
+                shopList[i] = packs[i].IsSoldOut;
+        }
+
+        if(IsItemSold)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
