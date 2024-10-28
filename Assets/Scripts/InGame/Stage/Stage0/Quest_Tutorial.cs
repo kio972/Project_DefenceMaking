@@ -91,6 +91,8 @@ public class Quest0103 : Quest
 public class Quest0104 : Quest
 {
     private bool isInit;
+    private int monsterCount = -1;
+    private int spawnerCount = -1;
 
     private bool IncreaseCount(GameObject tile)
     {
@@ -112,11 +114,28 @@ public class Quest0104 : Quest
         if (!isInit)
         {
             NodeManager.Instance.AddSetTileEvent(IncreaseCount);
+            monsterCount = GameManager.Instance._MonsterList.Count;
+            spawnerCount = GameManager.Instance.monsterSpawner.Count;
             isInit = true;
         }
 
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+        if (!isComplete[0] && curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
+
+        if (isComplete[1] = false && GameManager.Instance._MonsterList.Count > monsterCount)
+        {
+            curClearNum[1]++;
+            isComplete[1] = true;
+        }
+
+        if (isComplete[2] = false && GameManager.Instance.monsterSpawner.Count > spawnerCount)
+        {
+            curClearNum[2]++;
+            isComplete[2] = true;
+        }
+
+        monsterCount = GameManager.Instance._MonsterList.Count;
+        spawnerCount = GameManager.Instance.monsterSpawner.Count;
     }
 
     public override void FailQuest()
@@ -135,31 +154,21 @@ public class Quest0104 : Quest
 
 public class Quest0105 : Quest
 {
-    private int monsterCount = -1;
-    private int spawnerCount = -1;
+    GameObject guide = null;
 
     public override void CheckCondition()
     {
-        if (monsterCount == -1 || spawnerCount == -1)
+        if (guide == null)
         {
-            monsterCount = GameManager.Instance._MonsterList.Count;
-            spawnerCount = GameManager.Instance.monsterSpawner.Count;
+            bool isPause = GameManager.Instance.isPause;
+            SettingCanvas.Instance.CallSettings(false);
+            GameManager.Instance.isPause = isPause;
+
+            guide = SettingCanvas.Instance.transform.GetComponentInChildren<GuideSpiner>(true).transform.parent.gameObject;
         }
 
-        if (isComplete[0] = false && GameManager.Instance._MonsterList.Count > monsterCount)
-        {
-            curClearNum[0]++;
+        if (guide.activeSelf)
             isComplete[0] = true;
-        }
-
-        if (isComplete[1] = false && GameManager.Instance.monsterSpawner.Count > spawnerCount)
-        {
-            curClearNum[1]++;
-            isComplete[1] = true;
-        }
-
-        monsterCount = GameManager.Instance._MonsterList.Count;
-        spawnerCount = GameManager.Instance.monsterSpawner.Count;
     }
 
     public override void CompleteQuest()
