@@ -83,10 +83,10 @@ public class ResearchMainUI : MonoBehaviour
         {
             InputManager.Instance.ResetTileClick();
             AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
+            GameManager.Instance.SetPause(true);
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
     }
 
     [SerializeField]

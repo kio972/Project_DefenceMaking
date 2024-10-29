@@ -1003,8 +1003,6 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         {
             UpdateAttackSpeed();
         }).AddTo(gameObject);
-
-        SubscribeStateAnimation();
     }
 
     protected void SubscribeStateAnimation()

@@ -58,10 +58,13 @@ public class DeployUI : MonoBehaviour
     public void SetActive(bool value)
     {
         if (value)
+        {
             InputManager.Instance.ResetTileClick();
+            GameManager.Instance.SetPause(true);
+        }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
+        
         if (value)
             SetItem();
 
@@ -98,7 +101,9 @@ public class DeployUI : MonoBehaviour
         //UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
         UIManager.Instance.CloseTab(deployingWindow.gameObject);
         GameManager.Instance.cardLock = false;
-        GameManager.Instance.speedController.SetSpeedPrev();
+
+        if(GameManager.Instance.timeScale == 0)
+            GameManager.Instance.speedController.SetSpeedPrev();
         //GameManager.Instance.SetPause(true);
 
         if (ingameUI == null)
