@@ -368,6 +368,18 @@ public class StoryManager : MonoBehaviour
         rightIllust.SetColor(Color.black);
     }
 
+    private void ZoomStartTile()
+    {
+        GameManager.Instance.cameraController.ResetCamPos(true);
+        GameManager.Instance.cameraController.SetCamZoom(4);
+    }
+
+    private void ZoomEndTile()
+    {
+        GameManager.Instance.cameraController.ResetCamPos();
+        GameManager.Instance.cameraController.SetCamZoom(4);
+    }
+
     #endregion
 
     public void EnqueueScript(string scriptID)

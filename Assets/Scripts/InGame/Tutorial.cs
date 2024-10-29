@@ -181,7 +181,7 @@ public class Tutorial : MonoBehaviour
             yield return null;
 
         //모험가 침입
-        Vector3 prevPos = GameManager.Instance.cameraController._GuidePos;
+        Vector3 prevPos = GameManager.Instance.cameraController.guidePos;
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.spawnLock = true;
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.startPoint.transform.position);
@@ -360,7 +360,7 @@ public class Tutorial : MonoBehaviour
         while(GameManager.Instance._MonsterList.Count == 0)
             yield return null;
 
-        Vector3 prevPos = GameManager.Instance.cameraController._GuidePos;
+        Vector3 prevPos = GameManager.Instance.cameraController.guidePos;
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.speedLock = true;
         GameManager.Instance.cameraController.CamMoveToPos(GameManager.Instance._MonsterList[0].transform.position);

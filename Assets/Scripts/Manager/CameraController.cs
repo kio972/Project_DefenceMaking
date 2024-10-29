@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Transform guideObject;
-    public Vector3 _GuidePos { get => guideObject.position; }
+    public Vector3 guidePos { get => guideObject.position; }
 
     private float mouseMult = 1f;
 

@@ -11,7 +11,8 @@ public class Stage0_Story : MonoBehaviour
 
     private readonly string _Tuto0 = "Tuto100";
     private readonly string _Tuto1 = "Tuto101";
-    private readonly string _Tuto2 = "Tuto102";
+    private readonly string _Tuto2_a = "Tuto102_0";
+    private readonly string _Tuto2_b = "Tuto102_1";
     private readonly string _Tuto3 = "Tuto103";
     private readonly string _Tuto4 = "Tuto104";
     private readonly string _Tuto5 = "Tuto105";
@@ -52,6 +53,8 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.drawLock = true;
         GameManager.Instance.speedLock = true;
 
+        Vector3 camZeroPos = GameManager.Instance.cameraController.guidePos;
+
         //튜토리얼 카드 추가
         int directPath = DataManager.Instance.deckListIndex["c10001"];
         for (int i = 0; i < 4; i++)
@@ -77,29 +80,37 @@ public class Stage0_Story : MonoBehaviour
 
         await UniTask.WaitForSeconds(2.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto0);
+
+        GameManager.Instance.cameraController.SetCamZoom(1);
+        GameManager.Instance.cameraController.CamMoveToPos(camZeroPos);
+
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto1);
-        
-        
+
         for (int i = 0; i < 3; i++)
             GameManager.Instance.cardDeckController.DrawCard(directPath);
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        await PlayScript(_Tuto2);
-
-        //StoryManager.Instance.triggerZone = this;
+        await PlayScript(_Tuto2_a);
         GameManager.Instance.cardDeckController.DrawCard(crossRoad);
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        BattlerPooling.Instance.SpawnAdventurer("farmer_sickle");
-        await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await PlayScript(_Tuto2_b);
 
+        await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        BattlerPooling.Instance.SpawnAdventurer("farmer_sickle");
+        GameManager.Instance.cameraController.SetCamZoom(4);
+        GameManager.Instance.cameraController.ResetCamPos(true);
+
+        await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto3);
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto4);
 
+        GameManager.Instance.cameraController.SetCamZoom(1);
+        GameManager.Instance.cameraController.CamMoveToPos(camZeroPos);
         deployBtn.SetActive(true);
 
         ////GameManager.Instance.cameraController.ResetCamPos();
