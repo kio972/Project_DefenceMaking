@@ -9,6 +9,7 @@ public class CardController : CardFramework
 {
     private void RemoveCard(bool isRecycle)
     {
+        disposables.Dispose();
         GameManager.Instance.cardDeckController.hand_CardNumber--;
 
         GameManager.Instance.cardDeckController.DiscardCard(this.transform, cardIndex);

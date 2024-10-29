@@ -43,6 +43,8 @@ public class CardFramework : MonoBehaviour
 
     public ReactiveProperty<Card> _cardInfo { get; private set; } = new ReactiveProperty<Card>();
 
+    protected CompositeDisposable disposables = new CompositeDisposable();
+
     protected virtual bool SetInput()
     {
         return Input.GetKeyUp(KeyCode.Mouse0);
@@ -116,10 +118,7 @@ public class CardFramework : MonoBehaviour
     protected virtual void SetObjectOnMap(bool cancel = false)
     {
         instancedObject.SetActive(!cancel && curNode != null && curNode.setAvail);
-        bool recycle = GameManager.Instance.cardDeckController.IsRecycle;
-        if (!cancel && recycle)
-            GameManager.Instance.cardDeckController.AddCard(cardIndex);
-        else if (!cancel && curNode != null && curNode.setAvail)
+        if (!cancel && curNode != null && curNode.setAvail)
         {
             switch (cardType)
             {
@@ -269,7 +268,7 @@ public class CardFramework : MonoBehaviour
     {
         Image image = GetComponent<Image>();
         var startStream = image.OnPointerDownAsObservable()
-            .Subscribe(_ => WaitForCard().Forget());
+            .Subscribe(_ => WaitForCard().Forget()).AddTo(disposables);
     }
 
     private void OnEnable()
