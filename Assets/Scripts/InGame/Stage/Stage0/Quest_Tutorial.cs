@@ -196,9 +196,6 @@ public class Quest0106 : Quest
     {
         if (cardCount == -1 || deckCount == -1)
         {
-            CardDeckController deckBtn = MonoBehaviour.FindObjectOfType<CardDeckController>(true);
-            if (deckBtn != null) deckBtn.gameObject.SetActive(true);
-
             cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
             deckCount = GameManager.Instance.cardDeckController.cardDeckCount;
         }

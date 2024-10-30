@@ -33,6 +33,7 @@ public class DataManager : Singleton<DataManager>
     public List<int> roomPartCard_Index { get; private set; }
     public List<int> roomTypeCard_Indexs { get; private set; }
     public Dictionary<string, int> deckListIndex { get; private set; }
+    public Dictionary<string, Dictionary<string, object>> battlerDic { get; private set; }
     public Dictionary<string, Dictionary<string, object>> shopListDic { get; private set; }
     public Dictionary<string, Dictionary<string, object>> languageDic { get; private set; }
     #endregion
@@ -213,6 +214,13 @@ public class DataManager : Singleton<DataManager>
             languageDic.Add(item["id"].ToString(), item);
     }
 
+    private void SortBattlerList()
+    {
+        battlerDic = new Dictionary<string, Dictionary<string, object>>();
+        foreach (var item in _battler_Table)
+            battlerDic.Add(item["id"].ToString(), item);
+    }
+
     // csv파일 주소(Resource폴더 내)
     //private readonly string wave_Table_DataPath = "Data/waveData";
     private readonly string deckList_DataPath = "Data/deckList";
@@ -259,5 +267,6 @@ public class DataManager : Singleton<DataManager>
         SortDeckList();
         SortShopList();
         SortLanguageList();
+        SortBattlerList();
     }
 }

@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using Spine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,12 +19,14 @@ public class ResearchMainUI : MonoBehaviour
 
     public float CurProgressRate { get => curResearch == null ? -1 : 1 - (curProgressTime / curResearch._ResearchData.requiredTime); }
 
-    private Coroutine researchCoroutine;
+    //private Coroutine researchCoroutine;
+
+    private CancellationTokenSource researchCancelToken;
 
     private List<string> _completedResearchs;
     public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
-    private IEnumerator IResearch(ResearchSlot curResearch, float additionalTime)
+    private async UniTask IResearch(ResearchSlot curResearch, float additionalTime)
     {
         this.curResearch = curResearch;
 
@@ -30,7 +34,7 @@ public class ResearchMainUI : MonoBehaviour
         float endTime = startTime + curResearch._ResearchData.requiredTime - additionalTime;
         curResearch.SetResearchState(ResearchState.InProgress);
         float curTime = startTime;
-        yield return null;
+        await UniTask.Yield(researchCancelToken.Token);
         
         while(true)
         {
@@ -38,7 +42,7 @@ public class ResearchMainUI : MonoBehaviour
             if(curTime >= endTime)
                 break;
             curProgressTime = endTime - curTime;
-            yield return null;
+            await UniTask.Yield(researchCancelToken.Token);
         }
 
         curProgressTime = 0f;
@@ -59,10 +63,10 @@ public class ResearchMainUI : MonoBehaviour
 
     public bool StartResearch(ResearchSlot target, float additionalTime = 0)
     {
-        if (curResearch != null)
-            return false;
-
-        researchCoroutine = StartCoroutine(IResearch(target, additionalTime));
+        researchCancelToken?.Cancel();
+        researchCancelToken?.Dispose();
+        researchCancelToken = new CancellationTokenSource();
+        IResearch(target, additionalTime).Forget();
         return true;
     }
 
@@ -71,7 +75,9 @@ public class ResearchMainUI : MonoBehaviour
         if (curResearch == null)
             return;
 
-        StopCoroutine(researchCoroutine);
+        researchCancelToken?.Cancel();
+        researchCancelToken?.Dispose();
+        researchCancelToken = new CancellationTokenSource();
         curProgressTime = 0f;
         curResearch.SetResearchState(ResearchState.Incomplete);
         this.curResearch = null;

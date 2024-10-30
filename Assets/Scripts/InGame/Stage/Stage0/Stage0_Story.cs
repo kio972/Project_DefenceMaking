@@ -22,12 +22,21 @@ public class Stage0_Story : MonoBehaviour
     private readonly string _Tuto9 = "Tuto109";
     private readonly string _Tuto10 = "Tuto110";
 
-    [SerializeField]
-    private GameObject deployBtn;
-    [SerializeField]
-    private GameObject researchBtn;
-    [SerializeField]
-    private GameObject shopBtn;
+    
+    
+
+    public int tutoProgress { get; private set; }
+
+    private bool LockDestroyTile(GameObject obj)
+    {
+        Tile tile = obj.GetComponent<Tile>();
+        if (tile == null)
+            return false;
+
+        tile.IsRemovable = false;
+
+        return true;
+    }
 
     private async UniTask PlayScript(string targetScript)
     {
@@ -45,6 +54,7 @@ public class Stage0_Story : MonoBehaviour
 
         await PlayScript(_Entry2);
 
+        NodeManager.Instance.AddSetTileEvent(LockDestroyTile);
         
         GameManager.Instance.Init();
         GameManager.Instance.speedController.SetSpeedZero();
@@ -52,6 +62,8 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.spawnLock = true;
         GameManager.Instance.drawLock = true;
         GameManager.Instance.speedLock = true;
+        GameManager.Instance.cameraLock = true;
+        GameManager.Instance.saveLock = true;
 
         Vector3 camZeroPos = GameManager.Instance.cameraController.guidePos;
 
@@ -81,23 +93,34 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitForSeconds(2.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto0);
 
+        tutoProgress = 0;
+
         GameManager.Instance.cameraController.SetCamZoom(1);
         GameManager.Instance.cameraController.CamMoveToPos(camZeroPos);
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto1);
 
+        tutoProgress = 1;
+
+        GameManager.Instance.rotateLock = true;
+
         for (int i = 0; i < 3; i++)
             GameManager.Instance.cardDeckController.DrawCard(directPath);
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto2_a);
+
+        tutoProgress = 2;
+
+        GameManager.Instance.rotateLock = false;
         GameManager.Instance.cardDeckController.DrawCard(crossRoad);
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto2_b);
+
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         BattlerPooling.Instance.SpawnAdventurer("farmer_sickle");
@@ -109,9 +132,10 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto4);
 
+        tutoProgress = 3;
+        
         GameManager.Instance.cameraController.SetCamZoom(1);
         GameManager.Instance.cameraController.CamMoveToPos(camZeroPos);
-        deployBtn.SetActive(true);
 
         ////GameManager.Instance.cameraController.ResetCamPos();
         await UniTask.WaitUntil(() => GameManager.Instance.trapList.Count > 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
@@ -132,10 +156,12 @@ public class Stage0_Story : MonoBehaviour
         await PlayScript(_Tuto6);
 
         await PlayScript(_Tuto7);
-        researchBtn.SetActive(true);
 
+        tutoProgress = 4;
 
         await UniTask.WaitUntil(() => GameManager.Instance.research.curResearch != null && !GameManager.Instance.isPause, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+        tutoProgress = 5;
 
         GameManager.Instance.speedLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
@@ -145,22 +171,33 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto8);
 
+        tutoProgress = 6;
+
         GameManager.Instance.cardDeckController.DrawCard(room1);
 
         await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        deployBtn.SetActive(true);
+
+        tutoProgress = 7;
         await UniTask.WaitUntil(() => GameManager.Instance.monsterSpawner.Count > 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        
+
+        tutoProgress = 8;
+
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto9);
         
         await PlayScript(_Tuto10);
 
+        tutoProgress = 10;
+
         GameManager.Instance.timerLock = false;
         GameManager.Instance.spawnLock = false;
         GameManager.Instance.drawLock = false;
         GameManager.Instance.speedLock = false;
+        GameManager.Instance.cameraLock = false;
+        GameManager.Instance.saveLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
+
+        NodeManager.Instance.RemoveRemoveTileEvent(LockDestroyTile);
 
         //시작패 드로우
         GameManager.Instance.cardDeckController.DrawCard(directPath);

@@ -16,7 +16,10 @@ public class TutoHelpBtn : MonoBehaviour
     public void OnClick()
     {
         if (stage == 0)
-            tutoDeploy.SetActive(true, false);
+        {
+            tutoDeploy.updateItem = false;
+            tutoDeploy.SetActive(true);
+        }
         else if (stage == 1)
             researchMain.SetActive(true);
         else if(stage == 2)

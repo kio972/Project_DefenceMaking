@@ -34,6 +34,9 @@ public class SettingCanvas : MonoBehaviour
     [SerializeField]
     private GameObject ingameMenu;
 
+    [SerializeField]
+    private GameObject saveBtn;
+
     private void Awake()
     {
         if (instance == null)
@@ -63,6 +66,7 @@ public class SettingCanvas : MonoBehaviour
             GameManager.Instance.isPause = true;
             UIManager.Instance.SetTab(ingameMenu, isIngame);
             UIManager.Instance.SetTab(main, !isIngame);
+            saveBtn.SetActive(!GameManager.Instance.saveLock);
         }
         else
         {

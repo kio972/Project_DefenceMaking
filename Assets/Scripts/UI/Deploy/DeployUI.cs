@@ -22,11 +22,11 @@ public class DeployUI : MonoBehaviour
     {
         get
         {
-            if (!uiPage.activeSelf && !exitBtn.gameObject.activeSelf)
+            if (!uiPage.activeSelf && !deployingWindow.activeSelf)
                 return 0;
             else if (uiPage.activeSelf)
                 return 1;
-            else if (exitBtn.gameObject.activeSelf)
+            else if (deployingWindow.activeSelf)
                 return 2;
 
             return 0;
@@ -49,6 +49,8 @@ public class DeployUI : MonoBehaviour
 
     private InGameUI ingameUI;
 
+    public bool updateItem = true;
+
     public void UpdateMana()
     {
         foreach (DeploySlot slot in deployItems)
@@ -65,20 +67,6 @@ public class DeployUI : MonoBehaviour
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
         
-        if (value)
-            SetItem();
-
-        if (value)
-            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
-    }
-
-    public void SetActive(bool value, bool updateItem = true)
-    {
-        if (value)
-            InputManager.Instance.ResetTileClick();
-
-        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
         if (value && updateItem)
             SetItem();
 

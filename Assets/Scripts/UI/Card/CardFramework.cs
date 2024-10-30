@@ -176,14 +176,14 @@ public class CardFramework : MonoBehaviour
         UpdateObjectPosition();
         if(cardType == CardType.MapTile)
         {
-            if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
+            if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey) &&!GameManager.Instance.rotateLock)
             {
                 Tile tile = instancedObject.GetComponent<Tile>();
                 tile.RotateTile();
                 AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
             }
-            else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+            else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey) && !GameManager.Instance.rotateLock)
             {
                 Tile tile = instancedObject.GetComponent<Tile>();
                 AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);

@@ -189,7 +189,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.isPause)
+        if (GameManager.Instance.isPause || GameManager.Instance.cameraLock)
             return;
 
         CamMove();

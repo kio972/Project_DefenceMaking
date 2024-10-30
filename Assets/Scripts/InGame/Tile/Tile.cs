@@ -55,6 +55,8 @@ public class Tile : MonoBehaviour
 
             return isRemovable;
         }
+
+        set => removable = value;
     }
 
     public bool IsRemovableNow

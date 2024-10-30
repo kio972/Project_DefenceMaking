@@ -92,6 +92,9 @@ public class GameManager : IngameSingleton<GameManager>
     public bool drawLock = false;
     public bool tileLock = false;
     public bool timerLock = false;
+    public bool cameraLock = false;
+    public bool saveLock = false;
+    public bool rotateLock = false;
 
     public int loop = 0;
 

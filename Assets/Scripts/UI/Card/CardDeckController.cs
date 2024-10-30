@@ -108,7 +108,8 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private float handHeight = 1;
 
-    private List<Transform> cards = new List<Transform>();
+    private List<Transform> _cards = new List<Transform>();
+    public List<Transform> cards { get => _cards; }
     //초기 카드 숫자
     public int hand_CardNumber = 0;
     //최대 카드 숫자
@@ -400,13 +401,13 @@ public class CardDeckController : MonoBehaviour
         float lerpTime = 0.5f;
         List<Vector3> cardPos = GetCardPosition();
         List<Vector3> cardRot = CalculateRotation();
-        Vector3[] startPositions = new Vector3[cards.Count];
-        Quaternion[] startRotations = new Quaternion[cards.Count];
-        for (int i = 0; i < cards.Count; i++)
+        Vector3[] startPositions = new Vector3[_cards.Count];
+        Quaternion[] startRotations = new Quaternion[_cards.Count];
+        for (int i = 0; i < _cards.Count; i++)
         {
-            startPositions[i] = cards[i].position;
-            startRotations[i] = cards[i].rotation;
-            CardUIEffect temp = cards[i].GetComponent<CardUIEffect>();
+            startPositions[i] = _cards[i].position;
+            startRotations[i] = _cards[i].rotation;
+            CardUIEffect temp = _cards[i].GetComponent<CardUIEffect>();
             temp.originPos = cardPos[i];
             temp.originRot = UtilHelper.AlignUpWithVector(cardRot[i]);
             temp.originSiblingIndex = i;
@@ -418,15 +419,15 @@ public class CardDeckController : MonoBehaviour
             float t = Mathf.Clamp01(elapsedTime / lerpTime);
             t = Mathf.Sin(t * Mathf.PI * 0.5f);
             for (int i = 0; i < hand_CardNumber; i++)
-                cards[i].transform.position = Vector3.Lerp(startPositions[i], cardPos[i], t);
+                _cards[i].transform.position = Vector3.Lerp(startPositions[i], cardPos[i], t);
 
-            for (int i = 0; i < cards.Count; i++)
+            for (int i = 0; i < _cards.Count; i++)
             {
                 Vector3 targetDirection = cardRot[i];
                 Quaternion targetRotation = UtilHelper.AlignUpWithVector(targetDirection);
 
                 Quaternion currentRotation = Quaternion.Lerp(startRotations[i], targetRotation, t);
-                cards[i].transform.rotation = currentRotation;
+                _cards[i].transform.rotation = currentRotation;
             }
 
             await UniTask.Yield(cancellationTokenSource.Token);
@@ -504,7 +505,7 @@ public class CardDeckController : MonoBehaviour
 
     public void DiscardCard(Transform cardTransform, int cardId)
     {
-        cards.Remove(cardTransform);
+        _cards.Remove(cardTransform);
         _handCards.Remove(cardId);
     }
 
@@ -518,7 +519,7 @@ public class CardDeckController : MonoBehaviour
         card.Init(targetCard);
         cardUI?.DrawEffect();
         card.transform.position = transform.position;
-        cards.Add(card.transform);
+        _cards.Add(card.transform);
         _handCards.Add(targetCard.cardIndex);
         SetCardPosition();
         UpdateDeckCount();
