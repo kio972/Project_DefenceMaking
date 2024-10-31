@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class LoadGameBtn : MoveSceneBtn
 {
+    protected override void MoveScene()
+    {
+        sceneName = SaveManager.Instance.playerData.sceneName;
+        base.MoveScene();
+    }
+
     private void Awake()
     {
         SaveManager.Instance.LoadPlayerData();
         if (SaveManager.Instance.playerData.tiles == null)
             gameObject.SetActive(false);
-        else
-            sceneName = SaveManager.Instance.playerData.sceneName;
     }
 
 }

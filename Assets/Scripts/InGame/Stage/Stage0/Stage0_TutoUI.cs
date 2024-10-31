@@ -73,6 +73,14 @@ public class Stage0_TutoUI : MonoBehaviour
 
     async UniTaskVoid Start()
     {
+        if (SaveManager.Instance.playerData != null)
+        {
+            deployBtn.SetActive(true);
+            researchBtn.SetActive(true);
+            FinishTutoUI();
+            return;
+        }
+
         await UniTask.WaitUntil(() => _progress >= 1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         rotateGuide.gameObject.SetActive(false);
 
@@ -191,6 +199,12 @@ public class Stage0_TutoUI : MonoBehaviour
         btnGuide.SetActive(false);
         tileGuide.SetActive(false);
         await UniTask.WaitUntil(() => _progress >= 10, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+        FinishTutoUI();
+    }
+
+    private void FinishTutoUI()
+    {
         Destroy(tutoCanvas);
         Destroy(researchCloseGuide);
         Destroy(researchConfirmGuide);

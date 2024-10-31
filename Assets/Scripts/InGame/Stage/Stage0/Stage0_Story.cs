@@ -71,6 +71,7 @@ public class Stage0_Story : MonoBehaviour
 
     private async UniTaskVoid SpeedUIQuestCheck()
     {
+        GameManager.Instance.speedLock = true;
         const string targetQuest = "q0103";
         await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         speedUI.SetActive(true);
@@ -87,6 +88,17 @@ public class Stage0_Story : MonoBehaviour
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
+        if (SaveManager.Instance.playerData != null)
+        {
+            GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
+            GameManager.Instance.speedController.SetSpeedNormal();
+            DeckUIQuestCheck().Forget();
+            ManaUIQuestCheck().Forget();
+            SpeedUIQuestCheck().Forget();
+            ShopUIQuestCheck().Forget();
+            return;
+        }
+
         if (SettingManager.Instance.stageState == 0)
             await PlayScript(_Entry0);
         else
@@ -252,6 +264,8 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         //GameManager.Instance.waveController.SpawnWave(0);
         QuestManager.Instance.InitQuest();
+
+        SaveManager.Instance.SavePlayerData();
 
         DeckUIQuestCheck().Forget();
         ManaUIQuestCheck().Forget();
