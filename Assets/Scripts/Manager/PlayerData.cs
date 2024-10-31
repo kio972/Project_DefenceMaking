@@ -62,6 +62,9 @@ public struct ShopData
 
 public class PlayerData
 {
+    //Scene 관련
+    public string sceneName;
+
     //GameManager 관련
     public int curWave;
     public float curTime;

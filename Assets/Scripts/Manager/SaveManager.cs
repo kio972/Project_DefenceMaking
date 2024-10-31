@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : Singleton<SaveManager>
 {
@@ -74,6 +75,8 @@ public class SaveManager : Singleton<SaveManager>
     public void SavePlayerData()
     {
         playerData = new PlayerData();
+
+        playerData.sceneName = SceneManager.GetActiveScene().name;
 
         SaveAssetData(playerData);
         SaveTileData(playerData);

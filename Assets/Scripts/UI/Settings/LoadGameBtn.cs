@@ -10,6 +10,8 @@ public class LoadGameBtn : MoveSceneBtn
         SaveManager.Instance.LoadPlayerData();
         if (SaveManager.Instance.playerData.tiles == null)
             gameObject.SetActive(false);
+        else
+            sceneName = SaveManager.Instance.playerData.sceneName;
     }
 
 }
