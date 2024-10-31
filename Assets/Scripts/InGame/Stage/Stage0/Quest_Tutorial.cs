@@ -30,52 +30,6 @@ public class Quest0001 : Quest
 
 public class Quest0101 : Quest
 {
-    Vector3 prevPos = Vector3.zero;
-
-    public override void CheckCondition()
-    {
-        if(prevPos == Vector3.zero)
-            prevPos = GameManager.Instance.cameraController.transform.position;
-
-        if ((GameManager.Instance.cameraController.transform.position - prevPos).magnitude > 0.1f)
-        {
-            curClearNum[0]++;
-            isComplete[0] = true;
-        }
-    }
-
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        GameManager.Instance.gold += 10;
-    }
-}
-
-public class Quest0102 : Quest
-{
-    float prevTimeScale = -1;
-
-    public override void CheckCondition()
-    {
-        if (prevTimeScale == -1)
-            prevTimeScale = GameManager.Instance.timeScale;
-
-        if (prevTimeScale != GameManager.Instance.timeScale)
-        {
-            curClearNum[0]++;
-            isComplete[0] = true;
-        }
-    }
-
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        GameManager.Instance.gold += 10;
-    }
-}
-
-public class Quest0103 : Quest
-{
     private TileNode curNode = null;
 
     public override void CheckCondition()
@@ -97,7 +51,7 @@ public class Quest0103 : Quest
     }
 }
 
-public class Quest0104 : Quest
+public class Quest0102 : Quest
 {
     private bool isInit;
     private int monsterCount = -1;
@@ -159,9 +113,35 @@ public class Quest0104 : Quest
         GameManager.Instance.gold += 10;
         NodeManager.Instance.RemoveSetTileEvent(IncreaseCount);
     }
+
 }
 
-public class Quest0105 : Quest
+public class Quest0103 : Quest
+{
+
+    float prevTimeScale = -1;
+
+    public override void CheckCondition()
+    {
+        if (prevTimeScale == -1)
+            prevTimeScale = GameManager.Instance.timeScale;
+
+        if (prevTimeScale != GameManager.Instance.timeScale)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+
+}
+
+public class Quest0104 : Quest
 {
     GameObject guide = null;
 
@@ -187,7 +167,7 @@ public class Quest0105 : Quest
     }
 }
 
-public class Quest0106 : Quest
+public class Quest0105 : Quest
 {
     private int cardCount = -1;
     private int deckCount = -1;
@@ -223,7 +203,7 @@ public class Quest0106 : Quest
     }
 }
 
-public class Quest0107 : Quest
+public class Quest0106 : Quest
 {
     private bool[] shopList = null;
     private ItemSlot[] packs;
@@ -232,7 +212,7 @@ public class Quest0107 : Quest
     {
         get
         {
-            for(int i = 0; i < shopList.Length; i++)
+            for (int i = 0; i < shopList.Length; i++)
             {
                 if (shopList[i] != packs[i].IsSoldOut && packs[i].IsSoldOut)
                     return true;
@@ -246,16 +226,36 @@ public class Quest0107 : Quest
     {
         if (shopList == null)
         {
-            ManageBtnsContol manageBtnsContol = MonoBehaviour.FindObjectOfType<ManageBtnsContol>();
-            if (manageBtnsContol != null)
-                manageBtnsContol.shopBtn.SetActive(true);
             packs = GameManager.Instance.shop.GetComponentsInChildren<ItemSlot>(true);
             shopList = new bool[packs.Length];
-            for(int i = 0; i < packs.Length; i++)
+            for (int i = 0; i < packs.Length; i++)
                 shopList[i] = packs[i].IsSoldOut;
         }
 
-        if(IsItemSold)
+        if (IsItemSold)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.gold += 10;
+    }
+}
+
+public class Quest0107 : Quest
+{
+    Vector3 prevPos = Vector3.zero;
+
+    public override void CheckCondition()
+    {
+        if (prevPos == Vector3.zero)
+            prevPos = GameManager.Instance.cameraController.transform.position;
+
+        if ((GameManager.Instance.cameraController.transform.position - prevPos).magnitude > 0.1f)
         {
             curClearNum[0]++;
             isComplete[0] = true;

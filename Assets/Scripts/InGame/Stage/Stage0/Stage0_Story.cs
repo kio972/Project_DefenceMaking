@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Stage0_Story : MonoBehaviour
@@ -27,6 +28,16 @@ public class Stage0_Story : MonoBehaviour
 
     public int tutoProgress { get; private set; }
 
+
+    [SerializeField]
+    private GameObject deckBtn;
+    [SerializeField]
+    private GameObject manaUI;
+    [SerializeField]
+    private GameObject speedUI;
+    [SerializeField]
+    private GameObject shopBtn;
+
     private bool LockDestroyTile(GameObject obj)
     {
         Tile tile = obj.GetComponent<Tile>();
@@ -42,6 +53,35 @@ public class Stage0_Story : MonoBehaviour
     {
         StoryManager.Instance.EnqueueScript(targetScript);
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+    }
+
+    private async UniTaskVoid DeckUIQuestCheck()
+    {
+        const string targetQuest = "q0105";
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        deckBtn.SetActive(true);
+    }
+
+    private async UniTaskVoid ManaUIQuestCheck()
+    {
+        const string targetQuest = "q0102";
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        manaUI.SetActive(true);
+    }
+
+    private async UniTaskVoid SpeedUIQuestCheck()
+    {
+        const string targetQuest = "q0103";
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        speedUI.SetActive(true);
+        GameManager.Instance.speedLock = false;
+    }
+
+    private async UniTaskVoid ShopUIQuestCheck()
+    {
+        const string targetQuest = "q0106";
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        shopBtn.SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -192,7 +232,7 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.timerLock = false;
         GameManager.Instance.spawnLock = false;
         GameManager.Instance.drawLock = false;
-        GameManager.Instance.speedLock = false;
+        //GameManager.Instance.speedLock = false;
         GameManager.Instance.cameraLock = false;
         GameManager.Instance.saveLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
@@ -212,5 +252,10 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         //GameManager.Instance.waveController.SpawnWave(0);
         QuestManager.Instance.InitQuest();
+
+        DeckUIQuestCheck().Forget();
+        ManaUIQuestCheck().Forget();
+        SpeedUIQuestCheck().Forget();
+        ShopUIQuestCheck().Forget();
     }
 }

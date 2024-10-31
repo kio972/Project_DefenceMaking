@@ -8,7 +8,7 @@ public abstract class QuestCondition
     public abstract bool IsConditionPassed();
 }
 
-public class QusetCondition_m0106 : QuestCondition
+public class QusetCondition_m0105 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
@@ -16,7 +16,7 @@ public class QusetCondition_m0106 : QuestCondition
     }
 }
 
-public class QusetCondition_m0107 : QuestCondition
+public class QusetCondition_m0106 : QuestCondition
 {
     public override bool IsConditionPassed()
     {

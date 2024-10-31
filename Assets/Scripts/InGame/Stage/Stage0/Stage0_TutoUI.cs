@@ -15,9 +15,6 @@ public class Stage0_TutoUI : MonoBehaviour
     private GameObject rotateGuide;
 
     [SerializeField]
-    private CardDeckController deckBtn;
-
-    [SerializeField]
     private GameObject deployBtn;
     [SerializeField]
     private GameObject researchBtn;
@@ -200,8 +197,5 @@ public class Stage0_TutoUI : MonoBehaviour
         Destroy(researchSlimeGuide);
         realDeploy.SetActive(true);
         researchPage.transform.parent.gameObject.SetActive(true);
-
-        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q0106").Count() >= 1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        deckBtn.gameObject.SetActive(true);
     }
 }
