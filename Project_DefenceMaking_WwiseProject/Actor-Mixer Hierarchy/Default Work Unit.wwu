@@ -3,938 +3,2674 @@
 	<AudioObjects>
 		<WorkUnit Name="Default Work Unit" ID="{AEEB4062-0C31-47FB-B63F-951342C02777}" PersistMode="Standalone">
 			<ChildrenList>
-				<Sound Name="Blue_Attack" ID="{EC5BCCF1-122C-4F11-B51C-117D80A3E43A}" ShortID="647241443">
-					<PropertyList>
-						<Property Name="Pitch" Type="int32">
-							<ValueList>
-								<Value>10</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
-						</Reference>
-					</ReferenceList>
+				<Folder Name="Defence_Making_Sound" ID="{F87BCC9E-3097-474F-A861-2498DE9037E7}" ShortID="169958119">
 					<ChildrenList>
-						<AudioFileSource Name="Attack_Mimic_1" ID="{E9FFA0D4-25EB-4CD0-B117-CA244568ED64}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="814039165"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Mimic_2" ID="{5B4839DE-860B-412A-A6A4-847C2A264F30}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="429787325"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Mimic_3" ID="{51151698-2506-4C43-923F-29EC9ED496D3}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1059749253"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Mimic_4" ID="{6B6B1FB5-26F0-48F1-BF60-3F424B290A79}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Mimic_4.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="214310157"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_slime_1" ID="{CACC6AAB-18BA-4E0F-878A-7E183A58CB1F}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_slime_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1034664849"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_slime_2" ID="{3F5877CD-7DAF-440D-8C2E-776894C362A3}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_slime_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="302101275"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_slime_3" ID="{6EEF6D9B-CBBB-40A3-8AC4-5765259ED2E1}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_slime_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="206087936"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_StoneGolem_1" ID="{ED374EFF-6E9B-4F0A-8FEE-2E9DE2481787}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="687693806"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_StoneGolem_2" ID="{FA6CF4E4-92D0-4191-BD37-025375A41A0B}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="204957617"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_StoneGolem_3" ID="{E56D94D1-A8C4-46EE-8294-779FA48F73E8}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="292140083"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_StoneGolem_4" ID="{EA6E7606-F649-4466-942A-AC262FD3A4C0}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_StoneGolem_4.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="647783814"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Trap_A_1" ID="{1E033AA0-F51A-4866-B116-A5781BF8E612}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1007309864"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Trap_A_2" ID="{9F6E1B64-01ED-4D6E-94D8-3C517D95CC9C}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="830176880"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Trap_A_3" ID="{64A26A56-1475-4C42-9B7F-D7A8623F8026}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="772774625"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Attack_Trap_A_4" ID="{6156196C-4F75-4599-BAA2-421E4369820E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Attack_Trap_A_4.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="358418718"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="attack_trap_B_A" ID="{3190A4B2-9E8E-453F-BFEF-C4D449C13847}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\attack_trap_B_A.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="899887520"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="attack_trap_B_B" ID="{78BCCA9A-443D-46BB-B749-DE172D1675A4}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\attack_trap_B_B.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="804715862"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="attack_trap_C_01" ID="{F6AAEC4A-5586-4272-939D-C1E2B98FC621}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\attack_trap_C_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="839393464"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Blue_Attack_01" ID="{7EBB4B05-A23B-424E-9DF6-F1819422C39E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1062015631"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Blue_Attack_02" ID="{046AE32C-F3C6-478C-8192-B0A9A59DAAAF}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="317685592"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Blue_Attack_03" ID="{24CC16FF-A799-4C97-844A-0D4C4EB870CF}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1042784421"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Blue_Attack_04" ID="{829F40A4-3CB9-4686-AEBD-7193AD3C961A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Blue_Attack_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="527658891"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Boss_Attack_1" ID="{D499A2B2-C15F-4135-AD3D-F27A0DBE5C2A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="268701896"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Boss_Attack_2" ID="{AEAC6B6E-C435-47C1-B5E1-03188B2D2C32}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="934822932"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Boss_Attack_3" ID="{FD76C654-335D-42A7-A6B3-C52980E6E80D}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1014626425"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Boss_Attack_4" ID="{798F0127-7A3F-44DA-8E80-6D875839B789}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_4.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="23287247"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Boss_Attack_5" ID="{3DEE7444-5A30-42E8-BCD1-2C20F0DDEBE8}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_5.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="802321252"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Boss_Attack_6" ID="{795FE541-80D6-4AAF-A43E-FED78794A0E4}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Boss_Attack_6.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="864828636"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Bow_Attack_1" ID="{8940F36E-BA07-4247-B8AD-34F83F8BD18C}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="334509457"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Bow_Attack_2" ID="{27AEBBBD-0277-435C-AC47-7EC3E70D3C6F}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="57288591"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Bow_Attack_3" ID="{32C8833B-A853-4840-80CD-0740426AE7A6}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="566017947"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Bow_Attack_4" ID="{3B37C8AC-1A12-44BF-AC99-C2E32E5A2052}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_4.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="801659901"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Bow_Attack_5" ID="{D6924CBE-043B-43F1-983A-CAB34C27A545}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_5.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="541346238"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Bow_Attack_6" ID="{CB0E7752-FE58-48AF-97FB-39F4E9CE17C8}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Bow_Attack_6.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="791612428"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Goblin_1" ID="{2ED258C5-1B6F-4267-8C5B-8DF072A3FCFE}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Goblin_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="521920848"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Goblin_2" ID="{77F8AF41-E955-4BED-99F3-B93A4696E299}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Goblin_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="276987492"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Goblin_3" ID="{C2987EC4-60FC-447B-A959-100D7CD0AB74}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Goblin_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="864979988"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Mimic_1" ID="{A177369A-C89C-4357-8391-90B936475A2E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Mimic_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="366968059"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Mimic_2" ID="{A7AA92D2-728C-43FA-A7E7-9DE56C0C76F1}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Mimic_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="678540100"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Mimic_3" ID="{1E0DCB42-5785-4C4B-89C1-3DFA7B5AA678}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Mimic_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="706602841"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Slime_01" ID="{10B52B26-E4CA-451D-96B1-2A6253FF0484}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="389848744"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Slime_02" ID="{80F31C77-E7B3-449E-89D2-20287BEACA93}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="717215919"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Slime_03" ID="{6A4BD504-F45B-42C5-B30D-88192EA03EA3}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="798905109"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_Slime_04" ID="{2B9FA56B-9E55-4081-A9A7-1558F8D310F7}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_Slime_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="24769414"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_StoneGolem_01" ID="{AD18C41C-91B7-4D5F-9852-6F8021B959DF}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_StoneGolem_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="928994727"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Death_StoneGolem_02" ID="{ECA6EBE0-CA2F-494C-BD20-E1A6E7EED989}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Death_StoneGolem_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="989079363"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Defeat_icon_01" ID="{B49FC6E4-F035-4CDE-9392-9CE1E05769F4}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Defeat_icon_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="530046110"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Demon_Attack_A" ID="{1E1CE12B-F288-4892-8B81-B3CC99A71DBA}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Demon_Attack_A.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="32914987"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Demon_Attack_B" ID="{CA9202B7-4147-44AF-9409-2C162CE48D4B}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Demon_Attack_B.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="748118312"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Demon_Attack_C" ID="{B6215385-63F1-449D-A947-4A9DA8153686}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Demon_Attack_C.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="694581761"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Demon_Death_Layed" ID="{2C7A2957-7E45-47AB-B7A3-9B33F5DC49D5}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Demon_Death_Layed.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="682537168"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Demon_Death_Simple" ID="{244DCBFA-23A8-4FDA-80A9-4EEC4783681D}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Demon_Death_Simple.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="177515525"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="ESM_ACV_Vocals_male_pain_fatal_injury_bright_higher_pitch" ID="{AF80653E-DD95-4977-8114-83C1E08C2425}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\ESM_ACV_Vocals_male_pain_fatal_injury_bright_higher_pitch.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="904511644"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="ESM_ACV_Vocals_male_pain_light_injury_grunt_03" ID="{A56A7C15-34F1-40F3-ABC8-DA70652A22DD}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\ESM_ACV_Vocals_male_pain_light_injury_grunt_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="548106727"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="ESM_ACV_Vocals_male_pain_medium_heavy_damage_distressed_03" ID="{B783C223-EC60-47CF-979B-6B9C4FDC4EEF}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\ESM_ACV_Vocals_male_pain_medium_heavy_damage_distressed_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="978388835"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="FistHitDoor_ZA01_261" ID="{28968928-D46A-4667-B739-83440A2EBEDE}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\FistHitDoor_ZA01.261.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="910281137"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="FistHitDoor_ZA01_262" ID="{579346DA-E8F5-4886-AC4C-41145836A2A4}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\FistHitDoor_ZA01.262.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="72471963"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Ninja_Attack_1" ID="{1B09914F-FCD7-4B11-BF3A-5A5F065DCEAE}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="18172962"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Ninja_Attack_2" ID="{A184C6B3-7414-4C7B-A454-344EA75AEAA7}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="358453868"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Ninja_Attack_3" ID="{E52419FB-90C1-4635-B33A-AD7F5FBEA931}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="53029552"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Ninja_Attack_4" ID="{7228EE3C-7D3A-4D46-9A61-D44BAB8B1F4D}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_4.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="203122389"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Ninja_Attack_5" ID="{974D38D0-08CB-48BD-BF21-4959C2098CC6}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Ninja_Attack_5.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="311677868"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Purple_Attack_01" ID="{46729742-EACF-4337-9CA3-CBD5448BE0AA}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="311853606"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Purple_Attack_02" ID="{6D768BF7-5C88-4B39-B9B3-2F328169DEA4}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="328175843"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Purple_Attack_03" ID="{53727805-8CFE-4377-8ABE-50AD9F885F04}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="141217091"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Purple_Attack_04" ID="{61E2FF25-7D63-4F9E-A81F-6769A0C8B861}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="685401252"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Purple_Attack_05" ID="{EE344E1D-E64B-4532-8984-326AFFB37F25}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_05.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="370660564"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Purple_Attack_06" ID="{BD06AFE9-5869-44AB-9582-A740751FA1CE}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Purple_Attack_06.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="29266210"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Bodyfall_01" ID="{28AC4B6D-1BB7-4E83-8859-7CE91A25A58A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Bodyfall_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="339991924"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Bodyfall_02" ID="{58D54592-0EF5-4628-80A9-FA54B4997238}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Bodyfall_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="417548550"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Bodyfall_03" ID="{11C4366C-729F-42C4-9BD1-5F4404696E11}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Bodyfall_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="417928998"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_FeMale_01" ID="{DC32A112-E5AF-44CD-BE7D-A55B698C0CC3}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="588136305"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_FeMale_02" ID="{17F0876D-E04B-4616-B22E-391F1A07CFF5}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="31546145"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_FeMale_03" ID="{EFD87C49-1D78-4B22-BA85-EB0105BC285C}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="444046635"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_FeMale_04" ID="{B3C100C2-72FA-4BD1-80DA-CCFA5BA8431A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="515509363"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_FeMale_05" ID="{F9AA1CD3-3E8C-471D-854A-B4A3C5E07A83}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_FeMale_05.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="608542086"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Male_01" ID="{4D3A50E6-21CC-492F-91C3-B9FFE3A381E6}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="68263430"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Male_02" ID="{EE86F994-2EF8-4FD9-BB57-79F8C564B5AE}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="307143203"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Male_03" ID="{4EEA5761-C784-4AC1-8828-245AEC4C1251}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="422393216"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Male_04" ID="{8FC137A7-B2E9-4939-9923-E66671D3EFE2}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="62693893"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_death_Male_05" ID="{318BB002-0030-4F4A-8596-69B6E61A8A40}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_death_Male_05.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="227165688"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_Spell_01" ID="{9F626B13-03D8-41FC-83FD-F1B51BE8A149}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="942004608"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_Spell_02" ID="{99FD059C-A4CB-4FCA-A051-270509F39144}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="919157309"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_Spell_03" ID="{EFF9FB86-D3A1-4600-85E9-68832E46725F}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="448759925"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Raider_Spell_04" ID="{A8EC5CF3-9830-45FC-AC36-328B32D923E8}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Raider_Spell_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="427307433"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Summoned_goblin_01" ID="{8B6A48ED-7258-49D6-9AA0-360899310A74}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Summoned_goblin_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="241856485"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Summoned_Mimic_01" ID="{659643A0-0E5E-4329-B776-E95839CDD8D7}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Summoned_Mimic_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="512535478"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Summoned_slime_01" ID="{6B251565-7189-4057-9C88-7135A4EB5578}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Summoned_slime_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="724506159"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Summoned_Stonegolem_01" ID="{D89E781D-DE92-4918-9468-1BA0551B239E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Summoned_Stonegolem_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="832495152"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Sword_Attack_01" ID="{A254CB49-4DAC-4C0A-8BBF-C2BD0F5EE894}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="137180229"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Sword_Attack_02" ID="{D9851464-4F96-4BD1-ABB7-58EEC7092F28}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1070166207"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Sword_Attack_03" ID="{16AF8E68-B3F3-48BD-9893-B24603C628AB}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1022678959"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Sword_Attack_04" ID="{7E83FA1C-58AA-430A-A6EB-FF122B604FFE}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Sword_Attack_04.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="512485381"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Victory_icon_01" ID="{619E3EF8-C9E5-4F42-BE74-0A592EC360C1}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\Object_Sound\Victory_icon_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="143610120"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Alert_time" ID="{8AB3D82B-2FF4-4056-A3F3-44B967DAC07F}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Alert_time.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="948726479"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Card_Tile_E" ID="{2232128B-8B62-489D-B307-764D9E0E0D0C}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Card_Tile_E.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="852640175"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Card_Tile_Q" ID="{0562884B-9BCB-43A6-BAB7-B15BD80295E5}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Card_Tile_Q.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="719849091"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Click_card_01" ID="{14B87DB7-B207-496B-9E63-76E3FD8D1AC5}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Click_card_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="304640450"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Click_tile_01" ID="{39FBEAE0-1307-403F-941D-1C0E2A5F3443}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Click_tile_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="246560223"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Complete_Tech" ID="{8454A1AC-4031-4E1F-A115-55691A96AF48}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Complete_Tech.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="165427303"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Hidden_tile_01" ID="{785D15C8-0366-40D5-A219-CEF6B6F94267}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Hidden_tile_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="189911624"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Hidden_tile_02" ID="{AC079603-374E-446B-AC59-CB1C9440C4DB}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Hidden_tile_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="862618640"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Hidden_tile_03" ID="{69DF6D51-D074-4A99-8CA3-D0CE1FD86E9E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Hidden_tile_03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="193079804"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Open_Store" ID="{7D63B251-2239-4A77-8CB3-41E0541B9FF9}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Open_Store.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="576348307"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quest_Paper_Burn_1" ID="{B62EB617-5F20-4C3E-B88F-0E302CDD8823}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Burn_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="145495737"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quest_Paper_Burn_2" ID="{F7B1931F-9834-4786-B417-90132CD5115A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Burn_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="35117451"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quest_Paper_Open_1" ID="{86E06FBB-29B8-42BA-9490-E48B7757687A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Open_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="505254956"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quest_Paper_Open_2" ID="{E46D4D24-A13E-45FD-9BC5-E6BE2418B29A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Open_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="629197326"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quest_Paper_Open_3" ID="{424A8226-2177-4394-849D-3CAF07A7B527}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quest_Paper_Open_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1028839070"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Close_Failed_1" ID="{E494F20B-2A79-4E07-AAC1-FB45BDAEDF0E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Failed_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="319117382"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Close_Failed_2" ID="{1C17E1D6-AA4B-41C5-BBA4-8BF3E389AEF1}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Failed_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="437425014"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Close_Sussed_1" ID="{49B98174-6695-47D2-AA25-53BB4CC9A5BD}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Sussed_1.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="457607963"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Close_Sussed_2" ID="{C87494DE-52F2-444D-9B74-C15B85381E62}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Sussed_2.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="549030579"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Close_Sussed_3" ID="{C0E44EC7-2742-4749-ACE2-9B1E3B35847D}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Close_Sussed_3.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="934287172"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Creat_01" ID="{F43B8821-3F60-4EF7-AF2D-643F7BC29D60}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Creat_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="536749135"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Quset_Creat_02" ID="{FF8110B9-060C-4914-BECC-DDAD7741507F}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Quset_Creat_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="210275174"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Recruit_Open_steel" ID="{254987F7-029E-4407-8346-F88AB9918189}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Recruit_Open_steel.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="22198623"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Recruit_Open_wood" ID="{544D1B4D-294D-4D3D-9196-2123FCDBD49B}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Recruit_Open_wood.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="978787827"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Set_trap_01" ID="{30891E7B-9A13-4540-8A9D-CED5A45AFDC3}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Set_trap_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="856674717"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Set_trap_02" ID="{A49F633B-FF53-4B58-9DBE-40E1944BF2C2}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Set_trap_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="101270978"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Tech_research_Close" ID="{6EA9479C-D5A5-46A8-B89D-884DA112B8EB}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Close.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="87113873"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Tech_research_Fail-PitchII_02" ID="{BA19D156-154A-4A77-A8C7-FCD252BF67CF}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Fail-PitchII_02.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="741335801"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Tech_research_Fail_01" ID="{D3066F9E-4360-4FBF-B7A9-30157854AA8E}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Fail_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="672317067"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Tech_research_Open" ID="{F0D2AE8C-2E0F-498B-8247-BD025AF493DC}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Tech_research_Open.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="356757889"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="Time_Over_CruchBell-01" ID="{5EA58C94-4AC1-4A41-9041-83225F64F0F3}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\Time_Over_CruchBell-01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="983595184"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="UI_Click_01" ID="{A92F9A6C-BDAF-4021-9568-F25E3BA55C1D}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\UI_Click_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="378400303"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="UI_Click_DownPitch_01" ID="{244D128F-FAEA-4F01-8198-DDE69B541532}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\UI_Click_DownPitch_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="592689357"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="UI_MouseOver" ID="{5597B331-C220-4BF7-92BC-F891C863E2ED}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\UI_MouseOver.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="54241840"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="UI_MouseOver_01" ID="{52142FCE-C37C-4510-8F3A-0481412387F0}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\UI_MouseOver_01.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="141504077"/>
-							</MediaIDList>
-						</AudioFileSource>
-						<AudioFileSource Name="UI_Scprit" ID="{39713238-4D7E-470E-BB53-E2135FC18F7A}">
-							<Language>SFX</Language>
-							<AudioFile>Sound_Rework\UI_Sound\UI_Scprit.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="171277269"/>
-							</MediaIDList>
-						</AudioFileSource>
+						<Folder Name="Object_Sound" ID="{024AC577-3147-4A19-9119-91C3CBD59AEC}" ShortID="209109826">
+							<ChildrenList>
+								<Sound Name="attack_trap_B_A" ID="{4E0CF66C-7828-4795-B025-0E4FDCA9D0BA}" ShortID="373981060">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="attack_trap_B_A" ID="{F5E0D8C5-A7D3-4900-A996-AC8F9DD64425}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\attack_trap_B_A.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1007191944"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="attack_trap_B_A" ID="{F5E0D8C5-A7D3-4900-A996-AC8F9DD64425}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="attack_trap_B_B" ID="{7074D6CF-55EA-42D7-9F81-45BCFB57C47A}" ShortID="983535410">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="attack_trap_B_B" ID="{5E2C2C69-7367-4EF7-8378-811560213183}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\attack_trap_B_B.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="513011091"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="attack_trap_B_B" ID="{5E2C2C69-7367-4EF7-8378-811560213183}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="attack_trap_C_01" ID="{77BCA319-9729-4989-8680-EE4CBF82FE02}" ShortID="886297867">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="attack_trap_C_01" ID="{9770313A-1476-43DC-8262-1250D02C7F6A}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\attack_trap_C_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="310923769"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="attack_trap_C_01" ID="{9770313A-1476-43DC-8262-1250D02C7F6A}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Defeat_icon_01" ID="{AEB0D1A6-8FFD-47C3-B6EC-8BD969A9E0ED}" ShortID="681474522">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Defeat_icon_01" ID="{26D258E8-DD8B-415E-BED2-3A3AEB3E7A47}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Defeat_icon_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="376852097"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Defeat_icon_01" ID="{26D258E8-DD8B-415E-BED2-3A3AEB3E7A47}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Demon_Death_Simple" ID="{FD263464-09BC-4108-BB95-DD246A40D213}" ShortID="749375948">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Demon_Death_Simple" ID="{42BB8AC4-F60B-40FE-8726-282A0CBF6230}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Demon_Death_Simple.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="736766495"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Demon_Death_Simple" ID="{42BB8AC4-F60B-40FE-8726-282A0CBF6230}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Summoned_goblin_01" ID="{A0D51A92-F206-4F6A-BEDD-DDE90E793B8E}" ShortID="284310654">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Summoned_goblin_01" ID="{F8A6378C-F949-4680-8A70-E09ED102C636}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Summoned_goblin_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="278259090"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Summoned_goblin_01" ID="{F8A6378C-F949-4680-8A70-E09ED102C636}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Summoned_Mimic_01" ID="{735117DC-AFB0-49FD-BB20-D73FD627311F}" ShortID="944677523">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Summoned_Mimic_01" ID="{917A5343-2161-4197-93E5-685F47A4F64F}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Summoned_Mimic_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1009327479"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Summoned_Mimic_01" ID="{917A5343-2161-4197-93E5-685F47A4F64F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Summoned_slime_01" ID="{588F23DC-0630-464D-AE12-3DF515FD37A6}" ShortID="277129214">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Summoned_slime_01" ID="{CE8651A4-DC2C-40FE-954D-AAAAD338B642}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Summoned_slime_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="15148115"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Summoned_slime_01" ID="{CE8651A4-DC2C-40FE-954D-AAAAD338B642}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Summoned_Stonegolem_01" ID="{99A6589C-5DCC-4573-A8BD-16DC3F4615CF}" ShortID="480733893">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Summoned_Stonegolem_01" ID="{EED0DD92-E283-4BDC-84BE-C9767E870056}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Summoned_Stonegolem_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="483543623"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Summoned_Stonegolem_01" ID="{EED0DD92-E283-4BDC-84BE-C9767E870056}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Victory_icon_01" ID="{0B76A5AC-EE4C-4B40-9A7B-B1B3FB6BE6F7}" ShortID="995192524">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Victory_icon_01" ID="{FC2F7A43-AD69-4703-84B3-A5631D99973A}">
+											<Language>SFX</Language>
+											<AudioFile>Object_Sound\Victory_icon_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="998165293"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Victory_icon_01" ID="{FC2F7A43-AD69-4703-84B3-A5631D99973A}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Raider_death_Bodyfall" ID="{3307E899-E72D-4053-BF8E-2B59B46F4A49}" ShortID="39271980">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Raider_death_Bodyfall_01" ID="{145CB69E-B1C3-4B2F-AB25-C359305D0F96}">
+											<Language>SFX</Language>
+											<AudioFile>Raider_death_Bodyfall_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="649175020"/>
+											</MediaIDList>
+										</AudioFileSource>
+										<AudioFileSource Name="Raider_death_Bodyfall_02" ID="{E6FABDAD-4E4C-47DA-9910-D64EFB916A15}">
+											<Language>SFX</Language>
+											<AudioFile>Raider_death_Bodyfall_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="55905706"/>
+											</MediaIDList>
+										</AudioFileSource>
+										<AudioFileSource Name="Raider_death_Bodyfall_03" ID="{D2484A01-5898-4747-AB83-7B2FE4FFCAE5}">
+											<PropertyList>
+												<Property Name="FadeInDuration" Type="Real64" Value="0.0407713210702341"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.642827828874025"/>
+												<Property Name="LoopBegin" Type="Real64" Value="0.0489255852842809"/>
+												<Property Name="LoopEnd" Type="Real64" Value="0.239191750278707"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>Raider_death_Bodyfall_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="914234130"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Raider_death_Bodyfall_01" ID="{145CB69E-B1C3-4B2F-AB25-C359305D0F96}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<RandomSequenceContainer Name="Ninja_Attack" ID="{0EC0491A-2558-4D35-9D44-9E36B3A4303B}" ShortID="249176907">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Ninja_Attack_3" ID="{46D3F8A0-C307-4055-AF4E-628F4D1C3740}" ShortID="528871085">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Ninja_Attack_3" ID="{2BA96F7E-108B-4E08-A2A9-0E390E99FE28}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Ninja_Attack_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="979686237"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Ninja_Attack_3" ID="{2BA96F7E-108B-4E08-A2A9-0E390E99FE28}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Ninja_Attack_4" ID="{88A4BF6D-9F17-46D2-A2C1-1554088F1452}" ShortID="136411544">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Ninja_Attack_4" ID="{9FD5A9C9-95FA-49E2-8861-6AACCA2AC673}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Ninja_Attack_4.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="813663004"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Ninja_Attack_4" ID="{9FD5A9C9-95FA-49E2-8861-6AACCA2AC673}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Ninja_Attack_2" ID="{95F904AE-8ECA-4758-BB70-D7F8DD9F1A19}" ShortID="952869111">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Ninja_Attack_2" ID="{14557067-47D2-4ED8-A3DB-39D702F537B4}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Ninja_Attack_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1023286746"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Ninja_Attack_2" ID="{14557067-47D2-4ED8-A3DB-39D702F537B4}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Ninja_Attack_5" ID="{EC88B599-FB28-49F7-9B89-7629BD9F07A6}" ShortID="559907602">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Ninja_Attack_5" ID="{232D7558-8DD4-4FEF-9E95-27B56D146435}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Ninja_Attack_5.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1000150991"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Ninja_Attack_5" ID="{232D7558-8DD4-4FEF-9E95-27B56D146435}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Ninja_Attack_1" ID="{8F8400FF-0B66-476D-B1D8-E8AF9A417E9F}" ShortID="1017247813">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Ninja_Attack_1" ID="{F4314C79-33FA-4FB4-B32B-389B0157F2D2}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Ninja_Attack_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="262760469"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Ninja_Attack_1" ID="{F4314C79-33FA-4FB4-B32B-389B0157F2D2}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Attack_Mimic" ID="{83A80BE0-B703-4B3D-95AC-4DE55FBCB212}" ShortID="965470443">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Attack_Mimic_1" ID="{E0CD4DD2-909C-4303-A675-2D772E1CFDD1}" ShortID="162794465">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Mimic_1" ID="{BD08B776-4583-4EC0-AC56-EA3B4CB77A12}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Mimic_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="470752843"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Mimic_1" ID="{BD08B776-4583-4EC0-AC56-EA3B4CB77A12}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Mimic_2" ID="{2891FDAE-0856-4912-A676-6693AC129964}" ShortID="666344034">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Mimic_2" ID="{607D9B45-50A9-4C20-A16B-594CC44DADD4}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Mimic_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="782397571"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Mimic_2" ID="{607D9B45-50A9-4C20-A16B-594CC44DADD4}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Mimic_3" ID="{6C2B2689-D189-4421-93C9-0A7781117889}" ShortID="395259021">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Mimic_3" ID="{61D6280A-6F1B-4347-880D-18F75E1E40C9}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Mimic_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="323021496"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Mimic_3" ID="{61D6280A-6F1B-4347-880D-18F75E1E40C9}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Mimic_4" ID="{F39DA2D9-114E-4CED-B167-1BBCD9B8A457}" ShortID="136077456">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Mimic_4" ID="{177F8588-5EE0-4AC0-A14D-92FF72D8853D}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Mimic_4.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="602123644"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Mimic_4" ID="{177F8588-5EE0-4AC0-A14D-92FF72D8853D}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Attack_Slime" ID="{21600653-A34D-479B-8BAE-C3AA9B38F85F}" ShortID="626890915">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Attack_slime_1" ID="{63D30853-5373-414A-837C-B7662C51B0DC}" ShortID="444795337">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_slime_1" ID="{3CFA8656-18F3-454A-8BA7-C4A71C876E59}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_slime_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="216044309"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_slime_1" ID="{3CFA8656-18F3-454A-8BA7-C4A71C876E59}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_slime_2" ID="{1DE8A557-949D-4786-91BE-047AFD8F9309}" ShortID="20572312">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_slime_2" ID="{7B792FB3-F938-4E4F-9580-C612EAEC6FCD}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_slime_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="275535356"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_slime_2" ID="{7B792FB3-F938-4E4F-9580-C612EAEC6FCD}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_slime_3" ID="{D2099C23-3F68-4A20-BA55-809D87664CDC}" ShortID="565093092">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_slime_3" ID="{51CD3108-B9B6-4F2C-AC93-8E30A79EB3F3}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_slime_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1003717388"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_slime_3" ID="{51CD3108-B9B6-4F2C-AC93-8E30A79EB3F3}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Attack_StoneGolem" ID="{01A3DB4C-E24B-4F87-8E40-445797DF752A}" ShortID="154325701">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Attack_StoneGolem_1" ID="{AD3EBE11-36DB-4E37-A0F3-F55B1D6BDF86}" ShortID="81570569">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_StoneGolem_1" ID="{5F18C83B-F81A-4586-91F9-5023A01D848B}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_StoneGolem_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="152520223"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_StoneGolem_1" ID="{5F18C83B-F81A-4586-91F9-5023A01D848B}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_StoneGolem_2" ID="{88040266-566A-4ACB-985A-1304799A0164}" ShortID="548148957">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_StoneGolem_2" ID="{F4EC8C93-4A5D-4DAA-A54D-33394B0B50DD}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_StoneGolem_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="660506400"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_StoneGolem_2" ID="{F4EC8C93-4A5D-4DAA-A54D-33394B0B50DD}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_StoneGolem_3" ID="{24E0DD1B-2B03-432E-9118-EC721B65A2B7}" ShortID="562532726">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_StoneGolem_3" ID="{3C2FDD16-28BB-4F73-8E5E-70772F019672}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_StoneGolem_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="926891408"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_StoneGolem_3" ID="{3C2FDD16-28BB-4F73-8E5E-70772F019672}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_StoneGolem_4" ID="{6B47434B-E76D-4402-8D12-E9B6965132A6}" ShortID="431104551">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_StoneGolem_4" ID="{1043EDE2-FEAD-46C2-9FBC-B2A1618B95E2}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_StoneGolem_4.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="582226063"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_StoneGolem_4" ID="{1043EDE2-FEAD-46C2-9FBC-B2A1618B95E2}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Attack_Trap_A" ID="{00BF455E-76F3-4558-960C-7C7896DA4F0F}" ShortID="286939252">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Attack_Trap_A_1" ID="{E3BFCE1A-6992-49A1-A044-E6ACC8E661BB}" ShortID="273546334">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Trap_A_1" ID="{ED37C9D8-5526-4ABE-9A7B-CFA084F0F1DF}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Trap_A_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="4476517"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Trap_A_1" ID="{ED37C9D8-5526-4ABE-9A7B-CFA084F0F1DF}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Trap_A_2" ID="{DF852027-208B-4B13-839B-15307C393E75}" ShortID="865877723">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Trap_A_2" ID="{1954F78E-7467-40CB-93F7-34D9E60DD6B5}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Trap_A_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="424757925"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Trap_A_2" ID="{1954F78E-7467-40CB-93F7-34D9E60DD6B5}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Trap_A_3" ID="{5A4FB5E1-9D2C-4A4B-A89C-3D0FBC1FED29}" ShortID="211324213">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Trap_A_3" ID="{AA433A33-914C-4560-8836-4996D1E4CE5F}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Trap_A_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="46179571"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Trap_A_3" ID="{AA433A33-914C-4560-8836-4996D1E4CE5F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Trap_A_4" ID="{496BF17B-D6AB-45AD-95B3-F6991CA4DEDC}" ShortID="38289744">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Attack_Trap_A_4" ID="{360E1D13-740A-4D44-87DA-26473A20261A}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Attack_Trap_A_4.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="53523096"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Attack_Trap_A_4" ID="{360E1D13-740A-4D44-87DA-26473A20261A}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Boss_Attack" ID="{0BE1673E-F7AC-46C7-B5BC-451960DE1C80}" ShortID="1041832749">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Boss_Attack_1" ID="{418B3BE9-4D25-466B-B294-60DDC28F6216}" ShortID="1033000476">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Boss_Attack_1" ID="{8841CBFA-29F5-4048-A887-6957C98CE4F7}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Boss_Attack_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="320197884"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Boss_Attack_1" ID="{8841CBFA-29F5-4048-A887-6957C98CE4F7}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Boss_Attack_2" ID="{892B57FA-CFED-4505-B648-EBCC2A151B28}" ShortID="923873607">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Boss_Attack_2" ID="{F0815DCC-B5C5-440B-9724-546F52F457A2}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Boss_Attack_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="51671805"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Boss_Attack_2" ID="{F0815DCC-B5C5-440B-9724-546F52F457A2}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Boss_Attack_3" ID="{9B4D350A-38B7-4964-A641-DADF86532E5E}" ShortID="767242304">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Boss_Attack_3" ID="{323A93CA-F76A-4663-9058-7614E8D7EA6A}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Boss_Attack_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="924909423"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Boss_Attack_3" ID="{323A93CA-F76A-4663-9058-7614E8D7EA6A}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Boss_Attack_4" ID="{CD1BDB3C-7766-4076-A334-63185B597248}" ShortID="938159375">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Boss_Attack_4" ID="{839B02CE-40DE-41FF-8CD4-F357A623130E}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Boss_Attack_4.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="234721114"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Boss_Attack_4" ID="{839B02CE-40DE-41FF-8CD4-F357A623130E}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Boss_Attack_5" ID="{5FC656A1-450C-4BBC-9068-88CA41050AF2}" ShortID="427717703">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Boss_Attack_5" ID="{0EA8F454-083A-47ED-A784-CCA2C89BA775}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Boss_Attack_5.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="910707618"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Boss_Attack_5" ID="{0EA8F454-083A-47ED-A784-CCA2C89BA775}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Boss_Attack_6" ID="{47B3917B-78AC-490A-8D23-CA3AFECF66CE}" ShortID="134422993">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Boss_Attack_6" ID="{6DD38EAE-BAAA-4932-BF6C-E3997FDD05F5}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Boss_Attack_6.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="224950719"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Boss_Attack_6" ID="{6DD38EAE-BAAA-4932-BF6C-E3997FDD05F5}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Death_Goblin" ID="{89E38C38-EE61-4FDB-9C42-4BC08E31127B}" ShortID="351637152">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Death_Goblin_1" ID="{857B9E54-8A0B-4D88-89EC-E545D297CB86}" ShortID="975414101">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Goblin_1" ID="{3D3DEE0A-B161-42B2-A4CE-381518C4F70A}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Goblin_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1040639964"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Goblin_1" ID="{3D3DEE0A-B161-42B2-A4CE-381518C4F70A}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Goblin_2" ID="{5DF0B391-B0FC-467C-87D1-2D5476761125}" ShortID="257662798">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Goblin_2" ID="{B0025747-CAC4-49A3-9A19-CDEF87703BF8}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Goblin_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="688972651"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Goblin_2" ID="{B0025747-CAC4-49A3-9A19-CDEF87703BF8}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Goblin_3" ID="{5DC596BA-D706-468B-A272-24A80B4D3E41}" ShortID="515249657">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Goblin_3" ID="{B633E081-5821-46D0-8DAD-2FE519B7B04E}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Goblin_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="490116609"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Goblin_3" ID="{B633E081-5821-46D0-8DAD-2FE519B7B04E}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Bow_Attack" ID="{DDD974B5-C926-4850-91E7-CEB943695F34}" ShortID="672006441">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Bow_Attack_1" ID="{796A83D5-95A0-4FF9-8EF9-108410611720}" ShortID="381643408">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Bow_Attack_1" ID="{11EACC23-1036-41E2-B5F9-194671812A43}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Bow_Attack_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="488245872"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Bow_Attack_1" ID="{11EACC23-1036-41E2-B5F9-194671812A43}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Bow_Attack_2" ID="{B47814E5-E4E6-439A-8CBC-106472BF066B}" ShortID="169462806">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Bow_Attack_2" ID="{9F9360A8-E554-4EB5-85A4-2517163A690C}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Bow_Attack_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="669446434"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Bow_Attack_2" ID="{9F9360A8-E554-4EB5-85A4-2517163A690C}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Bow_Attack_3" ID="{70F52661-67D8-429F-A045-80655BD219C3}" ShortID="116210972">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Bow_Attack_3" ID="{78F153BD-482B-4EA0-B45E-BDEB49E93F66}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Bow_Attack_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="614841340"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Bow_Attack_3" ID="{78F153BD-482B-4EA0-B45E-BDEB49E93F66}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Bow_Attack_4" ID="{E2189C49-F8D0-4B45-995E-8C7591E99170}" ShortID="644940019">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Bow_Attack_4" ID="{12D6C892-56D6-413C-9669-CBE242A076F4}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Bow_Attack_4.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="997572956"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Bow_Attack_4" ID="{12D6C892-56D6-413C-9669-CBE242A076F4}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Bow_Attack_5" ID="{834CDE32-9026-49F5-A5AE-507DC28E2B46}" ShortID="889144602">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Bow_Attack_5" ID="{15A491FE-7523-4CA2-A1B0-0C49EEEED66E}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Bow_Attack_5.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="109798100"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Bow_Attack_5" ID="{15A491FE-7523-4CA2-A1B0-0C49EEEED66E}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Bow_Attack_6" ID="{4192B6B9-A59E-4881-BECA-2D1371A7FA26}" ShortID="164588099">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Bow_Attack_6" ID="{32680434-D761-4D37-BDA7-5E586C8B54D5}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Bow_Attack_6.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="782855535"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Bow_Attack_6" ID="{32680434-D761-4D37-BDA7-5E586C8B54D5}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Death_Mimic" ID="{7A0FCDFE-1E8F-436B-B82A-3A31FE66E797}" ShortID="529461230">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Death_Mimic_1" ID="{70309BA6-E1AB-446D-AA28-32BA900E89A9}" ShortID="777256212">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Mimic_1" ID="{63B272AC-6D9E-4BB4-83D7-E3EC6DFB4BDF}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Mimic_1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="361535040"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Mimic_1" ID="{63B272AC-6D9E-4BB4-83D7-E3EC6DFB4BDF}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Mimic_2" ID="{C0E4BF61-25D5-4EF7-8B0A-36252A87268D}" ShortID="1053322882">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Mimic_2" ID="{B1845A0C-9B73-4EFB-8934-4CD08571BF36}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Mimic_2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="745738373"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Mimic_2" ID="{B1845A0C-9B73-4EFB-8934-4CD08571BF36}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Mimic_3" ID="{DE55C289-33E6-4CE9-B723-036BF9398853}" ShortID="519005536">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Mimic_3" ID="{420FBD43-25FB-4F0E-BB21-BFC6209DD33D}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Mimic_3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="806876994"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Mimic_3" ID="{420FBD43-25FB-4F0E-BB21-BFC6209DD33D}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Blue_Attack" ID="{037F087D-CFEC-4DD1-9F16-722CADB03AC3}" ShortID="442127276">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Blue_Attack_01" ID="{9966083E-BBE5-41B3-999C-B205F099CA9B}" ShortID="1063907514">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Blue_Attack_01" ID="{7BE5AE83-0746-4B63-8D2A-A2B1E6A2D6DE}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Blue_Attack_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="304157049"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Blue_Attack_01" ID="{7BE5AE83-0746-4B63-8D2A-A2B1E6A2D6DE}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Blue_Attack_02" ID="{578F63DE-DBD8-488E-BCB7-E42ADD2A3DE0}" ShortID="117123039">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Blue_Attack_02" ID="{34B83A8A-7978-4ED3-B61D-849D17C26434}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Blue_Attack_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="983264369"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Blue_Attack_02" ID="{34B83A8A-7978-4ED3-B61D-849D17C26434}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Blue_Attack_03" ID="{F87588F2-71F0-44F3-A033-1E0C976CA1B9}" ShortID="851356839">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Blue_Attack_03" ID="{066290D9-BF43-4FCD-AE7C-429C6D4A07A6}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Blue_Attack_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="305180474"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Blue_Attack_03" ID="{066290D9-BF43-4FCD-AE7C-429C6D4A07A6}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Blue_Attack_04" ID="{49C0645C-5909-4293-8541-E8D22CE7F784}" ShortID="609513748">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Blue_Attack_04" ID="{23DAA738-EB07-47B6-9F9C-3C92278528BE}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Blue_Attack_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1005635259"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Blue_Attack_04" ID="{23DAA738-EB07-47B6-9F9C-3C92278528BE}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Death_Slime" ID="{79CB6BF3-8FF4-48E1-801D-67AC079053E0}" ShortID="515924847">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Death_Slime_01" ID="{2D535B75-87F3-4EBE-8B2F-A50978EEBAC3}" ShortID="898112082">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Slime_01" ID="{D316563D-1738-4DDF-8EAF-B035D57727A4}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Slime_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="511882208"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Slime_01" ID="{D316563D-1738-4DDF-8EAF-B035D57727A4}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Slime_02" ID="{FD0D5A5A-DFFD-49FA-A808-4DF653F17B99}" ShortID="492964761">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Slime_02" ID="{0F17DCB5-1898-4718-AEF6-D024302D116D}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Slime_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="681254704"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Slime_02" ID="{0F17DCB5-1898-4718-AEF6-D024302D116D}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Slime_03" ID="{54FB1E7A-435E-4457-A94A-30DD6D73C923}" ShortID="55962351">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Slime_03" ID="{EDA9692E-68B9-45A8-87DB-644CEDA07D54}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Slime_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1040649728"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Slime_03" ID="{EDA9692E-68B9-45A8-87DB-644CEDA07D54}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_Slime_04" ID="{99869443-457B-4808-964D-359A0D5C3C95}" ShortID="532401617">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_Slime_04" ID="{21985E21-4C29-4901-93BE-240A2B13C747}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_Slime_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="293027693"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_Slime_04" ID="{21985E21-4C29-4901-93BE-240A2B13C747}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Death_StoneGolem" ID="{933DDD1F-162E-433D-BB56-879D3B426F49}" ShortID="950878607">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Death_StoneGolem_01" ID="{3ED7EE35-766B-41C3-ABC7-35B52ED12B83}" ShortID="544582814">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_StoneGolem_01" ID="{5C980BA5-1F55-410A-BE99-818477B97473}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_StoneGolem_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="224760474"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_StoneGolem_01" ID="{5C980BA5-1F55-410A-BE99-818477B97473}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Death_StoneGolem_02" ID="{3BA208BB-D63D-40CF-808F-39786381CA56}" ShortID="42620679">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Death_StoneGolem_02" ID="{F1A5EAD4-8924-4606-A9FB-DC4BC0B92818}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Death_StoneGolem_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="736485499"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Death_StoneGolem_02" ID="{F1A5EAD4-8924-4606-A9FB-DC4BC0B92818}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Demon_Attack" ID="{964A273D-7BE2-4C20-9031-EBF7CAAE1A3D}" ShortID="436255190">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Demon_Attack_A" ID="{90C24412-1A96-4C52-AF9E-21686F71D61E}" ShortID="61751156">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Demon_Attack_A" ID="{CB9FD51E-7B5A-4D67-9C1A-CF5B3C42D07F}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Demon_Attack_A.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="730519260"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Demon_Attack_A" ID="{CB9FD51E-7B5A-4D67-9C1A-CF5B3C42D07F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Demon_Attack_B" ID="{15C8297D-8ABC-4FC4-AB29-20D908956DFD}" ShortID="882394741">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Demon_Attack_B" ID="{027647D7-2ACC-405E-AA08-437C95CB74B2}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Demon_Attack_B.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="158664167"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Demon_Attack_B" ID="{027647D7-2ACC-405E-AA08-437C95CB74B2}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Demon_Attack_C" ID="{C288B141-38BF-4EE5-86A4-16E9734B9F95}" ShortID="738848806">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Demon_Attack_C" ID="{8361DFED-A5A0-4441-BD8C-6D0FA9F4BED7}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Demon_Attack_C.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="82606320"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Demon_Attack_C" ID="{8361DFED-A5A0-4441-BD8C-6D0FA9F4BED7}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Purple_Attack" ID="{869CDAC6-40E7-4424-B8AD-325E9590144B}" ShortID="1011116651">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Purple_Attack_01" ID="{6DB7B454-FC32-487F-BA7D-97BF1E33F149}" ShortID="357031003">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Purple_Attack_01" ID="{9438D36A-FF80-424C-A790-13C166D8F7D1}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Purple_Attack_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1018817277"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Purple_Attack_01" ID="{9438D36A-FF80-424C-A790-13C166D8F7D1}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Purple_Attack_02" ID="{5C49FCA4-184D-4528-90BF-4A5783CB72C7}" ShortID="364230495">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Purple_Attack_02" ID="{6F38ED5C-9CDA-49CE-949E-852D549BFC8C}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Purple_Attack_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="313633646"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Purple_Attack_02" ID="{6F38ED5C-9CDA-49CE-949E-852D549BFC8C}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Purple_Attack_03" ID="{9CCC615F-2A07-407F-820D-C5A3DBC7AE18}" ShortID="584847041">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Purple_Attack_03" ID="{581FF5AC-16E8-414D-9A41-8541644DA193}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Purple_Attack_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="339176630"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Purple_Attack_03" ID="{581FF5AC-16E8-414D-9A41-8541644DA193}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Purple_Attack_04" ID="{EA7178E2-4120-417D-918B-21582194196B}" ShortID="14848957">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Purple_Attack_04" ID="{9D45E8A9-77C2-4C03-817A-C440AD64551B}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Purple_Attack_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="510787600"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Purple_Attack_04" ID="{9D45E8A9-77C2-4C03-817A-C440AD64551B}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Purple_Attack_05" ID="{B94C5B63-3BAE-4838-9F63-BCCABC17122E}" ShortID="536785022">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Purple_Attack_05" ID="{FF1703DA-3831-4D1C-A91D-373FC6750492}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Purple_Attack_05.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="737643297"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Purple_Attack_05" ID="{FF1703DA-3831-4D1C-A91D-373FC6750492}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Purple_Attack_06" ID="{B7E038A8-2DF2-4194-BDDA-7169DC9B4719}" ShortID="975233500">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Purple_Attack_06" ID="{C2F8C5D5-CF9D-404D-B31F-CC78A79D772F}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Purple_Attack_06.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="909282154"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Purple_Attack_06" ID="{C2F8C5D5-CF9D-404D-B31F-CC78A79D772F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Raider_death_Male" ID="{DA0E4556-9C8B-4BB4-96D9-E86E7E5EF3F4}" ShortID="911753602">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Raider_death_Male_01" ID="{A617B4D7-23D7-4C5F-9158-35E38F943FDB}" ShortID="758813972">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Male_01" ID="{6871AD43-D849-444A-A7CF-726351CE1461}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Male_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="863585971"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Male_01" ID="{6871AD43-D849-444A-A7CF-726351CE1461}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_Male_02" ID="{FE3563FA-99E4-4155-B693-5C28652C33DE}" ShortID="807310492">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Male_02" ID="{E2E052AD-D718-4459-A991-F8CD52DAEE59}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Male_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="957265276"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Male_02" ID="{E2E052AD-D718-4459-A991-F8CD52DAEE59}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_Male_03" ID="{55C1A117-E666-4AA8-9A54-3F3E2CD657C7}" ShortID="513156596">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Male_03" ID="{16FB3904-99AA-4452-9626-8AFCC8978BDF}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Male_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="745202636"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Male_03" ID="{16FB3904-99AA-4452-9626-8AFCC8978BDF}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_Male_04" ID="{85C85E10-2A21-48D3-88A9-BD68CAEE0008}" ShortID="36884616">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Male_04" ID="{04603578-59B3-4BEB-A5C5-630316C52175}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Male_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="396077996"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Male_04" ID="{04603578-59B3-4BEB-A5C5-630316C52175}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_Male_05" ID="{6924303B-BCD4-47DB-8C59-B47A4BBA9E75}" ShortID="508483006">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Male_05" ID="{DD495DD0-67E6-44CD-B4A3-BF6127727921}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Male_05.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="870435421"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Male_05" ID="{DD495DD0-67E6-44CD-B4A3-BF6127727921}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Raider_death_Bodyfall_" ID="{EF19B1F2-01EC-4DB8-A049-80766E0D33C0}" ShortID="799148925">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Raider_death_Bodyfall_01" ID="{A0EB8B60-9077-4159-AC85-A0732D3B6C4C}" ShortID="69982853">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Bodyfall_01" ID="{4D5A2127-FC98-4558-B94B-4872D3FFF860}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Bodyfall_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="977520210"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Bodyfall_01" ID="{4D5A2127-FC98-4558-B94B-4872D3FFF860}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_Bodyfall_02" ID="{22BA4C72-D91B-48B4-9C80-C37777150475}" ShortID="792374564">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Bodyfall_02" ID="{E074AC5F-1F2B-4CAC-BFC7-C1507A863A0F}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Bodyfall_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="621029457"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Bodyfall_02" ID="{E074AC5F-1F2B-4CAC-BFC7-C1507A863A0F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_Bodyfall_03" ID="{FA80809F-8A72-45CF-BC86-88B5ABDAD16E}" ShortID="960940590">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_Bodyfall_03" ID="{DF681CD8-9B64-4C8E-A02F-D2AE400A6A99}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_Bodyfall_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="589991433"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_Bodyfall_03" ID="{DF681CD8-9B64-4C8E-A02F-D2AE400A6A99}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Raider_death_FeMale" ID="{C43A0B49-E605-42EB-A07D-68166FA40DDD}" ShortID="343200463">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Raider_death_FeMale_01" ID="{8FB8C768-2B0B-4598-A784-81D45E802128}" ShortID="632012109">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_FeMale_01" ID="{0A4D2EF1-B135-420D-B187-CBA032B04AEC}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_FeMale_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="234038036"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_FeMale_01" ID="{0A4D2EF1-B135-420D-B187-CBA032B04AEC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_FeMale_02" ID="{8C115BF1-048E-4D70-8816-2429E1097F64}" ShortID="243412100">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_FeMale_02" ID="{BC83DB77-B545-4B80-8E7E-C08B7CEC4B03}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_FeMale_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="29502292"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_FeMale_02" ID="{BC83DB77-B545-4B80-8E7E-C08B7CEC4B03}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_FeMale_03" ID="{76541589-EEEE-4988-97D3-1258FADA700E}" ShortID="357103957">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_FeMale_03" ID="{330C5988-BF46-4DC2-80E0-369B159270AB}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_FeMale_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="154153258"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_FeMale_03" ID="{330C5988-BF46-4DC2-80E0-369B159270AB}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_FeMale_04" ID="{7895497C-0485-4422-9CDE-DBD2DBDCDED6}" ShortID="219115592">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_FeMale_04" ID="{F5C304F3-E701-46BE-B104-A4C47CDC5132}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_FeMale_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="215587818"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_FeMale_04" ID="{F5C304F3-E701-46BE-B104-A4C47CDC5132}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_death_FeMale_05" ID="{88CE51BA-63CB-4ABC-8435-D6079B0B3B50}" ShortID="800874175">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_death_FeMale_05" ID="{8DAAA4B7-F632-41C1-858A-3B71E8EB5817}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_death_FeMale_05.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="401954870"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_death_FeMale_05" ID="{8DAAA4B7-F632-41C1-858A-3B71E8EB5817}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Sword_Attack" ID="{F476610F-7DD0-423A-AEDB-8DB41B9C9728}" ShortID="4472465">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Sword_Attack_01" ID="{A948FC61-43E1-4F9F-B942-857517C7002F}" ShortID="322837518">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Sword_Attack_01" ID="{1A5CDA5E-5652-438E-89D7-20CBD66791D7}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Sword_Attack_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="43348875"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Sword_Attack_01" ID="{1A5CDA5E-5652-438E-89D7-20CBD66791D7}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Sword_Attack_02" ID="{BAB8DC0A-40FB-4909-A240-978445DCE32C}" ShortID="537468938">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Sword_Attack_02" ID="{6661F93A-7CAA-4BDE-8D9E-21834E6F7861}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Sword_Attack_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="198947489"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Sword_Attack_02" ID="{6661F93A-7CAA-4BDE-8D9E-21834E6F7861}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Sword_Attack_03" ID="{12F7E6CC-A30F-446C-8EBB-2AC38D1FF664}" ShortID="222449776">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Sword_Attack_03" ID="{79FA0079-83AB-4717-8F3E-1ACF89A4BD19}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Sword_Attack_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1054372729"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Sword_Attack_03" ID="{79FA0079-83AB-4717-8F3E-1ACF89A4BD19}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Sword_Attack_04" ID="{106B9D24-468B-4725-937D-99D81A7A49A3}" ShortID="272163559">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Sword_Attack_04" ID="{CC59ED7F-A4D5-4EE0-9C08-23EB91F532C7}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Sword_Attack_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="431521689"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Sword_Attack_04" ID="{CC59ED7F-A4D5-4EE0-9C08-23EB91F532C7}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Raider_Spell" ID="{58C039CB-9A0C-4F85-A13B-7140D91EF0FF}" ShortID="840748496">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Raider_Spell_01" ID="{20A4A4E7-E4C3-4332-B4A7-769F7982FDF7}" ShortID="32771592">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_Spell_01" ID="{D7242767-2B23-4AA5-AE07-D2511DE736B9}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_Spell_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="799349625"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_Spell_01" ID="{D7242767-2B23-4AA5-AE07-D2511DE736B9}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_Spell_02" ID="{1EEEF125-93C1-4F9B-B536-AF05962D4B81}" ShortID="395621611">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_Spell_02" ID="{9D43516A-4F1F-4692-9B9D-56618EB3D5B4}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_Spell_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="338717844"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_Spell_02" ID="{9D43516A-4F1F-4692-9B9D-56618EB3D5B4}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_Spell_03" ID="{047722DC-0877-4D52-9B0D-601A23ECEABD}" ShortID="765134625">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_Spell_03" ID="{8513233C-CF74-4DD1-A66C-9D5AC799AAE5}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_Spell_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="368400063"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_Spell_03" ID="{8513233C-CF74-4DD1-A66C-9D5AC799AAE5}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Raider_Spell_04" ID="{D9AB3FA8-F16F-4771-9F1A-C10259D7E465}" ShortID="861163502">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Raider_Spell_04" ID="{19BCA675-AD57-40B5-99EC-A7ADCB6E23D0}">
+													<Language>SFX</Language>
+													<AudioFile>Object_Sound\Raider_Spell_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="352454335"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="Raider_Spell_04" ID="{19BCA675-AD57-40B5-99EC-A7ADCB6E23D0}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+							</ChildrenList>
+						</Folder>
+						<Folder Name="BGM" ID="{8DDB68E4-F3FF-40FC-B7FE-7F13DCCE4CAC}" ShortID="461511805"/>
+						<Folder Name="UI_Sound" ID="{6B8775FC-AEC6-4B30-A402-36313FED854D}" ShortID="443879215">
+							<ChildrenList>
+								<Sound Name="Alert_time_Need Check" ID="{7EF21425-4770-49AA-B19D-4A43F48BBB7F}" ShortID="631561924">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Alert_time" ID="{0D52A03E-3713-45D0-91AE-E56B5F318EB5}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Alert_time.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1063689367"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Alert_time" ID="{0D52A03E-3713-45D0-91AE-E56B5F318EB5}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Tile_Rotate" ID="{7B00D459-D613-4419-8FF7-8A1D3B210ABD}" ShortID="263441502">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Card_Tile_Q" ID="{64C7BAA6-53F1-4774-A205-4B0FFBCB30B5}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Card_Tile_Q.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="820685796"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Card_Tile_Q" ID="{64C7BAA6-53F1-4774-A205-4B0FFBCB30B5}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Card_Mouseover" ID="{3A516824-B2C5-4557-8F6F-16C6199C13FC}" ShortID="592220441">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Click_card_01" ID="{8D2B7D5C-58DE-4BF4-B8D2-C758999805AC}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Click_card_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="453448275"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Click_card_01" ID="{8D2B7D5C-58DE-4BF4-B8D2-C758999805AC}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Tile_Click" ID="{872C0FDD-0088-4FEF-B816-C9641DC95678}" ShortID="750784748">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Click_tile_01" ID="{CA7B57FB-9926-4387-BA6D-C56E8B0CEC62}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Click_tile_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="580806800"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Click_tile_01" ID="{CA7B57FB-9926-4387-BA6D-C56E8B0CEC62}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Alert_Research_Complete" ID="{FDAE0FF9-FC6B-4B8F-BBB5-5BF15BE3F33C}" ShortID="841256571">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Complete_Tech" ID="{CB3D77DD-4E45-40CF-B548-3531D3CFCCB3}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Complete_Tech.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1035609610"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Complete_Tech" ID="{CB3D77DD-4E45-40CF-B548-3531D3CFCCB3}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Hidden_tile" ID="{47C88A2F-6510-4FA3-8789-640CE1623E14}" ShortID="801338680">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Hidden_tile_01" ID="{0B08B7D7-B745-45E8-902E-70EDD877BC77}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Hidden_tile_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="249862203"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Hidden_tile_01" ID="{0B08B7D7-B745-45E8-902E-70EDD877BC77}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Shop_Open" ID="{E7D1109B-2683-49D9-9DF8-99054B1183EC}" ShortID="772957427">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Open_Store" ID="{D9118954-C92D-41C5-B824-B46BC8DF1D26}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Open_Store.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="366322191"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Open_Store" ID="{D9118954-C92D-41C5-B824-B46BC8DF1D26}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Quest_Paper_Close" ID="{D1D9FB03-5C00-4684-9599-44059534F7B6}" ShortID="679480027">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Quest_Paper_Burn_1" ID="{D8288511-D6EE-4155-B107-5CDBBA3C577B}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Quest_Paper_Burn_1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="901457832"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Quest_Paper_Burn_1" ID="{D8288511-D6EE-4155-B107-5CDBBA3C577B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Quest_Paper_Open" ID="{8455B3DC-5114-4C64-8031-2ACFA7428F53}" ShortID="87272467">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Quest_Paper_Open_2" ID="{5C51BF5F-0A06-455E-9D7E-3F4DD59002B3}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Quest_Paper_Open_2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="196066707"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Quest_Paper_Open_2" ID="{5C51BF5F-0A06-455E-9D7E-3F4DD59002B3}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Quest_UI_Fail" ID="{70C6F5CC-F67D-44A1-9980-B14997F9F4B1}" ShortID="839554207">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Quset_Close_Failed_1" ID="{85797112-039C-42C8-A3E1-7EC604C10803}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Quset_Close_Failed_1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1069081986"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Quset_Close_Failed_1" ID="{85797112-039C-42C8-A3E1-7EC604C10803}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Quest_UI_Success" ID="{A40AF46A-AA4E-4926-890D-A5D867B34B57}" ShortID="999921303">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Quset_Close_Sussed_1" ID="{0D70D6A4-ADD7-47A6-9DC3-EBBCAF782AD8}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Quset_Close_Sussed_1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="344437368"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Quset_Close_Sussed_1" ID="{0D70D6A4-ADD7-47A6-9DC3-EBBCAF782AD8}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Quest_UI_Creat" ID="{ED6C8876-CAE6-4B64-846B-71D8842ED680}" ShortID="62254160">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Quset_Creat_01" ID="{63F1FD80-3AFD-493E-8AA2-89F374992733}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Quset_Creat_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="918358479"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Quset_Creat_01" ID="{63F1FD80-3AFD-493E-8AA2-89F374992733}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Recruit_Open_wood" ID="{81D6195B-FB6A-45B5-8E87-FBCCDBB99D6C}" ShortID="775098717">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Recruit_Open_wood" ID="{4A779215-E2DA-42A0-803B-094E7AD82A1F}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="0.258700916666667"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Recruit_Open_wood.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1041137450"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Recruit_Open_wood" ID="{4A779215-E2DA-42A0-803B-094E7AD82A1F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Trap_Set_Success" ID="{DAFC22CB-4550-4347-BA26-C70D50B36828}" ShortID="823435419">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Set_trap_01" ID="{5B1932A7-34D3-49C2-9419-E1AF8A9BA4FF}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Set_trap_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="826840469"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Set_trap_01" ID="{5B1932A7-34D3-49C2-9419-E1AF8A9BA4FF}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Research_Progress_Click_Fail" ID="{B8B393B7-A7AB-49AD-A0AB-66B964F6F187}" ShortID="964144800">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Tech_research_Fail_01" ID="{9245B52B-430E-405F-BF9D-376145D9375D}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Tech_research_Fail_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="155760231"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Tech_research_Fail_01" ID="{9245B52B-430E-405F-BF9D-376145D9375D}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Research_Open" ID="{4358BB72-54F5-41C6-B8E2-0835141C1A23}" ShortID="638533141">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Tech_research_Open" ID="{B067AFCC-EB00-4C2F-8A95-BC1DDFFBD834}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Tech_research_Open.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1050978079"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Tech_research_Open" ID="{B067AFCC-EB00-4C2F-8A95-BC1DDFFBD834}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Alert_Time" ID="{9CCA4AC7-7546-41A3-ACA1-B31644DB512B}" ShortID="622335783">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Time_Over_CruchBell-01" ID="{DD3D47D8-8A29-4063-B9F7-A463B3F75014}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\Time_Over_CruchBell-01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="386587150"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Time_Over_CruchBell-01" ID="{DD3D47D8-8A29-4063-B9F7-A463B3F75014}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="UI_Click" ID="{7FD885F9-5B46-4C36-845B-CBD8290A70A5}" ShortID="595797151">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="UI_Click_01" ID="{80CFCAE8-4EA4-472E-ACF4-6A3A78F41941}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\UI_Click_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="34544067"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="UI_Click_01" ID="{80CFCAE8-4EA4-472E-ACF4-6A3A78F41941}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="UI_MouseOver" ID="{AAC7494C-C9DB-4295-B1AA-57A76702A69A}" ShortID="170548625">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="UI_MouseOver" ID="{F4A564DA-ED2F-45F6-AA17-4EE228439640}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\UI_MouseOver.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="85382409"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="UI_MouseOver" ID="{F4A564DA-ED2F-45F6-AA17-4EE228439640}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="UI_Text" ID="{2A263905-7D78-4A5B-B286-6EC5378EA25E}" ShortID="843434166">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3AC49E30-8635-4104-9385-2D42737C4687}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{6F22FF98-B54B-428B-9F32-B2A7964413CF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="UI_Scprit" ID="{953B5F74-3A76-416E-9860-6ED27E5B71E7}">
+											<Language>SFX</Language>
+											<AudioFile>UI_Sound\UI_Scprit.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="213842675"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="UI_Scprit" ID="{953B5F74-3A76-416E-9860-6ED27E5B71E7}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</Folder>
 					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="Blue_Attack_01" ID="{7EBB4B05-A23B-424E-9DF6-F1819422C39E}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

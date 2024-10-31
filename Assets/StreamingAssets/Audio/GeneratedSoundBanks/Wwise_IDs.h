@@ -11,11 +11,6 @@
 
 namespace AK
 {
-    namespace EVENTS
-    {
-        static const AkUniqueID ENEMY_FARMER_TYPEA_ATTACK = 1226658030U;
-    } // namespace EVENTS
-
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
