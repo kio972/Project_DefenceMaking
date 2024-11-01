@@ -8,7 +8,11 @@ public class GoToGameScene : MonoBehaviour
     public float fakeLoadingTime = 3f;
     protected virtual void MoveScene()
     {
-        SceneController.Instance.MoveScene("MapScene");
+        string targetScene = "Stage0";
+        if (SaveManager.Instance.playerData != null)
+            targetScene = SaveManager.Instance.playerData.sceneName;
+
+        SceneController.Instance.MoveScene(targetScene);
     }
 
     private async UniTaskVoid Start()

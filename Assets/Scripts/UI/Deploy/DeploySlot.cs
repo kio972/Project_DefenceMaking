@@ -9,7 +9,7 @@ public class DeploySlot : MonoBehaviour
 {
     private string id = "";
 
-    public string _name;
+    public string targetName;
 
     public int minDamage;
     public int maxDamage;
@@ -74,7 +74,7 @@ public class DeploySlot : MonoBehaviour
         if(delpoyUI == null)
             delpoyUI = GetComponentInParent<DeployUI>();
 
-        delpoyUI.DeployReady(cardType, _name, prefabName, cost);
+        delpoyUI.DeployReady(cardType, targetName, prefabName, cost);
     }
 
     public void UpdateMana()
@@ -90,7 +90,7 @@ public class DeploySlot : MonoBehaviour
     public void Init(Dictionary<string,object> data)
     {
         id = data["id"].ToString();
-        _name = data["name"].ToString();
+        targetName = data["name"].ToString();
         cardType = (id[2] == 't' ? CardType.Trap : CardType.Spawner);
         if (id.Contains("s_m4"))
             cardType = CardType.Monster;
@@ -125,7 +125,7 @@ public class DeploySlot : MonoBehaviour
 
         Sprite illur = SpriteList.Instance.LoadSprite(prefabName);
         icon.sprite = illur;
-        nameText?.ChangeLangauge(SettingManager.Instance.language, _name);
+        nameText?.ChangeLangauge(SettingManager.Instance.language, targetName);
         costText.text = cost.ToString();
 
         this.data = data;

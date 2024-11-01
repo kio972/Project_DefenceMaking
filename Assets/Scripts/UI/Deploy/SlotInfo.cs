@@ -41,11 +41,12 @@ public class SlotInfo : MonoBehaviour
     private GameObject trapInfo;
 
 
-    private DeploySlot curslot;
+    private DeploySlot _curslot;
+    public DeploySlot curSlot { get => _curslot; }
 
     public void UpdateInfo(DeploySlot data)
     {
-        curslot = data;
+        _curslot = data;
         string type = "monster";
         if (data.cardType == CardType.Trap)
             type = "trap";
@@ -56,8 +57,8 @@ public class SlotInfo : MonoBehaviour
         Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + data.rate);
         card_Rank.sprite = cardRank;
 
-        card_Name.ChangeLangauge(SettingManager.Instance.language, data._name);
-        card_Description.ChangeLangauge(SettingManager.Instance.language, data._name + "_1");
+        card_Name.ChangeLangauge(SettingManager.Instance.language, data.targetName);
+        card_Description.ChangeLangauge(SettingManager.Instance.language, data.targetName + "_1");
 
         card_illust.sprite = data.illur;
 
@@ -94,6 +95,6 @@ public class SlotInfo : MonoBehaviour
         if (delpoyUI == null)
             delpoyUI = GetComponentInParent<DeployUI>();
 
-        delpoyUI.DeployReady(curslot.cardType, curslot._name, curslot.prefabName, curslot.cost);
+        delpoyUI.DeployReady(_curslot.cardType, _curslot.targetName, _curslot.prefabName, _curslot.cost);
     }
 }

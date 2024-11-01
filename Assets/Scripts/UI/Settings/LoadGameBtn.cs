@@ -7,7 +7,7 @@ public class LoadGameBtn : MoveSceneBtn
 {
     protected override void MoveScene()
     {
-        sceneName = SaveManager.Instance.playerData.sceneName;
+        sceneName = "LoadScene";
         base.MoveScene();
     }
 

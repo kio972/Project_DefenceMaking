@@ -69,7 +69,13 @@ public class Stage0_TutoUI : MonoBehaviour
     [SerializeField]
     private Button trapBtn;
     [SerializeField]
-    private Button slimeBtn;
+    private DeploySlot slimeSlot;
+    [SerializeField]
+    private GameObject deploySlimeGuide;
+    [SerializeField]
+    private SlotInfo deploySlotInfo;
+    [SerializeField]
+    private Button deployConfirmBtn;
 
     async UniTaskVoid Start()
     {
@@ -184,11 +190,13 @@ public class Stage0_TutoUI : MonoBehaviour
         deployKeyOpenBlock.SetActive(true);
         tutoDeployBtn.SetActive(true);
         trapBtn.enabled = false;
-        slimeBtn.gameObject.SetActive(true);
+        slimeSlot.gameObject.SetActive(true);
         while (_progress == 7)
         {
             btnGuide.SetActive(tutoDeploy.DeployStep == 0 && !researchPage.activeSelf);
-            deployConfirmGuide.SetActive(tutoDeploy.DeployStep == 1);
+            deploySlimeGuide.SetActive(deploySlotInfo.curSlot != slimeSlot);
+            deployConfirmGuide.SetActive(tutoDeploy.DeployStep == 1 && deploySlotInfo.curSlot == slimeSlot);
+            deployConfirmBtn.enabled = deploySlotInfo.curSlot == slimeSlot;
             tileGuide.SetActive(tutoDeploy.DeployStep == 2);
             tileGuide.transform.position = Camera.main.WorldToScreenPoint(roomPos);
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());

@@ -126,7 +126,7 @@ public class Quest0103 : Quest
         if (prevTimeScale == -1)
             prevTimeScale = GameManager.Instance.timeScale;
 
-        if (prevTimeScale != GameManager.Instance.timeScale)
+        if (prevTimeScale != GameManager.Instance.timeScale && UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
         {
             curClearNum[0]++;
             isComplete[0] = true;
