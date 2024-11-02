@@ -13,6 +13,8 @@ public class Quest0001 : Quest
     {
         base.CompleteQuest();
         GameManager.Instance.WinGame();
+        SaveManager.Instance.settingData.stageState = 1;
+        SaveManager.Instance.SaveSettingData();
     }
 
     public override void FailQuest()

@@ -386,6 +386,11 @@ public class StoryManager : MonoBehaviour
         GameManager.Instance.cameraController.SetCamZoom(1);
     }
 
+    private void SkipTutorial()
+    {
+        SceneController.Instance.MoveScene("Stage1", 0f);
+    }
+
     #endregion
 
     public void EnqueueScript(string scriptID)
