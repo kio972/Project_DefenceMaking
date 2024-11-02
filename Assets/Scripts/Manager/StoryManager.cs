@@ -380,6 +380,12 @@ public class StoryManager : MonoBehaviour
         GameManager.Instance.cameraController.SetCamZoom(4);
     }
 
+    private void ResetCamPos()
+    {
+        GameManager.Instance.cameraController.CamMoveToPos(Vector3.right * 2.5f);
+        GameManager.Instance.cameraController.SetCamZoom(1);
+    }
+
     #endregion
 
     public void EnqueueScript(string scriptID)
