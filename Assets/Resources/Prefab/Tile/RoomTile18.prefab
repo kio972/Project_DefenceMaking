@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609608640754181932}
   - component: {fileID: -508909328115285257}
+  - component: {fileID: 1346413142088615957}
   m_Layer: 0
   m_Name: RoomTile18
   m_TagString: Untagged
@@ -50,12 +51,23 @@ MonoBehaviour:
   tileType: 1
   roomMana: 1
   curNode: {fileID: 0}
-  movable: 0
   waitToMove: 0
   twin: {fileID: 0}
   trap: {fileID: 0}
-  haveMonster: 0
   IsBigRoom: 0
+--- !u!114 &1346413142088615957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609608640754181931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad83448870ef8234d8f2a30d74c48bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradeMaterial: {fileID: 2100000, guid: a99dfe99d74236b41a8d1d97c05f5479, type: 2}
 --- !u!1001 &3168065380198208021
 PrefabInstance:
   m_ObjectHideFlags: 0
