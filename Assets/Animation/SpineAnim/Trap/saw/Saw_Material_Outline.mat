@@ -7,12 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spike_trap_Material
-  m_Shader: {fileID: 4800000, guid: b77e51f117177954ea863bdb422344fb, type: 3}
+  m_Name: Saw_Material_Outline
+  m_Shader: {fileID: 4800000, guid: 0c26b8f3f8867ba41ac82baf19d8ff91, type: 3}
   m_ValidKeywords:
-  - _STRAIGHT_ALPHA_INPUT
-  m_InvalidKeywords:
   - _USE8NEIGHBOURHOOD_ON
+  m_InvalidKeywords:
+  - _STRAIGHT_ALPHA_INPUT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -23,7 +23,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1742003fb33ca5940b47a7babd2e1c1f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 30fcc9cd00daa8542b70935e939660c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -33,9 +33,9 @@ Material:
     - _LightAffectsAdditive: 0
     - _OutlineMipLevel: 0
     - _OutlineOpaqueAlpha: 1
-    - _OutlineReferenceTexWidth: 1024
+    - _OutlineReferenceTexWidth: 2024
     - _OutlineSmoothness: 1
-    - _OutlineWidth: 3
+    - _OutlineWidth: 4
     - _ReceiveShadows: 0
     - _StencilComp: 8
     - _StencilRef: 1
@@ -47,5 +47,5 @@ Material:
     m_Colors:
     - _Black: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 1, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []

@@ -111,7 +111,7 @@ public class Trap : MonoBehaviour
         if (col != null)
             col.enabled = true;
 
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         attackCount = 0;
         coolDown = 0.1f;
