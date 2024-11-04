@@ -44,14 +44,14 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> _quest_Table;
     private List<Dictionary<string, object>> _questMessage_Table;
     private List<Dictionary<string, object>> _start_deckTable;
-    private List<Dictionary<string, object>> _hiddenTile_Table;
+    private List<Dictionary<string, object>> _hiddenTile_WaveTable;
 
     public List<Dictionary<string, object>> wave_Table { get => _wave_Table; }
     public List<Dictionary<string, object>> quest_Table { get => _quest_Table; }
     public List<Dictionary<string, object>> questMessage_Table { get => _questMessage_Table; }
     public List<Dictionary<string, object>> start_deckTable { get => _start_deckTable; }
     public List<Dictionary<string, object>> scripts_Table { get => _scripts_Table; }
-    public List<Dictionary<string, object>> hiddenTile_Table { get => _hiddenTile_Table; }
+    public List<Dictionary<string, object>> hiddenTile_WaveTable { get => _hiddenTile_WaveTable; }
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
     public Dictionary<int, List<WaveData>> waveLevelTable { get; private set; }
@@ -243,6 +243,7 @@ public class DataManager : Singleton<DataManager>
         _scripts_Table = CSVLoader.LoadCSV(scriptData);
         _quest_Table = CSVLoader.LoadCSV(questData);
         _questMessage_Table = CSVLoader.LoadCSV(questMessageData);
+        _hiddenTile_WaveTable = CSVLoader.LoadCSV(hiddenTileData);
 
         InitLevelTable();
         InitScripts();

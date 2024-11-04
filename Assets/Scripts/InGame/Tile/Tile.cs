@@ -437,9 +437,9 @@ public class Tile : MonoBehaviour
         if(isDormant)
         {
             NodeManager.Instance.dormantTile.Add(this);
-            GameObject goldBox = Resources.Load<GameObject>("Prefab/Objects/GoldBox");
-            goldBox = Instantiate(goldBox, transform, true);
-            goldBox.transform.position = transform.position;
+            //GameObject goldBox = Resources.Load<GameObject>("Prefab/Objects/GoldBox");
+            //goldBox = Instantiate(goldBox, transform, true);
+            //goldBox.transform.position = transform.position;
         }
         if(playAnim)
             tileAnimator?.SetTrigger("Set");

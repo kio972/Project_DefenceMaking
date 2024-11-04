@@ -14,19 +14,14 @@ public class TileHidden : MonoBehaviour
 
     private void ExcuteReveal()
     {
-        GameObject newObject = Instantiate(_targetPrefab);
+        _targetPrefab = GetPrefab();
 
-        Tile tile = newObject.GetComponent<Tile>();
-        if (tile != null)
+        if(_targetPrefab != null)
         {
-            tile.transform.SetParent(_curNode.transform, false);
-            tile.Init(_curNode, true, false, false);
-        }
-
-        Environment environment = newObject.GetComponent<Environment>();
-        if (environment != null)
-        {
-            environment.Init(_curNode);
+            GameObject newObject = Instantiate(_targetPrefab, _curNode.transform, true);
+            newObject.transform.position = _curNode.transform.position;
+            IBaseTileBuilder tileBuilder = newObject.GetComponent<IBaseTileBuilder>();
+            tileBuilder?.BuildBaseTile(_curNode);
         }
 
         NodeManager.Instance.hiddenTiles.Remove(_curNode);
@@ -35,10 +30,46 @@ public class TileHidden : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Init(TileNode curNode, GameObject targetPrefab)
+    private string GetTargetName()
+    {
+        Dictionary<string, object> data = DataManager.Instance.hiddenTile_WaveTable[GameManager.Instance.CurWave];
+        int totalToken = 0;
+        foreach (var kvp in data)
+        {
+            if (kvp.Key == "level")
+                continue;
+            totalToken += System.Convert.ToInt32(kvp.Value);
+        }
+
+        int randomValue = Random.Range(0, totalToken);
+        int cumulative = 0;
+        print(randomValue);
+        // GameObject와 그 int 값을 반복하여 확률적 선택
+        foreach (var kvp in data)
+        {
+            if (kvp.Key == "level")
+                continue;
+            int value = System.Convert.ToInt32(kvp.Value);
+            cumulative += value;
+            if (randomValue < cumulative && value != 0)
+                return kvp.Key;
+        }
+
+        return null;
+    }
+
+    private GameObject GetPrefab()
+    {
+        string targetName = GetTargetName();
+
+        GameObject targetPrefab = Resources.Load<GameObject>("Prefab/Objects/" + targetName);
+
+        return targetPrefab;
+    }
+
+    public void Init(TileNode curNode)
     {
         _curNode = curNode;
-        _targetPrefab = targetPrefab;
 
         transform.SetParent(_curNode.transform, false);
 

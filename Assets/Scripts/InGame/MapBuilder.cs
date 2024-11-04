@@ -77,9 +77,8 @@ public class MapBuilder : MonoBehaviour
             return;
 
         TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
-        GameObject targetPrefab = GetRandomPrefab();
         hidden = Instantiate(hidden);
-        hidden.Init(targetNode, targetPrefab);
+        hidden.Init(targetNode);
     }
 
     public async UniTaskVoid SetHiddenTile(TileData tile)
@@ -90,9 +89,8 @@ public class MapBuilder : MonoBehaviour
             return;
 
         TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
-        GameObject targetPrefab = GetRandomPrefab();
         hidden = Instantiate(hidden);
-        hidden.Init(targetNode, targetPrefab);
+        hidden.Init(targetNode);
     }
 
     private void SetRamdomTileToRandomNode(TileNode tileNode, Tile targetTilePrefab, int range)
