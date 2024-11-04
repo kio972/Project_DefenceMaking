@@ -8,19 +8,14 @@ public class DamageText : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI damageText;
 
-    public void StartEffect(int value, float fontSize, Color color, bool isBold, bool isHeal)
+    public void StartEffect(string value, float fontSize, Color color, bool isBold)
     {
-        string sign = "";
-        if (isHeal)
-            sign = "+";
-        else
-            sign = "-";
         damageText.fontSize = fontSize;
         damageText.color = color;
         if(isBold)
-            damageText.text = "<b>" + sign + value.ToString() + "</b>";
+            damageText.text = "<b>" + value + "</b>";
         else
-            damageText.text = sign + value.ToString();
+            damageText.text = value;
         gameObject.SetActive(true);
     }
 
