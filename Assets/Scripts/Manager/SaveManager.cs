@@ -32,8 +32,8 @@ public class SaveManager : Singleton<SaveManager>
         foreach(MonsterSpawner spawner in GameManager.Instance.monsterSpawner)
         {
             SpawnerData spawnerData = new SpawnerData();
-            spawnerData.row = spawner.CurTile.row;
-            spawnerData.col = spawner.CurTile.col;
+            spawnerData.row = spawner.curTile.curNode.row;
+            spawnerData.col = spawner.curTile.curNode.col;
             spawnerData.spawnerId = spawner._TargetName;
             spawnerData.spawnerCool = spawner._CurCoolTime;
             playerData.spawners.Add(spawnerData);
@@ -54,8 +54,8 @@ public class SaveManager : Singleton<SaveManager>
         {
             TileData tile = new TileData();
             tile.id = environment.name.ToString().Replace("(Clone)", "");
-            tile.row = environment._CurNode.row;
-            tile.col = environment._CurNode.col;
+            tile.row = environment.curNode.row;
+            tile.col = environment.curNode.col;
             playerData.environments.Add(tile);
         }
 

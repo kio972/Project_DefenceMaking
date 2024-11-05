@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MonsterSpawner : MonoBehaviour
+public class MonsterSpawner : MonoBehaviour, IObjectKind
 {
     [SerializeField]
     private Image bgImg;
@@ -17,8 +17,12 @@ public class MonsterSpawner : MonoBehaviour
     private float curCoolTime;
     public float _CurCoolTime { get => curCoolTime; set => curCoolTime = value; }
 
-    private TileNode tile;
-    public TileNode CurTile { get => tile; }
+    //private TileNode tile;
+    //public TileNode CurTile { get => tile; }
+
+    private Tile _tile;
+
+    public Tile curTile { get; }
 
     private bool isUpdate = false;
 
@@ -46,7 +50,7 @@ public class MonsterSpawner : MonoBehaviour
 
     public void CheckTargetCollapsed()
     {
-        isUpdate = PathFinder.FindPath(tile, NodeManager.Instance.endPoint) != null;
+        isUpdate = PathFinder.FindPath(_tile.curNode, NodeManager.Instance.endPoint) != null;
     }
 
     public void UpdatePassive()
@@ -70,7 +74,7 @@ public class MonsterSpawner : MonoBehaviour
 
     public void Init(TileNode curNode, string targetName, CompleteRoom room)
     {
-        this.tile = curNode;
+        _tile = curNode.curTile;
         this.curRoom = room;
         transform.position = curNode.transform.position;
         this.targetName = targetName;
@@ -104,7 +108,7 @@ public class MonsterSpawner : MonoBehaviour
             if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 return;
 
-            BattlerPooling.Instance.SpawnMonster(targetName, tile);
+            BattlerPooling.Instance.SpawnMonster(targetName, _tile.curNode);
             curCoolTime = 0f;
         }
 

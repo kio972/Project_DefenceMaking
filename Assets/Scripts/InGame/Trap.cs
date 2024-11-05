@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UniRx;
 
-public class Trap : MonoBehaviour
+public class Trap : MonoBehaviour, IObjectKind
 {
     private int trapIndex = -1;
     [SerializeField]
@@ -25,7 +25,8 @@ public class Trap : MonoBehaviour
 
     private List<Battler> targetList = new List<Battler>();
 
-    private Tile curTile;
+    private Tile _curTile;
+    public Tile curTile { get => curTile; }
 
     private Animator animator;
 
@@ -41,7 +42,7 @@ public class Trap : MonoBehaviour
 
     public void DestroyTrap()
     {
-        curTile.trap = null;
+        _curTile.trap = null;
         gameObject.SetActive(false);
         if (NodeManager.Instance._GuideState == GuideState.Trap)
             NodeManager.Instance.SetGuideState(GuideState.Trap);
@@ -103,7 +104,7 @@ public class Trap : MonoBehaviour
         duration = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["duration"]);
         maxTarget = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["targetCount"]);
 
-        this.curTile = curTile;
+        this._curTile = curTile;
         curTile.trap = this;
         transform.position = curTile.transform.position;
 

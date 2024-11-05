@@ -21,7 +21,7 @@ public interface ISpeedModify
     float speedRate { get; }
 }
 
-public class Environment : MonoBehaviour
+public class Environment : MonoBehaviour, ITileKind
 {
     [SerializeField]
     private EnvironmentType environmentType;
@@ -29,8 +29,8 @@ public class Environment : MonoBehaviour
     [SerializeField]
     protected float value;
 
-    private TileNode curNode;
-    public TileNode _CurNode { get => curNode; }
+    private TileNode _curNode;
+    public TileNode curNode { get => _curNode; }
 
     protected virtual void CustomFunc() { }
 
@@ -40,8 +40,8 @@ public class Environment : MonoBehaviour
         transform.position = node.transform.position;
         NodeManager.Instance.SetTile(this);
         NodeManager.Instance.SetActiveNode(node, true);
-        curNode = node;
-        curNode.environment = this;
+        _curNode = node;
+        _curNode.environment = this;
         switch(environmentType)
         {
             case EnvironmentType.monsterHp:
@@ -58,6 +58,6 @@ public class Environment : MonoBehaviour
                 break;
         }
 
-        NodeManager.Instance.AddSightNode(curNode);
+        NodeManager.Instance.AddSightNode(_curNode);
     }
 }

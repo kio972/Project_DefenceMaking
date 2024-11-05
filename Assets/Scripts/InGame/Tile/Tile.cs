@@ -16,7 +16,17 @@ public enum TileType
     Environment,
 }
 
-public class Tile : MonoBehaviour
+public interface ITileKind
+{
+    TileNode curNode { get; }
+}
+
+public interface IObjectKind
+{
+    Tile curTile { get; }
+}
+
+public class Tile : MonoBehaviour, ITileKind
 {
     [SerializeField]
     private List<Direction> pathDirection = new List<Direction>();
@@ -38,7 +48,7 @@ public class Tile : MonoBehaviour
             bool isRoom = tileType == TileType.Room || tileType == TileType.Room_Single || tileType == TileType.Door;
             if (isUpgraded && isRoom)
                 curMana++;
-            foreach (TileNode node in curNode.neighborNodeDic.Values)
+            foreach (TileNode node in _curNode.neighborNodeDic.Values)
             {
                 if (node.environment != null && node.environment is IManaSupply supply)
                     curMana += supply.manaValue;
@@ -58,7 +68,7 @@ public class Tile : MonoBehaviour
             bool isPath = tileType == TileType.Path;
             if(isUpgraded && isPath)
                 curMana++;
-            foreach(TileNode node in curNode.neighborNodeDic.Values)
+            foreach(TileNode node in _curNode.neighborNodeDic.Values)
             {
                 if (node.environment != null && node.environment is IManaSupply supply)
                     curMana += supply.manaValue;
@@ -77,7 +87,7 @@ public class Tile : MonoBehaviour
 
     public void UpdateTileSpeed(UnitType targetUnit)
     {
-        foreach(var tile in curNode.neighborNodeDic.Values)
+        foreach(var tile in _curNode.neighborNodeDic.Values)
         {
             if(tile.environment != null && tile.environment is ISpeedModify speedModify && speedModify.targetUnit == targetUnit)
             {
@@ -92,7 +102,9 @@ public class Tile : MonoBehaviour
     public List<Direction> PathDirection { get => pathDirection; }
     public List<Direction> RoomDirection { get => roomDirection; }
 
-    public TileNode curNode;
+    private TileNode _curNode;
+
+    public TileNode curNode { get => _curNode; }
 
     private bool removable = false;
     public bool IsRemovable
@@ -122,9 +134,9 @@ public class Tile : MonoBehaviour
             bool remove = removable;
 
             if (remove)
-                remove = !GameManager.Instance.IsAdventurererOnTile(curNode);
+                remove = !GameManager.Instance.IsAdventurererOnTile(_curNode);
             if (remove)
-                remove = !GameManager.Instance.IsMonsterOnTile(curNode);
+                remove = !GameManager.Instance.IsMonsterOnTile(_curNode);
 
             //if (UtilHelper.GetConnectedCount(this) >= 2)
             //    remove = false;
@@ -145,9 +157,9 @@ public class Tile : MonoBehaviour
         {
             bool canMove = movable;
             if(canMove)
-                canMove = !GameManager.Instance.IsAdventurererOnTile(curNode);
+                canMove = !GameManager.Instance.IsAdventurererOnTile(_curNode);
             if (canMove)
-                canMove = !GameManager.Instance.IsMonsterOnTile(curNode);
+                canMove = !GameManager.Instance.IsMonsterOnTile(_curNode);
             return canMove;
         }
     }
@@ -176,31 +188,31 @@ public class Tile : MonoBehaviour
     public int GetUnClosedCount()
     {
         // 불완전 연결인 상태인 타일 개수를 반환하는 함수
-        if (curNode == null)
+        if (_curNode == null)
             return -1;
 
         int count = 0;
-        count += UtilHelper.GetDirectionUnClosed(curNode, PathDirection);
-        count += UtilHelper.GetDirectionUnClosed(curNode, RoomDirection, true);
+        count += UtilHelper.GetDirectionUnClosed(_curNode, PathDirection);
+        count += UtilHelper.GetDirectionUnClosed(_curNode, RoomDirection, true);
 
         return count;
     }
 
     public void MoveTile(TileNode nextNode, bool isActive = true)
     {
-        //curNode?.SetFog(true);
-        if(curNode != null)
+        //_curNode?.SetFog(true);
+        if(_curNode != null)
         {
-            NodeManager.Instance.RemoveSightNode(curNode);
-            curNode.curTile = null;
-            NodeManager.Instance.SetActiveNode(curNode, false);
+            NodeManager.Instance.RemoveSightNode(_curNode);
+            _curNode.curTile = null;
+            NodeManager.Instance.SetActiveNode(_curNode, false);
         }
 
         transform.SetParent(nextNode.transform, false);
 
-        curNode = nextNode;
-        NodeManager.Instance.AddSightNode(curNode);
-        //curNode?.SetFog(false);
+        _curNode = nextNode;
+        NodeManager.Instance.AddSightNode(_curNode);
+        //_curNode?.SetFog(false);
         if (isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
             NodeManager.Instance.SetActiveNode(nextNode, true);
 
@@ -227,7 +239,7 @@ public class Tile : MonoBehaviour
                 NodeManager.Instance.RoomCheck(this);
         }
 
-        NodeManager.Instance.UpdateMinMaxRowCol(curNode.row, curNode.col);
+        NodeManager.Instance.UpdateMinMaxRowCol(_curNode.row, _curNode.col);
         //NodeManager.Instance.UpdateSightNode();
         GameManager.Instance.CheckBattlerCollapsed();
 
@@ -244,14 +256,14 @@ public class Tile : MonoBehaviour
         tileRenderer.enabled = value;
     }
 
-    private void UpdateMoveTilePos(TileNode curNode)
+    private void UpdateMoveTilePos(TileNode _curNode)
     {
-        if (curNode != null && NodeManager.Instance.virtualNodes.Contains(curNode) || curNode == this.curNode)
-            twin.transform.position = curNode.transform.position + new Vector3(0, 0.01f, 0);
+        if (_curNode != null && NodeManager.Instance.virtualNodes.Contains(_curNode) || _curNode == this._curNode)
+            twin.transform.position = _curNode.transform.position + new Vector3(0, 0.01f, 0);
         else
             twin.transform.position = new Vector3(0, 10000, 0);
 
-        SetTileVisible(curNode != this.curNode);
+        SetTileVisible(_curNode != this._curNode);
     }
 
     public void EndMoveing(bool resetNode = true)
@@ -261,24 +273,24 @@ public class Tile : MonoBehaviour
         InputManager.Instance.settingCard = false;
         InputManager.Instance.ResetTileClick();
         if (resetNode)
-            NodeManager.Instance.SetActiveNode(this.curNode, true);
+            NodeManager.Instance.SetActiveNode(this._curNode, true);
         NodeManager.Instance.SetGuideState(GuideState.None);
         SetTileVisible(true);
     }
 
-    public void EndMove(TileNode curNode)
+    public void EndMove(TileNode _curNode)
     {
         bool resetNode = true;
-        if (curNode != null && curNode.setAvail)
+        if (_curNode != null && _curNode.setAvail)
         {
             transform.rotation = twin.transform.rotation;
             rotationCount.Value = twin.rotationCount.Value;
             pathDirection = new List<Direction>(twin.pathDirection);
             roomDirection = new List<Direction>(twin.roomDirection);
 
-            NodeManager.Instance.SetActiveNode(this.curNode, false);
-            NodeManager.Instance.SetActiveNode(curNode, true);
-            MoveTile(curNode);
+            NodeManager.Instance.SetActiveNode(this._curNode, false);
+            NodeManager.Instance.SetActiveNode(_curNode, true);
+            MoveTile(_curNode);
 
             //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
             resetNode = false;
@@ -355,7 +367,7 @@ public class Tile : MonoBehaviour
         twin.roomDirection = new List<Direction>(roomDirection);
         twin.transform.rotation = transform.rotation;
         twin.rotationCount.Value = rotationCount.Value;
-        //NodeManager.Instance.SetActiveNode(this.curNode, false);
+        //NodeManager.Instance.SetActiveNode(this._curNode, false);
     }
 
     public async UniTaskVoid ReadyForMove()
@@ -371,7 +383,7 @@ public class Tile : MonoBehaviour
                 break;
         }
 
-        //curNode.SetAvail(true);
+        //_curNode.SetAvail(true);
         TileMoveCheck();
         await UniTask.WaitUntil(() => !Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey) && !Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey));
         //AudioManager.Instance.Play2DSound("Click_tile", SettingManager.Instance._FxVolume);
@@ -380,9 +392,9 @@ public class Tile : MonoBehaviour
 
     public TileNode TileMoveCheck()
     {
-        TileNode curNode = UtilHelper.RayCastTile();
-        UpdateMoveTilePos(curNode);
-        return curNode;
+        TileNode _curNode = UtilHelper.RayCastTile();
+        UpdateMoveTilePos(_curNode);
+        return _curNode;
     }
 
     private void MonsterOutCheck()
@@ -403,12 +415,12 @@ public class Tile : MonoBehaviour
         //연결된 타일 중 active상태인 노드가 있으면 return true
         foreach(Direction direction in PathDirection)
         {
-            TileNode target = curNode.neighborNodeDic[direction];
+            TileNode target = _curNode.neighborNodeDic[direction];
             if (target == null || target.curTile == null)
                 continue;
-            if (UtilHelper.IsTileConnected(curNode, direction, target.curTile.PathDirection))
+            if (UtilHelper.IsTileConnected(_curNode, direction, target.curTile.PathDirection))
                 return true;
-            if (UtilHelper.IsTileConnected(curNode, direction, target.curTile.PathDirection))
+            if (UtilHelper.IsTileConnected(_curNode, direction, target.curTile.PathDirection))
                 return true;
         }
 
@@ -420,7 +432,7 @@ public class Tile : MonoBehaviour
         if(DormantAwake())
         {
             isDormant = false;
-            if(!GameManager.Instance.speedController.Is_Tile_Connected(this.curNode))
+            if(!GameManager.Instance.speedController.Is_Tile_Connected(this._curNode))
             {
                 isDormant = true;
                 return;
@@ -450,7 +462,7 @@ public class Tile : MonoBehaviour
 
     public void RemoveTile()
     {
-        NodeManager.Instance.SetActiveNode(curNode, false);
+        NodeManager.Instance.SetActiveNode(_curNode, false);
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
 
@@ -462,7 +474,7 @@ public class Tile : MonoBehaviour
 
         if (spawner != null)
             RemoveSpawner();
-        curNode.curTile = null;
+        _curNode.curTile = null;
 
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
@@ -473,8 +485,8 @@ public class Tile : MonoBehaviour
     {
         TileData tile = new TileData();
         tile.id = name.ToString().Replace("(Clone)", "");
-        tile.row = curNode.row;
-        tile.col = curNode.col;
+        tile.row = _curNode.row;
+        tile.col = _curNode.col;
         tile.rotation = rotationCount.Value;
         tile.isDormant = isDormant;
         tile.isRemovable = removable;
