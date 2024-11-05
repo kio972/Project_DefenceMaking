@@ -43,7 +43,6 @@ public class TileHidden : MonoBehaviour
 
         int randomValue = Random.Range(0, totalToken);
         int cumulative = 0;
-        print(randomValue);
         // GameObject와 그 int 값을 반복하여 확률적 선택
         foreach (var kvp in data)
         {

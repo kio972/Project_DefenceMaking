@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 public class CompleteRoom
 {
     private List<Tile> includeRooms;
-    public int totalMana;
+    public int totalMana { get; private set; } = 0;
 
     private List<MonsterSpawner> spawners = new List<MonsterSpawner>();
     public List<Tile> _IncludeRooms { get => includeRooms; }
@@ -74,18 +75,24 @@ public class CompleteRoom
         this.isSingleRoom = singleRoom;
         CalculateTotalMana();
 
-        var manaStream1 = PassiveManager.Instance.manaTile.ObserveAdd().AsObservable().Select(_ => _.Key.gameObject);
-        var manaStream2 = PassiveManager.Instance.manaTile.ObserveRemove().AsObservable().Select(_ => _.Key.gameObject);
-        Observable.Merge(manaStream1, manaStream2).Subscribe(_ => CalculateTotalMana()).AddTo(disposables);
+        var roomManaStream = targetTiles[0].roomManaProperty.ObserveEveryValueChanged(_ => _);
+        for(int i = 1; i < targetTiles.Count; i++)
+        {
+            var nextManaStream = targetTiles[i].roomManaProperty.ObserveEveryValueChanged(_ => _);
+            roomManaStream = Observable.Merge(roomManaStream, nextManaStream);
+        }
+
+        roomManaStream.ThrottleFrame(1).Subscribe(_ => CalculateTotalMana()).AddTo(targetTiles[0].gameObject);
     }
 
     private void CalculateTotalMana()
     {
-        totalMana = isSingleRoom ? 3 : includeRooms.Count;
+        int totalMana = 0;
         foreach (Tile tile in includeRooms)
         {
-            if (PassiveManager.Instance.manaTile.ContainsKey(tile.curNode))
-                totalMana += PassiveManager.Instance.manaTile[tile.curNode];
+            totalMana += tile.RoomMana;
         }
+
+        this.totalMana = totalMana;
     }
 }

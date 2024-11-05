@@ -29,6 +29,7 @@ public class Tile : MonoBehaviour
 
     [SerializeField]
     private int roomMana;
+    public ReactiveProperty<int> roomManaProperty { get; private set; } = new ReactiveProperty<int>();
     public int RoomMana
     {
         get
@@ -37,7 +38,13 @@ public class Tile : MonoBehaviour
             bool isRoom = tileType == TileType.Room || tileType == TileType.Room_Single || tileType == TileType.Door;
             if (isUpgraded && isRoom)
                 curMana++;
+            foreach (TileNode node in curNode.neighborNodeDic.Values)
+            {
+                if (node.environment != null && node.environment is IManaSupply supply)
+                    curMana += supply.manaValue;
+            }
 
+            roomManaProperty.Value = curMana;
             return curMana;
         }
     }
@@ -58,6 +65,25 @@ public class Tile : MonoBehaviour
             }
 
             return curMana;
+        }
+    }
+
+    private float _tileBaseSpeed = 1f;
+    
+    private Dictionary<UnitType, float> tileSpeedRateDic = new Dictionary<UnitType, float>()
+    {
+        { UnitType.Enemy, 1f }, { UnitType.Player, 1f }
+    };
+
+    public void UpdateTileSpeed(UnitType targetUnit)
+    {
+        foreach(var tile in curNode.neighborNodeDic.Values)
+        {
+            if(tile.environment != null && tile.environment is ISpeedModify speedModify && speedModify.targetUnit == targetUnit)
+            {
+
+            }
+
         }
     }
 

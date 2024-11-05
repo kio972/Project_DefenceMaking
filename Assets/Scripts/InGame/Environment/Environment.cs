@@ -17,6 +17,7 @@ public interface IManaSupply
 
 public interface ISpeedModify
 {
+    UnitType targetUnit { get; }
     float speedRate { get; }
 }
 

@@ -290,7 +290,8 @@ public class GameManager : IngameSingleton<GameManager>
         {
             //재화수급
             gold += 50 + PassiveManager.Instance.income_Weight;
-            foreach(var herb in herbDic.Keys)
+            var keys = new List<HerbType>(herbDic.Keys);
+            foreach (var herb in keys)
                 herbDic[herb] += PassiveManager.Instance.herbSupplyDic[herb];
 
             timer.Value = 0f;
@@ -366,9 +367,11 @@ public class GameManager : IngameSingleton<GameManager>
         if (shop == null)
             shop = FindObjectOfType<ShopUI>(true);
 
-        var manaStream1 =  PassiveManager.Instance.manaTile.ObserveAdd().AsObservable().Select(_ => true);
-        var manaStream2 = PassiveManager.Instance.manaTile.ObserveRemove().AsObservable().Select(_ => true);
-        Observable.Merge(manaStream1, manaStream2).Subscribe(_ => UpdateTotalMana()).AddTo(gameObject);
+        NodeManager.Instance.AddSetTileEvent((_) =>
+        {
+            UpdateTotalMana();
+            return true;
+        });
     }    
 
     public void Init()

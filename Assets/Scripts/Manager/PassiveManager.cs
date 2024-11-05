@@ -19,7 +19,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int income_Weight = 0;
     public Dictionary<TileNode, float> slowedTile = new Dictionary<TileNode, float>();
 
-    public ReactiveDictionary<TileNode, int> manaTile { get; private set; } = new ReactiveDictionary<TileNode, int>();
+    //public ReactiveDictionary<TileNode, int> manaTile { get; private set; } = new ReactiveDictionary<TileNode, int>();
 
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
@@ -70,17 +70,17 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         herbSupplyDic[targetHerb] += value;
     }
 
-    public void AddManaStone(TileNode node, int manaAmount)
-    {
-        foreach(var item in node.neighborNodeDic.Values)
-        {
-            if(item == null) continue;
+    //public void AddManaStone(TileNode node, int manaAmount)
+    //{
+    //    foreach(var item in node.neighborNodeDic.Values)
+    //    {
+    //        if(item == null) continue;
 
-            if (!manaTile.ContainsKey(item))
-                manaTile.Add(item, 0);
-            manaTile[item] += manaAmount;
-        }
-    }
+    //        if (!manaTile.ContainsKey(item))
+    //            manaTile.Add(item, 0);
+    //        manaTile[item] += manaAmount;
+    //    }
+    //}
 
     public void MimicBuffActive()
     {
