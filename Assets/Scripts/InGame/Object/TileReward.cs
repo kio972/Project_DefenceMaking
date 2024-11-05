@@ -36,7 +36,7 @@ public class TileReward : MonoBehaviour, IBaseTileBuilder
             if (isUpgraded)
             {
                 TileUpgrader upgrade = tile.GetComponent<TileUpgrader>();
-                upgrade.UpgradeTile();
+                upgrade?.UpgradeTile();
             }
         }
 

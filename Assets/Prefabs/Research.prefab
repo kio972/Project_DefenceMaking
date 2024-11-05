@@ -991,7 +991,7 @@ GameObject:
   - component: {fileID: 8860885376079512423}
   - component: {fileID: 1568767183015415910}
   - component: {fileID: 5597319778890709255}
-  - component: {fileID: 2328721774751932275}
+  - component: {fileID: 7159687924346974179}
   m_Layer: 5
   m_Name: Herb3Frame
   m_TagString: Untagged
@@ -1059,7 +1059,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2328721774751932275
+--- !u!114 &7159687924346974179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1068,12 +1068,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 697236224129532311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a50d7f9badd424d4d9608befbe539e1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b6fbb85e095d7a4b8df176eee16c177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetText: {fileID: 3502368504546729862}
   herbBoxFill: {fileID: 0}
   herbMaxImg: {fileID: 0}
+  targetHerb: 3
 --- !u!1 &724132814214740746
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,7 +3375,7 @@ GameObject:
   - component: {fileID: 4692249842602600097}
   - component: {fileID: 8523841009012974872}
   - component: {fileID: 4092690704997437909}
-  - component: {fileID: 341479926591281343}
+  - component: {fileID: 3306148258213579205}
   m_Layer: 5
   m_Name: Herb2Frame
   m_TagString: Untagged
@@ -3442,7 +3443,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &341479926591281343
+--- !u!114 &3306148258213579205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3451,12 +3452,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2025603368592661254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0977fe897e94d64cb6fca34a835177f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b6fbb85e095d7a4b8df176eee16c177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetText: {fileID: 4308115362320049465}
   herbBoxFill: {fileID: 0}
   herbMaxImg: {fileID: 0}
+  targetHerb: 2
 --- !u!1 &2058790025391332905
 GameObject:
   m_ObjectHideFlags: 0
@@ -15954,6 +15956,7 @@ MonoBehaviour:
   targetText: {fileID: 4985088469114418554}
   herbBoxFill: {fileID: 0}
   herbMaxImg: {fileID: 0}
+  targetHerb: 1
 --- !u!1 &8867349640724092935
 GameObject:
   m_ObjectHideFlags: 0

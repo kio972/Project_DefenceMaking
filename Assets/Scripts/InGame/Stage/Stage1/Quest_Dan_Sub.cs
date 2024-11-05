@@ -87,7 +87,7 @@ public class Quest2003 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb1 += 5;
+        //GameManager.Instance.herb1 += 5;
     }
 }
 
@@ -238,7 +238,7 @@ public class Quest2009 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb3 += 20;
+        //GameManager.Instance.herb3 += 20;
     }
 }
 
@@ -300,7 +300,7 @@ public class Quest2010 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb1 += 20;
+        //GameManager.Instance.herb1 += 20;
     }
 }
 
@@ -326,7 +326,7 @@ public class Quest2011 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb1 += 20;
+        //GameManager.Instance.herb1 += 20;
     }
 }
 
@@ -351,7 +351,7 @@ public class Quest2012 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb2 += 30;
+        //GameManager.Instance.herb2 += 30;
     }
 }
 
@@ -377,7 +377,7 @@ public class Quest2013 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb1 += 10;
+        //GameManager.Instance.herb1 += 10;
     }
 }
 
@@ -392,8 +392,8 @@ public class Quest2014 : Quest
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.herb1 += 10;
-        GameManager.Instance.herb2 += 10;
-        GameManager.Instance.herb3 += 10;
+        //GameManager.Instance.herb1 += 10;
+        //GameManager.Instance.herb2 += 10;
+        //GameManager.Instance.herb3 += 10;
     }
 }

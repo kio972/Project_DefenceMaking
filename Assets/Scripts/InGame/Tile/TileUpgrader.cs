@@ -20,8 +20,13 @@ public class TileUpgrader : MonoBehaviour
 
     public void UpgradeTile()
     {
+        if (tile == null || tile.isUpgraded)
+            return;
+
         Renderer renderer = transform.GetChild(0)?.GetComponent<Renderer>();
         if (renderer != null)
             renderer.material = _upgradeMaterial;
+
+        tile.isUpgraded = true;
     }
 }

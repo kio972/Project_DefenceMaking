@@ -115,13 +115,13 @@ public class ResearchPopup : MonoBehaviour
         haveGold = GameManager.Instance.gold >= curResearch._ResearchData.requiredMoney;
         gold.color = haveGold ? Color.white : Color.red;
 
-        haveHerb1 = GameManager.Instance.herb1 >= curResearch._ResearchData.requiredherb1;
+        haveHerb1 = GameManager.Instance.herbDic[HerbType.BlackHerb] >= curResearch._ResearchData.requiredherb1;
         herb1.color = haveHerb1 ? Color.white : Color.red;
 
-        haveHerb2 = GameManager.Instance.herb2 >= curResearch._ResearchData.requiredherb2;
+        haveHerb2 = GameManager.Instance.herbDic[HerbType.PurpleHerb] >= curResearch._ResearchData.requiredherb2;
         herb2.color = haveHerb2 ? Color.white : Color.red;
 
-        haveHerb3 = GameManager.Instance.herb3 >= curResearch._ResearchData.requiredherb3;
+        haveHerb3 = GameManager.Instance.herbDic[HerbType.WhiteHerb] >= curResearch._ResearchData.requiredherb3;
         herb3.color = haveHerb3 ? Color.white : Color.red;
 
         SetResearchBtn(researchState);
@@ -137,9 +137,9 @@ public class ResearchPopup : MonoBehaviour
         int plusMinus = isPlus ? 1 : -1;
 
         GameManager.Instance.gold += curResearch._ResearchData.requiredMoney * plusMinus;
-        GameManager.Instance.herb1 += curResearch._ResearchData.requiredherb1 * plusMinus;
-        GameManager.Instance.herb2 += curResearch._ResearchData.requiredherb2 * plusMinus;
-        GameManager.Instance.herb3 += curResearch._ResearchData.requiredherb3 * plusMinus;
+        GameManager.Instance.herbDic[HerbType.BlackHerb] += curResearch._ResearchData.requiredherb1 * plusMinus;
+        GameManager.Instance.herbDic[HerbType.PurpleHerb] += curResearch._ResearchData.requiredherb2 * plusMinus;
+        GameManager.Instance.herbDic[HerbType.WhiteHerb] += curResearch._ResearchData.requiredherb3 * plusMinus;
     }
 
     private void SetResearchBtn(ResearchState curState)

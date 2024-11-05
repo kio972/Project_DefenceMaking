@@ -29,7 +29,37 @@ public class Tile : MonoBehaviour
 
     [SerializeField]
     private int roomMana;
-    public int RoomMana { get => roomMana; }
+    public int RoomMana
+    {
+        get
+        {
+            int curMana = roomMana;
+            bool isRoom = tileType == TileType.Room || tileType == TileType.Room_Single || tileType == TileType.Door;
+            if (isUpgraded && isRoom)
+                curMana++;
+
+            return curMana;
+        }
+    }
+
+    private int supplyMana = 1;
+    public int SupplyMana
+    {
+        get
+        {
+            int curMana = supplyMana;
+            bool isPath = tileType == TileType.Path;
+            if(isUpgraded && isPath)
+                curMana++;
+            foreach(TileNode node in curNode.neighborNodeDic.Values)
+            {
+                if (node.environment != null && node.environment is IManaSupply supply)
+                    curMana += supply.manaValue;
+            }
+
+            return curMana;
+        }
+    }
 
     public TileType _TileType { get => tileType; }
 
@@ -113,6 +143,9 @@ public class Tile : MonoBehaviour
     protected bool isTwin = false;
     
     private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
+
+    private bool _isUpgraded = false;
+    public bool isUpgraded { get => _isUpgraded; set => _isUpgraded = value; }
 
     public int GetUnClosedCount()
     {

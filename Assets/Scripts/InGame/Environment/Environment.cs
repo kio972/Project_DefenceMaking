@@ -10,6 +10,16 @@ public enum EnvironmentType
     slow,
 }
 
+public interface IManaSupply
+{
+    int manaValue { get; }
+}
+
+public interface ISpeedModify
+{
+    float speedRate { get; }
+}
+
 public class Environment : MonoBehaviour
 {
     [SerializeField]

@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
+public enum HerbType
+{
+    None,
+    BlackHerb,
+    PurpleHerb,
+    WhiteHerb,
+}
+
 public class GameManager : IngameSingleton<GameManager>
 {
     [SerializeField]
@@ -21,9 +29,15 @@ public class GameManager : IngameSingleton<GameManager>
     public float Timer { get => timer.Value; }
 
     public int gold = 0;
-    public int herb1 = 0;
-    public int herb2 = 0;
-    public int herb3 = 0;
+    public ReactiveDictionary<HerbType, int> herbDic { get; private set; } = new ReactiveDictionary<HerbType, int>()
+    {
+        {HerbType.BlackHerb, 0},
+        {HerbType.PurpleHerb, 0},
+        {HerbType.WhiteHerb, 0}
+    };
+    //public int herb1 = 0;
+    //public int herb2 = 0;
+    //public int herb3 = 0;
 
     public int herb1Max = 0;
     public int herb2Max = 0;
@@ -132,9 +146,7 @@ public class GameManager : IngameSingleton<GameManager>
             if (node.curTile == null || node.curTile.IsDormant)
                 continue;
 
-            totalMana++;
-            if (PassiveManager.Instance.manaTile.ContainsKey(node) && node.curTile._TileType == TileType.Path)
-                totalMana += PassiveManager.Instance.manaTile[node];
+            totalMana += node.curTile.SupplyMana;
         }
 
         this.totalMana = totalMana;
@@ -278,6 +290,9 @@ public class GameManager : IngameSingleton<GameManager>
         {
             //재화수급
             gold += 50 + PassiveManager.Instance.income_Weight;
+            foreach(var herb in herbDic.Keys)
+                herbDic[herb] += PassiveManager.Instance.herbSupplyDic[herb];
+
             timer.Value = 0f;
             dailyIncome = true;
             curWave++;
@@ -394,9 +409,9 @@ public class GameManager : IngameSingleton<GameManager>
         curWave = data.curWave;
         timer.Value = data.curTime;
         gold = data.gold;
-        herb1 = data.herb1;
-        herb2 = data.herb2;
-        herb3 = data.herb3;
+        herbDic[HerbType.BlackHerb] = data.herb1;
+        herbDic[HerbType.PurpleHerb] = data.herb2;
+        herbDic[HerbType.WhiteHerb] = data.herb3;
 
         foreach (TileData tile in data.tiles)
             mapBuilder.SetTile(tile);

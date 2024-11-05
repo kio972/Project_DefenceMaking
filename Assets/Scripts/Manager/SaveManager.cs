@@ -21,9 +21,9 @@ public class SaveManager : Singleton<SaveManager>
         playerData.curWave = GameManager.Instance.CurWave;
         playerData.curTime = GameManager.Instance.Timer;
         playerData.gold = GameManager.Instance.gold;
-        playerData.herb1 = GameManager.Instance.herb1;
-        playerData.herb2 = GameManager.Instance.herb2;
-        playerData.herb3 = GameManager.Instance.herb3;
+        playerData.herb1 = GameManager.Instance.herbDic[HerbType.BlackHerb];
+        playerData.herb2 = GameManager.Instance.herbDic[HerbType.PurpleHerb];
+        playerData.herb3 = GameManager.Instance.herbDic[HerbType.WhiteHerb];
     }
 
     private void SaveSpanwerData(PlayerData playerData)

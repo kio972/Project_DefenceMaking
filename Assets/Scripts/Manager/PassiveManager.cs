@@ -8,7 +8,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int monsterHp_Weight = 0;
 
     public int monsterDefense_Weight = 0;
-    public float monsterAttackSpeed_Weight = 0; 
+    public float monsterAttackSpeed_Weight = 0;
     public float monsterDamageRate_Weight = 0;
     public float monsterHpRate_Weight = 0;
 
@@ -57,6 +57,18 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int golemHoldback_Weight { get; private set; } = 0;
 
     public bool isMimicBuffActive { get; private set; } = false;
+
+    public Dictionary<HerbType, int> herbSupplyDic { get; private set; } = new Dictionary<HerbType, int>()
+    {
+        {HerbType.BlackHerb, 0},
+        {HerbType.PurpleHerb, 0},
+        {HerbType.WhiteHerb, 0}
+    };
+
+    public void UpgradeHerb(HerbType targetHerb, int value)
+    {
+        herbSupplyDic[targetHerb] += value;
+    }
 
     public void AddManaStone(TileNode node, int manaAmount)
     {

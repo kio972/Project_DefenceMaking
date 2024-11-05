@@ -56,9 +56,9 @@ public class DebugTool : MonoBehaviour
         GameManager.Instance.gold += gold;
     }
 
-    public void GetHerb1(int index) { GameManager.Instance.herb1 += herbAmount[index]; }
-    public void GetHerb2(int index) { GameManager.Instance.herb2 += herbAmount[index]; }
-    public void GetHerb3(int index) { GameManager.Instance.herb3 += herbAmount[index]; }
+    public void GetHerb1(int index) { GameManager.Instance.herbDic[HerbType.BlackHerb] += herbAmount[index]; }
+    public void GetHerb2(int index) { GameManager.Instance.herbDic[HerbType.PurpleHerb] += herbAmount[index]; }
+    public void GetHerb3(int index) { GameManager.Instance.herbDic[HerbType.WhiteHerb] += herbAmount[index]; }
 
     public void IncreaseWave()
     {
