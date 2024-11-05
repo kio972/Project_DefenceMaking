@@ -55,6 +55,9 @@ public class InputManager : IngameSingleton<InputManager>
         tileControlUI?.SetButton(curTile);
     }
 
+    [SerializeField]
+    private AK.Wwise.Event tileClickSound;
+
     public void TileClickCheck()
     {
         if (_settingCard.Value)
@@ -73,7 +76,7 @@ public class InputManager : IngameSingleton<InputManager>
             {
                 //node.curTile.OnClick();
                 ClickTile(node.curTile);
-                AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
+                tileClickSound?.Post(node.gameObject);
             }
             else
                 ResetTileClick();

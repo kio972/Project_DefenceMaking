@@ -8,6 +8,9 @@ public class HealPotion : MonoBehaviour, IRewardObject
     [SerializeField]
     private int healAmount = 1;
 
+    [SerializeField]
+    private AK.Wwise.Event sound;
+
     private void OnTriggerEnter(Collider other)
     {
         if (isFinish)
@@ -25,7 +28,7 @@ public class HealPotion : MonoBehaviour, IRewardObject
     private async UniTaskVoid ExcuteGetReward()
     {
         GameManager.Instance.king.GetHeal(healAmount, null);
-        AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._FxVolume);
+        sound?.Post(gameObject);
         DamageTextPooling.Instance.TextEffect(transform.position - (Vector3.down * 0.2f), $"+{healAmount}<sprite name=Gold>", 27f, Color.yellow, true);
 
         float elapsedTime = 0f;

@@ -128,6 +128,9 @@ public class GameManager : IngameSingleton<GameManager>
     public HashSet<Battler> holdBackedABattlers { get => _holdBackedBattlers; }
 
 
+    [SerializeField]
+    private AK.Wwise.Event waveBellSound;
+
     public void CheckBattlerCollapsed()
     {
         foreach(Adventurer adventurer in adventurersList)
@@ -308,7 +311,7 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             //NodeManager.Instance.LockMovableTiles();
 
-            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
+            waveBellSound?.Post(gameObject);
         }
     }
 
@@ -384,7 +387,7 @@ public class GameManager : IngameSingleton<GameManager>
         SetWaveSpeed();
 
         ingameUI?.Init();
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
         cardDeckController.Init();
         //cardDeckController.Invoke("Mulligan", 1f);

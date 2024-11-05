@@ -40,9 +40,6 @@ public class Monster : Battler, IHoldbacker
 
     public HashSet<Battler> holdBackTargets { get => _holdBackTargets; }
 
-    [SerializeField]
-    private AudioClip summonSound;
-
     public override float MoveSpeed
     {
         get
@@ -196,8 +193,7 @@ public class Monster : Battler, IHoldbacker
     public override void Init()
     {
         base.Init();
-        if(GameManager.Instance.IsInit)
-            AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
+        summonSound?.Post(gameObject);
         ResetNode();
 
         monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");

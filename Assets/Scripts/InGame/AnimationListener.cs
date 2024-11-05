@@ -7,26 +7,20 @@ public class AnimationListener : MonoBehaviour
     private Battler battler;
 
     [SerializeField]
-    private List<AudioClip> attackSounds = new List<AudioClip>();
-    [SerializeField]
-    private float attackSoundMult = 1f;
+    private AK.Wwise.Event attackSounds;
     [Space]
     [SerializeField]
-    private List<AudioClip> deadSounds = new List<AudioClip>();
-    [SerializeField]
-    private float deadSoundMult = 1f;
+    private AK.Wwise.Event deadSounds;
 
     void Dead()
     {
-        if (deadSounds.Count > 0)
-            AudioManager.Instance.Play3DSound(deadSounds[Random.Range(0, deadSounds.Count)], transform.position, SettingManager.Instance._FxVolume * deadSoundMult);
+        deadSounds?.Post(gameObject);
     }
 
     void Attack()
     {
-        battler.Attack();
-        if(attackSounds.Count > 0)
-            AudioManager.Instance.Play3DSound(attackSounds[Random.Range(0, attackSounds.Count)], transform.position, SettingManager.Instance._FxVolume * attackSoundMult);
+        battler?.Attack();
+        attackSounds?.Post(gameObject);
     }
 
     private void Awake()

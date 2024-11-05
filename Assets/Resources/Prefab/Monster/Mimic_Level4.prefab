@@ -165,16 +165,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSounds:
-  - {fileID: 8300000, guid: e8be002f8cbcd4ce08603a78ec3a9392, type: 3}
-  - {fileID: 8300000, guid: 60fc32af3416d495aa02997a7a2c6b4a, type: 3}
-  - {fileID: 8300000, guid: 9aaaaa6fc1f5c4ed5ad40f0703e4efc7, type: 3}
-  - {fileID: 8300000, guid: ad4c4262fbb4c454fbaba2810c01bc04, type: 3}
-  attackSoundMult: 0.8
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 0609210e9820f3d41a2aeb00a1d4ac0e, type: 2}
   deadSounds:
-  - {fileID: 8300000, guid: fa459b5a9a1c34e0a9be1b8781f85a3e, type: 3}
-  - {fileID: 8300000, guid: 738026eb9f1a24f7dbe21edd5b6977d9, type: 3}
-  - {fileID: 8300000, guid: 8ff2ee75bccbd4a7780ff06ce3ba13a2, type: 3}
-  deadSoundMult: 1
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: befcee8439fd87f44a728b73bf72689b, type: 2}
 --- !u!136 &4251024216567660068
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -483,9 +480,12 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m40004
   attackEffect: {fileID: 0}
+  summonSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 09c2631a3a8f2b444ae43aad541d430f, type: 2}
   isHide: 1
   holdBackCount: 1
-  summonSound: {fileID: 8300000, guid: 21636bb31c25a4b169dfc0bc23dc6317, type: 3}
   seduceTargetCount: 15
 --- !u!136 &7389840894960381613
 CapsuleCollider:

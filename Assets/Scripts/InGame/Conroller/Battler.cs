@@ -155,6 +155,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     [SerializeField]
     protected GameObject attackEffect;
 
+    [SerializeField]
+    protected AK.Wwise.Event summonSound;
+
     public string BattlerID { get => battlerID; }
 
     private float ccTime = 0;

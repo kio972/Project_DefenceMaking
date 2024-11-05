@@ -160,10 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds: []
-  attackSoundMult: 1
-  deadSounds: []
-  deadSoundMult: 1
+  attackSounds:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 055e8ecbad38bc040bea08107c7855de, type: 2}
+  deadSounds:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ecbc658166dc21c47a4150c01c7758dd, type: 2}
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,9 +333,12 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m20004
   attackEffect: {fileID: 0}
+  summonSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 0f9d06a3913235e41b0d1ef82d9df9c2, type: 2}
   isHide: 0
   holdBackCount: 1
-  summonSound: {fileID: 8300000, guid: 62e2e45d391b840f9a2b9201b343fb66, type: 3}
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0

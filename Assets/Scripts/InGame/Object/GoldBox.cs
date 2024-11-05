@@ -13,6 +13,9 @@ public class GoldBox : MonoBehaviour, IRewardObject
     [SerializeField]
     private int goldAmount = 100;
 
+    [SerializeField]
+    private AK.Wwise.Event sound;
+
     private void OnTriggerEnter(Collider other)
     {
         if (isFinish)
@@ -30,7 +33,7 @@ public class GoldBox : MonoBehaviour, IRewardObject
     private async UniTaskVoid ExcuteGetReward()
     {
         GameManager.Instance.gold += goldAmount;
-        AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._FxVolume);
+        sound?.Post(gameObject);
         DamageTextPooling.Instance.TextEffect(transform.position - (Vector3.down * 0.2f), $"+{goldAmount}<sprite name=Gold>", 27f, Color.yellow, true);
 
         float elapsedTime = 0f;
