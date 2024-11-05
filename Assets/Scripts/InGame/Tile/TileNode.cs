@@ -21,8 +21,9 @@ public class TileNode : MonoBehaviour
     public int row;
     public int col;
 
-    public Tile curTile;
-    public Environment environment;
+    public Tile curTile { get => tileKind is Tile tile ? tile : null; }
+    public Environment environment { get => tileKind is Environment environment ? environment : null; }
+    public ITileKind tileKind;
 
     //public List<TileNode> neighborNodes = new List<TileNode>();
     public Dictionary<Direction, TileNode> neighborNodeDic = new Dictionary<Direction, TileNode>();

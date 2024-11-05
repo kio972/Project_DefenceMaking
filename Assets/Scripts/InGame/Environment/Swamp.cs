@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Swamp : Environment, ISpeedModify
@@ -10,6 +11,15 @@ public class Swamp : Environment, ISpeedModify
 
     protected override void CustomFunc()
     {
+        foreach(var node in curNode.neighborNodeDic.Values)
+        {
+            if (node.curTile == null)
+                continue;
 
+            if (!node.curTile.enemySpeedMults.Any(target => target is Swamp))
+            {
+                node.curTile.AddEnemySpeedMult(this);
+            }
+        }
     }
 }

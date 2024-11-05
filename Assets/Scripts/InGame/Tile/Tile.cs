@@ -78,24 +78,24 @@ public class Tile : MonoBehaviour, ITileKind
         }
     }
 
-    private float _tileBaseSpeed = 1f;
-    
-    private Dictionary<UnitType, float> tileSpeedRateDic = new Dictionary<UnitType, float>()
+    public float tileEnemySpeedMult { get; private set; } = 1f;
+    public float tileAllySpeedMult { get; private set; } = 1f;
+
+    private ReactiveCollection<ISpeedModify> _enemySpeedMults = new ReactiveCollection<ISpeedModify>();
+    private ReactiveCollection<ISpeedModify> _allySpeedMults = new ReactiveCollection<ISpeedModify>();
+
+    public List<ISpeedModify> enemySpeedMults { get => new List<ISpeedModify>(_enemySpeedMults); }
+
+    private float CalculateSpeedMult(List<ISpeedModify> speedModifies)
     {
-        { UnitType.Enemy, 1f }, { UnitType.Player, 1f }
-    };
-
-    public void UpdateTileSpeed(UnitType targetUnit)
-    {
-        foreach(var tile in _curNode.neighborNodeDic.Values)
-        {
-            if(tile.environment != null && tile.environment is ISpeedModify speedModify && speedModify.targetUnit == targetUnit)
-            {
-
-            }
-
-        }
+        float speedMult = 1f;
+        foreach(ISpeedModify speedModify in speedModifies)
+            speedMult *= speedModify.speedRate;
+        return speedMult;
     }
+
+    public void AddEnemySpeedMult(ISpeedModify speedModify) => _enemySpeedMults.Add(speedModify);
+    public void AddAllySpeedMult(ISpeedModify speedModify) => _allySpeedMults.Add(speedModify);
 
     public TileType _TileType { get => tileType; }
 
@@ -204,7 +204,7 @@ public class Tile : MonoBehaviour, ITileKind
         if(_curNode != null)
         {
             NodeManager.Instance.RemoveSightNode(_curNode);
-            _curNode.curTile = null;
+            _curNode.tileKind = null;
             NodeManager.Instance.SetActiveNode(_curNode, false);
         }
 
@@ -216,7 +216,7 @@ public class Tile : MonoBehaviour, ITileKind
         if (isActive && !NodeManager.Instance._ActiveNodes.Contains(nextNode))
             NodeManager.Instance.SetActiveNode(nextNode, true);
 
-        nextNode.curTile = this;
+        nextNode.tileKind = this;
         transform.position = nextNode.transform.position;
         NodeManager.Instance.ExpandEmptyNode(nextNode, 20);
 
@@ -474,7 +474,7 @@ public class Tile : MonoBehaviour, ITileKind
 
         if (spawner != null)
             RemoveSpawner();
-        _curNode.curTile = null;
+        _curNode.tileKind = null;
 
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
@@ -515,7 +515,14 @@ public class Tile : MonoBehaviour, ITileKind
         if(playAnim)
             tileAnimator?.SetTrigger("Set");
 
+        foreach(var tile in targetNode.neighborNodeDic.Values)
+        {
+            //if(tile.curTile)
+        }
+
         NodeManager.Instance.SetTile(this);
+        _allySpeedMults.ObserveCountChanged().Subscribe(_ => tileAllySpeedMult = CalculateSpeedMult(new List<ISpeedModify>(_allySpeedMults))).AddTo(gameObject);
+        _enemySpeedMults.ObserveCountChanged().Subscribe(_ => tileEnemySpeedMult = CalculateSpeedMult(new List<ISpeedModify>(_enemySpeedMults))).AddTo(gameObject);
     }
 
     protected virtual void Update()

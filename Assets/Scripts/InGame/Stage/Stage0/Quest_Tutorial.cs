@@ -59,15 +59,11 @@ public class Quest0102 : Quest
     private int monsterCount = -1;
     private int spawnerCount = -1;
 
-    private bool IncreaseCount(GameObject tile)
+    private bool IncreaseCount(ITileKind tileKind)
     {
-        if (tile.GetComponent<TileHidden>() != null)
+        if (tileKind is TileHidden || tileKind.curNode == NodeManager.Instance.endPoint)
             return false;
-
-        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().curNode == NodeManager.Instance.endPoint)
-            return false;
-
-        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
+        if (tileKind is Tile tile && tile.IsDormant)
             return false;
 
         curClearNum[0]++;

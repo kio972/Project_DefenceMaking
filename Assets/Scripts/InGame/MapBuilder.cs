@@ -24,18 +24,14 @@ public class MapBuilder : MonoBehaviour
     
     public int curTileSetCount { get => _curTileSetCount; set => _curTileSetCount = value; }
 
-    private bool SetHiddenTileContinuous(GameObject tile)
+    private bool SetHiddenTileContinuous(ITileKind tileKind)
     {
         if (!GameManager.Instance.IsInit)
             return false;
 
-        if (tile.GetComponent<TileHidden>() != null)
+        if (tileKind is TileHidden || tileKind.curNode == NodeManager.Instance.endPoint)
             return false;
-
-        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().curNode == NodeManager.Instance.endPoint)
-            return false;
-
-        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
+        if (tileKind is Tile tile && tile.IsDormant)
             return false;
 
         _curTileSetCount++;

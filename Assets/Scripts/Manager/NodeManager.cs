@@ -447,15 +447,15 @@ public class NodeManager : IngameSingleton<NodeManager>
             tileDictionary.Add(type, new List<Tile>());
     }
 
-    private List<System.Func<GameObject, bool>> setTileEvents = new List<System.Func<GameObject, bool>>();
-    public void AddSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Add(newEvent);
-    public void RemoveSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Remove(newEvent);
+    private List<System.Func<ITileKind, bool>> setTileEvents = new List<System.Func<ITileKind, bool>>();
+    public void AddSetTileEvent(System.Func<ITileKind, bool> newEvent) => setTileEvents.Add(newEvent);
+    public void RemoveSetTileEvent(System.Func<ITileKind, bool> newEvent) => setTileEvents.Remove(newEvent);
 
     public void SetTile(Environment environment)
     {
         environments.Add(environment);
         foreach (var events in setTileEvents)
-            events?.Invoke(environment.gameObject);
+            events?.Invoke(environment);
     }
 
     public void SetTile(Tile tile)
@@ -466,12 +466,12 @@ public class NodeManager : IngameSingleton<NodeManager>
         tileDictionary[tile._TileType].Add(tile);
         
         foreach (var events in setTileEvents)
-            events?.Invoke(tile.gameObject);
+            events?.Invoke(tile);
     }
     
-    private List<System.Func<GameObject, bool>> removeTileEvents = new List<System.Func<GameObject, bool>>();
-    public void AddRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Add(newEvent);
-    public void RemoveRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Remove(newEvent);
+    private List<System.Func<ITileKind, bool>> removeTileEvents = new List<System.Func<ITileKind, bool>>();
+    public void AddRemoveTileEvent(System.Func<ITileKind, bool> newEvent) => removeTileEvents.Add(newEvent);
+    public void RemoveRemoveTileEvent(System.Func<ITileKind, bool> newEvent) => removeTileEvents.Remove(newEvent);
 
     public void RemoveTile(Tile tile)
     {
@@ -481,7 +481,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         tileDictionary[tile._TileType].Remove(tile);
 
         foreach (var events in removeTileEvents)
-            events?.Invoke(tile.gameObject);
+            events?.Invoke(tile);
         RemoveSightNode(tile.curNode);
         if (tile._TileType == TileType.Room_Single)
         {

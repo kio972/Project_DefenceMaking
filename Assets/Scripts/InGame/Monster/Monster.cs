@@ -43,17 +43,17 @@ public class Monster : Battler, IHoldbacker
     [SerializeField]
     private AudioClip summonSound;
 
-    public override float MoveSpeed
-    {
-        get
-        {
-            float speed = base.MoveSpeed;
-            if (curTile != null && curTile.curTile != null)
-                speed *= (100f + PassiveManager.Instance._TileSpeed_Weight[(int)curTile.curTile._TileType]) / 100f;
+    //public override float MoveSpeed
+    //{
+    //    get
+    //    {
+    //        float speed = base.MoveSpeed;
+    //        if (curTile != null && curTile.curTile != null)
+    //            speed *= (100f + PassiveManager.Instance._TileSpeed_Weight[(int)curTile.curTile._TileType]) / 100f;
 
-            return speed;
-        }
-    }
+    //        return speed;
+    //    }
+    //}
 
     public bool CanHoldBack
     {

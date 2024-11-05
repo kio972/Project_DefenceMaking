@@ -41,7 +41,7 @@ public class Environment : MonoBehaviour, ITileKind
         NodeManager.Instance.SetTile(this);
         NodeManager.Instance.SetActiveNode(node, true);
         _curNode = node;
-        _curNode.environment = this;
+        _curNode.tileKind = this;
         switch(environmentType)
         {
             case EnvironmentType.monsterHp:

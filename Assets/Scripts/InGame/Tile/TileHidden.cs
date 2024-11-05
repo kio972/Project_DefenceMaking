@@ -7,9 +7,10 @@ using UniRx;
 using UniRx.Triggers;
 using Unity.VisualScripting;
 
-public class TileHidden : MonoBehaviour
+public class TileHidden : MonoBehaviour, ITileKind
 {
     private TileNode _curNode;
+    public TileNode curNode { get => _curNode; }
     private GameObject _targetPrefab;
 
     private void ExcuteReveal()

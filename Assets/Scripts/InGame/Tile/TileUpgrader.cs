@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileUpgrader : MonoBehaviour
+public class TileUpgrader : MonoBehaviour, ISpeedModify
 {
+    public UnitType targetUnit { get => UnitType.Player; }
+    public float speedRate { get => 1.2f; }
+
     private Tile _tile;
     private Tile tile
     {
@@ -28,5 +31,7 @@ public class TileUpgrader : MonoBehaviour
             renderer.material = _upgradeMaterial;
 
         tile.isUpgraded = true;
+        if (tile._TileType == TileType.Path)
+            tile.AddAllySpeedMult(this);
     }
 }

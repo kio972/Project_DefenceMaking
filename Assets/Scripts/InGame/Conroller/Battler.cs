@@ -163,8 +163,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         get
         {
-            float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
-            return moveSpeed * slowRate;
+            //float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
+            float tileSpeedMult = unitType == UnitType.Player ? curTile.curTile.tileAllySpeedMult : curTile.curTile.tileEnemySpeedMult;
+            return moveSpeed * tileSpeedMult;
         }
     }
 

@@ -38,15 +38,15 @@ public class Stage0_Story : MonoBehaviour
     [SerializeField]
     private GameObject shopBtn;
 
-    private bool LockDestroyTile(GameObject obj)
+    private bool LockDestroyTile(ITileKind tileKind)
     {
-        Tile tile = obj.GetComponent<Tile>();
-        if (tile == null)
-            return false;
+        if(tileKind is Tile tile)
+        {
+            tile.IsRemovable = false;
+            return true;
+        }
 
-        tile.IsRemovable = false;
-
-        return true;
+        return false;
     }
 
     private async UniTask PlayScript(string targetScript)
