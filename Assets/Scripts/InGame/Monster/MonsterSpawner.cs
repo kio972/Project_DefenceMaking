@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
-public class MonsterSpawner : MonoBehaviour, IObjectKind
+public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 {
     [SerializeField]
     private Image bgImg;
@@ -22,7 +23,7 @@ public class MonsterSpawner : MonoBehaviour, IObjectKind
 
     private Tile _tile;
 
-    public Tile curTile { get; }
+    public Tile curTile { get => _tile; }
 
     private bool isUpdate = false;
 
@@ -64,11 +65,12 @@ public class MonsterSpawner : MonoBehaviour, IObjectKind
         this.spawnCoolTime *= ((100 - PassiveManager.Instance._MonsterTypeSummonSpeed_Weight[(int)monsterType]) / 100);
     }
 
-    public void Dead()
+    public void DestroyObject()
     {
         isUpdate = false;
         curRoom?.SetSpawner(this, false);
         GameManager.Instance.monsterSpawner.Remove(this);
+        curTile.RemoveObject();
         Destroy(this.gameObject);
     }
 
@@ -78,7 +80,7 @@ public class MonsterSpawner : MonoBehaviour, IObjectKind
         this.curRoom = room;
         transform.position = curNode.transform.position;
         this.targetName = targetName;
-        curNode.curTile.AddSpawner(this);
+        curNode.curTile.SetObject(this);
 
         monsterIndex = UtilHelper.Find_Data_Index(targetName, DataManager.Instance.battler_Table, "name");
         Dictionary<string, object> data = DataManager.Instance.battler_Table[monsterIndex];

@@ -223,12 +223,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private bool IsSpawnerSetable(TileNode node)
     {
-        if (node.curTile != null)
+        if (node.curTile != null && node.curTile.objectKind == null)
         {
             if (node.curTile._TileType == TileType.Room || node.curTile._TileType == TileType.Room_Single)
             {
-                if (!node.curTile.HaveSpawner)
-                    return true;
+                return true;
             }
         }
 
@@ -277,7 +276,7 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.trap == null)
+            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.objectKind == null)
                 node.SetAvail(true);
             else
                 node.SetAvail(false);

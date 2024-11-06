@@ -67,7 +67,7 @@ public class TileEnd : Tile
             if (curTile != null && curTile.setAvail)
                 AutoRotate(curTile);
 
-            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
+            if (IsCharacterOnIt || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
             {
                 EndMoveing();
             }

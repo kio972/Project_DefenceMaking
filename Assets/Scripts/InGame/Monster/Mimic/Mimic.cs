@@ -67,7 +67,7 @@ public class Mimic : Monster, IHide
         emptySpawner.Init(curNode, _name, NodeManager.Instance.FindRoom(curNode.row, curNode.col));
         emptySpawner.isEmpty = true;
         await UniTask.WaitUntil(() => curTile != curNode || isDead);
-        curNode.curTile.RemoveSpawner();
+        emptySpawner.DestroyObject();
     }
 
     public override void LoadData(BattlerData data)

@@ -26,6 +26,11 @@ public interface IObjectKind
     Tile curTile { get; }
 }
 
+public interface IDestructableObjectKind : IObjectKind
+{
+    void DestroyObject();
+}
+
 public class Tile : MonoBehaviour, ITileKind
 {
     [SerializeField]
@@ -127,23 +132,7 @@ public class Tile : MonoBehaviour, ITileKind
         set => removable = value;
     }
 
-    public bool IsRemovableNow
-    {
-        get
-        {
-            bool remove = removable;
-
-            if (remove)
-                remove = !GameManager.Instance.IsAdventurererOnTile(_curNode);
-            if (remove)
-                remove = !GameManager.Instance.IsMonsterOnTile(_curNode);
-
-            //if (UtilHelper.GetConnectedCount(this) >= 2)
-            //    remove = false;
-
-            return remove;
-        }
-    }
+    public bool IsCharacterOnIt { get => GameManager.Instance.IsAdventurererOnTile(_curNode) || GameManager.Instance.IsMonsterOnTile(_curNode); }
 
     private bool movable = false;
 
@@ -151,28 +140,16 @@ public class Tile : MonoBehaviour, ITileKind
 
     public bool IsDormant { get => isDormant; }
     public bool Movable { get => movable; set { movable = value; } }
-    public bool MovableNow
-    {
-        get
-        {
-            bool canMove = movable;
-            if(canMove)
-                canMove = !GameManager.Instance.IsAdventurererOnTile(_curNode);
-            if (canMove)
-                canMove = !GameManager.Instance.IsMonsterOnTile(_curNode);
-            return canMove;
-        }
-    }
 
     public bool waitToMove = false;
 
     public Tile twin = null;
 
-    public Trap trap = null;
+    public Trap trap { get => _objectKind is Trap trap ? trap : null; }
+    public MonsterSpawner spawner { get => _objectKind is MonsterSpawner spawner ? spawner : null; }
 
-    private MonsterSpawner spawner;
-    public MonsterSpawner _Spanwer { get => spawner; }
-    public bool HaveSpawner { get => spawner != null && !spawner.isEmpty; }
+    private IObjectKind _objectKind;
+    public IObjectKind objectKind { get => _objectKind; }
 
     public bool IsBigRoom = false;
 
@@ -449,15 +426,14 @@ public class Tile : MonoBehaviour, ITileKind
         }
     }
 
-    public void AddSpawner(MonsterSpawner spawner)
+    public void SetObject(IObjectKind obj)
     {
-        this.spawner = spawner;
+        _objectKind = obj;
     }
 
-    public void RemoveSpawner()
+    public void RemoveObject()
     {
-        spawner.Dead();
-        spawner = null;
+        _objectKind = null;
     }
 
     public void RemoveTile()
@@ -469,12 +445,7 @@ public class Tile : MonoBehaviour, ITileKind
         AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.262", SettingManager.Instance._FxVolume);
 
         GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
-        trap?.DestroyTrap();
         Destroy(this.gameObject, 1.0f);
-
-        if (spawner != null)
-            RemoveSpawner();
-        _curNode.tileKind = null;
 
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
@@ -546,7 +517,7 @@ public class Tile : MonoBehaviour, ITileKind
                 twin.RotateTile(true);
             }
 
-            if (!MovableNow || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
+            if (IsCharacterOnIt || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
             {
                 EndMoveing();
             }

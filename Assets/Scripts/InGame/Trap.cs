@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UniRx;
 
-public class Trap : MonoBehaviour, IObjectKind
+public class Trap : MonoBehaviour, IDestructableObjectKind
 {
     private int trapIndex = -1;
     [SerializeField]
@@ -40,9 +40,9 @@ public class Trap : MonoBehaviour, IObjectKind
     [SerializeField]
     AudioClip attackSound;
 
-    public void DestroyTrap()
+    public void DestroyObject()
     {
-        _curTile.trap = null;
+        _curTile.RemoveObject();
         gameObject.SetActive(false);
         if (NodeManager.Instance._GuideState == GuideState.Trap)
             NodeManager.Instance.SetGuideState(GuideState.Trap);
@@ -105,7 +105,7 @@ public class Trap : MonoBehaviour, IObjectKind
         maxTarget = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["targetCount"]);
 
         this._curTile = curTile;
-        curTile.trap = this;
+        curTile.SetObject(this);
         transform.position = curTile.transform.position;
 
         Collider col = GetComponentInChildren<Collider>();
@@ -167,6 +167,6 @@ public class Trap : MonoBehaviour, IObjectKind
         }
 
         if (attackCount >= duration)
-            DestroyTrap();
+            DestroyObject();
     }
 }
