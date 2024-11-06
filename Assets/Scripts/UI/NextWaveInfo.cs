@@ -4,6 +4,8 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
+using UniRx.Triggers;
 
 public class NextWaveInfo : MonoBehaviour
 {
@@ -13,6 +15,9 @@ public class NextWaveInfo : MonoBehaviour
     GameObject waveBtn;
 
     List<NextWaveInfoSlot> infoSlots;
+
+    [SerializeField]
+    private Image btnUI;
 
     // Start is called before the first frame update
     async UniTaskVoid Start()
@@ -30,8 +35,11 @@ public class NextWaveInfo : MonoBehaviour
             });
         GameManager.Instance.timer.Where(x => x <= 720f && gameObject.activeSelf).Subscribe(x => gameObject.SetActive(false));
 
-        await UniTask.WaitUntil(() => GameManager.Instance.IsInit);
+        await UniTask.WaitUntil(() => GameManager.Instance.IsInit, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         transform.position = NodeManager.Instance.startPoint.transform.position;
+
+        btnUI.OnPointerEnterAsObservable().Subscribe(_ => waveIcons.SetActive(true)).AddTo(gameObject);
+        btnUI.OnPointerExitAsObservable().Subscribe(_ => waveIcons.SetActive(false)).AddTo(gameObject);
     }
 
     private List<WaveData> GetWaveSummary(List<WaveData> waveData)
