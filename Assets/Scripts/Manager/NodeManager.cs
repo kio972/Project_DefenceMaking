@@ -7,10 +7,10 @@ public enum GuideState
 {
     None,
     Monster,
-    Trap,
+    ObjectForPath,
     Tile,
     Environment,
-    Movable,
+    Selected,
     Spawner,
 }
 
@@ -168,7 +168,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.None:
                 //ShowMovableTiles();
                 break;
-            case GuideState.Movable:
+            case GuideState.Selected:
                 ShowSelectedTile(tile);
                 break;
             case GuideState.Tile:
@@ -176,8 +176,8 @@ public class NodeManager : IngameSingleton<NodeManager>
                     return;
                 SetTileAvail(tile);
                 break;
-            case GuideState.Trap:
-                SetTrapAvail();
+            case GuideState.ObjectForPath:
+                SetObjectForPathAvail();
                 break;
             case GuideState.Spawner:
                 SetSpawnerAvail();
@@ -272,7 +272,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    private void SetTrapAvail()
+    private void SetObjectForPathAvail()
     {
         foreach (TileNode node in activeNodes)
         {
@@ -282,8 +282,6 @@ public class NodeManager : IngameSingleton<NodeManager>
                 node.SetAvail(false);
         }
     }
-
-    
 
     private void SetEnvironmentAvail()
     {

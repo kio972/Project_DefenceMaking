@@ -34,15 +34,15 @@ public class Slime : Monster
         splitCount = 0 + PassiveManager.Instance._slimeSplit_Weight.Value;
         RotationAxis.localScale = Vector3.one;
         splitedNode = null;
-        slime_curNode = curTile;
+        slime_curNode = _curNode;
         source = new CancellationTokenSource();
     }
 
     private bool IsTileChanged()
     {
-        if (slime_curNode == curTile || 0.05f < Vector3.Distance(curTile.transform.position, transform.position))
+        if (slime_curNode == _curNode || 0.05f < Vector3.Distance(_curNode.transform.position, transform.position))
             return false;
-        slime_curNode = curTile;
+        slime_curNode = _curNode;
         if(!skipedFirst)
         {
             skipedFirst = true;
@@ -56,8 +56,8 @@ public class Slime : Monster
     {
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
-        nextNodes.Remove(prevTile);
-        nextNodes.Remove(GameManager.Instance.king.CurTile);
+        nextNodes.Remove(_prevNode);
+        nextNodes.Remove(GameManager.Instance.king.curNode);
         return nextNodes;
     }
 
@@ -73,14 +73,14 @@ public class Slime : Monster
         }
         
         splitCount--;
-        splitedNode = curTile;
+        splitedNode = _curNode;
         bool isOdd = curHp % 2 == 1;
         curHp /= 2;
         maxHp /= 2;
         BattlerData curData = GetData();
         RotationAxis.localScale *= 0.8f;
         TileNode randomNode = nextNodes[Random.Range(0, nextNodes.Count)];
-        this.nextTile = randomNode;
+        this._nextNode = randomNode;
         nextNodes.Remove(randomNode);
 
         Monster monster = BattlerPooling.Instance.SpawnMonster(curData.id, NodeManager.Instance.FindNode(curData.row, curData.col), "id");
@@ -90,7 +90,7 @@ public class Slime : Monster
         newSlime.RotationAxis.localScale = RotationAxis.localScale;
         newSlime.splitCount = this.splitCount;
         newSlime.splitedNode = this.splitedNode;
-        newSlime.nextTile = nextNodes[Random.Range(0, nextNodes.Count)];
+        newSlime._nextNode = nextNodes[Random.Range(0, nextNodes.Count)];
 
         if (isOdd) { curHp++; maxHp++; }
     }
@@ -113,7 +113,7 @@ public class Slime : Monster
         if (!IsTileChanged())
             return;
 
-        List<TileNode> nextNodes = GetNextNodes(slime_curNode, prevTile);
+        List<TileNode> nextNodes = GetNextNodes(slime_curNode, _prevNode);
         if (nextNodes.Count < 2)
             return;
 

@@ -53,6 +53,10 @@ public struct Card
                 return CardType.Monster;
             case "herb":
                 return CardType.Environment;
+            case "objectForPath":
+                return CardType.ObjectForPath;
+            case "Magic":
+                return CardType.Magic;
         }
         return CardType.None;
     }

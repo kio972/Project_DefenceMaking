@@ -74,9 +74,11 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
         Destroy(this.gameObject);
     }
 
+    public void SetTileInfo(Tile tile) => _tile = tile;
+
     public void Init(TileNode curNode, string targetName, CompleteRoom room)
     {
-        _tile = curNode.curTile;
+        SetTileInfo(curNode.curTile);
         this.curRoom = room;
         transform.position = curNode.transform.position;
         this.targetName = targetName;

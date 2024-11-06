@@ -44,8 +44,8 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
     {
         _curTile.RemoveObject();
         gameObject.SetActive(false);
-        if (NodeManager.Instance._GuideState == GuideState.Trap)
-            NodeManager.Instance.SetGuideState(GuideState.Trap);
+        if (NodeManager.Instance._GuideState == GuideState.ObjectForPath)
+            NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
 
         transform.position = Vector3.up * 1000f;
         GameManager.Instance.trapList.Remove(this);
@@ -94,6 +94,8 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
         targetList.Remove(battle);
     }
 
+    public void SetTileInfo(Tile tile) => _curTile = tile;
+
     public void Init(Tile curTile, int startDuration = 0)
     {
         trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
@@ -104,7 +106,7 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
         duration = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["duration"]);
         maxTarget = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["targetCount"]);
 
-        this._curTile = curTile;
+        SetTileInfo(curTile);
         curTile.SetObject(this);
         transform.position = curTile.transform.position;
 

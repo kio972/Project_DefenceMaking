@@ -4,20 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 public class CardController : CardFramework
 {
-    private void RemoveCard(bool isRecycle)
+    private bool isRemoved = false;
+
+    public async UniTaskVoid RemoveCard(bool isRecycle)
     {
+        if (isRemoved)
+            return;
+
+        isRemoved = true;
         disposables.Dispose();
         GameManager.Instance.cardDeckController.hand_CardNumber--;
 
         GameManager.Instance.cardDeckController.DiscardCard(this.transform, cardIndex);
         //GameManager.Instance.cardDeckController.cards.Remove(this.transform);
-        GameManager.Instance.cardDeckController.SetCardPosition();
 
         CardUIEffect cardUI = GetComponent<CardUIEffect>();
         cardUI?.DiscardEffect(isRecycle);
+
+        await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+        GameManager.Instance.cardDeckController.SetCardPosition();
     }
 
     protected override void SetObjectOnMap(bool cancel = false)
@@ -33,6 +43,6 @@ public class CardController : CardFramework
             base.SetObjectOnMap(cancel);
 
         if (instancedObject == null)
-            RemoveCard(recycle);
+            RemoveCard(recycle).Forget();
     }
 }

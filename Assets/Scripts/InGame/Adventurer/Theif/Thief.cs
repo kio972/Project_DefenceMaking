@@ -20,7 +20,7 @@ public class Thief : Adventurer, IHide
 
     public void HideAction()
     {
-        if(CurTile == NodeManager.Instance.endPoint)
+        if(curNode == NodeManager.Instance.endPoint)
             ChangeState(FSMPatrol.Instance);
         else
             Patrol();

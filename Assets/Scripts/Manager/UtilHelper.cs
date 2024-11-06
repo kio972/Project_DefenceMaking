@@ -330,6 +330,9 @@ public static class UtilHelper
             case CardType.Environment:
                 targetPrefabPath += "Environment";
                 break;
+            default:
+                targetPrefabPath += "Objects";
+                break;
         }
         targetPrefabPath = targetPrefabPath + "/" + targetName;
         return Resources.Load<GameObject>(targetPrefabPath);

@@ -18,6 +18,8 @@ public enum CardType
     Trap,
     Environment,
     Spawner,
+    ObjectForPath,
+    Magic,
 }
 
 public enum CardGrade
@@ -117,8 +119,23 @@ public class CardFramework : MonoBehaviour
 
     protected virtual void SetObjectOnMap(bool cancel = false)
     {
-        instancedObject.SetActive(!cancel && curNode != null && curNode.setAvail);
-        if (!cancel && curNode != null && curNode.setAvail)
+        if(cancel)
+        {
+            if(instancedObject != null)
+                instancedObject.SetActive(false);
+            return;
+        }
+
+        if(cardType == CardType.Magic)
+        {
+            SpecialCardEffect effect = gameObject.AddComponent<SpecialCardEffect>();
+            effect.SetCard(this);
+            effect.SendMessage(_cardInfo.Value.cardName, SendMessageOptions.DontRequireReceiver);
+            return;
+        }
+
+        instancedObject.SetActive(curNode != null && curNode.setAvail);
+        if (curNode != null && curNode.setAvail)
         {
             switch (cardType)
             {
@@ -173,6 +190,9 @@ public class CardFramework : MonoBehaviour
 
     private void UpdateObjectState()
     {
+        if (cardType == CardType.Magic)
+            return;
+
         UpdateObjectPosition();
         if(cardType == CardType.MapTile)
         {
@@ -192,25 +212,27 @@ public class CardFramework : MonoBehaviour
             }
         }
 
-        if (CancelInput())
-            SetObjectOnMap(true);
-
         DrawLine();
     }
 
-    public void CallCard()
+    private void InstanceObject()
     {
-        //targetPrefab积己
-        if(instancedObject == null)
+        if (instancedObject == null)
             instancedObject = Instantiate(targetPrefab);
         else
             instancedObject.SetActive(true);
 
-        if(cardType == CardType.Monster)
+        if (cardType == CardType.Monster)
         {
             Monster monster = instancedObject.GetComponent<Monster>();
             monster.SetRotation();
         }
+    }
+
+    public void CallCard()
+    {
+        if(cardType != CardType.Magic)
+            InstanceObject(); //targetPrefab积己
 
         InputManager.Instance.settingCard = true;
         //墨靛 辆幅喊 贸府
@@ -224,10 +246,16 @@ public class CardFramework : MonoBehaviour
                 NodeManager.Instance.SetGuideState(GuideState.Monster);
                 break;
             case CardType.Trap:
-                NodeManager.Instance.SetGuideState(GuideState.Trap);
+                NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
                 break;
             case CardType.Environment:
                 NodeManager.Instance.SetGuideState(GuideState.Environment);
+                break;
+            case CardType.ObjectForPath:
+                NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
+                break;
+            case CardType.Magic:
+                NodeManager.Instance.SetGuideState(GuideState.None);
                 break;
         }
     }
@@ -238,9 +266,21 @@ public class CardFramework : MonoBehaviour
         this.cardType = targetCard.cardType;
         targetPrefab = UtilHelper.GetCardPrefab(targetCard.cardType, targetCard.cardPrefabName);
         _cardInfo.Value = targetCard;
+
+        if(cardType == CardType.Magic)
+        {
+
+        }
     }
 
     private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+
+    private async UniTaskVoid WaitForDisposable()
+    {
+        await UniTask.Yield(_tokenSource.Token);
+
+
+    }
 
     private async UniTaskVoid WaitForCard()
     {

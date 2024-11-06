@@ -57,7 +57,7 @@ public class Mimic : Monster, IHide
         base.Init();
         curSeduceCount = 0;
         Seduce();
-        CheckNodeOut(curTile).Forget();
+        CheckNodeOut(_curNode).Forget();
         AddStatusEffect<Stealth>(new Stealth(this, 0));
     }
 
@@ -66,7 +66,7 @@ public class Mimic : Monster, IHide
         MonsterSpawner emptySpawner = new GameObject().AddComponent<MonsterSpawner>();
         emptySpawner.Init(curNode, _name, NodeManager.Instance.FindRoom(curNode.row, curNode.col));
         emptySpawner.isEmpty = true;
-        await UniTask.WaitUntil(() => curTile != curNode || isDead);
+        await UniTask.WaitUntil(() => _curNode != curNode || isDead);
         emptySpawner.DestroyObject();
     }
 

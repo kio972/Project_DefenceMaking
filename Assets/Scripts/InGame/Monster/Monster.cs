@@ -101,14 +101,14 @@ public class Monster : Battler, IHoldbacker
             return;
         }
 
-        if (nextTile == null || nextTile.curTile == null)
+        if (_nextNode == null || _nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
-            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
-                path.Remove(curTile);
+            List<TileNode> path = PathFinder.FindPath(_curNode, targetTile);
+            if ((transform.position - _curNode.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - _curNode.transform.position))
+                path.Remove(_curNode);
 
             if (path != null && path.Count > 0)
-                nextTile = path[0];
+                _nextNode = path[0];
             else
             {
                 ResetPaths();
@@ -116,11 +116,11 @@ public class Monster : Battler, IHoldbacker
             }
         }
 
-        ExcuteMove(nextTile);
+        ExcuteMove(_nextNode);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
-            NodeAction(nextTile);
+        if (Vector3.Distance(transform.position, _nextNode.transform.position) < 0.001f)
+            NodeAction(_nextNode);
     }
 
     protected override void CollapseLogic()
@@ -151,7 +151,7 @@ public class Monster : Battler, IHoldbacker
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
-        nextNodes.Remove(prevTile);
+        nextNodes.Remove(_prevNode);
         nextNodes.Remove(NodeManager.Instance.startPoint);
         nextNodes.Remove(NodeManager.Instance.endPoint);
         if (crossedNodes != null)
@@ -174,7 +174,7 @@ public class Monster : Battler, IHoldbacker
     public void SetStartPoint(TileNode tile)
     {
         transform.position = tile.transform.position;
-        curTile = tile;
+        _curNode = tile;
     }
 
     private void ModifyPassive()

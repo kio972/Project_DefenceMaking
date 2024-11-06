@@ -11,7 +11,7 @@ public class TooltipEffect_Tile : MonoBehaviour, IToolTipEffect
             tile = GetComponentInParent<Tile>();
 
         if(value)
-            NodeManager.Instance.SetGuideState(GuideState.Movable, tile);
+            NodeManager.Instance.SetGuideState(GuideState.Selected, tile);
         else
             NodeManager.Instance.SetGuideState(GuideState.None);
     }

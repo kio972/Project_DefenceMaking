@@ -249,7 +249,7 @@ public class DeployUI : MonoBehaviour
                 NodeManager.Instance.SetGuideState(GuideState.Spawner);
                 break;
             case CardType.Trap:
-                NodeManager.Instance.SetGuideState(GuideState.Trap);
+                NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
                 break;
         }
     }

@@ -34,7 +34,7 @@ public class PlayerBattleMain : Battler
 
     public void SetTile(TileNode node)
     {
-        curTile = node;
+        _curNode = node;
     }
 
     public override void GetDamage(int damage, Battler attacker)
@@ -86,7 +86,7 @@ public class PlayerBattleMain : Battler
             InitStats(index);
         }
 
-        curTile = NodeManager.Instance.endPoint;
+        _curNode = NodeManager.Instance.endPoint;
         MoveToBossRoom();
 
         InitState(this, FSMKing.Instance);

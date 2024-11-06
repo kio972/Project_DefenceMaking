@@ -50,7 +50,7 @@ public class InputManager : IngameSingleton<InputManager>
         }
 
         this.curTile = curTile;
-        NodeManager.Instance.SetGuideState(GuideState.Movable, curTile);
+        NodeManager.Instance.SetGuideState(GuideState.Selected, curTile);
         TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
         tileControlUI?.SetButton(curTile);
     }
@@ -65,7 +65,7 @@ public class InputManager : IngameSingleton<InputManager>
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            if (NodeManager.Instance._GuideState != GuideState.None && NodeManager.Instance._GuideState != GuideState.Movable)
+            if (NodeManager.Instance._GuideState != GuideState.None && NodeManager.Instance._GuideState != GuideState.Selected)
                 return;
 
             TileNode node = UtilHelper.RayCastTile();

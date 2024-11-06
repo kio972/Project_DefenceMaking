@@ -192,7 +192,7 @@ public class GameManager : IngameSingleton<GameManager>
     {
         foreach (Monster monster in monsterList)
         {
-            if (monster.CurTile == tile)
+            if (monster.curNode == tile)
                 return true;
         }
 
@@ -203,7 +203,7 @@ public class GameManager : IngameSingleton<GameManager>
     {
         foreach(Adventurer adventurer in adventurersList)
         {
-            if (adventurer.CurTile == tile)
+            if (adventurer.curNode == tile)
                 return true;
         }
 
@@ -235,7 +235,7 @@ public class GameManager : IngameSingleton<GameManager>
         bool bossTileMove = true;
         if (adventurer_entered_BossRoom.Count > 0)
             bossTileMove = false;
-        king.CurTile.curTile.Movable = bossTileMove;
+        king.curNode.curTile.Movable = bossTileMove;
     }
 
     public void SkipDay()

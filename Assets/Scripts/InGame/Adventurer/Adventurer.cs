@@ -31,7 +31,7 @@ public class Adventurer : Battler
         ResetNode();
 
         transform.position = NodeManager.Instance.startPoint.transform.position;
-        curTile = NodeManager.Instance.startPoint;
+        _curNode = NodeManager.Instance.startPoint;
 
         adventurerIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
         if(adventurerIndex != -1)

@@ -24,6 +24,7 @@ public interface ITileKind
 public interface IObjectKind
 {
     Tile curTile { get; }
+    void SetTileInfo(Tile tile);
 }
 
 public interface IDestructableObjectKind : IObjectKind

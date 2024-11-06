@@ -129,11 +129,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public bool isDead = false;
 
     protected HashSet<TileNode> crossedNodes = new HashSet<TileNode>();
-    protected TileNode prevTile;
-    protected TileNode curTile;
-    protected TileNode nextTile;
-    public TileNode CurTile { get => curTile; }
-    public TileNode NextTile { get => nextTile; set => nextTile = value; }
+    protected TileNode _prevNode;
+    protected TileNode _curNode;
+    protected TileNode _nextNode;
+    public TileNode curNode { get => _curNode; }
+    public TileNode NextTile { get => _nextNode; set => _nextNode = value; }
     protected TileNode lastCrossRoad;
     protected bool directPass = false;
     public TileNode directPassNode { get; protected set; } = null;
@@ -164,7 +164,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         get
         {
             //float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
-            float tileSpeedMult = unitType == UnitType.Player ? curTile.curTile.tileAllySpeedMult : curTile.curTile.tileEnemySpeedMult;
+            float tileSpeedMult = unitType == UnitType.Player ? _curNode.curTile.tileAllySpeedMult : _curNode.curTile.tileEnemySpeedMult;
             return moveSpeed * tileSpeedMult;
         }
     }
@@ -236,7 +236,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void KnockBack(Battler attacker, TileNode targetTile, Vector3 destPos, float lerpTime)
     {
-        curTile = targetTile;
+        _curNode = targetTile;
         GetCC(attacker, lerpTime + 30);
         ExcuteMoveToPos(destPos, lerpTime).Forget();
     }
@@ -244,9 +244,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public void ResetNode()
     {
         crossedNodes.Clear();
-        prevTile = null;
+        _prevNode = null;
         //curTile = null;
-        nextTile = null;
+        _nextNode = null;
         lastCrossRoad = null;
         directPass = false;
     }
@@ -403,13 +403,13 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     private void TileMoveCheck(TileNode nextNode, float distance)
     {
-        if (curTile == nextNode)
+        if (_curNode == nextNode)
             return;
 
-        if(distance < Vector3.Distance(curTile.transform.position, transform.position))
+        if(distance < Vector3.Distance(_curNode.transform.position, transform.position))
         {
-            prevTile = curTile;
-            curTile = nextNode;
+            _prevNode = _curNode;
+            _curNode = nextNode;
         }
     }
 
@@ -418,7 +418,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
-        nextNodes.Remove(prevTile);
+        nextNodes.Remove(_prevNode);
         nextNodes.Remove(NodeManager.Instance.startPoint);
         if (crossedNodes != null)
         {
@@ -439,12 +439,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     protected virtual void NodeAction(TileNode nextNode)
     {
-        this.nextTile = null;
-        crossedNodes.Add(curTile);
-        transform.position = curTile.transform.position;
+        this._nextNode = null;
+        crossedNodes.Add(_curNode);
+        transform.position = _curNode.transform.position;
 
         // 마왕성 이동 중 유효타일이 발생시 directPass = false;
-        if (directPass && FindNextNode(curTile) != null)
+        if (directPass && FindNextNode(_curNode) != null)
             directPass = false;
     }
 
@@ -478,7 +478,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         crossedNodes.Clear();
         lastCrossRoad = null;
-        prevTile = null;
+        _prevNode = null;
         directPass = false;
     }
 
@@ -490,16 +490,16 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
-        if (nextTile == null || nextTile.curTile == null)
+        if (_nextNode == null || _nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
+            List<TileNode> path = PathFinder.FindPath(_curNode, targetTile);
 
             //이미 다음노드로 이동중이었다면 현재노드는 제외
-            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
-                path.Remove(curTile);
+            if ((transform.position - _curNode.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - _curNode.transform.position))
+                path.Remove(_curNode);
             
             if (path != null && path.Count > 0)
-                nextTile = path[0];
+                _nextNode = path[0];
             else
             {
                 ResetPaths();
@@ -507,32 +507,32 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             }
         }
 
-        ExcuteMove(nextTile);
+        ExcuteMove(_nextNode);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
-            NodeAction(nextTile);
+        if (Vector3.Distance(transform.position, _nextNode.transform.position) < 0.001f)
+            NodeAction(_nextNode);
     }
 
     protected void NormalPatrol()
     {
         //다음 노드가 없으면 다음노드 탐색
-        if (nextTile == null || nextTile.curTile == null)
-            nextTile = FindNextNode(curTile);
+        if (_nextNode == null || _nextNode.curTile == null)
+            _nextNode = FindNextNode(_curNode);
 
         //탐색후에도 유효한 노드가 없을경우
-        if (nextTile == null)
+        if (_nextNode == null)
         {
             directPass = true;
             return;
         }
 
         // nextNode로 이동수행
-        ExcuteMove(nextTile);
+        ExcuteMove(_nextNode);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
-            NodeAction(nextTile);
+        if (Vector3.Distance(transform.position, _nextNode.transform.position) < 0.001f)
+            NodeAction(_nextNode);
     }
 
     protected float collapseCool = 0;
@@ -555,7 +555,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void CheckTargetCollapsed()
     {
-        isCollapsed = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null;
+        isCollapsed = PathFinder.FindPath(_curNode, NodeManager.Instance.endPoint) == null;
     }
 
     protected virtual void CollapseLogic()
@@ -583,7 +583,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void Chase()
     {
-        DirectPass(chaseTarget.curTile);
+        DirectPass(chaseTarget._curNode);
     }
 
     protected Battler FindNextTarget(Battler prevTarget = null)
@@ -719,10 +719,10 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             SubscribeAnimation();
         }
 
-        if (curTile == null)
+        if (_curNode == null)
         {
-            curTile = NodeManager.Instance.startPoint;
-            transform.position = curTile.transform.position;
+            _curNode = NodeManager.Instance.startPoint;
+            transform.position = _curNode.transform.position;
         }
 
         RandomizePosition();
@@ -822,7 +822,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             attackType = AttackType.Melee;
         }
 
-        if (target.CurTile == null)
+        if (target.curNode == null)
             return false;
 
         if (PathFinder.GetBattlerDistance(this, target) > attackRange)
@@ -942,9 +942,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public virtual void LoadData(BattlerData data)
     {
-        curTile = NodeManager.Instance.FindNode(data.row, data.col);
+        _curNode = NodeManager.Instance.FindNode(data.row, data.col);
         if(data.nextRow != -1)
-            nextTile = NodeManager.Instance.FindNode(data.nextRow, data.nextCol);
+            _nextNode = NodeManager.Instance.FindNode(data.nextRow, data.nextCol);
 
         if (data.lastCrossedRow != -1)
             lastCrossRoad = NodeManager.Instance.FindNode(data.lastCrossedRow, data.lastCrossedCol);
@@ -967,8 +967,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         target.pos_x = transform.position.x;
         target.pos_z = transform.position.z;
 
-        target.row = curTile.row;
-        target.col = curTile.col;
+        target.row = _curNode.row;
+        target.col = _curNode.col;
 
         target.crossedRow = new List<int>();
         target.crossedCol = new List<int>();
@@ -978,8 +978,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             target.crossedCol.Add(node.col);
         }
         
-        target.nextRow = nextTile != null ? nextTile.row : -1;
-        target.nextCol = nextTile != null ? nextTile.col : -1;
+        target.nextRow = _nextNode != null ? _nextNode.row : -1;
+        target.nextCol = _nextNode != null ? _nextNode.col : -1;
 
         target.lastCrossedRow = lastCrossRoad != null ? lastCrossRoad.row : -1;
         target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;

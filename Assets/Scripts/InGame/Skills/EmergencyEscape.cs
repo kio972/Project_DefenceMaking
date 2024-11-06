@@ -32,11 +32,11 @@ public class EmergencyEscape : ISkill
 
         List<Battler> targets = new List<Battler>();
         foreach(var target in GameManager.Instance.adventurersList)
-            if (target.CurTile == targetNode)
+            if (target.curNode == targetNode)
                 targets.Add(target);
 
         foreach (var target in GameManager.Instance._MonsterList)
-            if (target.CurTile == targetNode)
+            if (target.curNode == targetNode)
                 targets.Add(target);
 
         foreach(var target in targets)

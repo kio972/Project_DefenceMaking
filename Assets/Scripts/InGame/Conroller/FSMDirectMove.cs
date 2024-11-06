@@ -17,7 +17,7 @@ public class FSMDirectMove : FSMSingleton<FSMDirectMove>, CharState<Battler>
             return;
         }
 
-        if(e.CurTile == e.directPassNode)
+        if(e.curNode == e.directPassNode)
         {
             e.ChangeState(FSMPatrol.Instance);
             return;
