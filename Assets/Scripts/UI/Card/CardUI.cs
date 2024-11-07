@@ -46,6 +46,8 @@ public class CardUI : MonoBehaviour
                 return "cardFrame_03";
             case "herb":
                 return "cardFrame1_monster";
+            default:
+                return "cardFrame_03";
         }
         return "";
     }
@@ -60,7 +62,8 @@ public class CardUI : MonoBehaviour
 
         Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + targetCard.cardGrade.ToString());
         card_Rank.sprite = cardRank;
-        card_Rank.gameObject.SetActive(targetCard.cardType != CardType.MapTile && targetCard.cardType != CardType.Environment);
+        //card_Rank.gameObject.SetActive(targetCard.cardType != CardType.MapTile && targetCard.cardType != CardType.Environment);
+        card_Rank.gameObject.SetActive(false);
 
         card_Name.ChangeLangauge(SettingManager.Instance.language, targetCard.cardName);
         card_Description.ChangeLangauge(SettingManager.Instance.language, targetCard.cardDescription);

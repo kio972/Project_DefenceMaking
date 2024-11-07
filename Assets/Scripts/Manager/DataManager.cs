@@ -182,15 +182,15 @@ public class DataManager : Singleton<DataManager>
 
         for (int i = 0; i < _deckList.Count; i++)
         {
-            if (string.IsNullOrEmpty(_deckList[i]["prefab"].ToString()))
-                continue;
+            //if (string.IsNullOrEmpty(_deckList[i]["prefab"].ToString()))
+            //    continue;
 
-            if (_deckList[i]["cardtype"].ToString() == "tile")
-                tileCard_Indexs.Add(i);
-            if (_deckList[i]["cardtype"].ToString() == "monster")
-                monsterCard_Indexs.Add(i);
-            if (_deckList[i]["cardtype"].ToString() == "trap")
-                trapCard_Indexs.Add(i);
+            //if (_deckList[i]["cardtype"].ToString() == "tile")
+            //    tileCard_Indexs.Add(i);
+            //if (_deckList[i]["cardtype"].ToString() == "monster")
+            //    monsterCard_Indexs.Add(i);
+            //if (_deckList[i]["cardtype"].ToString() == "trap")
+            //    trapCard_Indexs.Add(i);
 
             if (_deckList[i]["type"].ToString() == "road")
                 pathCard_Indexs.Add(i);

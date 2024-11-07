@@ -55,7 +55,7 @@ public struct Card
                 return CardType.Environment;
             case "objectForPath":
                 return CardType.ObjectForPath;
-            case "Magic":
+            case "magic":
                 return CardType.Magic;
         }
         return CardType.None;

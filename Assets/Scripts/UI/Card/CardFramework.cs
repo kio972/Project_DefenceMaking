@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Unity.VisualScripting;
 
 public enum CardType
 {

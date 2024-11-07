@@ -16,6 +16,16 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
     private int environmentNumber;
 
     [SerializeField]
+    private List<string> _targetPathIds;
+    [SerializeField]
+    private List<string> _targetRoomIds;
+    [SerializeField]
+    private List<string> _targetRoomPartIds;
+    [SerializeField]
+    private List<string> _targetEnvironmentIds;
+
+
+    [SerializeField]
     private ShopUI shopUI;
 
     [SerializeField]
@@ -37,6 +47,19 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
                 itemSlot = GetComponent<ItemSlot>();
             return itemSlot;
         }
+    }
+
+    private int GetRandomIndex(List<string> target)
+    {
+        if (target == null || target.Count == 0)
+            return 0;
+
+        int randomIndex = Random.Range(0, target.Count);
+
+        if(DataManager.Instance.deckListIndex.ContainsKey(target[randomIndex]))
+            return DataManager.Instance.deckListIndex[target[randomIndex]];
+
+        return 0;
     }
 
     private int GetRandomIndex(List<int> target)
@@ -81,13 +104,13 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
     {
         List<int> cardIndexs = new List<int>();
         for (int i = 0; i < path; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.pathCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(_targetPathIds));
         for (int i = 0; i < singleRoom; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.roomCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(_targetRoomIds));
         for (int i = 0; i < partRoom; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.roomPartCard_Index));
+            cardIndexs.Add(GetRandomIndex(_targetRoomPartIds));
         for (int i = 0; i < environment; i++)
-            cardIndexs.Add(GetRandomIndex(DataManager.Instance.environmentCard_Indexs));
+            cardIndexs.Add(GetRandomIndex(_targetEnvironmentIds));
 
         foreach (int cardIndex in cardIndexs)
             curCards.Add(new Card(DataManager.Instance.deck_Table[cardIndex], cardIndex));
