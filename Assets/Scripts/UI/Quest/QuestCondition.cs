@@ -28,7 +28,7 @@ public class QusetCondition_m2001 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
-        return QuestManager.Instance.questController._MainQuest._QuestID == "q1001";
+        return QuestManager.Instance.questController.mainQuest._QuestID == "q1001";
     }
 }
 
@@ -36,7 +36,7 @@ public class QusetCondition_m2003 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
-        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2002").Count() >= 1;
+        return QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1;
     }
 }
 
@@ -71,6 +71,6 @@ public class QusetCondition_m2013 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
-        return QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == "q2004").Count() >= 1;
+        return QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2004").Count() >= 1;
     }
 }

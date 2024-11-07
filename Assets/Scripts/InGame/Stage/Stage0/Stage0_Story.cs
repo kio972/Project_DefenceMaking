@@ -58,14 +58,14 @@ public class Stage0_Story : MonoBehaviour
     private async UniTaskVoid DeckUIQuestCheck()
     {
         const string targetQuest = "q0105";
-        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         deckBtn.SetActive(true);
     }
 
     private async UniTaskVoid ManaUIQuestCheck()
     {
         const string targetQuest = "q0102";
-        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         manaUI.SetActive(true);
     }
 
@@ -73,7 +73,7 @@ public class Stage0_Story : MonoBehaviour
     {
         GameManager.Instance.speedLock = true;
         const string targetQuest = "q0103";
-        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         speedUI.SetActive(true);
         GameManager.Instance.speedLock = false;
     }
@@ -81,7 +81,7 @@ public class Stage0_Story : MonoBehaviour
     private async UniTaskVoid ShopUIQuestCheck()
     {
         const string targetQuest = "q0106";
-        await UniTask.WaitUntil(() => QuestManager.Instance.questController._SubQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == targetQuest).Count() >= 1 || QuestManager.Instance.IsQuestClear(targetQuest), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         shopBtn.SetActive(true);
     }
 

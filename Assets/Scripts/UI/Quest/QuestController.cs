@@ -26,11 +26,11 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    private Quest mainQuest;
-    public Quest _MainQuest { get => mainQuest; }
+    private Quest _mainQuest;
+    public Quest mainQuest { get => _mainQuest; }
 
-    private List<Quest> subQuest = new List<Quest>();
-    public List<Quest> _SubQuest { get => subQuest; }
+    private List<Quest> _subQuest = new List<Quest>();
+    public List<Quest> subQuest { get => _subQuest; }
 
     private Dictionary<int, List<Dictionary<string, object>>> questDic;
     private Dictionary<int, List<Dictionary<string, object>>> _QuestDic
@@ -60,10 +60,10 @@ public class QuestController : MonoBehaviour
 
     public bool IsQuestStarted(string questID)
     {
-        if (mainQuest != null && mainQuest._QuestID == questID)
+        if (_mainQuest != null && _mainQuest._QuestID == questID)
             return true;
 
-        foreach (var quest in subQuest)
+        foreach (var quest in _subQuest)
             if (quest._QuestID == questID)
                 return true;
 
@@ -83,7 +83,7 @@ public class QuestController : MonoBehaviour
 
     private void SetMainQuest(Quest quest)
     {
-        mainQuest = quest;
+        _mainQuest = quest;
         mainInfomer.SetQuest(quest);
 
         AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
@@ -91,7 +91,7 @@ public class QuestController : MonoBehaviour
 
     private void SetSubQuest(Quest quest)
     {
-        subQuest.Add(quest);
+        _subQuest.Add(quest);
         QuestInfo next = nextSubInformer;
         next.SetQuest(quest);
         layoutGroup.enabled = false;
@@ -115,9 +115,9 @@ public class QuestController : MonoBehaviour
 
     private void Update()
     {
-        mainQuest?.UpdateQuest();
+        _mainQuest?.UpdateQuest();
         List<Quest> clearedQuest = new List<Quest>();
-        foreach(Quest quest in subQuest)
+        foreach(Quest quest in _subQuest)
         {
             quest.UpdateQuest();
             if (quest._IsEnd)
@@ -125,6 +125,6 @@ public class QuestController : MonoBehaviour
         }
 
         foreach (Quest quest in clearedQuest)
-            subQuest.Remove(quest);
+            _subQuest.Remove(quest);
     }
 }

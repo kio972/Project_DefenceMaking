@@ -59,18 +59,18 @@ public class ItemSlot : FluctItem
     [SerializeField]
     private FluctType fluctType;
 
-    private Item item;
+    private Item _item;
 
     public Image ItemIcon { get => itemIcon; }
 
     public ItemInfo itemInfo { get; private set; }
-    private Item _Item
+    public Item item
     {
         get
         {
-            if (item == null)
-                item = GetComponent<Item>();
-            return item;
+            if (_item == null)
+                _item = GetComponent<Item>();
+            return _item;
         }
     }
 
@@ -98,9 +98,14 @@ public class ItemSlot : FluctItem
     [SerializeField]
     private ShopSlotInfo slotInfo;
 
+    [SerializeField]
+    private int _stockCount = 1;
+    private int _curStockCount;
+    public int curStockCount { get => _curStockCount; }
+
     public void OnClick()
     {
-        if (item is IMalPoongSunOnClick script)
+        if (_item is IMalPoongSunOnClick script)
             script.PlayOnClickScript();
 
         slotInfo?.UpdateInfo(this);
@@ -124,12 +129,14 @@ public class ItemSlot : FluctItem
 
         GameManager.Instance.gold -= _saledPrice;
 
-        _Item?.UseItem();
+        item?.UseItem();
 
         if (!string.IsNullOrEmpty(buyScript))
             _ShopUI?.PlayScript(buyScript);
 
-        isSoldOut.Value = true;
+        _curStockCount--;
+        if(_curStockCount == 0)
+            isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
         AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
     }
@@ -176,7 +183,10 @@ public class ItemSlot : FluctItem
         itemPrice.text = curPrice.ToString();
 
         if(isRefreshable)
+        {
             isSoldOut.Value = false;
+            _curStockCount = _stockCount;
+        }
     }
 
     public override void UpdateCoolTime()
@@ -218,6 +228,7 @@ public class ItemSlot : FluctItem
         isSoldOut.Subscribe(_ => soldOut?.SetActive(_));
 
         curPrice.Value = originPrice;
+        _curStockCount = _stockCount;
         IRefreshableItem refresh = GetComponent<IRefreshableItem>();
         refresh?.RefreshItem();
     }

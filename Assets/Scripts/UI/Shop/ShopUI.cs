@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShopUI : MonoBehaviour
@@ -18,7 +19,7 @@ public class ShopUI : MonoBehaviour
     private PopUpMessage malpoongsun;
 
     private HerbSlot[] herbSlots;
-    private ItemSlot[] itemSlots;
+    private List<ItemSlot> itemSlots;
 
     [SerializeField]
     private Transform itemShelf;
@@ -48,6 +49,18 @@ public class ShopUI : MonoBehaviour
         PlayScript(conver, track0, track1);
     }
 
+    private void SetItems()
+    {
+        foreach(ItemSlot slot in itemSlots)
+        {
+            bool isUnlocked = true;
+            if (slot.item is INeedUnlockItem needUnlock && !needUnlock.IsUnlock)
+                isUnlocked = false;
+
+            slot.gameObject.SetActive(isUnlocked);
+        }
+    }
+
     public void SetActive(bool value)
     {
         if (value)
@@ -60,6 +73,7 @@ public class ShopUI : MonoBehaviour
         
         if(value)
         {
+            SetItems();
             PlayScript("Shop000");
             AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
         }
@@ -71,11 +85,23 @@ public class ShopUI : MonoBehaviour
         if (initState)
             return;
 
-        herbSlots = GetComponentsInChildren<HerbSlot>(true);
-        foreach (HerbSlot slot in herbSlots)
-            slot.Init();
+        //herbSlots = GetComponentsInChildren<HerbSlot>(true);
+        //foreach (HerbSlot slot in herbSlots)
+        //    slot.Init();
 
-        itemSlots = itemShelf.GetComponentsInChildren<ItemSlot>(true);
+        itemSlots = itemShelf.GetComponentsInChildren<ItemSlot>(true).ToList();
+        List<ItemSlot> deactivedItems = new List<ItemSlot>();
+        foreach(var item in itemSlots)
+        {
+            if(!item.gameObject.activeSelf)
+                deactivedItems.Add(item);
+        }
+
+        foreach(var deactivedItem in deactivedItems)
+        {
+            itemSlots.Remove(deactivedItem);
+        }
+
         foreach (ItemSlot slot in itemSlots)
             slot.Init();
 
@@ -113,10 +139,10 @@ public class ShopUI : MonoBehaviour
         if (!initState)
             Init();
 
-        for (int i = 0; i < herbSlots.Length; i++)
-            herbSlots[i]._CurPrice = data.herbData[i].curVal;
+        //for (int i = 0; i < herbSlots.Length; i++)
+        //    herbSlots[i]._CurPrice = data.herbData[i].curVal;
 
-        for (int i = 0; i < itemSlots.Length; i++)
+        for (int i = 0; i < itemSlots.Count; i++)
         {
             if (data.itemsData[i].id != -1)
             {
@@ -134,16 +160,16 @@ public class ShopUI : MonoBehaviour
 
     public void SaveData(PlayerData data)
     {
-        data.herbData = new List<ShopData>();
-        for (int i = 0; i < herbSlots.Length; i++)
-        {
-            ShopData herb = new ShopData();
-            herb.curVal = herbSlots[i]._CurPrice;
-            data.herbData.Add(herb);
-        }
+        //data.herbData = new List<ShopData>();
+        //for (int i = 0; i < herbSlots.Length; i++)
+        //{
+        //    ShopData herb = new ShopData();
+        //    herb.curVal = herbSlots[i]._CurPrice;
+        //    data.herbData.Add(herb);
+        //}
 
         data.itemsData = new List<ShopData>();
-        for (int i = 0; i < itemSlots.Length; i++)
+        for (int i = 0; i < itemSlots.Count; i++)
         {
             ShopData item = new ShopData();
             RandomCard random = itemSlots[i].GetComponent<RandomCard>();

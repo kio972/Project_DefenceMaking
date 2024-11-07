@@ -162,14 +162,14 @@ public class QuestManager : IngameSingleton<QuestManager>
     {
         data.curQuests = new List<QuestData>();
         QuestData main = new QuestData();
-        if(questController._MainQuest != null)
+        if(questController.mainQuest != null)
         {
-            main.id = _questController._MainQuest._QuestID;
-            main.curVal = _questController._MainQuest._CurClearNum;
+            main.id = _questController.mainQuest._QuestID;
+            main.curVal = _questController.mainQuest._CurClearNum;
             data.curQuests.Add(main);
         }
 
-        foreach (Quest quest in _questController._SubQuest)
+        foreach (Quest quest in _questController.subQuest)
         {
             QuestData sub = new QuestData();
             sub.id = quest._QuestID;
