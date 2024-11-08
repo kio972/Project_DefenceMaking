@@ -24,6 +24,18 @@ public class ShopUI : MonoBehaviour
     [SerializeField]
     private Transform itemShelf;
 
+    private List<System.Action<Item>> buyItemEvents = new List<System.Action<Item>>();
+
+    public void InvokeBuyItemEvents(Item item)
+    {
+        foreach (var itemEvent in buyItemEvents)
+            itemEvent.Invoke(item);
+    }
+
+    public void AddBuyItemEvent(System.Action<Item> addEvent) => buyItemEvents.Add(addEvent);
+
+    public void RemoveBuyItemEvent(System.Action<Item> removeEvent) => buyItemEvents.Remove(removeEvent);
+
     public void PlayScript(string message, string anim, string anim2 = "")
     {
         malpoongsun.ToastMsg(message);

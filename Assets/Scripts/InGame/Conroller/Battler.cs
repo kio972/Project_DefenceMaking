@@ -264,7 +264,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Invoke("SetActiveFalse", 0.1f);
     }
 
-    public virtual void Dead()
+    public virtual void Dead(Battler attacker)
     {
         hpBar?.UpdateHp();
         isDead = true;
@@ -280,6 +280,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Invoke("RemoveBody", 2.5f);
         if(GameManager.Instance.holdBackedABattlers.Contains(this))
             GameManager.Instance.holdBackedABattlers.Remove(this);
+        GameManager.Instance.InvokeBattlerDeadEvents(this, attacker);
     }
 
     private void UpdateChaseTarget(Battler attacker)
@@ -360,7 +361,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             curHp -= Mathf.Abs(shield - finalDamage);
             shield = 0;
             if (curHp <= 0)
-                Dead();
+                Dead(attacker);
         }
 
         if ((object)CurState == FSMPatrol.Instance)

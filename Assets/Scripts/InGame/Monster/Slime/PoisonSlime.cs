@@ -11,9 +11,9 @@ public class PoisonSlime : Slime
             item.AddStatusEffect<Poison>(new Poison(item, 180));
     }
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         PosionEffect();
-        base.Dead();
+        base.Dead(attacker);
     }
 }

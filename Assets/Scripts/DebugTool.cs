@@ -21,7 +21,7 @@ public class DebugTool : MonoBehaviour
         foreach (var item in monsterList)
         {
             item.ChangeState(FSMDead.Instance);
-            item.Dead();
+            item.Dead(null);
         }
     }
 
@@ -31,7 +31,7 @@ public class DebugTool : MonoBehaviour
         foreach (var item in adventurersList)
         {
             item.ChangeState(FSMDead.Instance);
-            item.Dead();
+            item.Dead(null);
         }
     }
 

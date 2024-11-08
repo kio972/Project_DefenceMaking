@@ -49,7 +49,7 @@ public class ItemSlot : FluctItem
     private GameObject soldOut;
 
     [SerializeField]
-    private ShopUI shopUI;
+    private ShopUI _shopUI;
 
     [SerializeField]
     private string buyScript;
@@ -74,13 +74,13 @@ public class ItemSlot : FluctItem
         }
     }
 
-    private ShopUI _ShopUI
+    private ShopUI shopUI
     {
         get
         {
-            if (shopUI == null)
-                shopUI = GetComponentInParent<ShopUI>();
-            return shopUI;
+            if (_shopUI == null)
+                _shopUI = GetComponentInParent<ShopUI>();
+            return _shopUI;
         }
     }
 
@@ -115,14 +115,14 @@ public class ItemSlot : FluctItem
     {
         if (GameManager.Instance.gold < _saledPrice)
         {
-            _ShopUI?.PlayScript("Shop034");
+            shopUI?.PlayScript("Shop034");
             AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
         {
-            _ShopUI?.PlayScript("Shop035");
+            shopUI?.PlayScript("Shop035");
             AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
@@ -130,9 +130,10 @@ public class ItemSlot : FluctItem
         GameManager.Instance.gold -= _saledPrice;
 
         item?.UseItem();
+        shopUI?.InvokeBuyItemEvents(item);
 
         if (!string.IsNullOrEmpty(buyScript))
-            _ShopUI?.PlayScript(buyScript);
+            shopUI?.PlayScript(buyScript);
 
         _curStockCount--;
         if(_curStockCount == 0)

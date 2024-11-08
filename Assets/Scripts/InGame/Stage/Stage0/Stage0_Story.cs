@@ -250,7 +250,7 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.saveLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
 
-        NodeManager.Instance.RemoveRemoveTileEvent(LockDestroyTile);
+        NodeManager.Instance.RemoveSetTileEvent(LockDestroyTile);
 
         //시작패 드로우
         GameManager.Instance.cardDeckController.DrawCard(directPath);

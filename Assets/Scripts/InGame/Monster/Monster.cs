@@ -74,7 +74,7 @@ public class Monster : Battler, IHoldbacker
         GameManager.Instance.holdBackedABattlers.Add(target);
     }
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         if(resurrectCount > 0)
         {
@@ -83,7 +83,7 @@ public class Monster : Battler, IHoldbacker
             return;
         }
 
-        base.Dead();
+        base.Dead(attacker);
         GameManager.Instance.SetMonseter(this, false);
         //if (curTile.curTile.monster != null && curTile.curTile.monster == this)
         //{

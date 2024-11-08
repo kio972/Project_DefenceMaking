@@ -13,7 +13,7 @@ public class Barricade : Monster, IDestructableObjectKind
     {
         _curTile.RemoveObject();
 
-        Dead();
+        Dead(null);
     }
 
     public void SetTileInfo(Tile tile) => _curTile = tile;

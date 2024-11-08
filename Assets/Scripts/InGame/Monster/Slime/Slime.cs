@@ -15,11 +15,11 @@ public class Slime : Monster
 
     private CancellationTokenSource source;
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         source.Cancel();
         source.Dispose();
-        base.Dead();
+        base.Dead(attacker);
     }
 
     public void UpgradeSplitCount(int value)

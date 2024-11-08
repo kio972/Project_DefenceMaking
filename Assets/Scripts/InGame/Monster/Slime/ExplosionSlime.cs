@@ -12,9 +12,9 @@ public class ExplosionSlime : Slime
             item.GetDamage(explosionDamage, this);
     }
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         ExplodeEffect();
-        base.Dead();
+        base.Dead(attacker);
     }
 }

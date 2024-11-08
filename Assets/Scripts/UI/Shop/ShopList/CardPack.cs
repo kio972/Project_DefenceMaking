@@ -38,14 +38,14 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
     [SerializeField]
     CardPackEffect packEffect;
 
-    ItemSlot itemSlot;
-    ItemSlot _ItemSlot
+    ItemSlot _itemSlot;
+    public ItemSlot itemSlot
     {
         get
         {
-            if (itemSlot == null)
-                itemSlot = GetComponent<ItemSlot>();
-            return itemSlot;
+            if (_itemSlot == null)
+                _itemSlot = GetComponent<ItemSlot>();
+            return _itemSlot;
         }
     }
 
@@ -71,7 +71,7 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
 
     public void OnClick()
     {
-        if (_ItemSlot.IsSoldOut)
+        if (itemSlot.IsSoldOut)
             return;
 
         Dictionary<string, object> script = DataManager.Instance.GetMalpoongsunScript(descScript);

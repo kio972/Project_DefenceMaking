@@ -15,9 +15,9 @@ public class Adventurer : Battler
         base.RemoveBody();
     }
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
-        base.Dead();
+        base.Dead(attacker);
         GameManager.Instance.gold += reward;
         GameManager.Instance.adventurersList.Remove(this);
         if (GameManager.Instance.LastSpawnedAdventurer == this && GameManager.Instance.adventurersList.Count > 0)

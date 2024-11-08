@@ -9,10 +9,10 @@ public class GolemMithril : GolemIron
 {
     private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         tokenSource.Cancel();
-        base.Dead();
+        base.Dead(attacker);
     }
 
     private async UniTaskVoid ShieldRestoration(float time)

@@ -127,6 +127,17 @@ public class GameManager : IngameSingleton<GameManager>
     private HashSet<Battler> _holdBackedBattlers = new HashSet<Battler>();
     public HashSet<Battler> holdBackedABattlers { get => _holdBackedBattlers; }
 
+    private List<System.Action<Battler, Battler>> battlerDeadEvent = new List<System.Action<Battler, Battler>>();
+
+    public void InvokeBattlerDeadEvents(Battler battler, Battler attecker)
+    {
+        foreach (var curEvent in battlerDeadEvent)
+            curEvent.Invoke(battler, attecker);
+    }
+
+    public void AddBattlerDeadEvent(System.Action<Battler, Battler> addEvent) => battlerDeadEvent.Add(addEvent);
+
+    public void RemoveBattlerDeadEvent(System.Action<Battler, Battler> removeEvent) => battlerDeadEvent.Remove(removeEvent);
 
     public void CheckBattlerCollapsed()
     {
