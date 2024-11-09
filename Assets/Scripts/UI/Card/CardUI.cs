@@ -32,28 +32,24 @@ public class CardUI : MonoBehaviour
         disposables.Dispose();
     }
 
-    private string GetFrameName(string cardFrame)
+    private string GetFrameName(CardType cardFrame)
     {
         switch (cardFrame)
         {
-            case "road":
+            case CardType.PathTile:
                 return "cardFrame_04";
-            case "room":
+            case CardType.RoomTile:
                 return "cardFrame_05";
-            case "roomPart":
-                return "cardFrame_05";
-            case "environment":
+            case CardType.Environment:
                 return "cardFrame_03";
-            case "herb":
-                return "cardFrame1_monster";
             default:
-                return "cardFrame_03";
+                return "cardFrame1_monster";
         }
     }
 
     public void SetCardUI(Card targetCard)
     {
-        Sprite frame1 = SpriteList.Instance.LoadSprite(GetFrameName(targetCard.cardFrame));
+        Sprite frame1 = SpriteList.Instance.LoadSprite(GetFrameName(targetCard.cardType));
         card_Frame.sprite = frame1;
         //Sprite frame2 = SpriteList.Instance.LoadSprite("cardFrame2_" + targetCard.cardFrame);
         //card_Frame2.sprite = frame2;

@@ -315,7 +315,10 @@ public static class UtilHelper
         string targetPrefabPath = "Prefab/";
         switch (type)
         {
-            case CardType.MapTile:
+            case CardType.PathTile:
+                targetPrefabPath += "Tile";
+                break;
+            case CardType.RoomTile:
                 targetPrefabPath += "Tile";
                 break;
             case CardType.Monster:

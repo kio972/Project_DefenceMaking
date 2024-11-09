@@ -40,11 +40,11 @@ public struct Card
         switch (type)
         {
             case "road":
-                return CardType.MapTile;
+                return CardType.PathTile;
             case "room":
-                return CardType.MapTile;
+                return CardType.RoomTile;
             case "roomPart":
-                return CardType.MapTile;
+                return CardType.RoomTile;
             case "trap":
                 return CardType.Trap;
             case "environment":

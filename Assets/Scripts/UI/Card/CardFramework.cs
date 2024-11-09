@@ -10,13 +10,14 @@ using System.Threading;
 public enum CardType
 {
     None,
-    MapTile,
+    PathTile,
     Monster,
     Trap,
     Environment,
     Spawner,
     ObjectForPath,
     Magic,
+    RoomTile,
 }
 
 public enum CardGrade
@@ -136,7 +137,10 @@ public class CardFramework : MonoBehaviour
         {
             switch (cardType)
             {
-                case CardType.MapTile:
+                case CardType.PathTile:
+                    SetTile(curNode);
+                    break;
+                case CardType.RoomTile:
                     SetTile(curNode);
                     break;
                 case CardType.Monster:
@@ -191,7 +195,7 @@ public class CardFramework : MonoBehaviour
             return;
 
         UpdateObjectPosition();
-        if(cardType == CardType.MapTile)
+        if(cardType is CardType.PathTile or CardType.RoomTile)
         {
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey) &&!GameManager.Instance.rotateLock)
             {
@@ -235,9 +239,13 @@ public class CardFramework : MonoBehaviour
         //카드 종류별 처리
         switch (cardType)
         {
-            case CardType.MapTile:
+            case CardType.PathTile:
                 Tile tile = instancedObject.GetComponent<Tile>();
                 NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
+                break;
+            case CardType.RoomTile:
+                Tile room = instancedObject.GetComponent<Tile>();
+                NodeManager.Instance.SetGuideState(GuideState.Tile, room);
                 break;
             case CardType.Monster:
                 NodeManager.Instance.SetGuideState(GuideState.Monster);

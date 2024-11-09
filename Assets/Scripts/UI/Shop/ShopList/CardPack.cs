@@ -4,8 +4,18 @@ using UnityEngine;
 using System.Text;
 using System.Linq;
 
+public enum CardPackType
+{
+    None,
+    Path,
+    Room,
+    Environment,
+}
+
 public class CardPack : MonoBehaviour, Item, IRefreshableItem
 {
+    public CardPackType cardType;
+
     [SerializeField]
     private int pathNumber;
     [SerializeField]
@@ -47,6 +57,20 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
                 _itemSlot = GetComponent<ItemSlot>();
             return _itemSlot;
         }
+    }
+
+    public void AddCardPool(CardType cardType, string targetId)
+    {
+        List<string> targetPool = null;
+        if (cardType == CardType.PathTile)
+            targetPool = _targetPathIds;
+        if (cardType == CardType.RoomTile)
+            targetPool = _targetRoomPartIds;
+        if (cardType == CardType.Environment)
+            targetPool = _targetEnvironmentIds;
+
+        targetPool?.Add(targetId);
+        RefreshItem();
     }
 
     private int GetRandomIndex(List<string> target)
