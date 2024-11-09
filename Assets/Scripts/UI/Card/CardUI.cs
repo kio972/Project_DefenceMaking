@@ -49,7 +49,6 @@ public class CardUI : MonoBehaviour
             default:
                 return "cardFrame_03";
         }
-        return "";
     }
 
     public void SetCardUI(Card targetCard)

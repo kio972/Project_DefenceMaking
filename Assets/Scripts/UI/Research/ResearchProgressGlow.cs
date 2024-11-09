@@ -18,7 +18,7 @@ public class ResearchProgressGlow : MonoBehaviour
     [SerializeField]
     GameObject glowImage;
 
-    private bool activeState = false;
+    //private bool activeState = false;
 
     private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
