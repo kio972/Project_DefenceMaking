@@ -32,7 +32,8 @@ public class CardController : CardFramework
 
     protected override void SetObjectOnMap(bool cancel = false)
     {
-        bool recycle = GameManager.Instance.cardDeckController.IsRecycle;
+        //bool recycle = GameManager.Instance.cardDeckController.IsRecycle;
+        bool recycle = false;
         if (!cancel && recycle)
         {
             Destroy(instancedObject);
