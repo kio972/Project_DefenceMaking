@@ -12,7 +12,7 @@ public enum CardPackType
     Environment,
 }
 
-public class CardPack : MonoBehaviour, Item, IRefreshableItem
+public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem
 {
     public CardPackType cardType;
 
@@ -56,6 +56,26 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem
             if (_itemSlot == null)
                 _itemSlot = GetComponent<ItemSlot>();
             return _itemSlot;
+        }
+    }
+
+    [SerializeField]
+    private string targetQuestId;
+
+    public bool IsUnlock
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(targetQuestId))
+                return true;
+
+            if (QuestManager.Instance.IsQuestClear(targetQuestId))
+                return true;
+
+            if (QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == targetQuestId).Count() >= 1)
+                return true;
+
+            return false;
         }
     }
 
