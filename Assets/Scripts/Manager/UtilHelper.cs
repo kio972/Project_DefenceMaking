@@ -12,6 +12,38 @@ using System.Linq;
 
 public static class UtilHelper
 {
+    public static List<Tile> GetPathCount(Tile startTile)
+    {
+        List<Tile> visited = new List<Tile> { startTile };
+        Queue<Tile> queue = new Queue<Tile>();
+        queue.Enqueue(startTile);
+
+        while (queue.Count != 0)
+        {
+            Tile next = queue.Dequeue();
+            foreach (Direction dir in next.PathDirection)
+            {
+                TileNode targetNode = next.curNode.DirectionalNode(dir);
+                // 대상 방향에 길 타일 없음
+                if (targetNode == null || targetNode.curTile == null || targetNode.curTile._TileType != TileType.Path)
+                    continue;
+
+                // 이미 방문한 타일임
+                if (visited.Contains(targetNode.curTile))
+                    continue;
+
+                // 대상 방향으로 길 연결되어있지 않음
+                if (!targetNode.curTile.PathDirection.Contains(UtilHelper.ReverseDirection(dir)))
+                    continue;
+
+                queue.Enqueue(targetNode.curTile);
+                visited.Add(targetNode.curTile);
+            }
+        }
+
+        return visited;
+    }
+
     public static bool ContainsParam(this Animator _Anim, string _ParamName)
     {
         foreach (AnimatorControllerParameter param in _Anim.parameters)

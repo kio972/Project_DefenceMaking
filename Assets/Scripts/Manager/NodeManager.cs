@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public HashSet<TileNode> allNodes = new HashSet<TileNode>();
 
-    public List<CompleteRoom> roomTiles = new List<CompleteRoom>();
+    public ReactiveCollection<CompleteRoom> roomTiles = new ReactiveCollection<CompleteRoom>();
 
     public HashSet<TileNode> hiddenTiles = new HashSet<TileNode>();
 
@@ -131,11 +132,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void ResetNode()
     {
-        activeNodes = new HashSet<TileNode>();
-        emptyNodes = new HashSet<TileNode>();
-        allNodes = new HashSet<TileNode>();
-        roomTiles = new List<CompleteRoom>();
-        dormantTile = new List<Tile>();
+        activeNodes.Clear();
+        emptyNodes.Clear();
+        allNodes.Clear();
+        roomTiles.Clear();
+        dormantTile.Clear();
     }
 
 
@@ -152,7 +153,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             return;
 
         manaGuideState = value;
-        RoomManaPool.Instance.SetManaUI(value, roomTiles);
+        RoomManaPool.Instance.SetManaUI(value, roomTiles.ToList());
     }
 
     public void SetGuideState(GuideState guideState, Tile tile = null)

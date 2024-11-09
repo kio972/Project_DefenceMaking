@@ -86,22 +86,29 @@ public class Tile : MonoBehaviour, ITileKind
 
     public float tileEnemySpeedMult { get; private set; } = 1f;
     public float tileAllySpeedMult { get; private set; } = 1f;
+    public float tileAllyAttackSpeedMult { get; private set; } = 1f;
 
-    private ReactiveCollection<ISpeedModify> _enemySpeedMults = new ReactiveCollection<ISpeedModify>();
-    private ReactiveCollection<ISpeedModify> _allySpeedMults = new ReactiveCollection<ISpeedModify>();
+    private ReactiveCollection<IModifier> _enemySpeedMults = new ReactiveCollection<IModifier>();
+    private ReactiveCollection<IModifier> _allySpeedMults = new ReactiveCollection<IModifier>();
+    private ReactiveCollection<IModifier> _allyAttackSpeedMults = new ReactiveCollection<IModifier>();
 
-    public List<ISpeedModify> enemySpeedMults { get => new List<ISpeedModify>(_enemySpeedMults); }
+    public List<IModifier> enemySpeedMults { get => new List<IModifier>(_enemySpeedMults); }
 
-    private float CalculateSpeedMult(List<ISpeedModify> speedModifies)
+    private float CalculateSpeedMult(List<IModifier> speedModifies)
     {
         float speedMult = 1f;
-        foreach(ISpeedModify speedModify in speedModifies)
-            speedMult *= speedModify.speedRate;
+        foreach(IModifier speedModify in speedModifies)
+            speedMult *= speedModify.value;
         return speedMult;
     }
 
-    public void AddEnemySpeedMult(ISpeedModify speedModify) => _enemySpeedMults.Add(speedModify);
-    public void AddAllySpeedMult(ISpeedModify speedModify) => _allySpeedMults.Add(speedModify);
+    public void AddEnemySpeedMult(IModifier speedModify) => _enemySpeedMults.Add(speedModify);
+    public void AddAllySpeedMult(IModifier speedModify) => _allySpeedMults.Add(speedModify);
+    public void AddAllyAttackSpeedMult(IModifier attackSpeedModify) => _allyAttackSpeedMults.Add(attackSpeedModify);
+
+    public void RemoveEnemySpeedMult(IModifier speedModify) => _enemySpeedMults.Remove(speedModify);
+    public void RemoveAllySpeedMult(IModifier speedModify) => _allySpeedMults.Remove(speedModify);
+    public void RemoveAllyAttackSpeedMult(IModifier attackSpeedModify) => _allyAttackSpeedMults.Remove(attackSpeedModify);
 
     public TileType _TileType { get => tileType; }
 
@@ -439,6 +446,9 @@ public class Tile : MonoBehaviour, ITileKind
 
     public void RemoveTile()
     {
+        if (isUpgraded && tileType == TileType.Path)
+            DownGradeCheck();
+
         NodeManager.Instance.SetActiveNode(_curNode, false);
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
@@ -451,6 +461,31 @@ public class Tile : MonoBehaviour, ITileKind
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
         GameManager.Instance.UpdateTotalMana();
+    }
+
+    private void DownGradeCheck()
+    {
+        HashSet<Tile> checkedTile = new HashSet<Tile>();
+        foreach(var dir in pathDirection)
+        {
+            TileNode node = curNode.neighborNodeDic[dir];
+            if (node.curTile == null || node.curTile._TileType != TileType.Path)
+                continue;
+
+            if (checkedTile.Contains(node.curTile))
+                continue;
+
+            List<Tile> connectedTiles = UtilHelper.GetPathCount(node.curTile);
+            foreach(var tile in connectedTiles)
+            {
+                checkedTile.Add(tile);
+                if(connectedTiles.Count < 5)
+                {
+                    TileUpgrader upgrader = tile.GetComponent<TileUpgrader>();
+                    upgrader?.DownGradeTile();
+                }
+            }
+        }
     }
 
     public TileData GetTileData()
@@ -493,8 +528,9 @@ public class Tile : MonoBehaviour, ITileKind
         }
 
         NodeManager.Instance.SetTile(this);
-        _allySpeedMults.ObserveCountChanged().Subscribe(_ => tileAllySpeedMult = CalculateSpeedMult(new List<ISpeedModify>(_allySpeedMults))).AddTo(gameObject);
-        _enemySpeedMults.ObserveCountChanged().Subscribe(_ => tileEnemySpeedMult = CalculateSpeedMult(new List<ISpeedModify>(_enemySpeedMults))).AddTo(gameObject);
+        _allySpeedMults.ObserveCountChanged().Subscribe(_ => tileAllySpeedMult = CalculateSpeedMult(new List<IModifier>(_allySpeedMults))).AddTo(gameObject);
+        _enemySpeedMults.ObserveCountChanged().Subscribe(_ => tileEnemySpeedMult = CalculateSpeedMult(new List<IModifier>(_enemySpeedMults))).AddTo(gameObject);
+        _allyAttackSpeedMults.ObserveCountChanged().Subscribe(_ => tileAllyAttackSpeedMult = CalculateSpeedMult(new List<IModifier>(_allyAttackSpeedMults))).AddTo(gameObject);
     }
 
     protected virtual void Update()

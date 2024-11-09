@@ -87,7 +87,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
                 attackSpeedRate += rateEffect.attackSpeedRate;
         }
 
-        return baseAttackSpeed * (1 + (attackSpeedRate / 100));
+        return baseAttackSpeed * (1 + (attackSpeedRate / 100)) * _curNode.curTile.tileAllyAttackSpeedMult;
     }
 
 

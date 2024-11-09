@@ -15,10 +15,10 @@ public interface IManaSupply
     int manaValue { get; }
 }
 
-public interface ISpeedModify
+public interface IModifier
 {
     UnitType targetUnit { get; }
-    float speedRate { get; }
+    float value { get; }
 }
 
 public class Environment : MonoBehaviour, ITileKind

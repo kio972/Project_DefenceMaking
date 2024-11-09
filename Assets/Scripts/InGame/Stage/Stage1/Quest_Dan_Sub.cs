@@ -523,38 +523,6 @@ public class Quest2020 : Quest
 
     private int curPathCount = -1;
 
-    private int GetPathCount(Tile startTile)
-    {
-        List<Tile> visited = new List<Tile> { startTile };
-        Queue<Tile> queue = new Queue<Tile>();
-        queue.Enqueue(startTile);
-
-        while (queue.Count != 0)
-        {
-            Tile next = queue.Dequeue();
-            foreach (Direction dir in next.PathDirection)
-            {
-                TileNode targetNode = next.curNode.DirectionalNode(dir);
-                // 대상 방향에 길 타일 없음
-                if (targetNode == null || targetNode.curTile == null || targetNode.curTile._TileType != TileType.Path)
-                    continue;
-
-                // 이미 방문한 타일임
-                if (visited.Contains(targetNode.curTile))
-                    continue;
-
-                // 대상 방향으로 길 연결되어있지 않음
-                if (!targetNode.curTile.PathDirection.Contains(UtilHelper.ReverseDirection(dir)))
-                    continue;
-
-                queue.Enqueue(targetNode.curTile);
-                visited.Add(targetNode.curTile);
-            }
-        }
-
-        return visited.Count;
-    }
-
     public override void CheckCondition()
     {
         if (curPathCount == -1)
@@ -564,7 +532,7 @@ public class Quest2020 : Quest
         if (NodeManager.Instance.tileDictionary[TileType.Path].Count > curPathCount)
         {
             Tile lastTile = NodeManager.Instance.tileDictionary[TileType.Path][NodeManager.Instance.tileDictionary[TileType.Path].Count - 1];
-            int curNumber = GetPathCount(lastTile);
+            int curNumber = UtilHelper.GetPathCount(lastTile).Count;
             if (curNumber > curClearNum[0])
                 curClearNum[0] = curNumber;
         }

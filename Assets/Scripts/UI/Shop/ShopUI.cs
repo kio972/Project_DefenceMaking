@@ -19,7 +19,8 @@ public class ShopUI : MonoBehaviour
     private PopUpMessage malpoongsun;
 
     private HerbSlot[] herbSlots;
-    private List<ItemSlot> itemSlots;
+    private List<ItemSlot> _itemSlots;
+    public List<ItemSlot> itemSlots { get => new List<ItemSlot>(_itemSlots); }
 
     [SerializeField]
     private Transform itemShelf;
@@ -63,7 +64,7 @@ public class ShopUI : MonoBehaviour
 
     private void SetItems()
     {
-        foreach(ItemSlot slot in itemSlots)
+        foreach(ItemSlot slot in _itemSlots)
         {
             bool isUnlocked = true;
             if (slot.item is INeedUnlockItem needUnlock && !needUnlock.IsUnlock)
@@ -101,9 +102,9 @@ public class ShopUI : MonoBehaviour
         //foreach (HerbSlot slot in herbSlots)
         //    slot.Init();
 
-        itemSlots = itemShelf.GetComponentsInChildren<ItemSlot>(true).ToList();
+        _itemSlots = itemShelf.GetComponentsInChildren<ItemSlot>(true).ToList();
         List<ItemSlot> deactivedItems = new List<ItemSlot>();
-        foreach(var item in itemSlots)
+        foreach(var item in _itemSlots)
         {
             if(!item.gameObject.activeSelf)
                 deactivedItems.Add(item);
@@ -111,10 +112,10 @@ public class ShopUI : MonoBehaviour
 
         foreach(var deactivedItem in deactivedItems)
         {
-            itemSlots.Remove(deactivedItem);
+            _itemSlots.Remove(deactivedItem);
         }
 
-        foreach (ItemSlot slot in itemSlots)
+        foreach (ItemSlot slot in _itemSlots)
             slot.Init();
 
         initState = true;
@@ -154,16 +155,16 @@ public class ShopUI : MonoBehaviour
         //for (int i = 0; i < herbSlots.Length; i++)
         //    herbSlots[i]._CurPrice = data.herbData[i].curVal;
 
-        for (int i = 0; i < itemSlots.Count; i++)
+        for (int i = 0; i < _itemSlots.Count; i++)
         {
             if (data.itemsData[i].id != -1)
             {
                 object target = DataManager.Instance.deck_Table[data.itemsData[i].id]["text_name"];
-                itemSlots[i].SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[data.itemsData[i].id]["prefab"].ToString()), DataManager.Instance.GetDescription(target.ToString()));
+                _itemSlots[i].SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[data.itemsData[i].id]["prefab"].ToString()), DataManager.Instance.GetDescription(target.ToString()));
             }
 
-            itemSlots[i]._CurPrice = data.itemsData[i].curVal;
-            itemSlots[i].IsSoldOut = data.itemsData[i].isSoldOut;
+            _itemSlots[i]._CurPrice = data.itemsData[i].curVal;
+            _itemSlots[i].IsSoldOut = data.itemsData[i].isSoldOut;
         }
 
         timerList[0]._CurTime = data.itemFluctCool;
@@ -181,13 +182,13 @@ public class ShopUI : MonoBehaviour
         //}
 
         data.itemsData = new List<ShopData>();
-        for (int i = 0; i < itemSlots.Count; i++)
+        for (int i = 0; i < _itemSlots.Count; i++)
         {
             ShopData item = new ShopData();
-            RandomCard random = itemSlots[i].GetComponent<RandomCard>();
+            RandomCard random = _itemSlots[i].GetComponent<RandomCard>();
             item.id = random != null ? random._TargetIndex : -1;
-            item.curVal = itemSlots[i]._CurPrice;
-            item.isSoldOut = itemSlots[i].IsSoldOut;
+            item.curVal = _itemSlots[i]._CurPrice;
+            item.isSoldOut = _itemSlots[i].IsSoldOut;
             data.itemsData.Add(item);
         }
 

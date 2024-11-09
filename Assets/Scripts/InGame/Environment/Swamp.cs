@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Swamp : Environment, ISpeedModify
+public class Swamp : Environment, IModifier
 {
     private UnitType _targetUnit = UnitType.Enemy;
     public UnitType targetUnit { get => _targetUnit; }
-    public float speedRate { get => value; }
+    public float value { get => base.value; }
 
     protected override void CustomFunc()
     {
