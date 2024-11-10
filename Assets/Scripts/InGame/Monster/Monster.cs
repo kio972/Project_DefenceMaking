@@ -160,6 +160,20 @@ public class Monster : Battler, IHoldbacker
                 nextNodes.Remove(node);
         }
 
+        List<TileNode> cannotPassTiles = new List<TileNode>();
+        //노드중 통행불가 오브젝트가 설치된 타일은 제외
+        foreach (TileNode node in nextNodes)
+        {
+            if(node.curTile.objectKind != null && node.curTile.objectKind is IBlockingObject blockingObject)
+            {
+                if(blockingObject.blockTargets.Contains(monsterType))
+                    cannotPassTiles.Add(node);
+            }
+        }
+
+        foreach (TileNode node in cannotPassTiles)
+            nextNodes.Remove(node);
+
         if (nextNodes.Count == 0)
             return null;
 
@@ -169,12 +183,6 @@ public class Monster : Battler, IHoldbacker
 
         TileNode nextNode = nextNodes[UnityEngine.Random.Range(0, nextNodes.Count)];
         return nextNode;
-    }
-
-    public void SetStartPoint(TileNode tile)
-    {
-        transform.position = tile.transform.position;
-        _curNode = tile;
     }
 
     private void ModifyPassive()
@@ -205,9 +213,10 @@ public class Monster : Battler, IHoldbacker
         {
             InitStats(monsterIndex);
 
-            monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), DataManager.Instance.battler_Table[monsterIndex]["type"].ToString());
-            holdBackCount = Convert.ToInt32(DataManager.Instance.battler_Table[monsterIndex]["holdbackCount"]);
-            requiredMana = Convert.ToInt32(DataManager.Instance.battler_Table[monsterIndex]["requiredMagicpower"]);
+            if(Enum.TryParse(typeof(MonsterType), DataManager.Instance.battler_Table[monsterIndex]["type"].ToString(), out object targetType))
+                monsterType = (MonsterType)targetType;
+            int.TryParse(DataManager.Instance.battler_Table[monsterIndex]["holdbackCount"].ToString(), out holdBackCount);
+            int.TryParse(DataManager.Instance.battler_Table[monsterIndex]["requiredMagicpower"].ToString(), out requiredMana);
 
             ModifyPassive();
             curHp = maxHp;

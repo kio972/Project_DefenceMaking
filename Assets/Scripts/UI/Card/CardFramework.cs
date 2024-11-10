@@ -89,8 +89,8 @@ public class CardFramework : MonoBehaviour
         Monster monster = instancedObject.GetComponent<Monster>();
         if (monster != null)
         {
-            monster.Init();
             monster.SetStartPoint(curNode);
+            monster.Init();
             //curNode.curTile.monster = monster;
 
             if (SettingManager.Instance.autoPlay == AutoPlaySetting.always)
@@ -98,6 +98,17 @@ public class CardFramework : MonoBehaviour
         }
 
         AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
+    }
+
+    private void SetObejct(TileNode curNode)
+    {
+        IObjectKind obj = instancedObject.GetComponent<IObjectKind>();
+        obj.SetTileInfo(curNode.curTile);
+        if(obj is Battler battler)
+        {
+            battler.SetStartPoint(curNode);
+            battler.Init();
+        }
     }
 
     private void SetTrap(TileNode curNode)
@@ -151,6 +162,9 @@ public class CardFramework : MonoBehaviour
                     break;
                 case CardType.Environment:
                     SetEnvironment(curNode);
+                    break;
+                case CardType.ObjectForPath:
+                    SetObejct(curNode);
                     break;
             }
             instancedObject = null;

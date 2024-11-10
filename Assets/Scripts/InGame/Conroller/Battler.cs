@@ -693,15 +693,25 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         }
     }
 
+
+    public void SetStartPoint(TileNode tile)
+    {
+        transform.position = tile.transform.position;
+        _curNode = tile;
+    }
+
     protected virtual void InitStats(int index)
     {
         _name = DataManager.Instance.battler_Table[index]["name"].ToString();
         maxHp = Convert.ToInt32(DataManager.Instance.battler_Table[index]["hp"]);
         curHp = maxHp;
         shield = 0;
-        minDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["attackPowerMin"]);
-        maxDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["attackPowerMax"]);
-        attackTargetCount = Convert.ToInt32(DataManager.Instance.battler_Table[index]["targetCount"]);
+        if(int.TryParse(DataManager.Instance.battler_Table[index]["attackPowerMin"].ToString(), out int attackMinDmg))
+            minDamage = attackMinDmg;
+        if(int.TryParse(DataManager.Instance.battler_Table[index]["attackPowerMax"].ToString(), out int attackMaxDmg))
+            maxDamage = attackMaxDmg;
+        if (int.TryParse(DataManager.Instance.battler_Table[index]["targetCount"].ToString(), out int attacktargets))
+            attackTargetCount = attacktargets;
         float tempAttackSpeed = 1f;
         float.TryParse(DataManager.Instance.battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
         attackSpeed = tempAttackSpeed;
@@ -731,7 +741,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         moveSpeed = 1;
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
-        animator.SetBool("Move", GameManager.Instance.timeScale != 0);
+        animator?.SetBool("Move", GameManager.Instance.timeScale != 0);
         if (animator != null && !isAnimUniRxSubscribed)
         {
             isAnimUniRxSubscribed = true;
@@ -750,7 +760,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     private void RandomizePosition()
     {
         float targetZ = UnityEngine.Random.Range(-0.001f, 0.001f);
-        animator.transform.localPosition = new Vector3(0, 0, targetZ);
+        if(animator != null)
+            animator.transform.localPosition = new Vector3(0, 0, targetZ);
     }
 
     private Quaternion TargetRoation(int camera_Level)

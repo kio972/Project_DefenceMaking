@@ -103,7 +103,7 @@ public class HpBar : MonoBehaviour
         }
 
         if (status != null)
-            status.text = battler.CurState.GetType().Name;
+            status.text = battler.CurState != null ? battler.CurState.GetType().Name : "";
 
         UpdatePosition(position);
     }
