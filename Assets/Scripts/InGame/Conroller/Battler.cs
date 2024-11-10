@@ -97,6 +97,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public float attackRange;
     public float attackCoolTime = 0;
     public float curAttackCoolTime = 0;
+    public float attackTargetCount = 1;
 
     protected float moveSpeed;
 
@@ -668,6 +669,18 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             curTarget.GetDamage(tempDamage, this);
             if (splashAttack)
                 SplashAttack(curTarget, tempDamage);
+
+            if(attackTargetCount > 1)
+            {
+                List<Battler> targets = GetRangedTargets(transform.position, attackRange);
+                targets.Remove(curTarget);
+                for(int i = 0; i < attackTargetCount - 1; i++)
+                {
+                    if (i >= targets.Count)
+                        break;
+                    targets[i].GetDamage(tempDamage, this);
+                }
+            }
         }
     }
 
@@ -688,6 +701,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         shield = 0;
         minDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["attackPowerMin"]);
         maxDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["attackPowerMax"]);
+        attackTargetCount = Convert.ToInt32(DataManager.Instance.battler_Table[index]["targetCount"]);
         float tempAttackSpeed = 1f;
         float.TryParse(DataManager.Instance.battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
         attackSpeed = tempAttackSpeed;
@@ -845,7 +859,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)
     {
         List<Battler> validTargets = new List<Battler>();
-        Collider[] colliders = new Collider[10];
+        Collider[] colliders = new Collider[30];
         int colliderCount = Physics.OverlapSphereNonAlloc(position, attackRange, colliders, LayerMask.GetMask("Character"));
         for (int i = 0; i < colliderCount; i++)
         {
