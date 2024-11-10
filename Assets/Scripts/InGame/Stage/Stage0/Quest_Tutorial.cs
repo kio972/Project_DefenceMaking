@@ -69,7 +69,7 @@ public class Quest0102 : Quest
         if (!isInit)
         {
             NodeManager.Instance.AddSetTileEvent(IncreaseCount);
-            monsterCount = GameManager.Instance._MonsterList.Count;
+            monsterCount = GameManager.Instance.monsterList.Count;
             spawnerCount = GameManager.Instance.monsterSpawner.Count;
             isInit = true;
         }
@@ -77,7 +77,7 @@ public class Quest0102 : Quest
         if (!isComplete[0] && curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
 
-        if (!isComplete[1] && GameManager.Instance._MonsterList.Count > monsterCount)
+        if (!isComplete[1] && GameManager.Instance.monsterList.Count > monsterCount)
         {
             curClearNum[1]++;
             isComplete[1] = true;
@@ -89,7 +89,7 @@ public class Quest0102 : Quest
             isComplete[2] = true;
         }
 
-        monsterCount = GameManager.Instance._MonsterList.Count;
+        monsterCount = GameManager.Instance.monsterList.Count;
         spawnerCount = GameManager.Instance.monsterSpawner.Count;
     }
 

@@ -44,7 +44,7 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
 
         elapsedTime = 0;
         int targetCount = 0;
-        foreach (Monster goblin in GameManager.Instance._MonsterList)
+        foreach (Monster goblin in GameManager.Instance.monsterList)
         {
             if (goblin is not Goblin || goblin == _battler)
                 continue;

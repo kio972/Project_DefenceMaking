@@ -26,7 +26,7 @@ public class DevilAuraSkill : ISkill
         if (_devilAuraPower == 0 || _devilAuraRange == 0)
             return false;
 
-        foreach (Monster monster in GameManager.Instance._MonsterList)
+        foreach (Monster monster in GameManager.Instance.monsterList)
         {
             if (monster.HaveEffect(out DevilAura aura))
             {

@@ -17,7 +17,7 @@ public class DebugTool : MonoBehaviour
 
     public void RemoveAlly()
     {
-        List<Monster> monsterList = new List<Monster>(GameManager.Instance._MonsterList);
+        List<Monster> monsterList = new List<Monster>(GameManager.Instance.monsterList);
         foreach (var item in monsterList)
         {
             item.ChangeState(FSMDead.Instance);

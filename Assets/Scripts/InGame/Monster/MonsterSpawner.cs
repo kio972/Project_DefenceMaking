@@ -49,6 +49,11 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 
     public bool isEmpty = false;
 
+    public void ModifyCoolTime(float rate)
+    {
+        spawnCoolTime *= rate;
+    }
+
     public void CheckTargetCollapsed()
     {
         isUpdate = PathFinder.FindPath(_tile.curNode, NodeManager.Instance.endPoint) != null;
@@ -97,8 +102,8 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
         curCoolTime = spawnCoolTime;
         
         isUpdate = true;
-        GameManager.Instance.monsterSpawner.Add(this);
         curRoom?.SetSpawner(this, true);
+        GameManager.Instance.monsterSpawner.Add(this);
     }
 
     private void Update()

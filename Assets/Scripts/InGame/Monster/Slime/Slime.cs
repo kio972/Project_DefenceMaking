@@ -22,9 +22,9 @@ public class Slime : Monster
         base.Dead(attacker);
     }
 
-    public void UpgradeSplitCount(int value)
+    public void ModifySplitCount(int value)
     {
-        splitCount += value;
+        splitCount = Mathf.Max(0, splitCount + value);
     }
 
     public override void Init()

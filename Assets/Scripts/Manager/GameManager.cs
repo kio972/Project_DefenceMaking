@@ -76,9 +76,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public List<Battler> adventurer_entered_BossRoom = new List<Battler>();
 
-    private List<Monster> monsterList = new List<Monster>();
-    public List<Monster> _MonsterList { get => monsterList; }
-    public HashSet<MonsterSpawner> monsterSpawner = new HashSet<MonsterSpawner>();
+    public ReactiveCollection<Monster> monsterList { get; private set; } = new ReactiveCollection<Monster>();
+    public ReactiveCollection<MonsterSpawner> monsterSpawner { get; private set; } = new ReactiveCollection<MonsterSpawner>();
 
     public List<Trap> trapList = new List<Trap>();
 

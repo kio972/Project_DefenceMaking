@@ -93,7 +93,7 @@ public class SaveManager : Singleton<SaveManager>
         }
 
         playerData.allies = new List<BattlerData>();
-        foreach (Battler monster in GameManager.Instance._MonsterList)
+        foreach (Battler monster in GameManager.Instance.monsterList)
         {
             if (monster is ISaveLoadBattler battler)
                 playerData.allies.Add(battler.GetData());

@@ -359,7 +359,7 @@ public class Quest2013 : Quest
             isInit = true;
         }
 
-        foreach(var monster in GameManager.Instance._MonsterList)
+        foreach(var monster in GameManager.Instance.monsterList)
         {
             if (countedMonsters.Contains(monster))
                 continue;

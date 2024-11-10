@@ -28,7 +28,7 @@ public class DetectInject : ISkill
     {
         Monster target = null;
         float minDist = _range + 0.1f;
-        foreach (Monster monster in GameManager.Instance._MonsterList)
+        foreach (Monster monster in GameManager.Instance.monsterList)
         {
             if (monster.HaveEffect<Detect>())
                 continue;

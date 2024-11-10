@@ -90,7 +90,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void GolemHoldbackUp(int value)
     {
         golemHoldback_Weight += value;
-        foreach (var target in GameManager.Instance._MonsterList)
+        foreach (var target in GameManager.Instance.monsterList)
         {
             if(target is Golem golem)
                 golem.UpdateHoldBack(value);
@@ -105,10 +105,10 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void UpgradeSlimeSplit(int value)
     {
         _slimeSplit_Weight.Value += value;
-        foreach (var target in GameManager.Instance._MonsterList)
+        foreach (var target in GameManager.Instance.monsterList)
         {
             if(target is Slime slime)
-                slime.UpgradeSplitCount(value);
+                slime.ModifySplitCount(value);
         }
     }
 

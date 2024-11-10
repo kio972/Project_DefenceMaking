@@ -555,11 +555,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         GameManager.Instance.waveController.AddDelayedTarget(_name);
     }
 
-    protected bool isCollapsed = false;
+    protected ReactiveProperty<bool> _isCollapsed = new ReactiveProperty<bool>(false);
+    public bool isCollapsed { get => _isCollapsed.Value; }
 
     public void CheckTargetCollapsed()
     {
-        isCollapsed = PathFinder.FindPath(_curNode, NodeManager.Instance.endPoint) == null;
+        _isCollapsed.Value = PathFinder.FindPath(_curNode, NodeManager.Instance.endPoint) == null;
     }
 
     protected virtual void CollapseLogic()
@@ -709,7 +710,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         isDead = false;
         chaseTarget = null;
         curTarget = null;
-        isCollapsed = false;
+        _isCollapsed.Value = false;
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         _effects.Clear();
         SetRotation();

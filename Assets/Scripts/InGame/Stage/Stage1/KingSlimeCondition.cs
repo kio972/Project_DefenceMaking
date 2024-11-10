@@ -47,7 +47,7 @@ public class KingSlimeCondition : MonoBehaviour
     {
         await UniTask.WaitUntil(() => GameManager.Instance.IsInit, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         
-        foreach(var monster in GameManager.Instance._MonsterList)
+        foreach(var monster in GameManager.Instance.monsterList)
         {
             if (monster.BattlerID == "s_m10004")
             {

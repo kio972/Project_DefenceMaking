@@ -35,7 +35,7 @@ public class EmergencyEscape : ISkill
             if (target.curNode == targetNode)
                 targets.Add(target);
 
-        foreach (var target in GameManager.Instance._MonsterList)
+        foreach (var target in GameManager.Instance.monsterList)
             if (target.curNode == targetNode)
                 targets.Add(target);
 
