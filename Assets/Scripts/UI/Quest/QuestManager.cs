@@ -62,17 +62,21 @@ public class QuestManager : IngameSingleton<QuestManager>
     }
 
     HashSet<string> clearedQuests = new HashSet<string>();
+    HashSet<string> failedQuests = new HashSet<string>();
 
-    public bool IsQuestClear(string questId)
-    {
-        return clearedQuests.Contains(questId);
-    }
+    public bool IsQuestCleared(string questId) => clearedQuests.Contains(questId);
+
+    public bool IsQuestFailed(string questId) => failedQuests.Contains(questId);
+
+    public bool IsQuestEnded(string questId) => clearedQuests.Contains(questId) || failedQuests.Contains(questId);
 
     public void EndQuest(Quest quest, bool isClear)
     {
         //questController.EndQuest(quest, isClear);
-
-        clearedQuests.Add(quest._QuestID);
+        if(isClear)
+            clearedQuests.Add(quest._QuestID);
+        else
+            failedQuests.Add(quest._QuestID);
     }
 
     public void StartQuest(string questID, List<int> startVal = null)

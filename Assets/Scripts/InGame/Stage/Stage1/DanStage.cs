@@ -11,13 +11,13 @@ public class DanStage : MonoBehaviour
 
     private async UniTaskVoid CheckHerbInformer()
     {
-        if (QuestManager.Instance.IsQuestClear("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1)
+        if (QuestManager.Instance.IsQuestEnded("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1)
             return;
 
         foreach(GameObject herb in herbInformer)
             herb.SetActive(false);
 
-        await UniTask.WaitUntil(() => QuestManager.Instance.IsQuestClear("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1,
+        await UniTask.WaitUntil(() => QuestManager.Instance.IsQuestEnded("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1,
             cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
         foreach(GameObject herb in herbInformer)

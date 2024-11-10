@@ -69,7 +69,7 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem
             if (string.IsNullOrEmpty(targetQuestId))
                 return true;
 
-            if (QuestManager.Instance.IsQuestClear(targetQuestId))
+            if (QuestManager.Instance.IsQuestEnded(targetQuestId))
                 return true;
 
             if (QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == targetQuestId).Count() >= 1)

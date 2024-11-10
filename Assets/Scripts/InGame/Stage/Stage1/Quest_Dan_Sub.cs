@@ -2,7 +2,8 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
+using System.Threading;
+using UniRx;
 using UnityEngine;
 
 public class QuestKillBattler : Quest
@@ -428,19 +429,8 @@ public class Quest2015 : Quest
     //스포너 교체 퀘스트 (철거 후 설치)
     private HashSet<Tile> spawnerTiles = new HashSet<Tile>();
 
-    private MonsterSpawner GetNewSpawner()
-    {
-        //스포너가 설치되어있던 타일이 아닌곳에 설치된 스포너를 반환
-        foreach(var spawner in GameManager.Instance.monsterSpawner)
-        {
-            if (spawnerTiles.Contains(spawner.curTile))
-                continue;
-            return spawner;
-        }
-
-        //스포너가 설치된 이력이 있는 타일에 설치했다면 null반환
-        return null;
-    }
+    private bool isCleared = false;
+    private CancellationTokenSource cancellationToken = new CancellationTokenSource();
 
     public override void CheckCondition()
     {
@@ -449,21 +439,19 @@ public class Quest2015 : Quest
             foreach(var spawner in GameManager.Instance.monsterSpawner)
                 spawnerTiles.Add(spawner.curTile);
 
+            GameManager.Instance.monsterSpawner.ObserveAdd().Subscribe(_ =>
+            {
+                if (spawnerTiles.Contains(_.Value.curTile))
+                    isCleared = true;
+                else
+                    spawnerTiles.Add(_.Value.curTile);
+            }).AddTo(cancellationToken.Token);
+
             isInit = true;
         }
 
-        if (spawnerTiles.Count != GameManager.Instance.monsterSpawner.Count)
-        {
-            if(GameManager.Instance.monsterSpawner.Count > spawnerTiles.Count)
-            {
-                //스포너가 추가됐을때
-                MonsterSpawner newSpawner = GetNewSpawner();
-                if (newSpawner != null) //스포너의 위치를 추가
-                    spawnerTiles.Add(newSpawner.curTile);
-                else //스포너가 설치된곳에 설치됬으므로 클리어
-                    isComplete[0] = true;
-            }
-        }
+        if (isCleared)
+            isComplete[0] = true;
     }
 }
 
