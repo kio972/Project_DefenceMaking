@@ -15,7 +15,7 @@ public class TileReward : MonoBehaviour, IBaseTileBuilder
     [SerializeField]
     private bool isUpgraded;
 
-    public void BuildBaseTile(TileNode targetNode)
+    public virtual void BuildBaseTile(TileNode targetNode)
     {
         if (targetTiles == null || targetTiles.Count == 0)
         {

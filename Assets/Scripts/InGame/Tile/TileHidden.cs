@@ -15,7 +15,10 @@ public class TileHidden : MonoBehaviour, ITileKind
 
     private void ExcuteReveal()
     {
-        _targetPrefab = GetPrefab();
+        if(NodeManager.Instance.hiddenPrioritys.Count > 0)
+            _targetPrefab = NodeManager.Instance.hiddenPrioritys.Dequeue();
+        else
+            _targetPrefab = GetPrefab();
 
         if(_targetPrefab != null)
         {

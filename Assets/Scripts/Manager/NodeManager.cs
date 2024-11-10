@@ -39,6 +39,8 @@ public class NodeManager : IngameSingleton<NodeManager>
     public TileNode startPoint;
     public TileNode endPoint;
 
+    public Queue<GameObject> hiddenPrioritys = new Queue<GameObject>();
+
     private int minRow;
     private int maxRow;
     private int minCol;

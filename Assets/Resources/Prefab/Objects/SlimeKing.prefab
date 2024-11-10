@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1609608640754181931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1609608640754181932}
+  - component: {fileID: 3537773256364063343}
+  m_Layer: 0
+  m_Name: SlimeKing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1609608640754181932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609608640754181931}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3537773256364063343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609608640754181931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2fb6ce6453f5cf4189307439d949c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTiles:
+  - {fileID: 1609608640754181931, guid: e5a632fdb4a35a944829cc39b48d1ccc, type: 3}
+  - {fileID: 1609608640754181931, guid: 673aee6052cee5c4680f72a4b67eef29, type: 3}
+  - {fileID: 1609608640754181931, guid: b14fdc81083face45ac4054c1ff264c0, type: 3}
+  - {fileID: 1609608640754181931, guid: 0b6f56e8e609a34469ffdb82fc1deb52, type: 3}
+  isUpgraded: 0
