@@ -29,12 +29,12 @@ public class Slime : Monster
 
     public override void Init()
     {
-        base.Init();
         splitElapsed = 0;
         splitCount = 0 + PassiveManager.Instance._slimeSplit_Weight.Value;
         RotationAxis.localScale = Vector3.one;
         splitedNode = null;
         slime_curNode = _curNode;
+        base.Init();
         source = new CancellationTokenSource();
     }
 
