@@ -35,6 +35,22 @@ public class ShopSlotInfo : MonoBehaviour
     [SerializeField]
     private ItemSlot initSlot;
 
+    [SerializeField]
+    private GameObject cardPackViewBtn;
+    [SerializeField]
+    private CardPackView cardPackView;
+
+    [SerializeField]
+    private TextMeshProUGUI stockText;
+
+    public void ViewCardPack()
+    {
+        if(curslot.item is ICardPackList cardPack)
+        {
+            cardPackView?.SetCardList(cardPack.targetCards);
+        }
+    }
+
     private void SetSoldOutImg(bool isSoldOut)
     {
         int index = isSoldOut ? 1 : 0;
@@ -57,6 +73,8 @@ public class ShopSlotInfo : MonoBehaviour
 
         _isSoldOut = data.IsSoldOut;
         SetSoldOutImg(_isSoldOut);
+        cardPackViewBtn.SetActive(curslot.item is ICardPackList);
+        stockText.text = $"Àç°í : {data.curStockCount}";
     }
 
     public void Buy()

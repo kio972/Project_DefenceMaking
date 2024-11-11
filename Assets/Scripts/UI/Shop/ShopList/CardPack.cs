@@ -12,7 +12,12 @@ public enum CardPackType
     Environment,
 }
 
-public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem
+public interface ICardPackList
+{
+    List<int> targetCards { get; }
+}
+
+public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem, ICardPackList
 {
     public CardPackType cardType;
 
@@ -34,6 +39,17 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem
     [SerializeField]
     private List<string> _targetEnvironmentIds;
 
+    private List<int> _targetCards;
+    public List<int> targetCards
+    {
+        get
+        {
+            if (_targetCards == null)
+                UpdateTargetCards();
+
+            return _targetCards;
+        }
+    }
 
     [SerializeField]
     private ShopUI shopUI;
@@ -79,6 +95,24 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem
         }
     }
 
+    private void UpdateTargetCards()
+    {
+        _targetCards = new List<int>();
+        List<List<string>> targets = null;
+        if (cardType == CardPackType.Room)
+            targets = new List<List<string>>() { _targetRoomIds, _targetRoomPartIds, _targetPathIds, _targetEnvironmentIds };
+        else if (cardType == CardPackType.Environment)
+            targets = new List<List<string>>() { _targetEnvironmentIds, _targetPathIds, _targetRoomIds, _targetRoomPartIds };
+        else
+            targets = new List<List<string>>() { _targetPathIds, _targetRoomIds, _targetRoomPartIds, _targetEnvironmentIds };
+
+        foreach (var item in targets)
+        {
+            foreach (var id in item)
+                _targetCards.Add(DataManager.Instance.deckListIndex[id]);
+        }
+    }
+
     public void AddCardPool(CardType cardType, string targetId)
     {
         List<string> targetPool = null;
@@ -91,6 +125,7 @@ public class CardPack : MonoBehaviour, Item, IRefreshableItem, INeedUnlockItem
 
         targetPool?.Add(targetId);
         RefreshItem();
+        UpdateTargetCards();
     }
 
     private int GetRandomIndex(List<string> target)
