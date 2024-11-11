@@ -156,7 +156,7 @@ public class Quest2005 : Quest
     {
         if (item is CardPack pack)
         {
-            if(pack.itemSlot.ItemId is "shop_item0006" or "shop_item0014" or "shop_item0020")
+            if(pack.cardType == CardPackType.Environment)
             {
                 curClearNum[0]++;
             }
