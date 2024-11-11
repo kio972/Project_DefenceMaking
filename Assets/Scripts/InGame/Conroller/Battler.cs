@@ -245,6 +245,35 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         ExcuteMoveToPos(destPos, lerpTime).Forget();
     }
 
+    public void KnockBack(Battler attacker, Direction knockBackDirection, int knockBackDist, float lerpTime)
+    {
+        //현재 타일의 중심으로부터의 거리
+        Vector3 curPointDir = transform.position - curNode.transform.position;
+        bool isNodeEnough = true;
+        TileNode targetNode = curNode;
+        for(int i = 0; i < knockBackDist; i++)
+        {
+            if (targetNode.curTile.PathDirection.Contains(knockBackDirection) || targetNode.curTile.RoomDirection.Contains(knockBackDirection))
+                targetNode = targetNode.neighborNodeDic[knockBackDirection];
+            else
+            {
+                isNodeEnough = false;
+                break;
+            }
+        }
+        
+        Vector3 targetPos = targetNode.transform.position;
+        if (isNodeEnough)
+            targetPos += curPointDir;
+        else
+        {
+            Vector3 edgePoint = (targetNode.neighborNodeDic[knockBackDirection].transform.position - targetNode.transform.position) * 0.45f;
+            targetPos += edgePoint;
+        }
+
+        KnockBack(attacker, targetNode, targetPos, lerpTime);
+    }
+
     public void ResetNode()
     {
         crossedNodes.Clear();
