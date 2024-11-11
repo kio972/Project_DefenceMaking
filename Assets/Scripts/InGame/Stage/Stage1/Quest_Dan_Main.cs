@@ -10,8 +10,8 @@ public class QuestDebtRepay : Quest
 
     public override void CheckCondition()
     {
-        curClearNum[0] = _ClearNum[0] - Mathf.FloorToInt(_CurTime / 1440);
-        if (targetGold <= 0)
+        curClearNum[1] = _ClearNum[1] - Mathf.FloorToInt(_CurTime / 1440);
+        if (curClearNum[0] >= targetGold)
             isComplete[0] = true;
     }
 
@@ -36,11 +36,13 @@ public class QuestDebtRepay : Quest
     {
         SpawnExecutor(1).Forget();
         base.FailQuest();
+        if (!string.IsNullOrEmpty(nextQuestMsg))
+            QuestManager.Instance.EnqueueQuest(nextQuestMsg);
     }
 
     public void ReduceGold(int amount)
     {
-        targetGold = Mathf.Max(targetGold - amount, 0);
+        curClearNum[0] += amount;
     }
 
     public override void UpdateQuest()

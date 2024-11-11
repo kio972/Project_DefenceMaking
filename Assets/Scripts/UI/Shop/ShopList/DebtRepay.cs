@@ -16,14 +16,14 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
     [SerializeField]
     private string targetDebtQuestId;
 
-    ItemSlot itemSlot;
-    ItemSlot _ItemSlot
+    ItemSlot _itemSlot;
+    ItemSlot itemSlot
     {
         get
         {
-            if (itemSlot == null)
-                itemSlot = GetComponent<ItemSlot>();
-            return itemSlot;
+            if (_itemSlot == null)
+                _itemSlot = GetComponent<ItemSlot>();
+            return _itemSlot;
         }
     }
 

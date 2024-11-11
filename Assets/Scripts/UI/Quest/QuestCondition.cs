@@ -11,7 +11,7 @@ public abstract class QuestCondition
     public abstract bool IsConditionPassed();
 }
 
-public class QusetCondition_m0105 : QuestCondition
+public class QuestCondition_m0105 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
@@ -19,7 +19,7 @@ public class QusetCondition_m0105 : QuestCondition
     }
 }
 
-public class QusetCondition_m0106 : QuestCondition
+public class QuestCondition_m0106 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
@@ -27,7 +27,20 @@ public class QusetCondition_m0106 : QuestCondition
     }
 }
 
-public class QusetCondition_m2015 : QuestCondition
+public class QuestCondition_m2002 : QuestCondition
+{
+    public override bool IsConditionPassed()
+    {
+        foreach (var index in GameManager.Instance.cardDeckController.handCards)
+        {
+            if(DataManager.Instance.herbCard_Indexs.Contains(index))
+                return true;
+        }
+        return false;
+    }
+}
+
+public class QuestCondition_m2015 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
@@ -35,7 +48,7 @@ public class QusetCondition_m2015 : QuestCondition
     }
 }
 
-public class QusetCondition_m2016 : QuestCondition
+public class QuestCondition_m2016 : QuestCondition
 {
     bool isConnectionLost = false;
 
@@ -54,7 +67,7 @@ public class QusetCondition_m2016 : QuestCondition
     }
 }
 
-public class QusetCondition_m2017 : QuestCondition
+public class QuestCondition_m2017 : QuestCondition
 {
     private int prevHiddenTileCount = -1;
 
@@ -73,7 +86,7 @@ public class QusetCondition_m2017 : QuestCondition
     }
 }
 
-public class QusetCondition_m2018 : QuestCondition
+public class QuestCondition_m2018 : QuestCondition
 {
     public override bool IsConditionPassed()
     {
@@ -94,7 +107,7 @@ public class QusetCondition_m2018 : QuestCondition
     }
 }
 
-public class QusetCondition_m2019 : QuestCondition
+public class QuestCondition_m2019 : QuestCondition
 {
     private CancellationTokenSource cancellToken = new CancellationTokenSource();
     private bool isPassed = false;
@@ -118,12 +131,12 @@ public class QusetCondition_m2019 : QuestCondition
     }
 }
 
-public class QusetCondition_m2020 : QuestCondition
+public class QuestCondition_m2020 : QuestCondition
 {
     public override bool IsConditionPassed() => false;
 }
 
-//public class QusetCondition_m2013 : QuestCondition
+//public class QuestCondition_m2013 : QuestCondition
 //{
 //    public override bool IsConditionPassed()
 //    {

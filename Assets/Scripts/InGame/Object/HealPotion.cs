@@ -26,7 +26,7 @@ public class HealPotion : MonoBehaviour, IRewardObject
     {
         GameManager.Instance.king.GetHeal(healAmount, null);
         AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._FxVolume);
-        DamageTextPooling.Instance.TextEffect(transform.position - (Vector3.down * 0.2f), $"+{healAmount}<sprite name=Gold>", 27f, Color.yellow, true);
+        //DamageTextPooling.Instance.TextEffect(transform.position - (Vector3.down * 0.2f), $"{healAmount}", 27f, Color.yellow, true);
 
         float elapsedTime = 0f;
         float lerpTime = 0.5f;

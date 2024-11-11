@@ -12,7 +12,7 @@ public struct QuestWatcher
 
     private QuestCondition CustomCondition(string id)
     {
-        id = id.Replace("q_", "QusetCondition_");
+        id = id.Replace("q_", "QuestCondition_");
         Type questType = Type.GetType(id);
 
         if (questType != null && typeof(QuestCondition).IsAssignableFrom(questType))
