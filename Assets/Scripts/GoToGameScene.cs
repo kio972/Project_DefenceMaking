@@ -8,9 +8,10 @@ public class GoToGameScene : MonoBehaviour
     public float fakeLoadingTime = 3f;
     protected virtual void MoveScene()
     {
-        string targetScene = "Stage0";
-        if (SaveManager.Instance.playerData != null)
-            targetScene = SaveManager.Instance.playerData.sceneName;
+        string targetScene = string.IsNullOrEmpty(SettingManager.Instance.nextScene) ? "Stage0" : SettingManager.Instance.nextScene;
+        
+        //if (SaveManager.Instance.playerData != null)
+        //    targetScene = SaveManager.Instance.playerData.sceneName;
 
         SceneController.Instance.MoveScene(targetScene);
     }

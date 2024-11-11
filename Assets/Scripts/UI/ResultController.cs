@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ResultController : MonoBehaviour
 {
@@ -15,12 +17,12 @@ public class ResultController : MonoBehaviour
     private Image fade;
 
     [SerializeField]
-    private Transform titleBtn;
+    private MoveSceneBtn titleBtn;
 
     private void TitleBtnOn()
     {
         titleBtn.gameObject.SetActive(true);
-        UtilHelper.IColorEffect(titleBtn, Color.clear, Color.white, 0.5f).Forget();
+        UtilHelper.IColorEffect(titleBtn.transform, Color.clear, Color.white, 0.5f).Forget();
     }
 
     private void FadeOn()
@@ -41,6 +43,22 @@ public class ResultController : MonoBehaviour
 
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
 
+        TextMeshProUGUI text = titleBtn.GetComponentInChildren<TextMeshProUGUI>();
+        if(SceneManager.GetActiveScene().name == "Stage0")
+        {
+            titleBtn.useLoadingScene = true;
+            if (text != null)
+                text.text = SettingManager.Instance.language == Languages.korean ? "계속하기" : "Countinue";
+            titleBtn.sceneName = "Stage1";
+        }
+        else
+        {
+            titleBtn.useLoadingScene = false;
+            if (text != null)
+                text.text = SettingManager.Instance.language == Languages.korean ? "타이틀로" : "Main Menu";
+            titleBtn.sceneName = "TitleScene";
+        }
+
         FadeOn();
         victory.gameObject.SetActive(true);
         defeat.gameObject.SetActive(false);
@@ -58,6 +76,12 @@ public class ResultController : MonoBehaviour
             StoryManager.Instance.EnqueueScript("Dan800");
             await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
         }
+
+        TextMeshProUGUI text = titleBtn.GetComponentInChildren<TextMeshProUGUI>();
+        if(text != null)
+            text.text = SettingManager.Instance.language == Languages.korean ? "타이틀로" : "Main Menu";
+        titleBtn.useLoadingScene = false;
+        titleBtn.sceneName = "TitleScene";
 
         FadeOn();
         victory.gameObject.SetActive(false);

@@ -185,6 +185,8 @@ public class SettingManager : Singleton<SettingManager>
 
     #endregion
 
+    public string nextScene = "";
+
     public void Set_FPSLimit(bool value)
     {
         if (value)

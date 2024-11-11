@@ -8,9 +8,18 @@ public class MoveSceneBtn : MonoBehaviour
     [SerializeField]
     private Button btn;
     public string sceneName;
+
+    public bool useLoadingScene = false;
+
     protected virtual void MoveScene()
     {
-        SceneController.Instance.MoveScene(sceneName);
+        if (useLoadingScene)
+        {
+            SettingManager.Instance.nextScene = sceneName;
+            SceneController.Instance.MoveScene("LoadScene");
+        }
+        else
+            SceneController.Instance.MoveScene(sceneName);
     }
 
 
