@@ -40,6 +40,10 @@ public class TileUpgrader : MonoBehaviour, IModifier
             if (GameManager.Instance.research.completedResearchs.Contains("r_t10002"))
                 tile.AddAllyAttackSpeedMult(this);
         }
+        else if (tile._TileType is TileType.Room or TileType.Room_Single or TileType.Door)
+        {
+            int updateRoomMana = tile.RoomMana;
+        }
     }
 
     public void DownGradeTile()
