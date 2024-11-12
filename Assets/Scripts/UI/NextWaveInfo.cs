@@ -19,6 +19,15 @@ public class NextWaveInfo : MonoBehaviour
     [SerializeField]
     private Image btnUI;
 
+    [SerializeField]
+    private GameObject subBtnUI;
+
+    private void OnDisable()
+    {
+        subBtnUI.SetActive(false);
+        waveIcons.SetActive(false);
+    }
+
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
@@ -38,8 +47,16 @@ public class NextWaveInfo : MonoBehaviour
         await UniTask.WaitUntil(() => GameManager.Instance.IsInit, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         transform.position = NodeManager.Instance.startPoint.transform.position;
 
-        btnUI.OnPointerEnterAsObservable().Subscribe(_ => waveIcons.SetActive(true)).AddTo(gameObject);
-        btnUI.OnPointerExitAsObservable().Subscribe(_ => waveIcons.SetActive(false)).AddTo(gameObject);
+        btnUI.OnPointerEnterAsObservable().Subscribe(_ =>
+        {
+            subBtnUI.SetActive(true);
+            waveIcons.SetActive(true);
+        }).AddTo(gameObject);
+        btnUI.OnPointerExitAsObservable().Subscribe(_ =>
+        {
+            subBtnUI.SetActive(false);
+            waveIcons.SetActive(false);
+        }).AddTo(gameObject);
     }
 
     private List<WaveData> GetWaveSummary(List<WaveData> waveData)
