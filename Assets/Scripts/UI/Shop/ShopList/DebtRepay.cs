@@ -72,11 +72,14 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
         //모두 구매했을 때, 이미 퀘스트를 실패한 상태라면 집행관들을 모두 돌려보낸다
         if(_itemSlot.curStockCount <= 0 && QuestManager.Instance.IsQuestFailed(targetDebtQuestId))
         {
+            List<Adventurer> executors = new List<Adventurer>();
             foreach(var adventurer in GameManager.Instance.adventurersList)
             {
                 if(adventurer.BattlerID == "s_boss006")
-                    adventurer.ReturnToBase(false);
+                    executors.Add(adventurer);
             }
+            foreach (var executor in executors)
+                executor.ReturnToBase(false);
         }
     }
 }
