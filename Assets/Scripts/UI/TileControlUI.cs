@@ -119,7 +119,7 @@ public class TileControlUI : MonoBehaviour
         toolTip_desc?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_descs);
 
         if (tooltipObject.toolTipType == ToolTipType.Tile)
-            SetButton(tooltipObject.GetComponentInParent<Tile>());
+            SetButton(tooltipObject.GetComponentInParent<ITileKind>());
         else if(tooltipObject.toolTipType == ToolTipType.Devil)
             SetButton(NodeManager.Instance.endPoint.curTile);
         else
@@ -130,19 +130,23 @@ public class TileControlUI : MonoBehaviour
         }
     }
 
-    public void SetButton(Tile targetTile)
+    public void SetButton(ITileKind targetTile)
     {
         if (targetTile == null)
             return;
 
-        tileMoveBtn.SetActive(targetTile.Movable);
-        spawnerRemoveBtn.SetActive(false);
-        tileRemoveBtn.SetActive(targetTile.IsRemovable);
+        if(targetTile is Tile realTile)
+        {
+            tileMoveBtn.SetActive(realTile.Movable);
+            spawnerRemoveBtn.SetActive(false);
+            tileRemoveBtn.SetActive(realTile.IsRemovable);
+            curToolTipTile = realTile;
+        }
+        
         exitBtn.SetActive(true);
         if (inGameUI == null)
             inGameUI = GetComponentInParent<InGameUI>();
         inGameUI?.SwitchRightToTileUI(true);
-        curToolTipTile = targetTile;
     }
 
     //public void Update()

@@ -1179,10 +1179,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 5.552301
+  m_Radius: 5
   m_Height: 8.51354
   m_Direction: 1
-  m_Center: {x: -0.026533604, y: 2.141293, z: 0}
+  m_Center: {x: -0.026533604, y: 2.5, z: 0}
 --- !u!114 &6065363901057143569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,10 +1195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolTipType: 3
+  _toolTipType: 1
   _subLevel: 0
-  toolTipKey_header: tooltip_slime1_0
-  toolTipKey_descs: tooltip_slime1_1
+  toolTipKey_header: tooltip_kingslime_0
+  toolTipKey_descs: tooltip_kingslime_1
 --- !u!114 &7661981644989316985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2565,6 +2565,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0

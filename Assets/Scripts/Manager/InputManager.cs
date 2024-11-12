@@ -16,8 +16,8 @@ public class InputManager : IngameSingleton<InputManager>
 
     TileControlUI tileControlUI = null;
 
-    private Tile curTile = null;
-    public Tile _CurTile { get => curTile; }
+    private ITileKind _curTile = null;
+    public ITileKind curTile { get => _curTile; }
 
 
     List<IInput> _inputs = new List<IInput>();
@@ -34,52 +34,53 @@ public class InputManager : IngameSingleton<InputManager>
         if(tileControlUI == null)
             tileControlUI = FindObjectOfType<TileControlUI>();
         tileControlUI?.CloseAll();
-        if (curTile != null && curTile.waitToMove)
-            curTile.EndMoveing();
-        curTile = null;
+        if (_curTile != null && _curTile is Tile tile && tile.waitToMove)
+            tile.EndMoveing();
+        _curTile = null;
         NodeManager.Instance.SetGuideState(GuideState.None);
     }
 
-    public void ClickTile(Tile curTile)
-    {
-        if(this.curTile == curTile && curTile.curNode == NodeManager.Instance.endPoint)
-        {
-            TileControlUI tileControl = FindObjectOfType<TileControlUI>();
-            tileControl?.MoveTile();
-            return;
-        }
+    //public void ClickTile(ITileKind curTile)
+    //{
+    //    if(this._curTile == curTile && curTile.curNode == NodeManager.Instance.endPoint)
+    //    {
+    //        TileControlUI tileControl = FindObjectOfType<TileControlUI>();
+    //        tileControl?.MoveTile();
+    //        return;
+    //    }
 
-        this.curTile = curTile;
-        NodeManager.Instance.SetGuideState(GuideState.Selected, curTile);
-        TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
-        tileControlUI?.SetButton(curTile);
-    }
+    //    this._curTile = curTile;
+    //    NodeManager.Instance.SetGuideState(GuideState.Selected, curTile);
+    //    TileControlUI tileControlUI = FindObjectOfType<TileControlUI>(true);
+    //    if (curTile is Tile tile)
+    //        tileControlUI?.SetButton(tile);
+    //}
 
-    public void TileClickCheck()
-    {
-        if (_settingCard.Value)
-            return;
+    //public void TileClickCheck()
+    //{
+    //    if (_settingCard.Value)
+    //        return;
 
-        if (Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
+    //    if (Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey))
+    //    {
+    //        if (EventSystem.current.IsPointerOverGameObject())
+    //            return;
 
-            if (NodeManager.Instance._GuideState != GuideState.None && NodeManager.Instance._GuideState != GuideState.Selected)
-                return;
+    //        if (NodeManager.Instance._GuideState != GuideState.None && NodeManager.Instance._GuideState != GuideState.Selected)
+    //            return;
 
-            TileNode node = UtilHelper.RayCastTile();
-            if (node != null && node.curTile != null)
-            {
-                ClickTile(node.curTile);
-                AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
-            }
-            else
-                ResetTileClick();
-        }
-        else if (Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
-            ResetTileClick();
-    }
+    //        TileNode node = UtilHelper.RayCastTile();
+    //        if (node != null && node.curTile != null)
+    //        {
+    //            ClickTile(node.curTile);
+    //            AudioManager.Instance.Play2DSound("Click_tile_01", SettingManager.Instance._FxVolume);
+    //        }
+    //        else
+    //            ResetTileClick();
+    //    }
+    //    else if (Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey))
+    //        ResetTileClick();
+    //}
 
     private void CameraResetCheck()
     {

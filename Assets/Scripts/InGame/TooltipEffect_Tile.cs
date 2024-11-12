@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TooltipEffect_Tile : MonoBehaviour, IToolTipEffect
 {
-    Tile tile;
+    ITileKind tile;
     public void ShowEffect(bool value)
     {
         if(tile == null)
-            tile = GetComponentInParent<Tile>();
+            tile = GetComponentInParent<ITileKind>();
 
         if(value)
             NodeManager.Instance.SetGuideState(GuideState.Selected, tile);

@@ -158,7 +158,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         RoomManaPool.Instance.SetManaUI(value, roomTiles.ToList());
     }
 
-    public void SetGuideState(GuideState guideState, Tile tile = null)
+    public void SetGuideState(GuideState guideState, ITileKind tile = null)
     {
         //if (this.guideState == guideState)
         //    return;
@@ -177,7 +177,8 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.Tile:
                 if (tile == null)
                     return;
-                SetTileAvail(tile);
+                if(tile is Tile realTile)
+                    SetTileAvail(realTile);
                 break;
             case GuideState.ObjectForPath:
                 SetObjectForPathAvail();
@@ -206,7 +207,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             SetGuideState(GuideState.None);
     }
 
-    private void ShowSelectedTile(Tile targetTile)
+    private void ShowSelectedTile(ITileKind targetTile)
     {
         if (targetTile == null) return;
         targetTile.curNode.SetGuideColor(Color.yellow);
