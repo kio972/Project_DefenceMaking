@@ -238,8 +238,18 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     }
 
 
+    public void ForceKnockBack(Battler attacker, TileNode targetTile, Vector3 destPos, float lerpTime)
+    {
+        _curNode = targetTile;
+        GetCC(attacker, lerpTime + 30);
+        ExcuteMoveToPos(destPos, lerpTime).Forget();
+    }
+
     public void KnockBack(Battler attacker, TileNode targetTile, Vector3 destPos, float lerpTime)
     {
+        if (this is ICCEmmune emmune && emmune.emmuneCCs.Contains(CCType.KnockBack))
+            return;
+
         _curNode = targetTile;
         GetCC(attacker, lerpTime + 30);
         ExcuteMoveToPos(destPos, lerpTime).Forget();
@@ -247,6 +257,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void KnockBack(Battler attacker, Direction knockBackDirection, int knockBackDist, float lerpTime)
     {
+        if (this is ICCEmmune emmune && emmune.emmuneCCs.Contains(CCType.KnockBack))
+            return;
+
         //현재 타일의 중심으로부터의 거리
         Vector3 curPointDir = transform.position - curNode.transform.position;
         bool isNodeEnough = true;

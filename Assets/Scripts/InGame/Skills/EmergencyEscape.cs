@@ -40,7 +40,7 @@ public class EmergencyEscape : ISkill
                 targets.Add(target);
 
         foreach(var target in targets)
-            target.KnockBack(king, enterance, enterance.transform.position, 30);
+            target.ForceKnockBack(king, enterance, enterance.transform.position, 30);
     }
 
     public bool UseSkill()
