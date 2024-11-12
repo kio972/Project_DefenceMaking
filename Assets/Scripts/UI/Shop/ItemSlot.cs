@@ -138,7 +138,7 @@ public class ItemSlot : FluctItem
         if (!string.IsNullOrEmpty(buyScript))
             shopUI?.PlayScript(buyScript);
 
-        if(_curStockCount == 0)
+        if(_curStockCount <= 0)
             isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
         AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
