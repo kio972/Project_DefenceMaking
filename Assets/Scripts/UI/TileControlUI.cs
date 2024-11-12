@@ -63,7 +63,6 @@ public class TileControlUI : MonoBehaviour
 
     public void MoveTile(Tile curTile)
     {
-        InputManager.Instance.settingCard = true;
         if (curTile == null)
             return;
         if (curTile.IsCharacterOnIt)
@@ -72,6 +71,7 @@ public class TileControlUI : MonoBehaviour
         {
             CloseAllBtn();
             curTile.ReadyForMove().Forget();
+            InputManager.Instance.settingCard = true;
         }
     }
 

@@ -64,7 +64,7 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
     public void UseItem()
     {
         //퀘스트에서 해당 아이템 감시(SoldOut됬는지, 몇개남았는지)
-        if(QuestManager.Instance.questController.mainQuest is QuestDebtRepay repay)
+        if(QuestManager.Instance.questController.mainQuest is QuestDebtRepay repay && repay._QuestID == targetDebtQuestId)
         {
             repay.ReduceGold(itemSlot._CurPrice);
         }
