@@ -131,13 +131,13 @@ public class ItemSlot : FluctItem
 
         GameManager.Instance.gold -= _saledPrice;
 
+        _curStockCount--;
         item?.UseItem();
         shopUI?.InvokeBuyItemEvents(item);
 
         if (!string.IsNullOrEmpty(buyScript))
             shopUI?.PlayScript(buyScript);
 
-        _curStockCount--;
         if(_curStockCount == 0)
             isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);

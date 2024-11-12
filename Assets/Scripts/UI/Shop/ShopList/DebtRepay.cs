@@ -16,8 +16,10 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
     [SerializeField]
     private string targetDebtQuestId;
 
+    public string TargetDebtQuestId;
+
     ItemSlot _itemSlot;
-    ItemSlot itemSlot
+    public ItemSlot itemSlot
     {
         get
         {
@@ -32,6 +34,8 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
         get
         {
             if(QuestManager.Instance.questController.mainQuest != null && QuestManager.Instance.questController.mainQuest._QuestID == targetDebtQuestId)
+                return true;
+            if (QuestManager.Instance.IsQuestFailed(targetDebtQuestId) && itemSlot.curStockCount > 0)
                 return true;
             return false;
         }
@@ -63,6 +67,16 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
         if(QuestManager.Instance.questController.mainQuest is QuestDebtRepay repay)
         {
             repay.ReduceGold(itemSlot._CurPrice);
+        }
+
+        //모두 구매했을 때, 이미 퀘스트를 실패한 상태라면 집행관들을 모두 돌려보낸다
+        if(_itemSlot.curStockCount <= 0 && QuestManager.Instance.IsQuestFailed(targetDebtQuestId))
+        {
+            foreach(var adventurer in GameManager.Instance.adventurersList)
+            {
+                if(adventurer.BattlerID == "s_boss006")
+                    adventurer.ReturnToBase(false);
+            }
         }
     }
 }

@@ -188,7 +188,7 @@ public class CardUIEffect : MonoBehaviour
             image.OnPointerExitAsObservable().Where(_ => drawEnd).Subscribe(_ => OnPointerExit());
 
             CardFramework cardFramework = GetComponent<CardFramework>();
-            if(cardFramework._cardInfo.Value.cardType == CardType.Magic)
+            if(cardFramework != null && cardFramework._cardInfo.Value.cardType == CardType.Magic)
             {
                 var startStream = image.OnPointerDownAsObservable()
                     .Subscribe(_ => MagicDrag().Forget()).AddTo(disposables);

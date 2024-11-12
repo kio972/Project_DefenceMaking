@@ -17,8 +17,19 @@ public class QuestDebtRepay : Quest
 
     protected async UniTaskVoid SpawnExecutor(int count)
     {
+        DebtRepay repay = null;
+        foreach(var item in GameManager.Instance.shop.itemSlots)
+        {
+            if(item.item is DebtRepay repayItem && repayItem.TargetDebtQuestId == _QuestID)
+                repay = repayItem;
+        }
+
         for (int i = 1; i <= count; i++)
         {
+            bool debtPayed = repay != null && repay.itemSlot.curStockCount <= 0;
+            if (debtPayed)
+                return;
+
             BattlerPooling.Instance.SpawnAdventurer("executor_Lv1");
             if (count == i)
                 break;

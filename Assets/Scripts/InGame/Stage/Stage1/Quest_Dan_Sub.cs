@@ -492,9 +492,66 @@ public class Quest2017 : Quest
 
 public class Quest2018 : Quest
 {
+    CancellationTokenSource cancellationToken = new CancellationTokenSource();
+    HashSet<Adventurer> adventurers = new HashSet<Adventurer>();
+
+    private bool isInit = false;
+
     public override void CheckCondition()
     {
+        if(!isInit)
+        {
+            foreach(var adventurer in GameManager.Instance.adventurersList)
+            {
+                if (adventurer.BattlerID == "s_boss006")
+                {
+                    adventurers.Add(adventurer);
+                }
+            }
 
+            GameManager.Instance.adventurersList.ObserveAdd().Subscribe(_ =>
+            {
+                if(_.Value.BattlerID == "s_boss006")
+                {
+                    adventurers.Add(_.Value);
+                }
+            }).AddTo(cancellationToken.Token);
+
+            GameManager.Instance.adventurersList.ObserveRemove().Subscribe(_ =>
+            {
+                if (_.Value.BattlerID == "s_boss006")
+                {
+                    //1. 체력이 0이면 해쉬셋에서 삭제
+                    if (_.Value.curHp <= 0)
+                    {
+                        adventurers.Remove(_.Value);
+                        //모두 사망하여 카운트가 0이면 실패
+                        if (adventurers.Count == 0)
+                            FailQuest();
+                    }
+                    else
+                    {
+                        // 체력이 0이 아닌데 삭제되면 귀환임
+                        isComplete[0] = true;
+                    }
+                }
+            }).AddTo(cancellationToken.Token);
+            isInit = true;
+        }
+    }
+
+    public override void FailQuest()
+    {
+        base.FailQuest();
+        cancellationToken.Cancel();
+        cancellationToken.Dispose();
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        cancellationToken.Cancel();
+        cancellationToken.Dispose();
     }
 }
 

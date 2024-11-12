@@ -586,7 +586,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public virtual void UseSkill() { }
 
-    private void ReturnToBase()
+    public void ReturnToBase(bool addToWave)
     {
         StopAllCoroutines();
         hpBar.HPBarEnd();
@@ -595,7 +595,10 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Invoke("RemoveBody", 2.5f);
         //if (deadSound != null)
         //    AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
-        GameManager.Instance.waveController.AddDelayedTarget(_name);
+        if(addToWave)
+            GameManager.Instance.waveController.AddDelayedTarget(_name);
+        if(this is Adventurer adventurer)
+            GameManager.Instance.adventurersList.Remove(adventurer);
     }
 
     protected ReactiveProperty<bool> _isCollapsed = new ReactiveProperty<bool>(false);
@@ -614,7 +617,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             if (collapseCool >= 5f)
             {
                 collapseCool = 0f;
-                ReturnToBase();
+                ReturnToBase(true);
             }
         }
     }
