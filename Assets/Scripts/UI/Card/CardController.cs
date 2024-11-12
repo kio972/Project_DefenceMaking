@@ -33,17 +33,17 @@ public class CardController : CardFramework
     protected override void SetObjectOnMap(bool cancel = false)
     {
         //bool recycle = GameManager.Instance.cardDeckController.IsRecycle;
-        bool recycle = false;
-        if (!cancel && recycle)
-        {
-            Destroy(instancedObject);
-            instancedObject = null;
-            GameManager.Instance.cardDeckController.AddCard(cardIndex);
-        }
-        else
-            base.SetObjectOnMap(cancel);
+        base.SetObjectOnMap(cancel);
+        if (cancel)
+            return;
 
-        if (instancedObject == null)
-            RemoveCard(recycle).Forget();
+        if (_cardInfo.Value.cardType == CardType.Magic)
+        {
+            SpecialCardEffect effect = gameObject.GetComponent<SpecialCardEffect>();
+            if (effect != null && !cancel)
+                RemoveCard(false).Forget();
+        }
+        else if (instancedObject == null)
+            RemoveCard(false).Forget();
     }
 }

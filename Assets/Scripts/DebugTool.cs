@@ -7,6 +7,9 @@ using TMPro;
 public class DebugTool : MonoBehaviour
 {
     public int waveIndex = 1;
+
+    public string targetCardId;
+
     int goldIndex = 0;
     int gold { get { goldIndex = goldIndex % 3; if (goldIndex == 0) return 100; else if (goldIndex == 1) return 1000; else return 10000; } }
 
@@ -14,6 +17,15 @@ public class DebugTool : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI waveText;
+
+    public void DrawCard()
+    {
+        int index = DataManager.Instance.deckListIndex[targetCardId];
+        if (index == -1)
+            return;
+        GameManager.Instance.cardDeckController?.AddCard(index);
+        GameManager.Instance.cardDeckController?.DrawCard(index);
+    }
 
     public void RemoveAlly()
     {

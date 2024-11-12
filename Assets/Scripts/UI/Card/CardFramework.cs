@@ -137,9 +137,13 @@ public class CardFramework : MonoBehaviour
 
         if(cardType == CardType.Magic)
         {
-            SpecialCardEffect effect = gameObject.AddComponent<SpecialCardEffect>();
-            effect.SetCard(this);
-            effect.SendMessage(_cardInfo.Value.cardName, SendMessageOptions.DontRequireReceiver);
+            bool isActive = Input.mousePosition.y > 300;
+            if (isActive)
+            {
+                SpecialCardEffect effect = gameObject.AddComponent<SpecialCardEffect>();
+                effect.SetCard(this);
+                effect.SendMessage(_cardInfo.Value.cardPrefabName, SendMessageOptions.DontRequireReceiver);
+            }
             return;
         }
 
@@ -232,7 +236,7 @@ public class CardFramework : MonoBehaviour
 
     private void InstanceObject()
     {
-        if (instancedObject == null)
+        if (instancedObject == null && targetPrefab != null)
             instancedObject = Instantiate(targetPrefab);
         else
             instancedObject.SetActive(true);
@@ -275,6 +279,10 @@ public class CardFramework : MonoBehaviour
                 break;
             case CardType.Magic:
                 NodeManager.Instance.SetGuideState(GuideState.None);
+                //Image image = transform.GetComponent<Image>();
+                //image.raycastTarget = false;
+                CardUIEffect effect = GetComponent<CardUIEffect>();
+                effect.OnMagicDrag().Forget();
                 break;
         }
     }

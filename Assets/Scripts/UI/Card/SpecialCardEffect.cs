@@ -8,7 +8,7 @@ public class SpecialCardEffect : MonoBehaviour
 
     public void SetCard(CardFramework card) => targetCard = card;
 
-    public void TrashCan()
+    public void Recyclebin()
     {
         CardDeckController cardDeck = GameManager.Instance.cardDeckController;
         var cards = cardDeck.CardZone.GetComponentsInChildren<CardController>();
