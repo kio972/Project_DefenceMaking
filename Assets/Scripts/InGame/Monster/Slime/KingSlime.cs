@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using UniRx;
 using System.Linq;
-using Unity.VisualScripting;
 
 public class KingSlime : Monster
 {

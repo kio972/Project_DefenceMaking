@@ -500,9 +500,14 @@ public class Quest2018 : Quest
 
 public class Quest2019 : Quest
 {
+    KingSlime king;
+
     public override void CheckCondition()
     {
+        if(king == null)
+            king = MonoBehaviour.FindObjectOfType<KingSlime>();
 
+        isComplete[0] = !king.isCollapsed;
     }
 }
 
