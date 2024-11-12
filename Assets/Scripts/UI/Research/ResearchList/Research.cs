@@ -19,8 +19,8 @@ public struct ResearchData
         researchIndex = UtilHelper.Find_Data_Index(id, DataManager.Instance.research_Table, "id");
         Dictionary<string, object> data = DataManager.Instance.research_Table[researchIndex];
 
-        researchName = data["Name"].ToString();
-        researchDesc = data["Content"].ToString();
+        researchName = data["Name_Key"].ToString();
+        researchDesc = data["Name_Desc"].ToString();
         float.TryParse(data["RequiredTime"].ToString(), out requiredTime);
         requiredMoney = Convert.ToInt32(data["RequiredMoney"]);
         requiredherb1 = Convert.ToInt32(data["RequiredHerb1"]);

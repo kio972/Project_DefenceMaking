@@ -12,9 +12,9 @@ public class ResearchPopup : MonoBehaviour
     [SerializeField]
     private GameObject inprogressFrame;
     [SerializeField]
-    private TextMeshProUGUI researchName;
+    private LanguageText researchName;
     [SerializeField]
-    private TextMeshProUGUI researchDesc;
+    private LanguageText researchDesc;
     [SerializeField]
     private TextMeshProUGUI researchTime;
     [SerializeField]
@@ -96,8 +96,8 @@ public class ResearchPopup : MonoBehaviour
         if (isInProgress)
             researchTimer.text = GetMinSecTime(CurTime);
 
-        researchName.text = researchData.researchName;
-        researchDesc.text = researchData.researchDesc;
+        researchName.ChangeLangauge(SettingManager.Instance.language, researchData.researchName);
+        researchDesc.ChangeLangauge(SettingManager.Instance.language, researchData.researchDesc);
         researchTime.text = GetMinSecTime(researchData.requiredTime);
 
         herb1.text = researchData.requiredherb1.ToString();
