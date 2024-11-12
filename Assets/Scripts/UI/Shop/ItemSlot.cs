@@ -16,6 +16,7 @@ public struct ItemInfo
     public float increaseMax;
     public float decreaseMin;
     public float decreaseMax;
+    public int stockCount;
 
     public ItemInfo(Dictionary<string, object> data)
     {
@@ -28,6 +29,7 @@ public struct ItemInfo
         float.TryParse(data["IncreaseMax"].ToString(), out increaseMax);
         float.TryParse(data["DecreaseMin"].ToString(), out decreaseMin);
         float.TryParse(data["DecreaseMax"].ToString(), out decreaseMax);
+        int.TryParse(data["Stock"].ToString(), out stockCount);
     }
 }
 
@@ -214,6 +216,7 @@ public class ItemSlot : FluctItem
         decreaseMax = itemInfo.decreaseMax;
         originPrice = itemInfo.originPrice;
         curPrice.Value = itemInfo.curPrice;
+        _stockCount = itemInfo.stockCount;
     }
 
     public void Init()
