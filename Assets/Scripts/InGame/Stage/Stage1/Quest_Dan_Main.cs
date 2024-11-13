@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class QuestDebtRepay : Quest
 {
-    protected int targetGold;
     protected int executorCount;
 
     public override void CheckCondition()
     {
         curClearNum[1] = _ClearNum[1] - Mathf.FloorToInt(_CurTime / 1440);
-        if (curClearNum[0] >= targetGold)
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
     }
 
@@ -69,7 +68,6 @@ public class Quest1001 : QuestDebtRepay
 {
     public Quest1001()
     {
-        targetGold = 500;
         executorCount = 1;
     }
 }
@@ -78,7 +76,6 @@ public class Quest1002 : QuestDebtRepay
 {
     public Quest1002()
     {
-        targetGold = 1000;
         executorCount = 2;
     }
 }
@@ -87,7 +84,6 @@ public class Quest1003 : QuestDebtRepay
 {
     public Quest1003()
     {
-        targetGold = 2500;
         executorCount = 3;
     }
 }
@@ -96,7 +92,6 @@ public class Quest1004 : QuestDebtRepay
 {
     public Quest1004()
     {
-        targetGold = 4000;
         executorCount = 4;
     }
 }
@@ -105,18 +100,12 @@ public class Quest1005 : QuestDebtRepay
 {
     public Quest1005()
     {
-        targetGold = 7000;
         executorCount = 5;
     }
 }
 
 public class Quest1006 : QuestDebtRepay
 {
-    public Quest1006()
-    {
-        targetGold = 1000000;
-    }
-
     public override void CompleteQuest()
     {
         QuestManager.Instance.EndQuest(this, true);
