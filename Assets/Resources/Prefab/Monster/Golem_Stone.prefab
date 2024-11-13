@@ -100,6 +100,37 @@ MonoBehaviour:
   replacementMaterials:
   - originalMaterial: {fileID: 2100000, guid: 648ac005781a02949ac07db7ab75a074, type: 2}
     replacementMaterial: {fileID: 2100000, guid: 3e2adebe832a87746be7ad844b2a077e, type: 2}
+--- !u!1 &4229015140416898198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5593524739762603599}
+  m_Layer: 6
+  m_Name: MiddlePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5593524739762603599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229015140416898198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7628547921235060627}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4809690254627854902
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +454,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7583985603532323628}
+  - {fileID: 5593524739762603599}
   m_Father: {fileID: 6528212802685220637}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -495,7 +527,7 @@ MonoBehaviour:
   isDead: 0
   attackZone: {fileID: 0}
   battlerID: s_m30001
-  attackEffect: {fileID: 9054858531674775054, guid: 766ea6773c111c34db0c3af775050a15, type: 3}
+  attackEffect: {fileID: 3948996734090238566, guid: 29a2f2976c91a9648be6e25338a65a51, type: 3}
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 9ea03113ba88b47cb81fe5129e4266c5, type: 3}

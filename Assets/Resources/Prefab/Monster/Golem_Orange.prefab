@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3042916362443337739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1590453656871876442}
+  m_Layer: 6
+  m_Name: MiddlePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1590453656871876442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042916362443337739}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7628547921235060627}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4809690254627854902
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +341,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7583985603532323628}
+  - {fileID: 1590453656871876442}
   m_Father: {fileID: 6528212802685220637}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -382,10 +414,13 @@ MonoBehaviour:
   isDead: 0
   attackZone: {fileID: 0}
   battlerID: s_m30004
-  attackEffect: {fileID: 9054858531674775054, guid: 766ea6773c111c34db0c3af775050a15, type: 3}
+  attackEffect: {fileID: 3948996734090238566, guid: 29a2f2976c91a9648be6e25338a65a51, type: 3}
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 9ea03113ba88b47cb81fe5129e4266c5, type: 3}
+  middlePos: {fileID: 1590453656871876442}
+  sheildPrefab: {fileID: 1135644536747142, guid: d58db2a2d5820da4b8099f8d03af197c, type: 3}
+  explosionPrefab: {fileID: 1063853928597754236, guid: 8d0b7621ea4225c4baa45457250d7cfb, type: 3}
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0
