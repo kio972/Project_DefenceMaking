@@ -19,6 +19,16 @@ public class KingSlime : Monster
 
     readonly string[] targetSlimes = { "slime_mucus", "slime_poison", "slime_explosion" };
 
+    [SerializeField]
+    GameObject kingAttackEffect;
+
+    public override void Attack()
+    {
+        base.Attack();
+        if (kingAttackEffect != null)
+            EffectPooling.Instance.PlayEffect(kingAttackEffect, transform);
+    }
+
     private void ModifySpawnerCoolTime(MonsterSpawner spawner, float value)
     {
         if (!targetSlimes.Contains(spawner._TargetName))
