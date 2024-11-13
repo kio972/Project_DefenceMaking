@@ -46,6 +46,7 @@ public class ResultController : MonoBehaviour
         TextMeshProUGUI text = titleBtn.GetComponentInChildren<TextMeshProUGUI>();
         if(SceneManager.GetActiveScene().name == "Stage0")
         {
+            SaveManager.Instance.playerData = null;
             titleBtn.useLoadingScene = true;
             if (text != null)
                 text.text = SettingManager.Instance.language == Languages.korean ? "계속하기" : "Countinue";

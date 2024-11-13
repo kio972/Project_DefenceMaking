@@ -75,10 +75,10 @@ public class CompleteRoom
         this.isSingleRoom = singleRoom;
         CalculateTotalMana();
 
-        var roomManaStream = targetTiles[0].roomManaProperty.ObserveEveryValueChanged(_ => _);
+        var roomManaStream = targetTiles[0].roomManaProperty.ObserveEveryValueChanged(_ => _.Value);
         for(int i = 1; i < targetTiles.Count; i++)
         {
-            var nextManaStream = targetTiles[i].roomManaProperty.ObserveEveryValueChanged(_ => _);
+            var nextManaStream = targetTiles[i].roomManaProperty.ObserveEveryValueChanged(_ => _.Value);
             roomManaStream = Observable.Merge(roomManaStream, nextManaStream);
         }
 

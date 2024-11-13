@@ -144,6 +144,7 @@ public class ResearchMainUI : MonoBehaviour
         slot.SetResearchState(ResearchState.Complete);
         Research research = slot.GetComponent<Research>();
         research?.ActiveResearch();
+        _completedResearchs.Add(slot._ResearchId);
     }
 
     private Dictionary<string, ResearchSlot> researchDic = new Dictionary<string, ResearchSlot>();

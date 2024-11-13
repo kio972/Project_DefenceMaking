@@ -21,11 +21,23 @@ public class RoadWayUnlock : MonoBehaviour, Research
     {
         if(tileKind is Tile tile && tile._TileType == TileType.Path)
         {
-            if (IsConnectedWithRoadWay(tile) || UtilHelper.GetPathCount(tile).Count >= 5)
+            if (IsConnectedWithRoadWay(tile))
             {
                 TileUpgrader upgrader = tile.GetComponent<TileUpgrader>();
                 upgrader?.UpgradeTile();
                 return true;
+            }
+            else
+            {
+                List<Tile> paths = UtilHelper.GetPathCount(tile);
+                if(paths.Count >= 5)
+                {
+                    foreach(var path in paths)
+                    {
+                        TileUpgrader upgrader = path.GetComponent<TileUpgrader>();
+                        upgrader?.UpgradeTile();
+                    }
+                }
             }
         }
 
