@@ -43,6 +43,8 @@ public class ResultController : MonoBehaviour
 
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
 
+        SaveManager.Instance.ResetPlayerData();
+
         TextMeshProUGUI text = titleBtn.GetComponentInChildren<TextMeshProUGUI>();
         if(SceneManager.GetActiveScene().name == "Stage0")
         {
@@ -54,10 +56,18 @@ public class ResultController : MonoBehaviour
         }
         else
         {
-            titleBtn.useLoadingScene = false;
-            if (text != null)
-                text.text = SettingManager.Instance.language == Languages.korean ? "타이틀로" : "Main Menu";
-            titleBtn.sceneName = "TitleScene";
+            fade.gameObject.SetActive(true);
+            UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, 0.9f), 2f).Forget();
+            victory.gameObject.SetActive(true);
+            defeat.gameObject.SetActive(false);
+            AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
+            await UniTask.WaitForSeconds(4);
+            SceneController.Instance.MoveScene("DemoEnd");
+            return;
+            //titleBtn.useLoadingScene = false;
+            //if (text != null)
+            //    text.text = SettingManager.Instance.language == Languages.korean ? "타이틀로" : "Main Menu";
+            //titleBtn.sceneName = "TitleScene";
         }
 
         FadeOn();
