@@ -10,6 +10,10 @@ public class Adventurer : Battler
 
     private int reward;
 
+    [SerializeField]
+    private bool _isBoss;
+    public bool isBoss { get => _isBoss; }
+
     protected override void RemoveBody()
     {
         base.RemoveBody();
