@@ -128,6 +128,20 @@ public class GameManager : IngameSingleton<GameManager>
 
     private List<System.Action<Battler, Battler>> battlerDeadEvent = new List<System.Action<Battler, Battler>>();
 
+    public bool isBossOnMap
+    {
+        get
+        {
+            foreach(var enemy in adventurersList)
+            {
+                if(enemy.isBoss)
+                    return true;
+            }
+
+            return false;
+        }
+    }
+
     public void InvokeBattlerDeadEvents(Battler battler, Battler attecker)
     {
         foreach (var curEvent in battlerDeadEvent)
