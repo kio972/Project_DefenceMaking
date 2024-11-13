@@ -383,6 +383,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         curHp = Mathf.Min(curHp + heal, maxHp);
         const float fontSize = 27f;
         DamageTextPooling.Instance.TextEffect(transform.position, heal, fontSize, Color.green, false, true);
+        EffectPooling.Instance.PlayEffect("HealEffect", animator.transform.parent);
     }
 
     public virtual void GetDamage(int damage, Battler attacker)
