@@ -158,6 +158,10 @@ public class Quest0105 : Quest
         if (!isComplete[0] && GameManager.Instance.cardDeckController.hand_CardNumber > cardCount)
         {
             curClearNum[0]++;
+        }
+
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+        {
             isComplete[0] = true;
         }
 
