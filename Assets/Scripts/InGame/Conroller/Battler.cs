@@ -906,6 +906,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         return true;
     }
 
+    public void UpdateMoveSpeed()
+    {
+        if (animator != null)
+            animator.SetFloat("MoveSpeed", MoveSpeed * GameManager.Instance.timeScale);
+    }
+
     private void UpdateAttackSpeed()
     {
         if (animator != null)
@@ -1079,11 +1085,5 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         {
             UpdateAttackSpeed();
         }).AddTo(gameObject);
-    }
-
-    protected void SubscribeStateAnimation()
-    {
-        _CurState.Where(_ => animator.ContainsParam("Move")).
-            Subscribe(_ => animator.SetBool("Move", (object)_ == FSMPatrol.Instance || FSMChase.Instance || FSMDirectMove.Instance));
     }
 }

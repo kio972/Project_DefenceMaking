@@ -72,6 +72,7 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
             return;
 
         e.Patrol();
+        e.UpdateMoveSpeed();
     }
 
     public void Exit(Battler e)
