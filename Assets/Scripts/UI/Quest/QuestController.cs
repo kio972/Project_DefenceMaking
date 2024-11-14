@@ -101,12 +101,12 @@ public class QuestController : MonoBehaviour
         AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
     }
 
-    public void StartQuest(int questID, List<int> startVal)
+    public void StartQuest(int questID, List<int> startVal, float startTime)
     {
         Quest curQuest = LoadQuest(questID);
         if (curQuest == null)
             return;
-        curQuest.Init(_QuestDic[questID], startVal);
+        curQuest.Init(_QuestDic[questID], startVal, startTime);
         if (curQuest._IsMainQuest)
             SetMainQuest(curQuest);
         else

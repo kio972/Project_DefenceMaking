@@ -72,12 +72,15 @@ public class Tile : MonoBehaviour, ITileKind
         {
             int curMana = supplyMana;
             bool isPath = tileType == TileType.Path;
-            if(isUpgraded && isPath)
-                curMana++;
-            foreach(TileNode node in _curNode.neighborNodeDic.Values)
+            if(isPath)
             {
-                if (node.environment != null && node.environment is IManaSupply supply)
-                    curMana += supply.manaValue;
+                if (isUpgraded)
+                    curMana++;
+                foreach (TileNode node in _curNode.neighborNodeDic.Values)
+                {
+                    if (node.environment != null && node.environment is IManaSupply supply)
+                        curMana += supply.manaValue;
+                }
             }
 
             return curMana;

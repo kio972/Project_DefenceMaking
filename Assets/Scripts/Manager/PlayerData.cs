@@ -8,6 +8,7 @@ public struct QuestData
 {
     public string id;
     public List<int> curVal;
+    public float curTime;
 }
 
 public struct BattlerData

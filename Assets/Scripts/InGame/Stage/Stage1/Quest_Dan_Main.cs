@@ -44,7 +44,7 @@ public class QuestDebtRepay : Quest
 
     public override void FailQuest()
     {
-        SpawnExecutor(1).Forget();
+        SpawnExecutor(executorCount).Forget();
         base.FailQuest();
         if (!string.IsNullOrEmpty(nextQuestMsg))
             QuestManager.Instance.EnqueueQuest(nextQuestMsg);

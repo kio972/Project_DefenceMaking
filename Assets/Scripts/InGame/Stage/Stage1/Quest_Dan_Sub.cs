@@ -371,6 +371,9 @@ public class Quest2013 : Quest
                 countedMonsters.Add(monster);
             }
         }
+
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
     }
 
     public override void FailQuest()

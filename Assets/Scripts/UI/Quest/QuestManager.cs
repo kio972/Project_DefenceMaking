@@ -79,11 +79,11 @@ public class QuestManager : IngameSingleton<QuestManager>
             failedQuests.Add(quest._QuestID);
     }
 
-    public void StartQuest(string questID, List<int> startVal = null)
+    public void StartQuest(string questID, List<int> startVal = null, float startTime = 0)
     {
         int id;
         if(int.TryParse(questID.Replace("q", ""), out id))
-            questController.StartQuest(id, startVal);
+            questController.StartQuest(id, startVal, startTime);
     }
 
     public void EnqueueQuest(string msgID)
@@ -170,6 +170,7 @@ public class QuestManager : IngameSingleton<QuestManager>
         {
             main.id = _questController.mainQuest._QuestID;
             main.curVal = _questController.mainQuest._CurClearNum;
+            main.curTime = _questController.mainQuest._CurTime;
             data.curQuests.Add(main);
         }
 
@@ -178,6 +179,7 @@ public class QuestManager : IngameSingleton<QuestManager>
             QuestData sub = new QuestData();
             sub.id = quest._QuestID;
             sub.curVal = quest._CurClearNum;
+            sub.curTime = quest._CurTime;
             data.curQuests.Add(sub);
         }
 
@@ -193,7 +195,7 @@ public class QuestManager : IngameSingleton<QuestManager>
         InitQuest(false);
 
         foreach(QuestData quest in data.curQuests)
-            StartQuest(quest.id, quest.curVal);
+            StartQuest(quest.id, quest.curVal, quest.curTime);
         foreach (string quest in data.clearedQuests)
             clearedQuests.Add(quest);
 

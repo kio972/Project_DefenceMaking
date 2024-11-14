@@ -8,6 +8,12 @@ public class ManaStone : Environment, IManaSupply
 
     protected override void CustomFunc()
     {
-        //PassiveManager.Instance.AddManaStone(_CurNode, (int)value);
+        foreach(var node in curNode.neighborNodeDic.Values)
+        {
+            if (node == null || node.curTile == null)
+                continue;
+            int updateRoomMana = node.curTile.RoomMana;
+            GameManager.Instance.UpdateTotalMana();
+        }
     }
 }
