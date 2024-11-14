@@ -105,6 +105,12 @@ public class ItemSlot : FluctItem
     private int _curStockCount;
     public int curStockCount { get => _curStockCount; }
 
+    public void RefreshStock()
+    {
+        _curStockCount = _stockCount;
+        isSoldOut.Value = false;
+    }
+
     public void OnClick()
     {
         if (_item is IMalPoongSunOnClick script)
@@ -184,12 +190,6 @@ public class ItemSlot : FluctItem
         }
 
         itemPrice.text = curPrice.ToString();
-
-        if(isRefreshable)
-        {
-            isSoldOut.Value = false;
-            _curStockCount = _stockCount;
-        }
     }
 
     public override void UpdateCoolTime()
