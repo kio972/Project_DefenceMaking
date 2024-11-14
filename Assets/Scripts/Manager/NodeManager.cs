@@ -314,17 +314,24 @@ public class NodeManager : IngameSingleton<NodeManager>
 
             int connectedPathCount = 0;
             int connectedRoomCount = 0;
-            foreach (int val in node.connectionState.Values)
+            Direction connectedPathDir = Direction.None;
+            foreach (var kvp in node.connectionState)
             {
-                if (val == 1)
+                if (kvp.Value == 1)
+                {
                     connectedPathCount++;
-                else if (val == 2)
+                    connectedPathDir = kvp.Key;
+                }
+                else if (kvp.Value == 2)
                     connectedRoomCount++;
             }
 
             bool isAvail = connectedPathCount == 1 && connectedRoomCount == 0 ? true : false;
             if (isAvail)
-                nodes.Add(node);
+            {
+                if(PathFinder.FindPath(NodeManager.Instance.startPoint, node.neighborNodeDic[connectedPathDir]) != null)
+                    nodes.Add(node);
+            }
         }
         return nodes;
     }

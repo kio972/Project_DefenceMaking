@@ -13,6 +13,17 @@ public class Adventurer : Battler
     [SerializeField]
     private bool _isBoss;
     public bool isBoss { get => _isBoss; }
+    public bool isSmart = false;
+
+    public override void Patrol()
+    {
+        CollapseLogic();
+
+        if (directPass || isSmart)
+            DirectPass(NodeManager.Instance.endPoint);
+        else
+            NormalPatrol();
+    }
 
     protected override void RemoveBody()
     {

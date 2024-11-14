@@ -230,6 +230,8 @@ public class Tile : MonoBehaviour, ITileKind
         NodeManager.Instance.UpdateMinMaxRowCol(_curNode.row, _curNode.col);
         //NodeManager.Instance.UpdateSightNode();
         GameManager.Instance.CheckBattlerCollapsed();
+        if(!isDormant)
+            CheckDevilDisconnection();
 
         if(GameManager.Instance.IsInit)
             AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
@@ -400,17 +402,9 @@ public class Tile : MonoBehaviour, ITileKind
 
     private bool DormantAwake()
     {
-        //연결된 타일 중 active상태인 노드가 있으면 return true
-        foreach(Direction direction in PathDirection)
-        {
-            TileNode target = _curNode.neighborNodeDic[direction];
-            if (target == null || target.curTile == null)
-                continue;
-            if (UtilHelper.IsTileConnected(_curNode, direction, target.curTile.PathDirection))
-                return true;
-            if (UtilHelper.IsTileConnected(_curNode, direction, target.curTile.PathDirection))
-                return true;
-        }
+        //마왕 타일과 연결된 상태라면 true
+        if (PathFinder.FindPath(curNode) != null)
+            return true;
 
         return false;
     }
@@ -447,6 +441,16 @@ public class Tile : MonoBehaviour, ITileKind
         _objectKind = null;
     }
 
+    private void CheckDevilDisconnection()
+    {
+        if (GameManager.Instance.IsInit && PathFinder.FindPath(NodeManager.Instance.startPoint) == null)
+        {
+            string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
+            GameManager.Instance.popUpMessage?.ToastMsg(desc);
+            GameManager.Instance.speedController.SetSpeedZero();
+        }
+    }
+
     public void RemoveTile()
     {
         if (isUpgraded && tileType == TileType.Path)
@@ -464,6 +468,7 @@ public class Tile : MonoBehaviour, ITileKind
         NodeManager.Instance.RemoveTile(this);
         GameManager.Instance.CheckBattlerCollapsed();
         GameManager.Instance.UpdateTotalMana();
+        CheckDevilDisconnection();
     }
 
     private void DownGradeCheck()
