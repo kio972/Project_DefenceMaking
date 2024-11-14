@@ -100,7 +100,7 @@ public abstract class Quest
         }
     }
 
-    public void Init(List<Dictionary<string, object>> data, List<int> startVal = null)
+    public void Init(List<Dictionary<string, object>> data, List<int> startVal = null, float startTime = 0)
     {
         questID = data[0]["ID"].ToString();
         questName = data[0]["Name"].ToString();
@@ -111,7 +111,7 @@ public abstract class Quest
         if (int.TryParse(data[0]["RewardNum"].ToString(), out int rewardNum))
             rewardValue = rewardNum;
 
-        curTime = 0;
+        curTime = startTime;
         clearNum = new List<int>();
         curClearNum = startVal != null ? new List<int>(startVal) : new List<int>();
         clearInfo = new List<string>();
