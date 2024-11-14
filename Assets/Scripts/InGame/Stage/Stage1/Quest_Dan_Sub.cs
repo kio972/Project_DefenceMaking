@@ -461,15 +461,17 @@ public class Quest2015 : Quest
 public class Quest2016 : Quest
 {
     private TileNode curNode = null;
+    private int prevTileCount = 0;
 
     public override void CheckCondition()
     {
-        if(curNode != NodeManager.Instance.endPoint)
+        if(curNode != NodeManager.Instance.endPoint || prevTileCount != NodeManager.Instance._ActiveNodes.Count)
         {
             if (PathFinder.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) != null)
                 isComplete[0] = true;
         }
 
+        prevTileCount = NodeManager.Instance._ActiveNodes.Count;
         curNode = NodeManager.Instance.endPoint;
     }
 }
