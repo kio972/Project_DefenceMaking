@@ -118,7 +118,7 @@ public class TooltipInput : IInput
                 return;
             }
 
-            if(prevTarget != null && prevTarget.toolTipType == ToolTipType.Devil && tooltipObjects[0].toolTipType == ToolTipType.Devil)
+            if(prevTarget != null && prevTarget.toolTipType == ToolTipType.Devil && tooltipObjects[0].toolTipType == ToolTipType.Devil && !GameManager.Instance.moveLock)
             {
                 TileControlUI tileControl = MonoBehaviour.FindObjectOfType<TileControlUI>();
                 tileControl?.MoveTile(NodeManager.Instance.endPoint.curTile);

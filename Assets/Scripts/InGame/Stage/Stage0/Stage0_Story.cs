@@ -116,6 +116,7 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.speedLock = true;
         GameManager.Instance.cameraLock = true;
         GameManager.Instance.saveLock = true;
+        GameManager.Instance.moveLock = true;
 
         Vector3 camZeroPos = GameManager.Instance.cameraController.guidePos;
 
@@ -248,6 +249,7 @@ public class Stage0_Story : MonoBehaviour
         //GameManager.Instance.speedLock = false;
         GameManager.Instance.cameraLock = false;
         GameManager.Instance.saveLock = false;
+        GameManager.Instance.moveLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
 
         NodeManager.Instance.RemoveSetTileEvent(LockDestroyTile);
