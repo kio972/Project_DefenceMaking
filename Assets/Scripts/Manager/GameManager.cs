@@ -108,6 +108,7 @@ public class GameManager : IngameSingleton<GameManager>
     public bool cameraLock = false;
     public bool saveLock = false;
     public bool rotateLock = false;
+    public bool moveLock = false;
 
     public int loop = 0;
 

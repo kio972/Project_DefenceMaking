@@ -150,7 +150,7 @@ public class Tile : MonoBehaviour, ITileKind
     private bool isDormant = false;
 
     public bool IsDormant { get => isDormant; }
-    public bool Movable { get => movable; set { movable = value; } }
+    public bool Movable { get => movable && !GameManager.Instance.moveLock; set { movable = value; } }
 
     public bool waitToMove = false;
 
