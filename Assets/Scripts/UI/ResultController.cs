@@ -39,7 +39,7 @@ public class ResultController : MonoBehaviour
         //    FindObjectOfType<CameraController>()?.ResetCamPos();
         //await UniTask.Delay(System.TimeSpan.FromSeconds(2.5f));
 
-        //StoryManager.Instance.EnqueueScript("Dan900");
+        StoryManager.Instance.EnqueueScript("Dan900");
 
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty);
 
