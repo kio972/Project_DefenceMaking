@@ -96,6 +96,7 @@ public class Stage0_Story : MonoBehaviour
             ManaUIQuestCheck().Forget();
             SpeedUIQuestCheck().Forget();
             ShopUIQuestCheck().Forget();
+            NodeManager.Instance.AddSetTileEvent(LockDestroyTile);
             return;
         }
 
@@ -252,7 +253,7 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.moveLock = false;
         GameManager.Instance.speedController.SetSpeedNormal();
 
-        NodeManager.Instance.RemoveSetTileEvent(LockDestroyTile);
+        //NodeManager.Instance.RemoveSetTileEvent(LockDestroyTile);
 
         //시작패 드로우
         GameManager.Instance.cardDeckController.DrawCard(directPath);
