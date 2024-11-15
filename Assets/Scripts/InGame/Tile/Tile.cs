@@ -230,7 +230,7 @@ public class Tile : MonoBehaviour, ITileKind
         NodeManager.Instance.UpdateMinMaxRowCol(_curNode.row, _curNode.col);
         //NodeManager.Instance.UpdateSightNode();
         GameManager.Instance.CheckBattlerCollapsed();
-        if(!isDormant)
+        if(!isDormant && GameManager.Instance.timeScale != 0)
             CheckDevilDisconnection();
 
         if(GameManager.Instance.IsInit)
