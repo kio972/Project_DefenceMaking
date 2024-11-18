@@ -188,12 +188,12 @@ public class GameManager : IngameSingleton<GameManager>
         SkipDay();
     }
 
-    private void LoopWave()
-    {
-        curWave = -1;
-        isPause = true;
-        StoryManager.Instance.EnqueueScript("Dan100");
-    }
+    //private void LoopWave()
+    //{
+    //    curWave = -1;
+    //    isPause = true;
+    //    StoryManager.Instance.EnqueueScript("Dan100");
+    //}
 
     public void SetMonseter(Monster monster, bool value)
     {
