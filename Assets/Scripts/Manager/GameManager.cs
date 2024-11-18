@@ -487,4 +487,9 @@ public class GameManager : IngameSingleton<GameManager>
         speedController.SetSpeedZero();
         isInit = true;
     }
+
+    private void OnDestroy()
+    {
+        EffectPooling.Instance.StopAllEffect();
+    }
 }

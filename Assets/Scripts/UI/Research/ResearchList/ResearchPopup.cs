@@ -40,16 +40,16 @@ public class ResearchPopup : MonoBehaviour
     [SerializeField]
     private GameObject completePart;
 
-    private ResearchMainUI researchMain;
+    private ResearchMainUI _researchMain;
 
-    private ResearchMainUI ResearchMain
+    private ResearchMainUI researchMain
     {
         get
         {
-            if (researchMain == null)
-                researchMain = GetComponentInParent<ResearchMainUI>();
+            if (_researchMain == null)
+                _researchMain = GetComponentInParent<ResearchMainUI>();
 
-            return researchMain;
+            return _researchMain;
         }
     }
 
@@ -59,10 +59,10 @@ public class ResearchPopup : MonoBehaviour
     {
         get
         {
-            if (ResearchMain == null)
+            if (researchMain == null)
                 return 0;
 
-            return ResearchMain.CurProgressTime;
+            return researchMain.CurProgressTime;
         }
     }
 
@@ -166,12 +166,14 @@ public class ResearchPopup : MonoBehaviour
     public void ResearchInteract(bool blockStop = false)
     {
         ResearchState curState = researchState;
-        if (curState == ResearchState.Incomplete)
+        if (researchMain.curResearch != null && researchMain.curResearch != curResearch)
+            GameManager.Instance.popUpMessage.ToastMsg("연구가 이미 진행중입니다.");
+        else if (curState == ResearchState.Incomplete)
             StartResearch();
         else if (curState == ResearchState.InProgress && !blockStop)
             StopResearch();
 
-        if(curState != researchState)
+        if (curState != researchState)
             SetResearchBtn(researchState);
     }
 
@@ -184,7 +186,7 @@ public class ResearchPopup : MonoBehaviour
             return;
         }
 
-        bool isStart = ResearchMain.StartResearch(curResearch);
+        bool isStart = researchMain.StartResearch(curResearch);
         if (isStart)
         {
             inprogressFrame.SetActive(true);
@@ -194,15 +196,13 @@ public class ResearchPopup : MonoBehaviour
             ModifyAssets(false);
             researchState = ResearchState.InProgress;
         }
-        else
-            GameManager.Instance.popUpMessage.ToastMsg("연구가 이미 진행중입니다.");
 
         AudioManager.Instance.Play2DSound(isStart ? "UI_Click_01" : "UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
     }
 
     private void StopResearch()
     {
-        ResearchMain.StopResearch(curResearch);
+        researchMain.StopResearch(curResearch);
         inprogressFrame.SetActive(false);
         inProgressBtn.SetActive(false);
         researchTimer.gameObject.SetActive(false);

@@ -32,8 +32,8 @@ public class ShopSlotInfo : MonoBehaviour
     [SerializeField]
     private GameObject soldOutImage;
 
-    [SerializeField]
-    private ItemSlot initSlot;
+    //[SerializeField]
+    //private ItemSlot initSlot;
 
     [SerializeField]
     private GameObject cardPackViewBtn;
@@ -92,7 +92,17 @@ public class ShopSlotInfo : MonoBehaviour
 
     private void OnEnable()
     {
-        if (initSlot != null)
-            UpdateInfo(initSlot);
+        ItemSlot targetSlot = null;
+        foreach(var slot in GameManager.Instance.shop.itemSlots)
+        {
+            if(slot.gameObject.activeSelf)
+            {
+                targetSlot = slot;
+                break;
+            }
+        }
+
+        if (targetSlot != null)
+            UpdateInfo(targetSlot);
     }
 }

@@ -230,8 +230,7 @@ public class Tile : MonoBehaviour, ITileKind
         NodeManager.Instance.UpdateMinMaxRowCol(_curNode.row, _curNode.col);
         //NodeManager.Instance.UpdateSightNode();
         GameManager.Instance.CheckBattlerCollapsed();
-        if(!isDormant && GameManager.Instance.timeScale != 0)
-            CheckDevilDisconnection();
+        CheckDevilDisconnection();
 
         if(GameManager.Instance.IsInit)
             AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
@@ -443,7 +442,11 @@ public class Tile : MonoBehaviour, ITileKind
 
     private void CheckDevilDisconnection()
     {
-        if (GameManager.Instance.IsInit && PathFinder.FindPath(NodeManager.Instance.startPoint) == null)
+        //비활성 타일이거나 게임이 시작되지 않았거나 현재속도가 0이면 체크 패스
+        if (isDormant || !GameManager.Instance.IsInit || GameManager.Instance.timeScale == 0)
+            return;
+
+        if (PathFinder.FindPath(NodeManager.Instance.startPoint) == null)
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
             GameManager.Instance.popUpMessage?.ToastMsg(desc);
