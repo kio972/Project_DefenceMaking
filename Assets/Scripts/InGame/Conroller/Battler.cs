@@ -1087,4 +1087,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             UpdateAttackSpeed();
         }).AddTo(gameObject);
     }
+
+    private void OnDestroy()
+    {
+        foreach(StatusEffect effect in _effects)
+        {
+            effect.DeActiveEffect();
+        }
+    }
 }
