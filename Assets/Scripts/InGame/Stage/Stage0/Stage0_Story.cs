@@ -128,11 +128,11 @@ public class Stage0_Story : MonoBehaviour
         int crossRoad = DataManager.Instance.deckListIndex["c10007"];
         GameManager.Instance.cardDeckController.AddCard(crossRoad);
         
-        int road2 = DataManager.Instance.deckListIndex["c10003"];
+        int road6 = DataManager.Instance.deckListIndex["c10007"];
         int road4 = DataManager.Instance.deckListIndex["c10005"];
         //int road8 = DataManager.Instance.deckListIndex["c10009"];
         //int road10 = DataManager.Instance.deckListIndex["c10011"];
-        GameManager.Instance.cardDeckController.AddCard(road2);
+        GameManager.Instance.cardDeckController.AddCard(road6);
         GameManager.Instance.cardDeckController.AddCard(road4);
         //GameManager.Instance.cardDeckController.AddCard(road8);
         //GameManager.Instance.cardDeckController.AddCard(road10);
@@ -257,8 +257,8 @@ public class Stage0_Story : MonoBehaviour
 
         //시작패 드로우
         GameManager.Instance.cardDeckController.DrawCard(directPath);
-        GameManager.Instance.cardDeckController.DrawCard(road2);
         GameManager.Instance.cardDeckController.DrawCard(road4);
+        GameManager.Instance.cardDeckController.DrawCard(road6);
         //GameManager.Instance.cardDeckController.DrawCard(road8);
         //GameManager.Instance.cardDeckController.DrawCard(road10);
         //GameManager.Instance.cardDeckController.DrawCard(room0);
