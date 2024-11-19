@@ -13,7 +13,7 @@ public class Quest0001 : Quest
     {
         base.CompleteQuest();
         GameManager.Instance.WinGame();
-        SaveManager.Instance.settingData.stageState = 1;
+        SettingManager.Instance.stageState = 1;
         SaveManager.Instance.SaveSettingData();
     }
 
