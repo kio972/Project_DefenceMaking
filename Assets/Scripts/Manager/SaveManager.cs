@@ -72,6 +72,12 @@ public class SaveManager : Singleton<SaveManager>
         playerData.nextHiddenTileCount = GameManager.Instance.mapBuilder.curTileSetCount;
     }
 
+    public void ResetPlayerData()
+    {
+        playerData = new PlayerData();
+        SaveDataJsonCovnert(playerData, playerDataFileName);
+    }
+
     public void SavePlayerData()
     {
         playerData = new PlayerData();
