@@ -510,6 +510,7 @@ public class Tile : MonoBehaviour, ITileKind
         tile.isRemovable = removable;
         tile.trapId = trap != null ? trap.BattlerID : "";
         tile.trapDuration = trap != null ? trap.Duration : 0;
+        tile.isUpgraded = isUpgraded;
 
         return tile;
     }

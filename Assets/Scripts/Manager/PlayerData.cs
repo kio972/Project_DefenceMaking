@@ -44,6 +44,7 @@ public struct TileData
     public bool isRemovable;
     public string trapId;
     public int trapDuration;
+    public bool isUpgraded;
 }
 
 public struct SpawnerData

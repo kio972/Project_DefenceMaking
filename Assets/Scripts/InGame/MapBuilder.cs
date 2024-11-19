@@ -191,6 +191,11 @@ public class MapBuilder : MonoBehaviour
             SetHiddenTile(3).Forget();
         }
 
+        StartHiddenTileCounter();
+    }
+
+    public void StartHiddenTileCounter()
+    {
         NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
     }
 
@@ -290,6 +295,11 @@ public class MapBuilder : MonoBehaviour
             instance.Init(node, tile.isDormant, tile.isRemovable, false);
             if (!string.IsNullOrEmpty(tile.trapId))
                 BattlerPooling.Instance.SpawnTrap(tile.trapId, node, "id", tile.trapDuration);
+            if(tile.isUpgraded)
+            {
+                TileUpgrader upgrader = instance.GetComponent<TileUpgrader>();
+                upgrader?.UpgradeTile();
+            }
         }
     }
 

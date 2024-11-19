@@ -32,7 +32,7 @@ public class TileReward : MonoBehaviour, IBaseTileBuilder
         Tile tile = newObject.GetComponent<Tile>();
         if (tile != null)
         {
-            tile.Init(targetNode, true, false, false);
+            tile.Init(targetNode, true, true, false);
             if (isUpgraded)
             {
                 TileUpgrader upgrade = tile.GetComponent<TileUpgrader>();

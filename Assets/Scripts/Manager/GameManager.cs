@@ -448,8 +448,9 @@ public class GameManager : IngameSingleton<GameManager>
         foreach (TileData tile in data.hiddenTiles)
             mapBuilder.SetHiddenTile(tile).Forget();
         mapBuilder.curTileSetCount = data.nextHiddenTileCount;
+        mapBuilder.StartHiddenTileCounter();
 
-        foreach(SpawnerData spawnerData in data.spawners)
+        foreach (SpawnerData spawnerData in data.spawners)
         {
             MonsterSpawner spawner = BattlerPooling.Instance.SetSpawner(NodeManager.Instance.FindNode(spawnerData.row, spawnerData.col), spawnerData.spawnerId, NodeManager.Instance.FindRoom(spawnerData.row, spawnerData.col));
             spawner._CurCoolTime = spawnerData.spawnerCool;
