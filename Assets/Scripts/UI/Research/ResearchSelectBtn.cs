@@ -72,12 +72,12 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
             return;
         isClicked = true;
 
-        SetBaseBtn();
         researchBtn.image.sprite = clickedSprite;
         researchBtn.image.color = Color.white;
         //transform.position = originPos + new Vector3(-110, 0 , 0);
         if (targetPage != null)
             targetPage.gameObject.SetActive(true);
+        SetBaseBtn();
         SetController();
     }
 
