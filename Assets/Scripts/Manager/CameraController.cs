@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -198,7 +199,17 @@ public class CameraController : MonoBehaviour
             SetCam();
     }
 
-    private void FixedUpdate()
+    private void Awake()
+    {
+        CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
+    }
+
+    private void OnDestroy()
+    {
+        CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCameraUpdated);
+    }
+
+    private void OnCameraUpdated(CinemachineBrain brain)
     {
         stackCam.orthographicSize = Camera.main.orthographicSize;
         stackCam2.orthographicSize = Camera.main.orthographicSize;
