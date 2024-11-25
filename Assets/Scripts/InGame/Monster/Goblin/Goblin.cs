@@ -12,7 +12,7 @@ public class Goblin : Monster
     {
         curTarget = null;
 
-        var tiles = PathFinder.FindPath(_curNode, NodeManager.Instance.endPoint);
+        var tiles = NodeManager.Instance.FindPath(_curNode, NodeManager.Instance.endPoint);
         int count = 0;
 
         TileNode targetTile = null;

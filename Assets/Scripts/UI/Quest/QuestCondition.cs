@@ -58,7 +58,7 @@ public class QuestCondition_m2016 : QuestCondition
     public override bool IsConditionPassed()
     {
         if(prevNode != NodeManager.Instance.endPoint || activeCount > NodeManager.Instance._ActiveNodes.Count) //마왕타일이 옮겨지거나 타일이 삭제될경우 갱신
-            isConnectionLost = PathFinder.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null;
+            isConnectionLost = NodeManager.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null;
 
         prevNode = NodeManager.Instance.endPoint;
         activeCount = NodeManager.Instance._ActiveNodes.Count;

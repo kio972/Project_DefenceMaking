@@ -55,7 +55,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_Tile_Connected(TileNode tile)
     {
-        if (PathFinder.FindPath(tile) == null)
+        if (NodeManager.Instance.FindPath(tile) == null)
             return false;
         else
             return true;
@@ -63,7 +63,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_Game_Continuable()
     {
-        if (PathFinder.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
+        if (NodeManager.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
             return false;
 
         //foreach(Battler target in GameManager.Instance.monsterList)
@@ -97,7 +97,7 @@ public class GameSpeedController : MonoBehaviour
             if (tile.curTile.IsDormant)
                 continue;
 
-            if (PathFinder.FindPath(tile) == null)
+            if (NodeManager.Instance.FindPath(tile) == null)
                 return false;
         }
 

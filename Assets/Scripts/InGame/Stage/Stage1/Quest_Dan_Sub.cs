@@ -473,7 +473,7 @@ public class Quest2016 : Quest
     {
         if(curNode != NodeManager.Instance.endPoint || prevTileCount != NodeManager.Instance._ActiveNodes.Count)
         {
-            if (PathFinder.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) != null)
+            if (NodeManager.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) != null)
                 isComplete[0] = true;
         }
 

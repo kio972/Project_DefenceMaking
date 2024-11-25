@@ -341,8 +341,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             chaseTarget = attacker;
         else
         {
-            float originDist = PathFinder.GetBattlerDistance(this, chaseTarget);
-            float updateDist = PathFinder.GetBattlerDistance(this, attacker);
+            float originDist = NodeManager.Instance.GetBattlerDistance(this, chaseTarget);
+            float updateDist = NodeManager.Instance.GetBattlerDistance(this, attacker);
             if (updateDist < originDist)
                 chaseTarget = attacker;
         }
@@ -540,7 +540,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         //마왕타일로 이동수행
         if (_nextNode == null || _nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.FindPath(_curNode, targetTile);
+            List<TileNode> path = NodeManager.Instance.FindPath(_curNode, targetTile);
 
             //이미 다음노드로 이동중이었다면 현재노드는 제외
             if ((transform.position - _curNode.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - _curNode.transform.position))
@@ -607,7 +607,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void CheckTargetCollapsed()
     {
-        _isCollapsed.Value = PathFinder.FindPath(_curNode, NodeManager.Instance.endPoint) == null;
+        _isCollapsed.Value = NodeManager.Instance.FindPath(_curNode, NodeManager.Instance.endPoint) == null;
     }
 
     protected virtual void CollapseLogic()
@@ -901,7 +901,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         if (target.curNode == null)
             return false;
 
-        if (PathFinder.GetBattlerDistance(this, target) > attackRange)
+        if (NodeManager.Instance.GetBattlerDistance(this, target) > attackRange)
             return false;
 
         return true;

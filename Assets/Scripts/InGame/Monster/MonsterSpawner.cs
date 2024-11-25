@@ -56,7 +56,7 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 
     public void CheckTargetCollapsed()
     {
-        isUpdate = PathFinder.FindPath(_tile.curNode, NodeManager.Instance.endPoint) != null;
+        isUpdate = NodeManager.Instance.FindPath(_tile.curNode, NodeManager.Instance.endPoint) != null;
     }
 
     public void UpdatePassive()

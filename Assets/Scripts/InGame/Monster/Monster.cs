@@ -103,7 +103,7 @@ public class Monster : Battler, IHoldbacker
 
         if (_nextNode == null || _nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.FindPath(_curNode, targetTile);
+            List<TileNode> path = NodeManager.Instance.FindPath(_curNode, targetTile);
             if ((transform.position - _curNode.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - _curNode.transform.position))
                 path.Remove(_curNode);
 
@@ -228,11 +228,5 @@ public class Monster : Battler, IHoldbacker
             InitState(this, FSMHide.Instance);
         else
             InitState(this, FSMPatrol.Instance);
-    }
-
-
-    public override void Update()
-    {
-        base.Update();
     }
 }

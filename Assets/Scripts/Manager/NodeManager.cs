@@ -73,6 +73,66 @@ public class NodeManager : IngameSingleton<NodeManager>
     public ReactiveCollection<TileNode> directSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
     public ReactiveCollection<TileNode> inDirectSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
 
+    private Dictionary<(TileNode start, TileNode end), (List<TileNode> path, int version)> pathCache = new Dictionary<(TileNode start, TileNode end), (List<TileNode> path, int version)>();
+    private int nodeVersion = int.MinValue;
+
+    public void IncreaseNodeVersion() => nodeVersion++;
+
+    public float GetBattlerDistance(Battler origin, Battler target)
+    {
+        if (origin.curNode == target.curNode)
+        {
+            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.curNode.transform.position);
+            float modifyTarget = Vector3.Distance(target.transform.position, target.curNode.transform.position);
+            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.curNode.transform.position);
+            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.transform.position - target.curNode.transform.position);
+            if (originBattlerDirection == targetBattlerDirection)
+                modifyTarget *= -1f;
+
+            return modifyOrigin + modifyTarget;
+        }
+        else
+        {
+            List<TileNode> path = FindPath(origin.curNode, target.curNode);
+            if (path == null || path.Count <= 0)
+                return Mathf.Infinity;
+            float distance = path.Count * 1f;
+
+            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.curNode.transform.position);
+            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.curNode.transform.position);
+            Direction originPathDirection = origin.curNode.GetNodeDirection(path[0]);
+            if (originBattlerDirection == originPathDirection)
+                modifyOrigin *= -1f;
+
+            float modifyTarget = Vector3.Distance(target.transform.position, target.curNode.transform.position);
+            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.curNode.transform.position - target.transform.position);
+            TileNode destPoint = origin.curNode;
+            if (path.Count > 1)
+                destPoint = path[path.Count - 2];
+            Direction targetPathDirection = destPoint.GetNodeDirection(target.curNode);
+            if (targetBattlerDirection == targetPathDirection)
+                modifyTarget *= -1f;
+
+            return distance + modifyOrigin + modifyTarget;
+        }
+    }
+
+    public List<TileNode> FindPath(TileNode startTile, TileNode endTile = null)
+    {
+        if (endTile == null)
+            endTile = endPoint;
+
+        var key = (startTile, endTile);
+
+        if (pathCache.TryGetValue(key, out var cachedPath) && cachedPath.version == nodeVersion)
+            return cachedPath.path;
+
+        List<TileNode> path = PathFinder.FindPath(startTile, endTile);
+        pathCache[key] = (path, nodeVersion);
+
+        return path;
+    }
+
     public void RemoveSightNode(TileNode node)
     {
         HashSet<TileNode> inDirect = GetDistanceNodeFromNode(node, directSight + inDirectSight, true);
@@ -255,7 +315,7 @@ public class NodeManager : IngameSingleton<NodeManager>
                 TileNode node = tile.curNode;
                 if (IsSpawnerSetable(node))
                 {
-                    List<TileNode> path = PathFinder.FindPath(node);
+                    List<TileNode> path = FindPath(node);
                     node.SetAvail(path != null);
                 }
             }
@@ -268,7 +328,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (IsMonsterSetable(node))
             {
-                List<TileNode> path = PathFinder.FindPath(node);
+                List<TileNode> path = FindPath(node);
                 node.SetAvail(path != null);
             }
             else
@@ -329,7 +389,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             bool isAvail = connectedPathCount == 1 && connectedRoomCount == 0 ? true : false;
             if (isAvail)
             {
-                if(PathFinder.FindPath(NodeManager.Instance.startPoint, node.neighborNodeDic[connectedPathDir]) != null)
+                if(FindPath(startPoint, node.neighborNodeDic[connectedPathDir]) != null)
                     nodes.Add(node);
             }
         }
@@ -475,6 +535,8 @@ public class NodeManager : IngameSingleton<NodeManager>
         
         foreach (var events in setTileEvents)
             events?.Invoke(tile);
+
+        nodeVersion++;
     }
     
     private List<System.Func<ITileKind, bool>> removeTileEvents = new List<System.Func<ITileKind, bool>>();
@@ -496,6 +558,8 @@ public class NodeManager : IngameSingleton<NodeManager>
             var item = FindRoom(tile.curNode.row, tile.curNode.col);
             roomTiles.Remove(item);
         }
+
+        nodeVersion++;
     }
 
     public void DormantTileCheck()

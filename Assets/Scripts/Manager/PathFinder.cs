@@ -14,8 +14,21 @@ public struct Node
     public Node(TileNode tileNode, TileNode prevNode, TileNode startTile, TileNode endTile, List<Node> closedNode)
     {
         this.tileNode = tileNode;
-        gCost = PathFinder.GetGCost(prevNode, startTile, closedNode);
-        HCost = PathFinder.GetHCost(tileNode.transform.position, endTile.transform.position);
+        if (prevNode == startTile)
+            gCost = 1;
+        else
+        {
+            gCost = int.MaxValue;
+            for (int i = closedNode.Count - 1; i >= 0; i--)
+            {
+                if (closedNode[i].tileNode == prevNode)
+                {
+                    gCost = closedNode[i].gCost + 1;
+                    break;
+                }
+            }
+        }
+        HCost = (tileNode.transform.position - endTile.transform.position).magnitude;
         FCost = gCost + HCost;
         this.prevNode = prevNode;
     }
@@ -23,45 +36,6 @@ public struct Node
 
 public static class PathFinder
 {
-
-    public static float GetHCost(Vector3 curPos, Vector3 endPos)
-    {
-        // 추정거리 = 직선거리
-        return (curPos - endPos).magnitude;
-    }
-
-    // 목표거리 -> 현재노드로부터 전노드거리를 전노드가 시작노드일때까지 더함
-    public static float GetGCost(TileNode prevTile, TileNode startTile, List<Node> closedNode)
-    {
-        float dist = 1;
-        //노드중 prevTile을 계속 찾고, 노드의 prevTile이 startTile이면 반환
-        //dist = curPaths.Count - 1;
-        if(prevTile == startTile)
-            return dist;
-
-        int errorStack = 0;
-        while(prevTile != startTile)
-        {
-            foreach (Node node in closedNode)
-            {
-                if (node.tileNode == prevTile)
-                {
-                    dist++;
-                    prevTile = node.prevNode;
-                    break;
-                }
-            }
-
-            errorStack++;
-            if (errorStack > 10000)
-                break;
-        }
-
-        return dist;
-    }
-
-
-
     private static bool IsInNode(TileNode targetTile, List<Node> targetNode)
     {
         foreach (Node node in targetNode)
@@ -84,7 +58,7 @@ public static class PathFinder
         return new Node();
     }
 
-    private static void CheckNodeOpened(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
+    private static void CheckNodeOpened(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode)
     {
         List<TileNode> neighborTiles = new List<TileNode>(curTile.neighborNodeDic.Values);
         foreach (TileNode tile in neighborTiles)
@@ -108,10 +82,9 @@ public static class PathFinder
             else //오픈노드에 없다면 추가
                 openNode.Add(neighborNode);
         }
-        resultOpenNode = openNode;
     }
 
-    private static void CheckNode(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode, out List<Node> resultOpenNode)
+    private static void CheckNode(TileNode curTile, TileNode startTile, TileNode endTile, List<Node> openNode, List<Node> closedNode)
     {
         List<TileNode> neighborTiles = UtilHelper.GetConnectedNodes(curTile);
         foreach(TileNode tile in neighborTiles)
@@ -135,7 +108,6 @@ public static class PathFinder
             else //오픈노드에 없다면 추가
                 openNode.Add(neighborNode);
         }
-        resultOpenNode = openNode;
     }
 
     public static List<TileNode> CalculateFinalPath(TileNode startTile, TileNode endTile, List<Node> closedNode)
@@ -166,7 +138,7 @@ public static class PathFinder
         TileNode curTile = startTile;
         while (curTile != endTile)
         {
-            CheckNode(curTile, startTile, endTile, openNode, closedNode, out openNode);
+            CheckNode(curTile, startTile, endTile, openNode, closedNode);
             if (openNode.Count == 0)
             {
                 return null; // 길 없음
@@ -199,7 +171,7 @@ public static class PathFinder
         TileNode curTile = startTile;
         while (curTile != endTile)
         {
-            CheckNodeOpened(curTile, startTile, endTile, openNode, closedNode, out openNode);
+            CheckNodeOpened(curTile, startTile, endTile, openNode, closedNode);
             if (openNode.Count == 0)
                 return -1;
 
@@ -217,44 +189,5 @@ public static class PathFinder
 
         List<TileNode> finalNode = CalculateFinalPath(startTile, endTile, closedNode);
         return finalNode.Count;
-    }
-
-    public static float GetBattlerDistance(Battler origin, Battler target)
-    {
-        if (origin.curNode == target.curNode)
-        {
-            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.curNode.transform.position);
-            float modifyTarget = Vector3.Distance(target.transform.position, target.curNode.transform.position);
-            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.curNode.transform.position);
-            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.transform.position - target.curNode.transform.position);
-            if (originBattlerDirection == targetBattlerDirection)
-                modifyTarget *= -1f;
-
-            return modifyOrigin + modifyTarget;
-        }
-        else
-        {
-            List<TileNode> path = FindPath(origin.curNode, target.curNode);
-            if (path == null || path.Count <= 0)
-                return Mathf.Infinity;
-            float distance = path.Count * 1f;
-
-            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.curNode.transform.position);
-            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.curNode.transform.position);
-            Direction originPathDirection = origin.curNode.GetNodeDirection(path[0]);
-            if (originBattlerDirection == originPathDirection)
-                modifyOrigin *= -1f;
-
-            float modifyTarget = Vector3.Distance(target.transform.position, target.curNode.transform.position);
-            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.curNode.transform.position - target.transform.position);
-            TileNode destPoint = origin.curNode;
-            if (path.Count > 1)
-                destPoint = path[path.Count - 2];
-            Direction targetPathDirection = destPoint.GetNodeDirection(target.curNode);
-            if (targetBattlerDirection == targetPathDirection)
-                modifyTarget *= -1f;
-
-            return distance + modifyOrigin + modifyTarget;
-        }
     }
 }

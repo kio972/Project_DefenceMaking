@@ -234,6 +234,8 @@ public class Tile : MonoBehaviour, ITileKind
 
         if(GameManager.Instance.IsInit)
             AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
+
+        NodeManager.Instance.IncreaseNodeVersion();
     }
 
     private void SetTileVisible(bool value)
@@ -402,7 +404,7 @@ public class Tile : MonoBehaviour, ITileKind
     private bool DormantAwake()
     {
         //마왕 타일과 연결된 상태라면 true
-        if (PathFinder.FindPath(curNode) != null)
+        if (NodeManager.Instance.FindPath(curNode) != null)
             return true;
 
         return false;
@@ -446,7 +448,7 @@ public class Tile : MonoBehaviour, ITileKind
         if (isDormant || !GameManager.Instance.IsInit || GameManager.Instance.timeScale == 0)
             return;
 
-        if (PathFinder.FindPath(NodeManager.Instance.startPoint) == null)
+        if (NodeManager.Instance.FindPath(NodeManager.Instance.startPoint) == null)
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
             GameManager.Instance.popUpMessage?.ToastMsg(desc);
