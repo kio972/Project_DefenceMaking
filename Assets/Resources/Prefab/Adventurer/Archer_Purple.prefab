@@ -54,6 +54,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -69,6 +70,8 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a30002
   attackEffect: {fileID: 0}
+  _isBoss: 0
+  isSmart: 0
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -131,7 +134,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 14138555898155272}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &674615032273663667
 MeshRenderer:
@@ -213,9 +216,6 @@ GameObject:
   - component: {fileID: 4383217014043702367}
   - component: {fileID: 1126983552592219004}
   - component: {fileID: 571503732791153682}
-  - component: {fileID: 2079796041806522831}
-  - component: {fileID: 1137923706011135086}
-  - component: {fileID: 5207904283318520798}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -235,6 +235,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7787302900648898683}
   - {fileID: 170374999970197925}
   m_Father: {fileID: 2823092532441335052}
   m_RootOrder: 0
@@ -374,27 +375,61 @@ MonoBehaviour:
   deadSounds:
   - {fileID: 8300000, guid: ee4488e44e3a347d59acb94a66b46d49, type: 3}
   deadSoundMult: 0.6
---- !u!136 &2079796041806522831
+--- !u!1 &5506255766767720299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7787302900648898683}
+  - component: {fileID: 3625127556925922019}
+  - component: {fileID: 1447676962124270679}
+  - component: {fileID: 3366572656990042952}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7787302900648898683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506255766767720299}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 14138555898155272}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3625127556925922019
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554826399069124451}
+  m_GameObject: {fileID: 5506255766767720299}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 5.7634535
-  m_Height: 13.919996
+  m_Radius: 5
+  m_Height: 14
   m_Direction: 1
-  m_Center: {x: 0.9566536, y: 6.015241, z: 0}
---- !u!114 &1137923706011135086
+  m_Center: {x: 1, y: 6, z: 0}
+--- !u!114 &1447676962124270679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554826399069124451}
+  m_GameObject: {fileID: 5506255766767720299}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
@@ -404,13 +439,13 @@ MonoBehaviour:
   _subLevel: 1
   toolTipKey_header: tooltip_archer2_0
   toolTipKey_descs: tooltip_archer2_1
---- !u!114 &5207904283318520798
+--- !u!114 &3366572656990042952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554826399069124451}
+  m_GameObject: {fileID: 5506255766767720299}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}

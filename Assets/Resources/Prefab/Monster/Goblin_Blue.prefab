@@ -1,5 +1,82 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3558095852640885523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7125802780430650576}
+  - component: {fileID: 6769867499200513521}
+  - component: {fileID: 4012573611395589529}
+  - component: {fileID: 6941850578410834212}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7125802780430650576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558095852640885523}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1762980150918005849}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6769867499200513521
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558095852640885523}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 4.5
+  m_Height: 12
+  m_Direction: 1
+  m_Center: {x: 0, y: 5.5, z: 0}
+--- !u!114 &4012573611395589529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558095852640885523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 3
+  _subLevel: 1
+  toolTipKey_header: deploy_goblin2_0
+  toolTipKey_descs: deploy_goblin2_1
+--- !u!114 &6941850578410834212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558095852640885523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetOutline: {fileID: 3580149628537146153}
 --- !u!1 &3580149628537146153
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +109,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1762980150918005849}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &5080839020670487457
 MeshRenderer:
@@ -114,9 +191,6 @@ GameObject:
   - component: {fileID: 4442121077108697256}
   - component: {fileID: 8638838801445434031}
   - component: {fileID: 3445309568579405342}
-  - component: {fileID: 2887592210457651725}
-  - component: {fileID: 7133005464385374556}
-  - component: {fileID: 196751976130954057}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -136,6 +210,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7125802780430650576}
   - {fileID: 3738689859392529102}
   m_Father: {fileID: 7628547921235060627}
   m_RootOrder: 0
@@ -271,49 +346,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8f9afdb829dc043cfaa2d7d64b5e36d6, type: 3}
   - {fileID: 8300000, guid: 8abb00a9728dd4079a48f62c653d3165, type: 3}
   deadSoundMult: 1
---- !u!136 &2887592210457651725
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3948826638235807827}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 4.2756414
-  m_Height: 12.195769
-  m_Direction: 1
-  m_Center: {x: -0.07094908, y: 5.1604276, z: 0}
---- !u!114 &7133005464385374556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3948826638235807827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _toolTipType: 3
-  _subLevel: 1
-  toolTipKey_header: deploy_goblin2_0
-  toolTipKey_descs: deploy_goblin2_1
---- !u!114 &196751976130954057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3948826638235807827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetOutline: {fileID: 3580149628537146153}
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0

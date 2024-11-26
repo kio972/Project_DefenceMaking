@@ -70,6 +70,8 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a20002
   attackEffect: {fileID: 0}
+  _isBoss: 0
+  isSmart: 0
 --- !u!54 &-7463750327690883626
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +134,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2534294284458614493}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &425729158088454183
 MeshRenderer:
@@ -296,6 +298,83 @@ Transform:
   m_Father: {fileID: 6024107003459182810}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8993185424169265034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4151990575199535289}
+  - component: {fileID: 2087833151232320786}
+  - component: {fileID: 4505354408759240855}
+  - component: {fileID: 3941350563797670533}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4151990575199535289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993185424169265034}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2534294284458614493}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2087833151232320786
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993185424169265034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 4.5
+  m_Height: 14
+  m_Direction: 1
+  m_Center: {x: 0.2, y: 6, z: 0}
+--- !u!114 &4505354408759240855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993185424169265034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 2
+  _subLevel: 1
+  toolTipKey_header: tooltip_warrior2_0
+  toolTipKey_descs: tooltip_warrior2_1
+--- !u!114 &3941350563797670533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993185424169265034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetOutline: {fileID: 2841831644072377705}
 --- !u!1 &9026505278944122364
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,9 +389,6 @@ GameObject:
   - component: {fileID: 9021916489997692659}
   - component: {fileID: 7944142812854196014}
   - component: {fileID: 363287157681990963}
-  - component: {fileID: 7585121089015151261}
-  - component: {fileID: 4151057077685311390}
-  - component: {fileID: 2128362796231573457}
   m_Layer: 6
   m_Name: c1
   m_TagString: Untagged
@@ -332,6 +408,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4151990575199535289}
   - {fileID: 929727143059611046}
   m_Father: {fileID: 2823092532441335052}
   m_RootOrder: 0
@@ -469,46 +546,3 @@ MonoBehaviour:
   deadSounds:
   - {fileID: 8300000, guid: 69a07dc71919f4c208c2b2ff7fcb7cb6, type: 3}
   deadSoundMult: 0.6
---- !u!136 &7585121089015151261
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026505278944122364}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 5.903554
-  m_Height: 14.091174
-  m_Direction: 1
-  m_Center: {x: 1.0895538, y: 6.10813, z: 0}
---- !u!114 &4151057077685311390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026505278944122364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _toolTipType: 2
-  _subLevel: 1
-  toolTipKey_header: tooltip_warrior2_0
-  toolTipKey_descs: tooltip_warrior2_1
---- !u!114 &2128362796231573457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026505278944122364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetOutline: {fileID: 2841831644072377705}

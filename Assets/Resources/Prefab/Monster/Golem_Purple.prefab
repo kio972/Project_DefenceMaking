@@ -63,7 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7583985603532323628}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &8865035927661983549
 MeshRenderer:
@@ -145,9 +145,6 @@ GameObject:
   - component: {fileID: 2103541630921623617}
   - component: {fileID: 9014006541645648792}
   - component: {fileID: 2504114977898306151}
-  - component: {fileID: 7249732729903080269}
-  - component: {fileID: 6420846552322664345}
-  - component: {fileID: 5213266303493887404}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -167,6 +164,7 @@ Transform:
   m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 556749701014160557}
   - {fileID: 1160220353214181736}
   m_Father: {fileID: 7628547921235060627}
   m_RootOrder: 0
@@ -305,27 +303,61 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 60134c8ec42bd4f2aa2ba7c4af6cdd8a, type: 3}
   - {fileID: 8300000, guid: 2944c54af88104b4da1fae82cc1baa29, type: 3}
   deadSoundMult: 0.5
---- !u!136 &7249732729903080269
+--- !u!1 &5298550852993196131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 556749701014160557}
+  - component: {fileID: 3863533964456213187}
+  - component: {fileID: 8189536189669610803}
+  - component: {fileID: 76668162877363210}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &556749701014160557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5298550852993196131}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.85714287, y: 0.85714287, z: 0.85714287}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7583985603532323628}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3863533964456213187
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4809690254627854902}
+  m_GameObject: {fileID: 5298550852993196131}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 6.674674
-  m_Height: 14.111769
+  m_Radius: 6.5
+  m_Height: 16
   m_Direction: 1
-  m_Center: {x: -0.15129806, y: 6.0503273, z: 0}
---- !u!114 &6420846552322664345
+  m_Center: {x: 0, y: 7, z: 0}
+--- !u!114 &8189536189669610803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4809690254627854902}
+  m_GameObject: {fileID: 5298550852993196131}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
@@ -335,13 +367,13 @@ MonoBehaviour:
   _subLevel: 2
   toolTipKey_header: deploy_golem3_0
   toolTipKey_descs: deploy_golem3_1
---- !u!114 &5213266303493887404
+--- !u!114 &76668162877363210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4809690254627854902}
+  m_GameObject: {fileID: 5298550852993196131}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}

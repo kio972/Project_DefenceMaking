@@ -71,6 +71,7 @@ MonoBehaviour:
   battlerID: s_boss007
   attackEffect: {fileID: 0}
   _isBoss: 1
+  isSmart: 0
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -81,7 +82,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.2
+  m_Radius: 0.3
   m_Height: 0.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.4, z: 0}
@@ -115,9 +116,6 @@ GameObject:
   - component: {fileID: 6706644860242500285}
   - component: {fileID: 2579377073101816686}
   - component: {fileID: 7175196179519710677}
-  - component: {fileID: 3421385328305838950}
-  - component: {fileID: 6186802432928733931}
-  - component: {fileID: 7507007359773287715}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -137,6 +135,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5406235657757970104}
   - {fileID: 3284734733925839516}
   m_Father: {fileID: 2823092532441335052}
   m_RootOrder: 0
@@ -275,27 +274,61 @@ MonoBehaviour:
   deadSounds:
   - {fileID: 8300000, guid: ee4488e44e3a347d59acb94a66b46d49, type: 3}
   deadSoundMult: 0.6
---- !u!136 &3421385328305838950
+--- !u!1 &5091637541286814678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5406235657757970104}
+  - component: {fileID: 9194866347761584396}
+  - component: {fileID: 8253706020158623234}
+  - component: {fileID: 2229257436223741611}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5406235657757970104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091637541286814678}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6829504446995649851}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &9194866347761584396
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4496359827817641265}
+  m_GameObject: {fileID: 5091637541286814678}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 5.5
-  m_Height: 16
+  m_Radius: 7
+  m_Height: 17
   m_Direction: 1
-  m_Center: {x: 0, y: 8, z: 0}
---- !u!114 &6186802432928733931
+  m_Center: {x: 0, y: 8.5, z: 0}
+--- !u!114 &8253706020158623234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4496359827817641265}
+  m_GameObject: {fileID: 5091637541286814678}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
@@ -303,15 +336,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _toolTipType: 2
   _subLevel: 0
-  toolTipKey_header: tooltip_archer1_0
-  toolTipKey_descs: tooltip_archer1_1
---- !u!114 &7507007359773287715
+  toolTipKey_header: tooltip_boss1_0
+  toolTipKey_descs: tooltip_boss1_1
+--- !u!114 &2229257436223741611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4496359827817641265}
+  m_GameObject: {fileID: 5091637541286814678}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
@@ -446,7 +479,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6829504446995649851}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3551484601392370195
 MeshRenderer:
