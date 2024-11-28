@@ -636,6 +636,10 @@ public class NodeManager : IngameSingleton<NodeManager>
         
         // 해당 방들 완성으로 변경코드 추가 예정
         roomTiles.Add(newRoom);
+
+        RoomLineDrawer roomLineDrawer = Resources.Load<RoomLineDrawer>("Prefab/UI/RoomGuideLine");
+        roomLineDrawer = Instantiate(roomLineDrawer);
+        roomLineDrawer.Init(newRoom);
     }
 
     public void ExpandEmptyNode(TileNode curNode, int emptyNodeSize)
