@@ -8,10 +8,13 @@ public class BloodEffect : MonoBehaviour
     private Image effectImg;
 
     private float lerpTime = 0.3f;
+    bool isReady = true;
 
     private IEnumerator IBloodEffect()
     {
-        while(effectImg.color.a < 1)
+        isReady = false;
+
+        while (effectImg.color.a < 1)
         {
             float alpha = effectImg.color.a;
             alpha += Time.deltaTime / lerpTime;
@@ -20,7 +23,9 @@ public class BloodEffect : MonoBehaviour
             yield return null;
         }
 
-        while(effectImg.color.a > 0)
+        isReady = true;
+
+        while (effectImg.color.a > 0)
         {
             float alpha = effectImg.color.a;
             alpha -= Time.deltaTime / lerpTime;
@@ -35,6 +40,9 @@ public class BloodEffect : MonoBehaviour
 
     public void StartBloodEffect()
     {
+        if (!isReady)
+            return;
+
         StopAllCoroutines();
         StartCoroutine(IBloodEffect());
     }
