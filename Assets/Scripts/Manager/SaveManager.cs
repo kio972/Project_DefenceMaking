@@ -153,6 +153,9 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.key_SpeedControl_Zero.SetCurKey((KeyCode)settingData.key_SpeedControl_Zero);
         SettingManager.Instance.key_SpeedControl_One.SetCurKey((KeyCode)settingData.key_SpeedControl_One);
         SettingManager.Instance.key_SpeedControl_Double.SetCurKey((KeyCode)settingData.key_SpeedControl_Double);
+        SettingManager.Instance.key_Deploy.SetCurKey((KeyCode)settingData.key_deploy);
+        SettingManager.Instance.key_Research.SetCurKey((KeyCode)settingData.key_research);
+        SettingManager.Instance.key_Shop.SetCurKey((KeyCode)settingData.key_shop);
 
         SettingManager.Instance.stageState = settingData.stageState;
     }                               
@@ -181,6 +184,9 @@ public class SaveManager : Singleton<SaveManager>
         settingData.key_SpeedControl_Zero = (int)SettingManager.Instance.key_SpeedControl_Zero._CurKey;
         settingData.key_SpeedControl_One = (int)SettingManager.Instance.key_SpeedControl_One._CurKey;
         settingData.key_SpeedControl_Double = (int)SettingManager.Instance.key_SpeedControl_Double._CurKey;
+        settingData.key_deploy = (int)SettingManager.Instance.key_Deploy._CurKey;
+        settingData.key_research = (int)SettingManager.Instance.key_Research._CurKey;
+        settingData.key_shop = (int)SettingManager.Instance.key_Shop._CurKey;
 
         settingData.stageState = SettingManager.Instance.stageState;
 

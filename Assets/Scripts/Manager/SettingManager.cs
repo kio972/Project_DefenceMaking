@@ -81,8 +81,8 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_Camera_MoveRight = new BindKey(ControlKey.key_Camera_MoveRight, KeyCode.D);
 
     public BindKey key_SpeedControl_Zero = new BindKey(ControlKey.key_SpeedControl_Zero, KeyCode.Space);
-    public BindKey key_SpeedControl_One = new BindKey(ControlKey.key_SpeedControl_One, KeyCode.Alpha1);
-    public BindKey key_SpeedControl_Double = new BindKey(ControlKey.key_SpeedControl_Double, KeyCode.Alpha2);
+    public BindKey key_SpeedControl_One = new BindKey(ControlKey.key_SpeedControl_One, KeyCode.F1);
+    public BindKey key_SpeedControl_Double = new BindKey(ControlKey.key_SpeedControl_Double, KeyCode.F2);
 
     public BindKey key_Camera_Reset = new BindKey(ControlKey.key_SpeedControl_Double, KeyCode.Return);
     public BindKey key_Camera_ResetAssist = new BindKey(ControlKey.key_Camera_ResetAssist, KeyCode.LeftShift);
@@ -93,9 +93,9 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_RotateLeft = new BindKey(ControlKey.key_RotateTile, KeyCode.Q);
     public BindKey key_RotateRight = new BindKey(ControlKey.key_RotateTile, KeyCode.E);
 
-    public BindKey key_Deploy = new BindKey(ControlKey.key_Deploy, KeyCode.F1);
-    public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.F2);
-    public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.F3);
+    public BindKey key_Deploy = new BindKey(ControlKey.key_Deploy, KeyCode.Z);
+    public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.X);
+    public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.C);
 
     public int stageState = 0;
 

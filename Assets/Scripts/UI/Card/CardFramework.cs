@@ -45,15 +45,9 @@ public class CardFramework : MonoBehaviour
 
     protected CompositeDisposable disposables = new CompositeDisposable();
 
-    protected virtual bool SetInput()
-    {
-        return Input.GetKeyUp(KeyCode.Mouse0);
-    }
+    bool isUsingCard = false;
 
-    private bool CancelInput()
-    {
-        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
-    }
+    public int handIndex;
 
     private void SetTile(TileNode curNode)
     {
@@ -171,16 +165,20 @@ public class CardFramework : MonoBehaviour
                     SetObejct(curNode);
                     break;
             }
+            instancedObject.transform.position = curNode.transform.position;
             instancedObject = null;
         }
     }
 
-    protected void EndCard()
+    public void EndCard(bool isCancel)
     {
+        SetObjectOnMap(isCancel);
+
         DrawLine(false);
         curNode = null;
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
+        isUsingCard = false;
     }
 
     private void UpdateObjectPosition()
@@ -250,10 +248,15 @@ public class CardFramework : MonoBehaviour
 
     public void CallCard()
     {
-        if(cardType != CardType.Magic)
+        if (isUsingCard)
+            return;
+
+        isUsingCard = true;
+        InputManager.Instance.settingCard = true;
+
+        if (cardType != CardType.Magic)
             InstanceObject(); //targetPrefab생성
 
-        InputManager.Instance.settingCard = true;
         //카드 종류별 처리
         switch (cardType)
         {
@@ -285,6 +288,8 @@ public class CardFramework : MonoBehaviour
                 effect.OnMagicDrag().Forget();
                 break;
         }
+
+        UpdateObjectState();
     }
 
     public virtual void Init(Card targetCard)
@@ -293,60 +298,13 @@ public class CardFramework : MonoBehaviour
         this.cardType = targetCard.cardType;
         targetPrefab = UtilHelper.GetCardPrefab(targetCard.cardType, targetCard.cardPrefabName);
         _cardInfo.Value = targetCard;
-
-        if(cardType == CardType.Magic)
-        {
-
-        }
     }
 
-    private CancellationTokenSource _tokenSource = new CancellationTokenSource();
-
-    private async UniTaskVoid WaitForDisposable()
+    private void Update()
     {
-        await UniTask.Yield(_tokenSource.Token);
+        if (!isUsingCard)
+            return;
 
-
-    }
-
-    private async UniTaskVoid WaitForCard()
-    {
-        await UniTask.Yield(_tokenSource.Token);
-
-        if (InputManager.Instance.settingCard) return;
-
-        CallCard();
-        while(!CancelInput() && !SetInput())
-        {
-            UpdateObjectState();
-            await UniTask.Yield(_tokenSource.Token);
-        }
-
-        if (CancelInput())
-            SetObjectOnMap(true);
-        else
-            SetObjectOnMap();
-        
-        EndCard();
-        DrawLine(false);
-    }
-
-    protected virtual void Start()
-    {
-        Image image = GetComponent<Image>();
-        var startStream = image.OnPointerDownAsObservable()
-            .Subscribe(_ => WaitForCard().Forget()).AddTo(disposables);
-    }
-
-    private void OnEnable()
-    {
-        _tokenSource = new CancellationTokenSource();
-    }
-
-    private void OnDisable()
-    {
-        _tokenSource.Cancel();
-        _tokenSource.Dispose();
-        //EndCard();
+        UpdateObjectState();
     }
 }

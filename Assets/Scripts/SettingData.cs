@@ -23,8 +23,11 @@ public class SettingData
     public int key_Camera_MoveLeft = 97;
     public int key_Camera_MoveRight = 100;
     public int key_SpeedControl_Zero = 32;
-    public int key_SpeedControl_One = 49;
-    public int key_SpeedControl_Double = 50;
+    public int key_SpeedControl_One = 282;
+    public int key_SpeedControl_Double = 283;
+    public int key_deploy = 122;
+    public int key_research = 120;
+    public int key_shop = 99;
 
     public int stageState = 0;
 }

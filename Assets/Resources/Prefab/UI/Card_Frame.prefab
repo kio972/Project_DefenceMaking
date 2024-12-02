@@ -634,6 +634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8086615794040897010}
   - component: {fileID: 1839010092599867973}
+  - component: {fileID: 6775751637162035845}
   - component: {fileID: 8700319574989955521}
   - component: {fileID: 3946726640571217268}
   - component: {fileID: 8086615794040896908}
@@ -680,6 +681,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 0
   targetPrefab: {fileID: 0}
+  handIndex: 0
+--- !u!114 &6775751637162035845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8086615794040897011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b62db3cef280ae41ac587ca89076c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDrag: 1
+  useClick: 1
+  useShortCutKey: 1
 --- !u!114 &8700319574989955521
 MonoBehaviour:
   m_ObjectHideFlags: 0

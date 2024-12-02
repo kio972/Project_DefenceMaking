@@ -22,6 +22,9 @@ public class CardController : CardFramework
         GameManager.Instance.cardDeckController.DiscardCard(this.transform, cardIndex);
         //GameManager.Instance.cardDeckController.cards.Remove(this.transform);
 
+        CardInputControl cardInputControl = GetComponent<CardInputControl>();
+        cardInputControl?.StopAllInputCheck();
+
         CardUIEffect cardUI = GetComponent<CardUIEffect>();
         cardUI?.DiscardEffect(isRecycle);
 

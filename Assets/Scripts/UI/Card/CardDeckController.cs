@@ -409,6 +409,8 @@ public class CardDeckController : MonoBehaviour
         Quaternion[] startRotations = new Quaternion[_cards.Count];
         for (int i = 0; i < _cards.Count; i++)
         {
+            CardFramework card = _cards[i].GetComponent<CardFramework>();
+            card.handIndex = i;
             startPositions[i] = _cards[i].position;
             startRotations[i] = _cards[i].rotation;
             CardUIEffect temp = _cards[i].GetComponent<CardUIEffect>();
