@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum GuideState
@@ -218,6 +219,13 @@ public class NodeManager : IngameSingleton<NodeManager>
         RoomManaPool.Instance.SetManaUI(value, roomTiles.ToList());
     }
 
+    public void SetGuideSpawner(int requiredMana)
+    {
+        this.guideState = GuideState.Spawner;
+        ResetAvail();
+        SetSpawnerAvail(requiredMana);
+    }
+
     public void SetGuideState(GuideState guideState, ITileKind tile = null)
     {
         //if (this.guideState == guideState)
@@ -244,7 +252,7 @@ public class NodeManager : IngameSingleton<NodeManager>
                 SetObjectForPathAvail();
                 break;
             case GuideState.Spawner:
-                SetSpawnerAvail();
+                SetSpawnerAvail(0);
                 break;
             case GuideState.Monster:
                 SetMonsterAvail();
@@ -303,17 +311,16 @@ public class NodeManager : IngameSingleton<NodeManager>
         return node.curTile != null && node != startPoint && node != endPoint;
     }
 
-    private void SetSpawnerAvail()
+    private void SetSpawnerAvail(int requiredMana)
     {
-        foreach (TileNode node in activeNodes)
-            node.SetAvail(false);
-
         foreach (CompleteRoom room in roomTiles)
         {
-            foreach(Tile tile in room._IncludeRooms)
+            bool haveMana = room._RemainingMana >= requiredMana;
+            foreach (Tile tile in room._IncludeRooms)
             {
                 TileNode node = tile.curNode;
-                if (IsSpawnerSetable(node))
+                node.SetAvail(false);
+                if (IsSpawnerSetable(node) && haveMana)
                 {
                     List<TileNode> path = FindPath(node);
                     node.SetAvail(path != null);
@@ -636,10 +643,6 @@ public class NodeManager : IngameSingleton<NodeManager>
         
         // 해당 방들 완성으로 변경코드 추가 예정
         roomTiles.Add(newRoom);
-
-        RoomLineDrawer roomLineDrawer = Resources.Load<RoomLineDrawer>("Prefab/UI/RoomGuideLine");
-        roomLineDrawer = Instantiate(roomLineDrawer);
-        roomLineDrawer.Init(newRoom);
     }
 
     public void ExpandEmptyNode(TileNode curNode, int emptyNodeSize)

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,42 @@ public class RoomLineDrawer : MonoBehaviour
 {
     private LineRenderer _lineRenderer;
     readonly List<TileEdgeDirection> directions = new List<TileEdgeDirection>() { TileEdgeDirection.LeftUp, TileEdgeDirection.LeftDown, TileEdgeDirection.Down, TileEdgeDirection.RightDown, TileEdgeDirection.RightUp, TileEdgeDirection.Up };
+    [SerializeField]
+    private float blinkSpeed = 1f;
+
+    private async UniTaskVoid FadeEffect()
+    {
+        if (_lineRenderer == null)
+            return;
+        Material target = _lineRenderer.material;
+        target.SetColor("_Color", Color.white);
+        float curAlpha = 1f;
+        while(gameObject.activeSelf)
+        {
+            while(curAlpha > 0.3f)
+            {
+                curAlpha -= Time.deltaTime * blinkSpeed;
+                target.SetColor("_Color", new Color(1, 1, 1, curAlpha));
+                await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            }
+
+            while (curAlpha < 1f)
+            {
+                curAlpha += Time.deltaTime * blinkSpeed;
+                target.SetColor("_Color", new Color(1, 1, 1, curAlpha));
+                await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        FadeEffect().Forget();
+    }
 
     public void Init(CompleteRoom targetRoom)
     {
         _lineRenderer = GetComponent<LineRenderer>();
-
         if (targetRoom._IncludeRooms.Count == 1)
         {
             TileEdgeGuide tileEdge = targetRoom._IncludeRooms[0].GetComponentInChildren<TileEdgeGuide>();
