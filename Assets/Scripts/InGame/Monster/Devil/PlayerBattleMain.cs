@@ -51,6 +51,7 @@ public class PlayerBattleMain : Battler
         //attacker.GetDamage(attacker.maxHp + attacker.armor, this);
 
         GameManager.Instance._InGameUI.StartBloodEffect();
+        GameManager.Instance.cameraController.ShakeCamera();
     }
 
     public void MoveToBossRoom()

@@ -34,6 +34,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private AudioListener audioListener;
 
+    [SerializeField]
+    private CinemachineImpulseSource impulseSource;
+
+    public void ShakeCamera()
+    {
+        impulseSource?.GenerateImpulse();
+    }
+
     public void ResetCamPos(bool isStartPoint = false)
     {
         Vector3 position = NodeManager.Instance.endPoint.transform.position;
