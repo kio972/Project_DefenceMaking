@@ -18,6 +18,20 @@ public class CompleteRoom
 
     CompositeDisposable disposables = new CompositeDisposable();
 
+    public bool IsDormant
+    {
+        get
+        {
+            foreach (var rooms in _IncludeRooms)
+            {
+                if (rooms.IsDormant)
+                    return true;
+            }
+
+            return false;
+        }
+    }
+
     private int _SpendedMana
     {
         get

@@ -48,6 +48,9 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
         {
             foreach(CompleteRoom room in rooms)
             {
+                if (room.IsDormant)
+                    continue;
+
                 ManaUI mana = GetManaUI();
                 mana.Init(room.HeadRoom.transform, room);
                 RoomLineDrawer roomLine = GetLineUI(room);

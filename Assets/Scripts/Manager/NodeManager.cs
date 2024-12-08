@@ -315,6 +315,9 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         foreach (CompleteRoom room in roomTiles)
         {
+            if (room.IsDormant)
+                continue;
+
             bool haveMana = room._RemainingMana >= requiredMana;
             foreach (Tile tile in room._IncludeRooms)
             {
