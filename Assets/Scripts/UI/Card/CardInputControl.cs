@@ -27,6 +27,17 @@ public class CardInputControl : MonoBehaviour
     bool isStartStreamStarted = false;
     protected CompositeDisposable disposables = new CompositeDisposable();
 
+    private bool AnyShortcutKeyInput()
+    {
+        for(int i = 48; i < 58; i++)
+        {
+            if(Input.GetKeyDown((KeyCode)i))
+                return true;
+        }
+
+        return false;
+    }
+
     private bool ShorcutKeyInput(int index)
     {
         index = index + 49;
@@ -67,14 +78,24 @@ public class CardInputControl : MonoBehaviour
 
         if(useShortCutKey)
         {
+            bool isUsingShortCut = false;
             var shortCutStream = Observable.EveryUpdate()
-                .Where(_ => !InputManager.Instance.settingCard && _state == CardInputState.None)
                 .Where(_ => ShorcutKeyInput(cardFramework.handIndex))
-                .Where(_ => UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 .DelayFrame(1)
+                .Where(_ => !InputManager.Instance.settingCard && _state == CardInputState.None)
+                .Where(_ => UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
                 .Do(_ => _state = CardInputState.While)
+                .Do(_ => isUsingShortCut = true)
                 .Subscribe(_ => cardFramework.CallCard())
                 .AddTo(disposables);
+
+            var shorCutEndtream = Observable.EveryUpdate()
+                .Where(_ => _state == CardInputState.While && isUsingShortCut)
+                .Where(_ => AnyShortcutKeyInput())
+                .Do(_ => cardFramework.EndCard(true))
+                .Do(_ => isUsingShortCut = false)
+                .DelayFrame(1)
+                .Subscribe(_ => _state = CardInputState.None);
         }
 
         if(useClick)

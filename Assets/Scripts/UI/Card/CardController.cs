@@ -8,14 +8,15 @@ using Cysharp.Threading.Tasks;
 
 public class CardController : CardFramework
 {
-    private bool isRemoved = false;
+    private bool _isRemoved = false;
+    public bool isRemoved { get => _isRemoved; }
 
     public async UniTaskVoid RemoveCard(bool isRecycle)
     {
-        if (isRemoved)
+        if (_isRemoved)
             return;
 
-        isRemoved = true;
+        _isRemoved = true;
         disposables.Dispose();
         GameManager.Instance.cardDeckController.hand_CardNumber--;
 
