@@ -11,11 +11,24 @@ public class EmergencyEscape : ISkill
     private float coolTime = 4320f;
     private float curCoolTime = 0;
 
-    private Battler king;
+    private PlayerBattleMain king;
 
     public ReactiveProperty<float> coolRate { get; } = new ReactiveProperty<float>(0);
 
     public ReactiveProperty<bool> isReady { get; } = new ReactiveProperty<bool>(false);
+
+    private int requiredHp = 5;
+
+    public void ReduceHpCost(int value)
+    {
+        requiredHp -= value;
+    }
+
+    public void ReduceCoolTime(float value)
+    {
+        value = Mathf.Max(1 - value, 0);
+        coolTime = coolTime * value;
+    }
 
     private void KnockBackOthers(TileNode targetNode)
     {
@@ -67,7 +80,9 @@ public class EmergencyEscape : ISkill
         if (cameraController != null)
             cameraController.CamMoveToPos(kingTile.transform.position);
 
-        king.GetDamage(5, null);
+        king.MoveToBossRoom();
+        if (requiredHp > 0)
+            king.ForceGetDamage(requiredHp);
         curCoolTime = coolTime;
         return true;
     }
@@ -75,8 +90,8 @@ public class EmergencyEscape : ISkill
     public void SkillInit()
     {
         king = GameManager.Instance.king;
-        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp <= 5).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
-        var hpStream2 = Observable.EveryLateUpdate().Where(_ => king.curHp > 5 && coolRate.Value == 0).Subscribe(_ => { isReady.Value = true; }).AddTo(king.gameObject);
+        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp <= requiredHp).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
+        var hpStream2 = Observable.EveryLateUpdate().Where(_ => king.curHp > requiredHp && coolRate.Value == 0).Subscribe(_ => { isReady.Value = true; }).AddTo(king.gameObject);
 
         var coolTimeStream = Observable.EveryUpdate().Where(_ => curCoolTime > 0)
             .Subscribe(_ =>

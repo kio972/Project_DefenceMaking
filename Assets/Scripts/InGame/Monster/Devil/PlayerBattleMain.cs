@@ -37,6 +37,17 @@ public class PlayerBattleMain : Battler
         _curNode = node;
     }
 
+    public void ForceGetDamage(int damage)
+    {
+        curHp -= damage;
+        if (curHp <= 0)
+            Dead(null);
+
+        PlayDamageText(damage, UnitType.Player, false);
+        GameManager.Instance._InGameUI.StartBloodEffect();
+        GameManager.Instance.cameraController.ShakeCamera();
+    }
+
     public override void GetDamage(int damage, Battler attacker)
     {
         curHp -= 1;

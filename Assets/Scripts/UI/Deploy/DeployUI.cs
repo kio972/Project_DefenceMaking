@@ -241,8 +241,10 @@ public class DeployUI : MonoBehaviour
     private void SetGuideState(CardType unitType)
     {
         CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
-        int requiredMana;
-        bool haveMana = !HaveMana(room, out requiredMana);
+        int requiredMana = 0;
+        bool haveMana = false;
+        if(unitType is CardType.Spawner or CardType.Monster)
+            haveMana = !HaveMana(room, out requiredMana);
         switch (unitType)
         {
             case CardType.Monster:

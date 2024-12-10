@@ -403,19 +403,15 @@ public class Quest2014 : Quest
     private async UniTaskVoid CheckDevilSkill()
     {
         PlayerBattleMain king = GameManager.Instance.king;
-        await UniTask.WaitUntil(() => king.skills.Count > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
+        EmergencyEscape escape = new EmergencyEscape();
+        king.skills.Add(escape);
+        escape.SkillInit();
 
-        await UniTask.Yield(cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
+        //await UniTask.WaitUntil(() => king.skills.Count > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
 
-        await UniTask.WaitUntil(() =>
-        {
-            foreach (var skill in king.skills)
-            {
-                if (skill.coolRate.Value != 0)
-                    return true;
-            }
-            return false;
-        }, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
+        //await UniTask.Yield(cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
+
+        await UniTask.WaitUntil(() => escape.coolRate.Value > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
 
         curClearNum[0]++;
         isComplete[0] = true;
@@ -599,6 +595,37 @@ public class Quest2020 : Quest
         }
 
         curPathCount = NodeManager.Instance.tileDictionary[TileType.Path].Count;
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest2021 : Quest
+{
+    private bool isInit = false;
+    private ItemSlot debtRepayItem;
+    private int prevCount;
+
+    public override void CheckCondition()
+    {
+        if(!isInit)
+        {
+            foreach(var item in GameManager.Instance.shop.itemSlots)
+            {
+                if(item.item is DebtRepay repay && repay.IsUnlock)
+                {
+                    debtRepayItem = item;
+                    break;
+                }
+            }
+            prevCount = debtRepayItem.curStockCount;
+            isInit = true;
+        }
+
+        if(debtRepayItem.curStockCount < prevCount)
+            curClearNum[0] += prevCount - debtRepayItem.curStockCount;
+        prevCount = debtRepayItem.curStockCount;
+
         if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
     }
