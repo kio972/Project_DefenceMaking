@@ -33,7 +33,7 @@ public struct ItemInfo
     }
 }
 
-public class ItemSlot : FluctItem
+public class ItemSlot : FluctItem, ISlot
 {
     [SerializeField]
     private string itemId;
@@ -117,6 +117,11 @@ public class ItemSlot : FluctItem
             script.PlayOnClickScript();
 
         slotInfo?.UpdateInfo(this);
+    }
+
+    public void SendInfo()
+    {
+        OnClick();
     }
 
     public void BuyItem()

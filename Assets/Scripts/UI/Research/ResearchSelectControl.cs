@@ -8,6 +8,9 @@ public class ResearchSelectControl : MonoBehaviour
     [SerializeField]
     GameObject popUpUI;
 
+    ResearchSelectBtn[] _researchBtns;
+    ResearchSelectBtn[] researchBtns { get => _researchBtns; }
+
     public void SetCurResearch(ResearchSelectBtn target)
     {
         curBtn?.DeActiveClick();
@@ -16,15 +19,15 @@ public class ResearchSelectControl : MonoBehaviour
 
     private void Awake()
     {
-        ResearchSelectBtn[] btns = GetComponentsInChildren<ResearchSelectBtn>();
-        if (btns.Length == 0)
+        _researchBtns = GetComponentsInChildren<ResearchSelectBtn>();
+        if (_researchBtns.Length == 0)
             return;
-        foreach(ResearchSelectBtn btn in btns)
+        foreach(ResearchSelectBtn btn in _researchBtns)
         {
             btn.Init();
             btn.DeActiveClick();
         }
 
-        btns[0].OnClick();
+        _researchBtns[0].OnClick();
     }
 }

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopSlotInfo : MonoBehaviour
+public class ShopSlotInfo : MonoBehaviour, ISlotInformer
 {
     [SerializeField]
     private Image card_illust;
@@ -22,7 +22,8 @@ public class ShopSlotInfo : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI card_Cost;
 
-    private ItemSlot curslot;
+    private ItemSlot _curslot;
+    public ISlot curSlot { get => _curslot; }
 
     private bool _isSoldOut;
     [SerializeField]
@@ -45,7 +46,7 @@ public class ShopSlotInfo : MonoBehaviour
 
     public void ViewCardPack()
     {
-        if(curslot.item is ICardPackList cardPack)
+        if(_curslot.item is ICardPackList cardPack)
         {
             cardPackView?.SetCardList(cardPack.targetCards);
         }
@@ -62,7 +63,7 @@ public class ShopSlotInfo : MonoBehaviour
 
     public void UpdateInfo(ItemSlot data)
     {
-        curslot = data;
+        _curslot = data;
 
         card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName);
         card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc);
@@ -73,8 +74,12 @@ public class ShopSlotInfo : MonoBehaviour
 
         _isSoldOut = data.IsSoldOut;
         SetSoldOutImg(_isSoldOut);
-        cardPackViewBtn.SetActive(curslot.item is ICardPackList);
+        cardPackViewBtn.SetActive(_curslot.item is ICardPackList);
         stockText.text = $"Àç°í : {data.curStockCount}";
+    }
+    public void ExcuteAction()
+    {
+        Buy();
     }
 
     public void Buy()
@@ -82,8 +87,8 @@ public class ShopSlotInfo : MonoBehaviour
         if (_isSoldOut)
             return;
 
-        curslot.BuyItem();
-        if (curslot.IsSoldOut)
+        _curslot.BuyItem();
+        if (_curslot.IsSoldOut)
         {
             _isSoldOut = true;
             SetSoldOutImg(true);

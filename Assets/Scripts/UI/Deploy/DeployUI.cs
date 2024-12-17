@@ -59,6 +59,9 @@ public class DeployUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
+        if (value && updateItem)
+            SetItem();
+
         if (value)
         {
             InputManager.Instance.ResetTileClick();
@@ -66,9 +69,6 @@ public class DeployUI : MonoBehaviour
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        
-        if (value && updateItem)
-            SetItem();
 
         if (value)
             AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);

@@ -18,7 +18,7 @@ public class DeploySlotInjecter : MonoBehaviour
         slot = GetComponent<DeploySlot>();
         slot.Init(DataManager.Instance.battlerDic[id]);
 
-        if (slotInfo != null && slotInfo.curSlot != null)
+        if (slotInfo != null && slotInfo.curDeploySlot != null)
             return;
 
         slot.SendInfo();

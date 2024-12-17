@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DeploySlot : MonoBehaviour
+public class DeploySlot : MonoBehaviour, ISlot
 {
     private string id = "";
 

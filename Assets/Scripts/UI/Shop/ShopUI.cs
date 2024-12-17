@@ -78,6 +78,7 @@ public class ShopUI : MonoBehaviour
     {
         if (value)
         {
+            SetItems();
             InputManager.Instance.ResetTileClick();
             GameManager.Instance.SetPause(true);
         }
@@ -86,7 +87,6 @@ public class ShopUI : MonoBehaviour
         
         if(value)
         {
-            SetItems();
             PlayScript("Shop000");
             AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
         }

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotInfo : MonoBehaviour
+public class SlotInfo : MonoBehaviour, ISlotInformer
 {
     [SerializeField]
     private Image card_Frame;
@@ -41,12 +41,13 @@ public class SlotInfo : MonoBehaviour
     private GameObject trapInfo;
 
 
-    private DeploySlot _curslot;
-    public DeploySlot curSlot { get => _curslot; }
+    private DeploySlot _curSlot;
+    public DeploySlot curDeploySlot { get => _curSlot; }
+    public ISlot curSlot { get => _curSlot; }
 
     public void UpdateInfo(DeploySlot data)
     {
-        _curslot = data;
+        _curSlot = data;
         string type = "monster";
         if (data.cardType == CardType.Trap)
             type = "trap";
@@ -90,11 +91,16 @@ public class SlotInfo : MonoBehaviour
 
     private DeployUI delpoyUI;
 
+    public void ExcuteAction()
+    {
+        Deploy();
+    }
+
     public void Deploy()
     {
         if (delpoyUI == null)
             delpoyUI = GetComponentInParent<DeployUI>();
 
-        delpoyUI.DeployReady(_curslot.cardType, _curslot.targetName, _curslot.prefabName, _curslot.cost);
+        delpoyUI.DeployReady(_curSlot.cardType, _curSlot.targetName, _curSlot.prefabName, _curSlot.cost);
     }
 }

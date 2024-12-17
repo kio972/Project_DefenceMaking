@@ -194,9 +194,9 @@ public class Stage0_TutoUI : MonoBehaviour
         while (_progress == 7)
         {
             btnGuide.SetActive(tutoDeploy.DeployStep == 0 && !researchPage.activeSelf);
-            deploySlimeGuide.SetActive(deploySlotInfo.curSlot != slimeSlot);
-            deployConfirmGuide.SetActive(tutoDeploy.DeployStep == 1 && deploySlotInfo.curSlot == slimeSlot);
-            deployConfirmBtn.enabled = deploySlotInfo.curSlot == slimeSlot;
+            deploySlimeGuide.SetActive(deploySlotInfo.curDeploySlot != slimeSlot);
+            deployConfirmGuide.SetActive(tutoDeploy.DeployStep == 1 && deploySlotInfo.curDeploySlot == slimeSlot);
+            deployConfirmBtn.enabled = deploySlotInfo.curDeploySlot == slimeSlot;
             tileGuide.SetActive(tutoDeploy.DeployStep == 2);
             tileGuide.transform.position = Camera.main.WorldToScreenPoint(roomPos);
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
