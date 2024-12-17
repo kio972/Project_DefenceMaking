@@ -16,7 +16,7 @@ public enum ResearchState
 
 
 
-public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHandler
+public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHandler, ISlot
 {
     [SerializeField]
     private string researchId;
@@ -198,6 +198,12 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         outLineFrame.SetActive(true);
         selectedFrame.SetActive(true);
         iconImg.color = _curState.Value == ResearchState.Impossible ? impossibleColor : Color.white;
+    }
+
+    public void SendInfo()
+    {
+        OnClick();
+        CallPopUpUI();
     }
 
     public void OnClick()

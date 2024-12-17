@@ -32,6 +32,9 @@ public class SlotKeyController : MonoBehaviour, IKeyControl
 
     private ISlot _curSlot;
 
+    [SerializeField]
+    private ScrollViewController scrollViewController;
+
     private void SelectSlot(int row, int col)
     {
         ISlot nextSlot = biMap.GetKey((row, col));
@@ -53,6 +56,11 @@ public class SlotKeyController : MonoBehaviour, IKeyControl
         curCol = targetIndex.col;
         _curSlot = targetSlot;
         _curSlot.SendInfo();
+
+        if(_curSlot is MonoBehaviour obj)
+        {
+            scrollViewController?.ScrollToContent(obj.transform.GetComponent<RectTransform>());
+        }
     }
 
     public void HandleInput(KeyCode key)

@@ -790,6 +790,7 @@ MonoBehaviour:
   researchStopBtn: {fileID: 7332716249817536305}
   researchPart: {fileID: 1979128997922931194}
   completePart: {fileID: 377571516540124684}
+  researchInfos: {fileID: 5789846704991650430}
   researchState: 0
 --- !u!114 &6346595807484466447
 MonoBehaviour:
@@ -6234,6 +6235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1587635254204884412}
+  - component: {fileID: 3722836533907333807}
   m_Layer: 5
   m_Name: ResearchUI
   m_TagString: Untagged
@@ -6265,6 +6267,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3722836533907333807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3718853359964011801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c55f9c5c4b7ff4a8ad146cb8b53aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  researchPages:
+  - {fileID: 4878043284425043802}
+  - {fileID: 4768510645714014741}
+  - {fileID: 6932807838112078041}
+  informer: {fileID: 2235304452412638075}
+  researchSelectBtns:
+  - {fileID: 1405058964651321890}
+  - {fileID: 941444609288619493}
+  - {fileID: 3847518822882134344}
 --- !u!1 &3747320447941288175
 GameObject:
   m_ObjectHideFlags: 0
@@ -7370,6 +7393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUpUI: {fileID: 589556346154247320}
+  popUp: {fileID: 2235304452412638075}
 --- !u!114 &8792125309378294033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8098,6 +8122,7 @@ GameObject:
   - component: {fileID: 2729279455232551242}
   - component: {fileID: 8435512902274439720}
   - component: {fileID: 3549988986617369975}
+  - component: {fileID: 1725408680692207315}
   m_Layer: 5
   m_Name: TileResearch
   m_TagString: Untagged
@@ -8197,6 +8222,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &1725408680692207315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768510645714014741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf026e701f16b441bdc85746b9489b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 7407761092695045595}
+  content: {fileID: 2639109706462931536}
+  viewport: {fileID: 3276653462421524934}
 --- !u!1 &4878043284425043802
 GameObject:
   m_ObjectHideFlags: 0
@@ -8210,6 +8250,7 @@ GameObject:
   - component: {fileID: 1727551363955748827}
   - component: {fileID: 232436230282493030}
   - component: {fileID: 6990928781659071783}
+  - component: {fileID: 354110220538771480}
   m_Layer: 5
   m_Name: MonsteResearch
   m_TagString: Untagged
@@ -8309,6 +8350,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &354110220538771480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878043284425043802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf026e701f16b441bdc85746b9489b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 8601390882348198537}
+  content: {fileID: 4453807375410686333}
+  viewport: {fileID: 5206179445664319963}
 --- !u!1 &4932273936436846846
 GameObject:
   m_ObjectHideFlags: 0
@@ -12736,7 +12792,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9152986941282536333}
   - component: {fileID: 8957071659002887979}
-  - component: {fileID: 9103090700018823924}
   m_Layer: 5
   m_Name: Research
   m_TagString: Untagged
@@ -12779,22 +12834,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPage: {fileID: 3718853359964011801}
   btnObject: {fileID: 0}
---- !u!114 &9103090700018823924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6932789636664418635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48c55f9c5c4b7ff4a8ad146cb8b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  researchPages:
-  - {fileID: 2416761939580958379}
-  - {fileID: 7951041496591311149}
-  - {fileID: 4851828542589731436}
 --- !u!1 &6932807838112078041
 GameObject:
   m_ObjectHideFlags: 0
@@ -12808,6 +12847,7 @@ GameObject:
   - component: {fileID: 1184682378172028069}
   - component: {fileID: 2280153707378039102}
   - component: {fileID: 5141429901342592499}
+  - component: {fileID: 5817835128332303708}
   m_Layer: 5
   m_Name: DevilResearch
   m_TagString: Untagged
@@ -12907,6 +12947,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &5817835128332303708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6932807838112078041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf026e701f16b441bdc85746b9489b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 1207037486550947244}
+  content: {fileID: 6795325244072144313}
+  viewport: {fileID: 3378811944898613596}
 --- !u!1 &6973105598757411729
 GameObject:
   m_ObjectHideFlags: 0

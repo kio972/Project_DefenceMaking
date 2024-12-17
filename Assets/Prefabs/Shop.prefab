@@ -1758,6 +1758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9011148666604812492}
   - component: {fileID: 1102667016440917606}
+  - component: {fileID: 8840492319498005669}
   m_Layer: 5
   m_Name: ItemShelf
   m_TagString: Untagged
@@ -1818,6 +1819,23 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8840492319498005669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748654737553429748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf026e701f16b441bdc85746b9489b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 1102667016440917606}
+  content: {fileID: 2720618627481536214}
+  viewport: {fileID: 7595125972324171392}
+  upPadding: 79
+  downPadding: 74
 --- !u!1 &787458965622103203
 GameObject:
   m_ObjectHideFlags: 0
@@ -7529,6 +7547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotGrid: {fileID: 3800920776251013853}
   informerTranform: {fileID: 8135444313835514334}
+  scrollViewController: {fileID: 8840492319498005669}
 --- !u!1 &3217314310985446297
 GameObject:
   m_ObjectHideFlags: 0

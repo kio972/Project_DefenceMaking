@@ -5,16 +5,18 @@ using UnityEngine;
 public class ResearchSelectControl : MonoBehaviour
 {
     ResearchSelectBtn curBtn = null;
-    [SerializeField]
-    GameObject popUpUI;
 
     ResearchSelectBtn[] _researchBtns;
     ResearchSelectBtn[] researchBtns { get => _researchBtns; }
+
+    [SerializeField]
+    private ResearchPopup popUp;
 
     public void SetCurResearch(ResearchSelectBtn target)
     {
         curBtn?.DeActiveClick();
         curBtn = target;
+        popUp?.ResetPopUp();
     }
 
     private void Awake()

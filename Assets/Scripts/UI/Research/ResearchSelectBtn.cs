@@ -33,11 +33,11 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField]
     ResearchUI targetPage;
 
-    private void OnEnable()
-    {
-        if(isClicked)
-            SetBaseBtn();
-    }
+    //private void OnEnable()
+    //{
+    //    if(isClicked)
+    //        SetBaseBtn();
+    //}
 
     private void SetController()
     {
@@ -55,12 +55,12 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         //transform.position = originPos;
         if (targetPage != null)
         {
-            //targetPage.ResetPopUp();
+            targetPage.ResetPopUp();
             targetPage.gameObject.SetActive(false);
         }
     }
 
-    private void SetBaseBtn()
+    public void SetBaseBtn()
     {
         baseSlot?.OnClick();
         baseSlot?.CallPopUpUI();
@@ -68,6 +68,7 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnClick()
     {
+        targetPage?.ResetPopUp();
         if (isClicked)
             return;
         isClicked = true;
@@ -76,8 +77,10 @@ public class ResearchSelectBtn : MonoBehaviour, IPointerEnterHandler, IPointerEx
         researchBtn.image.color = Color.white;
         //transform.position = originPos + new Vector3(-110, 0 , 0);
         if (targetPage != null)
+        {
             targetPage.gameObject.SetActive(true);
-        SetBaseBtn();
+        }
+        //SetBaseBtn();
         SetController();
     }
 

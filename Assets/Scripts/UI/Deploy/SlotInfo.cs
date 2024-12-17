@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -93,6 +94,13 @@ public class SlotInfo : MonoBehaviour, ISlotInformer
 
     public void ExcuteAction()
     {
+        DelayedDeploy().Forget();
+    }
+
+    private async UniTaskVoid DelayedDeploy()
+    {
+        await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         Deploy();
     }
 

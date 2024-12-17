@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 
-public class ResearchPopup : MonoBehaviour
+public class ResearchPopup : MonoBehaviour, ISlotInformer
 {
     [SerializeField]
     private Image icon;
@@ -40,6 +40,9 @@ public class ResearchPopup : MonoBehaviour
     [SerializeField]
     private GameObject completePart;
 
+    [SerializeField]
+    private GameObject researchInfos;
+
     private ResearchMainUI _researchMain;
 
     private ResearchMainUI researchMain
@@ -73,14 +76,25 @@ public class ResearchPopup : MonoBehaviour
     bool haveHerb2;
     bool haveHerb3;
 
-    //private void OnDisable()
-    //{
-    //    this.gameObject.SetActive(false);
-    //}
+    public ISlot curSlot { get => curResearch; }
+    public void ExcuteAction()
+    {
+
+    }
+
+    void Start()
+    {
+        ResetPopUp();
+    }
 
     private string GetMinSecTime(float time)
     {
         return ((int)(time / 60)).ToString("00") + ":" + ((int)(time % 60)).ToString("00");
+    }
+
+    public void ResetPopUp()
+    {
+        researchInfos.SetActive(false);
     }
 
     public void SetPopUp(ResearchSlot researchSlot, Sprite iconSprite, ResearchState curState)
@@ -124,6 +138,7 @@ public class ResearchPopup : MonoBehaviour
         haveHerb3 = GameManager.Instance.herbDic[HerbType.WhiteHerb] >= curResearch._ResearchData.requiredherb3;
         herb3.color = haveHerb3 ? Color.white : Color.red;
 
+        researchInfos.SetActive(true);
         SetResearchBtn(researchState);
     }
 
