@@ -64,6 +64,13 @@ public class DeploySlot : MonoBehaviour, ISlot
         }
     }
 
+
+    private void OnEnable()
+    {
+        Color targetColor = GameManager.Instance.gold >= cost ? Color.white : Color.red;
+        costText.color = targetColor;
+    }
+
     public void SendInfo()
     {
         info.UpdateInfo(this);

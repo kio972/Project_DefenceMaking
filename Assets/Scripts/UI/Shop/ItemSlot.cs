@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UniRx;
+using UnityEditor.Rendering.LookDev;
 
 public struct ItemInfo
 {
@@ -104,6 +105,12 @@ public class ItemSlot : FluctItem, ISlot
     private int _stockCount = 1;
     private int _curStockCount;
     public int curStockCount { get => _curStockCount; }
+
+    private void Update()
+    {
+        Color targetColor = GameManager.Instance.gold >= curPrice.Value ? Color.white : Color.red;
+        itemPrice.color = targetColor;
+    }
 
     public void RefreshStock()
     {
