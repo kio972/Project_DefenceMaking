@@ -419,32 +419,16 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private void SetTileAvail(Tile targetTile)
     {
-        if(targetTile._TileType == TileType.End)
-        {
-            SetEndTileGuide();
-            return;
-        }
-
-        SetVirtualNode();
-
-        List<Direction> targetNode_PathDirection = targetTile.PathDirection;
-        List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
-
+        SetVirtualNode(targetTile._TileType == TileType.End);
+        targetTile.UpdateAvailableNode(virtualNodes);
         ResetAvail();
+
         foreach (TileNode node in virtualNodes)
         {
             if (node == null)
                 continue;
 
-            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection, true);
-            foreach (Direction dir in targetNode_PathDirection)
-                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
-                    isConnected = false;
-            foreach (Direction dir in targetNode_RoomDirection)
-                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
-                    isConnected = false;
-
-            node.SetAvail(isConnected);
+            node.SetAvail(targetTile.availableNodes.Contains(node));
         }
     }
 

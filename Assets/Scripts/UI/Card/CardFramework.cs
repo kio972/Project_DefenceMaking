@@ -37,7 +37,7 @@ public class CardFramework : MonoBehaviour
     private GameObject targetPrefab;
 
     protected GameObject instancedObject;
-    private TileNode curNode = null;
+    private TileNode _curNode = null;
 
     protected int cardIndex = -1;
 
@@ -141,31 +141,31 @@ public class CardFramework : MonoBehaviour
             return;
         }
 
-        instancedObject.SetActive(curNode != null && curNode.setAvail);
-        if (curNode != null && curNode.setAvail)
+        instancedObject.SetActive(_curNode != null && _curNode.setAvail);
+        if (_curNode != null && _curNode.setAvail)
         {
             switch (cardType)
             {
                 case CardType.PathTile:
-                    SetTile(curNode);
+                    SetTile(_curNode);
                     break;
                 case CardType.RoomTile:
-                    SetTile(curNode);
+                    SetTile(_curNode);
                     break;
                 case CardType.Monster:
-                    SetMonster(curNode);
+                    SetMonster(_curNode);
                     break;
                 case CardType.Trap:
-                    SetTrap(curNode);
+                    SetTrap(_curNode);
                     break;
                 case CardType.Environment:
-                    SetEnvironment(curNode);
+                    SetEnvironment(_curNode);
                     break;
                 case CardType.ObjectForPath:
-                    SetObejct(curNode);
+                    SetObejct(_curNode);
                     break;
             }
-            instancedObject.transform.position = curNode.transform.position;
+            instancedObject.transform.position = _curNode.transform.position;
             instancedObject = null;
         }
     }
@@ -175,7 +175,7 @@ public class CardFramework : MonoBehaviour
         SetObjectOnMap(isCancel);
 
         DrawLine(false);
-        curNode = null;
+        _curNode = null;
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
         isUsingCard = false;
@@ -183,12 +183,25 @@ public class CardFramework : MonoBehaviour
 
     private void UpdateObjectPosition()
     {
-        curNode = UtilHelper.RayCastTile();
+        TileNode curNode = UtilHelper.RayCastTile();
+        if (curNode == _curNode)
+            return;
 
-        if(curNode != null && curNode.GuideActive)
+        _curNode = curNode;
+
+        if(_curNode != null && _curNode.GuideActive)
         {
-            instancedObject.transform.SetParent(curNode.transform, false);
-            instancedObject.transform.position = curNode.transform.position;
+            instancedObject.transform.SetParent(_curNode.transform, false);
+            instancedObject.transform.position = _curNode.transform.position;
+            if(_curNode.setAvail)
+            {
+                Tile tile = instancedObject.GetComponent<Tile>();
+                if(tile != null)
+                {
+                    tile.AutoRotate(curNode);
+                    AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
+                }
+            }
         }
         else
         {
@@ -211,25 +224,32 @@ public class CardFramework : MonoBehaviour
             return;
 
         UpdateObjectPosition();
-        if(cardType is CardType.PathTile or CardType.RoomTile)
-        {
-            if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey) &&!GameManager.Instance.rotateLock)
-            {
-                Tile tile = instancedObject.GetComponent<Tile>();
-                tile.RotateTile();
-                AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
-                NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
-            }
-            else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey) && !GameManager.Instance.rotateLock)
-            {
-                Tile tile = instancedObject.GetComponent<Tile>();
-                AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
-                tile.RotateTile(true);
-                NodeManager.Instance.SetGuideState(GuideState.Tile, tile);
-            }
-        }
+        if (cardType is CardType.PathTile or CardType.RoomTile)
+            RotateCheck();
 
         DrawLine();
+    }
+
+    private void RotateCheck()
+    {
+        if (GameManager.Instance.rotateLock)
+            return;
+
+        if (!Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey) && !Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+            return;
+
+        Tile tile = instancedObject.GetComponent<Tile>();
+        if (tile == null)
+            return;
+
+        bool isReverse = Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey);
+
+        if (_curNode.setAvail)
+            tile.RotateToNext(_curNode, isReverse);
+        else
+            tile.RotateTile(isReverse);
+
+        AudioManager.Instance.Play2DSound(isReverse ? "Card_Tile_Q" : "Card_Tile_E", SettingManager.Instance._FxVolume);
     }
 
     private void InstanceObject()

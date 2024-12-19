@@ -122,9 +122,9 @@ public class TileNode : MonoBehaviour
 
 
 
-    public bool IsConnected(List<Direction> targetNode_PathDirection, List<Direction> targetNode_RoomDirection, bool isRestricted = true)
+    public bool IsConnected(List<Direction> pathDirection, List<Direction> roomDirection, bool isRestricted = true)
     {
-        //현재 노드와 targetNode를 비교하여 연결되어있는지 확인하는 함수
+        //현재 노드가 pathDirection, roomDirection의 조건을 충족하는지 확인하는 함수
         int connectedCount = 0;
         foreach(Direction direction in NodeManager.Instance.GetAllDirection())
         {
@@ -140,7 +140,7 @@ public class TileNode : MonoBehaviour
                 Direction reversed = UtilHelper.ReverseDirection(direction);
                 if (neighborNode.curTile.PathDirection.Contains(reversed))
                 {
-                    if (targetNode_PathDirection.Contains(direction))
+                    if (pathDirection.Contains(direction))
                     {
                         if (isRestricted)
                             connectedCount++;
@@ -152,7 +152,7 @@ public class TileNode : MonoBehaviour
                 }
                 else if (neighborNode.curTile.RoomDirection.Contains(reversed))
                 {
-                    if (targetNode_RoomDirection.Contains(direction))
+                    if (roomDirection.Contains(direction))
                     {
                         if (isRestricted)
                             connectedCount++;
@@ -162,7 +162,7 @@ public class TileNode : MonoBehaviour
                     else
                         return false;
                 }
-                else if(targetNode_PathDirection.Contains(direction) || targetNode_RoomDirection.Contains(direction))
+                else if(pathDirection.Contains(direction) || roomDirection.Contains(direction))
                     return false;
             }
         }

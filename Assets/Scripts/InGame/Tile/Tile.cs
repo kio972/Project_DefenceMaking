@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UniRx;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public enum TileType
 {
@@ -173,6 +174,40 @@ public class Tile : MonoBehaviour, ITileKind
     private bool _isUpgraded = false;
     public bool isUpgraded { get => _isUpgraded; set => _isUpgraded = value; }
 
+
+    TileNode prevNode = null;
+
+    private Dictionary<TileNode, int> availableNodeDic = new Dictionary<TileNode, int>();
+    public HashSet<TileNode> availableNodes { get => availableNodeDic.Keys.ToHashSet();}
+
+    public void UpdateAvailableNode(HashSet<TileNode> targetNodes)
+    {
+        availableNodeDic.Clear();
+        for (int i = 0; i < 6; i++)
+        {
+            foreach(TileNode node in targetNodes)
+            {
+                if (node == null)
+                    continue;
+
+                if (!node.IsConnected(pathDirection, roomDirection))
+                    continue;
+
+                foreach (Direction dir in pathDirection)
+                    if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                        continue;
+                foreach (Direction dir in roomDirection)
+                    if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                        continue;
+
+                if (!availableNodeDic.ContainsKey(node))
+                    availableNodeDic[node] = 0;
+                availableNodeDic[node]++;
+            }
+            RotateTile();
+        }
+    }
+
     public int GetUnClosedCount()
     {
         // 불완전 연결인 상태인 타일 개수를 반환하는 함수
@@ -333,7 +368,6 @@ public class Tile : MonoBehaviour, ITileKind
         pathDirection = RotateDirection(pathDirection, reverse);
         roomDirection = RotateDirection(roomDirection, reverse);
         RotateDirection(reverse);
-        NodeManager.Instance.SetGuideState(GuideState.Tile, this);
     }
 
     public void ResetTwin()
@@ -364,15 +398,7 @@ public class Tile : MonoBehaviour, ITileKind
     public async UniTaskVoid ReadyForMove()
     {
         SetTwin();
-        switch (tileType)
-        {
-            case TileType.End:
-                NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
-                break;
-            default:
-                NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
-                break;
-        }
+        NodeManager.Instance.SetGuideState(GuideState.Tile, twin);
 
         //_curNode.SetAvail(true);
         TileMoveCheck();
@@ -547,34 +573,61 @@ public class Tile : MonoBehaviour, ITileKind
         _allyAttackSpeedMults.ObserveCountChanged().Subscribe(_ => tileAllyAttackSpeedMult = CalculateSpeedMult(new List<IModifier>(_allyAttackSpeedMults))).AddTo(gameObject);
     }
 
+    public void AutoRotate(TileNode curNode)
+    {
+        while (!curNode.IsConnected(pathDirection, roomDirection))
+            RotateTile();
+
+        //NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+    }
+
+    public void RotateToNext(TileNode curNode, bool isReversed = false)
+    {
+        if (!availableNodeDic.ContainsKey(curNode) || availableNodeDic[curNode] < 2)
+            return;
+
+        RotateTile(isReversed);
+        while (!curNode.IsConnected(pathDirection, roomDirection))
+            RotateTile(isReversed);
+    }
+
     protected virtual void Update()
     {
         if (isTwin)
             return;
 
         //MonsterOutCheck();
-
         if(waitToMove)
         {
-            TileNode curTile = TileMoveCheck();
+            TileNode curNode = TileMoveCheck();
+            if(prevNode != curNode)
+            {
+                prevNode = curNode;
+                if (curNode != null && curNode.setAvail)
+                {
+                    twin.AutoRotate(curNode);
+                    AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
+                }
+            }
+
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
             {
                 AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
-                twin.RotateTile();
+                twin.RotateToNext(curNode);
             }
-            else if(Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
+            else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
             {
                 AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
-                twin.RotateTile(true);
+                twin.RotateToNext(curNode, true);
             }
 
             if (IsCharacterOnIt || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
             {
                 EndMoveing();
             }
-            else if (Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey) && curTile != null)
+            else if (Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey) && curNode != null)
             {
-                EndMove(curTile);
+                EndMove(curNode);
             }
         }
     }

@@ -71,9 +71,9 @@ public class EmergencyEscape : ISkill
 
         KnockBackOthers(NodeManager.Instance.endPoint);
 
+        kingTile.AutoRotate(nextNode);
         kingTile.MoveTile(nextNode);
-        if (kingTile is TileEnd endTile)
-            endTile.ForceRotate();
+
         NodeManager.Instance.SetGuideState(GuideState.None);
 
         CameraController cameraController = MonoBehaviour.FindObjectOfType<CameraController>();

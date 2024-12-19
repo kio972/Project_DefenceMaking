@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1609608640754181932}
-  - component: {fileID: 2458813298958830840}
+  - component: {fileID: 736921720754222930}
   m_Layer: 0
   m_Name: EndTile
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2458813298958830840
+--- !u!114 &736921720754222930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,17 +43,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609608640754181931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbe59823471e8674b8b62dec3924d63f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b4417942e8f5034ab48be4fc8ee37da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pathDirection: 01000000
   roomDirection: 
   tileType: 3
   roomMana: 0
-  curNode: {fileID: 0}
   waitToMove: 0
   twin: {fileID: 0}
-  trap: {fileID: 0}
   IsBigRoom: 0
 --- !u!1 &5255829649292745741
 GameObject:
@@ -370,7 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514013976115028936, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: _toolTipType
