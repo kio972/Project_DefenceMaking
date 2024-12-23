@@ -579,7 +579,13 @@ public class CardDeckController : MonoBehaviour
     private ScreenSize curScreenSize;
     private void Update()
     {
-        if(curScreenSize != SettingManager.Instance.screenSize)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Draw._CurKey))
+        {
+            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+                DrawDeck();
+        }
+
+        if (curScreenSize != SettingManager.Instance.screenSize)
         {
             curScreenSize = SettingManager.Instance.screenSize;
             SetCardPosition();

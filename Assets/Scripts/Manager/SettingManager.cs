@@ -44,6 +44,8 @@ public enum ControlKey
     key_Deploy,
     key_Research,
     key_Shop,
+
+    key_Draw,
 }
 
 public class BindKey
@@ -96,6 +98,8 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_Deploy = new BindKey(ControlKey.key_Deploy, KeyCode.Z);
     public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.X);
     public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.C);
+
+    public BindKey key_Draw = new BindKey(ControlKey.key_Draw, KeyCode.F);
 
     public int stageState = 0;
 
