@@ -14,6 +14,7 @@ public class CardShortCutUI : MonoBehaviour
         {
             text.text = card.handIndex >= 9 ? "0" : $"{card.handIndex + 1}";
             transform.rotation = Quaternion.identity;
+            gameObject.SetActive(SettingManager.Instance.showShortCut);
 
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }

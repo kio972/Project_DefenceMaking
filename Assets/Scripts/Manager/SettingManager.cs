@@ -73,6 +73,7 @@ public class SettingManager : Singleton<SettingManager>
     public Languages language = Languages.korean;
     public AutoPlaySetting autoPlay = AutoPlaySetting.setTile;
     public float textSize = 1f;
+    public bool showShortCut = false;
     #endregion
 
     #region ControlsSetting
@@ -218,6 +219,12 @@ public class SettingManager : Singleton<SettingManager>
         Screen.fullScreen = value;
         this.screen_FullSize = value;
 
+        SaveManager.Instance.SaveSettingData();
+    }
+
+    public void Set_ShowShortcut(bool value)
+    {
+        this.showShortCut = value;
         SaveManager.Instance.SaveSettingData();
     }
 

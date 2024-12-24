@@ -30,4 +30,6 @@ public class SettingData
     public int key_shop = 99;
 
     public int stageState = 0;
+
+    public bool showShortCut = false;
 }

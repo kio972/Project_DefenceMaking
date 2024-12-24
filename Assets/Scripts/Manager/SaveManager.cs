@@ -158,6 +158,8 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.key_Shop.SetCurKey((KeyCode)settingData.key_shop);
 
         SettingManager.Instance.stageState = settingData.stageState;
+
+        SettingManager.Instance.showShortCut = settingData.showShortCut;
     }                               
 
     public void SaveSettingData()
@@ -189,6 +191,8 @@ public class SaveManager : Singleton<SaveManager>
         settingData.key_shop = (int)SettingManager.Instance.key_Shop._CurKey;
 
         settingData.stageState = SettingManager.Instance.stageState;
+
+        settingData.showShortCut = SettingManager.Instance.showShortCut;
 
         SaveData(settingData, settingDataFileName);
     }
