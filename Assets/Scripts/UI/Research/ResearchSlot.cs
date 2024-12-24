@@ -25,6 +25,8 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     [SerializeField]
     private GameObject imgGroup;
 
+    public bool isActivedResearch { get => !string.IsNullOrEmpty(researchId) && imgGroup.activeSelf; }
+
     [SerializeField]
     private GameObject completedFrame;
     [SerializeField]

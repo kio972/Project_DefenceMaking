@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ResearchSelectControl : MonoBehaviour
 {
-    ResearchSelectBtn curBtn = null;
+    ResearchSelectBtn _curBtn = null;
 
     ResearchSelectBtn[] _researchBtns;
-    ResearchSelectBtn[] researchBtns { get => _researchBtns; }
+    public ResearchSelectBtn curBtn { get => _curBtn; }
 
     [SerializeField]
     private ResearchPopup popUp;
 
     public void SetCurResearch(ResearchSelectBtn target)
     {
-        curBtn?.DeActiveClick();
-        curBtn = target;
+        _curBtn?.DeActiveClick();
+        _curBtn = target;
         popUp?.ResetPopUp();
     }
 

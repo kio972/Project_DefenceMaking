@@ -94,6 +94,7 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
 
     public void ResetPopUp()
     {
+        curResearch = null;
         researchInfos.SetActive(false);
     }
 

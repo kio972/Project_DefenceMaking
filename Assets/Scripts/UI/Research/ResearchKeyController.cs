@@ -22,6 +22,10 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
     [SerializeField]
     private List<ResearchSelectBtn> researchSelectBtns;
     private int _curResearchSelectIndex = 0;
+    private ResearchSelectBtn curSelectPage { get => researchSelectBtns[_curResearchSelectIndex]; }
+    
+    [SerializeField]
+    private ResearchSelectControl researchSelectControl;
 
     private int _curRow;
     private int _curCol;
@@ -61,7 +65,7 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
         int nextCol = curCol;
 
         nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
-        while (nextSlot != null && nextSlot is ResearchSlot researchSlot && string.IsNullOrEmpty(researchSlot._ResearchId))
+        while (nextSlot is ResearchSlot researchSlot && !researchSlot.isActivedResearch)
         {
             nextRow--;
             nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
@@ -80,7 +84,7 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
         int nextCol = curCol;
 
         nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
-        while (nextSlot is ResearchSlot researchSlot && string.IsNullOrEmpty(researchSlot._ResearchId))
+        while (nextSlot is ResearchSlot researchSlot && !researchSlot.isActivedResearch)
         {
             nextRow++;
             nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
@@ -100,7 +104,7 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
             return (0, -1);
 
         ISlot nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
-        if (nextSlot is ResearchSlot researchSlot && string.IsNullOrEmpty(researchSlot._ResearchId))
+        if (nextSlot is ResearchSlot researchSlot && !researchSlot.isActivedResearch)
         {
             var nextIndex = MoveToUp(nextRow, nextCol);
             nextRow = nextIndex.row;
@@ -132,7 +136,7 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
             return (-1, -1);
 
         ISlot nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
-        if (nextSlot is ResearchSlot researchSlot && string.IsNullOrEmpty(researchSlot._ResearchId))
+        if (nextSlot is ResearchSlot researchSlot && !researchSlot.isActivedResearch)
         {
             var nextIndex = MoveToUp(nextRow, nextCol);
             nextRow = nextIndex.row;
@@ -283,9 +287,37 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
 
     private void Update()
     {
-        if (informer == null || informer.curSlot == _curSlot)
+        CheckClickSlot();
+        CheckClickPage();
+    }
+
+    private void CheckClickPage()
+    {
+        if (informer == null || informer.curSlot != null)
             return;
 
+        if (curSelectPage == researchSelectControl.curBtn)
+            return;
+
+        for(int i = 0; i < researchSelectBtns.Count; i++)
+        {
+            if(researchSelectBtns[i] == researchSelectControl.curBtn)
+            {
+                _curResearchSelectIndex = i;
+                _curRow = 0;
+                _curCol = -1;
+                isOnSelectZone = true;
+                break;
+            }
+        }
+    }
+
+    private void CheckClickSlot()
+    {
+        if (informer == null || informer.curSlot == null || informer.curSlot == _curSlot)
+            return;
+
+        isOnSelectZone = false;
         ForceUpdateSlot(informer.curSlot);
     }
 
