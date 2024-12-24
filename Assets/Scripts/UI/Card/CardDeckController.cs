@@ -8,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using UniRx;
 
 public struct Card
 {
@@ -138,6 +139,8 @@ public class CardDeckController : MonoBehaviour
 
     private int freeCount = 0;
     private int curFreeCount = 0;
+
+    public ReactiveProperty<GameObject> curHandlingObject { get; private set; } = new ReactiveProperty<GameObject>();
 
     private int _CardPrice
     {

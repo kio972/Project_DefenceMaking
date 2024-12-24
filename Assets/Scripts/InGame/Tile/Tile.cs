@@ -180,6 +180,24 @@ public class Tile : MonoBehaviour, ITileKind
     private Dictionary<TileNode, int> availableNodeDic = new Dictionary<TileNode, int>();
     public HashSet<TileNode> availableNodes { get => availableNodeDic.Keys.ToHashSet();}
 
+    public int GetAvailableCount(TileNode node)
+    {
+        if (!availableNodeDic.ContainsKey(node))
+            return 0;
+
+        return availableNodeDic[node];
+    }
+
+    private bool HasEnvironmentTileInNeighbors(TileNode node, IEnumerable<Direction> directions)
+    {
+        foreach (Direction dir in directions)
+        {
+            if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
+                return true;
+        }
+        return false;
+    }
+
     public void UpdateAvailableNode(HashSet<TileNode> targetNodes)
     {
         availableNodeDic.Clear();
@@ -193,12 +211,8 @@ public class Tile : MonoBehaviour, ITileKind
                 if (!node.IsConnected(pathDirection, roomDirection))
                     continue;
 
-                foreach (Direction dir in pathDirection)
-                    if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
-                        continue;
-                foreach (Direction dir in roomDirection)
-                    if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
-                        continue;
+                if (HasEnvironmentTileInNeighbors(node, pathDirection) || HasEnvironmentTileInNeighbors(node, roomDirection))
+                    continue;
 
                 if (!availableNodeDic.ContainsKey(node))
                     availableNodeDic[node] = 0;
@@ -573,12 +587,10 @@ public class Tile : MonoBehaviour, ITileKind
         _allyAttackSpeedMults.ObserveCountChanged().Subscribe(_ => tileAllyAttackSpeedMult = CalculateSpeedMult(new List<IModifier>(_allyAttackSpeedMults))).AddTo(gameObject);
     }
 
-    public void AutoRotate(TileNode curNode)
+    public void AutoRotate(TileNode curNode, bool isReversed = false)
     {
-        while (!curNode.IsConnected(pathDirection, roomDirection))
-            RotateTile();
-
-        //NodeManager.Instance.SetGuideState(GuideState.Tile, this);
+        while (!curNode.IsConnected(pathDirection, roomDirection) || HasEnvironmentTileInNeighbors(curNode, pathDirection) || HasEnvironmentTileInNeighbors(curNode, roomDirection))
+            RotateTile(isReversed);
     }
 
     public void RotateToNext(TileNode curNode, bool isReversed = false)
@@ -587,8 +599,7 @@ public class Tile : MonoBehaviour, ITileKind
             return;
 
         RotateTile(isReversed);
-        while (!curNode.IsConnected(pathDirection, roomDirection))
-            RotateTile(isReversed);
+        AutoRotate(curNode, isReversed);
     }
 
     protected virtual void Update()

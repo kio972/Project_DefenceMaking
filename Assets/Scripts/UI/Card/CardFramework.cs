@@ -179,6 +179,8 @@ public class CardFramework : MonoBehaviour
         InputManager.Instance.settingCard = false;
         NodeManager.Instance.SetGuideState(GuideState.None);
         isUsingCard = false;
+
+        GameManager.Instance.cardDeckController.curHandlingObject.Value = null;
     }
 
     private void UpdateObjectPosition()
@@ -264,6 +266,10 @@ public class CardFramework : MonoBehaviour
             Monster monster = instancedObject.GetComponent<Monster>();
             monster.SetRotation();
         }
+
+        instancedObject.transform.position = new Vector3(0, 10000, 0);
+
+        GameManager.Instance.cardDeckController.curHandlingObject.Value = instancedObject;
     }
 
     public void CallCard()
