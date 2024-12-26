@@ -295,6 +295,7 @@ public class SettingManager : Singleton<SettingManager>
         bindKeys.Add(key_Deploy);
         bindKeys.Add(key_Research);
         bindKeys.Add(key_Shop);
+        bindKeys.Add(key_Draw);
     }
 
     public void Init()
