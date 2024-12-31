@@ -57,6 +57,8 @@ public class ItemSlot : FluctItem, ISlot
     [SerializeField]
     private string buyScript;
     [SerializeField]
+    private string soldOutScript;
+    [SerializeField]
     private string sellScript;
 
     [SerializeField]

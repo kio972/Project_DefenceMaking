@@ -8,10 +8,11 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
     [SerializeField]
     private ShopUI shopUI;
 
-    [SerializeField]
-    private string descScript;
+
     [SerializeField]
     private string buyScript;
+    [SerializeField]
+    private string soldOutScript;
 
     [SerializeField]
     private string targetDebtQuestId;
@@ -81,5 +82,10 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
             foreach (var executor in executors)
                 executor.ReturnToBase(false);
         }
+
+        if(_itemSlot.curStockCount <= 0)
+            shopUI?.PlayScript(soldOutScript);
+        else
+            shopUI?.PlayScript(buyScript);
     }
 }
