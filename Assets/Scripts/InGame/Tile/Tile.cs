@@ -198,7 +198,7 @@ public class Tile : MonoBehaviour, ITileKind
         return false;
     }
 
-    public void UpdateAvailableNode(HashSet<TileNode> targetNodes)
+    public void UpdateAvailableNode(HashSet<TileNode> targetNodes, bool includeDormant = true)
     {
         availableNodeDic.Clear();
         for (int i = 0; i < 6; i++)
@@ -208,7 +208,7 @@ public class Tile : MonoBehaviour, ITileKind
                 if (node == null)
                     continue;
 
-                if (!node.IsConnected(pathDirection, roomDirection))
+                if (!node.IsConnected(pathDirection, roomDirection, includeDormant))
                     continue;
 
                 if (HasEnvironmentTileInNeighbors(node, pathDirection) || HasEnvironmentTileInNeighbors(node, roomDirection))

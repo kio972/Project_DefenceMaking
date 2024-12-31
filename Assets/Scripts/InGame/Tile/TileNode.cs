@@ -122,7 +122,7 @@ public class TileNode : MonoBehaviour
 
 
 
-    public bool IsConnected(List<Direction> pathDirection, List<Direction> roomDirection, bool isRestricted = true)
+    public bool IsConnected(List<Direction> pathDirection, List<Direction> roomDirection, bool includeDormant = true)
     {
         //현재 노드가 pathDirection, roomDirection의 조건을 충족하는지 확인하는 함수
         int connectedCount = 0;
@@ -131,34 +131,25 @@ public class TileNode : MonoBehaviour
             if (neighborNodeDic.ContainsKey(direction))
             {
                 TileNode neighborNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || neighborNode.curTile == null)
+                Tile curTile = neighborNode.curTile;
+                if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || curTile == null)
                     continue;
 
-                if (neighborNode.curTile.IsDormant && !isRestricted)
+                if (!includeDormant && curTile.IsDormant)
                     return false;
 
                 Direction reversed = UtilHelper.ReverseDirection(direction);
-                if (neighborNode.curTile.PathDirection.Contains(reversed))
+                if (curTile.PathDirection.Contains(reversed))
                 {
                     if (pathDirection.Contains(direction))
-                    {
-                        if (isRestricted)
-                            connectedCount++;
-                        else
-                            return true;
-                    }
+                        connectedCount++;
                     else
                         return false;
                 }
-                else if (neighborNode.curTile.RoomDirection.Contains(reversed))
+                else if (curTile.RoomDirection.Contains(reversed))
                 {
                     if (roomDirection.Contains(direction))
-                    {
-                        if (isRestricted)
-                            connectedCount++;
-                        else
-                            return true;
-                    }
+                        connectedCount++;
                     else
                         return false;
                 }

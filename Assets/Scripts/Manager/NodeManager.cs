@@ -419,10 +419,10 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private void SetTileAvail(Tile targetTile)
     {
-        SetVirtualNode(targetTile._TileType == TileType.End);
-        targetTile.UpdateAvailableNode(virtualNodes);
+        bool isEndtile = targetTile._TileType == TileType.End;
+        SetVirtualNode(isEndtile);
+        targetTile.UpdateAvailableNode(virtualNodes, !isEndtile);
         ResetAvail();
-
         foreach (TileNode node in virtualNodes)
         {
             if (node == null)
