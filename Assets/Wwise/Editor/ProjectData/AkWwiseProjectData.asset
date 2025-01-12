@@ -20,11 +20,11 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: d79606e76ada814b9bbc48fe8890debb
+      guid: 4408a3f6bac73d498d22b465fe8c94e5
     ParentPath: Virtual Acoustics/Default Work Unit
-    guid: d79606e76ada814b9bbc48fe8890debb
+    guid: 4408a3f6bac73d498d22b465fe8c94e5
     GuidInternal: 
-    m_lastTime: -8584716223757036909
+    m_lastTime: -8584649766962431340
     List: []
   - PhysicalPath: Virtual Acoustics/Factory Acoustic Textures.wwu
     PathAndIcons:
@@ -37,7 +37,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics/Factory Acoustic Textures
     guid: 6b663d46a83ca54f8b4a5fef12b883f6
     GuidInternal: 
-    m_lastTime: -8584717253704775808
+    m_lastTime: -8584657767174775808
     List:
     - name: Acoustic_Banner
       guid: f2532d2fccda8e408b8898b1b52a26d6
@@ -299,12 +299,59 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: 29d0201733499e4db8c2e984bd20bfc9
+      guid: b251557386c41948bd090923e2bfceac
     ParentPath: Master-Mixer Hierarchy/Default Work Unit
-    guid: 29d0201733499e4db8c2e984bd20bfc9
+    guid: b251557386c41948bd090923e2bfceac
     GuidInternal: 
-    m_lastTime: -8584716223757135240
+    m_lastTime: -8584649762122171387
+    List: []
+  - PhysicalPath: Master-Mixer Hierarchy/DM_patch.wwu
+    PathAndIcons:
+    - ElementName: Master-Mixer Hierarchy
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: DM_patch
+      ObjectType: 12
+      guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
+    ParentPath: Master-Mixer Hierarchy/DM_patch
+    guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
+    GuidInternal: 
+    m_lastTime: -8584649670335620777
     List:
+    - name: Ambience
+      guid: 76cc78976072504295ebf76d7e431ecb
+      id: 85412153
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_patch
+        ObjectType: 12
+        guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Ambience
+        ObjectType: 2
+        guid: 76cc78976072504295ebf76d7e431ecb
+      Path: Master-Mixer Hierarchy/DM_patch/Master Audio Bus/Ambience
+    - name: BGM
+      guid: 62415855b74fc841870a199b7b8ca888
+      id: 412724365
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_patch
+        ObjectType: 12
+        guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: BGM
+        ObjectType: 2
+        guid: 62415855b74fc841870a199b7b8ca888
+      Path: Master-Mixer Hierarchy/DM_patch/Master Audio Bus/BGM
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
       id: 3803692087
@@ -312,58 +359,47 @@ MonoBehaviour:
       - ElementName: Master-Mixer Hierarchy
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: DM_patch
         ObjectType: 12
-        guid: 29d0201733499e4db8c2e984bd20bfc9
+        guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
       - ElementName: Master Audio Bus
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus
-  - PhysicalPath: Master-Mixer Hierarchy/Factory Tencent GME.wwu
-    PathAndIcons:
-    - ElementName: Master-Mixer Hierarchy
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: Factory Tencent GME
-      ObjectType: 12
-      guid: 5183e1c4b59c6740984186b2b228b0d3
-    ParentPath: Master-Mixer Hierarchy/Factory Tencent GME
-    guid: 5183e1c4b59c6740984186b2b228b0d3
-    GuidInternal: 
-    m_lastTime: -8584717252604775808
-    List:
-    - name: Main Audio Bus
-      guid: 71e3912931c89548b6c258499524efda
-      id: 2246998526
+      Path: Master-Mixer Hierarchy/DM_patch/Master Audio Bus
+    - name: SFX
+      guid: 5f5c27690561364ea1b4a58b9aa7d188
+      id: 393239870
       PathAndIcons:
       - ElementName: Master-Mixer Hierarchy
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_patch
         ObjectType: 12
-        guid: 5183e1c4b59c6740984186b2b228b0d3
-      - ElementName: Main Audio Bus
+        guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
+      - ElementName: Master Audio Bus
         ObjectType: 2
-        guid: 71e3912931c89548b6c258499524efda
-      Path: Master-Mixer Hierarchy/Factory Tencent GME/Main Audio Bus
-    - name: Send Audio Bus
-      guid: f7a43c2ce3458a4e93360f6c503c5918
-      id: 2265867795
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: SFX
+        ObjectType: 2
+        guid: 5f5c27690561364ea1b4a58b9aa7d188
+      Path: Master-Mixer Hierarchy/DM_patch/Master Audio Bus/SFX
+    - name: UI
+      guid: 5ce53bb267cde2458366e8ae14f8997a
+      id: 1551306167
       PathAndIcons:
       - ElementName: Master-Mixer Hierarchy
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_patch
         ObjectType: 12
-        guid: 5183e1c4b59c6740984186b2b228b0d3
-      - ElementName: Main Audio Bus
+        guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
+      - ElementName: Master Audio Bus
         ObjectType: 2
-        guid: 71e3912931c89548b6c258499524efda
-      - ElementName: Send Audio Bus
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: UI
         ObjectType: 2
-        guid: f7a43c2ce3458a4e93360f6c503c5918
-      Path: Master-Mixer Hierarchy/Factory Tencent GME/Main Audio Bus/Send Audio
-        Bus
+        guid: 5ce53bb267cde2458366e8ae14f8997a
+      Path: Master-Mixer Hierarchy/DM_patch/Master Audio Bus/UI
   BankWwu:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
     PathAndIcons:
@@ -372,39 +408,12 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: 8bcb094e7160e54f9085c06b9518f4d9
+      guid: 3f636edb32b9fb48b8ddd28915125d97
     ParentPath: SoundBanks/Default Work Unit
-    guid: 8bcb094e7160e54f9085c06b9518f4d9
+    guid: 3f636edb32b9fb48b8ddd28915125d97
     GuidInternal: 
-    m_lastTime: -8584716223757092139
+    m_lastTime: -8584649766962671505
     List: []
-  - PhysicalPath: SoundBanks/Factory Tencent GME.wwu
-    PathAndIcons:
-    - ElementName: SoundBanks
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: Factory Tencent GME
-      ObjectType: 12
-      guid: 865bee1fbaf0a04e94162d30e5654ff0
-    ParentPath: SoundBanks/Factory Tencent GME
-    guid: 865bee1fbaf0a04e94162d30e5654ff0
-    GuidInternal: 
-    m_lastTime: -8584717252604775808
-    List:
-    - name: Tencent_GME
-      guid: ff17fdac29acd14cb8a2f70164a8a7d4
-      id: 3683561152
-      PathAndIcons:
-      - ElementName: SoundBanks
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: 865bee1fbaf0a04e94162d30e5654ff0
-      - ElementName: Tencent_GME
-        ObjectType: 7
-        guid: ff17fdac29acd14cb8a2f70164a8a7d4
-      Path: SoundBanks/Factory Tencent GME/Tencent_GME
   EventWwu:
   - PhysicalPath: Events/Default Work Unit.wwu
     PathAndIcons:
@@ -413,329 +422,781 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: c950661fd9b5914dac1bd08e43d79c18
+      guid: 35640558a4bb4349b583dc5af21a2a8e
     ParentPath: Events/Default Work Unit
-    guid: c950661fd9b5914dac1bd08e43d79c18
+    guid: 35640558a4bb4349b583dc5af21a2a8e
     GuidInternal: 
-    m_lastTime: -8584716223757189271
-    List: []
-  - PhysicalPath: Events/Factory Tencent GME.wwu
+    m_lastTime: -8584649633861045297
+    List:
+    - name: Play_Alert_time
+      guid: 20b4cf3fd77fbd4d92e60f2ab000bc5a
+      id: 3346497928
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 35640558a4bb4349b583dc5af21a2a8e
+      - ElementName: Play_Alert_time
+        ObjectType: 3
+        guid: 20b4cf3fd77fbd4d92e60f2ab000bc5a
+      Path: Events/Default Work Unit/Play_Alert_time
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Alert_time_01
+      guid: f8282453110c9e40a672eb5be2fd5adb
+      id: 2050609054
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 35640558a4bb4349b583dc5af21a2a8e
+      - ElementName: Play_Alert_time_01
+        ObjectType: 3
+        guid: f8282453110c9e40a672eb5be2fd5adb
+      Path: Events/Default Work Unit/Play_Alert_time_01
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Click_card_01
+      guid: eca5777cbf88b944a1142d17536f4335
+      id: 2574954115
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 35640558a4bb4349b583dc5af21a2a8e
+      - ElementName: Play_Click_card_01
+        ObjectType: 3
+        guid: eca5777cbf88b944a1142d17536f4335
+      Path: Events/Default Work Unit/Play_Click_card_01
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  - PhysicalPath: Events/DM_Event.wwu
     PathAndIcons:
     - ElementName: Events
       ObjectType: 5
       guid: 00000000000000000000000000000000
-    - ElementName: Factory Tencent GME
+    - ElementName: DM_Event
       ObjectType: 12
-      guid: b1390e77527c2a44a4f7653ae6b0c847
-    ParentPath: Events/Factory Tencent GME
-    guid: b1390e77527c2a44a4f7653ae6b0c847
+      guid: 39ab669188b6414984d8223432b92dc9
+    ParentPath: Events/DM_Event
+    guid: 39ab669188b6414984d8223432b92dc9
     GuidInternal: 
-    m_lastTime: -8584717252604775808
+    m_lastTime: -8584649633861072778
     List:
-    - name: Aliases
-      guid: 788c0c92ef6d024fa81167ba8339d847
-      id: 2088098919
+    - name: Alert_Research_Complete
+      guid: ab70f4dfef82864caf14ccdb6018e66e
+      id: 3872819091
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      Path: Events/Factory Tencent GME/Aliases
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Alert_Research_Complete
+        ObjectType: 3
+        guid: ab70f4dfef82864caf14ccdb6018e66e
+      Path: Events/DM_Event/UI Event/Alert_Research_Complete
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Play_gme_blend
-      guid: 834be251c11e6f45a07354c5ebef3d14
-      id: 1257006919
+    - name: Alert_Time
+      guid: 050ab754c965ff4ba05e01b48c294ed4
+      id: 4243488615
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      - ElementName: Play_gme_blend
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Alert_Time
         ObjectType: 3
-        guid: 834be251c11e6f45a07354c5ebef3d14
-      Path: Events/Factory Tencent GME/Aliases/Play_gme_blend
+        guid: 050ab754c965ff4ba05e01b48c294ed4
+      Path: Events/DM_Event/UI Event/Alert_Time
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Play_GME_Receive
-      guid: b9fd181e09834b479d8449b3160f1d07
-      id: 1185674625
+    - name: AMB_Cave
+      guid: 52c1acfd9c2a3a40894aec359bbbbf70
+      id: 3755979049
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Play_GME_Receive
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: AMB_Cave
         ObjectType: 3
-        guid: b9fd181e09834b479d8449b3160f1d07
-      Path: Events/Factory Tencent GME/Play_GME_Receive
+        guid: 52c1acfd9c2a3a40894aec359bbbbf70
+      Path: Events/DM_Event/AMB_Cave
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Play_GME_Send
-      guid: 7adc73897a7e844aad30b546cb50720b
-      id: 2793175796
+    - name: BGM Event
+      guid: ae66b1ae87009849929fca4be78f5bad
+      id: 1603703413
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Play_GME_Send
-        ObjectType: 3
-        guid: 7adc73897a7e844aad30b546cb50720b
-      Path: Events/Factory Tencent GME/Play_GME_Send
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_GME_Send_Loop
-      guid: e663a3e608b02e4e94cf1aa3b670656d
-      id: 511699757
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Play_GME_Send_Loop
-        ObjectType: 3
-        guid: e663a3e608b02e4e94cf1aa3b670656d
-      Path: Events/Factory Tencent GME/Play_GME_Send_Loop
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_Loop
-      guid: da6497c2fd06a143ac62ed16f82e46c9
-      id: 4266239556
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Play_Loop
-        ObjectType: 3
-        guid: da6497c2fd06a143ac62ed16f82e46c9
-      Path: Events/Factory Tencent GME/Play_Loop
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_original
-      guid: d72748db9d8e124dbd747986e6333199
-      id: 1724457055
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: BGM Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      - ElementName: Play_original
-        ObjectType: 3
-        guid: d72748db9d8e124dbd747986e6333199
-      Path: Events/Factory Tencent GME/Aliases/Play_original
+        guid: ae66b1ae87009849929fca4be78f5bad
+      Path: Events/DM_Event/BGM Event
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Play_Short
-      guid: 7278c8dea37cdf4f99a997f4ad73a5f1
-      id: 3094646336
+    - name: Card_Mouseover
+      guid: 5d35096e145a6d4a87e1bb32c3249d16
+      id: 1586336673
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Play_Short
-        ObjectType: 3
-        guid: 7278c8dea37cdf4f99a997f4ad73a5f1
-      Path: Events/Factory Tencent GME/Play_Short
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_Shotgun
-      guid: f4b5cc927ead2f4cb269da58d36a80d8
-      id: 992244
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      - ElementName: Play_Shotgun
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Card_Mouseover
         ObjectType: 3
-        guid: f4b5cc927ead2f4cb269da58d36a80d8
-      Path: Events/Factory Tencent GME/Aliases/Play_Shotgun
+        guid: 5d35096e145a6d4a87e1bb32c3249d16
+      Path: Events/DM_Event/UI Event/Card_Mouseover
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Stop_gme_blend
-      guid: b6f59672f0cd2840a040a96e4089b61a
-      id: 3854968841
+    - name: Enemy_Archer_Attack
+      guid: 7a1a5d73872df94b8235e4fcd5af2664
+      id: 3450149562
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      - ElementName: Stop_gme_blend
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Archer_Attack
         ObjectType: 3
-        guid: b6f59672f0cd2840a040a96e4089b61a
-      Path: Events/Factory Tencent GME/Aliases/Stop_gme_blend
+        guid: 7a1a5d73872df94b8235e4fcd5af2664
+      Path: Events/DM_Event/Object Event/Enemy_Archer_Attack
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Stop_GME_Receive
-      guid: 7f9f163778a9b042bdaeb768cefce580
-      id: 4154133439
+    - name: Enemy_Boss_TypeFarmer_Attack
+      guid: 4a041beca686ea4bb932a91444bee665
+      id: 2598397792
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Stop_GME_Receive
-        ObjectType: 3
-        guid: 7f9f163778a9b042bdaeb768cefce580
-      Path: Events/Factory Tencent GME/Stop_GME_Receive
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Stop_GME_Send
-      guid: 88cc267825b7394594162f53e7723708
-      id: 2839222858
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Stop_GME_Send
-        ObjectType: 3
-        guid: 88cc267825b7394594162f53e7723708
-      Path: Events/Factory Tencent GME/Stop_GME_Send
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Stop_GME_Send_Loop
-      guid: 971ca605f5e0804b9fa6ae4e99f9db68
-      id: 3949320891
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Stop_GME_Send_Loop
-        ObjectType: 3
-        guid: 971ca605f5e0804b9fa6ae4e99f9db68
-      Path: Events/Factory Tencent GME/Stop_GME_Send_Loop
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Stop_Loop
-      guid: 5df3e6dbbd10504f87010b8a9901cd27
-      id: 1640874226
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Stop_Loop
-        ObjectType: 3
-        guid: 5df3e6dbbd10504f87010b8a9901cd27
-      Path: Events/Factory Tencent GME/Stop_Loop
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Stop_original
-      guid: ad9b8e71db6a0e4b83f7781a5fb30689
-      id: 1301038397
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      - ElementName: Stop_original
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Boss_TypeFarmer_Attack
         ObjectType: 3
-        guid: ad9b8e71db6a0e4b83f7781a5fb30689
-      Path: Events/Factory Tencent GME/Aliases/Stop_original
+        guid: 4a041beca686ea4bb932a91444bee665
+      Path: Events/DM_Event/Object Event/Enemy_Boss_TypeFarmer_Attack
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Stop_Short
-      guid: cce448dfe730d3478bb6f13734fcb53e
-      id: 2181745102
+    - name: Enemy_Farmer_TypeA_Attack
+      guid: 1a0e69b0a690b4469efff6a9c8bb3144
+      id: 1226658030
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
+      - ElementName: DM_Event
         ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Stop_Short
-        ObjectType: 3
-        guid: cce448dfe730d3478bb6f13734fcb53e
-      Path: Events/Factory Tencent GME/Stop_Short
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Stop_Shotgun
-      guid: f75c850dccef9b40b7c8986e793c15a3
-      id: 89948534
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Tencent GME
-        ObjectType: 12
-        guid: b1390e77527c2a44a4f7653ae6b0c847
-      - ElementName: Aliases
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
         ObjectType: 4
-        guid: 788c0c92ef6d024fa81167ba8339d847
-      - ElementName: Stop_Shotgun
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Farmer_TypeA_Attack
         ObjectType: 3
-        guid: f75c850dccef9b40b7c8986e793c15a3
-      Path: Events/Factory Tencent GME/Aliases/Stop_Shotgun
+        guid: 1a0e69b0a690b4469efff6a9c8bb3144
+      Path: Events/DM_Event/Object Event/Enemy_Farmer_TypeA_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Enemy_Farmer_TypeB_Attack
+      guid: c6fb5512662d7a45a2457330c1d532a7
+      id: 3127603755
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Farmer_TypeB_Attack
+        ObjectType: 3
+        guid: c6fb5512662d7a45a2457330c1d532a7
+      Path: Events/DM_Event/Object Event/Enemy_Farmer_TypeB_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Enemy_Thief_Attack
+      guid: 6ca0e761b09cc844b0d21eb4119540b5
+      id: 1904917713
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Thief_Attack
+        ObjectType: 3
+        guid: 6ca0e761b09cc844b0d21eb4119540b5
+      Path: Events/DM_Event/Object Event/Enemy_Thief_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Enemy_Warrior_Attack
+      guid: 8453602241e20e4cab138c1f6c737f64
+      id: 768907175
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Warrior_Attack
+        ObjectType: 3
+        guid: 8453602241e20e4cab138c1f6c737f64
+      Path: Events/DM_Event/Object Event/Enemy_Warrior_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Goblin_Dead
+      guid: 4be116e9c4c02347ba7b531e342c1eeb
+      id: 433730394
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Goblin_Dead
+        ObjectType: 3
+        guid: 4be116e9c4c02347ba7b531e342c1eeb
+      Path: Events/DM_Event/Object Event/Monster_Goblin_Dead
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Goblin_Spawn
+      guid: 1770ce0ad653b844802d3eab7b32f20e
+      id: 3234222325
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Goblin_Spawn
+        ObjectType: 3
+        guid: 1770ce0ad653b844802d3eab7b32f20e
+      Path: Events/DM_Event/Object Event/Monster_Goblin_Spawn
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Golem_Attack
+      guid: d48615c71760a24b98260c9a366c1dd9
+      id: 3005370083
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Golem_Attack
+        ObjectType: 3
+        guid: d48615c71760a24b98260c9a366c1dd9
+      Path: Events/DM_Event/Object Event/Monster_Golem_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Golem_Dead
+      guid: b71463a0a5fa0440b7f4163914876cde
+      id: 977052537
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Golem_Dead
+        ObjectType: 3
+        guid: b71463a0a5fa0440b7f4163914876cde
+      Path: Events/DM_Event/Object Event/Monster_Golem_Dead
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Golem_Spawn
+      guid: 15c13f1d93f3aa4f9469fd853d165f3d
+      id: 3720990804
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Golem_Spawn
+        ObjectType: 3
+        guid: 15c13f1d93f3aa4f9469fd853d165f3d
+      Path: Events/DM_Event/Object Event/Monster_Golem_Spawn
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Mimic_Attack
+      guid: ea3f0191b6f8c0479308fd7db9d5c34e
+      id: 3467401894
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Mimic_Attack
+        ObjectType: 3
+        guid: ea3f0191b6f8c0479308fd7db9d5c34e
+      Path: Events/DM_Event/Object Event/Monster_Mimic_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Mimic_Dead
+      guid: 9cf0dcba3865544caae0eee31080843d
+      id: 3020778988
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Mimic_Dead
+        ObjectType: 3
+        guid: 9cf0dcba3865544caae0eee31080843d
+      Path: Events/DM_Event/Object Event/Monster_Mimic_Dead
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Mimic_Spawn
+      guid: 0957098872e1974a89e92dc3c6db35f7
+      id: 2151188167
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Mimic_Spawn
+        ObjectType: 3
+        guid: 0957098872e1974a89e92dc3c6db35f7
+      Path: Events/DM_Event/Object Event/Monster_Mimic_Spawn
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Slime_Attack
+      guid: 35fe7d4e42fd834b8a52f720f1a8a5c2
+      id: 3767676951
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Slime_Attack
+        ObjectType: 3
+        guid: 35fe7d4e42fd834b8a52f720f1a8a5c2
+      Path: Events/DM_Event/Object Event/Monster_Slime_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Slime_Dead
+      guid: 4f2009bca1826e49b7463667cdb9ee3b
+      id: 1055640181
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Slime_Dead
+        ObjectType: 3
+        guid: 4f2009bca1826e49b7463667cdb9ee3b
+      Path: Events/DM_Event/Object Event/Monster_Slime_Dead
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Monster_Slime_Spawn
+      guid: ab759ee863d0b042b72d3bf6cf92b0a5
+      id: 3004343104
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Slime_Spawn
+        ObjectType: 3
+        guid: ab759ee863d0b042b72d3bf6cf92b0a5
+      Path: Events/DM_Event/Object Event/Monster_Slime_Spawn
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Object Event
+      guid: 114309acb4f3c2499b945dbc3d0b18ce
+      id: 1197162948
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      Path: Events/DM_Event/Object Event
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Quest_Paper_Burn
+      guid: de250531279df74388e63d2b9f76d246
+      id: 3766261802
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Quest_Paper_Burn
+        ObjectType: 3
+        guid: de250531279df74388e63d2b9f76d246
+      Path: Events/DM_Event/UI Event/Quest_Paper_Burn
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Quest_Paper_Open
+      guid: ba089254c815e04abe09d2996ea6034e
+      id: 822059337
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Quest_Paper_Open
+        ObjectType: 3
+        guid: ba089254c815e04abe09d2996ea6034e
+      Path: Events/DM_Event/UI Event/Quest_Paper_Open
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Shop_Card_Buy
+      guid: 06d8e568dcc4ce4ab4253e60d8b1eb4b
+      id: 3637533423
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Shop_Card_Buy
+        ObjectType: 3
+        guid: 06d8e568dcc4ce4ab4253e60d8b1eb4b
+      Path: Events/DM_Event/UI Event/Shop_Card_Buy
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Shop_Open
+      guid: e5f9958df9eb5843a06c3743b419a30b
+      id: 839522188
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Shop_Open
+        ObjectType: 3
+        guid: e5f9958df9eb5843a06c3743b419a30b
+      Path: Events/DM_Event/UI Event/Shop_Open
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Tile_Click
+      guid: 610edb938d3cee408c97abafe53e48d2
+      id: 3030067132
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Tile_Click
+        ObjectType: 3
+        guid: 610edb938d3cee408c97abafe53e48d2
+      Path: Events/DM_Event/UI Event/Tile_Click
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Trap_Home_Attack
+      guid: afa0b547a67704418c695a6b183a51b6
+      id: 3975656553
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Trap_Home_Attack
+        ObjectType: 3
+        guid: afa0b547a67704418c695a6b183a51b6
+      Path: Events/DM_Event/Object Event/Trap_Home_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Trap_Saw_Attack
+      guid: e72550ae032a384aad1694350434ba10
+      id: 2188379821
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Trap_Saw_Attack
+        ObjectType: 3
+        guid: e72550ae032a384aad1694350434ba10
+      Path: Events/DM_Event/Object Event/Trap_Saw_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Trap_Set_Success
+      guid: 91051e9b6e166546969b5c29e25c6a3f
+      id: 2011209205
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Trap_Set_Success
+        ObjectType: 3
+        guid: 91051e9b6e166546969b5c29e25c6a3f
+      Path: Events/DM_Event/UI Event/Trap_Set_Success
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Trap_Spin_Attack
+      guid: b9752296cd613c4490367e82a21e5090
+      id: 970676282
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Trap_Spin_Attack
+        ObjectType: 3
+        guid: b9752296cd613c4490367e82a21e5090
+      Path: Events/DM_Event/Object Event/Trap_Spin_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: UI Event
+      guid: 369db6670027ac4a8f2d3c65fb72b26f
+      id: 2281681087
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      Path: Events/DM_Event/UI Event
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: UI_Click
+      guid: fb97482e86bc59409fdf2f7e9b68431c
+      id: 2249769530
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: UI_Click
+        ObjectType: 3
+        guid: fb97482e86bc59409fdf2f7e9b68431c
+      Path: Events/DM_Event/UI Event/UI_Click
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: UI_MouseOver
+      guid: 1cc82c2b51b0fb4eb5fb34d31174d275
+      id: 3809715957
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: UI_MouseOver
+        ObjectType: 3
+        guid: 1cc82c2b51b0fb4eb5fb34d31174d275
+      Path: Events/DM_Event/UI Event/UI_MouseOver
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Use_Coin
+      guid: 5b5d6be6db839e49bee630b0da510342
+      id: 2375532986
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Use_Coin
+        ObjectType: 3
+        guid: 5b5d6be6db839e49bee630b0da510342
+      Path: Events/DM_Event/UI Event/Use_Coin
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -747,11 +1208,11 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: 1a79a9d62cf20e4696d13de223a9cad0
+      guid: a9bc8c1022247d48828425bd96dd651c
     ParentPath: Game Parameters/Default Work Unit
-    guid: 1a79a9d62cf20e4696d13de223a9cad0
+    guid: a9bc8c1022247d48828425bd96dd651c
     GuidInternal: 
-    m_lastTime: -8584716223757000430
+    m_lastTime: -8584649766962651410
     List: []
   - PhysicalPath: Game Parameters/Factory Soundseed Air Game Syncs.wwu
     PathAndIcons:
@@ -764,7 +1225,7 @@ MonoBehaviour:
     ParentPath: Game Parameters/Factory Soundseed Air Game Syncs
     guid: 5577163b42fb8b4598bf96f557afb3b9
     GuidInternal: 
-    m_lastTime: -8584717252274775808
+    m_lastTime: -8584657766504775808
     List:
     - name: SS_Air_Fear
       guid: 59062ef746431c4ea1b1dab46a05101e
@@ -914,11 +1375,11 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: 3f27717264667448a3303d07c47f154e
+      guid: 73fd8cb555fd344c910ceb2fd2222b43
     ParentPath: States/Default Work Unit
-    guid: 3f27717264667448a3303d07c47f154e
+    guid: 73fd8cb555fd344c910ceb2fd2222b43
     GuidInternal: 
-    m_lastTime: -8584716223757236336
+    m_lastTime: -8584649766962691541
     List: []
   SwitchWwu:
   - PhysicalPath: Switches/Default Work Unit.wwu
@@ -928,11 +1389,11 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: 2911f9273260ed4bb44204e6fe74b46a
+      guid: ce98465e10887346bd21ae929ad3c024
     ParentPath: Switches/Default Work Unit
-    guid: 2911f9273260ed4bb44204e6fe74b46a
+    guid: ce98465e10887346bd21ae929ad3c024
     GuidInternal: 
-    m_lastTime: -8584716223757167657
+    m_lastTime: -8584649766962710415
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers/Default Work Unit.wwu
@@ -942,11 +1403,11 @@ MonoBehaviour:
       guid: 00000000000000000000000000000000
     - ElementName: Default Work Unit
       ObjectType: 12
-      guid: 68c17f4eba825c45a8e14a129c735440
+      guid: feb87d8f6ec0cb4bb7fbd424c5a8697b
     ParentPath: Triggers/Default Work Unit
-    guid: 68c17f4eba825c45a8e14a129c735440
+    guid: feb87d8f6ec0cb4bb7fbd424c5a8697b
     GuidInternal: 
-    m_lastTime: -8584716223756983972
+    m_lastTime: -8584649766962549349
     List: []
   ExpandedFileSystemItemIds: 
   ExpandedWaapiItemIds: 
