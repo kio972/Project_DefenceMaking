@@ -135,8 +135,13 @@ public class TileNode : MonoBehaviour
                 if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || curTile == null)
                     continue;
 
-                if (!includeDormant && curTile.IsDormant)
-                    return false;
+                if (!includeDormant)
+                {
+                    if (curTile.IsDormant)
+                        return false;
+                    else if (NodeManager.Instance.FindPath(NodeManager.Instance.startPoint, neighborNode) == null)
+                        return false;
+                }
 
                 Direction reversed = UtilHelper.ReverseDirection(direction);
                 if (curTile.PathDirection.Contains(reversed))
