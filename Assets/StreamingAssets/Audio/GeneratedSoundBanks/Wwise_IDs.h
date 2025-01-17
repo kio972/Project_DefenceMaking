@@ -34,6 +34,9 @@ namespace AK
         static const AkUniqueID MONSTER_SLIME_ATTACK = 3767676951U;
         static const AkUniqueID MONSTER_SLIME_DEAD = 1055640181U;
         static const AkUniqueID MONSTER_SLIME_SPAWN = 3004343104U;
+        static const AkUniqueID PLAY_ALERT_TIME = 3346497928U;
+        static const AkUniqueID PLAY_ALERT_TIME_01 = 2050609054U;
+        static const AkUniqueID PLAY_CLICK_CARD_01 = 2574954115U;
         static const AkUniqueID QUEST_PAPER_BURN = 3766261802U;
         static const AkUniqueID QUEST_PAPER_OPEN = 822059337U;
         static const AkUniqueID SHOP_CARD_BUY = 3637533423U;
