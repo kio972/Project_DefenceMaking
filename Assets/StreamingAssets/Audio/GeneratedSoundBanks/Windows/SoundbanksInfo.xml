@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<RootPaths>
+		<ProjectRoot>../../../../../../../../../Documents/WwiseProjects/Defence_Making_new_250112</ProjectRoot>
+		<SourceFilesRoot>../../../../../../../../../Documents/WwiseProjects/Defence_Making_new_250112/.cache/Windows</SourceFilesRoot>
+		<SoundBanksRoot>.</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>../../../../../../../../../Documents/WwiseProjects/Defence_Making_new_250112/GeneratedSoundBanks/Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{04C6CE8B-14B1-5A89-979F-6A6136EFFAF1}">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<Plugins>
+				<AudioDevices>
+					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
+					<Plugin Id="3859886410" Name="System" LibName="System" LibId="11403271"/>
+				</AudioDevices>
+			</Plugins>
+			<Busses>
+				<Bus Id="85412153" Name="Ambience"/>
+				<Bus Id="393239870" Name="SFX"/>
+				<Bus Id="412724365" Name="BGM"/>
+				<Bus Id="1551306167" Name="UI"/>
+				<Bus Id="3803692087" Name="Master Audio Bus"/>
+			</Busses>
+			<GameParameters>
+				<GameParameter Id="822163944" Name="SS_Air_RPM"/>
+				<GameParameter Id="1029930033" Name="SS_Air_Fury"/>
+				<GameParameter Id="1351367891" Name="SS_Air_Fear"/>
+				<GameParameter Id="2648548617" Name="SS_Air_Month"/>
+				<GameParameter Id="3002758120" Name="SS_Air_Freefall"/>
+				<GameParameter Id="3074696722" Name="SS_Air_Size"/>
+				<GameParameter Id="3203397129" Name="SS_Air_TimeOfDay"/>
+				<GameParameter Id="3715662592" Name="SS_Air_Storm"/>
+				<GameParameter Id="3847924954" Name="SS_Air_Presence"/>
+				<GameParameter Id="4160247818" Name="SS_Air_Turbulence"/>
+			</GameParameters>
+			<AcousticTextures>
+				<AcousticTexture Id="504532776" Name="Brick">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="12"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="18"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="23"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="513139656" Name="Mountain">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="0"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="841620460" Name="Concrete">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="6"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="6"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="6"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="14"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="1755085759" Name="Wood_Deep">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="1"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="8"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="20"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="1873957695" Name="Anechoic">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="1970351858" Name="Fabric">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="3"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="13"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="48"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="72"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2058049674" Name="Wood">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="32"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="25"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="20"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2412606308" Name="Carpet">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="46"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="45"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="76"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2637588553" Name="Tile">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="67"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="41"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="12"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="0"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2928161104" Name="Curtains">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="7"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="60"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="84"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="3195498748" Name="Cork_Tiles">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="14"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="30"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="73"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="3670307564" Name="Drywall">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="2"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="4168643977" Name="Acoustic_Banner">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="37"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="4262522749" Name="Wood_Bright">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="32"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="25"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="10"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="9"/>
+						<Property Name="Scattering" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+			</AcousticTextures>
+		</SoundBank>
+		<SoundBank Id="3140297794" Type="User" Language="SFX" Hash="{902F2F3A-AB9C-DE2F-EA2F-70BD852EE16A}">
+			<ShortName>DM_SoundBank</ShortName>
+			<Path>DM_SoundBank.bnk</Path>
+			<Media>
+				<File Id="8406157" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Male_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Male_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="24132063" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Male_05.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Male_05_818F3B66.wem</CachePath>
+				</File>
+				<File Id="29144556" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_FeMale_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_FeMale_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="37283882" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Goblin_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Goblin_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="37600522" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Purple_Attack_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Purple_Attack_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="39327877" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\attack_trap_C_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/attack_trap_C_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="45756097" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Sword_Attack_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Sword_Attack_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="48955098" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Purple_Attack_04.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Purple_Attack_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="51372973" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Sword_Attack_04.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Sword_Attack_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="68386001" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Ninja_Attack_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Ninja_Attack_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="74291987" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Male_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Male_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="84040522" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Ninja_Attack_4.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Ninja_Attack_4_818F3B66.wem</CachePath>
+				</File>
+				<File Id="84946529" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Boss_Attack_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Boss_Attack_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="86213992" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Trap_A_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Trap_A_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="89764749" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Recruit_Open_steel.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Recruit_Open_steel_818F3B66.wem</CachePath>
+				</File>
+				<File Id="90195344" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\UI_MouseOver.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/UI_MouseOver_818F3B66.wem</CachePath>
+				</File>
+				<File Id="108376648" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_slime_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_slime_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="113669159" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Bow_Attack_4.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Bow_Attack_4_818F3B66.wem</CachePath>
+				</File>
+				<File Id="134751914" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Trap_A_4.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Trap_A_4_818F3B66.wem</CachePath>
+				</File>
+				<File Id="155385660" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Summoned_Stonegolem_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Summoned_Stonegolem_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="165132545" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Male_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Male_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="167330261" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_StoneGolem_4.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_StoneGolem_4_818F3B66.wem</CachePath>
+				</File>
+				<File Id="181632696" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Recruit_Open_wood.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Recruit_Open_wood_818F3B66.wem</CachePath>
+				</File>
+				<File Id="191744181" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Bodyfall_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Bodyfall_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="218381180" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_FeMale_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_FeMale_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="220001480" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Time_Over_CruchBell-01.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Time_Over_CruchBell-01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="232206163" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Field_Loop_8s.wav</ShortName>
+					<CachePath>SFX/DM_Field_Loop_8s_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="238153259" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Quset_Close_Sussed_1.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Quset_Close_Sussed_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="262345249" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_StoneGolem_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_StoneGolem_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="284601550" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Quset_Creat_02.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Quset_Creat_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="287704520" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Ninja_Attack_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Ninja_Attack_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="312579588" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Set_trap_01.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Set_trap_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="320261432" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Sword_Attack_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Sword_Attack_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="328418548" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Ninja_Attack_5.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Ninja_Attack_5_818F3B66.wem</CachePath>
+				</File>
+				<File Id="344840926" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\attack_trap_B_A.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/attack_trap_B_A_818F3B66.wem</CachePath>
+				</File>
+				<File Id="350715679" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Slime_04.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Slime_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="356098794" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\attack_trap_B_B.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/attack_trap_B_B_818F3B66.wem</CachePath>
+				</File>
+				<File Id="381238297" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Complete_Tech.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Complete_Tech_818F3B66.wem</CachePath>
+				</File>
+				<File Id="402098223" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Blue_Attack_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Blue_Attack_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="429299768" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Quset_Creat_01.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Quset_Creat_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="431160721" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Mimic_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Mimic_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="437040741" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Boss_Attack_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Boss_Attack_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="463532739" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Mimic_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Mimic_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="470513075" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Set_trap_02.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Set_trap_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="509846558" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Mimic_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Mimic_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="516458020" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Sword_Attack_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Sword_Attack_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="521427741" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Ambi_Cave.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Ambi_Cave_818F3B66.wem</CachePath>
+				</File>
+				<File Id="531252399" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Mimic_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Mimic_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="542940728" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Click_card_01.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Click_card_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="549356873" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_StoneGolem_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_StoneGolem_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="578134957" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Open_Store.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Open_Store_818F3B66.wem</CachePath>
+				</File>
+				<File Id="639825403" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Boss_Attack_5.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Boss_Attack_5_818F3B66.wem</CachePath>
+				</File>
+				<File Id="647003223" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Boss_Attack_6.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Boss_Attack_6_818F3B66.wem</CachePath>
+				</File>
+				<File Id="650927945" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Bodyfall_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Bodyfall_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="660447759" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Purple_Attack_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Purple_Attack_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="691449612" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Slime_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Slime_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="703346060" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Click_tile_01.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Click_tile_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="704753082" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_FeMale_05.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_FeMale_05_818F3B66.wem</CachePath>
+				</File>
+				<File Id="704848513" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM title_Noloop_BPM138.wav</ShortName>
+					<CachePath>SFX/DM title_Noloop_BPM138_0AD8A061.wem</CachePath>
+				</File>
+				<File Id="714783981" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Mimic_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Mimic_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="716024118" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Quest_Paper_Open_2.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Quest_Paper_Open_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="719371770" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Purple_Attack_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Purple_Attack_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="727888604" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Boss_Attack_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Boss_Attack_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="730043839" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Trap_A_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Trap_A_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="735914655" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Bow_Attack_6.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Bow_Attack_6_818F3B66.wem</CachePath>
+				</File>
+				<File Id="745948597" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Bow_Attack_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Bow_Attack_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="759233175" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Summoned_slime_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Summoned_slime_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="790786006" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_FeMale_04.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_FeMale_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="791408484" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Alert_time.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Alert_time_818F3B66.wem</CachePath>
+				</File>
+				<File Id="798182631" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Quset_Close_Failed_1.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Quset_Close_Failed_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="804291839" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Main_Title.wav</ShortName>
+					<CachePath>SFX/DM_Main_Title_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="809036600" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Bodyfall_03.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Bodyfall_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="809160096" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\UI_Click_DownPitch_01.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/UI_Click_DownPitch_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="815270298" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Purple_Attack_06.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Purple_Attack_06_818F3B66.wem</CachePath>
+				</File>
+				<File Id="823767410" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Boss_Attack_4.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Boss_Attack_4_818F3B66.wem</CachePath>
+				</File>
+				<File Id="835569452" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_StoneGolem_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_StoneGolem_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="840170693" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Goblin_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Goblin_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="842134508" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_FeMale_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_FeMale_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="854305050" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Bow_Attack_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Bow_Attack_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="856384268" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Blue_Attack_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Blue_Attack_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="871198095" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Ninja_Attack_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Ninja_Attack_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="874315141" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Slime_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Slime_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="900311983" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_StoneGolem_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_StoneGolem_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="906684282" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Bow_Attack_5.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Bow_Attack_5_818F3B66.wem</CachePath>
+				</File>
+				<File Id="917173195" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Slime_02.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Slime_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="917520631" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Blue_Attack_04.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Blue_Attack_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="917601639" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Purple_Attack_05.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Purple_Attack_05_818F3B66.wem</CachePath>
+				</File>
+				<File Id="930703041" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Bow_Attack_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Bow_Attack_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="936757255" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Summoned_Mimic_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Summoned_Mimic_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="940701807" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Raider_death_Male_04.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Raider_death_Male_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="980286637" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Blue_Attack_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Blue_Attack_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="981364977" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Quest_Paper_Burn_1.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Quest_Paper_Burn_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="984479242" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Trap_A_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Trap_A_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="990137782" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Mimic_4.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Mimic_4_818F3B66.wem</CachePath>
+				</File>
+				<File Id="992059219" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_slime_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_slime_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1006789202" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Summoned_goblin_01.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Summoned_goblin_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1009124569" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_StoneGolem_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_StoneGolem_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1015118378" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_slime_3.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_slime_3_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1029397038" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Namedboss.wav</ShortName>
+					<CachePath>SFX/DM_Namedboss_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="1036114259" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Attack_Mimic_1.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Attack_Mimic_1_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1037114935" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Object_Sound\Death_Goblin_2.wav</ShortName>
+					<CachePath>SFX/DM_Object_Sound/Death_Goblin_2_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1049657279" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_Bossbattle_14m22s_BPM145.wav</ShortName>
+					<CachePath>SFX/DM_Bossbattle_14m22s_BPM145_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="1062667769" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>DM_UI_Sound\Coin_toss_Wet.wav</ShortName>
+					<CachePath>SFX/DM_UI_Sound/Coin_toss_Wet_818F3B66.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3872819091" Name="Alert_Research_Complete" DurationType="OneShot" DurationMin="1.0914583" DurationMax="1.0914583">
+					<MediaRefs>
+						<MediaRef Id="381238297"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4243488615" Name="Alert_Time" DurationType="OneShot" DurationMin="3" DurationMax="3">
+					<MediaRefs>
+						<MediaRef Id="220001480"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3755979049" Name="AMB_Cave" DurationType="OneShot" DurationMin="294.20477" DurationMax="294.20477">
+					<MediaRefs>
+						<MediaRef Id="521427741"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1586336673" Name="Card_Mouseover" DurationType="OneShot" DurationMin="0.261" DurationMax="0.261">
+					<MediaRefs>
+						<MediaRef Id="542940728"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3450149562" Name="Enemy_Archer_Attack" DurationType="OneShot" DurationMin="0.336" DurationMax="0.47839582">
+					<MediaRefs>
+						<MediaRef Id="113669159"/>
+						<MediaRef Id="735914655"/>
+						<MediaRef Id="745948597"/>
+						<MediaRef Id="854305050"/>
+						<MediaRef Id="906684282"/>
+						<MediaRef Id="930703041"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2598397792" Name="Enemy_Boss_TypeFarmer_Attack" DurationType="OneShot" DurationMin="0.4150625" DurationMax="0.74552083">
+					<MediaRefs>
+						<MediaRef Id="84946529"/>
+						<MediaRef Id="437040741"/>
+						<MediaRef Id="639825403"/>
+						<MediaRef Id="647003223"/>
+						<MediaRef Id="727888604"/>
+						<MediaRef Id="823767410"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1226658030" Name="Enemy_Farmer_TypeA_Attack" DurationType="OneShot" DurationMin="0.25733334" DurationMax="0.41066667">
+					<MediaRefs>
+						<MediaRef Id="402098223"/>
+						<MediaRef Id="856384268"/>
+						<MediaRef Id="917520631"/>
+						<MediaRef Id="980286637"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3127603755" Name="Enemy_Farmer_TypeB_Attack" DurationType="OneShot" DurationMin="0.18666667" DurationMax="0.25466666">
+					<MediaRefs>
+						<MediaRef Id="37600522"/>
+						<MediaRef Id="48955098"/>
+						<MediaRef Id="660447759"/>
+						<MediaRef Id="719371770"/>
+						<MediaRef Id="815270298"/>
+						<MediaRef Id="917601639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1904917713" Name="Enemy_Thief_Attack" DurationType="OneShot" DurationMin="0.44266668" DurationMax="0.52022916">
+					<MediaRefs>
+						<MediaRef Id="68386001"/>
+						<MediaRef Id="84040522"/>
+						<MediaRef Id="287704520"/>
+						<MediaRef Id="328418548"/>
+						<MediaRef Id="871198095"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="768907175" Name="Enemy_Warrior_Attack" DurationType="OneShot" DurationMin="0.192" DurationMax="0.32">
+					<MediaRefs>
+						<MediaRef Id="45756097"/>
+						<MediaRef Id="51372973"/>
+						<MediaRef Id="320261432"/>
+						<MediaRef Id="516458020"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="433730394" Name="Monster_Goblin_Dead" DurationType="OneShot" DurationMin="0.63839585" DurationMax="0.75">
+					<MediaRefs>
+						<MediaRef Id="37283882"/>
+						<MediaRef Id="840170693"/>
+						<MediaRef Id="1037114935"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3234222325" Name="Monster_Goblin_Spawn" DurationType="OneShot" DurationMin="1.1979584" DurationMax="1.1979584">
+					<MediaRefs>
+						<MediaRef Id="1006789202"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3005370083" Name="Monster_Golem_Attack" DurationType="OneShot" DurationMin="0.91066664" DurationMax="1.208">
+					<MediaRefs>
+						<MediaRef Id="167330261"/>
+						<MediaRef Id="549356873"/>
+						<MediaRef Id="835569452"/>
+						<MediaRef Id="1009124569"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="977052537" Name="Monster_Golem_Dead" DurationType="OneShot" DurationMin="1.7142917" DurationMax="1.7142917">
+					<MediaRefs>
+						<MediaRef Id="262345249"/>
+						<MediaRef Id="900311983"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3720990804" Name="Monster_Golem_Spawn" DurationType="OneShot" DurationMin="1.488" DurationMax="1.488">
+					<MediaRefs>
+						<MediaRef Id="155385660"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3467401894" Name="Monster_Mimic_Attack" DurationType="OneShot" DurationMin="0.64220834" DurationMax="1.0150208">
+					<MediaRefs>
+						<MediaRef Id="463532739"/>
+						<MediaRef Id="714783981"/>
+						<MediaRef Id="990137782"/>
+						<MediaRef Id="1036114259"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3020778988" Name="Monster_Mimic_Dead" DurationType="OneShot" DurationMin="0.62133336" DurationMax="0.79466665">
+					<MediaRefs>
+						<MediaRef Id="431160721"/>
+						<MediaRef Id="509846558"/>
+						<MediaRef Id="531252399"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2151188167" Name="Monster_Mimic_Spawn" DurationType="OneShot" DurationMin="1.8174375" DurationMax="1.8174375">
+					<MediaRefs>
+						<MediaRef Id="936757255"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3767676951" Name="Monster_Slime_Attack" DurationType="OneShot" DurationMin="0.54910415" DurationMax="0.9642917">
+					<MediaRefs>
+						<MediaRef Id="108376648"/>
+						<MediaRef Id="992059219"/>
+						<MediaRef Id="1015118378"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1055640181" Name="Monster_Slime_Dead" DurationType="OneShot" DurationMin="0.82589585" DurationMax="1.4110416">
+					<MediaRefs>
+						<MediaRef Id="350715679"/>
+						<MediaRef Id="691449612"/>
+						<MediaRef Id="874315141"/>
+						<MediaRef Id="917173195"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3004343104" Name="Monster_Slime_Spawn" DurationType="OneShot" DurationMin="0.71875" DurationMax="0.71875">
+					<MediaRefs>
+						<MediaRef Id="759233175"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3346497928" Name="Play_Alert_time" DurationType="OneShot" DurationMin="1.9911041" DurationMax="1.9911041">
+					<MediaRefs>
+						<MediaRef Id="791408484"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2050609054" Name="Play_Alert_time_01" DurationType="OneShot" DurationMin="1.9911041" DurationMax="1.9911041">
+					<MediaRefs>
+						<MediaRef Id="791408484"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2574954115" Name="Play_Click_card_01" DurationType="OneShot" DurationMin="0.261" DurationMax="0.261">
+					<MediaRefs>
+						<MediaRef Id="542940728"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3766261802" Name="Quest_Paper_Burn" DurationType="OneShot" DurationMin="2.2946458" DurationMax="2.2946458">
+					<MediaRefs>
+						<MediaRef Id="981364977"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="822059337" Name="Quest_Paper_Open" DurationType="OneShot" DurationMin="0.32" DurationMax="0.32">
+					<MediaRefs>
+						<MediaRef Id="716024118"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3637533423" Name="Shop_Card_Buy" DurationType="OneShot" DurationMin="0.261" DurationMax="0.261">
+					<MediaRefs>
+						<MediaRef Id="542940728"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="839522188" Name="Shop_Open" DurationType="OneShot" DurationMin="0.46716666" DurationMax="0.46716666">
+					<MediaRefs>
+						<MediaRef Id="578134957"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3030067132" Name="Tile_Click" DurationType="OneShot" DurationMin="0.43466666" DurationMax="0.43466666">
+					<MediaRefs>
+						<MediaRef Id="703346060"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3975656553" Name="Trap_Home_Attack" DurationType="OneShot" DurationMin="0.5952917" DurationMax="0.944">
+					<MediaRefs>
+						<MediaRef Id="86213992"/>
+						<MediaRef Id="134751914"/>
+						<MediaRef Id="730043839"/>
+						<MediaRef Id="984479242"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2188379821" Name="Trap_Saw_Attack" DurationType="OneShot" DurationMin="0.9557292" DurationMax="0.9557292">
+					<MediaRefs>
+						<MediaRef Id="39327877"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2011209205" Name="Trap_Set_Success" DurationType="OneShot" DurationMin="0.104833335" DurationMax="0.104833335">
+					<MediaRefs>
+						<MediaRef Id="312579588"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="970676282" Name="Trap_Spin_Attack" DurationType="OneShot" DurationMin="0.552" DurationMax="0.69733334">
+					<MediaRefs>
+						<MediaRef Id="344840926"/>
+						<MediaRef Id="356098794"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2249769530" Name="UI_Click" DurationType="OneShot" DurationMin="0.3805" DurationMax="0.3805">
+					<MediaRefs>
+						<MediaRef Id="809160096"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3809715957" Name="UI_MouseOver" DurationType="OneShot" DurationMin="0.075125" DurationMax="0.075125">
+					<MediaRefs>
+						<MediaRef Id="90195344"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2375532986" Name="Use_Coin" DurationType="OneShot" DurationMin="0.27977082" DurationMax="0.27977082">
+					<MediaRefs>
+						<MediaRef Id="1062667769"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<Busses>
+				<Bus Id="85412153" Name="Ambience"/>
+				<Bus Id="393239870" Name="SFX"/>
+				<Bus Id="412724365" Name="BGM"/>
+				<Bus Id="1551306167" Name="UI"/>
+				<Bus Id="3803692087" Name="Master Audio Bus"/>
+			</Busses>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{99F25553-41B0-8B7C-6475-6469024F4C71}</FileHash>
+</SoundBanksInfo>
