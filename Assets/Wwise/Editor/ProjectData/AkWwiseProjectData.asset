@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics/Default Work Unit
     guid: 4408a3f6bac73d498d22b465fe8c94e5
     GuidInternal: 
-    m_lastTime: -8584649766962431340
+    m_lastTime: -8584644846025827044
     List: []
   - PhysicalPath: Virtual Acoustics/Factory Acoustic Textures.wwu
     PathAndIcons:
@@ -37,7 +37,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics/Factory Acoustic Textures
     guid: 6b663d46a83ca54f8b4a5fef12b883f6
     GuidInternal: 
-    m_lastTime: -8584657767174775808
+    m_lastTime: -8584644846025794691
     List:
     - name: Acoustic_Banner
       guid: f2532d2fccda8e408b8898b1b52a26d6
@@ -303,7 +303,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy/Default Work Unit
     guid: b251557386c41948bd090923e2bfceac
     GuidInternal: 
-    m_lastTime: -8584649762122171387
+    m_lastTime: -8584644846026595912
     List: []
   - PhysicalPath: Master-Mixer Hierarchy/DM_patch.wwu
     PathAndIcons:
@@ -316,7 +316,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy/DM_patch
     guid: 3f347a1b8cc9984eaa3c0c83a2e58ff9
     GuidInternal: 
-    m_lastTime: -8584649670335620777
+    m_lastTime: -8584644846026536567
     List:
     - name: Ambience
       guid: 76cc78976072504295ebf76d7e431ecb
@@ -412,8 +412,35 @@ MonoBehaviour:
     ParentPath: SoundBanks/Default Work Unit
     guid: 3f636edb32b9fb48b8ddd28915125d97
     GuidInternal: 
-    m_lastTime: -8584649766962671505
+    m_lastTime: -8584644839253029673
     List: []
+  - PhysicalPath: SoundBanks/DM_SoundBank.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: DM_SoundBank
+      ObjectType: 12
+      guid: 509fead37a3c7a40b161e71d95d76cc6
+    ParentPath: SoundBanks/DM_SoundBank
+    guid: 509fead37a3c7a40b161e71d95d76cc6
+    GuidInternal: 
+    m_lastTime: -8584644839252969731
+    List:
+    - name: DM_SoundBank
+      guid: 10564ccd860f33428134335b6f399927
+      id: 3140297794
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_SoundBank
+        ObjectType: 12
+        guid: 509fead37a3c7a40b161e71d95d76cc6
+      - ElementName: DM_SoundBank
+        ObjectType: 7
+        guid: 10564ccd860f33428134335b6f399927
+      Path: SoundBanks/DM_SoundBank/DM_SoundBank
   EventWwu:
   - PhysicalPath: Events/Default Work Unit.wwu
     PathAndIcons:
@@ -426,7 +453,7 @@ MonoBehaviour:
     ParentPath: Events/Default Work Unit
     guid: 35640558a4bb4349b583dc5af21a2a8e
     GuidInternal: 
-    m_lastTime: -8584649633861045297
+    m_lastTime: -8584644846026444302
     List:
     - name: Play_Alert_time
       guid: 20b4cf3fd77fbd4d92e60f2ab000bc5a
@@ -490,7 +517,7 @@ MonoBehaviour:
     ParentPath: Events/DM_Event
     guid: 39ab669188b6414984d8223432b92dc9
     GuidInternal: 
-    m_lastTime: -8584649633861072778
+    m_lastTime: -8584644846026462470
     List:
     - name: Alert_Research_Complete
       guid: ab70f4dfef82864caf14ccdb6018e66e
@@ -510,8 +537,8 @@ MonoBehaviour:
         guid: ab70f4dfef82864caf14ccdb6018e66e
       Path: Events/DM_Event/UI Event/Alert_Research_Complete
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.0914583
+      minDuration: 1.0914583
     - name: Alert_Time
       guid: 050ab754c965ff4ba05e01b48c294ed4
       id: 4243488615
@@ -530,8 +557,8 @@ MonoBehaviour:
         guid: 050ab754c965ff4ba05e01b48c294ed4
       Path: Events/DM_Event/UI Event/Alert_Time
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 3
+      minDuration: 3
     - name: AMB_Cave
       guid: 52c1acfd9c2a3a40894aec359bbbbf70
       id: 3755979049
@@ -547,8 +574,8 @@ MonoBehaviour:
         guid: 52c1acfd9c2a3a40894aec359bbbbf70
       Path: Events/DM_Event/AMB_Cave
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 294.20477
+      minDuration: 294.20477
     - name: BGM Event
       guid: ae66b1ae87009849929fca4be78f5bad
       id: 1603703413
@@ -584,8 +611,8 @@ MonoBehaviour:
         guid: 5d35096e145a6d4a87e1bb32c3249d16
       Path: Events/DM_Event/UI Event/Card_Mouseover
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.261
+      minDuration: 0.261
     - name: Enemy_Archer_Attack
       guid: 7a1a5d73872df94b8235e4fcd5af2664
       id: 3450149562
@@ -604,8 +631,8 @@ MonoBehaviour:
         guid: 7a1a5d73872df94b8235e4fcd5af2664
       Path: Events/DM_Event/Object Event/Enemy_Archer_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.47839582
+      minDuration: 0.336
     - name: Enemy_Boss_TypeFarmer_Attack
       guid: 4a041beca686ea4bb932a91444bee665
       id: 2598397792
@@ -624,8 +651,8 @@ MonoBehaviour:
         guid: 4a041beca686ea4bb932a91444bee665
       Path: Events/DM_Event/Object Event/Enemy_Boss_TypeFarmer_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.74552083
+      minDuration: 0.4150625
     - name: Enemy_Farmer_TypeA_Attack
       guid: 1a0e69b0a690b4469efff6a9c8bb3144
       id: 1226658030
@@ -644,8 +671,8 @@ MonoBehaviour:
         guid: 1a0e69b0a690b4469efff6a9c8bb3144
       Path: Events/DM_Event/Object Event/Enemy_Farmer_TypeA_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.41066667
+      minDuration: 0.25733334
     - name: Enemy_Farmer_TypeB_Attack
       guid: c6fb5512662d7a45a2457330c1d532a7
       id: 3127603755
@@ -664,8 +691,8 @@ MonoBehaviour:
         guid: c6fb5512662d7a45a2457330c1d532a7
       Path: Events/DM_Event/Object Event/Enemy_Farmer_TypeB_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.25466666
+      minDuration: 0.18666667
     - name: Enemy_Thief_Attack
       guid: 6ca0e761b09cc844b0d21eb4119540b5
       id: 1904917713
@@ -684,8 +711,8 @@ MonoBehaviour:
         guid: 6ca0e761b09cc844b0d21eb4119540b5
       Path: Events/DM_Event/Object Event/Enemy_Thief_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.52022916
+      minDuration: 0.44266668
     - name: Enemy_Warrior_Attack
       guid: 8453602241e20e4cab138c1f6c737f64
       id: 768907175
@@ -704,8 +731,8 @@ MonoBehaviour:
         guid: 8453602241e20e4cab138c1f6c737f64
       Path: Events/DM_Event/Object Event/Enemy_Warrior_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.32
+      minDuration: 0.192
     - name: Monster_Goblin_Dead
       guid: 4be116e9c4c02347ba7b531e342c1eeb
       id: 433730394
@@ -724,8 +751,8 @@ MonoBehaviour:
         guid: 4be116e9c4c02347ba7b531e342c1eeb
       Path: Events/DM_Event/Object Event/Monster_Goblin_Dead
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.75
+      minDuration: 0.63839585
     - name: Monster_Goblin_Spawn
       guid: 1770ce0ad653b844802d3eab7b32f20e
       id: 3234222325
@@ -744,8 +771,8 @@ MonoBehaviour:
         guid: 1770ce0ad653b844802d3eab7b32f20e
       Path: Events/DM_Event/Object Event/Monster_Goblin_Spawn
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.1979584
+      minDuration: 1.1979584
     - name: Monster_Golem_Attack
       guid: d48615c71760a24b98260c9a366c1dd9
       id: 3005370083
@@ -764,8 +791,8 @@ MonoBehaviour:
         guid: d48615c71760a24b98260c9a366c1dd9
       Path: Events/DM_Event/Object Event/Monster_Golem_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.208
+      minDuration: 0.91066664
     - name: Monster_Golem_Dead
       guid: b71463a0a5fa0440b7f4163914876cde
       id: 977052537
@@ -784,8 +811,8 @@ MonoBehaviour:
         guid: b71463a0a5fa0440b7f4163914876cde
       Path: Events/DM_Event/Object Event/Monster_Golem_Dead
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.7142917
+      minDuration: 1.7142917
     - name: Monster_Golem_Spawn
       guid: 15c13f1d93f3aa4f9469fd853d165f3d
       id: 3720990804
@@ -804,8 +831,8 @@ MonoBehaviour:
         guid: 15c13f1d93f3aa4f9469fd853d165f3d
       Path: Events/DM_Event/Object Event/Monster_Golem_Spawn
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.488
+      minDuration: 1.488
     - name: Monster_Mimic_Attack
       guid: ea3f0191b6f8c0479308fd7db9d5c34e
       id: 3467401894
@@ -824,8 +851,8 @@ MonoBehaviour:
         guid: ea3f0191b6f8c0479308fd7db9d5c34e
       Path: Events/DM_Event/Object Event/Monster_Mimic_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.0150208
+      minDuration: 0.64220834
     - name: Monster_Mimic_Dead
       guid: 9cf0dcba3865544caae0eee31080843d
       id: 3020778988
@@ -844,8 +871,8 @@ MonoBehaviour:
         guid: 9cf0dcba3865544caae0eee31080843d
       Path: Events/DM_Event/Object Event/Monster_Mimic_Dead
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.79466665
+      minDuration: 0.62133336
     - name: Monster_Mimic_Spawn
       guid: 0957098872e1974a89e92dc3c6db35f7
       id: 2151188167
@@ -864,8 +891,8 @@ MonoBehaviour:
         guid: 0957098872e1974a89e92dc3c6db35f7
       Path: Events/DM_Event/Object Event/Monster_Mimic_Spawn
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.8174375
+      minDuration: 1.8174375
     - name: Monster_Slime_Attack
       guid: 35fe7d4e42fd834b8a52f720f1a8a5c2
       id: 3767676951
@@ -884,8 +911,8 @@ MonoBehaviour:
         guid: 35fe7d4e42fd834b8a52f720f1a8a5c2
       Path: Events/DM_Event/Object Event/Monster_Slime_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.9642917
+      minDuration: 0.54910415
     - name: Monster_Slime_Dead
       guid: 4f2009bca1826e49b7463667cdb9ee3b
       id: 1055640181
@@ -904,8 +931,8 @@ MonoBehaviour:
         guid: 4f2009bca1826e49b7463667cdb9ee3b
       Path: Events/DM_Event/Object Event/Monster_Slime_Dead
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.4110416
+      minDuration: 0.82589585
     - name: Monster_Slime_Spawn
       guid: ab759ee863d0b042b72d3bf6cf92b0a5
       id: 3004343104
@@ -924,8 +951,8 @@ MonoBehaviour:
         guid: ab759ee863d0b042b72d3bf6cf92b0a5
       Path: Events/DM_Event/Object Event/Monster_Slime_Spawn
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.71875
+      minDuration: 0.71875
     - name: Object Event
       guid: 114309acb4f3c2499b945dbc3d0b18ce
       id: 1197162948
@@ -961,8 +988,8 @@ MonoBehaviour:
         guid: de250531279df74388e63d2b9f76d246
       Path: Events/DM_Event/UI Event/Quest_Paper_Burn
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2.2946458
+      minDuration: 2.2946458
     - name: Quest_Paper_Open
       guid: ba089254c815e04abe09d2996ea6034e
       id: 822059337
@@ -981,8 +1008,8 @@ MonoBehaviour:
         guid: ba089254c815e04abe09d2996ea6034e
       Path: Events/DM_Event/UI Event/Quest_Paper_Open
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.32
+      minDuration: 0.32
     - name: Shop_Card_Buy
       guid: 06d8e568dcc4ce4ab4253e60d8b1eb4b
       id: 3637533423
@@ -1001,8 +1028,8 @@ MonoBehaviour:
         guid: 06d8e568dcc4ce4ab4253e60d8b1eb4b
       Path: Events/DM_Event/UI Event/Shop_Card_Buy
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.261
+      minDuration: 0.261
     - name: Shop_Open
       guid: e5f9958df9eb5843a06c3743b419a30b
       id: 839522188
@@ -1021,8 +1048,8 @@ MonoBehaviour:
         guid: e5f9958df9eb5843a06c3743b419a30b
       Path: Events/DM_Event/UI Event/Shop_Open
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.46716666
+      minDuration: 0.46716666
     - name: Tile_Click
       guid: 610edb938d3cee408c97abafe53e48d2
       id: 3030067132
@@ -1041,8 +1068,8 @@ MonoBehaviour:
         guid: 610edb938d3cee408c97abafe53e48d2
       Path: Events/DM_Event/UI Event/Tile_Click
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.43466666
+      minDuration: 0.43466666
     - name: Trap_Home_Attack
       guid: afa0b547a67704418c695a6b183a51b6
       id: 3975656553
@@ -1061,8 +1088,8 @@ MonoBehaviour:
         guid: afa0b547a67704418c695a6b183a51b6
       Path: Events/DM_Event/Object Event/Trap_Home_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.944
+      minDuration: 0.5952917
     - name: Trap_Saw_Attack
       guid: e72550ae032a384aad1694350434ba10
       id: 2188379821
@@ -1081,8 +1108,8 @@ MonoBehaviour:
         guid: e72550ae032a384aad1694350434ba10
       Path: Events/DM_Event/Object Event/Trap_Saw_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.9557292
+      minDuration: 0.9557292
     - name: Trap_Set_Success
       guid: 91051e9b6e166546969b5c29e25c6a3f
       id: 2011209205
@@ -1101,8 +1128,8 @@ MonoBehaviour:
         guid: 91051e9b6e166546969b5c29e25c6a3f
       Path: Events/DM_Event/UI Event/Trap_Set_Success
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.104833335
+      minDuration: 0.104833335
     - name: Trap_Spin_Attack
       guid: b9752296cd613c4490367e82a21e5090
       id: 970676282
@@ -1121,8 +1148,8 @@ MonoBehaviour:
         guid: b9752296cd613c4490367e82a21e5090
       Path: Events/DM_Event/Object Event/Trap_Spin_Attack
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.69733334
+      minDuration: 0.552
     - name: UI Event
       guid: 369db6670027ac4a8f2d3c65fb72b26f
       id: 2281681087
@@ -1158,8 +1185,8 @@ MonoBehaviour:
         guid: fb97482e86bc59409fdf2f7e9b68431c
       Path: Events/DM_Event/UI Event/UI_Click
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.3805
+      minDuration: 0.3805
     - name: UI_MouseOver
       guid: 1cc82c2b51b0fb4eb5fb34d31174d275
       id: 3809715957
@@ -1178,8 +1205,8 @@ MonoBehaviour:
         guid: 1cc82c2b51b0fb4eb5fb34d31174d275
       Path: Events/DM_Event/UI Event/UI_MouseOver
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.075125
+      minDuration: 0.075125
     - name: Use_Coin
       guid: 5b5d6be6db839e49bee630b0da510342
       id: 2375532986
@@ -1198,8 +1225,8 @@ MonoBehaviour:
         guid: 5b5d6be6db839e49bee630b0da510342
       Path: Events/DM_Event/UI Event/Use_Coin
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.27977082
+      minDuration: 0.27977082
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
     PathAndIcons:
@@ -1212,7 +1239,7 @@ MonoBehaviour:
     ParentPath: Game Parameters/Default Work Unit
     guid: a9bc8c1022247d48828425bd96dd651c
     GuidInternal: 
-    m_lastTime: -8584649766962651410
+    m_lastTime: -8584644846026377223
     List: []
   - PhysicalPath: Game Parameters/Factory Soundseed Air Game Syncs.wwu
     PathAndIcons:
@@ -1225,7 +1252,7 @@ MonoBehaviour:
     ParentPath: Game Parameters/Factory Soundseed Air Game Syncs
     guid: 5577163b42fb8b4598bf96f557afb3b9
     GuidInternal: 
-    m_lastTime: -8584657766504775808
+    m_lastTime: -8584644846026336399
     List:
     - name: SS_Air_Fear
       guid: 59062ef746431c4ea1b1dab46a05101e
@@ -1379,7 +1406,7 @@ MonoBehaviour:
     ParentPath: States/Default Work Unit
     guid: 73fd8cb555fd344c910ceb2fd2222b43
     GuidInternal: 
-    m_lastTime: -8584649766962691541
+    m_lastTime: -8584644846026391165
     List: []
   SwitchWwu:
   - PhysicalPath: Switches/Default Work Unit.wwu
@@ -1393,7 +1420,7 @@ MonoBehaviour:
     ParentPath: Switches/Default Work Unit
     guid: ce98465e10887346bd21ae929ad3c024
     GuidInternal: 
-    m_lastTime: -8584649766962710415
+    m_lastTime: -8584644846026364417
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers/Default Work Unit.wwu
@@ -1407,10 +1434,10 @@ MonoBehaviour:
     ParentPath: Triggers/Default Work Unit
     guid: feb87d8f6ec0cb4bb7fbd424c5a8697b
     GuidInternal: 
-    m_lastTime: -8584649766962549349
+    m_lastTime: -8584644846026025395
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 13000000140000001500000030000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
