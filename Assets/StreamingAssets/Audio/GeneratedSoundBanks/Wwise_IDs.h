@@ -17,12 +17,16 @@ namespace AK
         static const AkUniqueID ALERT_TIME = 4243488615U;
         static const AkUniqueID AMB_CAVE = 3755979049U;
         static const AkUniqueID CARD_MOUSEOVER = 1586336673U;
+        static const AkUniqueID DEMON_ATTACK = 1927135673U;
+        static const AkUniqueID DEMON_HIT_VOICE = 2357919911U;
         static const AkUniqueID ENEMY_ARCHER_ATTACK = 3450149562U;
         static const AkUniqueID ENEMY_BOSS_TYPEFARMER_ATTACK = 2598397792U;
         static const AkUniqueID ENEMY_FARMER_TYPEA_ATTACK = 1226658030U;
         static const AkUniqueID ENEMY_FARMER_TYPEB_ATTACK = 3127603755U;
+        static const AkUniqueID ENEMY_RECALL = 81576553U;
         static const AkUniqueID ENEMY_THIEF_ATTACK = 1904917713U;
         static const AkUniqueID ENEMY_WARRIOR_ATTACK = 768907175U;
+        static const AkUniqueID HIDDEN_TILE = 3069863532U;
         static const AkUniqueID MONSTER_GOBLIN_DEAD = 433730394U;
         static const AkUniqueID MONSTER_GOBLIN_SPAWN = 3234222325U;
         static const AkUniqueID MONSTER_GOLEM_ATTACK = 3005370083U;
@@ -37,17 +41,29 @@ namespace AK
         static const AkUniqueID PLAY_ALERT_TIME = 3346497928U;
         static const AkUniqueID PLAY_ALERT_TIME_01 = 2050609054U;
         static const AkUniqueID PLAY_CLICK_CARD_01 = 2574954115U;
+        static const AkUniqueID PLAY_DM_BOSSBATTLE_BPM145 = 2525272031U;
+        static const AkUniqueID PLAY_DM_FIELD_LOOP_8S = 4137095013U;
+        static const AkUniqueID PLAY_DM_MAIN_TITLE = 3274818598U;
+        static const AkUniqueID PLAY_DM_NAMEDBOSS_BATTLE = 2356728643U;
+        static const AkUniqueID PLAY_DM_TITLE_NOLOOP_BPM138 = 1908904774U;
         static const AkUniqueID QUEST_PAPER_BURN = 3766261802U;
         static const AkUniqueID QUEST_PAPER_OPEN = 822059337U;
+        static const AkUniqueID QUEST_UI_CREAT = 2870564192U;
+        static const AkUniqueID QUEST_UI_FAIL = 86675729U;
+        static const AkUniqueID QUEST_UI_SUCCESS = 2824547630U;
+        static const AkUniqueID RESEARCH_OPEN = 2489958093U;
+        static const AkUniqueID RESEARCH_PROGRESS_CLICK_FAIL = 1817680512U;
         static const AkUniqueID SHOP_CARD_BUY = 3637533423U;
         static const AkUniqueID SHOP_OPEN = 839522188U;
         static const AkUniqueID TILE_CLICK = 3030067132U;
+        static const AkUniqueID TILE_ROTATE = 58928041U;
         static const AkUniqueID TRAP_HOME_ATTACK = 3975656553U;
         static const AkUniqueID TRAP_SAW_ATTACK = 2188379821U;
         static const AkUniqueID TRAP_SET_SUCCESS = 2011209205U;
         static const AkUniqueID TRAP_SPIN_ATTACK = 970676282U;
         static const AkUniqueID UI_CLICK = 2249769530U;
         static const AkUniqueID UI_MOUSEOVER = 3809715957U;
+        static const AkUniqueID UI_TEXT = 3469071695U;
         static const AkUniqueID USE_COIN = 2375532986U;
     } // namespace EVENTS
 
