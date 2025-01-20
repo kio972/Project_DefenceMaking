@@ -367,6 +367,11 @@ public class CardDeckController : MonoBehaviour
         return ReturnDeck(random);
     }
 
+    [SerializeField]
+    private AK.Wwise.Event refusedSound;
+    [SerializeField]
+    private AK.Wwise.Event excutedSound;
+
     public void DrawDeck()
     {
         if (GameManager.Instance.drawLock)
@@ -375,28 +380,32 @@ public class CardDeckController : MonoBehaviour
         if (hand_CardNumber >= maxCardNumber)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("손 패가 가득 찼습니다");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            refusedSound?.Post(gameObject);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         if (GameManager.Instance.gold < _CardPrice)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            refusedSound?.Post(gameObject);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         if (_cardDeck.Count < 1)
         {
             GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            refusedSound?.Post(gameObject);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         GameManager.Instance.gold -= _CardPrice;
         DrawCard();
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
-        AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
+        excutedSound?.Post(gameObject);
+        //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
     }
 
     private async UniTaskVoid ISetCardPosition()

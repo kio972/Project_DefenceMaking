@@ -25,6 +25,9 @@ public class ShopUI : MonoBehaviour
     [SerializeField]
     private Transform itemShelf;
 
+    [SerializeField]
+    private AK.Wwise.Event openSound;
+
     private List<System.Action<Item>> buyItemEvents = new List<System.Action<Item>>();
 
     public void InvokeBuyItemEvents(Item item)
@@ -88,7 +91,8 @@ public class ShopUI : MonoBehaviour
         if(value)
         {
             PlayScript("Shop000");
-            AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
+            //AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
+            openSound?.Post(gameObject);
         }
     }
 

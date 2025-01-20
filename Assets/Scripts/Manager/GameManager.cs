@@ -71,6 +71,9 @@ public class GameManager : IngameSingleton<GameManager>
 
     public bool isInBattle = false;
 
+    [SerializeField]
+    private AK.Wwise.Event midBellSound;
+
 
     public ReactiveCollection<Adventurer> adventurersList = new ReactiveCollection<Adventurer>();
 
@@ -333,7 +336,8 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             //NodeManager.Instance.LockMovableTiles();
 
-            AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
+            midBellSound?.Post(gameObject);
+            //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
         }
     }
 
@@ -409,7 +413,7 @@ public class GameManager : IngameSingleton<GameManager>
         SetWaveSpeed();
 
         ingameUI?.Init();
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
 
         cardDeckController.Init();
         //cardDeckController.Invoke("Mulligan", 1f);

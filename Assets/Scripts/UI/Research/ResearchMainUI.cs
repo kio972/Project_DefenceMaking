@@ -26,6 +26,11 @@ public class ResearchMainUI : MonoBehaviour
     private List<string> _completedResearchs;
     public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
+    [SerializeField]
+    private AK.Wwise.Event openSound;
+    [SerializeField]
+    private AK.Wwise.Event completeSound;
+
     private async UniTask IResearch(ResearchSlot curResearch, float additionalTime)
     {
         this.curResearch = curResearch;
@@ -52,7 +57,8 @@ public class ResearchMainUI : MonoBehaviour
         //    curResearch.CallPopUpUI();
         string targetMesseage = DataManager.Instance.languageDic[curResearch._ResearchData.researchName]["korean"].ToString();
         GameManager.Instance.notificationBar?.SetMesseage(targetMesseage + " 연구 완료", NotificationType.Research);
-        AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+        openSound?.Post(gameObject);
 
         this.curResearch = null;
         _completedResearchs.Add(curResearch._ResearchId);
@@ -89,8 +95,9 @@ public class ResearchMainUI : MonoBehaviour
         if (value)
         {
             InputManager.Instance.ResetTileClick();
-            AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
             GameManager.Instance.SetPause(true);
+            //AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
+            openSound?.Post(gameObject);
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });

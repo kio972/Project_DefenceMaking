@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4118109717572786732}
   - component: {fileID: 906992845347959712}
   - component: {fileID: 8273688622129687675}
-  - component: {fileID: 8488798084886511666}
+  - component: {fileID: 4962218739472367760}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &8488798084886511666
+--- !u!114 &4962218739472367760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,20 +157,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 487404222048084393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: 56f702c862b304af1a3dd8701e586d12, type: 3}
-  - {fileID: 8300000, guid: 05019a5400c724794804e508be725196, type: 3}
-  - {fileID: 8300000, guid: a9e260fb6508f4a2ba1d7f8cf472872e, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 4027f8ddf52774545a81eae02e8a6a9b, type: 3}
-  - {fileID: 8300000, guid: 7d9a919b5c01045659da1ad85ff86291, type: 3}
-  - {fileID: 8300000, guid: ed62bfff6df5f4ef59c468492da2b1de, type: 3}
-  - {fileID: 8300000, guid: fad36d84a44e04d369fc0f6b71ecf855, type: 3}
-  deadSoundMult: 0.6
+  attackSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ed25c4a94fe79f84fa01570385b3a3d7, type: 2}
+  deadSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 4edb70c0ba77b4c4d8596cc3d7013509, type: 2}
 --- !u!1 &1215894734976800493
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +337,10 @@ MonoBehaviour:
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
+  summonSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: acd5ee431e515e9469489ae7a6b65fb4, type: 2}
 --- !u!136 &7820231197287753124
 CapsuleCollider:
   m_ObjectHideFlags: 0

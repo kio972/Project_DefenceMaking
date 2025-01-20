@@ -108,6 +108,11 @@ public class ItemSlot : FluctItem, ISlot
     private int _curStockCount;
     public int curStockCount { get => _curStockCount; }
 
+    [SerializeField]
+    private AK.Wwise.Event refusedSound;
+    [SerializeField]
+    private AK.Wwise.Event excutedSound;
+
     private void Update()
     {
         Color targetColor = GameManager.Instance.gold >= curPrice.Value ? Color.white : Color.red;
@@ -138,14 +143,16 @@ public class ItemSlot : FluctItem, ISlot
         if (GameManager.Instance.gold < _saledPrice)
         {
             shopUI?.PlayScript("Shop034");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            refusedSound?.Post(gameObject);
             return;
         }
 
         if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
         {
             shopUI?.PlayScript("Shop035");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            refusedSound?.Post(gameObject);
             return;
         }
 
@@ -161,7 +168,8 @@ public class ItemSlot : FluctItem, ISlot
         if(_curStockCount <= 0)
             isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
-        AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
+        //AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
+        excutedSound?.Post(gameObject);
     }
 
     private int DecreasePrice()

@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 8135559933520279386}
   - component: {fileID: 7149043362582349741}
   - component: {fileID: 6106281517710490074}
-  - component: {fileID: 3068550774594301243}
+  - component: {fileID: 2454814107451496533}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -326,7 +326,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &3068550774594301243
+--- !u!114 &2454814107451496533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -335,20 +335,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 5880900752991308404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: e8be002f8cbcd4ce08603a78ec3a9392, type: 3}
-  - {fileID: 8300000, guid: 60fc32af3416d495aa02997a7a2c6b4a, type: 3}
-  - {fileID: 8300000, guid: 9aaaaa6fc1f5c4ed5ad40f0703e4efc7, type: 3}
-  - {fileID: 8300000, guid: ad4c4262fbb4c454fbaba2810c01bc04, type: 3}
-  attackSoundMult: 0.8
-  deadSounds:
-  - {fileID: 8300000, guid: fa459b5a9a1c34e0a9be1b8781f85a3e, type: 3}
-  - {fileID: 8300000, guid: 738026eb9f1a24f7dbe21edd5b6977d9, type: 3}
-  - {fileID: 8300000, guid: 8ff2ee75bccbd4a7780ff06ce3ba13a2, type: 3}
-  deadSoundMult: 1
+  attackSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: cc95c6aefa50ea74e8a07305c1a897ab, type: 2}
+  deadSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: c96932d97b410b842ae43ee44d05872b, type: 2}
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +515,10 @@ MonoBehaviour:
   isHide: 1
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 21636bb31c25a4b169dfc0bc23dc6317, type: 3}
+  summonSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 9ad7f71c303baa84080d3b37fcd9579a, type: 2}
   seduceTargetCount: 3
 --- !u!136 &7389840894960381613
 CapsuleCollider:

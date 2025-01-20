@@ -51,6 +51,12 @@ public class DeployUI : MonoBehaviour
 
     public bool updateItem = true;
 
+    [SerializeField]
+    private AK.Wwise.Event openSound;
+    [SerializeField]
+    private AK.Wwise.Event completeSound;
+
+
     public void UpdateMana()
     {
         foreach (DeploySlot slot in deployItems)
@@ -71,7 +77,10 @@ public class DeployUI : MonoBehaviour
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
 
         if (value)
-            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
+        {
+            //AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
+            openSound?.Post(gameObject);
+        }
     }
 
     public async UniTaskVoid DeployEnd()
@@ -138,7 +147,8 @@ public class DeployUI : MonoBehaviour
                 }
 
                 BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
-                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                completeSound?.Post(gameObject);
             }
             else if (curType == CardType.Trap)
             {
@@ -149,7 +159,8 @@ public class DeployUI : MonoBehaviour
                 }
 
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
-                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                completeSound?.Post(gameObject);
             }
             else if(curType == CardType.Monster)
             {
@@ -168,7 +179,8 @@ public class DeployUI : MonoBehaviour
                 }
 
                 BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
-                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                completeSound?.Post(gameObject);
             }
 
             GameManager.Instance.gold -= curPrice;

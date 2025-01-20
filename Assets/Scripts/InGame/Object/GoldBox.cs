@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public interface IRewardObject
 {
@@ -12,6 +13,9 @@ public class GoldBox : MonoBehaviour, IRewardObject
 {
     [SerializeField]
     private int goldAmount = 100;
+
+    [SerializeField]
+    private UnityEvent buyEvent;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,7 +34,8 @@ public class GoldBox : MonoBehaviour, IRewardObject
     private async UniTaskVoid ExcuteGetReward()
     {
         GameManager.Instance.gold += goldAmount;
-        AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._FxVolume);
+        buyEvent.Invoke();
+        //AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._FxVolume);
         DamageTextPooling.Instance.TextEffect(transform.position - (Vector3.down * 0.2f), $"+{goldAmount}<sprite name=Gold>", 27f, Color.yellow, true);
 
         float elapsedTime = 0f;
