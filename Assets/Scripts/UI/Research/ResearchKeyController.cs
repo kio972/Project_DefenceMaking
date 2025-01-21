@@ -63,6 +63,8 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
         ISlot nextSlot;
         int nextRow = curRow - 1;
         int nextCol = curCol;
+        if (nextRow < 0)
+            return (-1, 0);
 
         nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
         while (nextSlot is ResearchSlot researchSlot && !researchSlot.isActivedResearch)
@@ -100,8 +102,6 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
     {
         int nextRow = curRow;
         int nextCol = curCol - 1;
-        if (nextCol < 0)
-            return (0, -1);
 
         ISlot nextSlot = curActiveBiMap.GetKey((nextRow, nextCol));
         if (nextSlot is ResearchSlot researchSlot && !researchSlot.isActivedResearch)
@@ -188,11 +188,7 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
             {
                 case KeyCode.W:
                     nextIndex = MoveToUp(_curRow, _curCol);
-                    SelectSlot(nextIndex.row, nextIndex.col);
-                    break;
-                case KeyCode.A:
-                    nextIndex = MoveToLeft(_curRow, _curCol);
-                    if (nextIndex.row == 0 && nextIndex.col == -1)
+                    if (nextIndex.row == -1 && nextIndex.col == 0)
                     {
                         isOnSelectZone = true;
                         informer.ResetPopUp();
@@ -200,6 +196,10 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
                     }
                     else
                         SelectSlot(nextIndex.row, nextIndex.col);
+                    break;
+                case KeyCode.A:
+                    nextIndex = MoveToLeft(_curRow, _curCol);
+                    SelectSlot(nextIndex.row, nextIndex.col);
                     break;
                 case KeyCode.S:
                     nextIndex = MoveToDown(_curRow, _curCol);
@@ -219,18 +219,18 @@ public class ResearchKeyController : MonoBehaviour, IKeyControl
             switch (key)
             {
                 case KeyCode.W:
+                    break;
+                case KeyCode.A:
                     _curResearchSelectIndex = Mathf.Max(0, _curResearchSelectIndex - 1);
                     researchSelectBtns[_curResearchSelectIndex].OnClick();
                     break;
-                case KeyCode.A:
-                    break;
                 case KeyCode.S:
-                    _curResearchSelectIndex = Mathf.Min(researchSelectBtns.Count - 1, _curResearchSelectIndex + 1);
-                    researchSelectBtns[_curResearchSelectIndex].OnClick();
-                    break;
-                case KeyCode.D:
                     isOnSelectZone = false;
                     researchSelectBtns[_curResearchSelectIndex].SetBaseBtn();
+                    break;
+                case KeyCode.D:
+                    _curResearchSelectIndex = Mathf.Min(researchSelectBtns.Count - 1, _curResearchSelectIndex + 1);
+                    researchSelectBtns[_curResearchSelectIndex].OnClick();
                     break;
                 case KeyCode.Space:
                     isOnSelectZone = false;

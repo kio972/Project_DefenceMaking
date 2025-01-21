@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 85bcb261999b8bd49bd85e7bdfdd53f3, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 85bcb261999b8bd49bd85e7bdfdd53f3, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -634,8 +634,8 @@ GameObject:
   - component: {fileID: 6175258210243007840}
   - component: {fileID: 4057366162666320003}
   - component: {fileID: 8043262198714986815}
-  - component: {fileID: 5028213368328187005}
   - component: {fileID: 6433349921040231099}
+  - component: {fileID: 1497005949588089781}
   m_Layer: 5
   m_Name: Select1
   m_TagString: Untagged
@@ -759,24 +759,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5028213368328187005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4660230816997977649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundOnClick: 0
-  soundOnHover: 1
-  soundOnUnHover: 0
-  soundOnClip: {fileID: 0}
-  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
-  soundOnUnHoverClip: {fileID: 0}
 --- !u!114 &6433349921040231099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +772,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseOverEffect: {fileID: 3953669957913787045}
+--- !u!114 &1497005949588089781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4660230816997977649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad328896f9b8714db9260123d02be34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 0
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  soundOnHoverClip:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 05eca69a2b6c89a4786085c1f6029afe, type: 2}
+  soundOnUnHoverClip:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &4685002149346004786
 GameObject:
   m_ObjectHideFlags: 0
@@ -937,8 +946,8 @@ GameObject:
   - component: {fileID: 7967905946663408448}
   - component: {fileID: 4961343884293568660}
   - component: {fileID: 3845317060561134280}
-  - component: {fileID: 6155175923436243789}
   - component: {fileID: 3222831865719222254}
+  - component: {fileID: 7448221544927877671}
   m_Layer: 5
   m_Name: Select2
   m_TagString: Untagged
@@ -1062,24 +1071,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6155175923436243789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5351739951064963873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d85ad7c07f99c347abb1017c5b0aa35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundOnClick: 0
-  soundOnHover: 1
-  soundOnUnHover: 0
-  soundOnClip: {fileID: 0}
-  soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
-  soundOnUnHoverClip: {fileID: 0}
 --- !u!114 &3222831865719222254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1084,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseOverEffect: {fileID: 6366737025857377442}
+--- !u!114 &7448221544927877671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5351739951064963873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad328896f9b8714db9260123d02be34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 0
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  soundOnHoverClip:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 05eca69a2b6c89a4786085c1f6029afe, type: 2}
+  soundOnUnHoverClip:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &6009392165834621275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,3 +1404,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5b435cb44aecf9f4791d4a8c1249ae57, type: 3}
   select1Back: {fileID: 1602913369577202943}
   select2Back: {fileID: 8368707364375686752}
+  openSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: bf8c24beb03b6734c8a645244f8d8cd4, type: 2}
+  closeSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 48d824143ed8c0341a37c620ff319f43, type: 2}

@@ -82,10 +82,10 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     private ResearchSlot[] prevResearch = null;
 
     private readonly Color selectedColor = new Color(0.14f, 1, 0);
-    private readonly Color mouseOverColor = Color.black;
+    private readonly Color mouseOverColor = new Color(0.8f, 0.8f, 0.8f);
     private readonly Color impossibleColor = new Color(0.494f, 0.470f, 0.439f);
     private readonly Color completeColor = new Color(1, 0.4f, 0);
-    private readonly Color defaultColor = new Color(0.305f, 0.274f, 0.254f);
+    private readonly Color defaultColor = Color.white;
 
     private void OnDisable()
     {
