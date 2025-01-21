@@ -36,10 +36,16 @@ public class QuestMessage : MonoBehaviour
     [SerializeField]
     private Sprite[] sprites;
 
-    private bool closing = false;
+    [SerializeField]
+    private Sprite[] mainSelectSprite;
+    [SerializeField]
+    private Sprite[] subSelectSprite;
+    [SerializeField]
+    private Image select1Back;
+    [SerializeField]
+    private Image select2Back;
 
-    private readonly Color mainBtnColor = new Color(0.8f, 0.5f, 0.4f);
-    private readonly Color subBtnColor = new Color(0.63f, 0.55f, 0.52f);
+    private bool closing = false;
 
     private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -149,7 +155,7 @@ public class QuestMessage : MonoBehaviour
     private void ResetUIColors()
     {
         TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
-        Image[] imgs = GetComponentsInChildren<Image>();
+        Image[] imgs = GetComponentsInChildren<Image>(true);
         foreach (TextMeshProUGUI text in textMeshProUGUIs)
             text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
         foreach (Image img in imgs)
@@ -193,8 +199,10 @@ public class QuestMessage : MonoBehaviour
         bool isMain = data["Type"].ToString() == "main";
         if (img != null)
             img.sprite = sprites[isMain ? 0 : Random.Range(1, 4)];
-        select1.transform.parent.GetComponent<Image>().color = isMain ? mainBtnColor : subBtnColor;
-        select2.transform.parent.GetComponent<Image>().color = isMain ? mainBtnColor : subBtnColor;
+        select1.transform.parent.GetComponent<Image>().sprite = isMain? mainSelectSprite[0] : subSelectSprite[0];
+        select2.transform.parent.GetComponent<Image>().sprite = isMain ? mainSelectSprite[0] : subSelectSprite[0];
+        select1Back.sprite = isMain ? mainSelectSprite[1] : subSelectSprite[1];
+        select2Back.sprite = isMain ? mainSelectSprite[1] : subSelectSprite[1];
 
         titleText.text = data["MessageTitle"].ToString();
 
