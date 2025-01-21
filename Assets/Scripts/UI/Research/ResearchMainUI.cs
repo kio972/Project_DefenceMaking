@@ -6,7 +6,7 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ResearchMainUI : MonoBehaviour
+public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 {
     [SerializeField]
     GameObject uiPage;
@@ -103,6 +103,16 @@ public class ResearchMainUI : MonoBehaviour
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
     }
 
+    public void TryOpenUI()
+    {
+        GameObjectSwap swapper = transform.GetComponentInParent<GameObjectSwap>();
+        if (swapper != null)
+            swapper.SwapObject(this);
+        else
+            SetActive(true);
+    }
+
+
     [SerializeField]
     private GameObject btnObject;
 
@@ -110,10 +120,10 @@ public class ResearchMainUI : MonoBehaviour
     {
         if (Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) && btnObject.activeSelf)
         {
-            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
-                SetActive(true);
-            else if (uiPage.activeSelf)
+            if (uiPage.activeSelf)
                 SetActive(false);
+            else
+                TryOpenUI();
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ShopUI : MonoBehaviour
+public class ShopUI : MonoBehaviour, ISwappableGameObject
 {
     [SerializeField]
     GameObject uiPage;
@@ -96,6 +96,16 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    public void TryOpenUI()
+    {
+        GameObjectSwap swapper = transform.GetComponentInParent<GameObjectSwap>();
+        if (swapper != null)
+            swapper.SwapObject(this);
+        else
+            SetActive(true);
+    }
+
+
     private bool initState = false;
     private void Init()
     {
@@ -137,10 +147,10 @@ public class ShopUI : MonoBehaviour
     {
         if (Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) && btnObject.activeSelf && !GetComponentInChildren<CardPackEffect>(true).gameObject.activeSelf)
         {
-            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
-                SetActive(true);
-            else if (uiPage.activeSelf)
+            if (uiPage.activeSelf)
                 SetActive(false);
+            else
+                TryOpenUI();
         }
 
         if (curWave == GameManager.Instance.CurWave)

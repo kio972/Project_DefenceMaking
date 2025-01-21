@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 
-public class DeployUI : MonoBehaviour
+public class DeployUI : MonoBehaviour, ISwappableGameObject
 {
     private bool initState = false;
 
@@ -327,6 +327,15 @@ public class DeployUI : MonoBehaviour
         return newSlot;
     }
 
+    public void TryOpenUI()
+    {
+        GameObjectSwap swapper = transform.GetComponentInParent<GameObjectSwap>();
+        if (swapper != null)
+            swapper.SwapObject(this);
+        else
+            SetActive(true);
+    }
+
     public void Init()
     {
         DeploySlot[] temp = GetComponentsInChildren<DeploySlot>(true);
@@ -360,10 +369,10 @@ public class DeployUI : MonoBehaviour
 
         if (Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) && btnObject.activeSelf)
         {
-            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
-                SetActive(true);
-            else if (uiPage.activeSelf)
+            if (uiPage.activeSelf)
                 SetActive(false);
+            else
+                TryOpenUI();
         }
     }
 }

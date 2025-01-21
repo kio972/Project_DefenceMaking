@@ -56,7 +56,7 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
     {
         int index = isSoldOut ? 1 : 0;
         buyBtn.sprite = btnSprites[index];
-        bgImg.sprite = bgSprites[index];
+        //bgImg.sprite = bgSprites[index];
         buyText.text = isSoldOut ? "품절" : "구매";
         soldOutImage.SetActive(isSoldOut);
     }
