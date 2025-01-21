@@ -42,6 +42,8 @@ public class Monster : Battler, IHoldbacker
 
     [SerializeField]
     private AudioClip summonSound;
+    [SerializeField]
+    private AK.Wwise.Event summonSoundEvent;
 
     //public override float MoveSpeed
     //{
@@ -205,7 +207,10 @@ public class Monster : Battler, IHoldbacker
     {
         base.Init();
         if(GameManager.Instance.IsInit)
-            AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
+        {
+            //AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
+            summonSoundEvent?.Post(gameObject);
+        }
         ResetNode();
 
         monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");

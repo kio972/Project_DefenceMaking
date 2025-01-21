@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 7318116232214203766}
   - component: {fileID: 2103541630921623617}
   - component: {fileID: 9014006541645648792}
-  - component: {fileID: 2504114977898306151}
+  - component: {fileID: 5302766318147797760}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -281,7 +281,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &2504114977898306151
+--- !u!114 &5302766318147797760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,19 +290,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4809690254627854902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: ee77b49554ebf4811b35879e7d4717ad, type: 3}
-  - {fileID: 8300000, guid: fbb4fbd777cdf426aae4cb4f7db493c5, type: 3}
-  - {fileID: 8300000, guid: beaa72496a31e4936887dd529f173fec, type: 3}
-  - {fileID: 8300000, guid: ec7545368d42e4fa5b2bee31f2f7d46f, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 60134c8ec42bd4f2aa2ba7c4af6cdd8a, type: 3}
-  - {fileID: 8300000, guid: 2944c54af88104b4da1fae82cc1baa29, type: 3}
-  deadSoundMult: 0.5
+  attackSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: b67843fb08cfa0349985970c3c9523ea, type: 2}
+  deadSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 096847cfcea47fc4f98efec2b22d782d, type: 2}
 --- !u!1 &5298550852993196131
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +548,10 @@ MonoBehaviour:
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 9ea03113ba88b47cb81fe5129e4266c5, type: 3}
+  summonSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 94871b06bd0d9694ea3d3ce3b014098f, type: 2}
   middlePos: {fileID: 849969367580679284}
   sheildPrefab: {fileID: 1135644536747142, guid: d58db2a2d5820da4b8099f8d03af197c, type: 3}
   explosionPrefab: {fileID: 1063853928597754236, guid: 8d0b7621ea4225c4baa45457250d7cfb, type: 3}

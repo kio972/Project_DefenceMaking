@@ -26,6 +26,9 @@ public class FluctTimer : MonoBehaviour
     public string refreshMessage;
     public string fluctMessage;
 
+    [SerializeField]
+    private AK.Wwise.Event fluctSound;
+
     private void UpdateCoolTime()
     {
         if (target == null)
@@ -60,7 +63,8 @@ public class FluctTimer : MonoBehaviour
         if (!string.IsNullOrEmpty(refreshMessage))
         {
             GameManager.Instance.notificationBar?.SetMesseage(refreshMessage, NotificationType.Shop);
-            AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+            //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+            fluctSound?.Post(gameObject);
         }
     }
 

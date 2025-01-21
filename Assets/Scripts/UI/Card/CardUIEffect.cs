@@ -30,6 +30,9 @@ public class CardUIEffect : MonoBehaviour
     private CancellationTokenSource _scaleToken;
     private CancellationTokenSource _moveToken;
 
+    [SerializeField]
+    private AK.Wwise.Event mouseOverSound;
+
     public void ResetEffect()
     {
         effectTarget.localScale = Vector3.one;
@@ -62,7 +65,8 @@ public class CardUIEffect : MonoBehaviour
         effectTarget.rotation = Quaternion.identity;
         transform.SetAsLastSibling();
 
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        mouseOverSound?.Post(gameObject);
     }
 
     public void OnPointerExit()

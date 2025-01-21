@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5121816003620464307}
   - component: {fileID: 4442121077108697256}
   - component: {fileID: 8638838801445434031}
-  - component: {fileID: 8694940572642630542}
+  - component: {fileID: 8526418906259210425}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -150,7 +150,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &8694940572642630542
+--- !u!114 &8526418906259210425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,19 +159,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3948826638235807827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: 80bc71f8e3b7c4ee1b58819418cf95bf, type: 3}
-  - {fileID: 8300000, guid: a0d3231f646204e9388a4a1f2d87a4c7, type: 3}
-  - {fileID: 8300000, guid: edac4f0c8ddf44935b3428af83f0bd28, type: 3}
-  - {fileID: 8300000, guid: 3ba40cc141d6a4b34be5e0dae1f6a53d, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 8f9afdb829dc043cfaa2d7d64b5e36d6, type: 3}
-  - {fileID: 8300000, guid: 8abb00a9728dd4079a48f62c653d3165, type: 3}
-  deadSoundMult: 1
+  attackSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: db3e7fbf3222aed44af699fd2ab9b11c, type: 2}
+  deadSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 1d1fe7d5e3a315047a6729f0ecbd9c6f, type: 2}
 --- !u!1 &4299603332289189572
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +516,10 @@ MonoBehaviour:
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 62e2e45d391b840f9a2b9201b343fb66, type: 3}
+  summonSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 118049a519f25f84c81576ece7f4df74, type: 2}
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0
