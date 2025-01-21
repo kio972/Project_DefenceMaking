@@ -94,7 +94,7 @@ public class WaveController : MonoBehaviour
 
     public void UpdateWaveText()
     {
-        waveText.text = (GameManager.Instance.CurWave + 1).ToString("D2");
+        waveText.text = (GameManager.Instance.CurWave + 1).ToString();
     }
 
     public IEnumerator ISpawnWave(int waveIndex, System.Action callback = null)
