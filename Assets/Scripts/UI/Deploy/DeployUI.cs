@@ -288,7 +288,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         GameManager.Instance.cardLock = true;
         UIManager.Instance.CloseTab(uiPage);
         UIManager.Instance.SetTab(deployingWindow.gameObject, true, () => { DeployEnd().Forget(); });
-        btnBlocker.SetActive(true);
+        //btnBlocker.SetActive(true);
     }
 
     public void SetItem()
