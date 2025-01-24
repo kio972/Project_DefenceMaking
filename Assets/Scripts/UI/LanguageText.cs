@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public interface ILanguageChange
+{
+    void ChangeLangauge(Languages language, string key = null);
+}
+
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class LanguageText : MonoBehaviour
+public class LanguageText : MonoBehaviour, ILanguageChange
 {
     [SerializeField]
     protected string keyStr;

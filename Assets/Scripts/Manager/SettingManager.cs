@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public enum ScreenSize
@@ -70,7 +71,8 @@ public class BindKey
 public class SettingManager : Singleton<SettingManager>
 {
     #region GamePlaySetting
-    public Languages language = Languages.korean;
+    public ReactiveProperty<Languages> _language = new ReactiveProperty<Languages>(Languages.english);
+    public Languages language { get => _language.Value; set { _language.Value = value; } }
     public AutoPlaySetting autoPlay = AutoPlaySetting.setTile;
     public float textSize = 1f;
     public bool showShortCut = false;
