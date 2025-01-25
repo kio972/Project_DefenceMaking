@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UniRx;
-using static Unity.VisualScripting.Icons;
 
 [RequireComponent(typeof(Image))]
 public class LanguageSprite : MonoBehaviour, ILanguageChange
