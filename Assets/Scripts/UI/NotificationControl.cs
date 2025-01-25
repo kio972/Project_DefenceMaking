@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +43,9 @@ public class NotificationControl : MonoBehaviour
 
     private List<NotificationSlot> activeSlot = new List<NotificationSlot>();
 
+    [SerializeField]
+    private List<NotificationSlot> notiSlots = new List<NotificationSlot>();
+
     private void ArrangeIndex(int index)
     {
         for(int i = index; i < activeSlot.Count; i++)
@@ -68,7 +73,20 @@ public class NotificationControl : MonoBehaviour
 
     public void SetMesseage(string msg, NotificationType type)
     {
-        notiQueue.Enqueue(new NotiQueue(msg, type));
+        //notiQueue.Enqueue(new NotiQueue(msg, type));
+        ExcuteMesseage(msg, type).Forget();
+    }
+
+    private async UniTaskVoid ExcuteMesseage(string msg, NotificationType type)
+    {
+        NotificationSlot targetSlot = notiSlots[(int)type];
+        if(targetSlot.gameObject.activeInHierarchy)
+        {
+            targetSlot.OnClick();
+            await UniTask.WaitUntil(() => !targetSlot.gameObject.activeInHierarchy, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        }
+
+        targetSlot.SetMesseage(msg, type);
     }
 
     private void ModifyPos()
@@ -118,27 +136,30 @@ public class NotificationControl : MonoBehaviour
         if (slots == null || slots.Length == 0)
             return;
 
+        foreach(var slot in slots)
+            slot.Finish();
+
         wait = new WaitForSeconds(waitTime);
 
         slotPos = new Vector2[slots.Length];
         notiQueue = new Queue<NotiQueue>();
 
-        float pos = slots[0]._Rect.anchoredPosition.y;
-        float width = slots[0]._Rect.sizeDelta.y;
-        slotPos[0] = slots[0]._Rect.anchoredPosition;
-        for (int i = 1; i < slots.Length; i++)
-        {
-            slots[i]._Rect.anchoredPosition = new Vector2(slots[i]._Rect.anchoredPosition.x, pos - width - spacing);
-            pos = slots[i]._Rect.anchoredPosition.y;
-            width = slots[i]._Rect.sizeDelta.y;
-            slotPos[i] = slots[i]._Rect.anchoredPosition;
-        }
+        //float pos = slots[0]._Rect.anchoredPosition.y;
+        //float width = slots[0]._Rect.sizeDelta.y;
+        //slotPos[0] = slots[0]._Rect.anchoredPosition;
+        //for (int i = 1; i < slots.Length; i++)
+        //{
+        //    slots[i]._Rect.anchoredPosition = new Vector2(slots[i]._Rect.anchoredPosition.x, pos - width - spacing);
+        //    pos = slots[i]._Rect.anchoredPosition.y;
+        //    width = slots[i]._Rect.sizeDelta.y;
+        //    slotPos[i] = slots[i]._Rect.anchoredPosition;
+        //}
 
-        StartCoroutine(ManageNotification());
+        //StartCoroutine(ManageNotification());
     }
 
-    private void Update()
-    {
-        ModifyPos();
-    }
+    //private void Update()
+    //{
+    //    ModifyPos();
+    //}
 }

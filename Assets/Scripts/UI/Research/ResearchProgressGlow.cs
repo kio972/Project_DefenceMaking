@@ -45,11 +45,11 @@ public class ResearchProgressGlow : MonoBehaviour
             }
 
             fillImage.fillAmount = 1;
+            fillImage.gameObject.SetActive(false);
             glowImage.SetActive(true);
 
             await UniTask.WaitUntil(() => researchUI.activeSelf, default, cancellationTokenSource.Token);
             glowImage.SetActive(false);
-            fillImage.gameObject.SetActive(false);
         }
     }
 

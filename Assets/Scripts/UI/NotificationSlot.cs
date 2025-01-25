@@ -6,8 +6,8 @@ using TMPro;
 
 public enum NotificationType
 {
-    Research,
     Deploy,
+    Research,
     Shop,
 }
 
@@ -51,8 +51,10 @@ public class NotificationSlot : MonoBehaviour
     private NotificationState curState = NotificationState.Closed;
     public NotificationState _CurState { get => curState; }
 
+    [SerializeField]
+    private GameObject linkedPage;
 
-    private void Finish()
+    public void Finish()
     {
         curState = NotificationState.Closed;
         gameObject.SetActive(false);
@@ -77,11 +79,17 @@ public class NotificationSlot : MonoBehaviour
     public void OnClick()
     {
         animator.SetTrigger("OnClick");
-        SendMessageUpwards("ArrangeIndex", index);
+        //SendMessageUpwards("ArrangeIndex", index);
     }
 
     private void Awake()
     {
         btn.onClick.AddListener(OnClick);
+    }
+
+    private void Update()
+    {
+        if(curState == NotificationState.Wait && linkedPage != null && linkedPage.activeInHierarchy)
+            Finish();
     }
 }
