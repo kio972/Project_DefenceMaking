@@ -4,7 +4,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public class EmergencyEscape : ISkill
+public class EmergencyEscape : ISkill, IHaveCost
 {
     public bool IsPassive { get => false; }
 
@@ -17,11 +17,13 @@ public class EmergencyEscape : ISkill
 
     public ReactiveProperty<bool> isReady { get; } = new ReactiveProperty<bool>(false);
 
-    private int requiredHp = 5;
+    private int _cost = 5;
+    public int cost { get => cost; }
+    public string costType { get => "Hp"; }
 
     public void ReduceHpCost(int value)
     {
-        requiredHp -= value;
+        _cost -= value;
     }
 
     public void ReduceCoolTime(float value)
@@ -81,8 +83,8 @@ public class EmergencyEscape : ISkill
             cameraController.CamMoveToPos(kingTile.transform.position);
 
         king.MoveToBossRoom();
-        if (requiredHp > 0)
-            king.ForceGetDamage(requiredHp);
+        if (_cost > 0)
+            king.ForceGetDamage(_cost);
         curCoolTime = coolTime;
         return true;
     }
@@ -90,8 +92,8 @@ public class EmergencyEscape : ISkill
     public void SkillInit()
     {
         king = GameManager.Instance.king;
-        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp <= requiredHp).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
-        var hpStream2 = Observable.EveryLateUpdate().Where(_ => king.curHp > requiredHp && coolRate.Value == 0).Subscribe(_ => { isReady.Value = true; }).AddTo(king.gameObject);
+        var hpStream = Observable.EveryLateUpdate().Where(_ => king.curHp <= _cost).Subscribe(_ => { isReady.Value = false; }).AddTo(king.gameObject);
+        var hpStream2 = Observable.EveryLateUpdate().Where(_ => king.curHp > _cost && coolRate.Value == 0).Subscribe(_ => { isReady.Value = true; }).AddTo(king.gameObject);
 
         var coolTimeStream = Observable.EveryUpdate().Where(_ => curCoolTime > 0)
             .Subscribe(_ =>

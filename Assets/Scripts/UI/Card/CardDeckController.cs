@@ -173,25 +173,25 @@ public class CardDeckController : MonoBehaviour
 
     private void UpdateDeckCount()
     {
-        if (deckCountText == null)
-            return;
+        //if (deckCountText == null)
+        //    return;
 
-        deckCountText.text = (_cardDeck.Count).ToString();
-        if (_cardDeck.Count < 10)
-        {
-            cardCountImg.sprite = emptycardCountSprite;
-            deckCountText.color = Color.red;
-        }
-        else
-        {
-            cardCountImg.sprite = cardCountSprite;
-            deckCountText.color = Color.white;
-        }
+        //deckCountText.text = (_cardDeck.Count).ToString();
+        //if (_cardDeck.Count < 10)
+        //{
+        //    cardCountImg.sprite = emptycardCountSprite;
+        //    deckCountText.color = Color.red;
+        //}
+        //else
+        //{
+        //    cardCountImg.sprite = cardCountSprite;
+        //    deckCountText.color = Color.white;
+        //}
 
-        if (_cardDeck.Count <= 0)
-            deckBtnImg.sprite = emptyDeckImg;
-        else
-            deckBtnImg.sprite = originDeckImg;
+        //if (_cardDeck.Count <= 0)
+        //    deckBtnImg.sprite = emptyDeckImg;
+        //else
+        //    deckBtnImg.sprite = originDeckImg;
     }
 
     public void DrawGuide(Vector3 cardPos, bool value)

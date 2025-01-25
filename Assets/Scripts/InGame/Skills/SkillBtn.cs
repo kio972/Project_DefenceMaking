@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class SkillBtn : MonoBehaviour
 
     private readonly float mouseOverTime = 0.2f;
     private CancellationTokenSource _scaleToken;
+
+    [SerializeField]
+    private SkillCostText costText;
 
     private void ResetScaleToken()
     {
@@ -55,6 +59,10 @@ public class SkillBtn : MonoBehaviour
         _skill.SkillInit();
         _skill.isReady.Subscribe(_ => _coolTimeFill.gameObject.SetActive(_));
         _skill.coolRate.Subscribe(_ => _coolTimeFill.fillAmount = _).AddTo(gameObject);
+        if (_skill is IHaveCost haveCost)
+            costText.SetCost(haveCost);
+        else
+            costText.gameObject.SetActive(false);
     }
 
     public void UseSkillBtn()

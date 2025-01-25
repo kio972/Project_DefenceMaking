@@ -9,8 +9,14 @@ public interface ISkill
     public bool IsPassive { get; }
     public ReactiveProperty<float> coolRate { get; }
     public ReactiveProperty<bool> isReady { get; }
+
     public bool UseSkill();
 
     public void SkillInit();
 }
 
+public interface IHaveCost
+{
+    public int cost { get; }
+    public string costType { get; }
+}
