@@ -107,7 +107,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             ingameUI = GetComponentInParent<InGameUI>();
         ingameUI?.SetRightUI(true);
         ingameUI?.SetDownUI(true);
-        btnBlocker.SetActive(false);
+        //btnBlocker.SetActive(false);
 
         await UniTask.WaitUntil(() => !Input.GetKey(KeyCode.Mouse0));
         InputManager.Instance.settingCard = false;

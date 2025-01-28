@@ -31,7 +31,5 @@ public class CardPackView : MonoBehaviour
             cardUIs[i].SetCardUI(cardDic[targetCards[i]]);
             cardUIs[i].gameObject.SetActive(true);
         }
-
-        gameObject.SetActive(true);
     }
 }

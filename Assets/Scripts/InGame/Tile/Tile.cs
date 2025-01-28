@@ -15,6 +15,8 @@ public enum TileType
     Door,
     Room_Single,
     Environment,
+    Herb,
+    Special,
 }
 
 public interface ITileKind

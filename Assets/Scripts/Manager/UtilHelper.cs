@@ -12,6 +12,27 @@ using System.Linq;
 
 public static class UtilHelper
 {
+    public static TileType GetTileType(string type)
+    {
+        switch(type)
+        {
+            case "road":
+                return TileType.Path;
+            case "room":
+                return TileType.Room_Single;
+            case "roomPart":
+                return TileType.Room;
+            case "roomDoor":
+                return TileType.Door;
+            case "environment":
+                return TileType.Environment;
+            case "herb":
+                return TileType.Herb;
+            default:
+                return TileType.Special;
+        }
+    }
+
     public static List<Tile> GetPathCount(Tile startTile)
     {
         List<Tile> visited = new List<Tile> { startTile };

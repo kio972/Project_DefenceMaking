@@ -23,6 +23,8 @@ public class DataManager : Singleton<DataManager>
     public List<Dictionary<string, object>> shop_Table { get => _shop_Table; }
     public List<Dictionary<string, object>> deck_Table { get => _deckList; }
 
+    public Dictionary<TileType, List<int>> cardIndexsDic { get; private set; }  
+
     public List<int> tileCard_Indexs { get; private set; }
     public List<int> monsterCard_Indexs { get; private set; }
     public List<int> trapCard_Indexs { get; private set; }

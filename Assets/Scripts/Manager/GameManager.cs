@@ -56,6 +56,11 @@ public class GameManager : IngameSingleton<GameManager>
     public ResearchMainUI research;
     public ShopUI shop;
 
+    public CardSelection cardSelector;
+    [SerializeField]
+    private int selectInterval = 3;
+
+
     //public int king_Hp = 20;
     private bool dailyIncome = true;
 
@@ -338,6 +343,9 @@ public class GameManager : IngameSingleton<GameManager>
 
             midBellSound?.Post(gameObject);
             //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
+
+            if(curWave % selectInterval == 0)
+                cardSelector?.StartCardSelect();
         }
     }
 

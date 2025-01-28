@@ -42,8 +42,9 @@ ui_settings_bgmvolume,배경음,Music Volume
 ui_settings_fxvolume,효과음,Effects Volume
 ui_settings_uivolume,UI조작,UI Volume
 ui_settings_backgroundmute,최소화 시 음소거,Mute while in background
+ui_settings_shortcutUI,카드 단축키 표시,Show Card Shortcuts
 announce_title_nosave,저장된 게임 데이터가 없습니다.,There is no saved game data.
-announce_ingame_tileconnect,시작 타일과 마왕 타일이 연결되어 있어야합니다.,The starting tile and the demon tile must be connected.
+announce_ingame_tileconnect,시작 타일과 마왕 타일이 연결되어 있어야합니다.,You must connect starting tile and demon tile together.
 announce_ingame_handfull,손 패가 가득 찼습니다.,Your hand is full.
 announce_common_developing,개발중인 기능입니다.,This feature is in development.
 announce_confirm_gotitle,타이틀로 나가시겠습니까?,Are you sure?
@@ -128,7 +129,7 @@ card_0_whiteherbfarm,백색 약초 생산지,White Herb Farm
 card_1_whiteherbfarm,"백색 약초를 생산하는 곳
 24시간 마다 백색 약초 +4","Place that produces white herbs
 White herbs + 4 every 24 hours"
-card_0_woodcade,나무 바리케이드,Wooden Barricade
+card_0_woodcade,목제 바리케이드,Wooden Barricade
 card_1_woodcade,"고블린, 미믹 몬스터의 이동을 막는다.",Block the movement of Goblins and Mimic monsters.
 card_0_metalcade,철제 바리케이드,Metal Barricade
 card_1_metalcade,"고블린, 골렘, 미믹의 이동을 막는다.","Block the movement of Goblins, Golems, and Mimics."
@@ -144,19 +145,23 @@ card_0_gold2(Temp),강화된 금광(임시),Gold+(Temp)
 card_1_gold2(Temp),일반적인 금광보다 채광량이 더 많다.,Gold+(Temp)
 card_0_manastone2(Temp),강화된 마력석(임시),Mana Stone+(Temp)
 card_1_manastone2(Temp),일반적인 마력석보다 순도가 더 높다.,Mana Stone+(Temp)
-deploy_spin_0,칼날 함정,Spin Trap
-deploy_spin_1,"회전하는 칼날로 공격하는 함정
-8번 공격하면 파괴된다.","A trap that attacks with a spinning blade
-Destroyed after 8 attacks."
+card_choose_0,위의 카드를 추가한다,Add the above card
+card_choose_1,위의 카드를 제거한다,Remove the above card
+card_choose_2,건너뛰기,Skip
+card_choose_3,카드 선택을 건너뛴다.,Skip card selection.
+deploy_spin_0,칼날 함정,Blade trap
+deploy_spin_1,"회전하는 칼날로 공격하는 함정 
+내구도 : 8","Trap armed with spinning blades
+Durability : 8"
 deploy_spear_0,창 함정,Spear Trap
 deploy_spear_1,"창이 솟아올라 공격하는 함정
-15번 공격하면 파괴된다.","A trap that attacks with a rising spear.
-Destroyed after 15 attacks."
+내구도 : 15","Trap armed with spear
+Durability : 15"
 deploy_saw_0,톱날 함정,Saw Trap
 deploy_saw_1,"회전톱으로 공격하는 함정
-20번 공격하면 파괴된다.","A trap that attacks with a spinning saw.
-Destroyed after 20 attacks."
-deploy_hole_0,구멍 함정,Hole Trap
+내구도 : 20","Trap armed with sawblade
+Druability : 20"
+deploy_hole_0,구멍 함정,Pitfall trap
 deploy_hole_1,"구멍에 빠뜨려 공격하는 함정
 1번 공격하면 파괴된다.","A trap that attacks by falling into a hole.
 Destroyed after 1 attacks."
@@ -167,10 +172,10 @@ deploy_slime2_1,죽을 때 주변 적을 중독에 빠뜨린다.,Poison nearby e
 deploy_slime3_0,폭발 슬라임,Explosion Slime
 deploy_slime3_1,죽을 때 주변에 피해를 입힌다.,Deals damage to its surroundings when dying
 deploy_goblin1_0,고블린 전사,Warrior Goblin
-deploy_goblin1_1,주변에 친구가 많을 수록 강해진다.,"The more friends you have around you, the stronger you are"
+deploy_goblin1_1,주변에 친구가 많을 수록 강해진다.,"More green, More power"
 deploy_goblin2_0,고블린 정찰병,Scout Goblin
-deploy_goblin2_1,"돌을 던져 공격한다.
-은신한 적을 공격 할 수 있다.","Throws rocks to attack.
+deploy_goblin2_1,"원거리 공격 가능
+은신한 적을 탐지하고 공격할 수 있다.","Throws rocks to attack.
 Can attack hidden enemies."
 deploy_goblin3_0,고블린 궁수,Archer Goblin
 deploy_goblin3_1,원거리에서 공격해 적을 중독에 빠뜨린다.,Attack from a distance to poison an enemy
@@ -190,64 +195,107 @@ deploy_mimic3_0,보물 상자 미믹,Treasure Mimic
 deploy_mimic3_1,상자 상태에서 HP를 회복한다.,Heal HP while in a box
 deploy_mimic4_0,왕실 보물 상자 미믹,Royal Mimic
 deploy_mimic4_1,주변의 적을 밀치면서 정체를 드러낸다.,Reveal your identity by knocking away nearby enemies
-research_slime1_0,점액 슬라임 소환,
-research_slime1_1,갈림길에서 분열하는 점액 슬라임 소환 가능,
-research_slime2_0,슬라임 언데드 볼륨업,
-research_slime2_1,"슬라임, 언데드의 최대 HP 5증가",
-research_slime3_0,중독 슬라임 소환,
-research_slime3_1,사망시 주변에 중독을 부여하는 슬라임 소환 가능,
-research_slime4_0,슬라임 스트레칭,
-research_slime4_1,슬라임의 분열 최대 횟수 +1 증가,
-research_slime5_0,폭탄 슬라임 소환,
-research_slime5_1,사망시 주변에 피해를 주는 슬라임 소환 가능,
-research_undead1_0,언데드 창병 소환,
-research_undead1_1,언데드 창병 소환 가능,
-research_undead2_0,언데드 방패병 소환,
-research_undead2_1,언데드 방패병 소환 가능,
-research_undead3_0,뼈다귀 붙이기,
-research_undead3_1,시체 모으기 마리 수 -1,
-research_undead4_0,언데드 마법사 소환,
-research_undead4_1,언데드 마법사 소환 가능,
-research_undead5_0,몬스터 창궐,
-research_undead5_1,"슬라임, 언데드 스폰 2배 증가",
-research_goblin1_0,고블린 전사 소환,
-research_goblin1_1,무리 지으면 강해지는 고블린 전사 소환 가능,
-research_goblin2_0,고블린 정찰병 소환,
-research_goblin2_1,은신을 탐지 할 수 있는 고블린 정찰병 소환 가능,
-research_goblin3_0,전략적 후퇴,
-research_goblin3_1,고블린이 도망친 후 HP 20% 회복,
-research_goblin4_0,고블린 궁수 소환,
-research_goblin4_1,독화살로 공격하는 고블린 궁수 소환 가능,
+research_slime1_0,제작 : 점액 슬라임,Production: Mucus Slime
+research_slime1_1,갈림길에서 분열하는 점액 슬라임 소환 가능,Can summon a Cleaving Slime at the Crossroads
+research_slime2_0,인체 재활용,Body recycling
+research_slime2_1,"슬라임, 언데드 최대 체력 +5","Slime, Undead +5% Max Health"
+research_slime3_0,제작 : 독성 슬라임,Production: Toxic Slime
+research_slime3_1,사망 시 주변을 중독시킴,Poison your surroundings on death
+research_slime4_0,97호 화합물,Compound No. 97
+research_slime4_1,슬라임이 갈림길에서 최대 1회 분열함,Slime splits up to once at a fork in the road
+research_slime5_0,제작 : 화약 슬라임,Production: Gunpowder Slime
+research_slime5_1,사망 시 폭발하여 주변에 피해를 입힘,"Explodes on death, causing damage to the surrounding area"
+research_undead1_0,강령술 : 언데드 창병,
+research_undead1_1,타일 내 7명의 모험가/몬스터 사망 시 체력 회복,
+research_undead2_0,강령술 : 언데드 방패병,
+research_undead2_1,타일 내 5명의 모험가/몬스터 사망 시 체력 회복,
+research_undead3_0,뼈 수확,Bone-cycling
+research_undead3_1,언데드 몬스터 회복에 필요한 개체 수 -1,
+research_undead4_0,강령술 : 언데드 마법사,
+research_undead4_1,"원거리 공격
+타일 내 7명의 모험가/몬스터 사망 시 체력 회복",
+research_undead5_0,물량공세,
+research_undead5_1,"슬라임, 언데드 몬스터가 2배로 생성됨",
+research_goblin1_0,소집 : 고블린 전사,Convocation: Goblin Warrior
+research_goblin1_1,"체력이 낮아지면 도주함
+무리의 힘 : 주변에 고블린 전사가 많을수록 강해짐","Fleeing when health is low
+Strength of the horde: the more Goblin Warriors around you, the stronger you are"
+research_goblin2_0,소집 : 고블린 정찰병,Convocation: Goblin Scout
+research_goblin2_1,"체력이 낮아지면 도주함
+원거리 공격
+은신한 적 탐지","Fleeing When Low Health
+Ranged Attacks
+Detecting Stealthy Enemies"
+research_goblin3_0,전략적 후퇴,Strategic retreat
+research_goblin3_1,"고블린이 도망친 후, 체력의 20%를 회복","Goblins flee, then recover 20% of their health"
+research_goblin4_0,소집 : 고블린 궁수,Convocation: Goblin Archer
+research_goblin4_1,"체력이 낮아지면 도주함
+원거리 공격
+공격한 적을 중독시킴","Fleeing When Low Health
+Ranged attacks
+Poisons enemies you attack"
 research_goblin5_0,고블린 오크 다이어트,
 research_goblin5_1,"고블린, 오크 소환 속도 25% 증가",
-research_oak1_0,오크 환영,
-research_oak1_1,오크 레어 등급 소환 가능,
-research_oak2_0,오크 환여엉,
-research_oak2_1,오크 에픽 등급 소환 가능,
-research_oak3_0,오크 환여어어엉,
-research_oak3_1,오크 전설 등급 소환 가능,
-research_golem1_0,스톤 골렘 소환,
-research_golem1_1,적의 공격에 밀리지 않는 스톤 골렘 소환 가능,
-research_golem2_0,아이언 골렘 소환,
-research_golem2_1,쉴드를 보유한 아이언 골렘 소환 가능,
-research_golem3_0,골렘 스펙업,
-research_golem3_1,골렘 최대 HP 20% 증가,
-research_golem4_0,흑요석 골렘 소환,
-research_golem4_1,쉴드 파괴시 주변에 피해를 주는 흑요석 골렘 소환 가능,
-research_golem5_0,골렘의 도발,
-research_golem5_1,골렘의 적 저지수 +2 증가,
-research_golem6_0,미스릴 골렘 소환,
-research_golem6_1,파괴된 쉴드를 재생성하는 미스릴 골렘 소환 가능,
-research_mimic1_0,나무 상자 미믹 소환,
-research_mimic1_1,적을 유인하는 나무 상자 미믹 소환 가능,
-research_mimic2_0,보급 상자 미믹 소환,
-research_mimic2_1,상자로 재둔갑하는 보급 상자 미믹 소환 가능,
-research_mimic3_0,보물 상자 미믹 소환,
-research_mimic3_1,상자 상태에서 HP를 회복하는 보물 상자 미믹 소환 가능,
-research_mimic4_0,매력적인 상자,
-research_mimic4_1,유혹한 적의 수만큼 미믹이 랜덤 버프를 획득,
-research_mimic5_0,왕실 보물 상자 미믹 소환,
-research_mimic5_1,둔갑 해제시 적을 놀래키는 왕실 보물 상자 미믹 소환 가능,
+research_oak1_0,오크 반갑다!,Orkz weLLcoMe!
+research_oak1_1,레어 등급 오크 배치 가능,
+research_oak2_0,오크 엄청 반갑다!!!,Orkz weLLcoMe!!!!
+research_oak2_1,에픽 등급 오크 배치 가능,
+research_oak3_0,오크 완전 엄청 반갑다!!!!!,Orkz weLLcoMe!!!!!!!!!!!
+research_oak3_1,전설 등급 오크 소환 가능,
+research_golem1_0,제작 : 석재 골렘,Crafting: Stone Golem
+research_golem1_1,"석제 골램 배치 가능
+적의 공격에 밀려나지 않음","Stone Golems can be deployed
+Can't be knocked back by enemy attacks"
+research_golem2_0,제작 : 강철 골렘,Crafting: Steel Golem
+research_golem2_1,"강철 골렘 배치 가능
+적의 공격에 밀려나지 않음
+추가 쉴드 보유","Steel Golems can be deployed
+Can't be knocked back by enemy attacks
+Has extra shields"
+research_golem3_0,골렘 구조 보강,reinforement
+research_golem3_1,골렘 최대 체력 +20%,Golem has +20% Max Health
+research_golem4_0,제작 : 흑요석 골렘,Crafting: Obsidian Golem
+research_golem4_1,"흑요석 골렘 배치 가능
+적의 공격에 밀려나지 않음
+추가 쉴드 보유
+쉴드는 파괴될 때 주변에 피해를 입힘","Obsidian Golems can be deployed
+Can't be knocked back by enemy attacks
+Has additional shields
+Shields deal damage to the surrounding area when destroyed"
+research_golem5_0,군중 진압 개조,Crowd control conversion
+research_golem5_1,골렘의 적 저지수 +2 증가,Golems have +2 Enemy Low Index
+research_golem6_0,제작 : 미스릴 골렘,Crafting: Mithril Golem
+research_golem6_1,"미스릴 골렘 배치 가능
+적의 공격에 밀려나지 않음
+추가 쉴드 보유
+쉴드는 파괴 시 주변에 피해를 입히며, 일정 시간 후 재생성됨","Mithril Golems can be deployed
+Can't be knocked back by enemy attacks
+Has additional shields
+Shields deal damage to the surrounding area when destroyed, and regenerate after a period of time"
+research_mimic1_0,제작 : 미믹,Crafting: Mimic
+research_mimic1_1,"미믹 배치 가능
+자신이 있는 타일로 적을 유인함","Mimic Deployable
+Lure enemies to your tile"
+research_mimic2_0,제작 : 보급상자 미믹,Crafting: Supply Crate Mimic
+research_mimic2_1,"보급상자 미믹 배치 가능
+자신이 있는 타일로 적을 유인함
+전투 종료 후 다시 상자로 위장함","Supply Crate Mimic Deployable
+Lures enemies to your tile
+Disguises itself as a crate again after the battle ends"
+research_mimic3_0,제작 : 보물상자 미믹,Crafting: Treasure Chest Mimic
+research_mimic3_1,"보물상자 미믹 배치 가능
+자신이 있는 타일로 적을 유인함
+위장하고 있는 동안 체력을 회복함","Treasure Chest Mimic Placement
+Lures enemies to your tile
+Recovers health while camouflaged"
+research_mimic4_0,진수성찬,Sumptuous feast
+research_mimic4_1,미믹이 유혹한 적의 수에 비례하여 랜덤 버프를 획득함,Mimic gains a random buff proportional to the number of enemies he seduces
+research_mimic5_0,제작 : 왕실 금고 미믹,Crafting: Royal Vault Mimic
+research_mimic5_1,"왕실 금고 미믹 배치 가능
+자신이 있는 타일로 적을 유인함
+위장 해제 시 적을 놀래킴","Royal Vault Mimic Deployable
+Lures enemies to your tile
+Surprises enemies when unmasked"
 research_succubus1_0,서큐버스 계약I,0
 research_succubus2_0,서큐버스 협상,0
 research_succubus3_0,서큐버스 계약II,0
@@ -280,321 +328,420 @@ research_dragon2_1,드래곤 소환 속도 10% 증가,
 research_dragon3_1,드래곤 요구 마력 -1,
 research_dragon4_1,드래곤 전설 등급 소환 가능,
 research_dragon5_1,드래곤 요구 마력 -1,
-research_road1_0,포장된 길,
-research_road1_1,"길 타일을 강화
-효과 : 몬스터 이동속도 20% 증가
-조건 : 길 타일 5개 이상 연결",적의 공격에 밀리지 않는 스톤 골렘 소환 가능
-research_road2_0,길 청소,
-research_road2_1,포장된 길 타일 위에서 몬스터 공격속도 20% 증가,
-research_room1_0,튼튼한 방,
-research_room1_1,"방 타일을 강화
-효과 : 방 타일의 사용 가능 마력 1 증가
-조건 : 방 완성 시",
-research_envir1_0,바위 선별,
-research_envir1_1,바위 타일의 HP 증가량 추가 1 증가,
-research_envir2_0,금광 채광,
-research_envir2_1,금광 타일이 제공하는 금화 추가 5 증가,
-research_barri1_0,나무 바리케이드,
-research_barri1_1,나무 바리케이드 카드를 환경요소 카드팩에 추가,
-research_barri2_0,철제 바리케이드,
-research_barri2_1,철제 바리케이드 카드를 환경요소 카드팩에 추가,
-research_magic1_0,휴지통,
-research_magic1_1,휴지통 카드를 환경요소 카드팩에 추가,
-research_maohp1_0,마왕 체력 강화1,
-research_maohp1_1,마왕 최대 HP 5 증가,
-research_maohp2_0,마왕 체력 강화2,
-research_maohp2_1,마왕 최대 HP 15 증가,
-research_maohp3_0,마왕 체력 강화3,
-research_maohp3_1,마왕 최대 HP 30 증가,
-research_maodex1_0,마왕 민첩 강화1,
-research_maodex1_1,마왕 공격속도 10% 증가,
-research_maodex2_0,마왕 민첩 강화2,
-research_maodex2_1,마왕 공격속도 15% 증가,
-research_maodex3_0,마왕 민첩 강화3,
-research_maodex3_1,마왕 공격속도 25% 증가,
-research_maosight1_0,마왕 시력 강화1,
-research_maosight1_1,마왕 사거리 1 증가,
-research_maosight2_0,마왕 시력 강화2,
-research_maosight2_1,마왕 사거리 1 증가,
-research_maosight3_0,마왕 시력 강화3,
-research_maosight3_1,마왕 사거리 1 증가,
-research_maoaura1_0,마왕의 아우라1,
-research_maoaura1_1,마왕 주변 1타일의 몬스터 공격력 20% 증가,
-research_maoaura2_0,마왕의 아우라2,
-research_maoaura2_1,마왕 주변 3타일의 몬스터 공격력 20% 증가,
-research_maoaura3_0,마왕의 아우라3,
-research_maoaura3_1,마왕 주변 5타일의 몬스터 공격력 20% 증가,
-research_maoeye1_0,마왕 은신 탐지,
-research_maoeye1_1,마왕이 은신 탐지 능력 보유,
-research_maoeye2_0,마안 부여,
-research_maoeye2_1,일정 시간마다 주변 2타일의 몬스터에게 은신 탐지 능력을 일시 부여,
-research_maoeye3_0,잠시 대기,
-research_maoeye3_1,일정 시간마다 주변 3타일의 몬스터의 이동을 멈추게 한다.,
+research_road1_0,도로 포장,Pavement
+research_road1_1,"몬스터가 포장된 길 타일 위에 있을 때,이동 속도 +20%
+해금 조건 : 길 타일 5개 이상 연결","Monster has +20% Movement Speed when on a Paved Road Tile
+Conditions to unlock: Connect 5 or more Road tiles"
+research_road2_0,핏빛 길,Blood Road
+research_road2_1,"몬스터가 포장된 길 타일 위에 있을 때, 공격 속도 +20%",20% Attack Speed when Monster is on a Paved Road tile
+research_room1_0,내부 공사,Internal construction
+research_room1_1,"방 타일의 사용 가능 마력 +1
+해금 조건 : 방 1개 완성","Room Tiles have +1 Usable Magic
+Unlock Conditions: Complete 1 Room"
+research_envir1_0,석재 선별,Stone sorting
+research_envir1_1,바위 타일이 제공하는 추가 체력 +1,Additional +1 Health provided by Rock Tiles
+research_envir2_0,고급 채광 기술,advanced mining process
+research_envir2_1,금광 타일이 제공하는 금화 +5,Gold Mine tiles provide +5 Gold Coins
+research_barri1_0,목제 바리케이드 구매,Buy wooden barricades
+research_barri1_1,나무 바리케이드 카드를 환경요소 카드팩에 추가,Add the Wooden Barricade card to the Environmental Elements card pack
+research_barri2_0,철제 바리케이드 구매,Buy iron barricades
+research_barri2_1,철제 바리케이드 카드를 환경요소 카드팩에 추가,Add the Iron Barricade card to the Environmental Elements card pack
+research_magic1_0,휴지통,Trash
+research_magic1_1,휴지통 카드를 환경요소 카드팩에 추가,Add the Trash card to the Environmental Elements card pack
+research_maohp1_0,마왕 체력 강화1,Increased Demon Health1
+research_maohp1_1,마왕 최대 HP 5 증가,Demon max HP increased by 5
+research_maohp2_0,마왕 체력 강화2,Increased Demon Health2
+research_maohp2_1,마왕 최대 HP 15 증가,Demon max HP increased by 15
+research_maohp3_0,마왕 체력 강화3,Increased Demon Health3
+research_maohp3_1,마왕 최대 HP 30 증가,Demon max HP increased by 30
+research_maodex1_0,마왕 민첩 강화1,Increased Demon Agility1
+research_maodex1_1,마왕 공격속도 10% 증가,Demon Attack Speed increased 10%
+research_maodex2_0,마왕 민첩 강화2,Increased Demon Agility2
+research_maodex2_1,마왕 공격속도 15% 증가,Demon Attack Speed increased 15%
+research_maodex3_0,마왕 민첩 강화3,Increased Demon Agility3
+research_maodex3_1,마왕 공격속도 25% 증가,Demon Attack Speed increased 25%
+research_maosight1_0,마왕 시력 강화1,Increased Demon Sight1
+research_maosight1_1,마왕 사거리 1 증가,Demon range increased by 1
+research_maosight2_0,마왕 시력 강화2,Increased Demon Sight2
+research_maosight2_1,마왕 사거리 1 증가,Demon range increased by 1
+research_maosight3_0,마왕 시력 강화3,Increased Demon Sight3
+research_maosight3_1,마왕 사거리 1 증가,Demon range increased by 1
+research_maoaura1_0,마왕의 아우라1,Demon Aura1
+research_maoaura1_1,마왕 주변 1타일의 몬스터 공격력 20% 증가,20% increased Monster Attack for 1 tile around the Demon
+research_maoaura2_0,마왕의 아우라2,Demon Aura2
+research_maoaura2_1,마왕 주변 3타일의 몬스터 공격력 20% 증가,20% increased Monster Attack for 3 tile around the Demon
+research_maoaura3_0,마왕의 아우라3,Demon Aura3
+research_maoaura3_1,마왕 주변 5타일의 몬스터 공격력 20% 증가,20% increased Monster Attack for 5 tile around the Demon
+research_maoeye1_0,권능 : 투시안,Power: Tucian
+research_maoeye1_1,마왕이 은신 탐지 능력 보유,Demons have Stealth Detection
+research_maoeye2_0,권능 : 시야 공유,Power: Shared Vision
+research_maoeye2_1,일정 시간마다 주변 2타일의 몬스터에게 은신 탐지 능력을 일시 부여,Temporarily grants Stealth Detection to monsters up to 2 tiles away at a set time
+research_maoeye3_0,권능 : 정지,Power: Stop
+research_maoeye3_1,"일정 시간마다 마왕 주변의 몬스터를 정지시킴
+범위 : 3타일","Freezes monsters near the Demon for a set amount of time
+Range: 3 tiles"
 research_maoskill1_0,긴급 탈출 활성화,
 research_maoskill1_1,"액티브 스킬 긴급 탈출을 활성화
 효과 : 마왕 타일을 반드시 랜덤 이동시킨다.
 조건 : HP 5 소모",
-research_maoskill2_0,숙련된 도망,
-research_maoskill2_1,긴급 탈출의 HP 소모값을 제거한다.,
-research_maoskill3_0,퇴로 확보,
-research_maoskill3_1,긴급 탈출의 쿨타임을 25% 감소시킨다.,
-shop_item0001_0,마계 하급 복권,
-shop_item0001_1,10~100 골드 랜덤 보상,
-shop_item0002_0,마계 중급 복권,
-shop_item0002_1,10~1000 골드 랜덤 보상,
-shop_item0003_0,마계 상급 복권,
-shop_item0003_1,10~10000 골드 랜덤 보상,
-shop_item0004_0,길 카드 팩I,
+research_maoskill2_0,계획된 도주,Planned getaways
+research_maoskill2_1,긴급 탈출의 HP 소모값을 제거,Removed the HP cost of Emergency Escape
+research_maoskill3_0,도주 경로 설계,Designing an escape route
+research_maoskill3_1,긴급 탈출의 쿨타임을 25% 감소,Reduced the cooldown of Emergency Escape by 25
+shop_item0001_0,마계 하급 복권,Demon Realm Lesser Lottery
+shop_item0001_1,10~100 골드 랜덤 보상,10-100 Gold Random Reward
+shop_item0002_0,마계 중급 복권,Demon Realm Intermediate Lottery
+shop_item0002_1,10~1000 골드 랜덤 보상,10-1000 Gold Random Reward
+shop_item0003_0,마계 상급 복권,Demon Realm Advanced Lottery
+shop_item0003_1,10~10000 골드 랜덤 보상,10-10000 Gold Random Reward
+shop_item0004_0,길 카드 팩I,Road Card Pack I
 shop_item0004_1,"6장의 카드가 담겨있는 카드팩
-길 카드의 비중이 높다.",
-shop_item0005_0,방 카드 팩I,
+길 카드의 비중이 높다.","A pack of 6 cards
+A high proportion of Road cards."
+shop_item0005_0,방 카드 팩I,Room Card Pack I
 shop_item0005_1,"6장의 카드가 담겨있는 카드팩
-방 카드의 비중이 높다.",
-shop_item0006_0,환경요소 카드 팩I,
+방 카드의 비중이 높다.","A pack of 6 cards
+A high proportion of room cards."
+shop_item0006_0,환경요소 카드 팩I,Environment Card Pack I
 shop_item0006_1,"6장의 카드가 담겨있는 카드팩
-환경요소 카드의 비중이 높다.",
-shop_item0007_0,길 카드만 팩I,
-shop_item0007_1,3장의 길 카드만 담겨있는 카드팩,
-shop_item0008_0,방 카드만 팩I,
-shop_item0008_1,3장의 방 카드만 담겨있는 카드팩,
-shop_item0009_0,환경요소 카드만 팩I,
-shop_item0009_1,3장의 환경요소 카드만 담겨있는 카드팩,
-shop_item0010_0,약초 텃밭 카드 팩,
-shop_item0010_1,3장의 약초 텃밭 카드가 담겨있는 카드팩,
-shop_item0011_0,약초 생산지 카드 팩,
-shop_item0011_1,3장의 약초 생산지 카드가 담겨있는 카드팩,
-shop_item0012_0,길 카드 팩II,
+환경요소 카드의 비중이 높다.","A pack of 6 cards
+A high proportion of environmental cards."
+shop_item0007_0,길 카드만 팩I,Only Road Card Pack I
+shop_item0007_1,3장의 길 카드만 담겨있는 카드팩,A card pack that contains only 3 road cards
+shop_item0008_0,방 카드만 팩I,Only Room Card Pack I
+shop_item0008_1,3장의 방 카드만 담겨있는 카드팩,A card pack that contains only 3 room cards
+shop_item0009_0,환경요소 카드만 팩I,Only Environment Card Pack I
+shop_item0009_1,3장의 환경요소 카드만 담겨있는 카드팩,A card pack that contains only 3 environment cards
+shop_item0010_0,약초 텃밭 카드 팩,Herb Garden Card Pack
+shop_item0010_1,3장의 약초 텃밭 카드가 담겨있는 카드팩,Card pack containing 3 herb garden cards
+shop_item0011_0,약초 생산지 카드 팩,Herb Spawn Card Pack
+shop_item0011_1,3장의 약초 생산지 카드가 담겨있는 카드팩,Card pack containing 3 herb spawn cards
+shop_item0012_0,길 카드 팩II,Road Card Pack II
 shop_item0012_1,"8장의 카드가 담겨있는 카드팩
-길 카드의 비중이 높다.",
-shop_item0013_0,방 카드 팩II,
+길 카드의 비중이 높다.","A pack of 8 cards
+A high proportion of Road cards."
+shop_item0013_0,방 카드 팩II,Room Card Pack II
 shop_item0013_1,"8장의 카드가 담겨있는 카드팩
-방 카드의 비중이 높다.",
-shop_item0014_0,환경요소 카드 팩II,
+방 카드의 비중이 높다.","A pack of 8 cards
+A high proportion of room cards."
+shop_item0014_0,환경요소 카드 팩II,Environment Card Pack II
 shop_item0014_1,"8장의 카드가 담겨있는 카드팩
-환경요소 카드의 비중이 높다.",
-shop_item0015_0,길 카드만 팩II,
-shop_item0015_1,5장의 길 카드만 담겨있는 카드팩,
-shop_item0016_0,방 카드만 팩II,
-shop_item0016_1,5장의 방 카드만 담겨있는 카드팩,
-shop_item0017_0,환경요소 카드만 팩II,
-shop_item0017_1,5장의 환경요소 카드만 담겨있는 카드팩,
-shop_item0018_0,길 카드 팩III,
+환경요소 카드의 비중이 높다.","A pack of 8 cards
+A high proportion of environmental cards."
+shop_item0015_0,길 카드만 팩II,Only Road Card Pack II
+shop_item0015_1,5장의 길 카드만 담겨있는 카드팩,A card pack that contains only 5 road cards
+shop_item0016_0,방 카드만 팩II,Only Room Card Pack II
+shop_item0016_1,5장의 방 카드만 담겨있는 카드팩,A card pack that contains only 5 room cards
+shop_item0017_0,환경요소 카드만 팩II,Only Environment Card Pack II
+shop_item0017_1,5장의 환경요소 카드만 담겨있는 카드팩,A card pack that contains only 5 environment cards
+shop_item0018_0,길 카드 팩III,Road Card Pack III
 shop_item0018_1,"10장의 카드가 담겨있는 카드팩
-길 카드의 비중이 높다.",
-shop_item0019_0,방 카드 팩III,
+길 카드의 비중이 높다.","A pack of 10 cards
+A high proportion of Road cards."
+shop_item0019_0,방 카드 팩III,Room Card Pack III
 shop_item0019_1,"10장의 카드가 담겨있는 카드팩
-방 카드의 비중이 높다.",
-shop_item0020_0,환경요소 카드 팩III,
+방 카드의 비중이 높다.","A pack of 10 cards
+A high proportion of room cards."
+shop_item0020_0,환경요소 카드 팩III,Environment Card Pack III
 shop_item0020_1,"10장의 카드가 담겨있는 카드팩
-환경요소 카드의 비중이 높다.",
-shop_item0021_0,채무 상환,
-shop_item0021_1,100골드의 빚을 상환,
-shop_item0022_0,채무 상환II,
-shop_item0022_1,150골드의 빚을 상환,
-shop_item0023_0,채무 상환III,
-shop_item0023_1,300골드의 빚을 상환,
-shop_item0024_0,채무 상환IV,
-shop_item0024_1,400골드의 빚을 상환,
-shop_item0025_0,채무 상환V,
-shop_item0025_1,700골드의 빚을 상환,
-shop_item0026_0,채무 상환MAX,
-shop_item0026_1,1000000골드의 빚을 상환,
-tooltip_start_0,마왕성 입구,
+환경요소 카드의 비중이 높다.","A pack of 10 cards
+A high proportion of environmental cards."
+shop_item0021_0,채무 상환,Pay off debt
+shop_item0021_1,100골드의 빚을 상환,Pay off a debt of 100 gold
+shop_item0022_0,채무 상환II,Pay off debt II
+shop_item0022_1,150골드의 빚을 상환,Pay off a debt of 150 gold
+shop_item0023_0,채무 상환III,Pay off debt III
+shop_item0023_1,300골드의 빚을 상환,Pay off a debt of 300 gold
+shop_item0024_0,채무 상환IV,Pay off debt IV
+shop_item0024_1,400골드의 빚을 상환,Pay off a debt of 400 gold
+shop_item0025_0,채무 상환V,Pay off debt V
+shop_item0025_1,700골드의 빚을 상환,Pay off a debt of 700 gold
+shop_item0026_0,채무 상환MAX,Pay off debt MAX
+shop_item0026_1,1000000골드의 빚을 상환,Pay off a debt of 1000000 gold
+shop_item0027_0,일반 카드팩 I,Cardpack I
+shop_item0027_1,랜덤 카드 5장을 덱에 추가,Add 5 Random Cards to Deck
+shop_item0028_0,일반 카드팩 II,Cardpack II
+shop_item0028_1,랜덤 카드 10장을 덱에 추가,Add 10 Random Cards to Deck
+shop_item0029_0,일반 카드팩 III,Cardpack III
+shop_item0029_1,랜덤 카드 15장을 덱에 추가,Add 15 Random Cards to Deck
+shop_item0030_0,특수 카드팩 I,Special cardpack I
+shop_item0030_1,원하는 카드 1장을 덱에 추가,Add 1 card you want to deck
+shop_item0031_0,특수 카드팩 II,Special cardpack II
+shop_item0031_1,원하는 카드 2장을 덱에 추가,Add 2 card you want to deck
+shop_item0032_0,특수 카드팩 III,Special cardpack III
+shop_item0032_1,원하는 카드 2장을 덱에 추가,Add 3 card you want to deck
+shop_item0033_0,% 추가,Add 1 %
+shop_item0033_1,% 카드를 덱에 1장 추가한다.,Add 1 % card from the deck.
+shop_item0034_0,% 제거,Remove 1 %
+shop_item0034_1,% 카드를 덱에서 1장 제거한다.,Remove 1 % card from the deck.
+tooltip_start_0,마왕성 입구,Entrance to the Demon Castle
 tooltip_start_1,"마왕성의 입구
 침입하는 적들은 여기서 등장한다.
-타일 위의 아이콘을 클릭해 침입하는 적들의 종류를 파악할 수 있다.",
-tooltip_boss_0,마왕의 방,
+타일 위의 아이콘을 클릭해 침입하는 적들의 종류를 파악할 수 있다.","Entrance to the Demon Castle
+This is where the invading enemies will appear.
+Click the icons on the tiles to see what type of enemies are invading"
+tooltip_boss_0,마왕의 방,The Devil's Chamber
 tooltip_boss_1,"마왕이 머무는 방
 마왕의 HP가 0이 되면 패배한다.
-더블 클릭으로 이동 배치가 가능하다.",
+더블 클릭으로 이동 배치가 가능하다.","The Demon's Chamber
+When the Demon reaches 0 HP, it is defeated.
+Double-click to place a move."
 tooltip_road001_0,직선 길,A straight path
-tooltip_road001_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road001_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road002_0,굽어져 있는 길,A slightly crooked path
-tooltip_road002_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road002_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road003_0,심하게 꺾여있는 길,A badly twisted path
-tooltip_road003_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road003_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road004_0,세갈래길,Three-way path
-tooltip_road004_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road004_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road005_0,오른쪽 갈래길,Right fork path
-tooltip_road005_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road005_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road006_0,왼쪽 갈래길,Left fork path
-tooltip_road006_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road006_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road007_0,양쪽 갈래길,Both fork path
-tooltip_road007_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road007_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road008_0,탁자 모양 갈래길,Table-shape forks path
-tooltip_road008_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road008_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road009_0,X 모양 갈래길,X-shape forks path
-tooltip_road009_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road009_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road010_0,포크 모양 갈래길,Fork-shape forks path
-tooltip_road010_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road010_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_road011_0,다섯갈래길,Five forks in the path
-tooltip_road011_1,마왕성의 마력을 1 증가시킨다.,
+tooltip_road011_1,마왕성의 마력을 1 증가시킨다.,Increases Demon Castle's Magic by 1
 tooltip_room001_0,통로가 한 곳 밖에 없는 작은방,Small Room1
 tooltip_room001_1,"통로가 한 곳 밖에 없는 작은방
-마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.",
+마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.","Small room with only one passageway
+Spend up to 2 hp to install a monster spawner."
 tooltip_room002_0,직선 통로가 뚫린 작은방,Small Room2
 tooltip_room002_1,"직선 통로가 뚫린 작은방
-마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.",
+마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.","Small Room with Straight Passage
+Spend up to 2 hp to install a monster spawner."
 tooltip_room003_0,꺾인 통로가 뚫린 작은방,Small Room3
 tooltip_room003_1,"꺾인 통로가 뚫린 작은방
-마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.",
+마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.","Small Room with Twisting Passage
+Spend up to 2 hp to install a monster spawner."
 tooltip_room004_0,심하게 꺾인 통로가 뚫린 작은방,Small Room4
 tooltip_room004_1,"꺾인 통로가 뚫린 작은방
-마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.",
+마력을 2까지 사용하여 몬스터 스포너를 설치 가능하다.","Small Room with Twisting Passage
+Spend up to 2 hp to install a monster spawner."
 tooltip_room005_0,한칸짜리 방,Room Part1
 tooltip_room005_1,"한칸짜리 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Single Room
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room006_0,두칸짜리 방,Room Part2
 tooltip_room006_1,"두칸짜리 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Two-Sided Rooms
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room007_0,직선방,Room Part3
 tooltip_room007_1,"직선방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Straight Rooms
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room008_0,꺾인 방,Room Part4
 tooltip_room008_1,"꺾인 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Twisted Rooms
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room009_0,세칸짜리 방,Room Part5
 tooltip_room009_1,"세칸짜리 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Three-Sided Rooms
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room010_0,좌측 확장방,Room Part6
 tooltip_room010_1,"좌측 확장방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Left Extension Room
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room011_0,우측 확장방,Room Part7
 tooltip_room011_1,"우측 확장방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Right Extension Room
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room012_0,세갈래 방,Room Part8
 tooltip_room012_1,"세갈래 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Triplex Rooms
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room013_0,넓은 방,Room Part12
 tooltip_room013_1,"넓은 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Large Rooms
+Room tiles can be stitched together to create a larger room.
+Grants 1 horsepower."
 tooltip_room014_0,방 입구(직선),Room Entrance1
 tooltip_room014_1,"방 입구(직선)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Room Entrance (Straight Line)
+Can be stitched together with Path tiles to create an entrance to a large room.
+Grants 1 horsepower."
 tooltip_room015_0,방 입구(꺾임),Room Entrance2
 tooltip_room015_1,"방 입구(꺾임)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Room Entrances (Bends)
+Can be stitched together with Path tiles to create an entrance to a large room.
+Grants 1 horsepower."
 tooltip_room016_0,넓은 방 입구(직선),Room Entrance4
 tooltip_room016_1,"넓은 방 입구(직선)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Large Room Entrance (Straight Line)
+Can be stitched together with Path tiles to create an entrance to a large room.
+Grants 1 horsepower."
 tooltip_room017_0,넓은 방 입구(꺾임),Room Entrance6
 tooltip_room017_1,"넓은 방 입구(꺾임)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Entrance to a Large Room (Turning)
+Can be stitched together with Path tiles to create an entrance to a large room.
+Grants 1 horsepower."
 tooltip_room018_0,아주 넓은 방 입구,Room Entrance7
 tooltip_room018_1,"아주 넓은 방 입구
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
+마력 1을 사용 가능하게 해준다.","Entrance to a very large room
+Can be stitched together with Path tiles to create an entrance to a large room.
+Grants 1 horsepower."
 tooltip_room019_0,방인가 입구인가,Room Entrance10
 tooltip_room019_1,"이것은 방인가 방의 입구인가.
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 1을 사용 가능하게 해준다.",
-tooltip_roadway001_0,포장된 직선 길,
-tooltip_roadway001_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway002_0,굽어져 있는 포장길,
-tooltip_roadway002_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway003_0,심하게 꺾여있는 포장길,
-tooltip_roadway003_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway004_0,포장된 세갈래길,
-tooltip_roadway004_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway005_0,포장된 오른쪽 갈래길,
-tooltip_roadway005_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway006_0,포장된 왼쪽 갈래길,
-tooltip_roadway006_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway007_0,포장된 양쪽 갈래길,
-tooltip_roadway007_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway008_0,포장된 탁자 모양 갈래길,
-tooltip_roadway008_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway009_0,포장된 X 모양 갈래길,
-tooltip_roadway009_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway010_0,포장된 포크 모양 갈래길,
-tooltip_roadway010_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_roadway011_0,포장된 다섯갈래길,
-tooltip_roadway011_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,
-tooltip_St_Room001_0,통로가 한 곳 밖에 없는 튼튼한 방,
+마력 1을 사용 가능하게 해준다.","This is a room or an entrance to a room.
+Can be stitched together with Path tiles to create an entrance to a large room.
+Grants 1 horsepower."
+tooltip_roadway001_0,포장된 직선 길,Paved straight paths
+tooltip_roadway001_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway002_0,굽어져 있는 포장길,Curved pavement
+tooltip_roadway002_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway003_0,심하게 꺾여있는 포장길,Pavement that is badly broken
+tooltip_roadway003_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway004_0,포장된 세갈래길,Paved triplets
+tooltip_roadway004_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway005_0,포장된 오른쪽 갈래길,Paved right fork
+tooltip_roadway005_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway006_0,포장된 왼쪽 갈래길,Paved left fork
+tooltip_roadway006_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway007_0,포장된 양쪽 갈래길,Paved two-way streets
+tooltip_roadway007_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway008_0,포장된 탁자 모양 갈래길,Paved table-like forks
+tooltip_roadway008_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway009_0,포장된 X 모양 갈래길,Wrapped X-shaped fork
+tooltip_roadway009_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway010_0,포장된 포크 모양 갈래길,Wrapped forked paths
+tooltip_roadway010_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_roadway011_0,포장된 다섯갈래길,Paved five-way streets
+tooltip_roadway011_1,마왕성의 마력을 2 증가시키며 몬스터의 이동속도를 20% 증가시킨다.,Increases Demon Castle's Magic by 2 and increases monster movement speed by 20%.
+tooltip_St_Room001_0,통로가 한 곳 밖에 없는 튼튼한 방,A sturdy room with only one aisle
 tooltip_St_Room001_1,"통로가 한 곳 밖에 없는 튼튼한 방
-마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.",
-tooltip_St_Room002_0,직선 통로가 뚫린 튼튼한 방,
+마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.","A sturdy room with only one aisle
+Spend up to 3 hp to install a monster spawner."
+tooltip_St_Room002_0,직선 통로가 뚫린 튼튼한 방,Sturdy room with straight aisles
 tooltip_St_Room002_1,"직선 통로가 뚫린 튼튼한 방
-마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.",
-tooltip_St_Room003_0,꺾인 통로가 뚫린 튼튼한 방,
+마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.","Sturdy room with straight aisles
+Spend up to 3 hp to install a monster spawner."
+tooltip_St_Room003_0,꺾인 통로가 뚫린 튼튼한 방,Sturdy rooms with curved passageways
 tooltip_St_Room003_1,"꺾인 통로가 뚫린 튼튼한 방
-마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.",
-tooltip_St_Room004_0,심하게 꺾인 통로가 뚫린 튼튼한 방,
+마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.","Sturdy rooms with curved passageways
+Spend up to 3 hp to install a monster spawner."
+tooltip_St_Room004_0,심하게 꺾인 통로가 뚫린 튼튼한 방,Sturdy room with a severely curved walkway
 tooltip_St_Room004_1,"꺾인 통로가 뚫린 튼튼한 방
-마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.",
-tooltip_St_Room005_0,한칸짜리 튼튼한 방,
+마력을 3까지 사용하여 몬스터 스포너를 설치 가능하다.","Sturdy Room with Twisting Passageways
+Spend up to 3 hp to install a monster spawner."
+tooltip_St_Room005_0,한칸짜리 튼튼한 방,A one-compartment sturdy room
 tooltip_St_Room005_1,"한칸짜리 튼튼한 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room006_0,두칸짜리 튼튼한 방,
+마력 2를 사용 가능하게 해준다.","A one-compartment sturdy room
+Room tiles can be stitched together to create a larger room.
+Grants 2 horsepower."
+tooltip_St_Room006_0,두칸짜리 튼튼한 방,A two-compartment sturdy room
 tooltip_St_Room006_1,"두칸짜리 튼튼한 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room007_0,튼튼한 직선방,
+마력 2를 사용 가능하게 해준다.","A two-compartment sturdy room
+Room tiles can be stitched together to create a large room.
+Provides 2 horsepower."
+tooltip_St_Room007_0,튼튼한 직선방,Sturdy straight rooms
 tooltip_St_Room007_1,"튼튼한 직선방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room008_0,꺾여있는 튼튼한 방,
+마력 2를 사용 가능하게 해준다.","Sturdy straight rooms
+Room tiles can be stitched together to create a large room.
+Grants 2 horsepower."
+tooltip_St_Room008_0,꺾여있는 튼튼한 방,Sturdy room with a bend
 tooltip_St_Room008_1,"꺾여있는 튼튼한 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room009_0,세칸짜리 튼튼한 방,
+마력 2를 사용 가능하게 해준다.","Sturdy room with a bend
+Room tiles can be stitched together to create a large room.
+Grants 2 Magic Power."
+tooltip_St_Room009_0,세칸짜리 튼튼한 방,A three-compartment sturdy room
 tooltip_St_Room009_1,"세칸짜리 튼튼한 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room010_0,튼튼한 좌측 확장방,
+마력 2를 사용 가능하게 해준다.","A three-compartment sturdy room
+Room tiles can be stitched together to create a large room.
+Grants 2 Magic Power."
+tooltip_St_Room010_0,튼튼한 좌측 확장방,Sturdy left extension room
 tooltip_St_Room010_1,"튼튼한 좌측 확장방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room011_0,튼튼한 우측 확장방,
+마력 2를 사용 가능하게 해준다.","Sturdy left extension room
+Room tiles can be stitched together to create a larger room.
+Grants 2 horsepower."
+tooltip_St_Room011_0,튼튼한 우측 확장방,Sturdy right extension room
 tooltip_St_Room011_1,"튼튼한 우측 확장방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room012_0,튼튼한 세갈래 방,
+마력 2를 사용 가능하게 해준다.","Sturdy right extension room
+Room tiles can be stitched together to create a larger room.
+Grants 2 horsepower."
+tooltip_St_Room012_0,튼튼한 세갈래 방,Sturdy three-pronged room
 tooltip_St_Room012_1,"튼튼한 세갈래 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room013_0,넓고 튼튼한 방,
+마력 2를 사용 가능하게 해준다.","Sturdy three-pronged room
+Room tiles can be stitched together to create a large room.
+Grants 2 Magic Power."
+tooltip_St_Room013_0,넓고 튼튼한 방,"Large, sturdy room"
 tooltip_St_Room013_1,"넓고 튼튼한 방
 방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room014_0,튼튼한 방 입구(직선),
+마력 2를 사용 가능하게 해준다.","Large, sturdy room
+Room tiles can be stitched together to create a large room.
+Grants 2 Magic Power."
+tooltip_St_Room014_0,튼튼한 방 입구(직선),Sturdy room entrance (straight)
 tooltip_St_Room014_1,"튼튼한 방 입구(직선)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room015_0,튼튼한 방 입구(꺾임),
+마력 2를 사용 가능하게 해준다.","Sturdy room entrance (straight)
+Can be stitched together with a Path tile to create an entrance to a large room.
+Grants 2 Magic Power."
+tooltip_St_Room015_0,튼튼한 방 입구(꺾임),Sturdy room entrances (angled)
 tooltip_St_Room015_1,"튼튼한 방 입구(꺾임)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room016_0,튼튼하고 넓은 방 입구(직선),
+마력 2를 사용 가능하게 해준다.","Sturdy room entrances (angled)
+Can be stitched together with a Path Tile to create an entrance to a large room.
+Grants 2 Magic Power."
+tooltip_St_Room016_0,튼튼하고 넓은 방 입구(직선),"Sturdy, wide room entrance (straight line)"
 tooltip_St_Room016_1,"튼튼하고 넓은 방 입구(직선)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room017_0,튼튼하고 넓은 방 입구(꺾임),
+마력 2를 사용 가능하게 해준다.","Sturdy, wide room entrance (straight line)
+Can be stitched together with a Path tile to create a large room entrance.
+Grants 2 Horsepower."
+tooltip_St_Room017_0,튼튼하고 넓은 방 입구(꺾임),"Sturdy, wide room entrance (angled)"
 tooltip_St_Room017_1,"튼튼하고 넓은 방 입구(꺾임)
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room018_0,튼튼하고 매우 넓은 방 입구,
+마력 2를 사용 가능하게 해준다.","Sturdy, wide room entrance (angled)
+Can be stitched together with a Path Tile to create a large room entrance.
+Grants 2 Horsepower."
+tooltip_St_Room018_0,튼튼하고 매우 넓은 방 입구,"Sturdy, extra-wide room entrance"
 tooltip_St_Room018_1,"튼튼하고 매우 넓은 방 입구
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
-tooltip_St_Room019_0,방인가 입구인가 일단 튼튼하다,
+마력 2를 사용 가능하게 해준다.","Sturdy, extra-wide room entrance
+Can be stitched together with a Path Tile to create a large room entrance.
+Grants 2 Magic Power."
+tooltip_St_Room019_0,방인가 입구인가 일단 튼튼하다,"Room or entrance, just make sure it's sturdy"
 tooltip_St_Room019_1,"이것은 방인가 방의 입구인가 일단 튼튼하다.
 길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
-마력 2를 사용 가능하게 해준다.",
+마력 2를 사용 가능하게 해준다.","This is a room or an entrance to a room, but it's sturdy.
+It can be stitched together with a Path tile to create the entrance to a large room.
+It gives you access to 2 horsepower."
 tooltip_rock_0,바위,Rock
 tooltip_rock_1,"크고 단단한 바위
 모든 몬스터의 HP +1","Large Hard Rock
@@ -651,10 +798,11 @@ tooltip_gold2_1,일반적인 금광보다 채광량이 더 많다.,
 tooltip_manastone2_0,강화된 마력석(임시),Mana Stone+(Temp)
 tooltip_manastone2_1,일반적인 마력석보다 순도가 더 높다.,
 tooltip_hidden_0,비밀 타일,Hidden Tile
-tooltip_hidden_1,마왕의 힘으로도 파악하지 못하는 타일.,
-tooltip_kingslime_0,슬라임 킹,
+tooltip_hidden_1,마왕의 힘으로도 파악하지 못하는 타일.,A tile that even the power of the devil can't figure out.
+tooltip_kingslime_0,슬라임 킹,Slime King
 tooltip_kingslime_1,"슬라임들의 왕이다.
-던전 내 슬라임의 능력을 강화한다.",
+던전 내 슬라임의 능력을 강화한다.","King of the Slimes.
+Enhances the abilities of Slimes in the dungeon."
 trap_spin,칼날 함정,Spin Trap
 trap_spin_1,"회전하는 칼날로 공격하는 함정
 30번 공격하면 파괴된다.","A trap that attacks with a spinning blade
@@ -685,26 +833,26 @@ tooltip_orc3_0,에픽 오크(도끼),Orc legend
 tooltip_orc3_1,에픽 오크(도끼),Orc legend
 tooltip_orc4_0,전설 오크(대검),Orc legend
 tooltip_orc4_1,전설 오크(대검),
-tooltip_spawner_slime1_0,점액 슬라임 생산지,
-tooltip_spawner_slime1_1,점액 슬라임을 생성하는 생산지,
-tooltip_spawner_slime2_0,중독 슬라임 생산지,
-tooltip_spawner_slime2_1,중독 슬라임을 생성하는 생산지,
-tooltip_spawner_slime3_0,폭발 슬라임 생산지,
-tooltip_spawner_slime3_1,폭발 슬라임을 생성하는 생산지,
-tooltip_spawner_goblin1_0,고블린 전사 생산지,
-tooltip_spawner_goblin1_1,고블린 전사를 생성하는 생산지,
-tooltip_spawner_goblin2_0,고블린 정찰병 생산지,
-tooltip_spawner_goblin2_1,고블린 정찰병을 생성하는 생산지,
-tooltip_spawner_goblin3_0,고블린 궁수 생산지,
-tooltip_spawner_goblin3_1,고블린 궁수를 생성하는 생산지,
-tooltip_spawner_golem1_0,스톤 골렘 생산지,
-tooltip_spawner_golem1_1,스톤 골렘을 생성하는 생산지,
-tooltip_spawner_golem2_0,아이언 골렘 생산지,
-tooltip_spawner_golem2_1,아이언 골렘을 생성하는 생산지,
-tooltip_spawner_golem3_0,흑요석 골렘 생산지,
-tooltip_spawner_golem3_1,흑요석 골렘을 생성하는 생산지,
-tooltip_spawner_golem4_0,미스릴 골렘 생산지,
-tooltip_spawner_golem4_1,미스릴 골렘을 생성하는 생산지,
+tooltip_spawner_slime1_0,점액 슬라임 생산지,Slime Slime Production Area
+tooltip_spawner_slime1_1,점액 슬라임을 생성하는 생산지,Production locations that produce slime
+tooltip_spawner_slime2_0,중독 슬라임 생산지,Poison Slime Production Area
+tooltip_spawner_slime2_1,중독 슬라임을 생성하는 생산지,Locations that spawn Poison Slime
+tooltip_spawner_slime3_0,폭발 슬라임 생산지,Explosive Slime Production Area
+tooltip_spawner_slime3_1,폭발 슬라임을 생성하는 생산지,Production Locations that spawn Exploding Slime
+tooltip_spawner_goblin1_0,고블린 전사 생산지,Goblin Warrior Production Area
+tooltip_spawner_goblin1_1,고블린 전사를 생성하는 생산지,Production Zones that spawn Goblin Warriors
+tooltip_spawner_goblin2_0,고블린 정찰병 생산지,Goblin Scout Production Area
+tooltip_spawner_goblin2_1,고블린 정찰병을 생성하는 생산지,Production Locations that spawn Goblin Scouts
+tooltip_spawner_goblin3_0,고블린 궁수 생산지,Goblin Archer Production Area
+tooltip_spawner_goblin3_1,고블린 궁수를 생성하는 생산지,Production Zones that spawn Goblin Archers
+tooltip_spawner_golem1_0,스톤 골렘 생산지,Stone Golem Production Locations
+tooltip_spawner_golem1_1,스톤 골렘을 생성하는 생산지,Production Zones that spawn Stone Golems
+tooltip_spawner_golem2_0,아이언 골렘 생산지,Iron Golem Production Locations
+tooltip_spawner_golem2_1,아이언 골렘을 생성하는 생산지,Production Zones that spawn Iron Golems
+tooltip_spawner_golem3_0,흑요석 골렘 생산지,Obsidian Golem Production Area
+tooltip_spawner_golem3_1,흑요석 골렘을 생성하는 생산지,Spawning locations for Obsidian Golems
+tooltip_spawner_golem4_0,미스릴 골렘 생산지,Mithril Golem Production Area
+tooltip_spawner_golem4_1,미스릴 골렘을 생성하는 생산지,Production Zones that spawn Mithril Golems
 tooltip_spawner_undead1_0,언데드 창병 생산지,
 tooltip_spawner_undead1_1,언데드 창병을 생성하는 생산지,
 tooltip_spawner_undead2_0,언데드 방패병 생산지,
@@ -719,84 +867,92 @@ tooltip_spawner_orc3_0,에픽 오크(도끼) 생산지,
 tooltip_spawner_orc3_1,전설 오크를 생성하는 생산지,
 tooltip_spawner_orc4_0,전설 오크(대검) 생산지,
 tooltip_spawner_orc4_1,전설 오크를 생성하는 생산지,
-tooltip_farmer1_0,마을 시민(낫),
-tooltip_farmer1_1,마왕성 근처의 마을 주민,
-tooltip_farmer2_0,마을 시민(창),
-tooltip_farmer2_1,마왕성 근처의 마을 주민,
+tooltip_farmer1_0,마을 시민(낫),Town Citizen (Scythe)
+tooltip_farmer1_1,마왕성 근처의 마을 주민,Villagers near Mawang Castle
+tooltip_farmer2_0,마을 시민(창),Town Citizen (Spear)
+tooltip_farmer2_1,마왕성 근처의 마을 주민,Villagers near Mawang Castle
 tooltip_warrior1_0,일반 전사,Normal warrior
-tooltip_warrior1_1,토벌 의뢰를 받은 전사,
+tooltip_warrior1_1,토벌 의뢰를 받은 전사,Warriors commissioned to kill
 tooltip_warrior2_0,영웅 전사,Heroic warrior
-tooltip_warrior2_1,토벌 의뢰를 받은 영웅 전사,
+tooltip_warrior2_1,토벌 의뢰를 받은 영웅 전사,Heroic Warriors commissioned to kill
 tooltip_warrior3_0,전설 전사,Legendary warrior
-tooltip_warrior3_1,동료의 복수를 하려하는 전설적인 전사,
+tooltip_warrior3_1,동료의 복수를 하려하는 전설적인 전사,A legendary warrior seeks revenge on his comrades
 tooltip_archer1_0,일반 궁수,Normal archer
-tooltip_archer1_1,토벌 의뢰를 받은 궁수,
+tooltip_archer1_1,토벌 의뢰를 받은 궁수,Archer with a kill order
 tooltip_archer2_0,영웅 궁수,Heroic archer
-tooltip_archer2_1,토벌 의뢰를 받은 영웅 궁수,
+tooltip_archer2_1,토벌 의뢰를 받은 영웅 궁수,Heroic Archer with a Kill Request
 tooltip_archer3_0,전설 궁수,Legendary archer
-tooltip_archer3_1,동료의 복수를 하려하는 전설적인 궁수,
+tooltip_archer3_1,동료의 복수를 하려하는 전설적인 궁수,A legendary archer seeks revenge on a colleague
 tooltip_thief1_0,일반 도적,Normal rogue
 tooltip_thief1_1,"토벌 의뢰를 받은 도적
-은신 상태에서는 몬스터에게 인식되지 않는다.",
+은신 상태에서는 몬스터에게 인식되지 않는다.","Rogue Hired to Kill
+You are invisible to monsters while stealthy."
 tooltip_thief2_0,영웅 도적,Heroic rogue
 tooltip_thief2_1,"토벌 의뢰를 받은 영웅 도적
-은신 상태에서는 함정과 몬스터에게 인식되지 않는다.",
+은신 상태에서는 함정과 몬스터에게 인식되지 않는다.","Heroic Rogue Hired to Kill
+While stealthy, you are invisible to traps and monsters."
 tooltip_thief3_0,전설 도적,Legendary rogue
 tooltip_thief3_1,"동료의 복수를 하려하는 전설적인 도적
-은신 상태에서는 함정과 몬스터에게 인식되지 않는다.",
-tooltip_infanrty1_0,정예 보병,
-tooltip_infanrty1_1,정예 보병,
-tooltip_infanrty2_0,정예 보병,
-tooltip_infanrty2_1,정예 보병의 영웅,
-tooltip_infanrty3_0,정예 보병,
-tooltip_infanrty3_1,전설적인 정예 보병,
-tooltip_cavalry1_0,정예 기병,
-tooltip_cavalry1_1,정예 기병,
-tooltip_cavalry2_0,정예 기병,
-tooltip_cavalry2_1,정예 기병의 영웅,
-tooltip_cavalry3_0,정예 기병,
-tooltip_cavalry3_1,전설적인 정예 기병,
-tooltip_magician1_0,정예 마법사,
-tooltip_magician1_1,정예 마법사,
-tooltip_magician2_0,정예 마법사,
-tooltip_magician2_1,정예 마법사의 영웅,
-tooltip_magician3_0,정예 마법사,
-tooltip_magician3_1,전설적인 정예 마법사,
-tooltip_boss1_0,마을 이장,
-tooltip_boss1_1,마왕성 근처 마을의 이장,
-tooltip_boss2_0,모험가 길드장,
-tooltip_bos2_1,마왕성 근처 길드의 길드장,
-tooltip_boss3_0,기사단장,
-tooltip_boss3_1,마왕성 근처 영지의 기사단장,
-tooltip_boss4_0,벨레드,
-tooltip_boss4_1,마왕 바르바토스의 부하,
-tooltip_boss5_0,시트리,
-tooltip_boss5_1,마왕 파이몬의 부하,
-tooltip_executor1_0,상회 징수원,
+은신 상태에서는 함정과 몬스터에게 인식되지 않는다.","A legendary rogue seeks revenge on his comrades
+While stealthy, you are invisible to traps and monsters."
+tooltip_infanrty1_0,정예 보병,Elite Infantry
+tooltip_infanrty1_1,정예 보병,Elite Infantry
+tooltip_infanrty2_0,정예 보병,Elite Infantry
+tooltip_infanrty2_1,정예 보병의 영웅,Heroes of the Elite Infantry
+tooltip_infanrty3_0,정예 보병,Elite Infantry
+tooltip_infanrty3_1,전설적인 정예 보병,Legendary Elite infantry
+tooltip_cavalry1_0,정예 기병,Elite Cavalry
+tooltip_cavalry1_1,정예 기병,Elite Cavalry
+tooltip_cavalry2_0,정예 기병,Elite Cavalry
+tooltip_cavalry2_1,정예 기병의 영웅,Heroes of the Elite Cavalry
+tooltip_cavalry3_0,정예 기병,Elite Cavalry
+tooltip_cavalry3_1,전설적인 정예 기병,Legendary Elite infantry
+tooltip_magician1_0,정예 마법사,Elite Wizards
+tooltip_magician1_1,정예 마법사,Elite Wizards
+tooltip_magician2_0,정예 마법사,Elite Wizards
+tooltip_magician2_1,정예 마법사의 영웅,Heroes of the Elite Wizards
+tooltip_magician3_0,정예 마법사,Elite Wizards
+tooltip_magician3_1,전설적인 정예 마법사,Legendary Elite Wizards
+tooltip_boss1_0,마을 이장,Village Mayor
+tooltip_boss1_1,마왕성 근처 마을의 이장,The chief of a village near Mawang Castle
+tooltip_boss2_0,모험가 길드장,Adventurer Guild Leader
+tooltip_bos2_1,마왕성 근처 길드의 길드장,Guild Leader of a guild near Demon Castle
+tooltip_boss3_0,기사단장,Templar
+tooltip_boss3_1,마왕성 근처 영지의 기사단장,Templar Captain of an estate near Demon Castle
+tooltip_boss4_0,벨레드,Veled
+tooltip_boss4_1,마왕 바르바토스의 부하,Demon Barbatos minions
+tooltip_boss5_0,시트리,Citrix
+tooltip_boss5_1,마왕 파이몬의 부하,Demon Paimon's minions
+tooltip_executor1_0,상회 징수원,Top-up collectors
 tooltip_executor1_1,"밀린 이자를 받기 위해 온 마계상회의 징수원이다.
-상점에서 남은 채무상환을 완료하면 공격을 멈추고 돌아간다.",
-tooltip_ui_blackherb_0,흑색 약초,
+상점에서 남은 채무상환을 완료하면 공격을 멈추고 돌아간다.","A collector from the Demon Council who has come to collect overdue interest.
+It will stop attacking and return when you have paid off the remaining debt in the shop."
+tooltip_ui_blackherb_0,흑색 약초,Black herbs
 tooltip_ui_blackherb_1,"보유 중인 흑색 약초의 수량
-연구의 재화로 사용된다.",
-tooltip_ui_purpleherb_0,자색 약초,
+연구의 재화로 사용된다.","Quantity of black herbs on hand
+Used as a research commodity."
+tooltip_ui_purpleherb_0,자색 약초,Purple Herbs
 tooltip_ui_purpleherb_1,"보유 중인 자색 약초의 수량
-연구의 재화로 사용된다.",
-tooltip_ui_whiteherb_0,백색 약초,
+연구의 재화로 사용된다.","Quantity of Purple herbs on hand
+Used as a research commodity."
+tooltip_ui_whiteherb_0,백색 약초,White herbs
 tooltip_ui_whiteherb_1,"보유 중인 백색 약초의 수량
-연구의 재화로 사용된다.",
-tooltip_ui_gold_0,골드,
-tooltip_ui_gold_1,사용 가능한 골드의 수량,
-tooltip_ui_magicpower_0,마력,
+연구의 재화로 사용된다.","Quantity of White herbs on hand
+Used as a research commodity."
+tooltip_ui_gold_0,골드,Gold
+tooltip_ui_gold_1,사용 가능한 골드의 수량,Amount of gold available
+tooltip_ui_magicpower_0,마력,Horsepower
 tooltip_ui_magicpower_1,"몬스터를 소환하는데 사용되는 힘
-사용 중인 마력 / 사용 가능한 마력을 나타낸다.",
-tooltip_ui_round_0,라운드,
-tooltip_ui_round_1,24시간이 지나면 숫자가 1 올라간다.,
-tooltip_ui_time_0,시간,
-tooltip_ui_time_1,마왕성 내부 시간을 알려준다.,
-tip_content001,적은 0시에 침입합니다.,
-tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.,
-tip_content003,단탈리온 마왕성은 인간 나라의 영토 내에 존재합니다.,
-tip_content004,단탈리온은 토벌 우선순위 최하위입니다.,
+사용 중인 마력 / 사용 가능한 마력을 나타낸다.","Power used to summon monsters
+Indicates the magic power being used/available."
+tooltip_ui_round_0,라운드,Round
+tooltip_ui_round_1,24시간이 지나면 숫자가 1 올라간다.,"After 24 hours, the number is incremented by 1."
+tooltip_ui_time_0,시간,Time
+tooltip_ui_time_1,마왕성 내부 시간을 알려준다.,Tells you the time inside the castle.
+tip_content001,적은 0시에 침입합니다.,The enemy enters at time 0.
+tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.,Not all demons are revered by demons.
+tip_content003,단탈리온 마왕성은 인간 나라의 영토 내에 존재합니다.,The Dantalion Demon Castle exists within the territory of the Human Nation.
+tip_content004,단탈리온은 토벌 우선순위 최하위입니다.,Dantalion is the lowest priority for extermination.
 slime1,최하급 슬라임,Lowest level slime
 slime_rare,하급 슬라임,Low level slime
 slime2,중급 슬라임,Intermediate level slime

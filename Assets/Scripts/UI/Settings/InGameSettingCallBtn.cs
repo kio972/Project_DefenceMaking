@@ -8,7 +8,7 @@ public class InGameSettingCallBtn : RotationEffect
     {
         base.Update();
 
-        if (UIManager.Instance._OpendUICount != 0)
+        if (UIManager.Instance._OpendUICount != 0 || GameManager.Instance.isPause)
             return;
 
         if (Input.GetKeyDown(KeyCode.Escape))

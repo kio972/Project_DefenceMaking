@@ -11,19 +11,19 @@ using System.Threading;
 public class CardUI : MonoBehaviour
 {
     [SerializeField]
-    private Image card_Frame;
+    protected Image card_Frame;
     [SerializeField]
-    private Image card_Frame2;
+    protected Image card_Frame2;
     [SerializeField]
-    private Image card_Frame_Mask;
+    protected Image card_Frame_Mask;
     [SerializeField]
-    private Image card_illust;
+    protected Image card_illust;
     [SerializeField]
-    private Image card_Rank;
+    protected Image card_Rank;
     [SerializeField]
-    private LanguageText card_Name;
+    protected LanguageText card_Name;
     [SerializeField]
-    private LanguageText card_Description;
+    protected LanguageText card_Description;
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -60,8 +60,8 @@ public class CardUI : MonoBehaviour
         //card_Rank.gameObject.SetActive(targetCard.cardType != CardType.MapTile && targetCard.cardType != CardType.Environment);
         card_Rank.gameObject.SetActive(false);
 
-        card_Name.ChangeLangauge(SettingManager.Instance.language, targetCard.cardName);
-        card_Description.ChangeLangauge(SettingManager.Instance.language, targetCard.cardDescription);
+        card_Name?.ChangeLangauge(SettingManager.Instance.language, targetCard.cardName);
+        card_Description?.ChangeLangauge(SettingManager.Instance.language, targetCard.cardDescription);
 
         Sprite illur = SpriteList.Instance.LoadSprite(targetCard.cardPrefabName);
         card_illust.sprite = illur;

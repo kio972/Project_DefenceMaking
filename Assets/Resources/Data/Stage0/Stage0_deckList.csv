@@ -1,11 +1,43 @@
-id,type,name,text_name,text_description,startNumber,prefab
-c10002,road,A slightly crooked path,card_tile_road2,card_tile_road2,1,RoadTile1
-c10003,road,A badly twisted path,card_tile_road3,card_tile_road3,1,RoadTile2
-c10004,road,Three-way path,card_tile_road4,card_tile_road4,1,RoadTile3
-c10005,road,Right fork path,card_tile_road5,card_tile_road5,1,RoadTile4
-c10006,road,Left fork path,card_tile_road6,card_tile_road6,1,RoadTile5
-c10007,road,Both fork path,card_tile_road7,card_tile_road7,1,RoadTile6
-c10008,road,Table-shape forks path,card_tile_road8,card_tile_road8,1,RoadTile7
-c11002,room,Small Room2,card_tile_room2,card_tile_room2,1,RoomTile1
-c11003,room,Small Room3,card_tile_room3,card_tile_room3,1,RoomTile2
-c11004,room,Small Room4,card_tile_room4,card_tile_room4,1,RoomTile3
+id,type,name,text_name,text_description,startNumber,token,include,prefab
+c10002,road,A slightly crooked path,card_tile_road2,card_tile_road2,1,100,TRUE,RoadTile1
+c10003,road,A badly twisted path,card_tile_road3,card_tile_road3,1,100,TRUE,RoadTile2
+c10004,road,Three-way path,card_tile_road4,card_tile_road4,1,100,TRUE,RoadTile3
+c10005,road,Right fork path,card_tile_road5,card_tile_road5,1,100,TRUE,RoadTile4
+c10006,road,Left fork path,card_tile_road6,card_tile_road6,1,100,TRUE,RoadTile5
+c10007,road,Both fork path,card_tile_road7,card_tile_road7,1,100,TRUE,RoadTile6
+c10008,road,Table-shape forks path,card_tile_road8,card_tile_road8,1,100,TRUE,RoadTile7
+c10009,road,X-shape forks path,card_tile_road9,card_tile_road9,0,0,FALSE,RoadTile8
+c10010,road,Fork-shape forks path,card_tile_road10,card_tile_road10,0,0,FALSE,RoadTile9
+c10011,road,Five forks in the path,card_tile_road11,card_tile_road11,0,0,FALSE,RoadTile10
+c11001,room,Small Room1,card_tile_room1,card_tile_room1,0,0,FALSE,RoomTile0
+c11002,room,Small Room2,card_tile_room2,card_tile_room2,1,100,TRUE,RoomTile1
+c11003,room,Small Room3,card_tile_room3,card_tile_room3,1,100,TRUE,RoomTile2
+c11004,room,Small Room4,card_tile_room4,card_tile_room4,1,100,TRUE,RoomTile3
+c12001,roomPart,Room Part1,card_tile_room_parts1,card_tile_room_parts1,0,0,FALSE,RoomTile4
+c12002,roomPart,Room Part2,card_tile_room_parts2,card_tile_room_parts2,0,0,FALSE,RoomTile5
+c12003,roomPart,Room Part3,card_tile_room_parts3,card_tile_room_parts3,0,0,FALSE,RoomTile6
+c12004,roomPart,Room Part4,card_tile_room_parts4,card_tile_room_parts4,0,0,FALSE,RoomTile7
+c12005,roomPart,Room Part5,card_tile_room_parts5,card_tile_room_parts5,0,0,FALSE,RoomTile8
+c12006,roomPart,Room Part6,card_tile_room_parts6,card_tile_room_parts6,0,0,FALSE,RoomTile9
+c12007,roomPart,Room Part7,card_tile_room_parts7,card_tile_room_parts7,0,0,FALSE,RoomTile10
+c12008,roomPart,Room Part8,card_tile_room_parts8,card_tile_room_parts8,0,0,FALSE,RoomTile11
+c12012,roomPart,Room Part12,card_tile_room_parts12,card_tile_room_parts12,0,0,FALSE,RoomTile15
+c13001,roomDoor,Room with a Door,card_tile_roadroom1,card_tile_roadroom1,0,0,FALSE,RoomTile16
+c13002,roomDoor,Room with a Door,card_tile_roadroom2,card_tile_roadroom2,0,0,FALSE,RoomTile17
+c13004,roomDoor,Room with a Door,card_tile_roadroom4,card_tile_roadroom4,0,0,FALSE,RoomTile19
+c13006,roomDoor,Room with a Door,card_tile_roadroom6,card_tile_roadroom6,0,0,FALSE,RoomTile21
+c13007,roomDoor,Room with a Door,card_tile_roadroom7,card_tile_roadroom7,0,0,FALSE,RoomTile22
+c13010,roomDoor,Room with a Door,card_tile_roadroom10,card_tile_roadroom10,0,0,FALSE,RoomTile25
+c20001,environment,Rock,card_0_rock,card_1_rock,0,100,TRUE,Rock
+c20002,environment,Swamp,card_0_swamp,card_1_swamp,0,100,TRUE,Swamp
+c20003,environment,Gold,card_0_goldmine,card_1_goldmine,0,100,TRUE,Gold
+c20004,environment,Mana Stone,card_0_manastone,card_1_manastone,0,100,TRUE,ManaStone
+c30001,herb,Black Herb Garden,card_0_blackherbgarden,card_1_blackherbgarden,0,0,FALSE,HerbBlackGarden
+c30002,herb,Purple Herb Garden,card_0_purpleherbgarden,card_1_purpleherbgarden,0,0,FALSE,HerbPurpleGarden
+c30003,herb,White Herb Garden,card_0_whiteherbgarden,card_1_whiteherbgarden,0,0,FALSE,HerbWhiteGarden
+c30004,herb,Black Herb Farm,card_0_blackherbfarm,card_1_blackherbfarm,0,0,FALSE,HerbBlackFarm
+c30005,herb,Purple Herb Farm,card_0_purpleherbfarm,card_1_purpleherbfarm,0,0,FALSE,HerbPurpleFarm
+c30006,herb,White Herb Farm,card_0_whiteherbfarm,card_1_whiteherbfarm,0,0,FALSE,HerbWhiteFarm
+c40001,objectForPath,Wood Barricade,card_0_woodcade,card_1_woodcade,0,0,FALSE,Woodcade
+c40002,objectForPath,Iron Barricade,card_0_metalcade,card_1_metalcade,0,0,FALSE,Metalcade
+c50001,magic,Trash Can,card_0_recycleBin,card_1_recycleBin,0,0,FALSE,Recyclebin

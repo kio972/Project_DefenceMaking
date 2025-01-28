@@ -46,6 +46,8 @@ public struct Card
                 return CardType.RoomTile;
             case "roomPart":
                 return CardType.RoomTile;
+            case "roomDoor":
+                return CardType.RoomTile;
             case "trap":
                 return CardType.Trap;
             case "environment":
@@ -165,10 +167,16 @@ public class CardDeckController : MonoBehaviour
         //SetCardPosition();
     }
 
+    public void RemoveCard(int index)
+    {
+        _cardDeck.Remove(index);
+
+    }
+
     public void AddCard(int index)
     {
         _cardDeck.Add(index);
-        UpdateDeckCount();
+
     }
 
     private void UpdateDeckCount()
@@ -356,7 +364,7 @@ public class CardDeckController : MonoBehaviour
 
     private Card ReturnDeck(int target)
     {
-        _cardDeck.Remove(target);
+        //_cardDeck.Remove(target);
         Card card = new Card(DataManager.Instance.deck_Table[target], target);
         return card;
     }
