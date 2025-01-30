@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,8 +136,9 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
         initState = true;
     }
 
-    private void Awake()
+    private async UniTaskVoid Awake()
     {
+        await UniTask.WaitUntil(() => GameManager.Instance.IsInit);
         Init();
     }
 

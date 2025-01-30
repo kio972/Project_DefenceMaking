@@ -15,8 +15,17 @@ public class CardSelection : MonoBehaviour
 
     private bool initState = false;
 
-    private Dictionary<TileType, Dictionary<int, int>> cardPoolDic = new Dictionary<TileType, Dictionary<int, int>>();
+    private Dictionary<TileType, Dictionary<int, int>> _cardPoolDic = new Dictionary<TileType, Dictionary<int, int>>();
     private Dictionary<string, (int index, TileType tileType, int token)> excludedCards = new Dictionary<string, (int index, TileType tileType, int token)>();
+    public Dictionary<TileType, Dictionary<int, int>> cardPoolDic
+    {
+        get
+        {
+            if (!initState)
+                Init();
+            return _cardPoolDic;
+        }
+    }
 
     bool isStarted = false;
     int[] curSelectIndex = new int[3];
@@ -69,7 +78,23 @@ public class CardSelection : MonoBehaviour
             return TileType.Special;
     }
 
-    private int GetRandomTileIndex(TileType tileType)
+    private bool IsCardAlreadySelected(int curIndex, int cardIndex, bool isAdd)
+    {
+        if (curIndex == 0)
+            return false;
+
+        // curSelectIndex와 curSelectIsAdd 배열을 사용하여 중복 체크
+        for (int i = 0; i < curIndex; i++)
+        {
+            if (curSelectIndex[i] == cardIndex && curSelectIsAdd[i] == isAdd)
+            {
+                return true; // 중복된 카드가 이미 선택됨
+            }
+        }
+        return false; // 중복되지 않음
+    }
+
+    public int GetRandomTileIndex(TileType tileType)
     {
         int totalCount = cardPoolDic[tileType].Count;
         if (totalCount == 0)
@@ -93,7 +118,7 @@ public class CardSelection : MonoBehaviour
         return -1;
     }
 
-    private Card GetRandomCard()
+    public Card GetRandomCard()
     {
         TileType tileType = GetRandomCardType();
 
@@ -102,6 +127,33 @@ public class CardSelection : MonoBehaviour
             return GetRandomCard();
 
         return new Card(DataManager.Instance.deck_Table[index], index);
+    }
+
+    public Card GetDeckRandomCard()
+    {
+        int randomDeckIndex = UnityEngine.Random.Range(0, GameManager.Instance.cardDeckController.cardDeckCount);
+
+        int index = GameManager.Instance.cardDeckController.cardDeck[randomDeckIndex];
+        return new Card(DataManager.Instance.deck_Table[index], index);
+    }
+
+    private void SetCardUI(int index)
+    {
+        Card card;
+        bool isAdd;
+        do
+        {
+            int token = UnityEngine.Random.Range(0, 2);
+            isAdd = token == 1;
+
+            card = isAdd ? GetRandomCard() : GetDeckRandomCard();
+
+        } while (IsCardAlreadySelected(index, card.cardIndex, isAdd));
+
+        cardUis[index].SetCardUI(card, isAdd);
+
+        curSelectIndex[index] = card.cardIndex;
+        curSelectIsAdd[index] = isAdd;
     }
 
     public void StartCardSelect()
@@ -114,31 +166,15 @@ public class CardSelection : MonoBehaviour
 
         GameManager.Instance.SetPause(true);
 
+        SetCardUI(0);
+        SetCardUI(1);
+
         int token = UnityEngine.Random.Range(0, 2);
-        bool isAdd = token == 1 ? true : false;
-        Card firstCard = GetRandomCard();
-        cardUis[0].SetCardUI(firstCard, isAdd);
-        curSelectIndex[0] = firstCard.cardIndex;
-        curSelectIsAdd[0] = isAdd;
-
-        token = UnityEngine.Random.Range(0, 2);
-        isAdd = token == 1 ? true : false;
-        Card secondCard = GetRandomCard();
-        cardUis[1].SetCardUI(secondCard, isAdd);
-        curSelectIndex[1] = secondCard.cardIndex;
-        curSelectIsAdd[1] = isAdd;
-
-        token = UnityEngine.Random.Range(0, 2);
         cardSkip.SetActive(token == 0);
         cardUis[2].gameObject.SetActive(token == 1);
         if (token == 1)
         {
-            token = UnityEngine.Random.Range(0, 2);
-            isAdd = token == 1 ? true : false;
-            Card thirdCard = GetRandomCard();
-            cardUis[2].SetCardUI(thirdCard, isAdd);
-            curSelectIndex[2] = thirdCard.cardIndex;
-            curSelectIsAdd[2] = isAdd;
+            SetCardUI(2);
         }
         else
             curSelectIndex[2] = -1;
@@ -155,19 +191,19 @@ public class CardSelection : MonoBehaviour
         }
 
         (int index, TileType tileType, int token) data = excludedCards[id];
-        cardPoolDic[data.tileType][data.index] = data.token;
+        _cardPoolDic[data.tileType][data.index] = data.token;
         isStarted = true;
     }
 
     private void Init()
     {
-        cardPoolDic[TileType.Path] = new Dictionary<int, int>();
-        cardPoolDic[TileType.Room_Single] = new Dictionary<int, int>();
-        cardPoolDic[TileType.Room] = new Dictionary<int, int>();
-        cardPoolDic[TileType.Door] = new Dictionary<int, int>();
-        cardPoolDic[TileType.Environment] = new Dictionary<int, int>();
-        cardPoolDic[TileType.Herb] = new Dictionary<int, int>();
-        cardPoolDic[TileType.Special] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Path] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Room_Single] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Room] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Door] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Environment] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Herb] = new Dictionary<int, int>();
+        _cardPoolDic[TileType.Special] = new Dictionary<int, int>();
 
 
         foreach (var data in DataManager.Instance.start_deckTable)
@@ -179,7 +215,7 @@ public class CardSelection : MonoBehaviour
 
             if (include)
             {
-                cardPoolDic[tileType][index] = token;
+                _cardPoolDic[tileType][index] = token;
                 isStarted = true;
             }
             else

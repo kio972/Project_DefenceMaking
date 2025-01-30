@@ -221,8 +221,8 @@ public class ItemSlot : FluctItem, ISlot
     public void SetItem(Sprite icon, string targetName)
     {
         itemIcon.sprite = icon;
-        itemName.text = targetName;
-        itemPrice.text = curPrice.ToString();
+        //itemName.text = targetName;
+        //itemPrice.text = curPrice.ToString();
     }
 
     private void SetItemInfo()
