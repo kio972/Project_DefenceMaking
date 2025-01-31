@@ -21,10 +21,10 @@ public class Stage0_Story : MonoBehaviour
     //private readonly string _Tuto7 = "Tuto107";
     private readonly string _Tuto8 = "Tuto108";
     private readonly string _Tuto9 = "Tuto109";
-    //private readonly string _Tuto10 = "Tuto110";
+    private readonly string _Tuto10 = "Tuto110";
+    private readonly string _Tuto11 = "Tuto111";
 
-    
-    
+
 
     public int tutoProgress { get; private set; }
 
@@ -138,9 +138,12 @@ public class Stage0_Story : MonoBehaviour
         //GameManager.Instance.cardDeckController.AddCard(road10);
         //int room0 = DataManager.Instance.deckListIndex["c11001"];
         int room1 = DataManager.Instance.deckListIndex["c11002"];
+
+        int roomPart = DataManager.Instance.deckListIndex["c12012"];
+        int doorPart = DataManager.Instance.deckListIndex["c13007"];
         //int room2 = DataManager.Instance.deckListIndex["c11003"];
         //GameManager.Instance.cardDeckController.AddCard(room0);
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
             GameManager.Instance.cardDeckController.AddCard(room1);
         //GameManager.Instance.cardDeckController.AddCard(room2);
 
@@ -239,11 +242,38 @@ public class Stage0_Story : MonoBehaviour
 
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto9);
-        
-        //await PlayScript(_Tuto10);
+
+        GameManager.Instance.speedLock = false;
+        GameManager.Instance.speedController.SetSpeedZero();
+        GameManager.Instance.speedLock = true;
+
+        await PlayScript(_Tuto10);
+
+        tutoProgress = 9;
+        GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.FindNode(-3, 6).transform.position);
+        if (GameManager.Instance.mapBuilder is Stage0_mapBuilder tutoBuilder)
+        {
+            TileNode door = tutoBuilder.SetExampleRoom();
+            door.isLock = true;
+            GameManager.Instance.cardDeckController.DrawCard(roomPart);
+            await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+            await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            NodeManager.Instance.SetActiveNode(door, false);
+            GameManager.Instance.cardDeckController.DrawCard(doorPart);
+            await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+            await UniTask.WaitUntil(() => GameManager.Instance.monsterSpawner.Count > 1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            door.isLock = false;
+            NodeManager.Instance.SetActiveNode(door, true);
+        }
+        GameManager.Instance.cameraController.CamMoveToPos(GameManager.Instance.monsterSpawner[1].transform.position);
+
+        await PlayScript(_Tuto11);
+        GameManager.Instance.cameraController.CamMoveToPos(camZeroPos);
 
         tutoProgress = 10;
-
         GameManager.Instance.timerLock = false;
         GameManager.Instance.spawnLock = false;
         GameManager.Instance.drawLock = false;

@@ -52,6 +52,8 @@ public class Stage0_TutoUI : MonoBehaviour
 
     [SerializeField]
     private GameObject researchPage;
+    [SerializeField]
+    private ResearchMainUI researchMain;
 
     [SerializeField]
     private GameObject researchSlimeGuide;
@@ -90,6 +92,9 @@ public class Stage0_TutoUI : MonoBehaviour
         await UniTask.WaitUntil(() => _progress >= 1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         rotateGuide.gameObject.SetActive(false);
 
+        TileNode endTile = NodeManager.Instance.endPoint;
+        NodeManager.Instance.SetActiveNode(endTile, false);
+
         await UniTask.WaitForSeconds(0.3f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         while (_progress == 1)
         {
@@ -107,6 +112,8 @@ public class Stage0_TutoUI : MonoBehaviour
 
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
+
+        NodeManager.Instance.SetActiveNode(endTile, true);
 
         await UniTask.WaitUntil(() => _progress >= 2, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         rotateGuide.gameObject.SetActive(true);
@@ -130,8 +137,9 @@ public class Stage0_TutoUI : MonoBehaviour
         await UniTask.WaitForSeconds(0.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         tutoDeployBtn.SetActive(true);
         deployKeyOpenBlock.SetActive(true);
-        deployBtn.SetActive(true);
+        //deployBtn.SetActive(true);
         btnGuide.transform.position = deployBtn.transform.position;
+        //tutoDeploy.enabled = false;
         while(_progress == 3 && GameManager.Instance.trapList.Count == 0)
         {
             btnGuide.SetActive(tutoDeploy.DeployStep == 0);
@@ -148,7 +156,7 @@ public class Stage0_TutoUI : MonoBehaviour
         await UniTask.WaitUntil(() => _progress >= 4, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await UniTask.WaitForSeconds(0.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         Destroy(tutoDeployBtn.GetComponent<Animator>());
-        tutoDeployBtn.SetActive(false);
+        //tutoDeployBtn.SetActive(false);
 
         researchBtn.SetActive(true);
         btnGuide.transform.position = researchBtn.transform.position;
@@ -164,7 +172,10 @@ public class Stage0_TutoUI : MonoBehaviour
 
         btnGuide.SetActive(false);
         researchBlock.SetActive(true);
-        researchPage.transform.parent.gameObject.SetActive(false);
+        //researchPage.transform.parent.gameObject.SetActive(false);
+        researchMain.enabled = false;
+        //tutoDeploy.enabled = true;
+
         await UniTask.WaitUntil(() => _progress >= 5, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
         await UniTask.WaitUntil(() => _progress >= 6, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
@@ -218,6 +229,7 @@ public class Stage0_TutoUI : MonoBehaviour
         Destroy(researchConfirmGuide);
         Destroy(researchSlimeGuide);
         realDeploy.SetActive(true);
-        researchPage.transform.parent.gameObject.SetActive(true);
+        //researchPage.transform.parent.gameObject.SetActive(true);
+        researchMain.enabled = true;
     }
 }

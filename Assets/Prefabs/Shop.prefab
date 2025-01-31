@@ -5256,9 +5256,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -60, y: -381}
+  m_AnchoredPosition: {x: -60, y: -425.5}
   m_SizeDelta: {x: 89, y: 89}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1764104784060263217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15771,6 +15771,7 @@ GameObject:
   - component: {fileID: 5367707415690669271}
   - component: {fileID: 6788258760712524659}
   - component: {fileID: 3352746565655856751}
+  - component: {fileID: 78959435250632874}
   m_Layer: 5
   m_Name: OpenBtn
   m_TagString: Untagged
@@ -15798,9 +15799,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -60, y: -381}
+  m_AnchoredPosition: {x: -60, y: -425.5}
   m_SizeDelta: {x: 89, y: 89}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5367707415690669271
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15895,6 +15896,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &78959435250632874
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7038857352743278001}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 762338d95eee9114397c87025aa73543, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7073423723088637478
 GameObject:
   m_ObjectHideFlags: 0

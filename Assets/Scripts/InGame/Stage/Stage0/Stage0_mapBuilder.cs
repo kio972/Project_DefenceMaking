@@ -4,6 +4,46 @@ using UnityEngine;
 
 public class Stage0_mapBuilder : MapBuilder
 {
+    public TileNode SetExampleRoom()
+    {
+        GameObject roomTile = Resources.Load<GameObject>("Prefab/Tile/RoomTile8");
+        GameObject doorTile = Resources.Load<GameObject>("Prefab/Tile/RoomTile22");
+        
+        TileNode node = NodeManager.Instance.FindNode(-3, 5);
+        Tile targetTile = Instantiate(roomTile)?.GetComponent<Tile>();
+        targetTile.Init(node, false, false, true);
+
+        TileNode nextNode = node.neighborNodeDic[Direction.RightDown];
+        targetTile = Instantiate(roomTile)?.GetComponent<Tile>();
+        targetTile.Init(nextNode, false, false, true);
+        targetTile.RotateTile(true);
+
+        nextNode = nextNode.neighborNodeDic[Direction.Right];
+        targetTile = Instantiate(doorTile)?.GetComponent<Tile>();
+        targetTile.Init(nextNode, false, false, true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+        TileNode doorNode = nextNode;
+
+        nextNode = nextNode.neighborNodeDic[Direction.RightUp];
+        targetTile = Instantiate(roomTile)?.GetComponent<Tile>();
+        targetTile.Init(nextNode, false, false, true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+
+        nextNode = nextNode.neighborNodeDic[Direction.LeftUp];
+        targetTile = Instantiate(roomTile)?.GetComponent<Tile>();
+        targetTile.Init(nextNode, false, false, true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+        targetTile.RotateTile(true);
+
+        return doorNode;
+    }
+
     protected override void SetBasicTile()
     {
         //스타트포인트부터 스타트포인트 - 직선길 - 직선길  직선길 - 직선길 - 마왕방

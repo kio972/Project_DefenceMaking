@@ -33,6 +33,7 @@ public class TileNode : MonoBehaviour
     public bool GuideActive { get => guideObject.gameObject.activeSelf; }
 
     public bool setAvail = false;
+    public bool isLock = false;
     [SerializeField]
     private RoadEmptyMaterialProperties guideColor;
 
@@ -111,8 +112,8 @@ public class TileNode : MonoBehaviour
         if (guideObject == null)
             return;
 
-        guideObject.gameObject.SetActive(true);
-        setAvail = value;
+        guideObject.gameObject.SetActive(true && !isLock);
+        setAvail = value && !isLock;
 
         if(value)
             guideColor?.SetColor(Color.green);

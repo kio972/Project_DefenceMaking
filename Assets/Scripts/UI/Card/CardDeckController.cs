@@ -516,8 +516,8 @@ public class CardDeckController : MonoBehaviour
 
     public void DrawCard(int cardIndex)
     {
-        if (_cardDeck.Count < 1) return;
-        if (!_cardDeck.Contains(cardIndex)) return;
+        //if (_cardDeck.Count < 1) return;
+        //if (!_cardDeck.Contains(cardIndex)) return;
 
         InstantiateCard(ReturnDeck(cardIndex));
     }
