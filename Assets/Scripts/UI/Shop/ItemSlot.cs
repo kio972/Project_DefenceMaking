@@ -124,12 +124,20 @@ public class ItemSlot : FluctItem, ISlot
         isSoldOut.Value = false;
     }
 
+    public void ForceUpdateItemInfo(ItemInfo info)
+    {
+        this.itemInfo = info;
+    }
+
     public void OnClick()
     {
         if (_item is IMalPoongSunOnClick script)
             script.PlayOnClickScript();
 
-        slotInfo?.UpdateInfo(this);
+        if(_item is IInfoChangeableItem infoChangeable)
+            slotInfo.UpdateInfo(this, infoChangeable.additional);
+        else
+            slotInfo?.UpdateInfo(this);
     }
 
     public void SendInfo()

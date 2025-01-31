@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using static UnityEditor.Progress;
 
-public class RandomCard : MonoBehaviour, Item, IRefreshableItem
+public class RandomCard : MonoBehaviour, Item, IRefreshableItem, IInfoChangeableItem
 {
     //[SerializeField]
     //private TileType targetType;
@@ -53,6 +55,25 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem
         }
     }
 
+    Card _curCard;
+
+    public ItemInfo Info
+    {
+        get
+        {
+            string itemId = isAdd ? "shop_item0033" : "shop_item0034";
+            return new ItemInfo(DataManager.Instance.shopListDic[itemId]);
+        }
+    }
+
+    public object additional
+    {
+        get
+        {
+            return DataManager.Instance.GetDescription(_curCard.cardName);
+        }
+    }
+
     private int GetRandomIndex(List<int> target)
     {
         int randomIndex = Random.Range(0, target.Count);
@@ -77,8 +98,10 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem
 
     public void UseItem()
     {
-        GameManager.Instance.cardDeckController.AddCard(targetIndex);
-        GameManager.Instance.cardDeckController.DrawCard(targetIndex);
+        if(isAdd)
+            GameManager.Instance.cardDeckController.AddCard(targetIndex);
+        else
+            GameManager.Instance.cardDeckController.RemoveCard(targetIndex);
     }
 
     public void RefreshItem()
@@ -96,13 +119,14 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem
         //        break;
         //}
 
-        bool isAdd = UnityEngine.Random.Range(0, 2) == 1;
-        Card card = isAdd ? GameManager.Instance.cardSelector.GetRandomCard() : GameManager.Instance.cardSelector.GetDeckRandomCard();
-        targetIndex = card.cardIndex;
-        card_frame.sprite = frameSprites[GetFrameIndex(card.cardType, isAdd)];
+        isAdd = UnityEngine.Random.Range(0, 2) == 1;
+        _curCard = isAdd ? GameManager.Instance.cardSelector.GetRandomCard() : GameManager.Instance.cardSelector.GetDeckRandomCard();
+        targetIndex = _curCard.cardIndex;
+        card_frame.sprite = frameSprites[GetFrameIndex(_curCard.cardType, isAdd)];
         object target = DataManager.Instance.deck_Table[targetIndex]["text_name"];
         targetName.Clear();
         targetName.Append(target.ToString());
         _ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));
+        _ItemSlot?.ForceUpdateItemInfo(Info);
     }
 }

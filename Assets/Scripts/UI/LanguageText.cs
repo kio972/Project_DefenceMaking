@@ -22,6 +22,8 @@ public class LanguageText : MonoBehaviour, ILanguageChange
 
     private float originSize;
 
+    private object _additional = null;
+
     public TextMeshProUGUI _Text
     {
         get
@@ -57,8 +59,40 @@ public class LanguageText : MonoBehaviour, ILanguageChange
         _Text.fontSize = targetSize;
     }
 
+    public void ChangeLangauge(Languages language, string key, object additional)
+    {
+        if (key != null)
+            keyStr = key;
+        if (string.IsNullOrEmpty(keyStr))
+            return;
+
+        // 1. text의 key값으로 인덱스 불러오기
+        int index = UtilHelper.Find_Data_Index(keyStr, DataManager.Instance.language_Table, "id");
+        if (index == -1)
+        {
+            _Text.text = keyStr;
+            return;
+        }
+
+        string targetLanguage = language.ToString();
+        Dictionary<string, object> data = DataManager.Instance.language_Table[index];
+        if (!data.ContainsKey(targetLanguage))
+        {
+            _Text.text = keyStr;
+            return;
+        }
+
+        _Text.text = data[targetLanguage].ToString().Replace("%", additional.ToString());
+    }
+
     public void ChangeLangauge(Languages language, string key = null)
     {
+        if (_additional != null)
+        {
+            ChangeLangauge(language, key, _additional);
+            return;
+        }
+
         if (key != null)
             keyStr = key;
         if (string.IsNullOrEmpty(keyStr))

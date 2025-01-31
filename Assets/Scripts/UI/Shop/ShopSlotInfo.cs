@@ -61,12 +61,20 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
         soldOutImage.SetActive(isSoldOut);
     }
 
-    public void UpdateInfo(ItemSlot data)
+    public void UpdateInfo(ItemSlot data, object additional = null)
     {
         _curslot = data;
 
-        card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName);
-        card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc);
+        if(additional != null)
+        {
+            card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName, additional);
+            card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc, additional);
+        }
+        else
+        {
+            card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName);
+            card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc);
+        }
 
         card_illust.sprite = data.ItemIcon.sprite;
 
