@@ -425,7 +425,7 @@ MonoBehaviour:
     ParentPath: SoundBanks/DM_SoundBank
     guid: 509fead37a3c7a40b161e71d95d76cc6
     GuidInternal: 
-    m_lastTime: -8584644816190532306
+    m_lastTime: -8584632114392508178
     List:
     - name: DM_SoundBank
       guid: 10564ccd860f33428134335b6f399927
@@ -453,7 +453,7 @@ MonoBehaviour:
     ParentPath: Events/Default Work Unit
     guid: 35640558a4bb4349b583dc5af21a2a8e
     GuidInternal: 
-    m_lastTime: -8584644816190642533
+    m_lastTime: -8584632114392544632
     List: []
   - PhysicalPath: Events/DM_Event.wwu
     PathAndIcons:
@@ -466,10 +466,10 @@ MonoBehaviour:
     ParentPath: Events/DM_Event
     guid: 39ab669188b6414984d8223432b92dc9
     GuidInternal: 
-    m_lastTime: -8584644816190578556
+    m_lastTime: -8584632114392570547
     List:
     - name: Alert_Research_Complete
-      guid: ab70f4dfef82864caf14ccdb6018e66e
+      guid: a488f237fd84514dab6c110c67af24d5
       id: 3872819091
       PathAndIcons:
       - ElementName: Events
@@ -483,13 +483,13 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Alert_Research_Complete
         ObjectType: 3
-        guid: ab70f4dfef82864caf14ccdb6018e66e
+        guid: a488f237fd84514dab6c110c67af24d5
       Path: Events/DM_Event/UI Event/Alert_Research_Complete
       maxAttenuation: 0
-      maxDuration: 1.0914583
-      minDuration: 1.0914583
+      maxDuration: 1.0896667
+      minDuration: 1.0896667
     - name: Alert_Time
-      guid: 050ab754c965ff4ba05e01b48c294ed4
+      guid: 95a386b89c04a343a79c7386fae216b4
       id: 4243488615
       PathAndIcons:
       - ElementName: Events
@@ -503,7 +503,7 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Alert_Time
         ObjectType: 3
-        guid: 050ab754c965ff4ba05e01b48c294ed4
+        guid: 95a386b89c04a343a79c7386fae216b4
       Path: Events/DM_Event/UI Event/Alert_Time
       maxAttenuation: 0
       maxDuration: 3
@@ -542,8 +542,28 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: 'Blank_Alert '
+      guid: f341b29bdf2f964c8ca0f11f2cd15756
+      id: 2897588466
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: 'Blank_Alert '
+        ObjectType: 3
+        guid: f341b29bdf2f964c8ca0f11f2cd15756
+      Path: 'Events/DM_Event/UI Event/Blank_Alert '
+      maxAttenuation: 0
+      maxDuration: 1.9768125
+      minDuration: 1.9768125
     - name: Card_Mouseover
-      guid: 5d35096e145a6d4a87e1bb32c3249d16
+      guid: f5b9a7da0fa42048bb2684c0660f3823
       id: 1586336673
       PathAndIcons:
       - ElementName: Events
@@ -557,11 +577,51 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Card_Mouseover
         ObjectType: 3
-        guid: 5d35096e145a6d4a87e1bb32c3249d16
+        guid: f5b9a7da0fa42048bb2684c0660f3823
       Path: Events/DM_Event/UI Event/Card_Mouseover
       maxAttenuation: 0
-      maxDuration: 0.261
-      minDuration: 0.261
+      maxDuration: 0.5000625
+      minDuration: 0.5000625
+    - name: Demon_Attack
+      guid: a7f7249fb794bf448be817ab87c24bae
+      id: 1927135673
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Demon_Attack
+        ObjectType: 3
+        guid: a7f7249fb794bf448be817ab87c24bae
+      Path: Events/DM_Event/Object Event/Demon_Attack
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Demon_Hit_Voice
+      guid: 7bb75869d9e2524a8ec314c600aac79c
+      id: 2357919911
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Demon_Hit_Voice
+        ObjectType: 3
+        guid: 7bb75869d9e2524a8ec314c600aac79c
+      Path: Events/DM_Event/Object Event/Demon_Hit_Voice
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: Enemy_Archer_Attack
       guid: 7a1a5d73872df94b8235e4fcd5af2664
       id: 3450149562
@@ -642,6 +702,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.25466666
       minDuration: 0.18666667
+    - name: Enemy_Recall
+      guid: a07d4ba4912d2944824c43382ded9ccd
+      id: 81576553
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Recall
+        ObjectType: 3
+        guid: a07d4ba4912d2944824c43382ded9ccd
+      Path: Events/DM_Event/Object Event/Enemy_Recall
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: Enemy_Thief_Attack
       guid: 6ca0e761b09cc844b0d21eb4119540b5
       id: 1904917713
@@ -682,6 +762,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.32
       minDuration: 0.192
+    - name: Hidden_tile
+      guid: 3655e50840179b4ba30153afb9be3ad9
+      id: 3069863532
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Hidden_tile
+        ObjectType: 3
+        guid: 3655e50840179b4ba30153afb9be3ad9
+      Path: Events/DM_Event/UI Event/Hidden_tile
+      maxAttenuation: 0
+      maxDuration: 3.5369167
+      minDuration: 3.5369167
     - name: Monster_Goblin_Dead
       guid: 4be116e9c4c02347ba7b531e342c1eeb
       id: 433730394
@@ -937,8 +1037,8 @@ MonoBehaviour:
         guid: 20b4cf3fd77fbd4d92e60f2ab000bc5a
       Path: Events/DM_Event/Object Event/Play_Alert_time
       maxAttenuation: 0
-      maxDuration: 1.9911041
-      minDuration: 1.9911041
+      maxDuration: 0
+      minDuration: 0
     - name: Play_Alert_time_01
       guid: f8282453110c9e40a672eb5be2fd5adb
       id: 2050609054
@@ -957,8 +1057,8 @@ MonoBehaviour:
         guid: f8282453110c9e40a672eb5be2fd5adb
       Path: Events/DM_Event/Object Event/Play_Alert_time_01
       maxAttenuation: 0
-      maxDuration: 1.9911041
-      minDuration: 1.9911041
+      maxDuration: 0
+      minDuration: 0
     - name: Play_Click_card_01
       guid: eca5777cbf88b944a1142d17536f4335
       id: 2574954115
@@ -977,11 +1077,111 @@ MonoBehaviour:
         guid: eca5777cbf88b944a1142d17536f4335
       Path: Events/DM_Event/Object Event/Play_Click_card_01
       maxAttenuation: 0
-      maxDuration: 0.261
-      minDuration: 0.261
-    - name: Quest_Paper_Burn
-      guid: de250531279df74388e63d2b9f76d246
-      id: 3766261802
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_DM_Bossbattle_BPM145
+      guid: abefbbfed5889a41a6757354ca1c5400
+      id: 2525272031
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: BGM Event
+        ObjectType: 4
+        guid: ae66b1ae87009849929fca4be78f5bad
+      - ElementName: Play_DM_Bossbattle_BPM145
+        ObjectType: 3
+        guid: abefbbfed5889a41a6757354ca1c5400
+      Path: Events/DM_Event/BGM Event/Play_DM_Bossbattle_BPM145
+      maxAttenuation: 0
+      maxDuration: 120.82758
+      minDuration: 120.82758
+    - name: Play_DM_Field_Loop_8s
+      guid: 8a12db08ef235b40854bc7795b2685f6
+      id: 4137095013
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: BGM Event
+        ObjectType: 4
+        guid: ae66b1ae87009849929fca4be78f5bad
+      - ElementName: Play_DM_Field_Loop_8s
+        ObjectType: 3
+        guid: 8a12db08ef235b40854bc7795b2685f6
+      Path: Events/DM_Event/BGM Event/Play_DM_Field_Loop_8s
+      maxAttenuation: 0
+      maxDuration: 104.156525
+      minDuration: 104.156525
+    - name: Play_DM_Main_Title
+      guid: da0046ffcf3b994faa770531fafd6176
+      id: 3274818598
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: BGM Event
+        ObjectType: 4
+        guid: ae66b1ae87009849929fca4be78f5bad
+      - ElementName: Play_DM_Main_Title
+        ObjectType: 3
+        guid: da0046ffcf3b994faa770531fafd6176
+      Path: Events/DM_Event/BGM Event/Play_DM_Main_Title
+      maxAttenuation: 0
+      maxDuration: 67.82609
+      minDuration: 67.82609
+    - name: Play_DM_Namedboss_Battle
+      guid: 5fd4fa5370d21749a3382fd68da7b825
+      id: 2356728643
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: BGM Event
+        ObjectType: 4
+        guid: ae66b1ae87009849929fca4be78f5bad
+      - ElementName: Play_DM_Namedboss_Battle
+        ObjectType: 3
+        guid: 5fd4fa5370d21749a3382fd68da7b825
+      Path: Events/DM_Event/BGM Event/Play_DM_Namedboss_Battle
+      maxAttenuation: 0
+      maxDuration: 106.666664
+      minDuration: 106.666664
+    - name: Play_DM_title_Noloop_BPM138
+      guid: 06d9eaab1439f2449537b155b2a3bdd9
+      id: 1908904774
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: BGM Event
+        ObjectType: 4
+        guid: ae66b1ae87009849929fca4be78f5bad
+      - ElementName: Play_DM_title_Noloop_BPM138
+        ObjectType: 3
+        guid: 06d9eaab1439f2449537b155b2a3bdd9
+      Path: Events/DM_Event/BGM Event/Play_DM_title_Noloop_BPM138
+      maxAttenuation: 0
+      maxDuration: 71.30435
+      minDuration: 71.30435
+    - name: Quest_Paper_Close
+      guid: e008921250e8404cb593c8784c78ec3e
+      id: 3322140943
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -992,15 +1192,15 @@ MonoBehaviour:
       - ElementName: UI Event
         ObjectType: 4
         guid: 369db6670027ac4a8f2d3c65fb72b26f
-      - ElementName: Quest_Paper_Burn
+      - ElementName: Quest_Paper_Close
         ObjectType: 3
-        guid: de250531279df74388e63d2b9f76d246
-      Path: Events/DM_Event/UI Event/Quest_Paper_Burn
+        guid: e008921250e8404cb593c8784c78ec3e
+      Path: Events/DM_Event/UI Event/Quest_Paper_Close
       maxAttenuation: 0
       maxDuration: 2.2946458
       minDuration: 2.2946458
     - name: Quest_Paper_Open
-      guid: ba089254c815e04abe09d2996ea6034e
+      guid: a32c7587983ba8459b953fe8f57a2b2c
       id: 822059337
       PathAndIcons:
       - ElementName: Events
@@ -1014,13 +1214,133 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Quest_Paper_Open
         ObjectType: 3
-        guid: ba089254c815e04abe09d2996ea6034e
+        guid: a32c7587983ba8459b953fe8f57a2b2c
       Path: Events/DM_Event/UI Event/Quest_Paper_Open
       maxAttenuation: 0
-      maxDuration: 0.32
-      minDuration: 0.32
+      maxDuration: 0.584
+      minDuration: 0.584
+    - name: Quest_UI_Creat
+      guid: dbc65d9cd8ec424ea982b042323cda69
+      id: 2870564192
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Quest_UI_Creat
+        ObjectType: 3
+        guid: dbc65d9cd8ec424ea982b042323cda69
+      Path: Events/DM_Event/UI Event/Quest_UI_Creat
+      maxAttenuation: 0
+      maxDuration: 1.5251666
+      minDuration: 1.5251666
+    - name: Quest_UI_Fail
+      guid: fe9af9ebcb6cfe4bb799635687cd001b
+      id: 86675729
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Quest_UI_Fail
+        ObjectType: 3
+        guid: fe9af9ebcb6cfe4bb799635687cd001b
+      Path: Events/DM_Event/UI Event/Quest_UI_Fail
+      maxAttenuation: 0
+      maxDuration: 1.5251666
+      minDuration: 1.5251666
+    - name: Quest_UI_Success
+      guid: 0c3ba02856e7984189074103591a1886
+      id: 2824547630
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Quest_UI_Success
+        ObjectType: 3
+        guid: 0c3ba02856e7984189074103591a1886
+      Path: Events/DM_Event/UI Event/Quest_UI_Success
+      maxAttenuation: 0
+      maxDuration: 1.5251666
+      minDuration: 1.5251666
+    - name: Recruit_Open
+      guid: f596cc842799c64090f2009b66742c43
+      id: 4271781412
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Recruit_Open
+        ObjectType: 3
+        guid: f596cc842799c64090f2009b66742c43
+      Path: Events/DM_Event/UI Event/Recruit_Open
+      maxAttenuation: 0
+      maxDuration: 0.78627086
+      minDuration: 0.78627086
+    - name: Research_Open
+      guid: 30dec39bca346b42ad78f538326c89a6
+      id: 2489958093
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Research_Open
+        ObjectType: 3
+        guid: 30dec39bca346b42ad78f538326c89a6
+      Path: Events/DM_Event/UI Event/Research_Open
+      maxAttenuation: 0
+      maxDuration: 0.9727708
+      minDuration: 0.9727708
+    - name: Research_Progress_Click_Fail
+      guid: 2f6418d993e40d47894c10fed8e1a5ae
+      id: 1817680512
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Research_Progress_Click_Fail
+        ObjectType: 3
+        guid: 2f6418d993e40d47894c10fed8e1a5ae
+      Path: Events/DM_Event/UI Event/Research_Progress_Click_Fail
+      maxAttenuation: 0
+      maxDuration: 1.4940208
+      minDuration: 1.4940208
     - name: Shop_Card_Buy
-      guid: 06d8e568dcc4ce4ab4253e60d8b1eb4b
+      guid: 505894355f3adb468c111a7058aa960c
       id: 3637533423
       PathAndIcons:
       - ElementName: Events
@@ -1034,13 +1354,13 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Shop_Card_Buy
         ObjectType: 3
-        guid: 06d8e568dcc4ce4ab4253e60d8b1eb4b
+        guid: 505894355f3adb468c111a7058aa960c
       Path: Events/DM_Event/UI Event/Shop_Card_Buy
       maxAttenuation: 0
       maxDuration: 0.261
       minDuration: 0.261
     - name: Shop_Open
-      guid: e5f9958df9eb5843a06c3743b419a30b
+      guid: e8abfab934442f48a10f42c096618165
       id: 839522188
       PathAndIcons:
       - ElementName: Events
@@ -1054,13 +1374,13 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Shop_Open
         ObjectType: 3
-        guid: e5f9958df9eb5843a06c3743b419a30b
+        guid: e8abfab934442f48a10f42c096618165
       Path: Events/DM_Event/UI Event/Shop_Open
       maxAttenuation: 0
       maxDuration: 0.46716666
       minDuration: 0.46716666
     - name: Tile_Click
-      guid: 610edb938d3cee408c97abafe53e48d2
+      guid: 50e8a8b44fbcfc498050f811ad39be88
       id: 3030067132
       PathAndIcons:
       - ElementName: Events
@@ -1074,11 +1394,71 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Tile_Click
         ObjectType: 3
-        guid: 610edb938d3cee408c97abafe53e48d2
+        guid: 50e8a8b44fbcfc498050f811ad39be88
       Path: Events/DM_Event/UI Event/Tile_Click
       maxAttenuation: 0
       maxDuration: 0.43466666
       minDuration: 0.43466666
+    - name: Tile_Create
+      guid: c8eaba7228b80a4e96cbd87ed0b362d7
+      id: 765226200
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Tile_Create
+        ObjectType: 3
+        guid: c8eaba7228b80a4e96cbd87ed0b362d7
+      Path: Events/DM_Event/UI Event/Tile_Create
+      maxAttenuation: 0
+      maxDuration: 0.4515625
+      minDuration: 0.4515625
+    - name: Tile_demolition
+      guid: 3bdd5b8075fa45449474764eea3bcf13
+      id: 2276214234
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Tile_demolition
+        ObjectType: 3
+        guid: 3bdd5b8075fa45449474764eea3bcf13
+      Path: Events/DM_Event/UI Event/Tile_demolition
+      maxAttenuation: 0
+      maxDuration: 1.1335
+      minDuration: 1.1335
+    - name: Tile_Rotate
+      guid: e989e1cbe768d94e917c7ea97c2266c5
+      id: 58928041
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: Tile_Rotate
+        ObjectType: 3
+        guid: e989e1cbe768d94e917c7ea97c2266c5
+      Path: Events/DM_Event/UI Event/Tile_Rotate
+      maxAttenuation: 0
+      maxDuration: 0.033791665
+      minDuration: 0.033791665
     - name: Trap_Home_Attack
       guid: afa0b547a67704418c695a6b183a51b6
       id: 3975656553
@@ -1120,7 +1500,7 @@ MonoBehaviour:
       maxDuration: 0.9557292
       minDuration: 0.9557292
     - name: Trap_Set_Success
-      guid: 91051e9b6e166546969b5c29e25c6a3f
+      guid: c097aed9a3a1884a83ad7048b110a8d3
       id: 2011209205
       PathAndIcons:
       - ElementName: Events
@@ -1134,7 +1514,7 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Trap_Set_Success
         ObjectType: 3
-        guid: 91051e9b6e166546969b5c29e25c6a3f
+        guid: c097aed9a3a1884a83ad7048b110a8d3
       Path: Events/DM_Event/UI Event/Trap_Set_Success
       maxAttenuation: 0
       maxDuration: 0.104833335
@@ -1177,7 +1557,7 @@ MonoBehaviour:
       maxDuration: -1
       minDuration: -1
     - name: UI_Click
-      guid: fb97482e86bc59409fdf2f7e9b68431c
+      guid: 1bd95d282e0cb341ba55305de42df2b5
       id: 2249769530
       PathAndIcons:
       - ElementName: Events
@@ -1191,13 +1571,33 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: UI_Click
         ObjectType: 3
-        guid: fb97482e86bc59409fdf2f7e9b68431c
+        guid: 1bd95d282e0cb341ba55305de42df2b5
       Path: Events/DM_Event/UI Event/UI_Click
       maxAttenuation: 0
       maxDuration: 0.3805
       minDuration: 0.3805
+    - name: UI_Fail
+      guid: 5191fe651b3f354d9f419927acfd70db
+      id: 3050276906
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: UI_Fail
+        ObjectType: 3
+        guid: 5191fe651b3f354d9f419927acfd70db
+      Path: Events/DM_Event/UI Event/UI_Fail
+      maxAttenuation: 0
+      maxDuration: 0.1813125
+      minDuration: 0.1813125
     - name: UI_MouseOver
-      guid: 1cc82c2b51b0fb4eb5fb34d31174d275
+      guid: 7e2076bb10b8aa4984279c4dce57609f
       id: 3809715957
       PathAndIcons:
       - ElementName: Events
@@ -1211,13 +1611,33 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: UI_MouseOver
         ObjectType: 3
-        guid: 1cc82c2b51b0fb4eb5fb34d31174d275
+        guid: 7e2076bb10b8aa4984279c4dce57609f
       Path: Events/DM_Event/UI Event/UI_MouseOver
       maxAttenuation: 0
       maxDuration: 0.075125
       minDuration: 0.075125
+    - name: UI_Text
+      guid: b3f93bfd6433c940a0068e883ab9e0e3
+      id: 3469071695
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: UI Event
+        ObjectType: 4
+        guid: 369db6670027ac4a8f2d3c65fb72b26f
+      - ElementName: UI_Text
+        ObjectType: 3
+        guid: b3f93bfd6433c940a0068e883ab9e0e3
+      Path: Events/DM_Event/UI Event/UI_Text
+      maxAttenuation: 0
+      maxDuration: 0.2643125
+      minDuration: 0.2643125
     - name: Use_Coin
-      guid: 5b5d6be6db839e49bee630b0da510342
+      guid: 8eeacaaf5e18c44faa21cc7038cc61d8
       id: 2375532986
       PathAndIcons:
       - ElementName: Events
@@ -1231,7 +1651,7 @@ MonoBehaviour:
         guid: 369db6670027ac4a8f2d3c65fb72b26f
       - ElementName: Use_Coin
         ObjectType: 3
-        guid: 5b5d6be6db839e49bee630b0da510342
+        guid: 8eeacaaf5e18c44faa21cc7038cc61d8
       Path: Events/DM_Event/UI Event/Use_Coin
       maxAttenuation: 0
       maxDuration: 0.27977082
@@ -1250,159 +1670,6 @@ MonoBehaviour:
     GuidInternal: 
     m_lastTime: -8584644846026377223
     List: []
-  - PhysicalPath: Game Parameters/Factory Soundseed Air Game Syncs.wwu
-    PathAndIcons:
-    - ElementName: Game Parameters
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: Factory Soundseed Air Game Syncs
-      ObjectType: 12
-      guid: 5577163b42fb8b4598bf96f557afb3b9
-    ParentPath: Game Parameters/Factory Soundseed Air Game Syncs
-    guid: 5577163b42fb8b4598bf96f557afb3b9
-    GuidInternal: 
-    m_lastTime: -8584644846026336399
-    List:
-    - name: SS_Air_Fear
-      guid: 59062ef746431c4ea1b1dab46a05101e
-      id: 1351367891
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Fear
-        ObjectType: 13
-        guid: 59062ef746431c4ea1b1dab46a05101e
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Fear
-    - name: SS_Air_Freefall
-      guid: 37fe2d2f9e4f944d83d853cca39781ad
-      id: 3002758120
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Freefall
-        ObjectType: 13
-        guid: 37fe2d2f9e4f944d83d853cca39781ad
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Freefall
-    - name: SS_Air_Fury
-      guid: dc79aea23acaba4696529986c322a87b
-      id: 1029930033
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Fury
-        ObjectType: 13
-        guid: dc79aea23acaba4696529986c322a87b
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Fury
-    - name: SS_Air_Month
-      guid: 45b4e209a3c47f44b3ca818a1d925ef7
-      id: 2648548617
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Month
-        ObjectType: 13
-        guid: 45b4e209a3c47f44b3ca818a1d925ef7
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Month
-    - name: SS_Air_Presence
-      guid: 1a81b7e32f7b0f49b44f5fe51b468041
-      id: 3847924954
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Presence
-        ObjectType: 13
-        guid: 1a81b7e32f7b0f49b44f5fe51b468041
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Presence
-    - name: SS_Air_RPM
-      guid: ab9048a3d5b92645a64d5290c43ef2dc
-      id: 822163944
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_RPM
-        ObjectType: 13
-        guid: ab9048a3d5b92645a64d5290c43ef2dc
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_RPM
-    - name: SS_Air_Size
-      guid: efeb291393a12e47a38c64668b494879
-      id: 3074696722
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Size
-        ObjectType: 13
-        guid: efeb291393a12e47a38c64668b494879
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Size
-    - name: SS_Air_Storm
-      guid: db8c3fe9d1063747acaf7cd44bbed783
-      id: 3715662592
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Storm
-        ObjectType: 13
-        guid: db8c3fe9d1063747acaf7cd44bbed783
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Storm
-    - name: SS_Air_TimeOfDay
-      guid: 2ca76f537e8c8b4cae03ef34fdadc314
-      id: 3203397129
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_TimeOfDay
-        ObjectType: 13
-        guid: 2ca76f537e8c8b4cae03ef34fdadc314
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_TimeOfDay
-    - name: SS_Air_Turbulence
-      guid: 197ba8edaa73a0409f192073606db710
-      id: 4160247818
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Factory Soundseed Air Game Syncs
-        ObjectType: 12
-        guid: 5577163b42fb8b4598bf96f557afb3b9
-      - ElementName: SS_Air_Turbulence
-        ObjectType: 13
-        guid: 197ba8edaa73a0409f192073606db710
-      Path: Game Parameters/Factory Soundseed Air Game Syncs/SS_Air_Turbulence
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
     PathAndIcons:
