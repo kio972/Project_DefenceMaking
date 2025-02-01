@@ -16,6 +16,7 @@ namespace AK
         static const AkUniqueID ALERT_RESEARCH_COMPLETE = 3872819091U;
         static const AkUniqueID ALERT_TIME = 4243488615U;
         static const AkUniqueID AMB_CAVE = 3755979049U;
+        static const AkUniqueID BLANK_ALERT_ = 2897588466U;
         static const AkUniqueID CARD_MOUSEOVER = 1586336673U;
         static const AkUniqueID DEMON_ATTACK = 1927135673U;
         static const AkUniqueID DEMON_HIT_VOICE = 2357919911U;
@@ -46,40 +47,30 @@ namespace AK
         static const AkUniqueID PLAY_DM_MAIN_TITLE = 3274818598U;
         static const AkUniqueID PLAY_DM_NAMEDBOSS_BATTLE = 2356728643U;
         static const AkUniqueID PLAY_DM_TITLE_NOLOOP_BPM138 = 1908904774U;
-        static const AkUniqueID QUEST_PAPER_BURN = 3766261802U;
+        static const AkUniqueID QUEST_PAPER_CLOSE = 3322140943U;
         static const AkUniqueID QUEST_PAPER_OPEN = 822059337U;
         static const AkUniqueID QUEST_UI_CREAT = 2870564192U;
         static const AkUniqueID QUEST_UI_FAIL = 86675729U;
         static const AkUniqueID QUEST_UI_SUCCESS = 2824547630U;
+        static const AkUniqueID RECRUIT_OPEN = 4271781412U;
         static const AkUniqueID RESEARCH_OPEN = 2489958093U;
         static const AkUniqueID RESEARCH_PROGRESS_CLICK_FAIL = 1817680512U;
         static const AkUniqueID SHOP_CARD_BUY = 3637533423U;
         static const AkUniqueID SHOP_OPEN = 839522188U;
         static const AkUniqueID TILE_CLICK = 3030067132U;
+        static const AkUniqueID TILE_CREATE = 765226200U;
+        static const AkUniqueID TILE_DEMOLITION = 2276214234U;
         static const AkUniqueID TILE_ROTATE = 58928041U;
         static const AkUniqueID TRAP_HOME_ATTACK = 3975656553U;
         static const AkUniqueID TRAP_SAW_ATTACK = 2188379821U;
         static const AkUniqueID TRAP_SET_SUCCESS = 2011209205U;
         static const AkUniqueID TRAP_SPIN_ATTACK = 970676282U;
         static const AkUniqueID UI_CLICK = 2249769530U;
+        static const AkUniqueID UI_FAIL = 3050276906U;
         static const AkUniqueID UI_MOUSEOVER = 3809715957U;
         static const AkUniqueID UI_TEXT = 3469071695U;
         static const AkUniqueID USE_COIN = 2375532986U;
     } // namespace EVENTS
-
-    namespace GAME_PARAMETERS
-    {
-        static const AkUniqueID SS_AIR_FEAR = 1351367891U;
-        static const AkUniqueID SS_AIR_FREEFALL = 3002758120U;
-        static const AkUniqueID SS_AIR_FURY = 1029930033U;
-        static const AkUniqueID SS_AIR_MONTH = 2648548617U;
-        static const AkUniqueID SS_AIR_PRESENCE = 3847924954U;
-        static const AkUniqueID SS_AIR_RPM = 822163944U;
-        static const AkUniqueID SS_AIR_SIZE = 3074696722U;
-        static const AkUniqueID SS_AIR_STORM = 3715662592U;
-        static const AkUniqueID SS_AIR_TIMEOFDAY = 3203397129U;
-        static const AkUniqueID SS_AIR_TURBULENCE = 4160247818U;
-    } // namespace GAME_PARAMETERS
 
     namespace BANKS
     {
