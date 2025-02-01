@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Stage0_Story : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class Stage0_Story : MonoBehaviour
     private readonly string _Tuto9 = "Tuto109";
     private readonly string _Tuto10 = "Tuto110";
     private readonly string _Tuto11 = "Tuto111";
-
+    private readonly string _Tuto12 = "Tuto112";
 
 
     public int tutoProgress { get; private set; }
@@ -38,6 +39,11 @@ public class Stage0_Story : MonoBehaviour
     [SerializeField]
     private GameObject shopBtn;
 
+    [SerializeField]
+    private CardSelection cardSelection;
+
+    [SerializeField]
+    private EventSystem eventSystem;
     private bool LockDestroyTile(ITileKind tileKind)
     {
         if(tileKind is Tile tile)
@@ -85,6 +91,16 @@ public class Stage0_Story : MonoBehaviour
         shopBtn.SetActive(true);
     }
 
+    private async UniTaskVoid CardSelecttionCheck()
+    {
+        await UniTask.WaitUntil(() => cardSelection.gameObject.activeInHierarchy, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        eventSystem.enabled = false;
+
+        await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await PlayScript(_Tuto12);
+        eventSystem.enabled = true;
+    }
+
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
@@ -95,7 +111,8 @@ public class Stage0_Story : MonoBehaviour
             DeckUIQuestCheck().Forget();
             ManaUIQuestCheck().Forget();
             SpeedUIQuestCheck().Forget();
-            ShopUIQuestCheck().Forget();
+            //ShopUIQuestCheck().Forget();
+            CardSelecttionCheck().Forget();
             NodeManager.Instance.AddSetTileEvent(LockDestroyTile);
             return;
         }
@@ -249,31 +266,39 @@ public class Stage0_Story : MonoBehaviour
 
         await PlayScript(_Tuto10);
 
-        tutoProgress = 9;
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.FindNode(-3, 6).transform.position);
         if (GameManager.Instance.mapBuilder is Stage0_mapBuilder tutoBuilder)
         {
             TileNode door = tutoBuilder.SetExampleRoom();
             door.isLock = true;
-            GameManager.Instance.cardDeckController.DrawCard(roomPart);
+
             await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            GameManager.Instance.cardDeckController.DrawCard(roomPart);
+            tutoProgress = 9;
 
             await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             NodeManager.Instance.SetActiveNode(door, false);
             GameManager.Instance.cardDeckController.DrawCard(doorPart);
+
+            tutoProgress = 10;
+
             await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             await UniTask.WaitUntil(() => GameManager.Instance.cardDeckController.hand_CardNumber == 0, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+            tutoProgress = 11;
 
             await UniTask.WaitUntil(() => GameManager.Instance.monsterSpawner.Count > 1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             door.isLock = false;
             NodeManager.Instance.SetActiveNode(door, true);
         }
+
         GameManager.Instance.cameraController.CamMoveToPos(GameManager.Instance.monsterSpawner[1].transform.position);
+        tutoProgress = 12;
 
         await PlayScript(_Tuto11);
         GameManager.Instance.cameraController.CamMoveToPos(camZeroPos);
 
-        tutoProgress = 10;
+        tutoProgress = 20;
         GameManager.Instance.timerLock = false;
         GameManager.Instance.spawnLock = false;
         GameManager.Instance.drawLock = false;
@@ -304,6 +329,7 @@ public class Stage0_Story : MonoBehaviour
         DeckUIQuestCheck().Forget();
         ManaUIQuestCheck().Forget();
         SpeedUIQuestCheck().Forget();
-        ShopUIQuestCheck().Forget();
+        //ShopUIQuestCheck().Forget();
+        CardSelecttionCheck().Forget();
     }
 }

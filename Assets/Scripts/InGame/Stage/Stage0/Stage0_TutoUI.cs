@@ -32,7 +32,7 @@ public class Stage0_TutoUI : MonoBehaviour
     [SerializeField]
     private DeployUI tutoDeploy;
     [SerializeField]
-    private GameObject tutoDeployBtn;
+    private Button tutoDeployBtn;
     [SerializeField]
     private GameObject realDeploy;
     [SerializeField]
@@ -74,6 +74,9 @@ public class Stage0_TutoUI : MonoBehaviour
     private DeploySlot slimeSlot;
     [SerializeField]
     private GameObject deploySlimeGuide;
+    [SerializeField]
+    private DeploySlot golemSlot;
+
     [SerializeField]
     private SlotInfo deploySlotInfo;
     [SerializeField]
@@ -135,7 +138,7 @@ public class Stage0_TutoUI : MonoBehaviour
 
         await UniTask.WaitUntil(() => _progress >= 3, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await UniTask.WaitForSeconds(0.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        tutoDeployBtn.SetActive(true);
+        tutoDeployBtn.gameObject.SetActive(true);
         deployKeyOpenBlock.SetActive(true);
         //deployBtn.SetActive(true);
         btnGuide.transform.position = deployBtn.transform.position;
@@ -153,10 +156,11 @@ public class Stage0_TutoUI : MonoBehaviour
         tileGuide.SetActive(false);
         deployBlock.SetActive(true);
         deployKeyOpenBlock.SetActive(false);
+        tutoDeployBtn.enabled = false;
+        tutoDeploy.enabled = false;
         await UniTask.WaitUntil(() => _progress >= 4, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await UniTask.WaitForSeconds(0.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        Destroy(tutoDeployBtn.GetComponent<Animator>());
-        //tutoDeployBtn.SetActive(false);
+        //Destroy(tutoDeployBtn.GetComponent<Animator>());
 
         researchBtn.SetActive(true);
         btnGuide.transform.position = researchBtn.transform.position;
@@ -165,13 +169,14 @@ public class Stage0_TutoUI : MonoBehaviour
             btnGuide.SetActive(!researchPage.activeSelf);
             researchSlimeGuide.SetActive(!slimeResearchClicked.activeSelf);
             researchConfirmGuide.SetActive(slimeResearchClicked.activeSelf && !researchConfirmBtn.activeSelf);
-            researchCloseGuide.SetActive(researchConfirmBtn.activeSelf);
+            researchCloseGuide.SetActive(researchConfirmBtn.activeInHierarchy);
 
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
 
         btnGuide.SetActive(false);
         researchBlock.SetActive(true);
+        researchCloseGuide.SetActive(false);
         //researchPage.transform.parent.gameObject.SetActive(false);
         researchMain.enabled = false;
         //tutoDeploy.enabled = true;
@@ -197,10 +202,10 @@ public class Stage0_TutoUI : MonoBehaviour
 
         await UniTask.WaitUntil(() => _progress >= 7, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         btnGuide.transform.position = deployBtn.transform.position;
-        deployBlock.SetActive(false);
+        tileGuide.SetActive(false);
         deployKeyOpenBlock.SetActive(true);
-        tutoDeployBtn.SetActive(true);
-        trapBtn.enabled = false;
+        tutoDeployBtn.enabled = true;
+        tutoDeploy.enabled = true;
         slimeSlot.gameObject.SetActive(true);
         while (_progress == 7)
         {
@@ -210,14 +215,64 @@ public class Stage0_TutoUI : MonoBehaviour
             deployConfirmBtn.enabled = deploySlotInfo.curDeploySlot == slimeSlot;
             tileGuide.SetActive(tutoDeploy.DeployStep == 2);
             tileGuide.transform.position = Camera.main.WorldToScreenPoint(roomPos);
+
+            await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        }
+
+        tileGuide.SetActive(false);
+
+        await UniTask.WaitUntil(() => _progress >= 9, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        Vector3 roomMiddlePos = NodeManager.Instance.FindNode(-3, 6).transform.position;
+        while (_progress == 9)
+        {
+            int handCount = GameManager.Instance.cardDeckController.handCards.Count;
+            bool isActive = handCount > 0 && !InputManager.Instance.settingCard;
+            cardGuide[0].SetActive(isActive);
+            if (isActive)
+                cardGuide[0].transform.position = GameManager.Instance.cardDeckController.cards[0].transform.position;
+
+            tileGuide.SetActive(InputManager.Instance.settingCard);
+            tileGuide.transform.position = Camera.main.WorldToScreenPoint(roomMiddlePos);
+
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
+        }
+
+        await UniTask.WaitUntil(() => _progress >= 10, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        Vector3 roomDoorPos = NodeManager.Instance.FindNode(-2, 5).transform.position;
+        while (_progress == 10)
+        {
+            int handCount = GameManager.Instance.cardDeckController.handCards.Count;
+            bool isActive = handCount > 0 && !InputManager.Instance.settingCard;
+            cardGuide[0].SetActive(isActive);
+            if (isActive)
+                cardGuide[0].transform.position = GameManager.Instance.cardDeckController.cards[0].transform.position;
+
+            tileGuide.SetActive(InputManager.Instance.settingCard);
+            tileGuide.transform.position = Camera.main.WorldToScreenPoint(roomDoorPos);
+
+            await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+        }
+
+        await UniTask.WaitUntil(() => _progress >= 11, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        GameManager.Instance.gold = 200;
+        golemSlot.gameObject.SetActive(true);
+        while (_progress == 11)
+        {
+            btnGuide.SetActive(tutoDeploy.DeployStep == 0 && !researchPage.activeSelf);
+            deploySlimeGuide.SetActive(deploySlotInfo.curDeploySlot != golemSlot);
+            deploySlimeGuide.transform.position = golemSlot.transform.position;
+            deployConfirmGuide.SetActive(tutoDeploy.DeployStep == 1 && deploySlotInfo.curDeploySlot == golemSlot);
+            deployConfirmBtn.enabled = deploySlotInfo.curDeploySlot == golemSlot;
+            tileGuide.SetActive(tutoDeploy.DeployStep == 2);
+            tileGuide.transform.position = Camera.main.WorldToScreenPoint(roomMiddlePos);
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
 
         btnGuide.SetActive(false);
         tileGuide.SetActive(false);
-        await UniTask.WaitUntil(() => _progress >= 10, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _progress >= 20, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
         FinishTutoUI();
     }

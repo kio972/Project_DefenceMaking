@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
-using UnityEngine.Rendering;
-using static UnityEditor.Progress;
 
 public class RandomCard : MonoBehaviour, Item, IRefreshableItem, IInfoChangeableItem
 {
