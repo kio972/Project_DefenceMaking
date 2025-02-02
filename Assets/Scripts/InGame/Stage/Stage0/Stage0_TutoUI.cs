@@ -17,7 +17,7 @@ public class Stage0_TutoUI : MonoBehaviour
     [SerializeField]
     private GameObject deployBtn;
     [SerializeField]
-    private GameObject researchBtn;
+    private Button researchBtn;
     [SerializeField]
     private GameObject shopBtn;
 
@@ -82,12 +82,15 @@ public class Stage0_TutoUI : MonoBehaviour
     [SerializeField]
     private Button deployConfirmBtn;
 
+    [SerializeField]
+    private ResearchSlot slimeResearch;
+
+
     async UniTaskVoid Start()
     {
         if (SaveManager.Instance.playerData != null)
         {
-            deployBtn.SetActive(true);
-            researchBtn.SetActive(true);
+
             FinishTutoUI();
             return;
         }
@@ -162,20 +165,21 @@ public class Stage0_TutoUI : MonoBehaviour
         await UniTask.WaitForSeconds(0.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         //Destroy(tutoDeployBtn.GetComponent<Animator>());
 
-        researchBtn.SetActive(true);
+        researchBtn.gameObject.SetActive(true);
         btnGuide.transform.position = researchBtn.transform.position;
         while (_progress == 4)
         {
             btnGuide.SetActive(!researchPage.activeSelf);
-            researchSlimeGuide.SetActive(!slimeResearchClicked.activeSelf);
+            researchSlimeGuide.SetActive(!slimeResearchClicked.activeSelf && researchMain.curResearch != slimeResearch);
             researchConfirmGuide.SetActive(slimeResearchClicked.activeSelf && !researchConfirmBtn.activeSelf);
-            researchCloseGuide.SetActive(researchConfirmBtn.activeInHierarchy);
+            researchCloseGuide.SetActive(researchMain.curResearch == slimeResearch);
 
             await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
 
         btnGuide.SetActive(false);
         researchBlock.SetActive(true);
+        researchBtn.enabled = false;
         researchCloseGuide.SetActive(false);
         //researchPage.transform.parent.gameObject.SetActive(false);
         researchMain.enabled = false;
@@ -220,6 +224,8 @@ public class Stage0_TutoUI : MonoBehaviour
         }
 
         tileGuide.SetActive(false);
+        tutoDeployBtn.enabled = false;
+        tutoDeploy.enabled = false;
 
         await UniTask.WaitUntil(() => _progress >= 9, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         Vector3 roomMiddlePos = NodeManager.Instance.FindNode(-3, 6).transform.position;
@@ -258,6 +264,8 @@ public class Stage0_TutoUI : MonoBehaviour
         await UniTask.WaitUntil(() => _progress >= 11, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         GameManager.Instance.gold = 200;
         golemSlot.gameObject.SetActive(true);
+        tutoDeployBtn.enabled = true;
+        tutoDeploy.enabled = true;
         while (_progress == 11)
         {
             btnGuide.SetActive(tutoDeploy.DeployStep == 0 && !researchPage.activeSelf);
@@ -284,7 +292,10 @@ public class Stage0_TutoUI : MonoBehaviour
         Destroy(researchConfirmGuide);
         Destroy(researchSlimeGuide);
         realDeploy.SetActive(true);
-        //researchPage.transform.parent.gameObject.SetActive(true);
+        deployBtn.SetActive(true);
         researchMain.enabled = true;
+        researchBtn.gameObject.SetActive(true);
+        researchBtn.enabled = true;
+        //researchPage.transform.parent.gameObject.SetActive(true);
     }
 }

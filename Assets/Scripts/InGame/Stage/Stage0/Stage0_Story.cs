@@ -109,7 +109,8 @@ public class Stage0_Story : MonoBehaviour
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
             GameManager.Instance.speedController.SetSpeedNormal();
             DeckUIQuestCheck().Forget();
-            ManaUIQuestCheck().Forget();
+            //ManaUIQuestCheck().Forget();
+            manaUI.SetActive(true);
             SpeedUIQuestCheck().Forget();
             //ShopUIQuestCheck().Forget();
             CardSelecttionCheck().Forget();
@@ -267,12 +268,14 @@ public class Stage0_Story : MonoBehaviour
         await PlayScript(_Tuto10);
 
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.FindNode(-3, 6).transform.position);
+        await UniTask.WaitForSeconds(0.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        manaUI.SetActive(true);
         if (GameManager.Instance.mapBuilder is Stage0_mapBuilder tutoBuilder)
         {
             TileNode door = tutoBuilder.SetExampleRoom();
             door.isLock = true;
 
-            await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            await UniTask.WaitForSeconds(1.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             GameManager.Instance.cardDeckController.DrawCard(roomPart);
             tutoProgress = 9;
 
@@ -327,7 +330,7 @@ public class Stage0_Story : MonoBehaviour
         SaveManager.Instance.SavePlayerData();
 
         DeckUIQuestCheck().Forget();
-        ManaUIQuestCheck().Forget();
+        //ManaUIQuestCheck().Forget();
         SpeedUIQuestCheck().Forget();
         //ShopUIQuestCheck().Forget();
         CardSelecttionCheck().Forget();

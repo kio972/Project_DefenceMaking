@@ -493,8 +493,8 @@ public class GameManager : IngameSingleton<GameManager>
         waveController.SpawnWave(curWave);
         waveController.UpdateWaveText();
 
-        research.LoadData(data);
-        shop.LoadData(data);
+        research?.LoadData(data);
+        shop?.LoadData(data);
         QuestManager.Instance.LoadGame(data);
         SetWaveSpeed(curWave);
         speedController.SetSpeedZero();

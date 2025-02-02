@@ -21,6 +21,6 @@ public class DeploySlotInjecter : MonoBehaviour
         if (slotInfo != null && slotInfo.curDeploySlot != null)
             return;
 
-        slot.SendInfo();
+        //slot.SendInfo();
     }
 }
