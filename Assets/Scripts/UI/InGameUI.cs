@@ -10,8 +10,6 @@ public class InGameUI : MonoBehaviour
     private RectTransform uiRight;
     [SerializeField]
     private RectTransform uiDown;
-    [SerializeField]
-    private RectTransform uiManageMentBtns;
 
     [SerializeField]
     private RectTransform uiRight2;
@@ -21,20 +19,16 @@ public class InGameUI : MonoBehaviour
     private Vector2 originPos_uiTop;
     private Vector2 originPos_uiRight;
     private Vector2 originPos_uiDown;
-    private Vector2 originPos_uiManage;
 
     private Vector2 hidePos_uiTop;
     private Vector2 hidePos_uiRight;
     private Vector2 hidePos_uiDown;
-    private Vector2 hidePos_uiManage;
 
     private Coroutine topCoroutine;
     private Coroutine rightCoroutine;
     private Coroutine downCoroutine;
 
     private Coroutine right2Coroutine;
-
-    private Coroutine manageCoroutine;
 
     public bool rightUILock = false;
 
@@ -92,15 +86,6 @@ public class InGameUI : MonoBehaviour
         downCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiDown, targetPos, lerpTime));
     }
 
-    public void SetManageUI(bool value, float lerpTime = 0.5f, System.Action callBack = null)
-    {
-        if (manageCoroutine != null)
-            StopCoroutine(manageCoroutine);
-
-        Vector2 targetPos = value ? originPos_uiManage : hidePos_uiManage;
-        manageCoroutine = StartCoroutine(UtilHelper.IMoveEffect(uiManageMentBtns, targetPos, lerpTime, callBack));
-    }
-
     public void Init(bool playAnim = true)
     {
         if (playAnim)
@@ -108,7 +93,6 @@ public class InGameUI : MonoBehaviour
             SetTopUI(true, 1f);
             SetRightUI(true, 1f);
             SetDownUI(true, 1f);
-            SetManageUI(true, 1f);
         }
         else
         {
@@ -129,15 +113,11 @@ public class InGameUI : MonoBehaviour
         originPos_uiDown = uiDown.anchoredPosition;
         hidePos_uiDown = originPos_uiDown + new Vector2(0, -uiRight.sizeDelta.y - 20);
 
-        originPos_uiManage = uiManageMentBtns.anchoredPosition;
-        hidePos_uiManage = originPos_uiManage + new Vector2(uiRight.sizeDelta.x + 50, 0);
 
         uiTop.anchoredPosition = hidePos_uiTop;
         uiRight.anchoredPosition = hidePos_uiRight;
         uiDown.anchoredPosition = hidePos_uiDown;
 
         uiRight2.anchoredPosition = hidePos_uiRight;
-
-        uiManageMentBtns.anchoredPosition = hidePos_uiManage;
     }
 }
