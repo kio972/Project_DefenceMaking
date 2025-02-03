@@ -47,7 +47,7 @@ public class ResultController : MonoBehaviour
             SaveManager.Instance.playerData = null;
             titleBtn.useLoadingScene = true;
             if (text != null)
-                text.text = SettingManager.Instance.language == Languages.korean ? "계속하기" : "Countinue";
+                text.text = DataManager.Instance.GetDescription("ui_menu_continue");
             titleBtn.sceneName = "Stage1";
         }
         else
@@ -89,7 +89,7 @@ public class ResultController : MonoBehaviour
 
         TextMeshProUGUI text = titleBtn.GetComponentInChildren<TextMeshProUGUI>();
         if(text != null)
-            text.text = SettingManager.Instance.language == Languages.korean ? "타이틀로" : "Main Menu";
+            text.text = DataManager.Instance.GetDescription("ui_menu_gotitle");
         titleBtn.useLoadingScene = false;
         titleBtn.sceneName = "TitleScene";
 
