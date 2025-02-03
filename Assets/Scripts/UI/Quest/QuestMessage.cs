@@ -11,13 +11,13 @@ using System.Threading;
 public class QuestMessage : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI titleText;
+    private LanguageText titleText;
     [SerializeField]
-    private TextMeshProUGUI messageText;
+    private LanguageText messageText;
     [SerializeField]
-    private TextMeshProUGUI select1;
+    private LanguageText select1;
     [SerializeField]
-    private TextMeshProUGUI select2;
+    private LanguageText select2;
 
     [SerializeField]
     private DissolveController dissolveController;
@@ -184,21 +184,31 @@ public class QuestMessage : MonoBehaviour
         if (data == null)
             return;
 
-        titleText.text = data["MessageTitle"].ToString();
-        messageText.text = data["MessageText"].ToString();
-
-        string[] buttonTexts = data["MessageButtonText"].ToString().Split('/');
+        //titleText.text = data["MessageTitle"].ToString();
+        titleText.ChangeLangauge(SettingManager.Instance.language, data["TitleKey"].ToString());
+        //messageText.text = data["MessageText"].ToString();
+        messageText.ChangeLangauge(SettingManager.Instance.language, data["TextKey"].ToString());
+        
+        //string[] buttonTexts = data["MessageButtonText"].ToString().Split('/');
+        string[] buttonTexts = data["ButtonKey"].ToString().Split('/');
         select1.transform.parent.gameObject.SetActive(true);
-        select1.text = buttonTexts[0];
+        //select1.text = buttonTexts[0];
+        select1.ChangeLangauge(SettingManager.Instance.language, buttonTexts[0]);
         targetQuest = data["TargetQuest"].ToString().Split('/').ToList();
         if (buttonTexts.Length <= 1)
             select2.transform.parent.gameObject.SetActive(false);
         else if(buttonTexts.Length >= 2)
         {
             if (buttonTexts.Length == 2)
-                select2.text = buttonTexts[1];
+            {
+                //select2.text = buttonTexts[1];
+                select2.ChangeLangauge(SettingManager.Instance.language, buttonTexts[1]);
+            }
             else
-                select2.text = "다른 선택지를 고려한다.";
+            {
+                //select2.text = "다른 선택지를 고려한다.";
+                select2.ChangeLangauge(SettingManager.Instance.language, "q_msg_next");
+            }
             select2.transform.parent.gameObject.SetActive(true);
         }
 
@@ -209,8 +219,6 @@ public class QuestMessage : MonoBehaviour
         select2.transform.parent.GetComponent<Image>().sprite = isMain ? mainSelectSprite[0] : subSelectSprite[0];
         select1Back.sprite = isMain ? mainSelectSprite[1] : subSelectSprite[1];
         select2Back.sprite = isMain ? mainSelectSprite[1] : subSelectSprite[1];
-
-        titleText.text = data["MessageTitle"].ToString();
 
         select1.transform.parent.GetComponent<Button>().interactable = false;
         select2.transform.parent.GetComponent<Button>().interactable = false;

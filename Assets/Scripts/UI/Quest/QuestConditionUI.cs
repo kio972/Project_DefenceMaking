@@ -17,11 +17,11 @@ public class QuestConditionUI : MonoBehaviour
     public void SetText()
     {
         if (quest._ClearNum[index] > 0)
-            text.text = $"{quest._ClearInfo[index]}{" (남은 라운드 "}{quest._CurClearNum[index]}{")"}";
+            text.text = $"{DataManager.Instance.GetDescription(quest._ClearInfo[index])} ({DataManager.Instance.GetDescription("q_ui_rounds")} : {quest._CurClearNum[index]})";
         else if (quest._ClearNum[index] < 0)
-            text.text = $"{quest._ClearInfo[index]}{" ("}{quest._CurClearNum[index]}{" / "}{Mathf.Abs(quest._ClearNum[index])}{")"}";
+            text.text = $"{DataManager.Instance.GetDescription(quest._ClearInfo[index])} ({quest._CurClearNum[index]}{" / "}{Mathf.Abs(quest._ClearNum[index])})";
         else
-            text.text = quest._ClearInfo[index];
+            text.text = DataManager.Instance.GetDescription(quest._ClearInfo[index]);
     }
 
     public void SetQuest(Quest quest, int index)

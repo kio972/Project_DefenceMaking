@@ -103,7 +103,7 @@ public abstract class Quest
     public void Init(List<Dictionary<string, object>> data, List<int> startVal = null, float startTime = 0)
     {
         questID = data[0]["ID"].ToString();
-        questName = data[0]["Name"].ToString();
+        questName = data[0]["NameKey"].ToString();
         timeLimit = float.Parse(data[0]["TimeLimit"].ToString());
         nextQuestMsg = data[0]["NextQuest"].ToString();
         isMainQuest = data[0]["Type"].ToString() == "main" ? true : false;
@@ -121,7 +121,7 @@ public abstract class Quest
             clearNum.Add(System.Convert.ToInt32(val["ClearNum"]));
             if(startVal == null)
                 curClearNum.Add(0);
-            clearInfo.Add(val["ClearInfo"].ToString());
+            clearInfo.Add(val["InfoKey"].ToString());
             isComplete.Add(false);
         }
     }

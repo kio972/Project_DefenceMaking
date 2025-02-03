@@ -57,7 +57,7 @@ public class QuestInfo : MonoBehaviour
 
     public void SetQuestText(Quest quest)
     {
-        questName.text = quest._QuestName;
+        questName.text = DataManager.Instance.GetDescription(quest._QuestName);
         foreach (QuestConditionUI condition in conditions)
             condition.gameObject.SetActive(false);
 

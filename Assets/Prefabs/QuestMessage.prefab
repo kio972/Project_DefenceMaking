@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 3957271192986931937}
   - component: {fileID: 1540326930684800727}
   - component: {fileID: 6701407130578857346}
+  - component: {fileID: 6869467128726531517}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -276,6 +277,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6869467128726531517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197346392748345061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 0
 --- !u!1 &1796012822197986160
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +302,7 @@ GameObject:
   - component: {fileID: 2004253246610234089}
   - component: {fileID: 1113304687282719509}
   - component: {fileID: 8485489127471735546}
+  - component: {fileID: 5466147616250250829}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -411,6 +427,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5466147616250250829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796012822197986160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 1
 --- !u!1 &2310828479212722487
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +528,7 @@ GameObject:
   - component: {fileID: 9020843912142468485}
   - component: {fileID: 9073661547048728519}
   - component: {fileID: 3707909314533781960}
+  - component: {fileID: 4746307471334786599}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -622,6 +653,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4746307471334786599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3153011085756285468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 0
 --- !u!1 &4660230816997977649
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,6 +855,7 @@ GameObject:
   - component: {fileID: 3398303470434671461}
   - component: {fileID: 4475531969461671661}
   - component: {fileID: 4935656179944030050}
+  - component: {fileID: 4853487397795163911}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -934,6 +980,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4853487397795163911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685002149346004786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb11d459be78684f9330f1f8ae84893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyStr: 
+  sizeLock: 0
 --- !u!1 &5351739951064963873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,10 +1443,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d95ed5cc566b14e8ebe950c8c31215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleText: {fileID: 3707909314533781960}
-  messageText: {fileID: 8485489127471735546}
-  select1: {fileID: 4935656179944030050}
-  select2: {fileID: 6701407130578857346}
+  titleText: {fileID: 4746307471334786599}
+  messageText: {fileID: 5466147616250250829}
+  select1: {fileID: 4853487397795163911}
+  select2: {fileID: 6869467128726531517}
   dissolveController: {fileID: 2161909491927248605}
   img: {fileID: 6621420940660205390}
   fade: {fileID: 3916441041860431222}
