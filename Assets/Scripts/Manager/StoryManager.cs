@@ -226,9 +226,9 @@ public class StoryManager : MonoBehaviour
                     break;
 
                 string type = script["type"].ToString();
-                string conver = script["script"].ToString();
+                string conver = script[SettingManager.Instance.language.ToString()].ToString();
                 string number = script["number"].ToString();
-                string name = script["character name"].ToString();
+                string name = DataManager.Instance.GetDescription(script["nameKey"].ToString());
                 string illustName = script["character sprite"].ToString();
                 string illustPos = script["sprite position"].ToString();
                 string trigger = script["trigger"].ToString();
