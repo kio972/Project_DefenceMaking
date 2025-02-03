@@ -62,7 +62,8 @@ ui_ResearchTime,소요시간 : ,Research time :
 ui_Monster,몬스터,Monster
 ui_Dungeon,던전,Dungeon
 ui_Devil,마왕,Stat
-announce_employ_continue,Shift + 클릭 : 연속 배치,
+ui_SelectPhase,아이템 선택,Card Selection
+announce_employ_continue,Shift + 클릭 : 연속 배치,Shift + Click : Continuous Placement
 announce_title_nosave,저장된 게임 데이터가 없습니다.,There is no saved game data.
 announce_ingame_tileconnect,시작 타일과 마왕 타일이 연결되어 있어야합니다.,You must connect starting tile with demon tile together.
 announce_ingame_handfull,손 패가 가득 찼습니다.,Your hand is full.
@@ -1130,7 +1131,7 @@ q_m0103_1,"아아. 일하기 싫다. 과인은 게으르고 싶구나.
 
 「죄송합니다만 전하, 전 지금 바쁩니다. 잠시 시간을 갖고, 혼자서 해결하십시오.」
 
-「상단의 시간 배속 버튼 및 키보드 space,F1,F2 키로」
+「상단의 시간 배속 버튼 및 키보드 Space, F1, F2 키로」
 
 「배속을 조작할 수 있사옵니다.」","I don't want to work. Laziness is what I pursuit.
 
@@ -1138,10 +1139,10 @@ This is tiresome even after 150 years. Handle this quickly, Papra
 
 「Forgive me - I am busy, m'lord. Take your time, and solve it by yourself.」
 
-「The time speed button at the top and the space, F1, and F2 keys on the keyboard.」
+「The time speed button at the top and the Space, F1, and F2 keys on the keyboard.」
 
 「“You can manipulate the speed of time.」"
-q_m0103_2,"시간 배속(space,1,2)을 조작해보자","Manipulate game speed (space,1,2)"
+q_m0103_2,"시간 배속(Space, F1, F2)을 조작해보자","Manipulate game speed (Space, F1, F2)"
 q_m0104_0,가이드의 존재, Guides
 q_m0104_1,"「전하. 소인이 자리를 비웠을 때 애로사항이 생겼을 경우」
 
@@ -1164,7 +1165,7 @@ q_m0105_1,"손에 있는 카드를 다 쓰고 말다니.
 
 It was a hard work. I have to rest, then.
 
-「M'lord, you can fill your hand by clicking on the deck icon on your right.」
+「My lord, you can fill your hand by clicking on the deck icon on your right.」
 
 「Please continue your work.」"
 q_m0105_2,뭐...뭣!,Wait...what?
@@ -1182,8 +1183,8 @@ q0102_4,몬스터 1마리 소환,Summon 1 Monster
 q0102_5,몬스터 스포너 설치,Placing Monster Spawner
 q0102_6,몬스터 스포너 1개 설치,Place 1 Monster Spawner
 q0103_0,시간 배속 조절,Adjusting the time rate
-q0103_1,"시간 배속 버튼 및 키보드 space,1,2 키 조작","Time Acceleration Button and Keyboard Controls (Space, 1, 2 Keys)"
-q0103_2,"시간 배속 버튼 및 키보드 space,1,2 키 1회 조작","Time Acceleration Button and Keyboard Controls (Space, 1, 2 Keys) - Press Once"
+q0103_1,"시간 배속 버튼 및 키보드 Space, F1, F2 키 조작","Time Acceleration Button and Keyboard Controls (Space, F1, F2 Keys)"
+q0103_2,"시간 배속 버튼 및 키보드 Space, F1, F2 키 1회 조작","Time Acceleration Button and Keyboard Controls (Space, F1, F2 Keys) - Press Once"
 q0104_0,가이드 존재,Existence of guides
 q0104_1,ESC 또는 옵션 버튼을 눌러 가이드 창 열기,Press ESC or the Options button to open the Guides window
 q0104_2,가이드 창 열기,Open the Guide window
@@ -1600,3 +1601,96 @@ q2019_2,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king
 npc_name_dan,마왕 단탈리온,Lord Dantallion
 npc_name_papra,파프라,Papra
 npc_name_vicente,비센테,Vicente
+guide000_0,카메라 조작,Screen Controls
+guide001_0,게임 배속,Game Speed & Pause
+guide002_0,시간,Round Progression & Events
+guide003_0,타일 배치&회전,Tile Placement & Interaction
+guide004_0,타일 제거,Tile Removal
+guide005_0,마왕 타일 조작,Demon Lord Tile Movement
+guide006_0,덱과 카드,Deck & Cards
+guide007_0,함정 배치,Trap Deployment
+guide008_0,몬스터 배치,Monster Summoning
+guide009_0,마력,Mana System
+guide010_0,연구,Research System
+guide011_0,상점,Shop System
+guide012_0,상태이상,Status Effects
+guide000_1,"화면 확대 : 휠 스크롤
+화면 이동 : 휠 클릭, 화면 가장자리 커서 이동 또는 키보드 W, A, S, D","Zoom In/Out: Mouse Wheel Scroll
+Move Screen: Click and hold Mouse Wheel,  move the cursor to the screen edges or keyboard W, A, S, D"
+guide001_1,"키보드 SPACE를 눌러 게임을 일시정지, 일시정지 해제 시킨다.
+키보드 F1을 눌러 게임을 1배속으로 진행한다.
+키보드 F2를 눌러 게임을 2배속으로 진행한다.
+상단 UI를 통해서도 배속 조작이 가능하다.","Pause/Unpause: Press the Spacebar
+Set Game Speed to 1x: Press F1
+Set Game Speed to 2x: Press F2
+Speed can also be adjusted via the top UI"
+guide002_1,"시간에 따라 라운드가 진행된다.
+00시 00분에는 적의 침입, 지원금 입금이 이루어진다.","Rounds progress over time
+At 00:00, enemy invasion and support fund deposit occur"
+guide003_1,"타일은 지형지물에 이어지게 배치해야 한다.
+패에 들고 있는 카드를 클릭&드래그 하여 배치한다.
+타일을 배치하기 전 Q, E 키로 타일 회전 시킬 수 있다.","Tiles must be placed connected to terrain features
+Click & Drag a card from your hand to place a tile
+Before placing, rotate tiles using Q and E"
+guide004_1,"원하는 타일 선택
+우측에 활성화 된 제거 버튼 클릭
+타일이 제거되어 시작-마왕 타일의 연결이 끊기면 다시 연결 될 때까지 일시정지 해제 불가","Select a tile
+Click the Remove button on the right
+If removing a tile disconnects the Start Tile from the Demon Lord Tile, the game will remain paused until reconnection"
+guide005_1,"마왕 타일 선택
+우측에 활성화 된 이동 버튼 클릭 또는 마왕 타일 더블 클릭
+설치 가능한(초록색) 위치에 클릭
+Q, E키로 마왕 타일을 회전시켜 설치 가능 타일을 찾아보자!","Select the lord tile
+Click the Move button on the right or double-click the Lord tile
+Click on a valid (green) position to place it
+Rotate using Q and E to find a valid position"
+guide006_1,"우측 덱 버튼(F)을 눌러 카드를 뽑을 수 있다.
+카드를 뽑을 때 5골드가 소모된다.",Click the Deck Button(F) to draw a card (costs 5 Gold)
+guide007_1,"고용 버튼(Z)을 눌러 고용 창을 연다.
+원하는 함정의 고용 버튼을 클릭
+설치 가능한 길 타일을 골라 배치
+배치된 함정은 적이 접근 시 자동 공격한다.","Press Z to open the Hire Menu
+Click the Hire button for the desired trap
+Select a valid path tile to place the trap
+Traps will automatically attack enemies when they approach"
+guide008_1,"고용 버튼(Z)을 눌러 고용 창을 연다.
+원하는 몬스터의 고용 버튼을 클릭
+소환 가능한 방 타일을 찾아 클릭
+생산지를 설치한 방에서 몬스터가 자동 스폰된다.","Press Z to open the Hire Menu
+Click the Hire button for the desired monster
+Select a valid room tile to summon the monster
+Monsters will spawn automatically in rooms with a production site"
+guide009_1,"길 타일을 배치 할 때마다 사용 가능한 마력의 총량이 늘어난다.
+방 타일은 타일 별로 정해진 마력을 사용 할 수 있다.
+단일 방 타일 : 2 마력 사용 가능
+조합 방 타일 : 조합된 방 타일 수 만큼의 마력 사용 가능","Placing a path tile increases the total available mana
+Room tiles consume mana based on type:
+Single Room Tile: Uses 2 Mana
+Combined Room Tiles: Uses mana equal to the number of connected tiles"
+guide010_1,"연구 버튼(X)을 눌러 연구 창을 연다.
+원하는 연구의 연구 진행 버튼을 클릭
+요구 재화가 소모
+요구 시간이 지나면 연구 완료","Press X to open the Research Menu
+Click Proceed Research on the desired upgrade
+Research consumes required resources
+Research completes after a set amount of time"
+guide011_1,"상점 버튼(C)을 눌러 상점 창을 연다.
+원하는 아이템의 구매 버튼을 클릭
+아이템은 일정 수량 구매하면 품절된다.
+상점이 초기화 되면 품절된 아이템이 재입고 된다.
+시간이 지남에 따라 아이템 가격이 상승한다.","Press C to open the Shop Menu
+Click Purchase to buy an item
+Items become sold out after a certain quantity is purchased
+Sold-out items restock when the shop resets
+Item prices increase over time"
+guide012_1,"중독 : 지속시간 동안 중첩 가능한 피해를 입힌다.
+출혈 : 지속시간 동안 중첩 가능한 피해를 입힌다.
+유혹 : 유혹에 빠진 개체의 목적지는 시전자가 된다.
+경직 : 일시적으로 행동이 멈춘다.
+넉백 : 상대방을 반대방향으로 밀어낸다.
+은신 : 상대방에 인식 되지 않아 전투를 치르지 않는다.","Poison: Deals stackable damage over time
+Bleeding: Deals stackable damage over time
+Charm: The affected unit moves toward the caster
+Stun: Temporarily stops movement and actions
+Knockback: Pushes the target backward
+Stealth: Prevents the unit from being detected or engaging in combat"

@@ -59,7 +59,7 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
         if (script == null)
             return;
 
-        string conver = script["script"].ToString();
+        string conver = script[SettingManager.Instance.language.ToString()].ToString();
         string track0 = script["track0"].ToString();
         string track1 = script["track1"].ToString();
 

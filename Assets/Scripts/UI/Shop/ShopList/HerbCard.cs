@@ -71,7 +71,7 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem, ICardPackList
         if (script == null)
             return;
 
-        string conver = script["script"].ToString();
+        string conver = script[SettingManager.Instance.language.ToString()].ToString();
         string track0 = script["track0"].ToString();
         string track1 = script["track1"].ToString();
         //shopUI?.PlayScript("\'" + DataManager.Instance.GetDescription(targetName.ToString()) + conver.Replace('%', '\''), track0, track1);
