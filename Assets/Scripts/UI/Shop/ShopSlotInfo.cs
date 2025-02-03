@@ -44,6 +44,13 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
     [SerializeField]
     private TextMeshProUGUI stockText;
 
+    private void UpdateText()
+    {
+        buyText.text = DataManager.Instance.GetDescription(_isSoldOut ? "ui_SoldOut" : "ui_Purchase");
+        if(curSlot != null)
+            stockText.text = $"{DataManager.Instance.GetDescription("ui_Stock")} : {_curslot.curStockCount}";
+    }
+
     public void ViewCardPack()
     {
         if(_curslot.item is ICardPackList cardPack)
@@ -57,7 +64,7 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
         int index = isSoldOut ? 1 : 0;
         buyBtn.sprite = btnSprites[index];
         //bgImg.sprite = bgSprites[index];
-        buyText.text = isSoldOut ? "품절" : "구매";
+        buyText.text = DataManager.Instance.GetDescription(isSoldOut ? "ui_SoldOut" : "ui_Purchase");
         soldOutImage.SetActive(isSoldOut);
     }
 
@@ -83,7 +90,7 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
         _isSoldOut = data.IsSoldOut;
         SetSoldOutImg(_isSoldOut);
         cardPackViewBtn.SetActive(_curslot.item is ICardPackList);
-        stockText.text = $"재고 : {data.curStockCount}";
+        stockText.text = $"{DataManager.Instance.GetDescription("ui_Stock")} : {data.curStockCount}";
     }
     public void ExcuteAction()
     {
@@ -117,5 +124,10 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
 
         if (targetSlot != null)
             UpdateInfo(targetSlot);
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() => UpdateText());
     }
 }

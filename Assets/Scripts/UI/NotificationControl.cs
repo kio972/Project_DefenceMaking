@@ -71,6 +71,12 @@ public class NotificationControl : MonoBehaviour
         }
     }
 
+    public void UpdageLanguage(string msg, NotificationType type)
+    {
+        NotificationSlot targetSlot = notiSlots[(int)type];
+        targetSlot.ForceUpdateText(msg);
+    }
+
     public void SetMesseage(string msg, NotificationType type)
     {
         //notiQueue.Enqueue(new NotiQueue(msg, type));

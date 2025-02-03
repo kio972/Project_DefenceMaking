@@ -183,7 +183,7 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
     {
         ResearchState curState = researchState;
         if (researchMain.curResearch != null && researchMain.curResearch != curResearch)
-            GameManager.Instance.popUpMessage.ToastMsg("연구가 이미 진행중입니다.");
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireNoResearch"));
         else if (curState == ResearchState.Incomplete)
             StartResearch();
         else if (curState == ResearchState.InProgress && !blockStop)
@@ -202,7 +202,7 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
     {
         if (!HaveAsset())
         {
-            GameManager.Instance.popUpMessage.ToastMsg("연구 재화가 부족합니다.");
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireAsset"));
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             refusedSound?.Post(gameObject);
             return;

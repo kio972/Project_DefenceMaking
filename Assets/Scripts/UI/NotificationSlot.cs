@@ -66,6 +66,11 @@ public class NotificationSlot : MonoBehaviour
         curState = NotificationState.Wait;
     }
 
+    public void ForceUpdateText(string msg)
+    {
+        text.text = msg;
+    }
+
     public void SetMesseage(string msg, NotificationType type)
     {
         animator.Rebind();
@@ -91,5 +96,10 @@ public class NotificationSlot : MonoBehaviour
     {
         if(curState == NotificationState.Wait && linkedPage != null && linkedPage.activeInHierarchy)
             Finish();
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() => OnClick());
     }
 }

@@ -66,7 +66,7 @@ public class TileControlUI : MonoBehaviour
         if (curTile == null)
             return;
         if (curTile.IsCharacterOnIt)
-            GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 움직일 수 없습니다!");
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
         else
         {
             CloseAllBtn();
@@ -97,11 +97,11 @@ public class TileControlUI : MonoBehaviour
             return;
 
         if (GameManager.Instance.isBossOnMap)
-            GameManager.Instance.popUpMessage.ToastMsg("강력한 적이 침입하여 철거가 불가능합니다!");
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailLockdown"));
         else if (curTile.objectKind != null)
-            GameManager.Instance.popUpMessage.ToastMsg("타일 위에 설치된 물체가 있어 제거할 수 없습니다!");
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailObject"));
         else if (curTile.IsCharacterOnIt)
-            GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 제거 할 수 없습니다!");
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
         else
             curTile.RemoveTile();
 

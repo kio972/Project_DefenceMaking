@@ -131,7 +131,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         {
             if (GameManager.Instance.gold < curPrice)
             {
-                GameManager.Instance.popUpMessage.ToastMsg("골드가 부족합니다");
+                GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
                 return;
             }
 
@@ -142,7 +142,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
 
                 if (!HaveMana(room, out requiredMana))
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
                     return;
                 }
 
@@ -154,7 +154,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             {
                 if(GameManager.Instance.IsAdventurererOnTile(curNode))
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("적이 있는 타일에는 설치할 수 없습니다.");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_setFailEnemy"));
                     return;
                 }
 
@@ -169,12 +169,12 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
 
                 if (!HaveMana(room, out requiredMana))
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
                     return;
                 }
                 if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("보유중인 마나가 부족합니다");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireTotalMana"));
                     return;
                 }
 

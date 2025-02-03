@@ -387,7 +387,7 @@ public class CardDeckController : MonoBehaviour
 
         if (hand_CardNumber >= maxCardNumber)
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("손 패가 가득 찼습니다");
+            GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_handfull"));
             refusedSound?.Post(gameObject);
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
@@ -395,7 +395,7 @@ public class CardDeckController : MonoBehaviour
 
         if (GameManager.Instance.gold < _CardPrice)
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
+            GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
             refusedSound?.Post(gameObject);
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
@@ -403,7 +403,7 @@ public class CardDeckController : MonoBehaviour
 
         if (_cardDeck.Count < 1)
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
+            //GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
             refusedSound?.Post(gameObject);
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;

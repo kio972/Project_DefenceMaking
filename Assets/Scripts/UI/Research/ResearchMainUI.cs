@@ -55,8 +55,8 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
         //ResearchPopup popup = GetComponentInChildren<ResearchPopup>();
         //if (popup.gameObject.activeSelf && popup._CurResearch == curResearch._ResearchData)
         //    curResearch.CallPopUpUI();
-        string targetMesseage = DataManager.Instance.languageDic[curResearch._ResearchData.researchName]["korean"].ToString();
-        GameManager.Instance.notificationBar?.SetMesseage(targetMesseage + " 연구 완료", NotificationType.Research);
+        string targetMesseage = DataManager.Instance.GetDescription(curResearch._ResearchData.researchName);
+        GameManager.Instance.notificationBar?.SetMesseage(targetMesseage + " " + DataManager.Instance.GetDescription("ui_ResearchCompleted"), NotificationType.Research);
         //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
         openSound?.Post(gameObject);
 
