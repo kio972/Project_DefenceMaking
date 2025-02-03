@@ -13,7 +13,7 @@ public class CallSettingBtn : MonoBehaviour
     private void CallSetting()
     {
         SettingCanvas.Instance.CallSettings(value, inIngame);
-        SettingManager.Instance.SetLanguage();
+        //SettingManager.Instance.SetLanguage();
     }
 
     private void Awake()

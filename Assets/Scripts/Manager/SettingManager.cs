@@ -244,7 +244,7 @@ public class SettingManager : Singleton<SettingManager>
 
     public void SetLanguage()
     {
-        SetLanguage(language);
+        //SetLanguage(language);
     }
 
     public void SetLanguage(Languages language)
@@ -306,7 +306,7 @@ public class SettingManager : Singleton<SettingManager>
         InitControlKey();
         Set_ScreenSize(screenSize);
         Set_FullScreen(screen_FullSize);
-        SetLanguage(language);
+        //SetLanguage(language);
         SetTextSize(textSize);
     }
 }

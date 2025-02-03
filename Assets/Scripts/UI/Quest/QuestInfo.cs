@@ -115,4 +115,13 @@ public class QuestInfo : MonoBehaviour
         if (curQuest._IsEnd)
             EndQuest();
     }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() =>
+        {
+            if(curQuest != null)
+                questName.text = DataManager.Instance.GetDescription(curQuest._QuestName);
+        });
+    }
 }

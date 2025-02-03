@@ -14,6 +14,8 @@ public class QuestConditionUI : MonoBehaviour
     private int index = 0;
     private bool isClear = false;
 
+    private int curClearNum = -1;
+
     public void SetText()
     {
         if (quest._ClearNum[index] > 0)
@@ -40,7 +42,12 @@ public class QuestConditionUI : MonoBehaviour
         if (quest == null || isClear)
             return;
 
-        SetText();
+        if(curClearNum != quest._CurClearNum[index])
+        {
+            curClearNum = quest._CurClearNum[index];
+            SetText();
+        }
+
         if(quest._IsComplete[index])
         {
             if (checkBox != null)
@@ -49,5 +56,10 @@ public class QuestConditionUI : MonoBehaviour
             text.color = Color.gray;
             isClear = true;
         }
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() => SetText());
     }
 }

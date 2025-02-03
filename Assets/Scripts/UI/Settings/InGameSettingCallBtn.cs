@@ -15,7 +15,7 @@ public class InGameSettingCallBtn : RotationEffect
         {
             SetSelected();
             SettingCanvas.Instance.CallSettings(true, true);
-            SettingManager.Instance.SetLanguage();
+            //SettingManager.Instance.SetLanguage();
         }
     }
 }

@@ -116,4 +116,13 @@ public class LanguageText : MonoBehaviour, ILanguageChange
 
         _Text.text = data[targetLanguage].ToString();
     }
+
+    private void Start()
+    {
+        ChangeLangauge(SettingManager.Instance.language);
+        LanguageManager.Instance.AddLanguageAction(() =>
+        {
+            ChangeLangauge(SettingManager.Instance.language);
+        });
+    }
 }
