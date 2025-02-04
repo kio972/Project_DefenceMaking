@@ -8,11 +8,13 @@ Event	ID	Name			Wwise Object Path	Notes
 	822059337	Quest_Paper_Open			\DM_Event\UI Event\Quest_Paper_Open	
 	827597594	Enemy_Knight_Dead			\DM_Event\Object Event\Enemy_Knight_Dead	
 	839522188	Shop_Open			\DM_Event\UI Event\Shop_Open	
+	861152358	Play_Field			\DM_Event\BGM Event\Play_Field	
 	970676282	Trap_Spin_Attack			\DM_Event\Object Event\Trap_Spin_Attack	
 	977052537	Monster_Golem_Dead			\DM_Event\Object Event\Monster_Golem_Dead	
 	1055640181	Monster_Slime_Dead			\DM_Event\Object Event\Monster_Slime_Dead	
 	1226658030	Enemy_Farmer_TypeA_Attack			\DM_Event\Object Event\Enemy_Farmer_TypeA_Attack	
 	1329223949	Icon_Victory			\DM_Event\Object Event\Icon_Victory	
+	1579914886	Play_Combat_middle			\DM_Event\BGM Event\Play_Combat_middle	
 	1586336673	Card_Mouseover			\DM_Event\UI Event\Card_Mouseover	
 	1817680512	Research_Progress_Click_Fail			\DM_Event\UI Event\Research_Progress_Click_Fail	
 	1901762100	Enemy_Knight_Attack			\DM_Event\Object Event\Enemy_Knight_Attack	
@@ -53,9 +55,11 @@ Event	ID	Name			Wwise Object Path	Notes
 	3720990804	Monster_Golem_Spawn			\DM_Event\Object Event\Monster_Golem_Spawn	
 	3767676951	Monster_Slime_Attack			\DM_Event\Object Event\Monster_Slime_Attack	
 	3809715957	UI_MouseOver			\DM_Event\UI Event\UI_MouseOver	
+	3849537216	Play_Title			\DM_Event\BGM Event\Play_Title	
 	3872819091	Alert_Research_Complete			\DM_Event\UI Event\Alert_Research_Complete	
 	3873211907	Monster_Goblin_Sword			\DM_Event\Object Event\Monster_Goblin_Sword	
 	3975656553	Trap_Home_Attack			\DM_Event\Object Event\Trap_Home_Attack	
+	4024028455	Play_Combat_Final			\DM_Event\BGM Event\Play_Combat_Final	
 	4123569734	Enemy_Spear_Dead			\DM_Event\Object Event\Enemy_Spear_Dead	
 	4243488615	Alert_Time			\DM_Event\UI Event\Alert_Time	
 	4271781412	Recruit_Open			\DM_Event\UI Event\Recruit_Open	
@@ -95,7 +99,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	178784030	Tile_Create	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\Tile_Create_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_UI_Sound\Tile_Create		86796
 	191744181	Raider_death_Bodyfall_02	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Raider_death_Bodyfall_02_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Raider_death_Bodyfall\Raider_death_Bodyfall_02		73656
 	218381180	Raider_death_FeMale_03	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Raider_death_FeMale_03_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Raider_death_FeMale\Raider_death_FeMale_03		101472
-	232206163	DM_Field_Loop_8s	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Field_Loop_8s_FBC78EF0.wem		\Interactive Music Hierarchy\DM_BGM\DM_Field_Loop_8s\DM_Field_Loop_8s		19998372
+	232206163	DM_Field_Loop_8s	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Field_Loop_8s_FBC78EF0.wem		\Interactive Music Hierarchy\DM_BGM\Field\DM_Field_Loop_8s\DM_Field_Loop_8s		19998372
 	249090395	UI_Click_DownPitch_01	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\UI_Click_DownPitch_01_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_UI_Sound\UI_Click_DownPitch_01		73152
 	262345249	Death_StoneGolem_02	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Death_StoneGolem_02_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Death_StoneGolem\Death_StoneGolem_02		329240
 	287704520	Ninja_Attack_2	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Ninja_Attack_2_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Ninja_Attack\Ninja_Attack_2		94148
@@ -139,7 +143,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	691449612	Death_Slime_03	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Death_Slime_03_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Death_Slime\Death_Slime_03		229500
 	695214666	Moster_Goblin_Throw_01	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\Moster_Goblin_Throw_01_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Moster_Goblin_Throw\Moster_Goblin_Throw_01		57348
 	704753082	Raider_death_FeMale_05	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Raider_death_FeMale_05_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Raider_death_FeMale\Raider_death_FeMale_05		43328
-	704848513	DM title_Noloop_BPM138	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM title_Noloop_BPM138_0AD8A061.wem		\Interactive Music Hierarchy\DM_BGM\DM title_Noloop_BPM138\DM title_Noloop_BPM138		13690596
+	704848513	DM title_Noloop_BPM138	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM title_Noloop_BPM138_0AD8A061.wem		\Interactive Music Hierarchy\DM_BGM\Title\DM title_Noloop_BPM138\DM title_Noloop_BPM138		13690596
 	714783981	Attack_Mimic_2	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Attack_Mimic_2_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Attack_Mimic\Attack_Mimic_2		153268
 	719371770	Purple_Attack_02	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Purple_Attack_02_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Purple_Attack\Purple_Attack_02		44128
 	727888604	Boss_Attack_2	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Boss_Attack_2_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Boss_Attack\Boss_Attack_2		143236
@@ -153,7 +157,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	759233175	Summoned_slime_01	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Summoned_slime_01_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Summoned_slime_01		138096
 	790786006	Raider_death_FeMale_04	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Raider_death_FeMale_04_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Raider_death_FeMale\Raider_death_FeMale_04		79908
 	794749304	UI_Text	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\UI_Text_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_UI_Sound\UI_Text		50844
-	804291839	DM_Main_Title	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Main_Title_FBC78EF0.wem		\Interactive Music Hierarchy\DM_BGM\DM_Main_Title\DM_Main_Title		13022768
 	809036600	Raider_death_Bodyfall_03	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Raider_death_Bodyfall_03_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Raider_death_Bodyfall\Raider_death_Bodyfall_03		78116
 	810831835	Dead_Male_Voice_01	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\Voice\Dead_Male_Voice_01_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Dead_Male_Voice\Dead_Male_Voice_01		90096
 	815270298	Purple_Attack_06	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Purple_Attack_06_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Purple_Attack\Purple_Attack_06		35936
@@ -187,8 +190,8 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	1006789202	Summoned_goblin_01	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Summoned_goblin_01_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Summoned_goblin_01		230104
 	1009124569	Attack_StoneGolem_3	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Attack_StoneGolem_3_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Attack_StoneGolem\Attack_StoneGolem_3		212880
 	1015118378	Attack_slime_3	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Attack_slime_3_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Attack_Slime\Attack_slime_3		105524
-	1029397038	DM_Namedboss_Battle	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Namedboss_FBC78EF0.wem		\Interactive Music Hierarchy\DM_BGM\DM_Namedboss_Battle\DM_Namedboss_Battle		20480160
+	1029397038	DM_Namedboss_Battle	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Namedboss_FBC78EF0.wem		\Interactive Music Hierarchy\DM_BGM\Combat_middle\DM_Namedboss_Battle\DM_Namedboss_Battle		20480160
 	1036114259	Attack_Mimic_1	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Attack_Mimic_1_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Attack_Mimic\Attack_Mimic_1		151924
 	1037114935	Death_Goblin_2	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Object_Sound\Death_Goblin_2_818F3B66.wem		\Actor-Mixer Hierarchy\DM Main Audio\DM_Object_Sound\Death_Goblin\Death_Goblin_2		122668
-	1049657279	DM_Bossbattle_BPM145	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Bossbattle_14m22s_BPM145_A95C3911.wem		\Interactive Music Hierarchy\DM_BGM\DM_Bossbattle_BPM145\DM_Bossbattle_BPM145		23199056
+	1049657279	DM_Bossbattle_BPM145	Y:\Documents\WwiseProjects\Defence_Making_new_250112\.cache\Windows\SFX\DM_Bossbattle_14m22s_BPM145_A95C3911.wem		\Interactive Music Hierarchy\DM_BGM\Combat_Final\DM_Bossbattle_BPM145\DM_Bossbattle_BPM145		23199056
 

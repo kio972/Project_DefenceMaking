@@ -154,7 +154,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3140297794" Type="User" Language="SFX" Hash="{93250D88-20FF-95ED-46CD-BA2E6028B44B}">
+		<SoundBank Id="3140297794" Type="User" Language="SFX" Hash="{1E1AA0E2-4366-498B-95C5-499DA7E83CE3}">
 			<ShortName>DM_SoundBank</ShortName>
 			<Path>DM_SoundBank.bnk</Path>
 			<Media>
@@ -497,10 +497,6 @@
 				<File Id="794749304" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>UI_Text.wav</ShortName>
 					<CachePath>SFX/UI_Text_818F3B66.wem</CachePath>
-				</File>
-				<File Id="804291839" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>DM_Main_Title.wav</ShortName>
-					<CachePath>SFX/DM_Main_Title_FBC78EF0.wem</CachePath>
 				</File>
 				<File Id="809036600" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>DM_Object_Sound\Raider_death_Bodyfall_03.wav</ShortName>
@@ -888,6 +884,26 @@
 						<MediaRef Id="916796926"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="4024028455" Name="Play_Combat_Final" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="1049657279"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1579914886" Name="Play_Combat_middle" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="1029397038"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="861152358" Name="Play_Field" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="232206163"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3849537216" Name="Play_Title" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="704848513"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="3322140943" Name="Quest_Paper_Close" DurationType="OneShot" DurationMin="2.2946458" DurationMax="2.2946458">
 					<MediaRefs>
 						<MediaRef Id="977818425"/>
@@ -1017,5 +1033,5 @@
 			</Busses>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{1911BF13-483C-90BB-98BA-18C02605693B}</FileHash>
+	<FileHash>{A26055B4-B77F-338D-B4E7-7A74BE2071E3}</FileHash>
 </SoundBanksInfo>

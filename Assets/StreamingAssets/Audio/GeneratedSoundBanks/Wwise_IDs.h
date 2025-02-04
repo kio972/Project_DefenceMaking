@@ -50,6 +50,10 @@ namespace AK
         static const AkUniqueID MONSTER_SLIME_SPAWN = 3004343104U;
         static const AkUniqueID MOSTER_GOBLIN_BOW = 2861373928U;
         static const AkUniqueID MOSTER_GOBLIN_THROW = 2165960620U;
+        static const AkUniqueID PLAY_COMBAT_FINAL = 4024028455U;
+        static const AkUniqueID PLAY_COMBAT_MIDDLE = 1579914886U;
+        static const AkUniqueID PLAY_FIELD = 861152358U;
+        static const AkUniqueID PLAY_TITLE = 3849537216U;
         static const AkUniqueID QUEST_PAPER_CLOSE = 3322140943U;
         static const AkUniqueID QUEST_PAPER_OPEN = 822059337U;
         static const AkUniqueID QUEST_UI_CREAT = 2870564192U;
