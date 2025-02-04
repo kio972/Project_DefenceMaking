@@ -85,6 +85,8 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
             SetItems();
             InputManager.Instance.ResetTileClick();
             GameManager.Instance.SetPause(true);
+            Animator btnAnim = btnObject.GetComponent<Animator>();
+            btnAnim?.SetBool("End", true);
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
@@ -145,9 +147,11 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
     [SerializeField]
     private GameObject btnObject;
 
+    private bool isActived { get => btnObject.activeSelf || uiPage.activeSelf; }
+
     void Update()
     {
-        if (Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) && btnObject.activeSelf && !GetComponentInChildren<CardPackEffect>(true).gameObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) && isActived && !GetComponentInChildren<CardPackEffect>(true).gameObject.activeSelf)
         {
             if (uiPage.activeSelf)
                 SetActive(false);

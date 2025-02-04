@@ -98,6 +98,8 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
             GameManager.Instance.SetPause(true);
             //AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
             openSound?.Post(gameObject);
+            Animator btnAnim = btnObject.GetComponent<Animator>();
+            btnAnim?.SetBool("End", true);
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
@@ -116,9 +118,11 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
     [SerializeField]
     private GameObject btnObject;
 
+    private bool isActived { get => btnObject.activeSelf || uiPage.activeSelf; }
+
     public void Update()
     {
-        if (Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) && btnObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) && isActived)
         {
             if (uiPage.activeSelf)
                 SetActive(false);

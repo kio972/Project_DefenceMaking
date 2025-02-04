@@ -9,6 +9,9 @@ public class DanStage : MonoBehaviour
     [SerializeField]
     List<GameObject> herbInformer;
 
+    [SerializeField]
+    List<GameObject> managementBtns;
+
     private async UniTaskVoid CheckHerbInformer()
     {
         if (QuestManager.Instance.IsQuestEnded("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1)
@@ -35,6 +38,8 @@ public class DanStage : MonoBehaviour
         GameManager.Instance.cardDeckController.Invoke("MulliganFixed", 1f);
         GameManager.Instance.research.ForceActiveResearch("r_m10001");
         QuestManager.Instance.InitQuest();
+        foreach(var btn in managementBtns)
+            btn.SetActive(true);
         CheckHerbInformer().Forget();
     }
 
@@ -46,6 +51,8 @@ public class DanStage : MonoBehaviour
         {
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
             CheckHerbInformer().Forget();
+            foreach (var btn in managementBtns)
+                btn.SetActive(true);
         }
     }
 }

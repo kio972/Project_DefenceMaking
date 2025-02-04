@@ -72,6 +72,8 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         {
             InputManager.Instance.ResetTileClick();
             GameManager.Instance.SetPause(true);
+            Animator btnAnim = btnObject.GetComponent<Animator>();
+            btnAnim?.SetBool("End", true);
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
@@ -362,12 +364,14 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
     [SerializeField]
     private GameObject btnObject;
 
+    private bool isActived { get => btnObject.activeSelf || uiPage.activeSelf; }
+
     public void Update()
     {
         if (curObject != null)
             UpdateDeployState();
 
-        if (Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) && btnObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) && isActived)
         {
             if (uiPage.activeSelf)
                 SetActive(false);

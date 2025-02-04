@@ -62,7 +62,7 @@ public class FluctTimer : MonoBehaviour
 
         if (!string.IsNullOrEmpty(refreshMessage))
         {
-            GameManager.Instance.notificationBar?.SetMesseage(refreshMessage, NotificationType.Shop);
+            GameManager.Instance.notificationBar?.SetMesseage(DataManager.Instance.GetDescription(refreshMessage), NotificationType.Shop);
             //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
             fluctSound?.Post(gameObject);
         }
@@ -80,7 +80,7 @@ public class FluctTimer : MonoBehaviour
             item.FluctPrice();
 
         if (!string.IsNullOrEmpty(fluctMessage))
-            GameManager.Instance.notificationBar?.SetMesseage(fluctMessage, NotificationType.Shop);
+            GameManager.Instance.notificationBar?.SetMesseage(DataManager.Instance.GetDescription(fluctMessage), NotificationType.Shop);
     }
 
     public void IncreaseTime()
