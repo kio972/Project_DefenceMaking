@@ -425,7 +425,7 @@ MonoBehaviour:
     ParentPath: SoundBanks/DM_SoundBank
     guid: 509fead37a3c7a40b161e71d95d76cc6
     GuidInternal: 
-    m_lastTime: -8584632114392508178
+    m_lastTime: -8584629515169668338
     List:
     - name: DM_SoundBank
       guid: 10564ccd860f33428134335b6f399927
@@ -453,7 +453,7 @@ MonoBehaviour:
     ParentPath: Events/Default Work Unit
     guid: 35640558a4bb4349b583dc5af21a2a8e
     GuidInternal: 
-    m_lastTime: -8584632114392544632
+    m_lastTime: -8584629515169723708
     List: []
   - PhysicalPath: Events/DM_Event.wwu
     PathAndIcons:
@@ -466,7 +466,7 @@ MonoBehaviour:
     ParentPath: Events/DM_Event
     guid: 39ab669188b6414984d8223432b92dc9
     GuidInternal: 
-    m_lastTime: -8584632114392570547
+    m_lastTime: -8584629515169802112
     List:
     - name: Alert_Research_Complete
       guid: a488f237fd84514dab6c110c67af24d5
@@ -508,9 +508,9 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 3
       minDuration: 3
-    - name: AMB_Cave
+    - name: Ambience_Field
       guid: 52c1acfd9c2a3a40894aec359bbbbf70
-      id: 3755979049
+      id: 3365997872
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -518,13 +518,13 @@ MonoBehaviour:
       - ElementName: DM_Event
         ObjectType: 12
         guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: AMB_Cave
+      - ElementName: Ambience_Field
         ObjectType: 3
         guid: 52c1acfd9c2a3a40894aec359bbbbf70
-      Path: Events/DM_Event/AMB_Cave
+      Path: Events/DM_Event/Ambience_Field
       maxAttenuation: 0
-      maxDuration: 294.20477
-      minDuration: 294.20477
+      maxDuration: -1
+      minDuration: -1
     - name: BGM Event
       guid: ae66b1ae87009849929fca4be78f5bad
       id: 1603703413
@@ -600,10 +600,50 @@ MonoBehaviour:
         guid: a7f7249fb794bf448be817ab87c24bae
       Path: Events/DM_Event/Object Event/Demon_Attack
       maxAttenuation: 0
+      maxDuration: 0.85725
+      minDuration: 0.85725
+    - name: Demon_Death
+      guid: 05f066a94086be47bfb3ca32370acc32
+      id: 3545023021
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Demon_Death
+        ObjectType: 3
+        guid: 05f066a94086be47bfb3ca32370acc32
+      Path: Events/DM_Event/Object Event/Demon_Death
+      maxAttenuation: 0
+      maxDuration: 2.4746666
+      minDuration: 2.4746666
+    - name: Demon_Hit_Recall
+      guid: 96baf7a71a660d4396c739dd70dd8bc5
+      id: 3083558972
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Demon_Hit_Recall
+        ObjectType: 3
+        guid: 96baf7a71a660d4396c739dd70dd8bc5
+      Path: Events/DM_Event/Object Event/Demon_Hit_Recall
+      maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
     - name: Demon_Hit_Voice
-      guid: 7bb75869d9e2524a8ec314c600aac79c
+      guid: ba382934bb3d504e85f219b9e4e128fd
       id: 2357919911
       PathAndIcons:
       - ElementName: Events
@@ -617,7 +657,7 @@ MonoBehaviour:
         guid: 114309acb4f3c2499b945dbc3d0b18ce
       - ElementName: Demon_Hit_Voice
         ObjectType: 3
-        guid: 7bb75869d9e2524a8ec314c600aac79c
+        guid: ba382934bb3d504e85f219b9e4e128fd
       Path: Events/DM_Event/Object Event/Demon_Hit_Voice
       maxAttenuation: 0
       maxDuration: 0
@@ -702,6 +742,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.25466666
       minDuration: 0.18666667
+    - name: Enemy_Knight_Attack
+      guid: 97fd632f378d72479e1a225db2369156
+      id: 1901762100
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Knight_Attack
+        ObjectType: 3
+        guid: 97fd632f378d72479e1a225db2369156
+      Path: Events/DM_Event/Object Event/Enemy_Knight_Attack
+      maxAttenuation: 0
+      maxDuration: 0.32
+      minDuration: 0.192
+    - name: Enemy_Knight_Dead
+      guid: 72e8bc788951c04ab864e87f927e9e52
+      id: 827597594
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Knight_Dead
+        ObjectType: 3
+        guid: 72e8bc788951c04ab864e87f927e9e52
+      Path: Events/DM_Event/Object Event/Enemy_Knight_Dead
+      maxAttenuation: 0
+      maxDuration: 0.46875
+      minDuration: 0.234375
     - name: Enemy_Recall
       guid: a07d4ba4912d2944824c43382ded9ccd
       id: 81576553
@@ -722,6 +802,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - name: Enemy_Spear_Attack
+      guid: 5285c865fc57954293d050c5041d642b
+      id: 3567193736
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Spear_Attack
+        ObjectType: 3
+        guid: 5285c865fc57954293d050c5041d642b
+      Path: Events/DM_Event/Object Event/Enemy_Spear_Attack
+      maxAttenuation: 0
+      maxDuration: 0.32
+      minDuration: 0.192
+    - name: Enemy_Spear_Dead
+      guid: 66e209e75ba2494b952c2bd7c279eb21
+      id: 4123569734
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Enemy_Spear_Dead
+        ObjectType: 3
+        guid: 66e209e75ba2494b952c2bd7c279eb21
+      Path: Events/DM_Event/Object Event/Enemy_Spear_Dead
+      maxAttenuation: 0
+      maxDuration: 0.46875
+      minDuration: 0.234375
     - name: Enemy_Thief_Attack
       guid: 6ca0e761b09cc844b0d21eb4119540b5
       id: 1904917713
@@ -782,6 +902,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 3.5369167
       minDuration: 3.5369167
+    - name: Icon_Defeat
+      guid: b1a5c88bd6eab845bf6af61957f476f1
+      id: 2677177576
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Icon_Defeat
+        ObjectType: 3
+        guid: b1a5c88bd6eab845bf6af61957f476f1
+      Path: Events/DM_Event/Object Event/Icon_Defeat
+      maxAttenuation: 0
+      maxDuration: 8
+      minDuration: 8
+    - name: Icon_Victory
+      guid: 1f361e4d2bb1bf40b71bc328cc525b42
+      id: 1329223949
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Icon_Victory
+        ObjectType: 3
+        guid: 1f361e4d2bb1bf40b71bc328cc525b42
+      Path: Events/DM_Event/Object Event/Icon_Victory
+      maxAttenuation: 0
+      maxDuration: 7.826083
+      minDuration: 7.826083
     - name: Monster_Goblin_Dead
       guid: 4be116e9c4c02347ba7b531e342c1eeb
       id: 433730394
@@ -822,6 +982,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 1.1979584
       minDuration: 1.1979584
+    - name: Monster_Goblin_Sword
+      guid: 4ec723c58ca5bb40bdbcd8a90031852e
+      id: 3873211907
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Monster_Goblin_Sword
+        ObjectType: 3
+        guid: 4ec723c58ca5bb40bdbcd8a90031852e
+      Path: Events/DM_Event/Object Event/Monster_Goblin_Sword
+      maxAttenuation: 0
+      maxDuration: 0.32
+      minDuration: 0.192
     - name: Monster_Golem_Attack
       guid: d48615c71760a24b98260c9a366c1dd9
       id: 3005370083
@@ -1002,6 +1182,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.71875
       minDuration: 0.71875
+    - name: Moster_Goblin_Bow
+      guid: 61467be38eddad4f88d4c92b826eca9b
+      id: 2861373928
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Moster_Goblin_Bow
+        ObjectType: 3
+        guid: 61467be38eddad4f88d4c92b826eca9b
+      Path: Events/DM_Event/Object Event/Moster_Goblin_Bow
+      maxAttenuation: 0
+      maxDuration: 0.47839582
+      minDuration: 0.336
+    - name: Moster_Goblin_Throw
+      guid: 70b7fb7740962148bc3b7fbb3b43daf4
+      id: 2165960620
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: DM_Event
+        ObjectType: 12
+        guid: 39ab669188b6414984d8223432b92dc9
+      - ElementName: Object Event
+        ObjectType: 4
+        guid: 114309acb4f3c2499b945dbc3d0b18ce
+      - ElementName: Moster_Goblin_Throw
+        ObjectType: 3
+        guid: 70b7fb7740962148bc3b7fbb3b43daf4
+      Path: Events/DM_Event/Object Event/Moster_Goblin_Throw
+      maxAttenuation: 0
+      maxDuration: 0.2981875
+      minDuration: 0.213125
     - name: Object Event
       guid: 114309acb4f3c2499b945dbc3d0b18ce
       id: 1197162948
@@ -1019,69 +1239,9 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Play_Alert_time
-      guid: 20b4cf3fd77fbd4d92e60f2ab000bc5a
-      id: 3346497928
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: Object Event
-        ObjectType: 4
-        guid: 114309acb4f3c2499b945dbc3d0b18ce
-      - ElementName: Play_Alert_time
-        ObjectType: 3
-        guid: 20b4cf3fd77fbd4d92e60f2ab000bc5a
-      Path: Events/DM_Event/Object Event/Play_Alert_time
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: Play_Alert_time_01
-      guid: f8282453110c9e40a672eb5be2fd5adb
-      id: 2050609054
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: Object Event
-        ObjectType: 4
-        guid: 114309acb4f3c2499b945dbc3d0b18ce
-      - ElementName: Play_Alert_time_01
-        ObjectType: 3
-        guid: f8282453110c9e40a672eb5be2fd5adb
-      Path: Events/DM_Event/Object Event/Play_Alert_time_01
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: Play_Click_card_01
-      guid: eca5777cbf88b944a1142d17536f4335
-      id: 2574954115
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: Object Event
-        ObjectType: 4
-        guid: 114309acb4f3c2499b945dbc3d0b18ce
-      - ElementName: Play_Click_card_01
-        ObjectType: 3
-        guid: eca5777cbf88b944a1142d17536f4335
-      Path: Events/DM_Event/Object Event/Play_Click_card_01
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: Play_DM_Bossbattle_BPM145
-      guid: abefbbfed5889a41a6757354ca1c5400
-      id: 2525272031
+    - name: Play_Combat_Final
+      guid: 8125e13fc133dc4f85b8b00c3332e436
+      id: 4024028455
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -1092,16 +1252,16 @@ MonoBehaviour:
       - ElementName: BGM Event
         ObjectType: 4
         guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_DM_Bossbattle_BPM145
+      - ElementName: Play_Combat_Final
         ObjectType: 3
-        guid: abefbbfed5889a41a6757354ca1c5400
-      Path: Events/DM_Event/BGM Event/Play_DM_Bossbattle_BPM145
+        guid: 8125e13fc133dc4f85b8b00c3332e436
+      Path: Events/DM_Event/BGM Event/Play_Combat_Final
       maxAttenuation: 0
-      maxDuration: 120.82758
-      minDuration: 120.82758
-    - name: Play_DM_Field_Loop_8s
-      guid: 8a12db08ef235b40854bc7795b2685f6
-      id: 4137095013
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Combat_middle
+      guid: e6aa37f74c36dd4c92ea380549bc4a2d
+      id: 1579914886
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -1112,16 +1272,16 @@ MonoBehaviour:
       - ElementName: BGM Event
         ObjectType: 4
         guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_DM_Field_Loop_8s
+      - ElementName: Play_Combat_middle
         ObjectType: 3
-        guid: 8a12db08ef235b40854bc7795b2685f6
-      Path: Events/DM_Event/BGM Event/Play_DM_Field_Loop_8s
+        guid: e6aa37f74c36dd4c92ea380549bc4a2d
+      Path: Events/DM_Event/BGM Event/Play_Combat_middle
       maxAttenuation: 0
-      maxDuration: 104.156525
-      minDuration: 104.156525
-    - name: Play_DM_Main_Title
-      guid: da0046ffcf3b994faa770531fafd6176
-      id: 3274818598
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Field
+      guid: c548056edf529a49a46bc51939ed69ea
+      id: 861152358
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -1132,16 +1292,16 @@ MonoBehaviour:
       - ElementName: BGM Event
         ObjectType: 4
         guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_DM_Main_Title
+      - ElementName: Play_Field
         ObjectType: 3
-        guid: da0046ffcf3b994faa770531fafd6176
-      Path: Events/DM_Event/BGM Event/Play_DM_Main_Title
+        guid: c548056edf529a49a46bc51939ed69ea
+      Path: Events/DM_Event/BGM Event/Play_Field
       maxAttenuation: 0
-      maxDuration: 67.82609
-      minDuration: 67.82609
-    - name: Play_DM_Namedboss_Battle
-      guid: 5fd4fa5370d21749a3382fd68da7b825
-      id: 2356728643
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Title
+      guid: ded2261e71bd104c8a57cde49dcd745b
+      id: 3849537216
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -1152,33 +1312,13 @@ MonoBehaviour:
       - ElementName: BGM Event
         ObjectType: 4
         guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_DM_Namedboss_Battle
+      - ElementName: Play_Title
         ObjectType: 3
-        guid: 5fd4fa5370d21749a3382fd68da7b825
-      Path: Events/DM_Event/BGM Event/Play_DM_Namedboss_Battle
+        guid: ded2261e71bd104c8a57cde49dcd745b
+      Path: Events/DM_Event/BGM Event/Play_Title
       maxAttenuation: 0
-      maxDuration: 106.666664
-      minDuration: 106.666664
-    - name: Play_DM_title_Noloop_BPM138
-      guid: 06d9eaab1439f2449537b155b2a3bdd9
-      id: 1908904774
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: BGM Event
-        ObjectType: 4
-        guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_DM_title_Noloop_BPM138
-        ObjectType: 3
-        guid: 06d9eaab1439f2449537b155b2a3bdd9
-      Path: Events/DM_Event/BGM Event/Play_DM_title_Noloop_BPM138
-      maxAttenuation: 0
-      maxDuration: 71.30435
-      minDuration: 71.30435
+      maxDuration: -1
+      minDuration: -1
     - name: Quest_Paper_Close
       guid: e008921250e8404cb593c8784c78ec3e
       id: 3322140943
