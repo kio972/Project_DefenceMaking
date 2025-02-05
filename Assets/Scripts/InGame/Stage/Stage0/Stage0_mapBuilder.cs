@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Stage0_mapBuilder : MapBuilder
 {
+    public override void StartHiddenTileCounter()
+    {
+        //히든타일 사용안함
+    }
+
     public TileNode SetExampleRoom()
     {
         GameObject roomTile = Resources.Load<GameObject>("Prefab/Tile/RoomTile8");

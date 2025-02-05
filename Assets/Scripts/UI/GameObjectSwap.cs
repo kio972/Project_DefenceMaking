@@ -22,6 +22,6 @@ public class GameObjectSwap : MonoBehaviour
 
     private void Awake()
     {
-        swapableObjects = GetComponentsInChildren<ISwappableGameObject>();
+        swapableObjects = GetComponentsInChildren<ISwappableGameObject>(true);
     }
 }

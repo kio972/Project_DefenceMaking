@@ -294,9 +294,9 @@ public class Stage0_TutoUI : MonoBehaviour
         realDeploy.SetActive(true);
         deployBtn.SetActive(true);
         researchMain.enabled = true;
-        Animator researchBtnAnim = researchBtn.GetComponent<Animator>();
-        Destroy(researchBtnAnim);
         researchBtn.gameObject.SetActive(true);
+        Animator researchBtnAnim = researchBtn.GetComponent<Animator>();
+        researchBtnAnim?.SetBool("End", true);
         researchBtn.enabled = true;
         //researchPage.transform.parent.gameObject.SetActive(true);
     }

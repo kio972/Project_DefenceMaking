@@ -27,6 +27,11 @@ public class CardInputControl : MonoBehaviour
     bool isStartStreamStarted = false;
     protected CompositeDisposable disposables = new CompositeDisposable();
 
+    private void OnDestroy()
+    {
+        disposables.Dispose();
+    }
+
     private bool AnyShortcutKeyInput()
     {
         for(int i = 48; i < 58; i++)
@@ -95,7 +100,8 @@ public class CardInputControl : MonoBehaviour
                 .Do(_ => cardFramework.EndCard(true))
                 .Do(_ => isUsingShortCut = false)
                 .DelayFrame(1)
-                .Subscribe(_ => _state = CardInputState.None);
+                .Subscribe(_ => _state = CardInputState.None)
+                .AddTo(disposables);
         }
 
         if(useClick)
@@ -123,6 +129,7 @@ public class CardInputControl : MonoBehaviour
             .Where(_ => ClickInput() || CancelInput())
             .Do(_ => cardFramework.EndCard(CancelInput()))
             .DelayFrame(1)
-            .Subscribe(_ => _state = CardInputState.None);
+            .Subscribe(_ => _state = CardInputState.None)
+            .AddTo(disposables);
     }
 }

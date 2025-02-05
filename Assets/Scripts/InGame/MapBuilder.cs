@@ -194,7 +194,7 @@ public class MapBuilder : MonoBehaviour
         StartHiddenTileCounter();
     }
 
-    public void StartHiddenTileCounter()
+    public virtual void StartHiddenTileCounter()
     {
         NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
     }
