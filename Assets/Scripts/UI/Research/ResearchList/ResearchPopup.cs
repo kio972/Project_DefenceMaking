@@ -221,9 +221,9 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
 
         //AudioManager.Instance.Play2DSound(isStart ? "UI_Click_01" : "UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
         if(isStart)
-            refusedSound?.Post(gameObject);
-        else
             excutedSound?.Post(gameObject);
+        else
+            refusedSound?.Post(gameObject);
     }
 
     private void StopResearch()

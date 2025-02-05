@@ -28,8 +28,6 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
     [SerializeField]
     private AK.Wwise.Event openSound;
-    [SerializeField]
-    private AK.Wwise.Event completeSound;
 
     private async UniTask IResearch(ResearchSlot curResearch, float additionalTime)
     {

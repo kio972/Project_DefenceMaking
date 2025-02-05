@@ -4,14 +4,15 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UniRx;
-using UniRx.Triggers;
-using Unity.VisualScripting;
 
 public class TileHidden : MonoBehaviour, ITileKind
 {
     private TileNode _curNode;
     public TileNode curNode { get => _curNode; }
     private GameObject _targetPrefab;
+
+    [SerializeField]
+    AK.Wwise.Event revealSound;
 
     private void ExcuteReveal()
     {
@@ -29,7 +30,8 @@ public class TileHidden : MonoBehaviour, ITileKind
         }
 
         NodeManager.Instance.hiddenTiles.Remove(_curNode);
-        AudioManager.Instance.Play2DSound("Demon_Attack_B", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Demon_Attack_B", SettingManager.Instance._FxVolume);
+        revealSound?.Post(gameObject);
         gameObject.SetActive(false);
         Destroy(gameObject);
     }

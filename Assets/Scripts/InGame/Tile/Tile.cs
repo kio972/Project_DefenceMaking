@@ -182,6 +182,11 @@ public class Tile : MonoBehaviour, ITileKind
     private Dictionary<TileNode, int> availableNodeDic = new Dictionary<TileNode, int>();
     public HashSet<TileNode> availableNodes { get => availableNodeDic.Keys.ToHashSet();}
 
+    [SerializeField]
+    private AK.Wwise.Event rotateSound;
+    [SerializeField]
+    private AK.Wwise.Event buildSound;
+
     public int GetAvailableCount(TileNode node)
     {
         if (!availableNodeDic.ContainsKey(node))
@@ -284,7 +289,10 @@ public class Tile : MonoBehaviour, ITileKind
         CheckDevilDisconnection();
 
         if(GameManager.Instance.IsInit)
-            AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
+        {
+            //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
+            buildSound?.Post(gameObject);
+        }
 
         NodeManager.Instance.IncreaseNodeVersion();
     }
@@ -619,18 +627,21 @@ public class Tile : MonoBehaviour, ITileKind
                 if (curNode != null && curNode.setAvail)
                 {
                     twin.AutoRotate(curNode);
-                    AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
+                    rotateSound?.Post(gameObject);
+                    //AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 }
             }
 
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
             {
-                AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
+                rotateSound?.Post(gameObject);
+                //AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 twin.RotateToNext(curNode);
             }
             else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
             {
-                AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
+                rotateSound?.Post(gameObject);
+                //AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateToNext(curNode, true);
             }
 

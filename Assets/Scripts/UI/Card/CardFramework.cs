@@ -74,8 +74,8 @@ public class CardFramework : MonoBehaviour
             //    GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        if (GameManager.Instance.IsInit)
-            AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
+        //if (GameManager.Instance.IsInit)
+        //    AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
     }
 
     private void SetMonster(TileNode curNode)
@@ -91,7 +91,7 @@ public class CardFramework : MonoBehaviour
                 GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Set_monster", SettingManager.Instance._FxVolume);
     }
 
     private void SetObejct(TileNode curNode)
@@ -117,7 +117,7 @@ public class CardFramework : MonoBehaviour
                 GameManager.Instance.speedController.SetSpeedPrev(false);
         }
 
-        AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
     }
 
     protected virtual void SetObjectOnMap(bool cancel = false)

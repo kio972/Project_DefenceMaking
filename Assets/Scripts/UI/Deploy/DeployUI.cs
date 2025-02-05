@@ -55,6 +55,8 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
     private AK.Wwise.Event openSound;
     [SerializeField]
     private AK.Wwise.Event completeSound;
+    [SerializeField]
+    private AK.Wwise.Event refusedSound;
 
 
     public void UpdateMana()
@@ -134,6 +136,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             if (GameManager.Instance.gold < curPrice)
             {
                 GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
+                refusedSound?.Post(gameObject);
                 return;
             }
 
@@ -145,6 +148,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
+                    refusedSound?.Post(gameObject);
                     return;
                 }
 
@@ -154,9 +158,10 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             }
             else if (curType == CardType.Trap)
             {
-                if(GameManager.Instance.IsAdventurererOnTile(curNode))
+                if (GameManager.Instance.IsAdventurererOnTile(curNode))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_setFailEnemy"));
+                    refusedSound?.Post(gameObject);
                     return;
                 }
 
@@ -164,7 +169,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
                 completeSound?.Post(gameObject);
             }
-            else if(curType == CardType.Monster)
+            else if (curType == CardType.Monster)
             {
                 CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
                 int requiredMana;
@@ -172,11 +177,13 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
+                    refusedSound?.Post(gameObject);
                     return;
                 }
                 if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireTotalMana"));
+                    refusedSound?.Post(gameObject);
                     return;
                 }
 
@@ -191,7 +198,9 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             if (!Input.GetKey(KeyCode.LeftShift))
                 DeployEnd().Forget();
         }
-        else if(curNode == null || curNode.curTile == null)
+        else if (curNode != null && !curNode.setAvail)
+            refusedSound?.Post(gameObject);
+        else if (curNode == null || curNode.curTile == null)
             DeployEnd().Forget();
     }
 
