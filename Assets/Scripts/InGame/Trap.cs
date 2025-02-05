@@ -37,8 +37,11 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
     public ReactiveProperty<int> curDuration = new ReactiveProperty<int>();
     public ReactiveProperty<int> maxDuration = new ReactiveProperty<int>();
 
+    //[SerializeField]
+    //AudioClip attackSound;
     [SerializeField]
-    AudioClip attackSound;
+    AK.Wwise.Event attackSound;
+
 
     public void DestroyObject()
     {
@@ -69,7 +72,8 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
 
         attackCount++;
         curDuration.Value = duration - attackCount;
-        AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
+        attackSound?.Post(gameObject);
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);

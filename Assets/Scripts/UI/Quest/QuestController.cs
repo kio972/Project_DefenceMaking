@@ -58,6 +58,9 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup layoutGroup;
 
+    [SerializeField]
+    AK.Wwise.Event createSound;
+
     public bool IsQuestStarted(string questID)
     {
         if (_mainQuest != null && _mainQuest._QuestID == questID)
@@ -86,7 +89,8 @@ public class QuestController : MonoBehaviour
         _mainQuest = quest;
         mainInfomer.SetQuest(quest);
 
-        AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
+        createSound?.Post(gameObject);
     }
 
     private void SetSubQuest(Quest quest)
@@ -98,7 +102,8 @@ public class QuestController : MonoBehaviour
         next.transform.SetAsLastSibling();
         layoutGroup.enabled = true;
 
-        AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
+        createSound?.Post(gameObject);
     }
 
     public void StartQuest(int questID, List<int> startVal, float startTime)

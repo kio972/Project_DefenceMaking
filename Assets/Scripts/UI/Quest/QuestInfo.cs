@@ -37,6 +37,11 @@ public class QuestInfo : MonoBehaviour
     [SerializeField]
     private GameObject alarmObject;
 
+    [SerializeField]
+    AK.Wwise.Event clearSound;
+    [SerializeField]
+    AK.Wwise.Event failSound;
+
     private void DeActive()
     {
         gameObject.SetActive(false);
@@ -49,10 +54,13 @@ public class QuestInfo : MonoBehaviour
         _Animator.SetTrigger("End");
         //Invoke("DeActive", 1f);
 
-        string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
-        AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
-
         curQuest = null;
+        //string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
+        //AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
+        if (curQuest._IsClear)
+            clearSound?.Post(gameObject);
+        else
+            failSound?.Post(gameObject);
     }
 
     public void SetQuestText(Quest quest)
