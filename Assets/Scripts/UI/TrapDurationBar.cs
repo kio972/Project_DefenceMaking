@@ -23,6 +23,7 @@ public class TrapDurationBar : MonoBehaviour
 
     public void HPBarEnd()
     {
+        deadBar = true;
         gameObject.SetActive(false);
         disposables.Clear();
     }
@@ -58,7 +59,6 @@ public class TrapDurationBar : MonoBehaviour
 
         if(fillRate <= 0)
         {
-            deadBar = true;
             HPBarEnd();
         }
     }

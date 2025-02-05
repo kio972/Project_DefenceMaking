@@ -37,6 +37,8 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
     public ReactiveProperty<int> curDuration = new ReactiveProperty<int>();
     public ReactiveProperty<int> maxDuration = new ReactiveProperty<int>();
 
+    TrapDurationBar hpBar;
+
     //[SerializeField]
     //AudioClip attackSound;
     [SerializeField]
@@ -53,6 +55,7 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
         transform.position = Vector3.up * 1000f;
         GameManager.Instance.trapList.Remove(this);
         isInit = false;
+        hpBar?.HPBarEnd();
     }
 
     private void ExcuteAttack()
@@ -128,7 +131,7 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
 
         maxDuration.Value = duration;
         curDuration.Value = startDuration == 0 ? duration : startDuration;
-        HPBarPooling.Instance.GetTrapHpBar(this);
+        hpBar = HPBarPooling.Instance.GetTrapHpBar(this);
         isInit = true;
     }
 
