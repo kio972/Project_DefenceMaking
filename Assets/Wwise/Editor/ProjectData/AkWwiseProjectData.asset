@@ -412,35 +412,22 @@ MonoBehaviour:
     ParentPath: SoundBanks/Default Work Unit
     guid: 3f636edb32b9fb48b8ddd28915125d97
     GuidInternal: 
-    m_lastTime: -8584644839253029673
-    List: []
-  - PhysicalPath: SoundBanks/DM_SoundBank.wwu
-    PathAndIcons:
-    - ElementName: SoundBanks
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: DM_SoundBank
-      ObjectType: 12
-      guid: 509fead37a3c7a40b161e71d95d76cc6
-    ParentPath: SoundBanks/DM_SoundBank
-    guid: 509fead37a3c7a40b161e71d95d76cc6
-    GuidInternal: 
-    m_lastTime: -8584629515169668338
+    m_lastTime: -8584628648448755613
     List:
     - name: DM_SoundBank
-      guid: 10564ccd860f33428134335b6f399927
+      guid: f2bd8efc40e88649b337ec285c39c488
       id: 3140297794
       PathAndIcons:
       - ElementName: SoundBanks
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: DM_SoundBank
+      - ElementName: Default Work Unit
         ObjectType: 12
-        guid: 509fead37a3c7a40b161e71d95d76cc6
+        guid: 3f636edb32b9fb48b8ddd28915125d97
       - ElementName: DM_SoundBank
         ObjectType: 7
-        guid: 10564ccd860f33428134335b6f399927
-      Path: SoundBanks/DM_SoundBank/DM_SoundBank
+        guid: f2bd8efc40e88649b337ec285c39c488
+      Path: SoundBanks/Default Work Unit/DM_SoundBank
   EventWwu:
   - PhysicalPath: Events/Default Work Unit.wwu
     PathAndIcons:
@@ -453,7 +440,7 @@ MonoBehaviour:
     ParentPath: Events/Default Work Unit
     guid: 35640558a4bb4349b583dc5af21a2a8e
     GuidInternal: 
-    m_lastTime: -8584629515169723708
+    m_lastTime: -8584628711438913872
     List: []
   - PhysicalPath: Events/DM_Event.wwu
     PathAndIcons:
@@ -466,7 +453,7 @@ MonoBehaviour:
     ParentPath: Events/DM_Event
     guid: 39ab669188b6414984d8223432b92dc9
     GuidInternal: 
-    m_lastTime: -8584629515169802112
+    m_lastTime: -8584628650981000694
     List:
     - name: Alert_Research_Complete
       guid: a488f237fd84514dab6c110c67af24d5
@@ -1239,9 +1226,9 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: Play_Combat_Final
-      guid: 8125e13fc133dc4f85b8b00c3332e436
-      id: 4024028455
+    - name: Play_BGM_Switch
+      guid: 5e1b0bb930fd2d47b8e5fd05d7639a13
+      id: 2539716287
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -1252,70 +1239,10 @@ MonoBehaviour:
       - ElementName: BGM Event
         ObjectType: 4
         guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_Combat_Final
+      - ElementName: Play_BGM_Switch
         ObjectType: 3
-        guid: 8125e13fc133dc4f85b8b00c3332e436
-      Path: Events/DM_Event/BGM Event/Play_Combat_Final
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_Combat_middle
-      guid: e6aa37f74c36dd4c92ea380549bc4a2d
-      id: 1579914886
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: BGM Event
-        ObjectType: 4
-        guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_Combat_middle
-        ObjectType: 3
-        guid: e6aa37f74c36dd4c92ea380549bc4a2d
-      Path: Events/DM_Event/BGM Event/Play_Combat_middle
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_Field
-      guid: c548056edf529a49a46bc51939ed69ea
-      id: 861152358
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: BGM Event
-        ObjectType: 4
-        guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_Field
-        ObjectType: 3
-        guid: c548056edf529a49a46bc51939ed69ea
-      Path: Events/DM_Event/BGM Event/Play_Field
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: Play_Title
-      guid: ded2261e71bd104c8a57cde49dcd745b
-      id: 3849537216
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: DM_Event
-        ObjectType: 12
-        guid: 39ab669188b6414984d8223432b92dc9
-      - ElementName: BGM Event
-        ObjectType: 4
-        guid: ae66b1ae87009849929fca4be78f5bad
-      - ElementName: Play_Title
-        ObjectType: 3
-        guid: ded2261e71bd104c8a57cde49dcd745b
-      Path: Events/DM_Event/BGM Event/Play_Title
+        guid: 5e1b0bb930fd2d47b8e5fd05d7639a13
+      Path: Events/DM_Event/BGM Event/Play_BGM_Switch
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -1822,8 +1749,174 @@ MonoBehaviour:
     ParentPath: States/Default Work Unit
     guid: 73fd8cb555fd344c910ceb2fd2222b43
     GuidInternal: 
-    m_lastTime: -8584644846026391165
-    List: []
+    m_lastTime: -8584628715809523259
+    List:
+    - name: Battle_State_Grp
+      guid: e6f0c1e3d3c470429d90db5b6a35ec77
+      id: 1252149497
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 73fd8cb555fd344c910ceb2fd2222b43
+      - ElementName: Battle_State_Grp
+        ObjectType: 9
+        guid: e6f0c1e3d3c470429d90db5b6a35ec77
+      Path: States/Default Work Unit/Battle_State_Grp
+      values:
+      - name: Combat_Final
+        guid: e1a4220bcab3754da67e2fbb2cc6fdee
+        id: 1503069520
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Battle_State_Grp
+          ObjectType: 9
+          guid: e6f0c1e3d3c470429d90db5b6a35ec77
+        - ElementName: Combat_Final
+          ObjectType: 8
+          guid: e1a4220bcab3754da67e2fbb2cc6fdee
+      - name: Combat_Middle
+        guid: ae119da58076c04b9aba2d232894bcbd
+        id: 1764846191
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Battle_State_Grp
+          ObjectType: 9
+          guid: e6f0c1e3d3c470429d90db5b6a35ec77
+        - ElementName: Combat_Middle
+          ObjectType: 8
+          guid: ae119da58076c04b9aba2d232894bcbd
+      - name: None
+        guid: 833fc68d8bdb554e9f547df53add1891
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Battle_State_Grp
+          ObjectType: 9
+          guid: e6f0c1e3d3c470429d90db5b6a35ec77
+        - ElementName: None
+          ObjectType: 8
+          guid: 833fc68d8bdb554e9f547df53add1891
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: Field_State_Grp
+      guid: f061b4232f0a6948b1e3c663b76e70dc
+      id: 1681955157
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 73fd8cb555fd344c910ceb2fd2222b43
+      - ElementName: Field_State_Grp
+        ObjectType: 9
+        guid: f061b4232f0a6948b1e3c663b76e70dc
+      Path: States/Default Work Unit/Field_State_Grp
+      values:
+      - name: Main_Field
+        guid: 606d53058860324b969f250ca605c5f9
+        id: 148085039
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Field_State_Grp
+          ObjectType: 9
+          guid: f061b4232f0a6948b1e3c663b76e70dc
+        - ElementName: Main_Field
+          ObjectType: 8
+          guid: 606d53058860324b969f250ca605c5f9
+      - name: None
+        guid: 087b9bb075b8bc418be5596e11cb9c91
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Field_State_Grp
+          ObjectType: 9
+          guid: f061b4232f0a6948b1e3c663b76e70dc
+        - ElementName: None
+          ObjectType: 8
+          guid: 087b9bb075b8bc418be5596e11cb9c91
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: Title_State_Grp
+      guid: 45034525171bb041a4af016d6301b583
+      id: 2558211971
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 73fd8cb555fd344c910ceb2fd2222b43
+      - ElementName: Title_State_Grp
+        ObjectType: 9
+        guid: 45034525171bb041a4af016d6301b583
+      Path: States/Default Work Unit/Title_State_Grp
+      values:
+      - name: Main_Title
+        guid: 308648bb1877ab4bb31dda819adb99ca
+        id: 654742305
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Title_State_Grp
+          ObjectType: 9
+          guid: 45034525171bb041a4af016d6301b583
+        - ElementName: Main_Title
+          ObjectType: 8
+          guid: 308648bb1877ab4bb31dda819adb99ca
+      - name: None
+        guid: 83a3c594bbab664aae11e12e7ea6653e
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 73fd8cb555fd344c910ceb2fd2222b43
+        - ElementName: Title_State_Grp
+          ObjectType: 9
+          guid: 45034525171bb041a4af016d6301b583
+        - ElementName: None
+          ObjectType: 8
+          guid: 83a3c594bbab664aae11e12e7ea6653e
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   SwitchWwu:
   - PhysicalPath: Switches/Default Work Unit.wwu
     PathAndIcons:
@@ -1836,8 +1929,90 @@ MonoBehaviour:
     ParentPath: Switches/Default Work Unit
     guid: ce98465e10887346bd21ae929ad3c024
     GuidInternal: 
-    m_lastTime: -8584644846026364417
-    List: []
+    m_lastTime: -8584628715809587818
+    List:
+    - name: BGM_Switch
+      guid: b020aa213f72424cba77aa96558d6c18
+      id: 1239043692
+      PathAndIcons:
+      - ElementName: Switches
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: ce98465e10887346bd21ae929ad3c024
+      - ElementName: BGM_Switch
+        ObjectType: 11
+        guid: b020aa213f72424cba77aa96558d6c18
+      Path: Switches/Default Work Unit/BGM_Switch
+      values:
+      - name: Combat_Main
+        guid: 51cec24b7a70fe4cb2f663e91c92a6bb
+        id: 538589511
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: ce98465e10887346bd21ae929ad3c024
+        - ElementName: BGM_Switch
+          ObjectType: 11
+          guid: b020aa213f72424cba77aa96558d6c18
+        - ElementName: Combat_Main
+          ObjectType: 10
+          guid: 51cec24b7a70fe4cb2f663e91c92a6bb
+      - name: Combat_Middle
+        guid: 94d646ef9c1e3546aa8a670bee4a4b81
+        id: 1764846191
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: ce98465e10887346bd21ae929ad3c024
+        - ElementName: BGM_Switch
+          ObjectType: 11
+          guid: b020aa213f72424cba77aa96558d6c18
+        - ElementName: Combat_Middle
+          ObjectType: 10
+          guid: 94d646ef9c1e3546aa8a670bee4a4b81
+      - name: Field
+        guid: 3063c4417a4985498da82726c397f8bd
+        id: 514358619
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: ce98465e10887346bd21ae929ad3c024
+        - ElementName: BGM_Switch
+          ObjectType: 11
+          guid: b020aa213f72424cba77aa96558d6c18
+        - ElementName: Field
+          ObjectType: 10
+          guid: 3063c4417a4985498da82726c397f8bd
+      - name: Title
+        guid: 8cfae5ca4cb0234c9b36c7e3459bc380
+        id: 3705726509
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: ce98465e10887346bd21ae929ad3c024
+        - ElementName: BGM_Switch
+          ObjectType: 11
+          guid: b020aa213f72424cba77aa96558d6c18
+        - ElementName: Title
+          ObjectType: 10
+          guid: 8cfae5ca4cb0234c9b36c7e3459bc380
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   TriggerWwu:
   - PhysicalPath: Triggers/Default Work Unit.wwu
     PathAndIcons:
@@ -1852,8 +2027,8 @@ MonoBehaviour:
     GuidInternal: 
     m_lastTime: -8584644846026025395
     List: []
-  ExpandedFileSystemItemIds: 0200000004000000100000001200000013000000140000001500000030000000
-  ExpandedWaapiItemIds: 100000001200000013000000140000001500000030000000
+  ExpandedFileSystemItemIds: 02000000040000000700000009000000100000001200000013000000140000001500000030000000480000004a0000004f000000510000005500000058000000590000005b000000
+  ExpandedWaapiItemIds: 020000000400000007000000090000000c000000100000001200000013000000140000001500000030000000480000004a0000004f000000510000005500000058000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 1

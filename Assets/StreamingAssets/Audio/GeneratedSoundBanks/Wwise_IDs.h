@@ -50,10 +50,7 @@ namespace AK
         static const AkUniqueID MONSTER_SLIME_SPAWN = 3004343104U;
         static const AkUniqueID MOSTER_GOBLIN_BOW = 2861373928U;
         static const AkUniqueID MOSTER_GOBLIN_THROW = 2165960620U;
-        static const AkUniqueID PLAY_COMBAT_FINAL = 4024028455U;
-        static const AkUniqueID PLAY_COMBAT_MIDDLE = 1579914886U;
-        static const AkUniqueID PLAY_FIELD = 861152358U;
-        static const AkUniqueID PLAY_TITLE = 3849537216U;
+        static const AkUniqueID PLAY_BGM_SWITCH = 2539716287U;
         static const AkUniqueID QUEST_PAPER_CLOSE = 3322140943U;
         static const AkUniqueID QUEST_PAPER_OPEN = 822059337U;
         static const AkUniqueID QUEST_UI_CREAT = 2870564192U;
@@ -78,6 +75,61 @@ namespace AK
         static const AkUniqueID UI_TEXT = 3469071695U;
         static const AkUniqueID USE_COIN = 2375532986U;
     } // namespace EVENTS
+
+    namespace STATES
+    {
+        namespace BATTLE_STATE_GRP
+        {
+            static const AkUniqueID GROUP = 1252149497U;
+
+            namespace STATE
+            {
+                static const AkUniqueID COMBAT_FINAL = 1503069520U;
+                static const AkUniqueID COMBAT_MIDDLE = 1764846191U;
+                static const AkUniqueID NONE = 748895195U;
+            } // namespace STATE
+        } // namespace BATTLE_STATE_GRP
+
+        namespace FIELD_STATE_GRP
+        {
+            static const AkUniqueID GROUP = 1681955157U;
+
+            namespace STATE
+            {
+                static const AkUniqueID MAIN_FIELD = 148085039U;
+                static const AkUniqueID NONE = 748895195U;
+            } // namespace STATE
+        } // namespace FIELD_STATE_GRP
+
+        namespace TITLE_STATE_GRP
+        {
+            static const AkUniqueID GROUP = 2558211971U;
+
+            namespace STATE
+            {
+                static const AkUniqueID MAIN_TITLE = 654742305U;
+                static const AkUniqueID NONE = 748895195U;
+            } // namespace STATE
+        } // namespace TITLE_STATE_GRP
+
+    } // namespace STATES
+
+    namespace SWITCHES
+    {
+        namespace BGM_SWITCH
+        {
+            static const AkUniqueID GROUP = 1239043692U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID COMBAT_MAIN = 538589511U;
+                static const AkUniqueID COMBAT_MIDDLE = 1764846191U;
+                static const AkUniqueID FIELD = 514358619U;
+                static const AkUniqueID TITLE = 3705726509U;
+            } // namespace SWITCH
+        } // namespace BGM_SWITCH
+
+    } // namespace SWITCHES
 
     namespace BANKS
     {
