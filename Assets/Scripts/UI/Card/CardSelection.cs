@@ -11,6 +11,8 @@ public class CardSelection : MonoBehaviour
     [SerializeField]
     private List<CardSelectUI> cardUis;
     [SerializeField]
+    private List<DissolveController> dissolves;
+    [SerializeField]
     private GameObject cardSkip;
 
     private bool initState = false;
@@ -31,23 +33,44 @@ public class CardSelection : MonoBehaviour
     int[] curSelectIndex = new int[3];
     bool[] curSelectIsAdd = new bool[3];
 
+    bool isSelectingNow = false;
+
+    private void DeActive()
+    {
+        gameObject.SetActive(false);
+        GameManager.Instance.SetPause(false);
+    }
+
     public void SelectCard(int i)
     {
+        if (!isSelectingNow)
+            return;
+
         if (i < 0 || i >= curSelectIndex.Length)
             return;
 
+        foreach (var item in dissolves)
+            item.isDisappare = true;
+        foreach (var item in dissolves)
+            item.isAppare = false;
         int index = curSelectIndex[i];
-        if(index != -1)
+        if (index != -1)
         {
             bool isAdd = curSelectIsAdd[i];
             if (isAdd)
                 GameManager.Instance.cardDeckController.AddCard(index);
             else
                 GameManager.Instance.cardDeckController.RemoveCard(index);
-        }
 
-        GameManager.Instance.SetPause(false);
-        gameObject.SetActive(false);
+            dissolves[i].isDisappare = false;
+        }
+        else
+            dissolves[3].isDisappare = false;
+
+        isSelectingNow = false;
+        //gameObject.SetActive(false);
+        Animator animator = GetComponent<Animator>();
+        animator?.SetTrigger("End");
     }
 
     private TileType GetRandomCardType()
@@ -180,6 +203,10 @@ public class CardSelection : MonoBehaviour
             curSelectIndex[2] = -1;
 
         gameObject.SetActive(true);
+
+        foreach (var item in dissolves)
+            item.isAppare = true;
+        isSelectingNow = true;
     }
 
     public void AddCardToPool(string id)

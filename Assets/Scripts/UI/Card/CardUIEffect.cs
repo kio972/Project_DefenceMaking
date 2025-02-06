@@ -17,6 +17,7 @@ public class CardUIEffect : MonoBehaviour
     [SerializeField]
     private float mouseOverTime = 0.2f;
 
+    [SerializeField]
     private bool drawEnd = false;
 
     public Vector3 originPos;
@@ -29,6 +30,9 @@ public class CardUIEffect : MonoBehaviour
 
     private CancellationTokenSource _scaleToken;
     private CancellationTokenSource _moveToken;
+
+    [SerializeField]
+    private float sizeMult = 1.5f;
 
     [SerializeField]
     private AK.Wwise.Event mouseOverSound;
@@ -58,12 +62,13 @@ public class CardUIEffect : MonoBehaviour
         _moveToken = new CancellationTokenSource();
         _scaleToken = new CancellationTokenSource();
 
-        UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one * 1.5f, mouseOverTime, _scaleToken.Token).Forget();
+        UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one * sizeMult, mouseOverTime, _scaleToken.Token).Forget();
         if(useSiblingArrange)
             UtilHelper.IMoveEffect(effectTarget, effectTarget.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime, _moveToken.Token).Forget();
 
         effectTarget.rotation = Quaternion.identity;
-        transform.SetAsLastSibling();
+        if(useSiblingArrange)
+            transform.SetAsLastSibling();
 
         //AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
         mouseOverSound?.Post(gameObject);
@@ -86,7 +91,7 @@ public class CardUIEffect : MonoBehaviour
             UtilHelper.IMoveEffect(effectTarget, effectTarget.position, originPos, mouseOverTime, _moveToken.Token).Forget();
 
         effectTarget.rotation = originRot;
-        if (originSiblingIndex != -1)
+        if (useSiblingArrange && originSiblingIndex != -1)
             transform.SetSiblingIndex(originSiblingIndex);
     }
 
