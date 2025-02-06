@@ -490,7 +490,7 @@ public class CardDeckController : MonoBehaviour
     {
         foreach(var card in mulliganList)
         {
-            AddCard(DataManager.Instance.deckListIndex[card]);
+            //AddCard(DataManager.Instance.deckListIndex[card]);
             DrawCard(DataManager.Instance.deckListIndex[card]);
         }
     }
@@ -580,7 +580,7 @@ public class CardDeckController : MonoBehaviour
         _cardDeck = new List<int>(deckLists);
         foreach(int id in cardIdes)
         {
-            AddCard(id);
+            //AddCard(id);
             DrawCard(id);
         }
     }

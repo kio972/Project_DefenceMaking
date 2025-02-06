@@ -141,17 +141,17 @@ public class Stage0_Story : MonoBehaviour
 
         //튜토리얼 카드 추가
         int directPath = DataManager.Instance.deckListIndex["c10001"];
-        for (int i = 0; i < 4; i++)
-            GameManager.Instance.cardDeckController.AddCard(directPath);
+        //for (int i = 0; i < 4; i++)
+        //    GameManager.Instance.cardDeckController.AddCard(directPath);
         int crossRoad = DataManager.Instance.deckListIndex["c10007"];
-        GameManager.Instance.cardDeckController.AddCard(crossRoad);
+        //GameManager.Instance.cardDeckController.AddCard(crossRoad);
         
         int road6 = DataManager.Instance.deckListIndex["c10007"];
         int road4 = DataManager.Instance.deckListIndex["c10005"];
         //int road8 = DataManager.Instance.deckListIndex["c10009"];
         //int road10 = DataManager.Instance.deckListIndex["c10011"];
-        GameManager.Instance.cardDeckController.AddCard(road6);
-        GameManager.Instance.cardDeckController.AddCard(road4);
+        //GameManager.Instance.cardDeckController.AddCard(road6);
+        //GameManager.Instance.cardDeckController.AddCard(road4);
         //GameManager.Instance.cardDeckController.AddCard(road8);
         //GameManager.Instance.cardDeckController.AddCard(road10);
         //int room0 = DataManager.Instance.deckListIndex["c11001"];
@@ -161,8 +161,8 @@ public class Stage0_Story : MonoBehaviour
         int doorPart = DataManager.Instance.deckListIndex["c13007"];
         //int room2 = DataManager.Instance.deckListIndex["c11003"];
         //GameManager.Instance.cardDeckController.AddCard(room0);
-        for (int i = 0; i < 2; i++)
-            GameManager.Instance.cardDeckController.AddCard(room1);
+        //for (int i = 0; i < 2; i++)
+        //    GameManager.Instance.cardDeckController.AddCard(room1);
         //GameManager.Instance.cardDeckController.AddCard(room2);
 
 

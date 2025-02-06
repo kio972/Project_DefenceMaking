@@ -23,7 +23,7 @@ public class DebugTool : MonoBehaviour
         int index = DataManager.Instance.deckListIndex[targetCardId];
         if (index == -1)
             return;
-        GameManager.Instance.cardDeckController?.AddCard(index);
+        //GameManager.Instance.cardDeckController?.AddCard(index);
         GameManager.Instance.cardDeckController?.DrawCard(index);
     }
 
