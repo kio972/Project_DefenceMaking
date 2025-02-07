@@ -18,6 +18,7 @@ public class GoToGameScene : MonoBehaviour
 
     private async UniTaskVoid Start()
     {
+        AudioManager.Instance.StopBGM(5000);
         float waitTime = Time.time;
         await UniTask.WaitUntil(() => !SceneController.Instance.SceneChanging);
         waitTime -= Time.time;

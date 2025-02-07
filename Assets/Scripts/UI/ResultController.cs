@@ -19,6 +19,11 @@ public class ResultController : MonoBehaviour
     [SerializeField]
     private MoveSceneBtn titleBtn;
 
+    [SerializeField]
+    private AK.Wwise.Event winSound;
+    [SerializeField]
+    private AK.Wwise.Event defeatSound;
+
     private void TitleBtnOn()
     {
         titleBtn.gameObject.SetActive(true);
@@ -59,7 +64,8 @@ public class ResultController : MonoBehaviour
             UtilHelper.IColorEffect(fade.transform, Color.clear, new Color(0, 0, 0, 0.9f), 2f).Forget();
             victory.gameObject.SetActive(true);
             defeat.gameObject.SetActive(false);
-            AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
+            //AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
+            winSound?.Post(gameObject);
             await UniTask.WaitForSeconds(4);
             SceneController.Instance.MoveScene("DemoEnd");
             return;
@@ -72,7 +78,8 @@ public class ResultController : MonoBehaviour
         FadeOn();
         victory.gameObject.SetActive(true);
         defeat.gameObject.SetActive(false);
-        AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
+        winSound?.Post(gameObject);
     }
 
     public async UniTaskVoid GameDefeat()
@@ -96,6 +103,7 @@ public class ResultController : MonoBehaviour
         FadeOn();
         victory.gameObject.SetActive(false);
         defeat.gameObject.SetActive(true);
-        AudioManager.Instance.Play2DSound("Defeat_icon_01", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Defeat_icon_01", SettingManager.Instance._FxVolume);
+        defeatSound?.Post(gameObject);
     }
 }

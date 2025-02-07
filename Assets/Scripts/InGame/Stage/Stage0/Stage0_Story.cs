@@ -44,6 +44,12 @@ public class Stage0_Story : MonoBehaviour
 
     [SerializeField]
     private EventSystem eventSystem;
+
+    [SerializeField]
+    private AK.Wwise.Event ambience;
+    [SerializeField]
+    private AK.Wwise.Event bgmSound;
+
     private bool LockDestroyTile(ITileKind tileKind)
     {
         if(tileKind is Tile tile)
@@ -104,6 +110,7 @@ public class Stage0_Story : MonoBehaviour
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
+        ambience?.Post(gameObject);
         if (SaveManager.Instance.playerData != null)
         {
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
@@ -115,6 +122,7 @@ public class Stage0_Story : MonoBehaviour
             //ShopUIQuestCheck().Forget();
             CardSelecttionCheck().Forget();
             NodeManager.Instance.AddSetTileEvent(LockDestroyTile);
+            AudioManager.Instance.PlayBackground(bgmSound);
             return;
         }
 
@@ -165,6 +173,7 @@ public class Stage0_Story : MonoBehaviour
         //    GameManager.Instance.cardDeckController.AddCard(room1);
         //GameManager.Instance.cardDeckController.AddCard(room2);
 
+        AudioManager.Instance.PlayBackground(bgmSound);
 
         await UniTask.WaitForSeconds(2.5f, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto0);

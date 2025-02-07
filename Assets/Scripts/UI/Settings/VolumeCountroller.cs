@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class BgmController : SliderWithText
+
+
+public class VolumeCountroller : SliderWithText
 {
+    [SerializeField]
+    private VolumeType targetType;
+
     public override void OnValueChange()
     {
         base.OnValueChange();
@@ -12,15 +16,14 @@ public class BgmController : SliderWithText
         if (slider == null)
             return;
 
-        SettingManager.Instance.bgmVolume = slider.value;
-        AudioManager.Instance.UpdateMusicVolume(SettingManager.Instance._BGMVolume);
+        SettingManager.Instance.SetVolume(targetType, slider.value);
         SaveManager.Instance.SaveSettingData();
     }
 
     protected override void Awake()
     {
         if (slider != null)
-            slider.value = SettingManager.Instance.bgmVolume;
+            slider.value = SettingManager.Instance.GetVolume(targetType);
         base.Awake();
     }
 }

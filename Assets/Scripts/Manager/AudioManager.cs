@@ -62,6 +62,12 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    public void ChangeVolume(string RTPC_Name, float value)
+    {
+        AkSoundEngine.SetRTPCValue(RTPC_Name, value * 100f);
+    }
+
+
     public void UpdateMusicVolume(float volume)
     {
         background.volume = volume;
@@ -73,6 +79,24 @@ public class AudioManager : Singleton<AudioManager>
         {
             effect.volume = volume;
         }
+    }
+
+    private string curBGMEventID = null;
+
+    public void StopBGM(int fadeTileMilliSec = 500)
+    {
+        if (!string.IsNullOrEmpty(curBGMEventID))
+        {
+            AkSoundEngine.ExecuteActionOnEvent(curBGMEventID, AkActionOnEventType.AkActionOnEventType_Stop, gameObject, fadeTileMilliSec /* π–∏Æ√  */, AkCurveInterpolation.AkCurveInterpolation_Exp1);
+            curBGMEventID = null;
+        }
+    }
+
+    public void PlayBackground(AK.Wwise.Event soundClip, int fadeTileMilliSec = 500)
+    {
+        StopBGM(fadeTileMilliSec);
+        soundClip.Post(gameObject);
+        curBGMEventID = soundClip.Name;
     }
 
     public void PlayBackground(string name, float voulme = 1.0f)

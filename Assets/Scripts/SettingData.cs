@@ -8,6 +8,7 @@ public class SettingData
     public float volume_Bgm = 1f;
     public float volume_Fxs = 1f;
     public float volume_UI = 1f;
+    public float volume_Amb = 1f;
     public bool muteOnBackground = false;
 
     public bool fullScreen = true;
@@ -15,7 +16,7 @@ public class SettingData
     public bool fpsLimit = false;
     public int screenSizeIndex = 0;
     public float mouseSensitivity = 1f;
-    public int language = 0;
+    public int language = 1;
     public int autoPlay = 0;
 
     public int key_Camera_MoveUp = 119;

@@ -49,6 +49,15 @@ public enum ControlKey
     key_Draw,
 }
 
+public enum VolumeType
+{
+    Master,
+    BGM,
+    SFX,
+    UI,
+    Ambience,
+}
+
 public class BindKey
 {
     private ControlKey controlKey;
@@ -180,15 +189,62 @@ public class SettingManager : Singleton<SettingManager>
     #endregion
 
     #region AudioSetting
-    public float masterVolume = 1f;
-    public float bgmVolume = 1f;
-    public float fxVolume = 1f;
-    public float uiVolume = 1f;
+    private float masterVolume = 1f;
+    private float bgmVolume = 1f;
+    private float fxVolume = 1f;
+    private float uiVolume = 1f;
+    private float ambienceVolume = 1f;
     public bool muteOnBackground = false;
 
     public float _BGMVolume { get { return bgmVolume * masterVolume; } }
     public float _FxVolume { get { return fxVolume * masterVolume; } }
     public float _UIVolume { get { return uiVolume * masterVolume; } }
+
+    public float GetVolume(VolumeType volumeType)
+    {
+        switch(volumeType)
+        {
+            case VolumeType.Master:
+                return masterVolume;
+            case VolumeType.BGM:
+                return bgmVolume;
+            case VolumeType.SFX:
+                return fxVolume;
+            case VolumeType.UI:
+                return uiVolume;
+            case VolumeType.Ambience:
+                return ambienceVolume;
+        }
+
+        return 0;
+    }
+
+    public void SetVolume(VolumeType volumeType, float value)
+    {
+        switch (volumeType)
+        {
+            case VolumeType.Master:
+                masterVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_Master", value);
+                break;
+            case VolumeType.BGM:
+                bgmVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_BGM", value);
+                break;
+            case VolumeType.SFX:
+                fxVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_SFX", value);
+                break;
+            case VolumeType.UI:
+                uiVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_UI", value);
+                break;
+            case VolumeType.Ambience:
+                ambienceVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_Ambience", value);
+                break;
+        }
+    }
 
     #endregion
 

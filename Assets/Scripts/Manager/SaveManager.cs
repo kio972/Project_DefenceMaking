@@ -131,10 +131,16 @@ public class SaveManager : Singleton<SaveManager>
     public void LoadSettingData()
     {
         settingData = LoadData<SettingData>(settingDataFileName);
-        SettingManager.Instance.masterVolume = settingData.volume_Master;
-        SettingManager.Instance.bgmVolume = settingData.volume_Bgm;
-        SettingManager.Instance.fxVolume = settingData.volume_Fxs;
-        SettingManager.Instance.uiVolume = settingData.volume_UI;
+        //SettingManager.Instance.masterVolume = settingData.volume_Master;
+        //SettingManager.Instance.bgmVolume = settingData.volume_Bgm;
+        //SettingManager.Instance.fxVolume = settingData.volume_Fxs;
+        //SettingManager.Instance.uiVolume = settingData.volume_UI;
+        SettingManager.Instance.SetVolume(VolumeType.Master, settingData.volume_Master);
+        SettingManager.Instance.SetVolume(VolumeType.BGM, settingData.volume_Bgm);
+        SettingManager.Instance.SetVolume(VolumeType.SFX, settingData.volume_Fxs);
+        SettingManager.Instance.SetVolume(VolumeType.UI, settingData.volume_UI);
+        SettingManager.Instance.SetVolume(VolumeType.Ambience, settingData.volume_Amb);
+
         SettingManager.Instance.muteOnBackground = settingData.muteOnBackground;
 
         SettingManager.Instance.screen_FullSize = settingData.fullScreen;
@@ -164,10 +170,11 @@ public class SaveManager : Singleton<SaveManager>
 
     public void SaveSettingData()
     {
-        settingData.volume_Master = SettingManager.Instance.masterVolume;
-        settingData.volume_Bgm = SettingManager.Instance.bgmVolume;
-        settingData.volume_Fxs = SettingManager.Instance.fxVolume;
-        settingData.volume_UI = SettingManager.Instance.uiVolume;
+        settingData.volume_Master = SettingManager.Instance.GetVolume(VolumeType.Master);
+        settingData.volume_Bgm = SettingManager.Instance.GetVolume(VolumeType.BGM);
+        settingData.volume_Fxs = SettingManager.Instance.GetVolume(VolumeType.SFX);
+        settingData.volume_UI = SettingManager.Instance.GetVolume(VolumeType.UI);
+        settingData.volume_Amb = SettingManager.Instance.GetVolume(VolumeType.Ambience);
         settingData.muteOnBackground = SettingManager.Instance.muteOnBackground;
 
         settingData.fullScreen = SettingManager.Instance.screen_FullSize;

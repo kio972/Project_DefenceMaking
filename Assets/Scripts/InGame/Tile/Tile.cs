@@ -601,6 +601,8 @@ public class Tile : MonoBehaviour, ITileKind
     {
         while (!curNode.IsConnected(pathDirection, roomDirection) || HasEnvironmentTileInNeighbors(curNode, pathDirection) || HasEnvironmentTileInNeighbors(curNode, roomDirection))
             RotateTile(isReversed);
+
+        rotateSound?.Post(gameObject);
     }
 
     public void RotateToNext(TileNode curNode, bool isReversed = false)
@@ -627,7 +629,6 @@ public class Tile : MonoBehaviour, ITileKind
                 if (curNode != null && curNode.setAvail)
                 {
                     twin.AutoRotate(curNode);
-                    rotateSound?.Post(gameObject);
                     //AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 }
             }

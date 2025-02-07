@@ -12,6 +12,15 @@ public class DanStage : MonoBehaviour
     [SerializeField]
     List<GameObject> managementBtns;
 
+    [SerializeField]
+    AK.Wwise.Event ambient;
+    [SerializeField]
+    AK.Wwise.Event bgmSound;
+    [SerializeField]
+    AK.Wwise.Event battleSound;
+    [SerializeField]
+    AK.Wwise.Event battleSound2;
+
     private async UniTaskVoid CheckHerbInformer()
     {
         if (QuestManager.Instance.IsQuestEnded("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1)
@@ -41,10 +50,13 @@ public class DanStage : MonoBehaviour
         foreach(var btn in managementBtns)
             btn.SetActive(true);
         CheckHerbInformer().Forget();
+
+        AudioManager.Instance.PlayBackground(bgmSound);
     }
 
     void Start()
     {
+        ambient?.Post(gameObject);
         if (SaveManager.Instance.playerData == null)
             StartCoroutine(ITutorial());
         else
@@ -53,6 +65,7 @@ public class DanStage : MonoBehaviour
             CheckHerbInformer().Forget();
             foreach (var btn in managementBtns)
                 btn.SetActive(true);
+            AudioManager.Instance.PlayBackground(bgmSound);
         }
     }
 }

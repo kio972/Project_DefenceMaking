@@ -889,6 +889,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 93818703e4af04345af919b85697d0e5, type: 3}
   volume: 1
+  bgmEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!4 &887567699
 Transform:
   m_ObjectHideFlags: 0
@@ -1056,6 +1060,22 @@ MonoBehaviour:
   - {fileID: 1866793128}
   - {fileID: 1866793127}
   - {fileID: 1866793126}
+  ambient:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 4d59934cec6894437a29d925112916f8, type: 2}
+  bgmSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 1112357dcd6842140a2bd217e443a228, type: 2}
+  battleSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 196ac3fbd0c2ad04e8694fc884a018c2, type: 2}
+  battleSound2:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 2feaea3f25e3478428a83fec501d187a, type: 2}
 --- !u!114 &998226390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,8 +1119,6 @@ GameObject:
   - component: {fileID: 1061391396}
   - component: {fileID: 1061391395}
   - component: {fileID: 1061391394}
-  - component: {fileID: 1061391393}
-  - component: {fileID: 1061391392}
   m_Layer: 0
   m_Name: WwiseGlobal
   m_TagString: Untagged
@@ -1108,58 +1126,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1061391392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061391391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6bc24bc6834e43208474e0240fee603, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerList: f7e1664c
-  useOtherObject: 0
-  actionOnEventType: 0
-  curveInterpolation: 4
-  enableActionOnEvent: 0
-  data:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 4d59934cec6894437a29d925112916f8, type: 2}
-  useCallbacks: 0
-  Callbacks: []
-  playingId: 0
-  soundEmitterObject: {fileID: 0}
-  transitionDuration: 0
-  eventIdInternal: 0
-  valueGuidInternal: 
-  m_callbackDataInternal: {fileID: 0}
---- !u!114 &1061391393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061391391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04b0c98fafde9448ba6128bcd6f8a208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_listeners:
-    initialListenerList: []
-    useDefaultListeners: 1
-  isEnvironmentAware: 1
-  isStaticObject: 0
-  m_positionOffsetData:
-    KeepMe: 0
-    positionOffset: {x: 0, y: 0, z: 0}
-  scalingFactor: 1
-  m_posOffsetData: {fileID: 0}
-  listenerMask: 1
 --- !u!114 &1061391394
 MonoBehaviour:
   m_ObjectHideFlags: 0

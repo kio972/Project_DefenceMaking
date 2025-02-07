@@ -201,7 +201,7 @@ public class CardFramework : MonoBehaviour
                 if(tile != null)
                 {
                     tile.AutoRotate(curNode);
-                    AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
+                    //AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 }
             }
         }
