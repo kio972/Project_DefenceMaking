@@ -41,6 +41,7 @@ ui_settings_mastervolume,마스터,Mater Volume
 ui_settings_bgmvolume,배경음,Music Volume
 ui_settings_fxvolume,효과음,Effects Volume
 ui_settings_uivolume,UI조작,UI Volume
+ui_settings_ambvolume,환경음,Ambience Volume
 ui_settings_backgroundmute,최소화 시 음소거,Mute while in background
 ui_settings_shortcutUI,카드 단축키 표시,Show Card Shortcuts
 ui_settings_guide,가이드,Guide
@@ -101,7 +102,7 @@ card_0_room1,통로가 한 곳 밖에 없는 작은방,Small room with one exit
 card_1_room1,마력을 2까지 사용하여 몬스터 생산지 설치가 가능하다.,Mana capacity : 2
 card_0_room2,직선 통로가 뚫린 작은방,Small room with straight path
 card_0_room3,꺾인 통로가 뚫린 작은방,Small room with curved path
-card_0_room4,심하게 꺾인 통로가 뚫린 작은방,Small room with heavily twisted path
+card_0_room4,심하게 꺾인 통로가 뚫린 작은방,Small room with twisted path
 card_0_room_parts1,한칸짜리 방,Single Room
 card_1_room_parts1,"방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
 마력 1을 사용 가능하게 해준다.","You can add room parts to create larger room
@@ -546,7 +547,7 @@ tooltip_room002_0,직선 통로가 뚫린 작은방,Small room with straight pat
 tooltip_room002_1,마력을 2까지 사용하여 몬스터 생산지 설치가 가능하다.,Mana capacity : 2
 tooltip_room003_0,꺾인 통로가 뚫린 작은방,Small room with curved path
 tooltip_room003_1,마력을 2까지 사용하여 몬스터 생산지 설치가 가능하다.,Mana capacity : 2
-tooltip_room004_0,심하게 꺾인 통로가 뚫린 작은방,Small room with heavily twisted path
+tooltip_room004_0,심하게 꺾인 통로가 뚫린 작은방,Small room with twisted path
 tooltip_room004_1,마력을 2까지 사용하여 몬스터 생산지 설치가 가능하다.,Mana capacity : 2
 tooltip_room005_0,한칸짜리 방,Single Room
 tooltip_room005_1,"방 타일끼리 이어 붙혀서 큰 방을 만들 수 있다.
@@ -1116,13 +1117,13 @@ q_m1002_1,"소인, 감복했습니다.
 
 150년간 숨만 쉬셨던 분께서, 드디어 본분을 다하신다니...
 
-시작이 반이라더니, 정말로 그렇지 않습니까?
+시작이 반이다. 정말로 그렇지 않습니까?
 
 소인, 감히 요청컨데, 더욱 일에 힘써 주시길 기대하겠습니다.","My lord, I am impressed.
 
 A Demon who did nothing but breathing for 150 years -  is now doing his part.
 
-Beginning was the hardest part, wasn't it?
+Well begun is half done. wasn't it?
 
 I dare expect you, M'lord, to work harder."
 q_m1002_2,"음, 알겠다...","Hmm, I see..."
@@ -1203,7 +1204,7 @@ q_m2004_1,"「전하. 정보에 의하면 48시간 이내에 도적이 침입한
 
 「함정이나 은신을 식별하는 몬스터를 배치하여 대비하시옵소서.」
 
-「또한 시작 타일 위에서 침입하는 적들의 정보를 미리 살펴 볼 수 있나이다.」","「Your Lord, intelligence indicates that rogues will invade within 48 hours.」
+「또한 시작 타일 위에서 침입하는 적들의 정보를 미리 살펴 볼 수 있나이다.」","「My Lord, information indicates that rogues will invade within 48 hours.」
 
 「Unlike warriors and archers, they utilize stealth to sneak in.」
 
@@ -1211,12 +1212,12 @@ q_m2004_1,"「전하. 정보에 의하면 48시간 이내에 도적이 침입한
 
 「You can also preview information about the invading enemy on the starting tile.」"
 q_m2004_2,도적놈들을 막아라!,Stop the bandits!
-q_m2012_0,이거라도 가져가세요,Take this instead!
+q_m2012_0,이거라도 가져가세요,Take this instead
 q_m2012_1,"「전하. 마계 상회에서 밀린 이자를 갚으라 독촉하고 있사옵니다.」
 
 「하여 500골드 대신 던전에 설치한 타일 일부로 빚을 상환해야합니다.」
 
-「다음은 전하의 침대를 매물로 내놓아야 할 수도 있사오니 주의해주십시오.」","「Your Lord. The guild is demanding you to pay the interest on your debt.」
+「다음은 전하의 침대를 매물로 내놓아야 할 수도 있사오니 주의해주십시오.」","「My Lord. The guild is demanding you to pay the interest on your debt.」
 
 「Instead of gold, you must dispose some of the tiles you installed in the dungeon.」
 
@@ -1233,7 +1234,7 @@ q_m2014_1,"「전하, 많은 몬스터를 거느리고 계시군요.」
 
 「And some dare questions your leadership and authority.」
 
-「Your Lord. It's time to show your dignity」
+「My Lord. It's time to show your dignity」
 
 「Let them know who rules them .」"
 q_m2014_2,"그렇다면 보아라, 과인의 힘을!","Behold my power, then"
@@ -1244,7 +1245,7 @@ q_m2009_1,"「새로운 정보입니다.」
 
 「함정으로는 놈들을 막을 수 없을 겁니다.」
 
-「은신을 식별하는 몬스터나 능력으로 대비하시옵소서.」","「New intelligence has arrived.」
+「은신을 식별하는 몬스터나 능력으로 대비하시옵소서.」","「New information has arrived.」
 
 「Rogues invading within 48 hours are highly trained.」
 
@@ -1252,7 +1253,7 @@ q_m2009_1,"「새로운 정보입니다.」
 
 「Be prepared with monsters or abilities which can detect them.」"
 q_m2009_2,또 도적이야?,Rogues again?
-q_m2003_0,안녕하세요. 마계상회입니다.,"Hello, this is demon merchant guild"
+q_m2003_0,안녕하세요. 마계상회입니다.,"Hello, this is demonic merchant guild"
 q_m2003_1,"『늘 마계 상회를 이용해 주셔서 감사합니다.』
 
 『본 상회는 언제나 최선의 서비스를 제공드리고 있습니다.』
@@ -1281,7 +1282,7 @@ It's annoying...
 
 
 I won't move a inch..."
-q_m2008_2,침대 속이 제일 행복해,"Happiness O' mine, my bed."
+q_m2008_2,침대 속이 제일 행복해,Bed is the happiest place
 q_m2010_0,이 방은 생각보다 넓은데,This room is bigger than I thought.
 q_m2010_1,"전하,방이 커질수록 몬스터들의 만족도가 높아진다더군요.
 
@@ -1297,7 +1298,7 @@ So, we'll spare your unused rooms to expand rooms for your troops.
 
 Thank you for your kindness and cooperation."
 q_m2010_2,타일 5개 정도면 괜찮겠지...,A room made of 5 tiles would be enough
-q_m2011_0,안녕하세요. 마계상회입니다.,The guild send it's regards.
+q_m2011_0,안녕하세요. 마계상회입니다.,"Hello, this is demonic merchant guild"
 q_m2011_1,"『마계 상회를 이용해주심에 다시 한번 감사합니다.』
 
 『전하의 깊은 관심에 힘입어 신상품을 상점에서 판매중입니다.』
@@ -1308,7 +1309,7 @@ q_m2011_1,"『마계 상회를 이용해주심에 다시 한번 감사합니다.
 
 『We wish your best luck, looking forward to our continued partnership.』"
 q_m2011_2,진짜 마지막으로 사겠다!,I'll buy it last!
-q_m2013_0,마왕의 응원,Demonic Encouragement
+q_m2013_0,마왕의 응원,Lord Encouragement
 q_m2013_1,"가라, 나의 하수인들아.
 
 내 휴식을 방해하는 놈들에게 천벌을!
@@ -1334,7 +1335,7 @@ I'll take him down and rest!  After resting for 150 years,
 
 my body is rejecting this hard work and dilligence.
 
-If he falls, the rest will simply run ayay, I assume.
+If he falls, the rest will simply run away, I assume.
 
 Go, my minions!"
 q_m2006_2,저 대머리를 막아라!,Stop that bald head!
@@ -1343,7 +1344,7 @@ q_m2002_1,"「마력이 풍부한 던전에서는 독자적인 식생이 발달�
 
 「그 중에서 <sprite name=""Herb1"">, <sprite name=""Herb2"">, <sprite name=""Herb3"">약초는 귀중한 자원으로써 연구 자원으로 사용됩니다.」
 
-「약초는 텃밭과 생산지 타일을 통해 획득 가능합니다.」","「Dungeonsr develop their own unique vegetation with plentiful flow of mana」
+「약초는 텃밭과 생산지 타일을 통해 획득 가능합니다.」","「Dungeon develop their own unique vegetation with plentiful flow of mana」
 
 「Among them, <sprite name=""Herb1"">, <sprite name=""Herb2"">, and <sprite name=""Herb3"">herbs are valuable resources and are used for research.」
 
@@ -1452,7 +1453,7 @@ q2001_2,"휠 클릭&드래그 or W,A,S,D 키 1회 조작","Click & drag the whee
 q2021_0,상환 아이템 구매,Purchase repayment item
 q2021_1,상환 아이템 구매하기,Purchase repayment item
 q2021_2,상환 아이템 1회 구매,Purchase 1 repayment item at the store
-q2005_0,안녕하세요. 마계상회입니다.,"Hello, this is demon merchant guild"
+q2005_0,안녕하세요. 마계상회입니다.,Hello. This is Demonic merchant guild
 q2005_1,아이템 구매하기(상환 아이템 제외),Purchase an Item (except Repayment Items)
 q2005_2,제한시간 내에 상점에서 아이템 1개 구매(상환 아이템 제외),Purchase 1 item from the shop until quest expires(except Repayment Items)
 q2004_0,주의해야할 적,Dangerous enemy
@@ -1472,14 +1473,14 @@ q2003_1,상점에서 카드 팩 구매,Buy any card pack in the store
 q2003_2,제한시간 내에 상점에서 아무 카드 팩 구매,Buy any card pack at the store before quest expires
 q2008_0,체통 지키기,Stand your ground
 q2008_1,이번 라운드 마왕방 타일 이동금지,Do not move Demon tile in this round
-q2008_2,제한시간 동안 마왕방 타일 이동하지 않기,Do not move the Demon tile in this round
+q2008_2,제한시간 동안 마왕방 타일 이동하지 않기,Do not move Demon tile in this round
 q2010_0,이 방은 생각보다 넓은데,This room is bigger than I thought.
 q2010_1,방 타일 5개를 조합하여 방 완성,Complete a room with 5 Room tiles
 q2010_2,5개 이상의 조합방 타일을 사용하여 방 완성,Use 5 or more room tiles to complete a room
 q2011_0,안녕하세요. 마계상회입니다.,Hello. This is Demonic merchant guild
 q2011_1,상점에서 카드 팩 구매,Buy any card pack in the store
 q2011_2,제한시간 내에 상점에서 아무 카드 팩 구매,Buy any card pack at the store before quest expires
-q2013_0,마왕의 격려,Demonic Encouragement
+q2013_0,마왕의 격려,Lord Encouragement
 q2013_1,마왕의 지도력' 버프 부여,Grant the 'Demonic charisma' Buff to allies
 q2013_2,30마리의 몬스터에게 '마왕의 지도력' 버프 부여,Grant 'Demonic Charisma' buff to 30 monsters
 q2006_0,우두머리의 침입,Boss Invasion
@@ -1493,7 +1494,7 @@ q2015_1,스포너 교체,Replace a monster spawner
 q2015_2,몬스터 스포너 1개 제거 후 새로 배치하기,Remove 1 Monster Spawner and place a new one
 q2016_0,가만히계세요,Stay still
 q2016_1,시작 타일과 마왕 타일 연결하기,Link Start Tile with Demon Tile
-q2016_2,시작 타일과 마왕 타일 연결하기,Link start tile with Demon Tile
+q2016_2,시작 타일과 마왕 타일 연결하기,Link Start Tile with Demon Tile
 q2017_0,이 곳에 비밀은 없다.,No more secrets
 q2017_1,비밀 타일을 밝혀내라,Uncover the Secret Tile
 q2017_2,3개의 비밀 타일 밝혀내기,Reveal 3 Secret Tiles
@@ -1593,9 +1594,9 @@ guide012_1,"중독 : 지속시간 동안 중첩 가능한 피해를 입힌다.
 유혹 : 유혹에 빠진 개체의 목적지는 시전자가 된다.
 경직 : 일시적으로 행동이 멈춘다.
 넉백 : 상대방을 반대방향으로 밀어낸다.
-은신 : 상대방에 인식 되지 않아 전투를 치르지 않는다.","Poison: Deals stackable damage over time
-Bleeding: Deals stackable damage over time
-Charm: The affected unit moves toward the caster
-Stun: Temporarily stops movement and actions
-Knockback: Pushes the target backward
-Stealth: Prevents the unit from being detected or engaging in combat"
+은신 : 상대방에 인식 되지 않아 전투를 치르지 않는다.","Poison : Deals stackable damage over time
+Bleeding : Deals stackable damage over time
+Charm : The affected unit moves toward the caster
+Stun : Temporarily stops movement and actions
+Knockback : Pushes the target backward
+Stealth : Prevents the unit from being detected or engaging in combat"
