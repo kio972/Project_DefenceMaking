@@ -35,6 +35,9 @@ public class CardSelection : MonoBehaviour
 
     bool isSelectingNow = false;
 
+    [SerializeField]
+    AK.Wwise.Event selectSound;
+
     private void DeActive()
     {
         gameObject.SetActive(false);
@@ -50,9 +53,9 @@ public class CardSelection : MonoBehaviour
             return;
 
         foreach (var item in dissolves)
-            item.isDisappare = true;
-        foreach (var item in dissolves)
             item.isAppare = false;
+        foreach (var item in dissolves)
+            item.isDisappare = true;
         int index = curSelectIndex[i];
         if (index != -1)
         {
@@ -63,14 +66,20 @@ public class CardSelection : MonoBehaviour
                 GameManager.Instance.cardDeckController.RemoveCard(index);
 
             dissolves[i].isDisappare = false;
+            if(i == 2)
+                dissolves[3].isDisappare = false;
         }
-        else
+        else //skip을선택함
+        {
+            dissolves[2].isDisappare = false;
             dissolves[3].isDisappare = false;
+        }
 
         isSelectingNow = false;
         //gameObject.SetActive(false);
         Animator animator = GetComponent<Animator>();
         animator?.SetTrigger("End");
+        selectSound?.Post(gameObject);
     }
 
     private TileType GetRandomCardType()

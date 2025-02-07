@@ -104,13 +104,14 @@ public class Quest2002 : Quest
 
 public class Quest2003 : Quest
 {
-    //Ä«µåÆÑ ±¸¸Å Äù½ºÆ®
     private bool isInit = false;
 
     private void CheckBuyCardPack(Item item)
     {
-        if (item is CardPack)
-            curClearNum[0]++;
+        if (item is DebtRepay)
+            return;
+
+        curClearNum[0]++;
     }
 
     public override void CheckCondition()
@@ -149,18 +150,14 @@ public class Quest2004 : QuestKillBattler
 
 public class Quest2005 : Quest
 {
-    //È¯°æÅ¸ÀÏ Ä«µåÆÑ ±¸¸Å Äù½ºÆ®
     private bool isInit = false;
 
     private void CheckBuyCardPack(Item item)
     {
-        if (item is CardPack pack)
-        {
-            if(pack.cardType == CardPackType.Environment)
-            {
-                curClearNum[0]++;
-            }
-        }
+        if (item is DebtRepay)
+            return;
+
+        curClearNum[0]++;
     }
 
     public override void CheckCondition()
@@ -272,13 +269,14 @@ public class Quest2010 : Quest
 
 public class Quest2011 : Quest
 {
-    //Ä«µåÆÑ ±¸¸Å Äù½ºÆ®
     private bool isInit = false;
 
     private void CheckBuyCardPack(Item item)
     {
-        if (item is CardPack)
-            curClearNum[0]++;
+        if (item is DebtRepay)
+            return;
+
+        curClearNum[0]++;
     }
 
     public override void CheckCondition()

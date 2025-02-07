@@ -19,6 +19,11 @@ public class LanguageManager : Singleton<LanguageManager>
         }
     }
 
+    public void RemoveLanguageAction(Action action)
+    {
+        languageActions.Remove(action);
+    }
+
     public void AddLanguageAction(Action action)
     {
         languageActions.Add(action);
@@ -33,7 +38,7 @@ public class LanguageManager : Singleton<LanguageManager>
     private void Init()
     {
         InitLanguageActions();
-        SettingManager.Instance._language.Subscribe(_ => ChangeLanguage());
+        SettingManager.Instance._language.Subscribe(_ => ChangeLanguage()).AddTo(gameObject);
     }
 
     private void Update()

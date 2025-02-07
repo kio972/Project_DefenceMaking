@@ -102,7 +102,7 @@ public class Stage0_Story : MonoBehaviour
         await UniTask.WaitUntil(() => cardSelection.gameObject.activeInHierarchy, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         eventSystem.enabled = false;
 
-        await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitForSeconds(2, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto12);
         eventSystem.enabled = true;
     }

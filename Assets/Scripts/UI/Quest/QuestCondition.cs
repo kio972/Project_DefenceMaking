@@ -36,6 +36,25 @@ public class QuestCondition_m2002 : QuestCondition
             if(DataManager.Instance.herbCard_Indexs.Contains(index))
                 return true;
         }
+
+        if (GameManager.Instance.herbDic[HerbType.BlackHerb] > 0 || GameManager.Instance.herbDic[HerbType.WhiteHerb] > 0 || GameManager.Instance.herbDic[HerbType.PurpleHerb] > 0)
+            return true;
+
+        return false;
+    }
+}
+
+public class QuestCondition_m2006 : QuestCondition
+{
+    DanStage stage = null;
+    public override bool IsConditionPassed()
+    {
+        if(stage == null)
+            stage = MonoBehaviour.FindObjectOfType<DanStage>();
+
+        if (stage.bossEntered)
+            return true;
+
         return false;
     }
 }

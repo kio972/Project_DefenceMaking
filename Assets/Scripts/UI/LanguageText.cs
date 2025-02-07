@@ -120,9 +120,11 @@ public class LanguageText : MonoBehaviour, ILanguageChange
     private void Start()
     {
         ChangeLangauge(SettingManager.Instance.language);
-        LanguageManager.Instance.AddLanguageAction(() =>
-        {
-            ChangeLangauge(SettingManager.Instance.language);
-        });
+        LanguageManager.Instance.AddLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
+    }
+
+    private void OnDestroy()
+    {
+        LanguageManager.Instance.RemoveLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
     }
 }

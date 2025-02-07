@@ -18,7 +18,7 @@ public class EmergencyEscape : ISkill, IHaveCost
     public ReactiveProperty<bool> isReady { get; } = new ReactiveProperty<bool>(false);
 
     private int _cost = 5;
-    public int cost { get => cost; }
+    public int cost { get => _cost; }
     public string costType { get => "Hp"; }
 
     public void ReduceHpCost(int value)

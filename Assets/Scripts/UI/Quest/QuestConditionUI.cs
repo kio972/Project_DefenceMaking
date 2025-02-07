@@ -35,6 +35,7 @@ public class QuestConditionUI : MonoBehaviour
         if(checkBox != null)
             checkBox.SetActive(false);
         isClear = false;
+        SetText();
     }
 
     void Update()

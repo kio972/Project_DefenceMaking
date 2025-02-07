@@ -21,6 +21,25 @@ public class DanStage : MonoBehaviour
     [SerializeField]
     AK.Wwise.Event battleSound2;
 
+    public bool bossEntered = false;
+
+    private async UniTaskVoid CheckBossEnter()
+    {
+        if (QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2006").Count() >= 1)
+            return;
+
+        await UniTask.WaitUntil(() => GameManager.Instance.CurWave >= 29, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+        StoryManager.Instance.EnqueueScript("Dan001");
+
+        await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        bossEntered = true;
+
+        AudioManager.Instance.PlayBackground(battleSound);
+        await UniTask.WaitUntil(() => QuestManager.Instance.IsQuestCleared("q2006"), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        AudioManager.Instance.PlayBackground(bgmSound);
+    }
+
     private async UniTaskVoid CheckHerbInformer()
     {
         if (QuestManager.Instance.IsQuestEnded("q2002") || QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2002").Count() >= 1)
@@ -50,6 +69,7 @@ public class DanStage : MonoBehaviour
         foreach(var btn in managementBtns)
             btn.SetActive(true);
         CheckHerbInformer().Forget();
+        CheckBossEnter().Forget();
 
         AudioManager.Instance.PlayBackground(bgmSound);
     }
@@ -63,6 +83,7 @@ public class DanStage : MonoBehaviour
         {
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
             CheckHerbInformer().Forget();
+            CheckBossEnter().Forget();
             foreach (var btn in managementBtns)
                 btn.SetActive(true);
             AudioManager.Instance.PlayBackground(bgmSound);
