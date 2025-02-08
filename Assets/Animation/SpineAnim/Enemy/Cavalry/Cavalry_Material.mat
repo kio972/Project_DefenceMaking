@@ -10,6 +10,7 @@ Material:
   m_Name: Cavalry_Material
   m_Shader: {fileID: 4800000, guid: b77e51f117177954ea863bdb422344fb, type: 3}
   m_ValidKeywords:
+  - _DOUBLE_SIDED_LIGHTING
   - _STRAIGHT_ALPHA_INPUT
   m_InvalidKeywords:
   - _USE8NEIGHBOURHOOD_ON
@@ -29,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Cutoff: 0.1
-    - _DoubleSidedLighting: 0
+    - _DoubleSidedLighting: 1
     - _LightAffectsAdditive: 0
     - _OutlineMipLevel: 0
     - _OutlineOpaqueAlpha: 1

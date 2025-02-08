@@ -70,7 +70,9 @@ public class ShopSlotInfo : MonoBehaviour, ISlotInformer
 
     public void UpdateInfo(ItemSlot data, object additional = null)
     {
+        _curslot?.SetClicked(false);
         _curslot = data;
+        _curslot?.SetClicked(true);
 
         if(additional != null)
         {

@@ -52,6 +52,10 @@ public class DeploySlot : MonoBehaviour, ISlot
 
     Dictionary<string, object> data;
 
+    [SerializeField]
+    private GameObject clickedImg;
+
+
     private bool isUnlocked = false;
     public bool IsUnlocked
     {
@@ -63,7 +67,11 @@ public class DeploySlot : MonoBehaviour, ISlot
             return isUnlocked;
         }
     }
-
+    public void SetClicked(bool value)
+    {
+        if (clickedImg != null)
+            clickedImg.SetActive(value);
+    }
 
     private void OnEnable()
     {

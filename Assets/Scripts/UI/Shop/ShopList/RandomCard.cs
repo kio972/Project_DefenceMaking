@@ -102,6 +102,29 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem, IInfoChangeable
             GameManager.Instance.cardDeckController.RemoveCard(targetIndex);
     }
 
+    private void OnEnable()
+    {
+        if (itemSlot.IsSoldOut)
+            return;
+
+        if(!isAdd && !GameManager.Instance.cardDeckController.cardDeck.Contains(_curCard.cardIndex))
+        {
+            _curCard = GameManager.Instance.cardSelector.GetDeckRandomCard();
+            RefreshItem();
+        }
+    }
+
+    private void UpdateCard()
+    {
+        targetIndex = _curCard.cardIndex;
+        card_frame.sprite = frameSprites[GetFrameIndex(_curCard.cardType, isAdd)];
+        object target = DataManager.Instance.deck_Table[targetIndex]["text_name"];
+        targetName.Clear();
+        targetName.Append(target.ToString());
+        _ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));
+        _ItemSlot?.ForceUpdateItemInfo(Info);
+    }
+
     public void RefreshItem()
     {
         //switch (targetType)
@@ -119,12 +142,6 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem, IInfoChangeable
 
         isAdd = UnityEngine.Random.Range(0, 2) == 1;
         _curCard = isAdd ? GameManager.Instance.cardSelector.GetRandomCard() : GameManager.Instance.cardSelector.GetDeckRandomCard();
-        targetIndex = _curCard.cardIndex;
-        card_frame.sprite = frameSprites[GetFrameIndex(_curCard.cardType, isAdd)];
-        object target = DataManager.Instance.deck_Table[targetIndex]["text_name"];
-        targetName.Clear();
-        targetName.Append(target.ToString());
-        _ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));
-        _ItemSlot?.ForceUpdateItemInfo(Info);
+        UpdateCard();
     }
 }

@@ -108,6 +108,9 @@ public class ItemSlot : FluctItem, ISlot
     public int curStockCount { get => _curStockCount; }
 
     [SerializeField]
+    private GameObject clickedImg;
+
+    [SerializeField]
     private AK.Wwise.Event refusedSound;
     [SerializeField]
     private AK.Wwise.Event excutedSound;
@@ -127,6 +130,12 @@ public class ItemSlot : FluctItem, ISlot
     public void ForceUpdateItemInfo(ItemInfo info)
     {
         this.itemInfo = info;
+    }
+
+    public void SetClicked(bool value)
+    {
+        if(clickedImg != null)
+            clickedImg.SetActive(value);
     }
 
     public void OnClick()

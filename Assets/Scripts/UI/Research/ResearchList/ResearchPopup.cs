@@ -98,6 +98,12 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
         researchInfos.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        if(curResearch != null)
+            SetPopUp(curResearch, icon.sprite, curResearch._CurState);
+    }
+
     public void SetPopUp(ResearchSlot researchSlot, Sprite iconSprite, ResearchState curState)
     {
         curResearch = researchSlot;

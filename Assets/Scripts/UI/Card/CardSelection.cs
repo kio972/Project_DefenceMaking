@@ -53,9 +53,10 @@ public class CardSelection : MonoBehaviour
             return;
 
         foreach (var item in dissolves)
-            item.isAppare = false;
-        foreach (var item in dissolves)
-            item.isDisappare = true;
+        {
+            if(item.gameObject.activeInHierarchy)
+                item.isDisappare = true;
+        }
         int index = curSelectIndex[i];
         if (index != -1)
         {
@@ -66,12 +67,9 @@ public class CardSelection : MonoBehaviour
                 GameManager.Instance.cardDeckController.RemoveCard(index);
 
             dissolves[i].isDisappare = false;
-            if(i == 2)
-                dissolves[3].isDisappare = false;
         }
         else //skip을선택함
         {
-            dissolves[2].isDisappare = false;
             dissolves[3].isDisappare = false;
         }
 
@@ -214,7 +212,10 @@ public class CardSelection : MonoBehaviour
         gameObject.SetActive(true);
 
         foreach (var item in dissolves)
-            item.isAppare = true;
+        {
+            if(item.gameObject.activeInHierarchy)
+                item.isAppare = true;
+        }
         isSelectingNow = true;
     }
 

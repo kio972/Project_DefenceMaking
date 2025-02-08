@@ -20,6 +20,12 @@ public class DissolveController : MonoBehaviour
 
     private Material material = null;
 
+    private void OnDisable()
+    {
+        isDisappare = false;
+        isAppare = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

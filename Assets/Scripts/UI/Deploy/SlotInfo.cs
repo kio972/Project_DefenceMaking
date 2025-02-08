@@ -41,6 +41,8 @@ public class SlotInfo : MonoBehaviour, ISlotInformer
     [SerializeField]
     private GameObject trapInfo;
 
+    [SerializeField]
+    private Button deployBtn;
 
     private DeploySlot _curSlot;
     public DeploySlot curDeploySlot { get => _curSlot; }
@@ -48,7 +50,9 @@ public class SlotInfo : MonoBehaviour, ISlotInformer
 
     public void UpdateInfo(DeploySlot data)
     {
+        _curSlot?.SetClicked(false);
         _curSlot = data;
+        _curSlot?.SetClicked(true);
         string type = "monster";
         if (data.cardType == CardType.Trap)
             type = "trap";
@@ -108,6 +112,9 @@ public class SlotInfo : MonoBehaviour, ISlotInformer
     {
         if (delpoyUI == null)
             delpoyUI = GetComponentInParent<DeployUI>();
+
+        if (deployBtn != null && !deployBtn.enabled)
+            return;
 
         delpoyUI.DeployReady(_curSlot.cardType, _curSlot.targetName, _curSlot.prefabName, _curSlot.cost);
     }

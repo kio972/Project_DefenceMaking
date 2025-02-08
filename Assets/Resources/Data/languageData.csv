@@ -172,78 +172,92 @@ card_choose_1,카드를 덱에서 1장 제거한다.,Remove 1 card from the deck
 card_choose_2,건너뛰기,Skip
 card_choose_3,카드 선택을 건너뛴다.,Skip card selection
 card_choose_4,덱 확인,My Deck
-deploy_spin_0,칼날 함정,Blade trap
-deploy_spin_1,"회전하는 칼날로 공격하는 함정 
+trap_spin,칼날 함정,Blade trap
+trap_spin_1,"회전하는 칼날로 공격하는 함정 
 내구도 : 8","Trap armed with spinning blades.
 Durability : 8"
-deploy_spear_0,창 함정,Spear Trap
-deploy_spear_1,"창이 솟아올라 공격하는 함정
+trap_spear,창 함정,Spear Trap
+trap_spear_1,"창이 솟아올라 공격하는 함정
 내구도 : 15","Trap armed with spear.
 Durability : 15"
-deploy_saw_0,톱날 함정,Saw Trap
-deploy_saw_1,"회전톱으로 공격하는 함정
+trap_saw,톱날 함정,Saw Trap
+trap_saw_1,"회전톱으로 공격하는 함정
 내구도 : 20","Trap armed with sawblade.
 Druability : 20"
-deploy_hole_0,구멍 함정,Pitfall trap
-deploy_hole_1,"구멍에 빠뜨려 공격하는 함정
+trap_hole,구멍 함정,Pitfall trap
+trap_hole_1,"구멍에 빠뜨려 공격하는 함정
 내구도 : 1","A trap that attacks by falling into a hole.
 Durability : 1"
-deploy_slime1_0,슬라임,Slime
-deploy_slime1_1,연금술 폐기물로 만든 조잡한 몬스터,Rubbish monster born from alchemy waste.
-deploy_slime2_0,독성 슬라임,Toxic Slime
-deploy_slime2_1,죽을 때 주변 적을 중독에 빠뜨린다.,Poisons nearby enemies when it falls.
-deploy_slime3_0,폭발 슬라임,Explosive Slime
-deploy_slime3_1,죽을 때 주변에 피해를 입힌다.,Deals damage to nearby enemies when it falls.
-deploy_goblin1_0,고블린 전사,Warrior Goblin
-deploy_goblin1_1,"체력이 낮아지면 도주한다.
+slime_mucus,슬라임,Slime
+slime_mucus_1,연금술 폐기물로 만든 조잡한 몬스터,Rubbish monster born from alchemy waste.
+slime_poison,독성 슬라임,Toxic Slime
+slime_poison_1,죽을 때 주변 적을 중독에 빠뜨린다.,Poisons nearby enemies when it falls.
+slime_explosion,폭발 슬라임,Explosive Slime
+slime_explosion_1,죽을 때 주변에 피해를 입힌다.,Deals damage to nearby enemies when it falls.
+goblin_warrior,고블린 전사,Warrior Goblin
+goblin_warrior_1,"체력이 낮아지면 도주한다.
 주변에 고블린 전사가 많을수록 강해진다.","When injured, it will try to run away.
 Become more stronger if other Goblin fighters are near."
-deploy_goblin2_0,고블린 정찰병,Scout Goblin
-deploy_goblin2_1,"체력이 낮아지면 도주한다.
+goblin_scout,고블린 정찰병,Scout Goblin
+goblin_scout_1,"체력이 낮아지면 도주한다.
 원거리 공격
 은신한 적 탐지","When injured, it will try to run away.
 Ranged attack.
 Can detect invisible enemies."
-deploy_goblin3_0,고블린 궁수,Archer Goblin
-deploy_goblin3_1,"체력이 낮아지면 도주한다.
+goblin_archer,고블린 궁수,Archer Goblin
+goblin_archer_1,"체력이 낮아지면 도주한다.
 원거리 공격
 공격한 적을 중독에 빠뜨린다.","When injured, it will try to run away.
 Ranged attack.
 Can poison enemies."
-deploy_golem1_0,석제 골렘,Stone Golem
-deploy_golem1_1,적의 공격에 밀려나지 않는다.,Immune to knockback.
-deploy_golem2_0,강철 골렘,Steel golem
-deploy_golem2_1,"적의 공격에 밀려나지 않는다.
+golem_stone,석제 골렘,Stone Golem
+golem_stone_1,적의 공격에 밀려나지 않는다.,Immune to knockback.
+golem_iron,강철 골렘,Steel golem
+golem_iron_1,"적의 공격에 밀려나지 않는다.
 추가 쉴드 보유","Immune to knockback.
 Armed with extra shield."
-deploy_golem3_0,흑요석 골렘,Obsidian Golem
-deploy_golem3_1,"적의 공격에 밀려나지 않는다.
+golem_obsidian,흑요석 골렘,Obsidian Golem
+golem_obsidian_1,"적의 공격에 밀려나지 않는다.
 추가 쉴드 보유
 쉴드는 파괴될 때 주변에 피해를 입힌다.","Immune to knockback.
 Armed with extra shield.
 Can damage nearby enemies when shield is destroyed."
-deploy_golem4_0,미스릴 골렘,Mithril Golem
-deploy_golem4_1,"적의 공격에 밀려나지 않는다.
+golem_mithril,미스릴 골렘,Mithril Golem
+golem_mithril_1,"적의 공격에 밀려나지 않는다.
 추가 쉴드 보유
 쉴드는 파괴 시 주변에 피해를 입힌다.
 일정 시간 후 쉴드를 재생성할 수 있다.","Immune to knockback.
 Armed with extra shield.
 Can damage nearby enemies when shield is destroyed.
 Can regenerate shield after short period."
-deploy_mimic1_0,미믹,Mimic
-deploy_mimic1_1,자신이 있는 타일로 적을 유인한다.,Can lure enemies towards Mimic.
-deploy_mimic2_0,보급상자 미믹,Supply chest Mimic
-deploy_mimic2_1,"자신이 있는 타일로 적을 유인한다.
+mimic_wood,미믹,Mimic
+mimic_wood_1,자신이 있는 타일로 적을 유인한다.,Can lure enemies towards Mimic.
+mimic_supply,보급상자 미믹,Supply chest Mimic
+mimic_supply_1,"자신이 있는 타일로 적을 유인한다.
 전투 종료 후 다시 상자로 위장한다.","Can lure enemies towards Mimic.
 Disguise into chest after combat."
-deploy_mimic3_0,보물상자 미믹,Treasure chest Mimic
-deploy_mimic3_1,"자신이 있는 타일로 적을 유인한다.
+mimic_treasure,보물상자 미믹,Treasure chest Mimic
+mimic_treasure_1,"자신이 있는 타일로 적을 유인한다.
 위장하고 있는 동안 체력을 회복한다.","Can lure enemies towards Mimic.
 When in disguise, Mimic restore its HP."
-deploy_mimic4_0,왕실 금고 미믹,Royal chest Mimic
-deploy_mimic4_1,"자신이 있는 타일로 적을 유인한다.
+mimic_royal,왕실 금고 미믹,Royal chest Mimic
+mimic_royal_1,"자신이 있는 타일로 적을 유인한다.
 위장 해제 시 적을 놀래켜 경직에 빠뜨린다.","Can lure enemies towards Mimic.
 Can terrify enemies when Mimic take off its disguise."
+undead_spear,언데드 창병,Spear Undead
+undead_spear_1,창을 든 언데드,Undead with Spears
+undead_shield,언데드 방패병,Shield Undead
+undead_shield_1,방패를 들어 튼튼한 언데드,Sturdy Undead with Shields
+undead_magician,언데드 마법사,Magician Undead
+undead_magician_1,마법을 사용할 수 있는 언데드,Undead that can use magic
+orc1,일반 오크(몽둥이),Orc normal
+orc1_1,일반 오크(몽둥이),Orc normal
+orc_rare,레어 오크(망치),Orc epic
+orc_rare_1,레어 오크(망치),Orc epic
+orc2,에픽 오크(도끼),Orc legend
+orc2_1,에픽 오크(도끼),Orc legend
+orc3,전설 오크(대검),Orc legend
+orc3_1,전설 오크(대검),
 research_slime1_0,제작 : 슬라임,Production : Slime
 research_slime1_1,슬라임 소환 가능,Can summon Slime
 research_slime2_0,인체 재활용,Man-cycling
@@ -513,12 +527,12 @@ shop_item0034_0,% 카드 1장 제거,Remove 1 % card
 shop_item0034_1,% 카드를 카드풀에서 1장 제거한다.,Remove 1 % card on card pool
 tooltip_start_0,던전 입구,Dungeon Enterance
 tooltip_start_1,"침입하는 적들은 이곳에서 등장한다.
-타일 위의 아이콘을 클릭해 침입하는 적들의 종류를 파악할 수 있다.","This is where enemies appear
-You can click the icon above this tile to search for enemy info"
+타일 위의 아이콘을 클릭해 침입하는 적들의 종류를 파악할 수 있다.","This is where enemies appear.
+You can click the icon above this tile to search for enemy info."
 tooltip_boss_0,마왕의 방,Dantallion's room
 tooltip_boss_1,"마왕의 HP가 0이 되면 패배한다.
-더블 클릭으로 이동 배치가 가능하다.","Game over when Dantallion's HP is 0
-You can move this tile by double click"
+더블 클릭으로 이동 배치가 가능하다.","Game over when Dantallion's HP is 0.
+You can move this tile by double click."
 tooltip_road001_0,직선 길,Straight Path
 tooltip_road001_1,던전의 마력을 1 증가시킨다.,Increase dungeon mana +1
 tooltip_road002_0,굽어져 있는 길,Curved Path
@@ -710,7 +724,7 @@ tooltip_swamp_1,"주변 타일의 모험가들의 이동속도를 25% 감소시�
 다른 늪 타일과 중복 작동되지 않는다.","decrease movement speed of nearby enemies
 effects do not stack "
 tooltip_manastone_0,마력석,Mana stone
-tooltip_manastone_1,주변 타일의 마력 +1,nearby maaa capacity +1
+tooltip_manastone_1,주변 타일의 마력 +1,nearby mana capacity +1
 tooltip_lonelyrock_0,외톨이 바위,Lonely Rocks
 tooltip_lonelyrock_1,"바위는 혼자일 수록 강하다.
 모든 몬스터 HP +15","A rock is stronger when it is alone.
@@ -743,36 +757,6 @@ tooltip_kingslime_0,슬라임 킹,Slime king
 tooltip_kingslime_1,"크게와 귀여움이 가장 뛰어난 슬라임
 던전 내 슬라임의 능력을 강화한다.","Long live the king!
 Can empower slimes "
-trap_spin,칼날 함정,Blade trap
-trap_spin_1,"회전하는 칼날로 공격하는 함정 
-내구도 : 8","Trap armed with spinning blades.
-Durability : 8"
-trap_spear,창 함정,Spear Trap
-trap_spear_1,"창이 솟아올라 공격하는 함정
-내구도 : 15","Trap armed with spear.
-Durability : 15"
-trap_saw,톱날 함정,Saw Trap
-trap_saw_1,"회전톱으로 공격하는 함정
-내구도 : 20","Trap armed with sawblade.
-Druability : 20"
-trap_hole,구멍 함정,Pitfall trap
-trap_hole_1,"구멍에 빠뜨려 공격하는 함정
-내구도 : 1","A trap that attacks by falling into a hole.
-Durability : 1"
-tooltip_undead1_0,언데드 창병,Spear Undead
-tooltip_undead1_1,창을 든 언데드,Undead with Spears
-tooltip_undead2_0,언데드 방패병,Shield Undead
-tooltip_undead2_1,방패를 들어 튼튼한 언데드,Sturdy Undead with Shields
-tooltip_undead3_0,언데드 마법사,Magician Undead
-tooltip_undead3_1,마법을 사용할 수 있는 언데드,Undead that can use magic
-tooltip_orc1_0,일반 오크(몽둥이),Orc normal
-tooltip_orc1_1,일반 오크(몽둥이),Orc normal
-tooltip_orc2_0,레어 오크(망치),Orc epic
-tooltip_orc2_1,레어 오크(망치),Orc epic
-tooltip_orc3_0,에픽 오크(도끼),Orc legend
-tooltip_orc3_1,에픽 오크(도끼),Orc legend
-tooltip_orc4_0,전설 오크(대검),Orc legend
-tooltip_orc4_1,전설 오크(대검),
 tooltip_spawner_slime1_0,슬라임 생산지,Slime spawner
 tooltip_spawner_slime1_1,슬라임을 생성하는 생산지,Spawner that summons slimes
 tooltip_spawner_slime2_0,독성 슬라임 생산지,Toxic Slime spawner
@@ -807,10 +791,10 @@ tooltip_spawner_orc3_0,에픽 오크(도끼) 생산지,
 tooltip_spawner_orc3_1,전설 오크를 생성하는 생산지,
 tooltip_spawner_orc4_0,전설 오크(대검) 생산지,
 tooltip_spawner_orc4_1,전설 오크를 생성하는 생산지,
-tooltip_farmer1_0,마을 주민,Villager
-tooltip_farmer1_1,던전 근처의 마을 주민,Villagers from nearby town
-tooltip_farmer2_0,마을 민병대원,Militia
-tooltip_farmer2_1,무장한 마을 주민,"AAA villagers - Angry, Armed, Agressive"
+tooltip_farmer1_0,마을 농부,Villager
+tooltip_farmer1_1,던전 근처 마을의 농부,Farmers from nearby town
+tooltip_farmer2_0,마을 일꾼,Worker
+tooltip_farmer2_1,초반 일꾼 러쉬는 유서 깊은 전략이다.,Why are they just here? just to suffer?
 tooltip_warrior1_0,초보 전사,Novice fighter
 tooltip_warrior1_1,첫 토벌 의뢰를 수주한 풋내기 전사,Novice fighter who began her first quest
 tooltip_warrior2_0,전사,fighter
@@ -891,7 +875,7 @@ tooltip_ui_time_0,시간,Time
 tooltip_ui_time_1,던전 내부 시간을 알려준다.,Indicates time of dungeon
 tip_content001,적은 0시에 침입합니다.,The enemy invades at midnight.
 tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.,Not all Demon Kings are respected by their demonic kin.
-tip_content003,단탈리온 마왕령은 인간 나라의 영토 내에 존재합니다.,Dantalion's dungeon exists within human territory.
+tip_content003,단탈리온의 던전은 인간 나라의 영토 내에 존재합니다.,Dantalion's dungeon exists within human territory.
 tip_content004,단탈리온은 토벌 우선순위 최하위입니다.,Dantalion has the lowest priority for subjugation.
 slime1,최하급 슬라임,Lowest level slime
 slime_rare,하급 슬라임,Low level slime
@@ -909,27 +893,6 @@ mimic1,최하급 미믹,Lowest level mimic
 mimic_rare,하급 미믹,Low level mimic
 mimic2,중급 미믹,Intermediate level mimic
 mimic3,상급 미믹,High level mimic
-slime_mucus,점액 슬라임,Slime
-slime_poison,중독 슬라임,Poison Slime
-slime_explosion,폭발 슬라임,Explosion Slime
-goblin_warrior,고블린 전사,Warrior Goblin
-goblin_scout,고블린 정찰병,Scout Goblin
-goblin_archer,고블린 궁수,Archer Goblin
-golem_stone,스톤 골렘,Stone Golem
-golem_iron,아이언 골렘,Iron Golem
-golem_obsidian,흑요석 골렘,Obsidian Golem
-golem_mithril,미스릴 골렘,Mithril Golem
-mimic_wood,나무 상자 미믹,Wood Mimic
-mimic_supply,보급 상자 미믹,Supply Mimic
-mimic_treasure,보물 상자 미믹,Treasure Mimic
-mimic_royal,왕실 보물 상자 미믹,Royal Mimic
-undead_spear,언데드 창병,Spear Undead
-undead_shield,언데드 방패병,Shield Undead
-undead_magician,언데드 마법사,Magician Undead
-orc1,일반 오크(임시),Orc normal
-orc_rare,희귀 오크 (임시),Orc rare
-orc2,에픽 오크(임시),Orc epic
-orc3,전설 오크(임시),Orc legend
 slime1_1,최하급 슬라임,Lowest level slime
 slime_rare_1,하급 슬라임,Low level slime
 slime2_1,중급 슬라임,Intermediate level slime
@@ -946,27 +909,6 @@ mimic1_1,최하급 미믹,Lowest level mimic
 mimic_rare_1,하급 미믹,Low level mimic
 mimic2_1,중급 미믹,Intermediate level mimic
 mimic3_1,상급 미믹,High level mimic
-slime_mucus_1,갈림길에서 분열한다.,Split at the fork
-slime_poison_1,죽을 때 주변 적을 중독에 빠뜨린다.,Poison nearby enemies when dying
-slime_explosion_1,죽을 때 주변에 피해를 입힌다.,Deals damage to its surroundings when dying
-goblin_warrior_1,주변에 친구가 많을 수록 강해진다.,"The more friends you have around you, the stronger you are"
-goblin_scout_1,은신한 적을 공격 할 수 있다.,Can attack a cloaked enemy
-goblin_archer_1,원거리에서 공격해 적을 중독에 빠뜨린다.,Attack from a distance to poison an enemy
-golem_stone_1,밀치는 공격에 영향을 받지 않는다.,Immune to push attacks
-golem_iron_1,쉴드를 보유하여 더 튼튼하다.,Stronger by having a shield
-golem_obsidian_1,쉴드가 파괴되면 주변에 피해를 입힌다.,"When a shield is destroyed, it deals damage to its surroundings"
-golem_mithril_1,쉴드가 파괴되면 잠시 후 쉴드를 회복한다.,"If the shield is destroyed, it will regenerate after a short time"
-mimic_wood_1,침입하는 적을 유혹한다.,Entice invading enemies
-mimic_supply_1,주변에 적이 없으면 다시 상자로 변신한다.,"If there are no enemies nearby, it will transform back into a box"
-mimic_treasure_1,상자 상태에서 HP를 회복한다.,Heal HP while in a box
-mimic_royal_1,주변의 적을 밀치면서 정체를 드러낸다.,Reveal your identity by knocking away nearby enemies
-undead_spear_1,창을 든 언데드,Undead with Spears
-undead_shield_1,방패를 들어 튼튼한 언데드,Sturdy Undead with Shields
-undead_magician_1,마법을 사용할 수 있는 언데드,Undead that can use magic
-orc1_1,일반 오크,Orc normal
-orc_rare_1,레어 오크,Orc rare
-orc2_1,에픽 오크,Orc epic
-orc3_1,전설 오크,Orc legend
 warrior1,일반 전사,Normal warrior
 warrior_rare,베테랑 전사,Veteran warrior
 warrior2,영웅 전사,Heroic warrior
@@ -1144,7 +1086,7 @@ q_m1003_1,"『단탈리온 경, 경의 채무 이행이 확인되었습니다.�
 
 Until our debt is gone, we must be on guard. Please carry on - defeat your enemies, and repay your debt."
 q_m1003_2,"음, 알겠다...","Hmm, I see..."
-q_m2001_0,맵 이동 조작,Map move operation
+q_m2001_0,맵 이동 조작,Screen move operation
 q_m2001_1,"어디보자... 파프라가 쪽지 하나를 더 주었는데?
 
 「혹여 던전이 너무 커져서 한 눈에 파악하기 어려우시다면」
@@ -1159,12 +1101,14 @@ q_m2001_1,"어디보자... 파프라가 쪽지 하나를 더 주었는데?
 
 「You can also use the wheel scroll to zoom in and out.」"
 q_m2001_2,크흠!,Hmmm!
-q_m2021_0,상점 오픈,Repayment information
+q_m2021_0,상점 오픈,Shop is Open
 q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
 
-「전하. 소인이 마계 상회에 제안한 거래가 통과되었습니다. - 이제 전하를 위해 상회에서 물건들을 제공할 것입니다.」
+「전하. 소인이 마계 상회에 제안한 거래가 통과되었습니다.
+- 이제 전하를 위해 상회에서 물건들을 제공할 것입니다.」
 
-「<sprite name=""Shop"">상점에선 채무를 갚을 수 있는 상환 아이템 외에도 다양한 상품을 판매하고 있사오니」
+「<sprite name=""Shop"">상점에선 채무를 갚을 수 있는 상환 아이템
+외에도 다양한 상품을 판매하고 있사오니」
 
 「그러니 게으름 피우지 말고, 계속해서 힘써주십시오.」
 
@@ -1172,13 +1116,13 @@ q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
 
 「My lord, I have finished the bargain - Demonic merchant guild will provide goods for your dungeon.」
 
-「<sprite name=""Shop""> The shop offers various items, including repayment items that can help you pay off your debt.」
+「The <sprite name=""Shop""> shop offers various items, including repayment items that can help you pay off your debt.」
 
-「So quit being lazy , and keep working.」
+「So quit being lazy, and keep working.」
 
 「The shop's items reset every 72 hours, so please keep that in mind.」"
 q_m2021_2,이런...,Hells...
-q_m2005_0,안녕하세요. 마계상회입니다.,"Hello, this is demon merchant guild"
+q_m2005_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q_m2005_1,"『마계 상회를 이용해 주셔서 감사합니다.』
 
 『현재 <sprite name=""Shop"">상점에서 할인 이벤트를 진행중이오니』
@@ -1189,7 +1133,7 @@ q_m2005_1,"『마계 상회를 이용해 주셔서 감사합니다.』
 
 「그러니 현재 가격이 싸다는 관점에서는 할인이 맞다고 볼 수 있습니다.」","『Thank you for using the Demonic merchant guild.』
 
-『A discount event is currently underway at the <sprite name=""Shop""> Shop,』
+『A discount event is currently underway at the <sprite name=""Shop"">Shop,』
 
 『So we appreciate your interest and support!』
 
@@ -1208,7 +1152,7 @@ q_m2004_1,"「전하. 정보에 의하면 48시간 이내에 도적이 침입한
 
 「Unlike warriors and archers, they utilize stealth to sneak in.」
 
-「Please prepare enough traps, or troops that can detect them」
+「Please prepare enough traps, or troops that can detect them.」
 
 「You can also preview information about the invading enemy on the starting tile.」"
 q_m2004_2,도적놈들을 막아라!,Stop the bandits!
@@ -1236,7 +1180,7 @@ q_m2014_1,"「전하, 많은 몬스터를 거느리고 계시군요.」
 
 「My Lord. It's time to show your dignity」
 
-「Let them know who rules them .」"
+「Let them know who rules them.」"
 q_m2014_2,"그렇다면 보아라, 과인의 힘을!","Behold my power, then"
 q_m2009_0,주의해야할 적 II,Dangerous enemies II
 q_m2009_1,"「새로운 정보입니다.」
@@ -1253,7 +1197,7 @@ q_m2009_1,"「새로운 정보입니다.」
 
 「Be prepared with monsters or abilities which can detect them.」"
 q_m2009_2,또 도적이야?,Rogues again?
-q_m2003_0,안녕하세요. 마계상회입니다.,"Hello, this is demonic merchant guild"
+q_m2003_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q_m2003_1,"『늘 마계 상회를 이용해 주셔서 감사합니다.』
 
 『본 상회는 언제나 최선의 서비스를 제공드리고 있습니다.』
@@ -1264,7 +1208,7 @@ q_m2003_1,"『늘 마계 상회를 이용해 주셔서 감사합니다.』
 
 『We will always serve you with the best offer we can provide.』
 
-『The <sprite name=""Shop"">We are selling new products for your dungeon expansion.』
+『The <sprite name=""Shop"">Shop is selling new products for your dungeon expansion.』
 
 『We wish your best luck, and thank you for your continued patronage.』"
 q_m2003_2,하나만 더 살래,I want one more
@@ -1298,7 +1242,7 @@ So, we'll spare your unused rooms to expand rooms for your troops.
 
 Thank you for your kindness and cooperation."
 q_m2010_2,타일 5개 정도면 괜찮겠지...,A room made of 5 tiles would be enough
-q_m2011_0,안녕하세요. 마계상회입니다.,"Hello, this is demonic merchant guild"
+q_m2011_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q_m2011_1,"『마계 상회를 이용해주심에 다시 한번 감사합니다.』
 
 『전하의 깊은 관심에 힘입어 신상품을 상점에서 판매중입니다.』
@@ -1318,7 +1262,7 @@ q_m2013_1,"가라, 나의 하수인들아.
 
 Strike down those who interrupt my precious time!
 
-I am watching ."
+I am watching."
 q_m2013_2,화이팅 화이팅,Go! Go!
 q_m2006_0,우두머리의 침입,Boss Invasion
 q_m2006_1,"그래그래. 우두머리가 쳐들어올 때가 되긴 했지.
@@ -1342,11 +1286,11 @@ q_m2006_2,저 대머리를 막아라!,Stop that bald head!
 q_m2002_0,약초에 대하여,About herbs
 q_m2002_1,"「마력이 풍부한 던전에서는 독자적인 식생이 발달합니다.」
 
-「그 중에서 <sprite name=""Herb1"">, <sprite name=""Herb2"">, <sprite name=""Herb3"">약초는 귀중한 자원으로써 연구 자원으로 사용됩니다.」
+「그 중에서 <sprite name=""Herb1""> <sprite name=""Herb2""> <sprite name=""Herb3"">약초는 귀중한 자원으로써 연구 자원으로 사용됩니다.」
 
 「약초는 텃밭과 생산지 타일을 통해 획득 가능합니다.」","「Dungeon develop their own unique vegetation with plentiful flow of mana」
 
-「Among them, <sprite name=""Herb1"">, <sprite name=""Herb2"">, and <sprite name=""Herb3"">herbs are valuable resources and are used for research.」
+「Among them, <sprite name=""Herb1""> <sprite name=""Herb2"">  <sprite name=""Herb3"">herbs are valuable resources and are used for research.」
 
 「Herbs can be obtained from Garden and Farm tiles.」"
 q_m2002_2,약초를 캐자,Digging for herbs
@@ -1442,20 +1386,20 @@ q1001_2,11라운드 전까지 상점에서 500골드 상환,Repay 500 gold at th
 q1001_3,생존,Survive
 q1001_4,생존하기,Survive
 q1002_0,빚 갚기II,Paying off debt II
-q1002_1,2000골드 변제,repay 2000 gold
-q1002_2,21라운드 전까지 상점에서 2000골드 상환,Repay 2000 gold at the Store before Round 21
+q1002_1,1500골드 변제,repay 1500 gold
+q1002_2,21라운드 전까지 상점에서 1500골드 상환,Repay 1500 gold at the Store before Round 21
 q1003_0,빚 갚기III,Paying off debt III
-q1003_1,4000골드 변제,repay 4000 gold
-q1003_2,31라운드 전까지 상점에서 4000골드 상환,Repay 4000 gold at the Store before Round 31
-q2001_0,맵 이동 조작,Map pan operation
+q1003_1,3000골드 변제,repay 3000 gold
+q1003_2,31라운드 전까지 상점에서 3000골드 상환,Repay 3000 gold at the Store before Round 31
+q2001_0,맵 이동 조작,Screen move operation
 q2001_1,"휠 클릭&드래그 or W,A,S,D 키로 화면 이동","Move the screen with the wheel click & drag or W,A,S,D keys"
 q2001_2,"휠 클릭&드래그 or W,A,S,D 키 1회 조작","Click & drag the wheel or press the W,A,S,D keys once"
 q2021_0,상환 아이템 구매,Purchase repayment item
 q2021_1,상환 아이템 구매하기,Purchase repayment item
 q2021_2,상환 아이템 1회 구매,Purchase 1 repayment item at the store
-q2005_0,안녕하세요. 마계상회입니다.,Hello. This is Demonic merchant guild
+q2005_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q2005_1,아이템 구매하기(상환 아이템 제외),Purchase an Item (except Repayment Items)
-q2005_2,제한시간 내에 상점에서 아이템 1개 구매(상환 아이템 제외),Purchase 1 item from the shop until quest expires(except Repayment Items)
+q2005_2,제한시간 내에 상점에서 아이템 1개 구매(상환 아이템 제외),Purchase 1 item from the shop(except Repayment Items)
 q2004_0,주의해야할 적,Dangerous enemy
 q2004_1,초보 도적 2명 처치,Defeat 2 Novice rogues
 q2004_2,초보 도적 2마리 처치,Defeat 2 Novice rogues
@@ -1468,18 +1412,18 @@ q2014_2,마왕 스킬 <비상탈출> 사용하기,Use the Demon Skill <Emergency
 q2009_0,주의해야할 적 II,Dangerous enemy II
 q2009_1,도적 3명 처치,Defeat 3 Rogues
 q2009_2,도적 3명 처치,Defeat 3 Rogues
-q2003_0,안녕하세요. 마계상회입니다.,Hello. This is Demonic merchant guild
-q2003_1,상점에서 카드 팩 구매,Buy any card pack in the store
-q2003_2,제한시간 내에 상점에서 아무 카드 팩 구매,Buy any card pack at the store before quest expires
+q2003_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
+q2003_1,상점에서 카드 팩 구매,Purchase an Item (except Repayment Items)
+q2003_2,제한시간 내에 상점에서 아무 카드 팩 구매,Purchase 1 item from the shop(except Repayment Items)
 q2008_0,체통 지키기,Stand your ground
 q2008_1,이번 라운드 마왕방 타일 이동금지,Do not move Demon tile in this round
 q2008_2,제한시간 동안 마왕방 타일 이동하지 않기,Do not move Demon tile in this round
 q2010_0,이 방은 생각보다 넓은데,This room is bigger than I thought.
 q2010_1,방 타일 5개를 조합하여 방 완성,Complete a room with 5 Room tiles
 q2010_2,5개 이상의 조합방 타일을 사용하여 방 완성,Use 5 or more room tiles to complete a room
-q2011_0,안녕하세요. 마계상회입니다.,Hello. This is Demonic merchant guild
-q2011_1,상점에서 카드 팩 구매,Buy any card pack in the store
-q2011_2,제한시간 내에 상점에서 아무 카드 팩 구매,Buy any card pack at the store before quest expires
+q2011_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
+q2011_1,상점에서 카드 팩 구매,Purchase an Item (except Repayment Items)
+q2011_2,제한시간 내에 상점에서 아무 카드 팩 구매,Purchase 1 item from the shop(except Repayment Items)
 q2013_0,마왕의 격려,Lord Encouragement
 q2013_1,마왕의 지도력' 버프 부여,Grant the 'Demonic charisma' Buff to allies
 q2013_2,30마리의 몬스터에게 '마왕의 지도력' 버프 부여,Grant 'Demonic Charisma' buff to 30 monsters
@@ -1500,7 +1444,7 @@ q2017_1,비밀 타일을 밝혀내라,Uncover the Secret Tile
 q2017_2,3개의 비밀 타일 밝혀내기,Reveal 3 Secret Tiles
 q2018_0,상회의 집행자,Guild enforcers
 q2018_1,집행자 돌려보내기,Make enforcers return
-q2018_2,집행자 위의 아이콘을 클릭해서 집행자 돌려보내기,Make enforcers return by clicking repayment icon above
+q2018_2,밀린 상환 아이템을 모두 구매하여 집행자 돌려보내기,Purchase all overdue repayment items to send the enforcer away.
 q2019_0,슬라임 킹,Slime King
 q2019_1,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king tile
 q2019_2,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king tile
@@ -1551,24 +1495,30 @@ Click the Move button on the right or double-click the Lord tile
 Click on a valid (green) position to place it
 Rotate using Q and E to find a valid position"
 guide006_1,"우측 덱 버튼(F)을 눌러 카드를 뽑을 수 있다.
-카드를 뽑을 때 5골드가 소모된다.",Click the Deck Button(F) to draw a card (costs 5 Gold)
+카드를 뽑을 때 5골드가 소모된다.
+덱 위의 정보 버튼을 누르면 현재 내 덱에 들어있는 카드들을 확인 할 수 있다.","Click the Deck Button(F) to draw a card (costs 5 Gold)
+Pressing the Info Button above the deck allows you to view the cards currently in your deck."
 guide007_1,"고용 버튼(Z)을 눌러 고용 창을 연다.
 원하는 함정의 고용 버튼을 클릭
 설치 가능한 길 타일을 골라 배치
-배치된 함정은 적이 접근 시 자동 공격한다.","Press Z to open the Hire Menu
-Click the Hire button for the desired trap
-Select a valid path tile to place the trap
-Traps will automatically attack enemies when they approach"
+배치된 함정은 적이 접근 시 자동 공격한다.
+Shift + 클릭으로 연속 배치가 가능하다.
+ESC 및 돌아가기 버튼을 눌러 설치를 취소할 수 있다.","Press Z to open the Employ Menu.
+Click the Employ button for the desired trap.
+Select a valid path tile to place the trap.
+Traps will automatically attack enemies when they approach.
+Use Shift + Click for continuous placement.
+Press ESC or the Back Button to cancel placement."
 guide008_1,"고용 버튼(Z)을 눌러 고용 창을 연다.
 원하는 몬스터의 고용 버튼을 클릭
 소환 가능한 방 타일을 찾아 클릭
-생산지를 설치한 방에서 몬스터가 자동 스폰된다.","Press Z to open the Hire Menu
-Click the Hire button for the desired monster
+생산지를 설치한 방에서 몬스터가 자동 스폰된다.","Press Z to open the Employ Menu
+Click the Employ button for the desired monster
 Select a valid room tile to summon the monster
 Monsters will spawn automatically in rooms with a production site"
 guide009_1,"길 타일을 배치 할 때마다 사용 가능한 마력의 총량이 늘어난다.
 방 타일은 타일 별로 정해진 마력을 사용 할 수 있다.
-단일 방 타일 : 2 마력 사용 가능
+단일 방 타일 : 마력 2 사용 가능
 조합 방 타일 : 조합된 방 타일 수 만큼의 마력 사용 가능","Placing a path tile increases the total available mana
 Room tiles consume mana based on type:
 Single Room Tile: Uses 2 Mana
