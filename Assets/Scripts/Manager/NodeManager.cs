@@ -320,6 +320,9 @@ public class NodeManager : IngameSingleton<NodeManager>
             bool haveMana = room._RemainingMana >= requiredMana;
             foreach (Tile tile in room._IncludeRooms)
             {
+                if (tile.spawnLock)
+                    continue;
+
                 TileNode node = tile.curNode;
                 node.SetAvail(false);
                 if (IsSpawnerSetable(node) && haveMana)

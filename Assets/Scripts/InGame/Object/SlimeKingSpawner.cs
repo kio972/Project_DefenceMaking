@@ -8,5 +8,6 @@ public class SlimeKingSpawner : TileReward
     {
         BattlerPooling.Instance.SpawnMonster("slime_king", targetNode);
         base.BuildBaseTile(targetNode);
+        targetNode.curTile.spawnLock = true;
     }
 }

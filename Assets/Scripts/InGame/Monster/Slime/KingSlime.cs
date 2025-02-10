@@ -83,7 +83,7 @@ public class KingSlime : Monster
         source.Dispose();
 
         DeactiveSkill();
-
+        curNode.curTile.spawnLock = false;
         base.Dead(attacker);
     }
 

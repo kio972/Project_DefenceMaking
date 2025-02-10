@@ -49,6 +49,8 @@ public class ResultController : MonoBehaviour
         TextMeshProUGUI text = titleBtn.GetComponentInChildren<TextMeshProUGUI>();
         if(SceneManager.GetActiveScene().name == "Stage0")
         {
+            if(SaveManager.Instance.playerData.sceneName == "Stage0")
+                SaveManager.Instance.ResetPlayerData();
             SaveManager.Instance.playerData = null;
             titleBtn.useLoadingScene = true;
             if (text != null)

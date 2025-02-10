@@ -156,6 +156,13 @@ public class CardDeckController : MonoBehaviour
 
     public bool IsRecycle { get { return recycle.IsMouseOver; } }
 
+    private Queue<int> nextCardQueue = new Queue<int>();
+
+    public void EnqueueCard(int cardId)
+    {
+        nextCardQueue.Enqueue(cardId);
+    }
+
     public void SetFreeCount(int value)
     {
         freeCount = value;
@@ -410,7 +417,13 @@ public class CardDeckController : MonoBehaviour
         }
 
         GameManager.Instance.gold -= _CardPrice;
-        DrawCard();
+        if(nextCardQueue.Count > 0)
+        {
+            DrawCard(nextCardQueue.Dequeue());
+        }
+        else
+            DrawCard();
+
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
         excutedSound?.Post(gameObject);
         //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);

@@ -68,6 +68,8 @@ public class Tile : MonoBehaviour, ITileKind
         }
     }
 
+    public bool spawnLock = false;
+
     private int supplyMana = 1;
     public int SupplyMana
     {
