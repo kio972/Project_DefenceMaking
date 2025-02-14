@@ -423,14 +423,19 @@ public class NodeManager : IngameSingleton<NodeManager>
     {
         bool isEndtile = targetTile._TileType == TileType.End;
         SetVirtualNode(isEndtile);
-        targetTile.UpdateAvailableNode(virtualNodes, !isEndtile);
-        ResetAvail();
-        foreach (TileNode node in virtualNodes)
+        if (isEndtile)
+            SetEndTileGuide();
+        else
         {
-            if (node == null)
-                continue;
+            targetTile.UpdateAvailableNode(virtualNodes, !isEndtile);
+            ResetAvail();
+            foreach (TileNode node in virtualNodes)
+            {
+                if (node == null)
+                    continue;
 
-            node.SetAvail(targetTile.availableNodes.Contains(node));
+                node.SetAvail(targetTile.availableNodes.Contains(node));
+            }
         }
     }
 

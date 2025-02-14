@@ -53,7 +53,7 @@ public class TileNode : MonoBehaviour
                 connectionState.Add(direction, 0);
 
             Tile targetTile = neighborNodeDic[direction].curTile;
-            if (targetTile == null || targetTile.IsDormant)
+            if (targetTile == null)
             {
                 connectionState[direction] = 0;
                 continue;
