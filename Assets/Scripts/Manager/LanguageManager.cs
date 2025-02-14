@@ -26,6 +26,9 @@ public class LanguageManager : Singleton<LanguageManager>
 
     public void AddLanguageAction(Action action)
     {
+        if (curSceneIndex != SceneManager.GetActiveScene().buildIndex)
+            InitLanguageActions();
+
         languageActions.Add(action);
     }
 
@@ -39,11 +42,5 @@ public class LanguageManager : Singleton<LanguageManager>
     {
         InitLanguageActions();
         SettingManager.Instance._language.Subscribe(_ => ChangeLanguage()).AddTo(gameObject);
-    }
-
-    private void Update()
-    {
-        if (curSceneIndex != SceneManager.GetActiveScene().buildIndex)
-            InitLanguageActions();
     }
 }
