@@ -601,8 +601,14 @@ public class Tile : MonoBehaviour, ITileKind
 
     public void AutoRotate(TileNode curNode, bool isReversed = false)
     {
+        int count = 0;
         while (!curNode.IsConnected(pathDirection, roomDirection) || HasEnvironmentTileInNeighbors(curNode, pathDirection) || HasEnvironmentTileInNeighbors(curNode, roomDirection))
+        {
             RotateTile(isReversed);
+            count++;
+            if (count > 6)
+                return;
+        }
 
         rotateSound?.Post(gameObject);
     }
@@ -614,6 +620,13 @@ public class Tile : MonoBehaviour, ITileKind
 
         RotateTile(isReversed);
         AutoRotate(curNode, isReversed);
+    }
+
+    private bool CancelInput()
+    {
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(SettingManager.Instance.key_CancelControl._CurKey)
+            || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey)
+            || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
     }
 
     protected virtual void Update()
@@ -648,7 +661,7 @@ public class Tile : MonoBehaviour, ITileKind
                 twin.RotateToNext(curNode, true);
             }
 
-            if (IsCharacterOnIt || Input.GetKeyUp(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(KeyCode.Escape))
+            if (IsCharacterOnIt || CancelInput())
             {
                 EndMoveing();
             }

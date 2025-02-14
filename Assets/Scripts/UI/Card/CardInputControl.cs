@@ -57,12 +57,12 @@ public class CardInputControl : MonoBehaviour
 
     private bool ClickInput()
     {
-        return Input.GetKeyUp(KeyCode.Mouse0);
+        return Input.GetKeyUp(SettingManager.Instance.key_BasicControl._CurKey);
     }
 
     private bool CancelInput()
     {
-        return Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
+        return Input.GetKeyDown(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
     }
 
     public void StopAllInputCheck()
