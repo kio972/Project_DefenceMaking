@@ -85,4 +85,17 @@ public class DetectInject : ISkill
                 coolRate.Value = curCoolTime <= 0 ? 0 : curCoolTime / coolTime;
             }).AddTo(king.gameObject);
     }
+
+    public SkillData SaveSkill()
+    {
+        SkillData skillData = new SkillData();
+        skillData.skillName = GetType().Name;
+        skillData.curCool = curCoolTime;
+        return skillData;
+    }
+
+    public void LoadSkill(SkillData data)
+    {
+        curCoolTime += data.curCool;
+    }
 }

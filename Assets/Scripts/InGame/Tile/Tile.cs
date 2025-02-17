@@ -610,7 +610,11 @@ public class Tile : MonoBehaviour, ITileKind
                 return;
         }
 
-        rotateSound?.Post(gameObject);
+        if (GameManager.Instance.IsInit)
+        {
+            //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
+            rotateSound?.Post(gameObject);
+        }
     }
 
     public void RotateToNext(TileNode curNode, bool isReversed = false)

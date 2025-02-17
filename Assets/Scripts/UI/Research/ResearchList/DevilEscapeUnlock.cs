@@ -9,7 +9,6 @@ public class DevilEscapeUnlock : MonoBehaviour, Research
         PlayerBattleMain king = GameManager.Instance.king;
 
         EmergencyEscape escape = new EmergencyEscape();
-        king.skills.Add(escape);
-        escape.SkillInit();
+        king.AddSkill(escape);
     }
 }

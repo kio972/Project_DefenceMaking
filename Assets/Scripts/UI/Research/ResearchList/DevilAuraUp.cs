@@ -19,9 +19,8 @@ public class DevilAuraUp : MonoBehaviour, Research
         else
         {
             DevilAuraSkill devilAura = new DevilAuraSkill();
-            king.skills.Add(devilAura);
             devilAura.SetDevilAuraValue(range, value);
-            devilAura.SkillInit();
+            king.AddSkill(devilAura);
         }
     }
 }

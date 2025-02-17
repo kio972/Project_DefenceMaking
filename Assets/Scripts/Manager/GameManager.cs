@@ -473,8 +473,6 @@ public class GameManager : IngameSingleton<GameManager>
         BattlerData king = data.devil;
         NodeManager.Instance.endPoint = NodeManager.Instance.FindNode(king.row, king.col);
         SpawnKing();
-        this.king.curHp = king.curHp;
-
         cardDeckController.LoadData(data.cardIdes, data.deckLists);
 
         foreach(BattlerData enemy in data.enemys)
@@ -498,6 +496,8 @@ public class GameManager : IngameSingleton<GameManager>
         QuestManager.Instance.LoadGame(data);
         SetWaveSpeed(curWave);
         speedController.SetSpeedZero();
+
+        this.king.LoadData(king);
         isInit = true;
     }
 

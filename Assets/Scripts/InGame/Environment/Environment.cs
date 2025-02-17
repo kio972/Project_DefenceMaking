@@ -62,6 +62,7 @@ public class Environment : MonoBehaviour, ITileKind
         }
 
         NodeManager.Instance.AddSightNode(_curNode);
-        buildSound?.Post(gameObject);
+        if(GameManager.Instance.IsInit)
+            buildSound?.Post(gameObject);
     }
 }

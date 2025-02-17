@@ -65,4 +65,17 @@ public class DevilAuraSkill : ISkill
         king = GameManager.Instance.king;
         DevilAuraEffect().Forget();
     }
+
+    public SkillData SaveSkill()
+    {
+        SkillData skillData = new SkillData();
+        skillData.skillName = GetType().Name;
+        skillData.curCool = curCoolTime;
+        return skillData;
+    }
+
+    public void LoadSkill(SkillData data)
+    {
+        curCoolTime += data.curCool;
+    }
 }

@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
 public class PlayerBattleMain : Battler
 {
-    public ReactiveCollection<ISkill> skills = new ReactiveCollection<ISkill>();
+    public ReactiveCollection<ISkill> skills { get; private set; } = new ReactiveCollection<ISkill>();
 
     public bool HaveSkill<T>() where T : ISkill
     {
@@ -30,6 +32,34 @@ public class PlayerBattleMain : Battler
         }
 
         return false;
+    }
+
+    public ISkill AddSkill(ISkill skill)
+    {
+        // 동일한 타입의 스킬이 이미 있는지 확인
+        var existingSkill = skills.FirstOrDefault(existingSkill => existingSkill.GetType() == skill.GetType());
+
+        // 이미 존재하는 경우, 기존 스킬을 반환
+        if (existingSkill != null)
+            return existingSkill;
+
+        // 새 스킬 추가
+        skills.Add(skill);
+        skill.SkillInit();
+        return skill; // 새로 추가한 스킬 반환
+    }
+
+    public ISkill AddSkill(string skillName)
+    {
+        var skillType = Type.GetType(skillName);
+        if (skillType != null && typeof(ISkill).IsAssignableFrom(skillType))
+        {
+            var skill = Activator.CreateInstance(skillType) as ISkill;
+            if (skill != null)
+                return AddSkill(skill);
+        }
+
+        return null;
     }
 
     public void SetTile(TileNode node)
@@ -104,4 +134,25 @@ public class PlayerBattleMain : Battler
         InitState(this, FSMKing.Instance);
     }
 
+    public override BattlerData GetData()
+    {
+        BattlerData target = base.GetData();
+        target.skills = new List<SkillData>();
+        foreach(var skill in skills)
+        {
+            target.skills.Add(skill.SaveSkill());
+        }
+
+        return target;
+    }
+
+    public override void LoadData(BattlerData data)
+    {
+        curHp = data.curHp;
+        foreach (var skillData in data.skills)
+        {
+            ISkill skill = AddSkill(skillData.skillName);
+            skill?.LoadSkill(skillData);
+        }
+    }
 }

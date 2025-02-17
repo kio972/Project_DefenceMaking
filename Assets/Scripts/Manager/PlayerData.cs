@@ -11,6 +11,13 @@ public struct QuestData
     public float curTime;
 }
 
+public struct SkillData
+{
+    public string skillName;
+    public float curCool;
+    public Dictionary<string, object> additionalData;
+}
+
 public struct BattlerData
 {
     public string id;
@@ -30,6 +37,8 @@ public struct BattlerData
 
     public List<int> crossedRow;
     public List<int> crossedCol;
+
+    public List<SkillData> skills;
 
     public Dictionary<string, object> additionalData;
 }

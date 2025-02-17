@@ -402,14 +402,13 @@ public class Quest2014 : Quest
     {
         PlayerBattleMain king = GameManager.Instance.king;
         EmergencyEscape escape = new EmergencyEscape();
-        king.skills.Add(escape);
-        escape.SkillInit();
+        ISkill target = king.AddSkill(escape);
 
         //await UniTask.WaitUntil(() => king.skills.Count > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
 
         //await UniTask.Yield(cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
 
-        await UniTask.WaitUntil(() => escape.coolRate.Value > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => target.coolRate.Value > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
 
         curClearNum[0]++;
         isComplete[0] = true;

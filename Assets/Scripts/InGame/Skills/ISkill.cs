@@ -13,6 +13,10 @@ public interface ISkill
     public bool UseSkill();
 
     public void SkillInit();
+
+    public SkillData SaveSkill();
+
+    public void LoadSkill(SkillData data);
 }
 
 public interface IHaveCost

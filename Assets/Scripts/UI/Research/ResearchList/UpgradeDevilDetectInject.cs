@@ -9,7 +9,6 @@ public class UpgradeDevilDetectInject : MonoBehaviour, Research
         PlayerBattleMain king = GameManager.Instance.king;
 
         DetectInject devilAura = new DetectInject();
-        king.skills.Add(devilAura);
-        devilAura.SkillInit();
+        king.AddSkill(devilAura);
     }
 }
