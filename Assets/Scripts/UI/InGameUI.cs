@@ -16,6 +16,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField]
     private BloodEffect bloodEffect;
 
+    public MouseOverTooltip mouseOverTooltip;
+
     private Vector2 originPos_uiTop;
     private Vector2 originPos_uiRight;
     private Vector2 originPos_uiDown;

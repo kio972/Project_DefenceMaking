@@ -64,6 +64,7 @@ ui_Monster,몬스터,Monster
 ui_Dungeon,던전,Dungeon
 ui_Devil,마왕,Stat
 ui_SelectPhase,아이템 선택,Card Selection
+ui_GoldCost,소모 골드,Cost
 announce_employ_continue,Shift + 클릭 : 연속 배치,Shift + Click : Continuous Placement
 announce_title_nosave,저장된 게임 데이터가 없습니다.,There is no saved game data.
 announce_ingame_tileconnect,시작 타일과 마왕 타일이 연결되어 있어야합니다.,You must connect Dungeon Enterance with Dantallion's room together.
@@ -340,7 +341,7 @@ research_mimic3_1,"자신이 있는 타일로 적을 유인한다.
 위장하고 있는 동안 체력을 회복한다.","Can lure enemies towards Mimic.
 When in disguise, Mimic restore its HP."
 research_mimic4_0,진수성찬,Feast
-research_mimic4_1,미믹이 유혹한 적의 수에 비례하여 무작위 버프를 획득한다.,Mimic gains random buff per numbers of lured enemies.
+research_mimic4_1,미믹이 주변의 적 수에 비례하여 무작위 버프를 획득한다.,Mimic gains random buff per numbers of surrounding enemies.
 research_mimic5_0,제작 : 왕실 금고 미믹,Production : Royal chest Mimic
 research_mimic5_1,"자신이 있는 타일로 적을 유인한다.
 위장 해제 시 적을 놀래켜 경직에 빠뜨린다.","Can lure enemies towards Mimic.
@@ -397,6 +398,8 @@ research_barri2_0,철제 바리케이드 해금,Unlock metal barricade
 research_barri2_1,"골렘, 미믹의 이동을 막는 바리케이드",Metal barricade that unlock golems and mimics
 research_magic1_0,휴지통 해금,Unlock recycle bin
 research_magic1_1,손 패의 카드를 모두 버리는 카드,Card that discards all your hand
+research_chance1_0,한번 더,One more chance
+research_chance1_1,아이템 선택 페이즈 때 제시되는 아이템을 1회 새로고침 한다.,Refresh the items presented during the item selection phase once.
 research_maohp1_0,마왕의 활력 1,Demonic vigor I
 research_maohp1_1,마왕 최대 HP 5 증가,Increase Dantallion's HP +5
 research_maohp2_0,마왕의 활력 2,Demonic vigor II
@@ -522,9 +525,9 @@ shop_item0031_1,원하는 카드 2장을 덱에 추가,Add 2 card you choose to 
 shop_item0032_0,특수 카드팩 III,Special order III
 shop_item0032_1,원하는 카드 3장을 덱에 추가,Add 3 cards you choose to the deck
 shop_item0033_0,% 카드 1장 추가,Add 1 % card
-shop_item0033_1,% 카드를 카드풀에서 1장 추가한다.,Add 1 % card on card pool
+shop_item0033_1,% 카드를 덱에 1장 추가한다.,Add 1 % card on deck
 shop_item0034_0,% 카드 1장 제거,Remove 1 % card
-shop_item0034_1,% 카드를 카드풀에서 1장 제거한다.,Remove 1 % card on card pool
+shop_item0034_1,% 카드를 덱에서 1장 제거한다.,Remove 1 % card on deck
 tooltip_start_0,던전 입구,Dungeon Enterance
 tooltip_start_1,"침입하는 적들은 이곳에서 등장한다.
 타일 위의 아이콘을 클릭해 침입하는 적들의 종류를 파악할 수 있다.","This is where enemies appear.
@@ -849,7 +852,7 @@ tooltip_boss5_0,시트리,Citrix
 tooltip_boss5_1,마왕 파이몬의 부하,Demon Paimon's minions
 tooltip_executor1_0,상회 징수원,Guild enforcer
 tooltip_executor1_1,"빚을 돌려받기 위해 쳐들어온 마계상회의 정예 징수원.
-상점에서 채무상환을 완료하면 공격을 멈추고 돌아간다.","Elite enforcer who came to collect their due.
+정해진 금액을 지불하면 공격을 멈추고 돌아간다.","Elite enforcer who came to collect their due.
 if payment is complete, they will retreat."
 tooltip_ui_blackherb_0,흑색 약초,Black herb
 tooltip_ui_blackherb_1,"보유 중인 흑색 약초의 수량
@@ -1086,6 +1089,9 @@ q_m1003_1,"『단탈리온 경, 경의 채무 이행이 확인되었습니다.�
 
 Until our debt is gone, we must be on guard. Please carry on - defeat your enemies, and repay your debt."
 q_m1003_2,"음, 알겠다...","Hmm, I see..."
+q_m1004_0,,
+q_m1004_1,,
+q_m1004_2,,
 q_m2001_0,맵 이동 조작,Screen move operation
 q_m2001_1,"어디보자... 파프라가 쪽지 하나를 더 주었는데?
 
@@ -1381,16 +1387,19 @@ q_m2020_1,"「마족의 지배자이자 영토를 다스리는 마왕이, 던전
 「Humans are afraid of long, dark roads, so please take that into consideration as well.」"
 q_m2020_2,길을 길게 설치 하자,"Let's build up a long, long path"
 q1001_0,빚 갚기I,Paying off debt I
-q1001_1,500골드 변제,repay 500 gold
-q1001_2,11라운드 전까지 상점에서 500골드 상환,Repay 500 gold at the Store before Round 11
+q1001_1,500골드 변제,Repay 500 gold
+q1001_2,11라운드 전까지 500골드 상환,Repay 500 gold at the Store before Round 11
 q1001_3,생존,Survive
 q1001_4,생존하기,Survive
 q1002_0,빚 갚기II,Paying off debt II
-q1002_1,1500골드 변제,repay 1500 gold
-q1002_2,21라운드 전까지 상점에서 1500골드 상환,Repay 1500 gold at the Store before Round 21
+q1002_1,1500골드 변제,Repay 1500 gold
+q1002_2,21라운드 전까지 1500골드 상환,Repay 1500 gold at the Store before Round 21
 q1003_0,빚 갚기III,Paying off debt III
-q1003_1,3000골드 변제,repay 3000 gold
-q1003_2,31라운드 전까지 상점에서 3000골드 상환,Repay 3000 gold at the Store before Round 31
+q1003_1,3000골드 변제,Repay 3000 gold
+q1003_2,31라운드 전까지 3000골드 상환,Repay 3000 gold at the Store before Round 31
+q1004_0,빚 갚기IV,Paying off debt IV
+q1004_1,5000골드 변제,Repay 5000 gold
+q1004_2,41라운드 전까지 5000골드 상환,Repay 5000 gold at the Store before Round 41
 q2001_0,맵 이동 조작,Screen move operation
 q2001_1,"휠 클릭&드래그 or W,A,S,D 키로 화면 이동","Move the screen with the wheel click & drag or W,A,S,D keys"
 q2001_2,"휠 클릭&드래그 or W,A,S,D 키 1회 조작","Click & drag the wheel or press the W,A,S,D keys once"

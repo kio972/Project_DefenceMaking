@@ -34,10 +34,10 @@ public class DebtRepay : MonoBehaviour, Item, INeedUnlockItem
     {
         get
         {
-            if(QuestManager.Instance.questController.mainQuest != null && QuestManager.Instance.questController.mainQuest._QuestID == targetDebtQuestId)
+            if(QuestManager.Instance.questController.mainQuest != null && QuestManager.Instance.questController.mainQuest._QuestID == targetDebtQuestId && !QuestManager.Instance.IsQuestFailed(targetDebtQuestId))
                 return true;
-            if (QuestManager.Instance.IsQuestFailed(targetDebtQuestId) && itemSlot.curStockCount > 0)
-                return true;
+            //if (QuestManager.Instance.IsQuestFailed(targetDebtQuestId) && itemSlot.curStockCount > 0)
+            //    return true;
             return false;
         }
     }

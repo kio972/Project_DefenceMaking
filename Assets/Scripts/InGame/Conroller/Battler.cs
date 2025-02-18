@@ -109,7 +109,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     [SerializeField]
     private AttackType attackType = AttackType.Melee;
 
-    private HpBar hpBar;
+    protected HpBar hpBar;
 
     protected List<CCType> cc_Emmunes = new List<CCType>();
 
