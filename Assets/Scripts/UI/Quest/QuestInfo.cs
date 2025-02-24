@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public interface IQuestInteract
+{
+    void SetQuest(Quest quest);
+}
+
 public class QuestInfo : MonoBehaviour
 {
     [SerializeField]
@@ -41,6 +46,17 @@ public class QuestInfo : MonoBehaviour
     AK.Wwise.Event clearSound;
     [SerializeField]
     AK.Wwise.Event failSound;
+
+    private IQuestInteract _interactBtn;
+    private IQuestInteract interactBtn
+    {
+        get
+        {
+            if (_interactBtn == null)
+                _interactBtn = GetComponentInChildren<IQuestInteract>(true);
+            return _interactBtn;
+        }
+    }
 
     private void DeActive()
     {
@@ -87,6 +103,7 @@ public class QuestInfo : MonoBehaviour
         isTimerOn = true;
         alarmObject.SetActive(false);
         UpdateTimer();
+        interactBtn?.SetQuest(quest);
     }
 
     private void UpdateTimer()

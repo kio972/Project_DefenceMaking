@@ -17,16 +17,19 @@ public class MouseOverTooltip : MonoBehaviour
 
     private Transform followTarget = null;
 
+    private bool isOnUI;
+
     public void SetActive(bool value)
     {
         gameObject.SetActive(value);
     }
 
-    public void SetMesseage(Transform follow, Vector2 pivot, string header, string desc, string additional = null)
+    public void SetMesseage(Transform follow, Vector2 pivot, bool isOnUI, string header, string desc, string additional = null)
     {
         rect.pivot = pivot;
         followTarget = follow;
-        transform.position = Camera.main.WorldToScreenPoint(followTarget.position);
+        this.isOnUI = isOnUI;
+        transform.position = isOnUI ? followTarget.position : Camera.main.WorldToScreenPoint(followTarget.position);
 
         this.header.text = header;
         this.desc.text = desc;
@@ -44,6 +47,6 @@ public class MouseOverTooltip : MonoBehaviour
     private void Update()
     {
         if(followTarget != null)
-            transform.position = Camera.main.WorldToScreenPoint(followTarget.position);
+            transform.position = isOnUI ? followTarget.position : Camera.main.WorldToScreenPoint(followTarget.position);
     }
 }
