@@ -633,6 +633,10 @@ public class NodeManager : IngameSingleton<NodeManager>
             List<Tile> completeRoom = BFSRoom(tile);
             if (completeRoom == null || completeRoom.Count <= 1) return;
             newRoom = new CompleteRoom(completeRoom);
+            foreach(Tile target in completeRoom)
+            {
+                target.SetRoom(newRoom);
+            }
         }
         
         // 해당 방들 완성으로 변경코드 추가 예정

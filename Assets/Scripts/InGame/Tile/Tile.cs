@@ -133,14 +133,14 @@ public class Tile : MonoBehaviour, ITileKind
         get
         {
             bool isRemovable = removable && !isDormant;
-            foreach(var room in NodeManager.Instance.roomTiles)
-            {
-                if(room._IncludeRooms.Count > 1 && room._IncludeRooms.Contains(this))
-                {
-                    isRemovable = false;
-                    break;
-                }
-            }
+            //foreach(var room in NodeManager.Instance.roomTiles)
+            //{
+            //    if(room._IncludeRooms.Count > 1 && room._IncludeRooms.Contains(this))
+            //    {
+            //        isRemovable = false;
+            //        break;
+            //    }
+            //}
 
             return isRemovable;
         }
@@ -183,6 +183,9 @@ public class Tile : MonoBehaviour, ITileKind
 
     private Dictionary<TileNode, int> availableNodeDic = new Dictionary<TileNode, int>();
     public HashSet<TileNode> availableNodes { get => availableNodeDic.Keys.ToHashSet();}
+
+    private CompleteRoom _curRoom;
+    public CompleteRoom curRoom { get => _curRoom; set => _curRoom = value; }
 
     [SerializeField]
     private AK.Wwise.Event rotateSound;
@@ -508,10 +511,48 @@ public class Tile : MonoBehaviour, ITileKind
         }
     }
 
+    public void SetRoom(CompleteRoom room)
+    {
+        _curRoom = room;
+        if (_objectKind is MonsterSpawner spawner)
+        {
+            spawner.isSpawnLocked = false;
+        }
+    }
+
+    private void DetructRoom()
+    {
+        if (_curRoom == null)
+            return;
+
+        _curRoom = null;
+        if(_objectKind is MonsterSpawner spawner)
+        {
+            spawner.isSpawnLocked = true;
+        }
+    }
+
+    private void DestructRoomCheck()
+    {
+        if (_curRoom == null)
+            return;
+
+        CompleteRoom room = _curRoom;
+        foreach(Tile tile in room._IncludeRooms)
+        {
+            tile.DetructRoom();
+        }
+
+        NodeManager.Instance.roomTiles.Remove(room);
+    }
+
     public void RemoveTile()
     {
         if (isUpgraded && tileType == TileType.Path)
             DownGradeCheck();
+
+        if (tileType is TileType.Room or TileType.Door)
+            DestructRoomCheck();
 
         NodeManager.Instance.SetActiveNode(_curNode, false);
         InputManager.Instance.ResetTileClick();

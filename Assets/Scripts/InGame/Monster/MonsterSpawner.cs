@@ -49,6 +49,8 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 
     public bool isEmpty = false;
 
+    public bool isSpawnLocked = false;
+
     public void ModifyCoolTime(float rate)
     {
         spawnCoolTime *= rate;
@@ -108,7 +110,7 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 
     private void Update()
     {
-        if (!isUpdate || isEmpty)
+        if (!isUpdate || isEmpty || isSpawnLocked)
             return;
 
         if(curCoolTime > spawnCoolTime)

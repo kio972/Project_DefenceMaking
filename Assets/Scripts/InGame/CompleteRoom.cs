@@ -9,7 +9,7 @@ public class CompleteRoom
     private List<Tile> includeRooms;
     public int totalMana { get; private set; } = 0;
 
-    private List<MonsterSpawner> spawners = new List<MonsterSpawner>();
+    private HashSet<MonsterSpawner> spawners = new HashSet<MonsterSpawner>();
     public List<Tile> _IncludeRooms { get => includeRooms; }
     public int _RemainingMana { get { return totalMana - _SpendedMana; } }
     public Tile HeadRoom { get { return CalculateMidTile(); } }
@@ -96,7 +96,7 @@ public class CompleteRoom
             roomManaStream = Observable.Merge(roomManaStream, nextManaStream);
         }
 
-        roomManaStream.ThrottleFrame(1).Subscribe(_ => CalculateTotalMana()).AddTo(targetTiles[0].gameObject);
+        roomManaStream.ThrottleFrame(1).Subscribe(_ => CalculateTotalMana()).AddTo(disposables);
     }
 
     private void CalculateTotalMana()
@@ -105,6 +105,10 @@ public class CompleteRoom
         foreach (Tile tile in includeRooms)
         {
             totalMana += tile.RoomMana;
+            if(tile.objectKind is MonsterSpawner spawner)
+            {
+                this.spawners.Add(spawner);
+            }
         }
 
         this.totalMana = totalMana;
