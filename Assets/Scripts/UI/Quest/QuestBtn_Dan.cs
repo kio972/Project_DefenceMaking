@@ -26,6 +26,7 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
             return;
         }
 
+        GameManager.Instance.gold -= repayAmount;
         repay.ReduceGold(repayAmount);
         AkSoundEngine.PostEvent(successClipName, gameObject);
         repay.UpdateQuest();
