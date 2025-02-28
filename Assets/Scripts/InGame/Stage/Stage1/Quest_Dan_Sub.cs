@@ -600,28 +600,25 @@ public class Quest2020 : Quest
 public class Quest2021 : Quest
 {
     private bool isInit = false;
-    private ItemSlot debtRepayItem;
+    private QuestDebtRepay debtQuest;
     private int prevCount;
 
     public override void CheckCondition()
     {
         if(!isInit)
         {
-            foreach(var item in GameManager.Instance.shop.itemSlots)
+            if(QuestManager.Instance.questController.mainQuest is  QuestDebtRepay quest)
             {
-                if(item.item is DebtRepay repay && repay.IsUnlock)
-                {
-                    debtRepayItem = item;
-                    break;
-                }
+                debtQuest = quest;
             }
-            prevCount = debtRepayItem.curStockCount;
+
+            prevCount = debtQuest._CurClearNum[0];
             isInit = true;
         }
 
-        if(debtRepayItem.curStockCount < prevCount)
-            curClearNum[0] += prevCount - debtRepayItem.curStockCount;
-        prevCount = debtRepayItem.curStockCount;
+        if(prevCount < debtQuest._CurClearNum[0])
+            curClearNum[0]++;
+        prevCount = debtQuest._CurClearNum[0];
 
         if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
