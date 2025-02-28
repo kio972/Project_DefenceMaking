@@ -428,7 +428,7 @@ public class StoryManager : MonoBehaviour
     {
         if (prevIllust == null)
             return;
-        prevIllust.ChangeColor(Color.black, 1f);
+        prevIllust.ChangeColor(Color.black, 0.5f);
     }
 
     private void FadeIn()
