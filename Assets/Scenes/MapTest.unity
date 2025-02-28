@@ -2456,7 +2456,7 @@ MonoBehaviour:
   _waveData: {fileID: 4900000, guid: bc1f3db02528eb849944850426a7d96f, type: 3}
   _timeRateData: {fileID: 4900000, guid: dccd6017659f17c4185599a9a14e828e, type: 3}
   _deckListData: {fileID: 4900000, guid: d0cb0c8b8f99dee43ab08d8fc770ed74, type: 3}
-  _scriptData: {fileID: 4900000, guid: 9d7903450659061479c6da1e78df1a31, type: 3}
+  _scriptData: {fileID: 4900000, guid: 62b664def1b87e640bd2f652e11066df, type: 3}
   _questData: {fileID: 4900000, guid: e4e962c1378032e41b5b2687a2750e8f, type: 3}
   _questMessageData: {fileID: 4900000, guid: 150524e96fb21a248b87c788817621e0, type: 3}
   _hiddenTileData: {fileID: 4900000, guid: fef40b106deb686458e56e7ce978a9d6, type: 3}
@@ -2581,6 +2581,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666e286f9410aa04eba43a78a8fd4a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1247041672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1247041674}
+  - component: {fileID: 1247041673}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1247041673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247041672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62314b8897fb1e3409fbdb36b29a7673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endWave: 20
+--- !u!4 &1247041674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247041672}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 867.136, y: 668.75385, z: 3.9889808}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1270522593 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3475774761926954918, guid: ea0b2f6861acd844e838b2c3fa4b544a, type: 3}

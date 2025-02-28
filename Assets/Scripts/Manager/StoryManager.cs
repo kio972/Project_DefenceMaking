@@ -82,6 +82,8 @@ public class StoryManager : MonoBehaviour
 
     private HashSet<IllustrateUI> curUsedIllur;
 
+    private readonly Color fadedColor = new Color(0.4f, 0.4f, 0.4f);
+
     public void SkipScript()
     {
         if(!isSkip)
@@ -185,13 +187,17 @@ public class StoryManager : MonoBehaviour
     {
         IllustrateUI targetUI = GetIllust(targetName);
         if (targetUI == null)
+        {
+            prevIllust?.ChangeColor(fadedColor);
+            prevIllust = null;
             return;
+        }
 
         targetUI.SetRotation(isRight);
         targetUI.SetPosition(illurXPos);
         if (prevIllust != targetUI)
         {
-            prevIllust?.ChangeColor(new Color(0.6f, 0.6f, 0.6f));
+            prevIllust?.ChangeColor(fadedColor);
 
             if (!targetUI.gameObject.activeSelf)
                 targetUI.FadeIn();
@@ -227,7 +233,7 @@ public class StoryManager : MonoBehaviour
 
         if(prevIllust != targetUI)
         {
-            prevIllust?.ChangeColor(new Color(0.6f, 0.6f, 0.6f));
+            prevIllust?.ChangeColor(fadedColor);
 
             if (!targetUI.gameObject.activeSelf)
                 targetUI.FadeIn();
@@ -416,6 +422,13 @@ public class StoryManager : MonoBehaviour
     private void SetBlack()
     {
         prevIllust?.SetColor(Color.black);
+    }
+
+    private void FadeBlack()
+    {
+        if (prevIllust == null)
+            return;
+        prevIllust.ChangeColor(Color.black, 1f);
     }
 
     private void FadeIn()

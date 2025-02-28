@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,21 @@ public class Quest0001 : Quest
         curClearNum[0] = _ClearNum[0] - Mathf.FloorToInt(_CurTime / 1440);
     }
 
+    private async UniTaskVoid TutoClear()
+    {
+        SettingManager.Instance.stageState = 1;
+        SaveManager.Instance.SaveSettingData();
+
+        StoryManager.Instance.EnqueueScript("Tuto200");
+        await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty, cancellationToken: StoryManager.Instance.gameObject.GetCancellationTokenOnDestroy());
+
+        GameManager.Instance.WinGame();
+    }
+
     public override void CompleteQuest()
     {
         base.CompleteQuest();
-        GameManager.Instance.WinGame();
-        SettingManager.Instance.stageState = 1;
-        SaveManager.Instance.SaveSettingData();
+        TutoClear().Forget();
     }
 
     public override void FailQuest()
