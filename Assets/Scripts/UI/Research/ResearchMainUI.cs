@@ -29,17 +29,19 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
     [SerializeField]
     private AK.Wwise.Event openSound;
 
-    private async UniTask IResearch(ResearchSlot curResearch, float additionalTime)
+    private async UniTask ExcuteResearch(ResearchSlot curResearch, float additionalTime)
     {
         this.curResearch = curResearch;
 
         float startTime = (GameManager.Instance.CurWave * 1440) + GameManager.Instance.Timer;
         float endTime = startTime + curResearch._ResearchData.requiredTime - additionalTime;
         curResearch.SetResearchState(ResearchState.InProgress);
+        curResearch.OppositeResearch?.UpdateSlotState();
+
         float curTime = startTime;
         await UniTask.Yield(researchCancelToken.Token);
-        
-        while(true)
+
+        while (true)
         {
             curTime += GameManager.Instance.InGameDeltaTime;
             if(curTime >= endTime)
@@ -60,7 +62,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
         this.curResearch = null;
         _completedResearchs.Add(curResearch._ResearchId);
-        Research[] research = curResearch.GetComponents<Research>();
+        IResearch[] research = curResearch.GetComponents<IResearch>();
         foreach(var item in research)
             item?.ActiveResearch();
         
@@ -71,7 +73,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
         researchCancelToken?.Cancel();
         researchCancelToken?.Dispose();
         researchCancelToken = new CancellationTokenSource();
-        IResearch(target, additionalTime).Forget();
+        ExcuteResearch(target, additionalTime).Forget();
         return true;
     }
 
@@ -85,6 +87,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
         researchCancelToken = new CancellationTokenSource();
         curProgressTime = 0f;
         curResearch.SetResearchState(ResearchState.Incomplete);
+        curResearch.OppositeResearch?.UpdateSlotState();
         this.curResearch = null;
     }
 
@@ -149,7 +152,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
             if (_completedResearchs.Contains(slot._ResearchId))
             {
                 slot.SetResearchState(ResearchState.Complete);
-                Research research = slot.GetComponent<Research>();
+                IResearch research = slot.GetComponent<IResearch>();
                 research?.ActiveResearch();
             }
             else if(!string.IsNullOrEmpty(data.curResearch) && slot._ResearchId == data.curResearch)
@@ -161,7 +164,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
     {
         ResearchSlot slot = researchDic[id];
         slot.SetResearchState(ResearchState.Complete);
-        Research research = slot.GetComponent<Research>();
+        IResearch research = slot.GetComponent<IResearch>();
         research?.ActiveResearch();
         _completedResearchs.Add(slot._ResearchId);
     }
@@ -184,7 +187,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
                     continue;
 
                 slot.SetResearchState(ResearchState.Complete);
-                Research research = slot.GetComponent<Research>();
+                IResearch research = slot.GetComponent<IResearch>();
                 research?.ActiveResearch();
             }
         }

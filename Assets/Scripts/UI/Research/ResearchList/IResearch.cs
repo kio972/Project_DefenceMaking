@@ -29,7 +29,7 @@ public struct ResearchData
     }
 }
 
-public interface Research
+public interface IResearch
 {
     public void ActiveResearch();
 }

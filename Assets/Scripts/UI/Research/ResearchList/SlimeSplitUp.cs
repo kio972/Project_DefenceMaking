@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeSplitUp : MonoBehaviour, Research
+public class SlimeSplitUp : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int value = 1;

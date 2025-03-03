@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReduceManaCost : MonoBehaviour, Research
+public class ReduceManaCost : MonoBehaviour, IResearch
 {
     [SerializeField]
     private MonsterType targetType;

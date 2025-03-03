@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class RockUpgrade : MonoBehaviour, Research
+public class RockUpgrade : MonoBehaviour, IResearch
 {
     [SerializeField]
     int value = 5;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DevilAuraUp : MonoBehaviour, Research
+public class DevilAuraUp : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int range = 1;

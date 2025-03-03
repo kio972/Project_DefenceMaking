@@ -311,11 +311,11 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         {
             //if (!slot.gameObject.activeSelf)
             //    continue;
-            if (slot.cardType == CardType.Trap)
-            {
-                slot.gameObject.SetActive(true);
-                continue;
-            }
+            //if (slot.cardType == CardType.Trap)
+            //{
+            //    slot.gameObject.SetActive(true);
+            //    continue;
+            //}
 
             slot.gameObject.SetActive(slot.IsUnlocked);
         }
@@ -347,6 +347,8 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             SetActive(true);
     }
 
+    private readonly string[] basicTraps = { "s_t100001", "s_t100002", "s_t100003", "s_t100004" };
+
     public void Init()
     {
         DeploySlot[] temp = GetComponentsInChildren<DeploySlot>(true);
@@ -366,6 +368,9 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         }
 
         deployItems[0].SendInfo();
+
+        foreach(var id in basicTraps)
+            PassiveManager.Instance.deployAvailableTable.Add(id, true);
 
         initState = true;
     }

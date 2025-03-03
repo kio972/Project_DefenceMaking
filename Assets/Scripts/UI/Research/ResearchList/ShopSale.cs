@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopSale : MonoBehaviour, Research
+public class ShopSale : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int value = 10;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeAttackSpeed : MonoBehaviour, Research
+public class UpgradeAttackSpeed : MonoBehaviour, IResearch
 {
     [SerializeField]
     private MonsterType targetType;

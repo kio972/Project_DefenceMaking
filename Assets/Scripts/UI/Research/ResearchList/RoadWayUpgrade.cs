@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadWayUpgrade : MonoBehaviour, Research
+public class RoadWayUpgrade : MonoBehaviour, IResearch
 {
     private void ApplyRoadWayUpgrade()
     {

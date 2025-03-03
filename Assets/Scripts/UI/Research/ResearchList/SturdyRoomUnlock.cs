@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-public class SturdyRoomUnlock : MonoBehaviour, Research
+public class SturdyRoomUnlock : MonoBehaviour, IResearch
 {
     private void ApplySturdyRoom(CompleteRoom completeRoom)
     {

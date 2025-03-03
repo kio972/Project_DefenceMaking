@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadWayUnlock : MonoBehaviour, Research
+public class RoadWayUnlock : MonoBehaviour, IResearch
 {
     private bool IsConnectedWithRoadWay(Tile tile)
     {

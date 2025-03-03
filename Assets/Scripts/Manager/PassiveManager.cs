@@ -43,6 +43,8 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     private int tileDestructIncome = 0;
     public int _TileDesturctIncome { get => tileDestructIncome; }
 
+    public Dictionary<string, bool> unLockDictionary = new Dictionary<string, bool>();
+
     public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
 
     //public int devilAuraRange { get; private set; } = 0;
@@ -81,6 +83,11 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     //        manaTile[item] += manaAmount;
     //    }
     //}
+
+    public void SetUnLockState(string target, bool value)
+    {
+        unLockDictionary[target] = value;
+    }
 
     public void MimicBuffActive()
     {
@@ -162,10 +169,14 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         monsterTypeHp_Weight[(int)monsterType] += value;
     }
 
+    public void RemoveDeployData(string targetId)
+    {
+        deployAvailableTable[targetId] = false;
+    }
+
     public void AddDeployData(string targetId)
     {
-        if(!deployAvailableTable.ContainsKey(targetId))
-            deployAvailableTable.Add(targetId, true);
+        deployAvailableTable[targetId] = true;
     }
 
     public void AddBuffTable(Dictionary<string, object> data)

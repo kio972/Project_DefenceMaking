@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeResurrect : MonoBehaviour, Research
+public class UpgradeResurrect : MonoBehaviour, IResearch
 {
     [SerializeField]
     private MonsterType targetType;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DevilEscapeUnlock : MonoBehaviour, Research
+public class DevilEscapeUnlock : MonoBehaviour, IResearch
 {
     public void ActiveResearch()
     {

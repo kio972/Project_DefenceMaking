@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HerbMaxUp : MonoBehaviour, Research
+public class HerbMaxUp : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int targetHerb = 1;

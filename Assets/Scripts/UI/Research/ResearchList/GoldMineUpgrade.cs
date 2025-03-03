@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class GoldMineUpgrade : MonoBehaviour, Research
+public class GoldMineUpgrade : MonoBehaviour, IResearch
 {
     [SerializeField]
     int value = 5;

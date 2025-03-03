@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MimicBuff : MonoBehaviour, Research
+public class MimicBuff : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int value = 2;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DevilEscapeReduceHpCost : MonoBehaviour, Research
+public class DevilEscapeReduceHpCost : MonoBehaviour, IResearch
 {
     [SerializeField]
     int value = 5;

@@ -140,6 +140,10 @@ card_0_swamp,늪,Swamp
 card_1_swamp,주변 모험가들의 이동속도를 25% 감소,Reduces the movement speed of nearby adventurers by 25%
 card_0_manastone,마력석,Mana Stone
 card_1_manastone,주변 타일 마력 + 1,Nearby Tile's Mana + 1
+card_0_crater,마력 분화구,Mana crater
+card_1_crater,주위 몬스터 생산지의 소환 속도 25% 감소,Reduces nearby monster spawn rate by 25%
+card_0_cavespring,동굴샘,Cave lake
+card_1_cavespring,주위 환경 타일 강화,Enhances the surrounding environment tiles
 card_0_blackherbgarden,흑색 약초 텃밭,Black Herb Garden
 card_1_blackherbgarden,24시간 마다 흑색 약초 +1,+1 Black Herb per 24 hours
 card_0_purpleherbgarden,자색 약초 텃밭,Purple Herb Garden
@@ -147,7 +151,7 @@ card_1_purpleherbgarden,24시간 마다 자색 약초 +1,+1 Purple Herb per 24 h
 card_0_whiteherbgarden,백색 약초 텃밭,White Herb Garden
 card_1_whiteherbgarden,24시간 마다 백색 약초 +1,+1 White Herb per 24 hours
 card_0_blackherbfarm,흑색 약초 생산지,Black Herb Farm
-card_1_blackherbfarm,24시간 마다 흑색 약초 +4,+4 lack herbs per 24 hours
+card_1_blackherbfarm,24시간 마다 흑색 약초 +4,+4 Black herbs per 24 hours
 card_0_purpleherbfarm,자색 약초 생산지,Purple Herb Farm
 card_1_purpleherbfarm,24시간 마다 자색 약초 +4,+4 Purple herb per 24 hours
 card_0_whiteherbfarm,백색 약초 생산지,White Herb Farm
@@ -392,12 +396,24 @@ research_envir1_0,석재 선별,Stone selection
 research_envir1_1,바위 타일이 제공하는 추가 체력 +1,Increase bonus health from Rock tile (+1)
 research_envir2_0,고급 채광 기술,Advanced mining technique
 research_envir2_1,금광 타일이 제공하는 금화 +5,Increase bonus gold from Gold Mine tile (+5)
+research_envir3_0,마력 분화구,Mana crater
+research_envir3_1,주위 몬스터 생산지의 생산 시간 25% 감소,Reduces nearby monster spawn rate by 25%
+research_envir4_0,동굴샘,Cave lake
+research_envir4_1,주위 환경타일 강화,Enhances the surrounding environment tiles
+research_trap1_0,함정 유지 보수,Trap maintenance
+research_trap1_1,함정의 내구도 강화,Increases trap durability.
+research_trap2_0,함정 재설계,Trap redesign
+research_trap2_1,함정의 공격력 강화,Enhances trap attack power.
+research_trap3_0,적을 찾아라,Seek the enemy
+research_trap3_1,함정이 상위 은신 상태인 적 공격 가능,Traps can target highly stealthed enemies.
+research_trap4_0,길동무,Companion in death
+research_trap4_1,함정 파괴시 주위에 피해를 가함,Destroyed traps deal area damage.
 research_barri1_0,목제 바리케이드 해금,Unlock wooden barricade
 research_barri1_1,"슬라임, 고블린의 이동을 막는 바리케이드",Wooden barricade that block slimes and goblins 
 research_barri2_0,철제 바리케이드 해금,Unlock metal barricade
 research_barri2_1,"골렘, 미믹의 이동을 막는 바리케이드",Metal barricade that unlock golems and mimics
-research_magic1_0,휴지통 해금,Unlock recycle bin
-research_magic1_1,손 패의 카드를 모두 버리는 카드,Card that discards all your hand
+research_magic1_0,카드 재활용 해금,Unlock recycle card
+research_magic1_1,손에 있는 모든 카드를 버린 후 그 수만큼 다시 뽑는다.,"Discard all cards in hand, then redraw the same amount."
 research_chance1_0,한번 더,One more chance
 research_chance1_1,아이템 선택 페이즈 때 제시되는 아이템을 1회 새로고침 한다.,Refresh the items presented during the item selection phase once.
 research_maohp1_0,마왕의 활력 1,Demonic vigor I
@@ -728,6 +744,10 @@ tooltip_swamp_1,"주변 타일의 모험가들의 이동속도를 25% 감소시�
 effects do not stack "
 tooltip_manastone_0,마력석,Mana stone
 tooltip_manastone_1,주변 타일의 마력 +1,nearby mana capacity +1
+tooltip_crater_0,분화구,Crater
+tooltip_crater_1,주위 몬스터 생산지의 소환 속도 25% 감소,Reduces nearby monster spawn rate by 25%
+tooltip_cavespring_0,동굴샘,Cave Spring
+tooltip_cavespring_1,주위 환경 타일 강화,Enhances the surrounding environment tiles
 tooltip_lonelyrock_0,외톨이 바위,Lonely Rocks
 tooltip_lonelyrock_1,"바위는 혼자일 수록 강하다.
 모든 몬스터 HP +15","A rock is stronger when it is alone.
@@ -873,9 +893,16 @@ tooltip_ui_magicpower_1,"몬스터를 소환하는데 사용되는 힘
 사용 중인 마력 / 사용 가능한 마력을 나타낸다.","Mysterious ower to summon and command monsters
 Indicates currently using mana/max mana"
 tooltip_ui_round_0,라운드,Round
-tooltip_ui_round_1,24시간이 지나면 숫자가 1 올라간다.,Move to next round after 24 hours
+tooltip_ui_round_1,24시간이 지나면 다음 라운드가 진행된다.,Move to next round after 24 hours
 tooltip_ui_time_0,시간,Time
 tooltip_ui_time_1,던전 내부 시간을 알려준다.,Indicates time of dungeon
+tooltip_ui_debt1_0,채무 상환,Debt Repayment
+tooltip_ui_debt1_1,100골드의 빚을 갚는다.,Repay 100 gold
+tooltip_ui_debt2_1,150골드의 빚을 갚는다.,Repay 150 gold
+tooltip_ui_debt3_1,300골드의 빚을 갚는다.,Repay 300 gold
+tooltip_ui_debt4_1,500골드의 빚을 갚는다.,Repay 500 gold
+tooltip_ui_debt5_1,700골드의 빚을 갚는다.,Repay 700 gold
+tooltip_ui_debt6_1,1000000골드의 빚을 갚는다,Repay 1000000 gold
 tip_content001,적은 0시에 침입합니다.,The enemy invades at midnight.
 tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.,Not all Demon Kings are respected by their demonic kin.
 tip_content003,단탈리온의 던전은 인간 나라의 영토 내에 존재합니다.,Dantalion's dungeon exists within human territory.
@@ -1012,13 +1039,22 @@ q_m0105_1,"손에 있는 카드를 다 쓰고 말다니.
 
 「전하, 우측의 덱 아이콘을 클릭하여 손패를 보충 할 수 있사옵니다.」
 
-「쉬지 말고 계속 일해주십시오.」","I've spent all cards in my hand.
+「최대 10장의 카드를 손에 쥘 수 있으며 그 이상으로 카드를 보충 하실 경우」
+
+「가장 좌측에 있는 카드부터 손패에서 사라질 것입니다.」
+
+「그러므로 쉬지 말고 계속 일해주십시오.」","I've spent all cards in my hand.
 
 It was a hard work. I have to rest, then.
 
 「My lord, you can fill your hand by clicking on the deck icon on your right.」
 
-「Please continue your work.」"
+「Please continue your work.」
+
+「You can hold up to 10 cards in your hand. If you draw beyond this limit,
+the leftmost cards will be discarded first.」
+
+「So do not rest—keep working.」"
 q_m0105_2,뭐...뭣!,Wait...what?
 q0001_0,생존,Survive
 q0001_1,5라운드까지 생존,Survive until Round 5
@@ -1049,13 +1085,13 @@ q_m1001_1,"단탈리온 전하,
 원금 <sprite name=""Gold"">5,000 골드와 이자 <sprite name=""Gold"">10,000골드를 갚을 때까지,
 놈들의 병력들이 계속해서 쳐들어 올 것입니다.
 
-침입하는 적들을 막아내십시오.","Lord Dantallion,
+침입하는 적들을 막아내며 빚을 갚으십시오.","Lord Dantallion,
 
 Merchant guild have sent their final notice.
 Until you repay <sprite name=""Gold"">5,000 gold and <sprite name=""Gold"">10,000 gold in interest,
 Their enforcers will invade your dungeon.
 
-Defeat the enemies"
+Defeat the enemies and repay your debt"
 q_m1001_2,알겠다,I see.
 q_m1002_0,첫번째 상환,First repayment
 q_m1002_1,"소인, 감복했습니다.
@@ -1111,22 +1147,22 @@ q_m2021_0,상점 오픈,Shop is Open
 q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
 
 「전하. 소인이 마계 상회에 제안한 거래가 통과되었습니다.
-- 이제 전하를 위해 상회에서 물건들을 제공할 것입니다.」
+- 이제 전하를 위해 <sprite name=""Shop"">상점에서 물건들을 제공할 것입니다.」
 
-「<sprite name=""Shop"">상점에선 채무를 갚을 수 있는 상환 아이템
-외에도 다양한 상품을 판매하고 있사오니」
+「상회에서 파견된 상인이 다양한 상품을 판매할 예정이오니」
 
-「그러니 게으름 피우지 말고, 계속해서 힘써주십시오.」
+「게으름 피우지 말고, 계속해서 힘써주십시오.」
 
-「상점의 아이템은 72시간 마다 초기화되오니 주의해주십시오.」","This is tiring. I shall rest before Parpra....
+「상점의 아이템은 72시간 마다 변경됩니다.」","This is tiring. I shall rest before Parpra....
 
-「My lord, I have finished the bargain - Demonic merchant guild will provide goods for your dungeon.」
+「My lord, I have finished the bargain - 
+The Demonic Merchant Guild will now provide goods for you at the <sprite name=""Shop""> shop.」
 
-「The <sprite name=""Shop""> shop offers various items, including repayment items that can help you pay off your debt.」
+「A merchant dispatched by the guild will offer a variety of items for sale.」
 
 「So quit being lazy, and keep working.」
 
-「The shop's items reset every 72 hours, so please keep that in mind.」"
+「The shop's items change every 72 hours, so please keep that in mind.」"
 q_m2021_2,이런...,Hells...
 q_m2005_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q_m2005_1,"『마계 상회를 이용해 주셔서 감사합니다.』
@@ -1403,9 +1439,9 @@ q1004_2,41라운드 전까지 5000골드 상환,Repay 5000 gold at the Store bef
 q2001_0,맵 이동 조작,Screen move operation
 q2001_1,"휠 클릭&드래그 or W,A,S,D 키로 화면 이동","Move the screen with the wheel click & drag or W,A,S,D keys"
 q2001_2,"휠 클릭&드래그 or W,A,S,D 키 1회 조작","Click & drag the wheel or press the W,A,S,D keys once"
-q2021_0,상환 아이템 구매,Purchase repayment item
-q2021_1,상환 아이템 구매하기,Purchase repayment item
-q2021_2,상환 아이템 1회 구매,Purchase 1 repayment item at the store
+q2021_0,상점 확인하기,Open the Shop
+q2021_1,상점 확인하기,Open the Shop
+q2021_2,상점 확인하기,Open the Shop
 q2005_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q2005_1,아이템 구매하기(상환 아이템 제외),Purchase an Item (except Repayment Items)
 q2005_2,제한시간 내에 상점에서 아이템 1개 구매(상환 아이템 제외),Purchase 1 item from the shop(except Repayment Items)
@@ -1453,7 +1489,7 @@ q2017_1,비밀 타일을 밝혀내라,Uncover the Secret Tile
 q2017_2,3개의 비밀 타일 밝혀내기,Reveal 3 Secret Tiles
 q2018_0,상회의 집행자,Guild enforcers
 q2018_1,집행자 돌려보내기,Make enforcers return
-q2018_2,밀린 상환 아이템을 모두 구매하여 집행자 돌려보내기,Purchase all overdue repayment items to send the enforcer away.
+q2018_2,집행자 위의 아이콘을 클릭해서 집행자 돌려보내기,Click the icon above the enforcer to send it back.
 q2019_0,슬라임 킹,Slime King
 q2019_1,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king tile
 q2019_2,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king tile

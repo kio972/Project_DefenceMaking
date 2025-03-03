@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeDestuctIncome : MonoBehaviour, Research
+public class UpgradeDestuctIncome : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int value;

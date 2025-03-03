@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardPoolExpand2 : MonoBehaviour, Research
+public class CardPoolExpand2 : MonoBehaviour, IResearch
 {
     [SerializeField]
     private string targetCardId;
