@@ -13,7 +13,7 @@ public class ExplosionSlime : Slime
 
     private void ExplodeEffect()
     {
-        var targets = GetRangedTargets(transform.position, 1, false);
+        var targets = GetRangedTargets(transform.position, 0.75f, false);
         foreach (Adventurer item in targets)
             item.GetDamage(explosionDamage, this);
         if (explosionPrefab != null)

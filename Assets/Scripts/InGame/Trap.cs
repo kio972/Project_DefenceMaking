@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UniRx;
+using UnityEngine.UIElements;
 
 public class Trap : MonoBehaviour, IDestructableObjectKind
 {
@@ -88,7 +89,10 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
         if (battle == null || battle.unitType == UnitType.Player) return;
 
         if(battle.HaveEffect<Stealth_sup>())
-            return;
+        {
+            if (!PassiveManager.Instance.unLockDictionary.ContainsKey("TrapDetect") || !PassiveManager.Instance.unLockDictionary["TrapDetect"])
+                return;
+        }
 
         targetList.Add(battle);
     }
@@ -148,6 +152,25 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
             targetList.Remove(removeTarget);
     }
 
+    private void Explosion()
+    {
+        List<Battler> validTargets = new List<Battler>();
+        Collider[] colliders = new Collider[30];
+        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, 0.5f, colliders, LayerMask.GetMask("Character"));
+        for (int i = 0; i < colliderCount; i++)
+        {
+            Battler battle = colliders[i].GetComponent<Battler>();
+            if (battle == null)
+                continue;
+            if (battle.unitType == UnitType.Player || battle.isDead)
+                continue;
+            validTargets.Add(battle);
+        }
+
+        foreach(Battler target in validTargets)
+            target.GetDamage(Damage, null);
+    }
+
     private void Update()
     {
         if (!isInit)
@@ -176,6 +199,10 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
         }
 
         if (attackCount >= duration)
+        {
+            if (PassiveManager.Instance.unLockDictionary.ContainsKey("TrapExplosion") && PassiveManager.Instance.unLockDictionary["TrapExplosion"])
+                Explosion();
             DestroyObject();
+        }
     }
 }

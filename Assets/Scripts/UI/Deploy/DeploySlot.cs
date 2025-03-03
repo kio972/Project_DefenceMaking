@@ -61,8 +61,10 @@ public class DeploySlot : MonoBehaviour, ISlot
     {
         get
         {
-            if (!isUnlocked && PassiveManager.Instance.deployAvailableTable.ContainsKey(id))
-                isUnlocked = true;
+            if (PassiveManager.Instance.deployAvailableTable.ContainsKey(id))
+            {
+                isUnlocked = PassiveManager.Instance.deployAvailableTable[id];
+            }
 
             return isUnlocked;
         }
@@ -129,7 +131,6 @@ public class DeploySlot : MonoBehaviour, ISlot
         {
             duration = Convert.ToInt32(data["duration"]);
             maxTarget = Convert.ToInt32(data["targetCount"]);
-            isUnlocked = true;
         }
 
         manaText.gameObject.SetActive(mana == 0 ? false : true);

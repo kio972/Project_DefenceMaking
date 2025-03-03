@@ -11,7 +11,7 @@ public class PoisonSlime : Slime
 
     private void PosionEffect()
     {
-        var targets = GetRangedTargets(transform.position, 1, false);
+        var targets = GetRangedTargets(transform.position, 0.5f, false);
         foreach(Adventurer item in targets)
             item.AddStatusEffect<Poison>(new Poison(item, 180));
         if (explosionPrefab != null)

@@ -370,7 +370,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         deployItems[0].SendInfo();
 
         foreach(var id in basicTraps)
-            PassiveManager.Instance.deployAvailableTable.Add(id, true);
+            PassiveManager.Instance.deployAvailableTable[id] = true;
 
         initState = true;
     }
@@ -379,6 +379,11 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
     private GameObject btnObject;
 
     private bool isActived { get => btnObject.activeSelf || uiPage.activeSelf; }
+
+    private void Start()
+    {
+        Init();
+    }
 
     public void Update()
     {
