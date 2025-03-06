@@ -50,6 +50,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
     private InGameUI ingameUI;
 
     public bool updateItem = true;
+    public bool setContinuous = true;
 
     [SerializeField]
     private AK.Wwise.Event openSound;
@@ -195,7 +196,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
 
-            if (!Input.GetKey(KeyCode.LeftShift))
+            if (!Input.GetKey(KeyCode.LeftShift) || !setContinuous)
                 DeployEnd().Forget();
         }
         else if (curNode != null && !curNode.setAvail)
@@ -382,7 +383,8 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
 
     private void Start()
     {
-        Init();
+        if(updateItem)
+            Init();
     }
 
     public void Update()
