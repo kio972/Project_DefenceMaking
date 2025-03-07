@@ -61,9 +61,31 @@ public class QuestCondition_m2006 : QuestCondition
 
 public class QuestCondition_m2015 : QuestCondition
 {
+    int prevCount = 0;
+    bool isUnlocked = false;
+    private bool IsMonsterUnlocked
+    {
+        get
+        {
+            foreach(var kvp in PassiveManager.Instance.deployAvailableTable)
+            {
+                if (kvp.Key[2] == 'm' && kvp.Key != "s_m10001")
+                    return true;
+            }
+
+            return false;
+        }
+    }
+
     public override bool IsConditionPassed()
     {
-        return PassiveManager.Instance.deployAvailableTable.Count >= 2;
+        if (prevCount != PassiveManager.Instance.deployAvailableTable.Count)
+        {
+            isUnlocked = IsMonsterUnlocked;
+            prevCount = PassiveManager.Instance.deployAvailableTable.Count;
+        }
+
+        return isUnlocked;
     }
 }
 
