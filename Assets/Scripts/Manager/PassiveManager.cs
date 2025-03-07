@@ -44,6 +44,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int _TileDesturctIncome { get => tileDestructIncome; }
 
     public Dictionary<string, bool> unLockDictionary = new Dictionary<string, bool>();
+    public Dictionary<string, int> countDictionary = new Dictionary<string, int>();
 
     public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
 
@@ -83,6 +84,11 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     //        manaTile[item] += manaAmount;
     //    }
     //}
+
+    public void SetCount(string target, int count)
+    {
+        countDictionary[target] = count;
+    }
 
     public void SetUnLockState(string target, bool value)
     {

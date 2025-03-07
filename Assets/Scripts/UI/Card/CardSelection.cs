@@ -1,7 +1,10 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardSelection : MonoBehaviour
 {
@@ -34,6 +37,16 @@ public class CardSelection : MonoBehaviour
     bool[] curSelectIsAdd = new bool[3];
 
     bool isSelectingNow = false;
+
+    private int rerollLeft = 0;
+    [SerializeField]
+    private Button rerollBtn;
+    [SerializeField]
+    private Sprite rerollIdle;
+    [SerializeField]
+    private Sprite rerollUsed;
+    [SerializeField]
+    private TextMeshProUGUI rerollText;
 
     [SerializeField]
     AK.Wwise.Event selectSound;
@@ -196,6 +209,36 @@ public class CardSelection : MonoBehaviour
 
         GameManager.Instance.SetPause(true);
 
+        SetNewCards();
+
+        gameObject.SetActive(true);
+
+        foreach (var item in dissolves)
+        {
+            if(item.gameObject.activeInHierarchy)
+                item.isAppare = true;
+        }
+        
+        rerollLeft = PassiveManager.Instance.countDictionary.ContainsKey("Reroll") ? PassiveManager.Instance.countDictionary["Reroll"] : 0;
+        rerollBtn.gameObject.SetActive(rerollLeft > 0);
+        rerollBtn.GetComponent<Image>().sprite = rerollIdle;
+        rerollBtn.enabled = true;
+        UpdateRerollText();
+
+        isSelectingNow = true;
+    }
+
+    private void UpdateRerollText()
+    {
+        string[] text = DataManager.Instance.GetDescription("ui_Reroll").Split('%');
+        if(text.Length >= 1)
+            rerollText.text = $"{text[0]}{rerollLeft}";
+        else if(text.Length >= 2)
+            rerollText.text = $"{text[0]}{rerollLeft}{text[1]}";
+    }
+
+    private void SetNewCards()
+    {
         SetCardUI(0);
         SetCardUI(1);
 
@@ -208,15 +251,31 @@ public class CardSelection : MonoBehaviour
         }
         else
             curSelectIndex[2] = -1;
+    }
 
-        gameObject.SetActive(true);
+    private async UniTaskVoid ExcuteReroll()
+    {
+        rerollBtn.enabled = false;
 
-        foreach (var item in dissolves)
+        Animator animator = GetComponent<Animator>();
+        animator?.SetTrigger("Reroll");
+        await UniTask.Delay(1000);
+
+        rerollBtn.enabled = true;
+    }
+
+    public void OnRerollClicked()
+    {
+        if (rerollLeft == 0)
+            return;
+
+        ExcuteReroll().Forget();
+        rerollLeft--;
+        UpdateRerollText();
+        if (rerollLeft == 0)
         {
-            if(item.gameObject.activeInHierarchy)
-                item.isAppare = true;
+            rerollBtn.GetComponent<Image>().sprite = rerollUsed;
         }
-        isSelectingNow = true;
     }
 
     public void AddCardToPool(string id)
