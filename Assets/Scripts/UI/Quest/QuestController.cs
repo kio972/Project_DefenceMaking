@@ -61,6 +61,20 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     AK.Wwise.Event createSound;
 
+    public QuestInfo GetInformer(string questId)
+    {
+        if (mainInfomer.curQuest._QuestID == questId)
+            return mainInfomer;
+
+        foreach(QuestInfo questInfo in subInformer)
+        {
+            if(questInfo.curQuest._QuestID == questId)
+                return questInfo;
+        }
+
+        return null;
+    }
+
     public bool IsQuestStarted(string questID)
     {
         if (_mainQuest != null && _mainQuest._QuestID == questID)

@@ -527,7 +527,7 @@ public class CardDeckController : MonoBehaviour
 
     }
 
-    public void DrawCard(int cardIndex)
+    public void DrawCard(int cardIndex, Transform startPos)
     {
         //if (_cardDeck.Count < 1) return;
         //if (!_cardDeck.Contains(cardIndex)) return;
@@ -537,7 +537,12 @@ public class CardDeckController : MonoBehaviour
             card?.RemoveCard(false).Forget();
         }
 
-        InstantiateCard(ReturnDeck(cardIndex));
+        InstantiateCard(ReturnDeck(cardIndex), startPos);
+    }
+
+    public void DrawCard(int cardIndex)
+    {
+        DrawCard(cardIndex, transform);
     }
 
     public void DrawCard()
@@ -559,7 +564,7 @@ public class CardDeckController : MonoBehaviour
         _handCards.Remove(cardId);
     }
 
-    private void InstantiateCard(Card targetCard)
+    private void InstantiateCard(Card targetCard, Transform startPos = null)
     {
         GameObject cardPrefab = Resources.Load<GameObject>("Prefab/UI/Card_Frame");
 
@@ -568,7 +573,9 @@ public class CardDeckController : MonoBehaviour
         CardUIEffect cardUI = card.GetComponent<CardUIEffect>();
         card.Init(targetCard);
         cardUI?.DrawEffect();
-        card.transform.position = transform.position;
+        if (startPos == null)
+            startPos = transform;
+        card.transform.position = startPos.position;
         _cards.Add(card.transform);
         _handCards.Add(targetCard.cardIndex);
         SetCardPosition();
