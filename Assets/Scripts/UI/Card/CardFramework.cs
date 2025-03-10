@@ -312,6 +312,7 @@ public class CardFramework : MonoBehaviour
                 //image.raycastTarget = false;
                 CardUIEffect effect = GetComponent<CardUIEffect>();
                 effect.OnMagicDrag().Forget();
+                effect.MagicDrag().Forget();
                 break;
         }
 

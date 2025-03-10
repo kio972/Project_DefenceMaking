@@ -8,6 +8,7 @@ using UniRx.Triggers;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using Unity.VisualScripting;
+using UnityEditor.U2D.Path;
 
 public class CardUIEffect : MonoBehaviour
 {
@@ -162,23 +163,31 @@ public class CardUIEffect : MonoBehaviour
 
     public async UniTaskVoid MagicDrag()
     {
-        Vector3 originPos = transform.position;
-        while(Input.GetKey(SettingManager.Instance.key_BasicControl._CurKey))
+        //Vector3 originPos = transform.position;
+        drawEnd = false;
+        _moveToken.Cancel();
+        _scaleToken.Cancel();
+        _moveToken.Dispose();
+        _scaleToken.Dispose();
+        _moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
+
+        await UniTask.WaitUntil(() => !Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey), cancellationToken: _moveToken.Token);
+        while(true)
         {
-            bool cancelInput = Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
+            bool cancelInput = Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
             if(cancelInput)
-            {
-                transform.position = originPos;
-                OnPointerExit();
-                return;
-            }    
+                break;
             transform.position = Input.mousePosition;
+            transform.localScale = Vector3.one;
+            effectTarget.rotation = Quaternion.identity;
             effectTarget.position = transform.position;
 
             await UniTask.Yield(cancellationToken: _moveToken.Token);
         }
 
         transform.position = originPos;
+        drawEnd = true;
         OnPointerExit();
     }
 
@@ -196,12 +205,12 @@ public class CardUIEffect : MonoBehaviour
             image.OnPointerEnterAsObservable().Where(_ => !GameManager.Instance.cardLock && drawEnd && !InputManager.Instance.settingCard).Subscribe(_ => OnPointerEnter());
             image.OnPointerExitAsObservable().Where(_ => drawEnd).Subscribe(_ => OnPointerExit());
 
-            CardFramework cardFramework = GetComponent<CardFramework>();
-            if(cardFramework != null && cardFramework._cardInfo.Value.cardType == CardType.Magic)
-            {
-                var startStream = image.OnPointerDownAsObservable()
-                    .Subscribe(_ => MagicDrag().Forget()).AddTo(disposables);
-            }
+            //CardFramework cardFramework = GetComponent<CardFramework>();
+            //if(cardFramework != null && cardFramework._cardInfo.Value.cardType == CardType.Magic)
+            //{
+            //    var startStream = image.OnPointerDownAsObservable()
+            //        .Subscribe(_ => MagicDrag().Forget()).AddTo(disposables);
+            //}
         }
     }
 }
