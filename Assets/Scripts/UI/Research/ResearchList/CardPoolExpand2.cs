@@ -14,9 +14,10 @@ public class CardPoolExpand2 : MonoBehaviour, IResearch
 
         int index = DataManager.Instance.deckListIndex[targetCardId];
         GameManager.Instance.cardDeckController.AddCard(index);
-        if (GameManager.Instance.cardDeckController.hand_CardNumber >= GameManager.Instance.cardDeckController.maxCardNumber)
-            GameManager.Instance.cardDeckController.EnqueueCard(index);
-        else
-            GameManager.Instance.cardDeckController.DrawCard(index);
+        //if (GameManager.Instance.cardDeckController.hand_CardNumber >= GameManager.Instance.cardDeckController.maxCardNumber)
+        //    GameManager.Instance.cardDeckController.EnqueueCard(index);
+        //else
+        //    GameManager.Instance.cardDeckController.DrawCard(index);
+        GameManager.Instance.cardDeckController.DrawCard(index);
     }
 }

@@ -392,13 +392,13 @@ public class CardDeckController : MonoBehaviour
         if (GameManager.Instance.drawLock)
             return;
 
-        if (hand_CardNumber >= maxCardNumber)
-        {
-            GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_handfull"));
-            refusedSound?.Post(gameObject);
-            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            return;
-        }
+        //if (hand_CardNumber >= maxCardNumber)
+        //{
+        //    GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_handfull"));
+        //    refusedSound?.Post(gameObject);
+        //    //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        //    return;
+        //}
 
         if (GameManager.Instance.gold < _CardPrice)
         {
@@ -531,6 +531,11 @@ public class CardDeckController : MonoBehaviour
     {
         //if (_cardDeck.Count < 1) return;
         //if (!_cardDeck.Contains(cardIndex)) return;
+        if (hand_CardNumber >= maxCardNumber)
+        {
+            CardController card = cards[0].GetComponentInChildren<CardController>();
+            card?.RemoveCard(false).Forget();
+        }
 
         InstantiateCard(ReturnDeck(cardIndex));
     }
@@ -538,6 +543,12 @@ public class CardDeckController : MonoBehaviour
     public void DrawCard()
     {
         if(_cardDeck.Count < 1) return;
+
+        if(hand_CardNumber >= maxCardNumber)
+        {
+            CardController card = cards[0].GetComponentInChildren<CardController>();
+            card?.RemoveCard(false).Forget();
+        }
 
         InstantiateCard(ReturnDeck());
     }
