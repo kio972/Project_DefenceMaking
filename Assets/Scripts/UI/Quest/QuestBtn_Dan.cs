@@ -36,8 +36,8 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
 
     public override void SetText()
     {
-        string header = DataManager.Instance.GetDescription("shop_item0021_0");
-        string desc = "";
+        string header = DataManager.Instance.GetDescription("tooltip_ui_debt1_0");
+        string desc = DataManager.Instance.GetDescription("tooltip_ui_debt1_1");
         string additional = $"{DataManager.Instance.GetDescription("ui_GoldCost")} : <color=yellow>{repayAmount}</color> <sprite name=\"Gold\">";
         GameManager.Instance._InGameUI.mouseOverTooltip?.SetMesseage(transform, pivot, true, header, desc, additional);
     }

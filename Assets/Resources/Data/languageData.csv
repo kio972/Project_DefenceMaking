@@ -143,8 +143,8 @@ card_0_manastone,마력석,Mana Stone
 card_1_manastone,주변 타일 마력 + 1,Nearby Tile's Mana + 1
 card_0_crater,마력 분화구,Mana crater
 card_1_crater,주위 몬스터 생산지의 소환 속도 25% 감소,Reduces nearby monster spawn rate by 25%
-card_0_cavespring,동굴샘,Cave lake
-card_1_cavespring,주위 환경 타일 강화,Enhances the surrounding environment tiles
+card_0_cavelake,동굴샘,Cave lake
+card_1_cavelake,주위 환경 타일 강화,Enhances the surrounding environment tiles
 card_0_blackherbgarden,흑색 약초 텃밭,Black Herb Garden
 card_1_blackherbgarden,24시간 마다 흑색 약초 +1,+1 Black Herb per 24 hours
 card_0_purpleherbgarden,자색 약초 텃밭,Purple Herb Garden
@@ -296,7 +296,7 @@ research_goblin2_1,"체력이 낮아지면 도주한다.
 Ranged attack.
 Detect invisible enemies."
 research_goblin3_0,전략적 후퇴,Tactical retreat
-research_goblin3_1,"고블린이 도망친 후, 체력의 20%를 회복",Goblins recover 20% HP after 'retreat'
+research_goblin3_1,"고블린이 도주 후, 체력의 20%를 회복",Goblins recover 20% HP after 'retreat'
 research_goblin4_0,소집 : 고블린 궁수,Employment : Goblin archer
 research_goblin4_1,"체력이 낮아지면 도주한다.
 원거리 공격
@@ -747,8 +747,8 @@ tooltip_manastone_0,마력석,Mana stone
 tooltip_manastone_1,주변 타일의 마력 +1,nearby mana capacity +1
 tooltip_crater_0,분화구,Crater
 tooltip_crater_1,주위 몬스터 생산지의 소환 속도 25% 감소,Reduces nearby monster spawn rate by 25%
-tooltip_cavespring_0,동굴샘,Cave Spring
-tooltip_cavespring_1,주위 환경 타일 강화,Enhances the surrounding environment tiles
+tooltip_cavelake_0,동굴샘,Cave Spring
+tooltip_cavelake_1,주위 환경 타일 강화,Enhances the surrounding environment tiles
 tooltip_lonelyrock_0,외톨이 바위,Lonely Rocks
 tooltip_lonelyrock_1,"바위는 혼자일 수록 강하다.
 모든 몬스터 HP +15","A rock is stronger when it is alone.
@@ -899,6 +899,42 @@ tooltip_ui_time_0,시간,Time
 tooltip_ui_time_1,던전 내부 시간을 알려준다.,Indicates time of dungeon
 tooltip_ui_debt1_0,채무 상환,Debt Repayment
 tooltip_ui_debt1_1,밀린 채무를 상환한다.,Repay overdue debt.
+tooltip_ui_Enemy_0,침입자 정보,Enemy Information
+tooltip_ui_Enemy_1,다음 라운드에 침입할 적들의 구성을 확인할 수 있다.,View the next round's enemy lineup.
+tooltip_ui_Deckinfo_0,덱 정보,Deck Info
+tooltip_ui_Deckinfo_1,덱을 구성하고 있는 카드를 확인할 수 있다.,View cards in your deck.
+tooltip_ui_Durability_1,함정의 체력. 0이 되면 파괴된다.,Trap HP. Destroyed at 0.
+tooltip_ui_MaxTarget_1,최대 공격 가능한 대상의 수,Max Targets: Maximum number of targets it can attack.
+tooltip_ui_rush_0,도주,Escape
+tooltip_ui_rush_1,HP가 1/5 이하로 내려가면 마왕이 있는 방향으로으로 도망간다.,Flees toward the Demon King when HP falls below 1/5.
+tooltip_ui_rockstance_0,바위 태세,Rock Stance
+tooltip_ui_rockstance_1,밀치는 공격에 영향을 받지 않는다.,Immune to knockback attacks.
+tooltip_ui_shield_0,쉴드,Shield
+tooltip_ui_shield_1,최대 HP 20%만큼 피해를 막아주는 방어막. ,Blocks damage up to 20% of max HP.
+tooltip_ui_shieldbreak_0,쉴드 폭발,Shield Burst
+tooltip_ui_shieldbreak_1,쉴드 제거시 주변에 최대 쉴드량의 50% 데미지만큼 피해를 가한다.,Deals 50% of max shield as damage when broken.
+tooltip_ui_shieldrecover_0,쉴드 회복,Shield Regen
+tooltip_ui_shieldrecover_1,"쉴드가 없을 시 일정 시간 후에 보유 체력의 20%를 쉴드로 획득한다.
+HP가 10 이하일 경우 발동되지 않는다.","Recovers shield equal to 20% of current HP after a delay if no shield.
+Doesn't trigger if HP less 10."
+tooltip_ui_charm_0,유혹,Lure
+tooltip_ui_charm_1,적을 자신이 있는 곳으로 유인시킨다.,Attracts enemies to its position.
+tooltip_ui_retrick_0,재둔갑,Re-Disguise
+tooltip_ui_retrick_1,비전투 상태가 됐을 경우 다시 상자로 둔갑하여 유혹을 시전한다.,Returns to box form and lures when out of combat.
+tooltip_ui_trickrecover_0,둔갑 회복,Disguise Heal
+tooltip_ui_trickrecover_1,둔갑 상태에서 HP를 회복한다.,Recovers HP while disguised.
+tooltip_ui_surprise_0,깜짝 등장,Surprise Attack
+tooltip_ui_surprise_1,둔갑 해제시 주변 적들에게 경직 및 넉백 효과를 부여한다.,"On reveal, stuns and knocks back nearby enemies."
+tooltip_ui_Holdcount_0,저지수,Hold Count
+tooltip_ui_Holdcount_1,저지수 만큼의 적을 지나가지 못하게 잡아둔다.,Stops that many enemies from passing.
+tooltip_ui_danskill_0,긴급탈출,Emergency Escape
+tooltip_ui_danskill_1,"HP 5를 소모하여 랜덤 위치로 이동한다.
+마왕 타일 위에 적이 있어도 사용 가능","Spend 5 HP to teleport to a random location. 
+Can be used even if enemies are on the Demon King tile."
+tooltip_ui_refresh_0,초기화,Reset
+tooltip_ui_refresh_1,상점의 상품이 바뀌는 시기. 일정 주기마다 가격 또한 인상된다.,Shop refresh time. Prices increase over time.
+tooltip_ui_stock_0,재고,Stock
+tooltip_ui_stock_1,아이템 구매 가능 횟수,Number of times an item can be purchased.
 tip_content001,적은 0시에 침입합니다.,The enemy invades at midnight.
 tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.,Not all Demon Kings are respected by their demonic kin.
 tip_content003,단탈리온의 던전은 인간 나라의 영토 내에 존재합니다.,Dantalion's dungeon exists within human territory.
@@ -1161,7 +1197,7 @@ q_m2001_1,"어디보자... 파프라가 쪽지 하나를 더 주었는데?
 
 「You can also use the wheel scroll to zoom in and out.」"
 q_m2001_2,크흠!,Hmmm!
-q_m2021_0,상점 오픈,Shop is Open
+q_m2021_0,채무 상환,Debt Repayment
 q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
 
 「전하. 소인이 마계 상회에 제안한 거래가 통과되었습니다.」
@@ -1455,9 +1491,9 @@ q1004_2,41라운드 전까지 5000골드 상환,Repay 5000 gold at the Store bef
 q2001_0,맵 이동 조작,Screen move operation
 q2001_1,"휠 클릭&드래그 or W,A,S,D 키로 화면 이동","Move the screen with the wheel click & drag or W,A,S,D keys"
 q2001_2,"휠 클릭&드래그 or W,A,S,D 키 1회 조작","Click & drag the wheel or press the W,A,S,D keys once"
-q2021_0,상점 확인하기,Open the Shop
-q2021_1,상점 확인하기,Open the Shop
-q2021_2,상점 확인하기,Open the Shop
+q2021_0,채무 상환,Debt Repayment
+q2021_1,채무 상환 버튼 조작,Debt Repayment Button Pressed
+q2021_2,채무 상환 버튼 1회 조작,Debt Repayment Button Pressed Once
 q2005_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q2005_1,아이템 구매하기(상환 아이템 제외),Purchase an Item (except Repayment Items)
 q2005_2,제한시간 내에 상점에서 아이템 1개 구매(상환 아이템 제외),Purchase 1 item from the shop(except Repayment Items)
