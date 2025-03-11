@@ -18,6 +18,7 @@ namespace AK
         static const AkUniqueID AMBIENCE_FIELD = 3365997872U;
         static const AkUniqueID BLANK_ALERT_ = 2897588466U;
         static const AkUniqueID CARD_MOUSEOVER = 1586336673U;
+        static const AkUniqueID CARD_SELECT = 1259932846U;
         static const AkUniqueID DEMON_ATTACK = 1927135673U;
         static const AkUniqueID DEMON_DEATH = 3545023021U;
         static const AkUniqueID DEMON_HIT_RECALL = 3083558972U;
@@ -33,6 +34,8 @@ namespace AK
         static const AkUniqueID ENEMY_SPEAR_DEAD = 4123569734U;
         static const AkUniqueID ENEMY_THIEF_ATTACK = 1904917713U;
         static const AkUniqueID ENEMY_WARRIOR_ATTACK = 768907175U;
+        static const AkUniqueID GET_COIN = 1153341081U;
+        static const AkUniqueID GET_HP = 634124798U;
         static const AkUniqueID HIDDEN_TILE = 3069863532U;
         static const AkUniqueID ICON_DEFEAT = 2677177576U;
         static const AkUniqueID ICON_VICTORY = 1329223949U;
