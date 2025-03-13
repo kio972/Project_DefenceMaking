@@ -6,6 +6,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
 
+public interface ISpawnTimeModifiyer
+{
+    float value { get; }
+
+}
+
 public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 {
     [SerializeField]
