@@ -288,6 +288,7 @@ public class Tile : MonoBehaviour, ITileKind
                 NodeManager.Instance.RoomCheck(this);
         }
 
+        NodeManager.Instance.IncreaseNodeVersion();
         NodeManager.Instance.UpdateMinMaxRowCol(_curNode.row, _curNode.col);
         //NodeManager.Instance.UpdateSightNode();
         GameManager.Instance.CheckBattlerCollapsed();
@@ -299,7 +300,6 @@ public class Tile : MonoBehaviour, ITileKind
             buildSound?.Post(gameObject);
         }
 
-        NodeManager.Instance.IncreaseNodeVersion();
     }
 
     private void SetTileVisible(bool value)

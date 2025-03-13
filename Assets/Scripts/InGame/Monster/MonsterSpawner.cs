@@ -57,6 +57,8 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 
     public bool isSpawnLocked = false;
 
+    public bool spawnerActivatedState { get => !isSpawnLocked && isUpdate; }
+
     public void ModifyCoolTime(float rate)
     {
         spawnCoolTime *= rate;
