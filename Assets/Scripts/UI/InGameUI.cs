@@ -34,6 +34,19 @@ public class InGameUI : MonoBehaviour
 
     public bool rightUILock = false;
 
+    [SerializeField]
+    private Transform mainBtn;
+    private IQuestInteract _mainQuestInteractBtn;
+    public IQuestInteract mainQuestInteractBtn
+    {
+        get
+        {
+            if(_mainQuestInteractBtn == null)
+                _mainQuestInteractBtn = mainBtn.GetComponent<IQuestInteract>();
+            return _mainQuestInteractBtn;
+        }
+    }
+
     public void StartBloodEffect()
     {
         bloodEffect?.StartBloodEffect();

@@ -6,6 +6,7 @@ using TMPro;
 
 public interface IQuestInteract
 {
+    void EndQuest();
     void SetQuest(Quest quest);
 }
 
@@ -44,9 +45,13 @@ public class QuestInfo : MonoBehaviour
     private GameObject alarmObject;
 
     [SerializeField]
+    bool isMainQuest = false;
+
+    [SerializeField]
     AK.Wwise.Event clearSound;
     [SerializeField]
     AK.Wwise.Event failSound;
+
 
     private IQuestInteract _interactBtn;
     private IQuestInteract interactBtn
@@ -54,7 +59,12 @@ public class QuestInfo : MonoBehaviour
         get
         {
             if (_interactBtn == null)
-                _interactBtn = GetComponentInChildren<IQuestInteract>(true);
+            {
+                if (isMainQuest)
+                    _interactBtn = GameManager.Instance._InGameUI.mainQuestInteractBtn;
+                else
+                    _interactBtn = GetComponentInChildren<IQuestInteract>(true);
+            }
             return _interactBtn;
         }
     }
@@ -78,6 +88,7 @@ public class QuestInfo : MonoBehaviour
         else
             failSound?.Post(gameObject);
         _curQuest = null;
+        interactBtn?.EndQuest();
     }
 
     public void SetQuestText(Quest quest)

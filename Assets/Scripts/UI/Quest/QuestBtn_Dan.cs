@@ -14,7 +14,15 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
     readonly string successClipName = "Use_Coin";
     readonly string faillClipName = "UI_Fail";
 
-    readonly Vector2 pivot = new Vector2(-0.2f, 0.5f);
+    readonly Vector2 pivot = new Vector2(0.5f, 1.4f);
+    readonly string interactBtnKey = "tooltip_ui_debt1_0";
+
+    public void EndQuest()
+    {
+        repay = null;
+        gameObject.SetActive(false);
+    }
+
     public void OnClick()
     {
         if (repay == null || repay._IsClear)
@@ -56,6 +64,12 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
             rate = repay._QuestID == "q1001" ? 5 : 10;
             repayAmount = Mathf.Abs(repay._ClearNum[0]) / rate;
             gameObject.SetActive(true);
+        }
+
+        LanguageText btnText = GetComponentInChildren<LanguageText>(true);
+        if(btnText != null)
+        {
+            btnText.ChangeLangauge(SettingManager.Instance.language, interactBtnKey);
         }
     }
 }
