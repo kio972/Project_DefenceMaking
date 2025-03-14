@@ -1527,6 +1527,7 @@ GameObject:
   - component: {fileID: 3329772447551416610}
   - component: {fileID: 3335083893009023750}
   - component: {fileID: 7084440569755055320}
+  - component: {fileID: 3926750578669736663}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1592,6 +1593,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3926750578669736663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447434321223925296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_magicpower_0
+  descKey: tooltip_ui_magicpower_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: -0.05, y: 1.4}
 --- !u!1 &3777113288970779063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1622,7 @@ GameObject:
   - component: {fileID: 3655103852491106753}
   - component: {fileID: 7402042273541640196}
   - component: {fileID: 723658013627022623}
+  - component: {fileID: 3053452935768559214}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1727,6 +1747,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3053452935768559214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777113288970779063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_time_0
+  descKey: tooltip_ui_time_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: 0, y: 1.4}
 --- !u!1 &3906233557594634796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,6 +1898,7 @@ GameObject:
   - component: {fileID: 2297587824514387882}
   - component: {fileID: 9035651318046492337}
   - component: {fileID: 3431648488313513656}
+  - component: {fileID: 8678945773997360916}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1925,6 +1964,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8678945773997360916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4097095147945964279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_gold_0
+  descKey: tooltip_ui_gold_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: -0.05, y: 1.4}
 --- !u!1 &4110852009379424162
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,6 +2159,7 @@ GameObject:
   - component: {fileID: 5771344920693269989}
   - component: {fileID: 5817103427438361478}
   - component: {fileID: 5365375480155453588}
+  - component: {fileID: 5945844047505936787}
   m_Layer: 5
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
@@ -2126,8 +2184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 154, y: 80}
+  m_AnchoredPosition: {x: 0, y: -4}
+  m_SizeDelta: {x: 154, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5817103427438361478
 CanvasRenderer:
@@ -2159,8 +2217,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ROUND
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4cfd3859bfa9cf0419bb39027c17aab3, type: 2}
-  m_sharedMaterial: {fileID: -7728803947815060664, guid: 4cfd3859bfa9cf0419bb39027c17aab3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 46ae37a710f591341a71c570de68b970, type: 2}
+  m_sharedMaterial: {fileID: 5186172464639477764, guid: 46ae37a710f591341a71c570de68b970, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2190,11 +2248,11 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -4
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2226,6 +2284,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5945844047505936787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281595866539361619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_round_0
+  descKey: tooltip_ui_round_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: -0.15, y: 1.4}
 --- !u!1 &4328714601930132392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,6 +2313,7 @@ GameObject:
   - component: {fileID: 5504112945090360203}
   - component: {fileID: 372324610430277732}
   - component: {fileID: 8824888951777137329}
+  - component: {fileID: 6973098957916480835}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2302,6 +2379,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6973098957916480835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4328714601930132392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_blackherb_0
+  descKey: tooltip_ui_blackherb_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: -0.05, y: 1.4}
 --- !u!1 &4394094053738304666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,6 +2543,7 @@ GameObject:
   - component: {fileID: 7833495459725920026}
   - component: {fileID: 4502532478769682121}
   - component: {fileID: 6115159726096064425}
+  - component: {fileID: 4042966604202881395}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2513,6 +2609,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4042966604202881395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407996721126372935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_whiteherb_0
+  descKey: tooltip_ui_whiteherb_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: -0.05, y: 1.4}
 --- !u!1 &4420526430300215934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2813,7 +2927,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 154, y: 60}
+  m_SizeDelta: {x: 154, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4155943545820882688
 CanvasRenderer:
@@ -2845,8 +2959,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4cfd3859bfa9cf0419bb39027c17aab3, type: 2}
-  m_sharedMaterial: {fileID: -7728803947815060664, guid: 4cfd3859bfa9cf0419bb39027c17aab3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 46ae37a710f591341a71c570de68b970, type: 2}
+  m_sharedMaterial: {fileID: 5186172464639477764, guid: 46ae37a710f591341a71c570de68b970, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2876,7 +2990,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -4122,6 +4236,7 @@ GameObject:
   - component: {fileID: 6510021929012052320}
   - component: {fileID: 7304220745370029443}
   - component: {fileID: 52439910850140420}
+  - component: {fileID: 3187249061772488966}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4187,3 +4302,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3187249061772488966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8556220145788994940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_purpleherb_0
+  descKey: tooltip_ui_purpleherb_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: -0.05, y: 1.4}

@@ -14,7 +14,7 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
     readonly string successClipName = "Use_Coin";
     readonly string faillClipName = "UI_Fail";
 
-    readonly Vector2 pivot = new Vector2(0.5f, 1.4f);
+    readonly Vector2 pivot = new Vector2(0f, 1.4f);
     readonly string interactBtnKey = "tooltip_ui_debt1_0";
 
     public void EndQuest()

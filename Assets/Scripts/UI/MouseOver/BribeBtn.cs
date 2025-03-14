@@ -35,6 +35,12 @@ public class BribeBtn : MouseOverTarget
         battler.ReturnToBase(false);
     }
 
+    protected override void OnDisable()
+    {
+        gameObject.SetActive(false);
+        base.OnDisable();
+    }
+
     public void Init(Adventurer target, int cost)
     {
         this.cost = cost;

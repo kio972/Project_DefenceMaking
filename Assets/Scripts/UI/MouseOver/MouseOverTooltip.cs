@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MouseOverTooltip : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class MouseOverTooltip : MonoBehaviour
     public void SetActive(bool value)
     {
         gameObject.SetActive(value);
+        if(value)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
     public void SetMesseage(Transform follow, Vector2 pivot, bool isOnUI, string header, string desc, string additional = null)
@@ -33,7 +36,7 @@ public class MouseOverTooltip : MonoBehaviour
 
         this.header.text = header;
         this.desc.text = desc;
-        if(additional == null)
+        if(string.IsNullOrEmpty(additional))
         {
             this.additional.gameObject.SetActive(false);
         }

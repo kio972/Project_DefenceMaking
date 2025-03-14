@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 5082661000328135088}
   - component: {fileID: 8164721907301154229}
   - component: {fileID: 6784104219019952330}
+  - component: {fileID: 7075198724987359147}
   m_Layer: 5
   m_Name: DeckListBtn
   m_TagString: Untagged
@@ -479,6 +480,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardDeckController: {fileID: 8308870059192340280}
   _cardPackView: {fileID: 6011341242429432681}
+--- !u!114 &7075198724987359147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542688845025114575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46229b00cfe0c234abb5b1424ec27509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverTime: 0.5
+  headerKey: tooltip_ui_Deckinfo_0
+  descKey: tooltip_ui_Deckinfo_1
+  additionalKey: 
+  isOnUI: 1
+  pivot: {x: 1, y: 1}
 --- !u!1 &584771036554452325
 GameObject:
   m_ObjectHideFlags: 0
