@@ -191,11 +191,11 @@ public class Quest2006 : QuestKillBattler
         targetId = "s_boss007";
     }
 
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        GameManager.Instance.WinGame();
-    }
+    //public override void CompleteQuest()
+    //{
+    //    base.CompleteQuest();
+    //    GameManager.Instance.WinGame();
+    //}
 }
 
 public class Quest2007 : QuestKillBattler

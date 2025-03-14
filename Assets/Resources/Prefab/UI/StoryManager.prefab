@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3757878182601935850}
   - component: {fileID: 8612141074308814145}
+  - component: {fileID: 4207054765683553638}
   - component: {fileID: 1211461638164841112}
+  - component: {fileID: 1603148027886211408}
   m_Layer: 0
   m_Name: vicente
   m_TagString: Untagged
@@ -46,6 +48,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688816310129771495}
   m_CullTransparentMesh: 0
+--- !u!114 &4207054765683553638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688816310129771495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6dba0c80843624aa84434315a1ac3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInState: 0
 --- !u!114 &1211461638164841112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: b66cf7a186d13054989b33a5c90044e4, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -103,6 +118,27 @@ MonoBehaviour:
       immutableTriangles: 0
   updateTiming: 1
   unscaledTime: 0
+--- !u!114 &1603148027886211408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688816310129771495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cbe1f11426513d49ad8e21e9d6643f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+  maxRenderTextureSize: 4096
+  quad: {fileID: 0}
+  renderTexture: {fileID: 0}
+  targetCamera: {fileID: 0}
+  customRenderRect: {fileID: 0}
+  meshRendererMaterialForTexture:
+  - texture: {fileID: 2800000, guid: d856f5abce53a5e439f74978800a9c79, type: 3}
+    material: {fileID: 2100000, guid: f7482bc12496658449ab532fda11eda8, type: 2}
 --- !u!1 &1061687004723756645
 GameObject:
   m_ObjectHideFlags: 0
