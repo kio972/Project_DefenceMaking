@@ -21,12 +21,42 @@ public class DanStage : MonoBehaviour
     [SerializeField]
     AK.Wwise.Event battleSound2;
 
-    public bool bossEntered = false;
+    public bool bossEntered { get; private set; } = false;
+
+
+    readonly string shopOpenQuestId = "q2005";
+    readonly string vicenteQuestId = "q2006";
+
+    private async UniTaskVoid SetManageBtns()
+    {
+        for(int i = 0; i < 2; i++)
+        {
+            managementBtns[i].SetActive(true);
+        }
+
+        await UniTask.WaitUntil(() => QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == shopOpenQuestId).Count() >= 1 || QuestManager.Instance.IsQuestEnded(shopOpenQuestId),
+            cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+
+        managementBtns[2].SetActive(true);
+    }
+
+    private async UniTaskVoid PlayBossBattleBGM()
+    {
+        AudioManager.Instance.PlayBackground(battleSound);
+        await UniTask.WaitUntil(() => QuestManager.Instance.IsQuestCleared(vicenteQuestId), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        AudioManager.Instance.PlayBackground(bgmSound);
+    }
 
     private async UniTaskVoid CheckBossEnter()
     {
-        if (QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == "q2006").Count() >= 1)
+        if (QuestManager.Instance.IsQuestEnded(vicenteQuestId))
             return;
+
+        if (QuestManager.Instance.questController.subQuest.Where(_ => _._QuestID == vicenteQuestId).Count() >= 1)
+        {
+            PlayBossBattleBGM().Forget();
+            return;
+        }
 
         await UniTask.WaitUntil(() => GameManager.Instance.CurWave >= 29, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
@@ -35,9 +65,7 @@ public class DanStage : MonoBehaviour
         await UniTask.WaitUntil(() => StoryManager.Instance.IsScriptQueueEmpty, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         bossEntered = true;
 
-        AudioManager.Instance.PlayBackground(battleSound);
-        await UniTask.WaitUntil(() => QuestManager.Instance.IsQuestCleared("q2006"), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        AudioManager.Instance.PlayBackground(bgmSound);
+        PlayBossBattleBGM().Forget();
     }
 
     private async UniTaskVoid CheckHerbInformer()
@@ -66,8 +94,7 @@ public class DanStage : MonoBehaviour
         GameManager.Instance.cardDeckController.Invoke("MulliganFixed", 1f);
         GameManager.Instance.research.ForceActiveResearch("r_m10001");
         QuestManager.Instance.InitQuest();
-        foreach(var btn in managementBtns)
-            btn.SetActive(true);
+        SetManageBtns().Forget();
         CheckHerbInformer().Forget();
         CheckBossEnter().Forget();
 
@@ -84,8 +111,7 @@ public class DanStage : MonoBehaviour
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);
             CheckHerbInformer().Forget();
             CheckBossEnter().Forget();
-            foreach (var btn in managementBtns)
-                btn.SetActive(true);
+            SetManageBtns().Forget();
             AudioManager.Instance.PlayBackground(bgmSound);
         }
     }

@@ -25,6 +25,7 @@ namespace AK
         static const AkUniqueID DEMON_HIT_VOICE = 2357919911U;
         static const AkUniqueID ENEMY_ARCHER_ATTACK = 3450149562U;
         static const AkUniqueID ENEMY_BOSS_TYPEFARMER_ATTACK = 2598397792U;
+        static const AkUniqueID ENEMY_BOSS_TYPEFARMER_SKILL = 244215811U;
         static const AkUniqueID ENEMY_FARMER_TYPEA_ATTACK = 1226658030U;
         static const AkUniqueID ENEMY_FARMER_TYPEB_ATTACK = 3127603755U;
         static const AkUniqueID ENEMY_KNIGHT_ATTACK = 1901762100U;

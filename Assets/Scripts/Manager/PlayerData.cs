@@ -110,9 +110,11 @@ public class PlayerData
     public List<ShopData> herbData;
     public List<ShopData> itemsData;
     public int itemFluctCool;
+    public int itemRefreshCool;
 
     //퀘스트 현황
     public List<string> clearedQuests;
+    public List<string> failedQuests;
     public List<string> enqueuedQuests;
     public List<QuestData> curQuests;
 }

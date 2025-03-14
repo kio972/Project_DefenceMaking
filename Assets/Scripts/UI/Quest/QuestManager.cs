@@ -188,6 +188,7 @@ public class QuestManager : IngameSingleton<QuestManager>
             data.enqueuedQuests.Add(watcher.id);
 
         data.clearedQuests = new List<string>(clearedQuests);
+        data.failedQuests = new List<string>(failedQuests);
     }
 
     public void LoadGame(PlayerData data)
@@ -198,7 +199,8 @@ public class QuestManager : IngameSingleton<QuestManager>
             StartQuest(quest.id, quest.curVal, quest.curTime);
         foreach (string quest in data.clearedQuests)
             clearedQuests.Add(quest);
-
+        foreach (string quest in data.failedQuests)
+            failedQuests.Add(quest);
         foreach (string quest in data.enqueuedQuests)
             EnqueueQuest(quest);
     }

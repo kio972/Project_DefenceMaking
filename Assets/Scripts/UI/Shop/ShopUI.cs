@@ -187,7 +187,8 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
             _itemSlots[i].IsSoldOut = data.itemsData[i].isSoldOut;
         }
 
-        timerList[0]._CurTime = data.itemFluctCool;
+        timerList[0].CurTime = data.itemFluctCool;
+        timerList[0].CurRefreshTime = data.itemRefreshCool;
         curWave = GameManager.Instance.CurWave;
     }
 
@@ -212,6 +213,7 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
             data.itemsData.Add(item);
         }
 
-        data.itemFluctCool = timerList[0]._CurTime;
+        data.itemFluctCool = timerList[0].CurTime;
+        data.itemRefreshCool = timerList[0].CurRefreshTime;
     }
 }

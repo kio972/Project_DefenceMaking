@@ -7,8 +7,6 @@ using UniRx;
 using UniRx.Triggers;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Unity.VisualScripting;
-using UnityEditor.U2D.Path;
 
 public class CardUIEffect : MonoBehaviour
 {

@@ -12,17 +12,24 @@ public abstract class MouseOverTarget : MonoBehaviour, IPointerEnterHandler, IPo
     [SerializeField]
     private float mouseOverTime = 0.5f;
 
+    private bool isMouseEntered = false;
+
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!isMouseEntered)
+            return;
+
         cts?.Cancel();
         cts = new CancellationTokenSource();
         GameManager.Instance._InGameUI.mouseOverTooltip?.SetActive(false);
+        isMouseEntered = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         // 1초 후 툴팁 표시
         ShowTooltipAfterDelay(cts.Token).Forget();
+        isMouseEntered = true;
     }
 
     private async UniTaskVoid ShowTooltipAfterDelay(CancellationToken token)

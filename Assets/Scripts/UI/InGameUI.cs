@@ -41,7 +41,7 @@ public class InGameUI : MonoBehaviour
     {
         get
         {
-            if(_mainQuestInteractBtn == null)
+            if(_mainQuestInteractBtn == null && mainBtn != null)
                 _mainQuestInteractBtn = mainBtn.GetComponent<IQuestInteract>();
             return _mainQuestInteractBtn;
         }

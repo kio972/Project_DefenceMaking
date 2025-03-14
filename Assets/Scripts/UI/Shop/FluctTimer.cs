@@ -7,16 +7,17 @@ public class FluctTimer : MonoBehaviour
 {
     [SerializeField]
     private GameObject target;
-
-    private int curTime = 0;
+    [SerializeField]
+    private int _curTime = 0;
     [SerializeField]
     private int fluctTime = 10;
-
-    private int curRefreashTime = 0;
+    [SerializeField]
+    private int _curRefreashTime = 0;
     [SerializeField]
     private int refreashTime = 3;
 
-    public int _CurTime { get => curTime; set => curTime = value; }
+    public int CurTime { get => _curTime; set => _curTime = value; }
+    public int CurRefreshTime { get => _curRefreashTime; set => _curRefreashTime = value; }
 
     [SerializeField]
     private TextMeshProUGUI text;
@@ -85,18 +86,18 @@ public class FluctTimer : MonoBehaviour
 
     public void IncreaseTime()
     {
-        curTime++;
-        curRefreashTime++;
+        _curTime++;
+        _curRefreashTime++;
 
-        if(curRefreashTime >= refreashTime)
+        if(_curRefreashTime >= refreashTime)
         {
-            curRefreashTime = 0;
+            _curRefreashTime = 0;
             RefreshItem();
         }
 
-        if (curTime >= fluctTime)
+        if (_curTime >= fluctTime)
         {
-            curTime = 0;
+            _curTime = 0;
             FluctPrice();
         }
 
@@ -107,7 +108,7 @@ public class FluctTimer : MonoBehaviour
     private void UpdateText()
     {
         if (text != null)
-            text.text = (refreashTime - curRefreashTime).ToString();
+            text.text = (refreashTime - _curRefreashTime).ToString();
     }
 
     private void OnEnable()
