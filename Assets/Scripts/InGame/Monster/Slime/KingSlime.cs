@@ -6,7 +6,7 @@ using System.Threading;
 using UniRx;
 using System.Linq;
 
-public class KingSlime : Monster
+public class KingSlime : Monster, ISpawnTimeModifier
 {
     //스킬1. 슬라임의 분열 추가 회수 +1
     //스킬2. 모든 슬라임 생산 속도 50% 감소
@@ -19,6 +19,8 @@ public class KingSlime : Monster
 
     readonly string[] targetSlimes = { "slime_mucus", "slime_poison", "slime_explosion" };
 
+    public float spawnTimeWeight { get => 0.5f; }
+
     [SerializeField]
     GameObject kingAttackEffect;
 
@@ -29,12 +31,12 @@ public class KingSlime : Monster
             EffectPooling.Instance.PlayEffect(kingAttackEffect, transform);
     }
 
-    private void ModifySpawnerCoolTime(MonsterSpawner spawner, float value)
+    private void ModifySpawnerCoolTime(MonsterSpawner spawner, bool value)
     {
         if (!targetSlimes.Contains(spawner._TargetName))
             return;
 
-        spawner.ModifyCoolTime(value);
+        spawner.SetSpawntimeModifier(this, value);
     }
 
     private void ModifySlimeSplitCount(Monster monster, int value)
@@ -104,7 +106,7 @@ public class KingSlime : Monster
         }).AddTo(source.Token);
 
         GameManager.Instance.monsterList.ObserveAdd().Where(_ => !isCollapsed).Subscribe(_ => ModifySlimeSplitCount(_.Value, 1)).AddTo(source.Token);
-        GameManager.Instance.monsterSpawner.ObserveAdd().Where(_ => !isCollapsed).Subscribe(_ => ModifySpawnerCoolTime(_.Value, 0.5f)).AddTo(source.Token);
+        GameManager.Instance.monsterSpawner.ObserveAdd().Where(_ => !isCollapsed).Subscribe(_ => ModifySpawnerCoolTime(_.Value, true)).AddTo(source.Token);
         SpawnSlimes().Forget();
     }
 
@@ -114,7 +116,7 @@ public class KingSlime : Monster
             ModifySlimeSplitCount(monster, 1);
 
         foreach (var spawner in GameManager.Instance.monsterSpawner)
-            ModifySpawnerCoolTime(spawner, 0.5f);
+            ModifySpawnerCoolTime(spawner, true);
     }
 
     private void DeactiveSkill()
@@ -123,7 +125,7 @@ public class KingSlime : Monster
             ModifySlimeSplitCount(monster, -1);
 
         foreach (var spawner in GameManager.Instance.monsterSpawner)
-            ModifySpawnerCoolTime(spawner, 2);
+            ModifySpawnerCoolTime(spawner, false);
     }
 
     public override void Patrol()
