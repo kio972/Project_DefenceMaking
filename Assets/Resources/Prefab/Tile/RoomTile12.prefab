@@ -50,6 +50,7 @@ MonoBehaviour:
   roomDirection: 01000000030000000400000005000000
   tileType: 2
   roomMana: 1
+  spawnLock: 0
   waitToMove: 0
   twin: {fileID: 0}
   IsBigRoom: 0
@@ -164,6 +165,14 @@ PrefabInstance:
     - target: {fileID: 2024124981890878287, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_Name
       value: Road10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
+      propertyPath: toolTipKey_descs
+      value: card_1_room_parts1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
+      propertyPath: toolTipKey_header
+      value: card_0_room_parts9
       objectReference: {fileID: 0}
     - target: {fileID: 8937943421281466749, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_Materials.Array.data[0]
