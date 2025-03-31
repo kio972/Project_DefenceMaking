@@ -254,7 +254,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         ExcuteMoveToPos(destPos, lerpTime).Forget();
     }
 
-    public void KnockBack(Battler attacker, Direction knockBackDirection, int knockBackDist, float lerpTime)
+    public void KnockBack(Battler attacker, Direction knockBackDirection, float knockBackDist, float lerpTime)
     {
         if (this is ICCEmmune emmune && emmune.emmuneCCs.Contains(CCType.KnockBack))
             return;
@@ -273,16 +273,21 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
                 break;
             }
         }
-        
+        float leftDist = knockBackDist % 1;
+        Vector3 leftPos = UtilHelper.GetDirectionalVector(knockBackDirection) * leftDist;
+
         Vector3 targetPos = targetNode.transform.position;
+
         if (isNodeEnough)
+        {
             targetPos += curPointDir;
+            targetPos += leftPos;
+        }
         else
         {
             Vector3 edgePoint = (targetNode.neighborNodeDic[knockBackDirection].transform.position - targetNode.transform.position) * 0.45f;
             targetPos += edgePoint;
         }
-
         KnockBack(attacker, targetNode, targetPos, lerpTime);
     }
 

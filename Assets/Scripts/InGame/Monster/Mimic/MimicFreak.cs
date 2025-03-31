@@ -15,8 +15,8 @@ public class MimicFreak : MimicRecover
         Battler curTarget = BattleCheck();
         if (curTarget != null)
         {
-            ChangeState(FSMPatrol.Instance);
-            FreakEnemy();
+            chaseTarget = curTarget;
+            FreakEnemy().Forget();
         }
     }
 
@@ -26,13 +26,20 @@ public class MimicFreak : MimicRecover
         curSeduceCount = 0;
     }
 
-    private void FreakEnemy()
+    private async UniTaskVoid FreakEnemy()
     {
+        ChangeState(FSMPatrol.Instance);
+        float curMovespeed = moveSpeed;
+        moveSpeed = 0;
+
         List<Battler> rangedTargets = GetRangedTargets(transform.position, freakRange, false);
         foreach (Battler target in rangedTargets)
         {
-            target.GetCC(this, 30f);
-            target.KnockBack(this, UtilHelper.CheckClosestDirection(target.transform.position - transform.position), 1, 60);
+            target.KnockBack(this, UtilHelper.CheckClosestDirection(target.transform.position - transform.position), 0.5f, 60);
         }
+        await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsTag("Reveal"));
+        await UniTask.WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsTag("Reveal"));
+        moveSpeed = curMovespeed;
+        ChangeState(FSMChase.Instance);
     }
 }

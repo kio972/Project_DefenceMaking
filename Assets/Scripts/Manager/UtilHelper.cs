@@ -12,6 +12,20 @@ using System.Linq;
 
 public static class UtilHelper
 {
+    public static Vector3 GetDirectionalVector(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.Left: return new Vector3(-1, 0, 0);
+            case Direction.LeftUp: return new Vector3(-0.707f, 0.707f, 0);
+            case Direction.RightUp: return new Vector3(0.707f, 0.707f, 0);
+            case Direction.Right: return new Vector3(1, 0, 0);
+            case Direction.RightDown: return new Vector3(0.707f, -0.707f, 0);
+            case Direction.LeftDown: return new Vector3(-0.707f, -0.707f, 0);
+            default: return Vector3.zero;
+        }
+    }
+
     public static TileType GetTileType(string type)
     {
         switch(type)
