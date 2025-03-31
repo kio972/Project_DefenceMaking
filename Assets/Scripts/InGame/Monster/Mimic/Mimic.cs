@@ -59,6 +59,8 @@ public class Mimic : Monster, IHide
         Seduce();
         CheckNodeOut(_curNode).Forget();
         AddStatusEffect<Stealth>(new Stealth(this, 0));
+        if (PassiveManager.Instance.isMimicBuffActive)
+            attackTargetCount += 2;
     }
 
     private async UniTaskVoid CheckNodeOut(TileNode curNode)

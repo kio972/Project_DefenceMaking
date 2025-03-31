@@ -32,6 +32,7 @@ public class MimicFreak : MimicRecover
         foreach (Battler target in rangedTargets)
         {
             target.GetCC(this, 30f);
+            target.KnockBack(this, UtilHelper.CheckClosestDirection(target.transform.position - transform.position), 1, 60);
         }
     }
 }
