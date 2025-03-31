@@ -386,6 +386,7 @@ public class CardDeckController : MonoBehaviour
     private AK.Wwise.Event refusedSound;
     [SerializeField]
     private AK.Wwise.Event excutedSound;
+    public AK.Wwise.Event drawSound { get => excutedSound; }
 
     public void DrawDeck()
     {
