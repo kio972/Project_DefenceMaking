@@ -68,6 +68,9 @@ public class QuestController : MonoBehaviour
 
         foreach(QuestInfo questInfo in subInformer)
         {
+            if (questInfo.curQuest == null)
+                continue;
+
             if(questInfo.curQuest._QuestID == questId)
                 return questInfo;
         }

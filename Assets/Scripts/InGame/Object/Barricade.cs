@@ -21,13 +21,12 @@ public class Barricade : Battler, IDestructableObjectKind, IBlockingObject
     public override void Dead(Battler attacker)
     {
         base.Dead(attacker);
+        _curTile.RemoveObject();
         Destroy(gameObject);
     }
 
     public void DestroyObject()
     {
-        _curTile.RemoveObject();
-
         Dead(null);
     }
 

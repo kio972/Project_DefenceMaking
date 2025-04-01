@@ -64,8 +64,10 @@ public abstract class Quest
                         break;
 
                     int index = DataManager.Instance.deckListIndex[targetReward];
-                    for(int i = 0; i < rewardValue; i++)
-                        GameManager.Instance.cardDeckController.DrawCard(index, QuestManager.Instance.questController.GetInformer(questID).transform);
+                    QuestInfo info = QuestManager.Instance.questController.GetInformer(questID);
+                    Transform targetTransform = info == null ? null : info.transform;
+                    for (int i = 0; i < rewardValue; i++)
+                        GameManager.Instance.cardDeckController.DrawCard(index, targetTransform);
                 }
                 break;
         }
