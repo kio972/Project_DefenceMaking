@@ -263,7 +263,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Vector3 curPointDir = transform.position - curNode.transform.position;
         bool isNodeEnough = true;
         TileNode targetNode = curNode;
-        for(int i = 0; i < knockBackDist; i++)
+        float leftDist = knockBackDist % 1;
+        int dist = (int)knockBackDist;
+        for (int i = 0; i < dist; i++)
         {
             if (targetNode.curTile.PathDirection.Contains(knockBackDirection) || targetNode.curTile.RoomDirection.Contains(knockBackDirection))
                 targetNode = targetNode.neighborNodeDic[knockBackDirection];
@@ -273,7 +275,6 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
                 break;
             }
         }
-        float leftDist = knockBackDist % 1;
         Vector3 leftPos = UtilHelper.GetDirectionalVector(knockBackDirection) * leftDist;
 
         Vector3 targetPos = targetNode.transform.position;
