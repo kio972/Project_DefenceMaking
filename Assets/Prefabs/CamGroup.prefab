@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7626524197558262398}
-  - component: {fileID: 6848261957719885392}
+  - component: {fileID: -6418989570559955315}
   m_Layer: 0
   m_Name: AudioListener
   m_TagString: Untagged
@@ -32,14 +32,20 @@ Transform:
   m_Father: {fileID: 7792023357325454915}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &6848261957719885392
-AudioListener:
+--- !u!114 &-6418989570559955315
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481572266824079815}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &4398909289695003631
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,7 +929,7 @@ MonoBehaviour:
   useScreenMove: 1
   stackCam: {fileID: 2952396436433328801}
   stackCam2: {fileID: 2954404533863778933}
-  audioListener: {fileID: 6848261957719885392}
+  audioListener: {fileID: 0}
   impulseSource: {fileID: 1589081481259602687}
 --- !u!114 &7792023356844733571
 MonoBehaviour:
