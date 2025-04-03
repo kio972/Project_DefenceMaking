@@ -49,10 +49,10 @@ public class QuestMessage : MonoBehaviour
 
     private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-    [SerializeField]
-    private AK.Wwise.Event openSound;
-    [SerializeField]
-    private AK.Wwise.Event closeSound;
+    //[SerializeField]
+    //private AK.Wwise.Event openSound;
+    //[SerializeField]
+    //private AK.Wwise.Event closeSound;
 
     private IEnumerator SetAlpha(bool value, float lerpTime, float waitTime = 0)
     {
@@ -111,7 +111,7 @@ public class QuestMessage : MonoBehaviour
     {
         //string closeClip = "Quest_Paper_Burn_" + Random.Range(1, 3).ToString();
         //AudioManager.Instance.Play2DSound(closeClip, SettingManager.Instance._FxVolume);
-        closeSound?.Post(gameObject);
+        //closeSound?.Post(gameObject);
 
         closing = true;
 
@@ -226,7 +226,7 @@ public class QuestMessage : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.1f), false, default, cancellationTokenSource.Token);
         //string openClip = "Quest_Paper_Open_" + Random.Range(1, 4).ToString();
         //AudioManager.Instance.Play2DSound(openClip, SettingManager.Instance._FxVolume);
-        openSound?.Post(gameObject);
+        //openSound?.Post(gameObject);
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(dissolveController.appareGoaltime), false, default, cancellationTokenSource.Token);
         select1.transform.parent.GetComponent<Button>().interactable = true;

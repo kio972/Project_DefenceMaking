@@ -24,7 +24,7 @@ public class SpecialCardEffect : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             cardDeck.DrawCard();
-            cardDeck.drawSound?.Post(gameObject);
+            //cardDeck.drawSound?.Post(gameObject);
             await UniTask.Delay(100, cancellationToken: cardDeck.GetCancellationTokenOnDestroy());
         }
     }

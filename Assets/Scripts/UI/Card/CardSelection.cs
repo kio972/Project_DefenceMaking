@@ -48,8 +48,8 @@ public class CardSelection : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI rerollText;
 
-    [SerializeField]
-    AK.Wwise.Event selectSound;
+    //[SerializeField]
+    //AK.Wwise.Event selectSound;
 
     private void DeActive()
     {
@@ -90,7 +90,7 @@ public class CardSelection : MonoBehaviour
         //gameObject.SetActive(false);
         Animator animator = GetComponent<Animator>();
         animator?.SetTrigger("End");
-        selectSound?.Post(gameObject);
+        //selectSound?.Post(gameObject);
     }
 
     private TileType GetRandomCardType()

@@ -26,8 +26,8 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
     [SerializeField]
     private Transform itemShelf;
 
-    [SerializeField]
-    private AK.Wwise.Event openSound;
+    //[SerializeField]
+    //private AK.Wwise.Event openSound;
 
     private List<System.Action<Item>> buyItemEvents = new List<System.Action<Item>>();
 
@@ -95,7 +95,7 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
         {
             PlayScript("Shop000");
             //AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
-            openSound?.Post(gameObject);
+            //openSound?.Post(gameObject);
         }
     }
 

@@ -11,8 +11,8 @@ public class TileHidden : MonoBehaviour, ITileKind
     public TileNode curNode { get => _curNode; }
     private GameObject _targetPrefab;
 
-    [SerializeField]
-    AK.Wwise.Event revealSound;
+    //[SerializeField]
+    //AK.Wwise.Event revealSound;
 
     private void ExcuteReveal()
     {
@@ -31,7 +31,7 @@ public class TileHidden : MonoBehaviour, ITileKind
 
         NodeManager.Instance.hiddenTiles.Remove(_curNode);
         //AudioManager.Instance.Play2DSound("Demon_Attack_B", SettingManager.Instance._FxVolume);
-        revealSound?.Post(gameObject);
+        //revealSound?.Post(gameObject);
         gameObject.SetActive(false);
         Destroy(gameObject);
     }

@@ -32,8 +32,8 @@ public class Environment : MonoBehaviour, ITileKind
     private TileNode _curNode;
     public TileNode curNode { get => _curNode; }
 
-    [SerializeField]
-    private AK.Wwise.Event buildSound;
+    //[SerializeField]
+    //private AK.Wwise.Event buildSound;
 
     protected virtual void CustomFunc() { }
 
@@ -62,7 +62,7 @@ public class Environment : MonoBehaviour, ITileKind
         }
 
         NodeManager.Instance.AddSightNode(_curNode);
-        if(GameManager.Instance.IsInit)
-            buildSound?.Post(gameObject);
+        //if(GameManager.Instance.IsInit)
+        //    buildSound?.Post(gameObject);
     }
 }

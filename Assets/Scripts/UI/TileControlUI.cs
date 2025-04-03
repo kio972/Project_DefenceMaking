@@ -23,12 +23,12 @@ public class TileControlUI : MonoBehaviour
     private TooltipObject curToolTipObject;
     private Tile curToolTipTile;
 
-    [SerializeField]
-    AK.Wwise.Event refusedSound;
-    [SerializeField]
-    AK.Wwise.Event tileMoveSound;
-    [SerializeField]
-    AK.Wwise.Event tileRemoveSound;
+    //[SerializeField]
+    //AK.Wwise.Event refusedSound;
+    //[SerializeField]
+    //AK.Wwise.Event tileMoveSound;
+    //[SerializeField]
+    //AK.Wwise.Event tileRemoveSound;
 
     TooltipInput _tooltipInput;
     TooltipInput tooltipInput
@@ -75,14 +75,14 @@ public class TileControlUI : MonoBehaviour
         if (curTile.IsCharacterOnIt)
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
         }
         else
         {
             CloseAllBtn();
             curTile.ReadyForMove().Forget();
             InputManager.Instance.settingCard = true;
-            tileMoveSound?.Post(gameObject);
+            //tileMoveSound?.Post(gameObject);
         }
     }
 
@@ -110,22 +110,22 @@ public class TileControlUI : MonoBehaviour
         if (GameManager.Instance.isBossOnMap)
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailLockdown"));
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
         }
         else if (curTile.objectKind != null)
         { 
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailObject"));
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
         }
         else if (curTile.IsCharacterOnIt)
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
         }
         else
         {
             curTile.RemoveTile();
-            tileRemoveSound?.Post(gameObject);
+            //tileRemoveSound?.Post(gameObject);
         }
 
         InputManager.Instance.ResetTileClick();

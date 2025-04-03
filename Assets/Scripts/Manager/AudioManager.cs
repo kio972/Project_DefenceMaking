@@ -64,7 +64,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public void ChangeVolume(string RTPC_Name, float value)
     {
-        AkSoundEngine.SetRTPCValue(RTPC_Name, value * 100f);
+        //AkSoundEngine.SetRTPCValue(RTPC_Name, value * 100f);
     }
 
 
@@ -87,17 +87,17 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (!string.IsNullOrEmpty(curBGMEventID))
         {
-            AkSoundEngine.ExecuteActionOnEvent(curBGMEventID, AkActionOnEventType.AkActionOnEventType_Stop, gameObject, fadeTileMilliSec /* 밀리초 */, AkCurveInterpolation.AkCurveInterpolation_Exp1);
+            //AkSoundEngine.ExecuteActionOnEvent(curBGMEventID, AkActionOnEventType.AkActionOnEventType_Stop, gameObject, fadeTileMilliSec /* 밀리초 */, AkCurveInterpolation.AkCurveInterpolation_Exp1);
             curBGMEventID = null;
         }
     }
 
-    public void PlayBackground(AK.Wwise.Event soundClip, int fadeTileMilliSec = 500)
-    {
-        StopBGM(fadeTileMilliSec);
-        soundClip.Post(gameObject);
-        curBGMEventID = soundClip.Name;
-    }
+    //public void PlayBackground(AK.Wwise.Event soundClip, int fadeTileMilliSec = 500)
+    //{
+    //    StopBGM(fadeTileMilliSec);
+    //    soundClip.Post(gameObject);
+    //    curBGMEventID = soundClip.Name;
+    //}
 
     public void PlayBackground(string name, float voulme = 1.0f)
     {

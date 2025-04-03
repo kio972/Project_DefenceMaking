@@ -54,10 +54,10 @@ public class NotificationSlot : MonoBehaviour
     [SerializeField]
     private GameObject linkedPage;
 
-    [SerializeField]
-    private AK.Wwise.Event openSound;
-    [SerializeField]
-    private AK.Wwise.Event closeSound;
+    //[SerializeField]
+    //private AK.Wwise.Event openSound;
+    //[SerializeField]
+    //private AK.Wwise.Event closeSound;
 
     public void Finish()
     {
@@ -84,14 +84,14 @@ public class NotificationSlot : MonoBehaviour
         curState = NotificationState.Open;
         if(img != null && sprites != null)
             img.sprite = sprites[(int)type];
-        openSound?.Post(gameObject);
+        //openSound?.Post(gameObject);
     }
 
     public void OnClick()
     {
         animator.SetTrigger("OnClick");
         //SendMessageUpwards("ArrangeIndex", index);
-        closeSound?.Post(gameObject);
+        //closeSound?.Post(gameObject);
     }
 
     private void Awake()

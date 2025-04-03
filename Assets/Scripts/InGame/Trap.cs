@@ -42,8 +42,8 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
 
     //[SerializeField]
     //AudioClip attackSound;
-    [SerializeField]
-    AK.Wwise.Event attackSound;
+    //[SerializeField]
+    //AK.Wwise.Event attackSound;
 
 
     public void DestroyObject()
@@ -77,7 +77,7 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
         attackCount++;
         curDuration.Value = duration - attackCount;
         //AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
-        attackSound?.Post(gameObject);
+        //attackSound?.Post(gameObject);
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);

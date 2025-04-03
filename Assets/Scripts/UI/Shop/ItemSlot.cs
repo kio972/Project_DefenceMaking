@@ -110,10 +110,10 @@ public class ItemSlot : FluctItem, ISlot
     [SerializeField]
     private GameObject clickedImg;
 
-    [SerializeField]
-    private AK.Wwise.Event refusedSound;
-    [SerializeField]
-    private AK.Wwise.Event excutedSound;
+    //[SerializeField]
+    //private AK.Wwise.Event refusedSound;
+    //[SerializeField]
+    //private AK.Wwise.Event excutedSound;
 
     private void Update()
     {
@@ -160,7 +160,7 @@ public class ItemSlot : FluctItem, ISlot
         {
             shopUI?.PlayScript("Shop034");
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
             return;
         }
 
@@ -168,7 +168,7 @@ public class ItemSlot : FluctItem, ISlot
         {
             shopUI?.PlayScript("Shop035");
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
             return;
         }
 
@@ -185,7 +185,7 @@ public class ItemSlot : FluctItem, ISlot
             isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
         //AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
-        excutedSound?.Post(gameObject);
+        //excutedSound?.Post(gameObject);
     }
 
     private int DecreasePrice()

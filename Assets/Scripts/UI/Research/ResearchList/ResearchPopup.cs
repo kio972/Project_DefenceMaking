@@ -199,10 +199,10 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
             SetResearchBtn(researchState);
     }
 
-    [SerializeField]
-    private AK.Wwise.Event refusedSound;
-    [SerializeField]
-    private AK.Wwise.Event excutedSound;
+    //[SerializeField]
+    //private AK.Wwise.Event refusedSound;
+    //[SerializeField]
+    //private AK.Wwise.Event excutedSound;
 
     private void StartResearch()
     {
@@ -210,7 +210,7 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireAsset"));
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            refusedSound?.Post(gameObject);
+            //refusedSound?.Post(gameObject);
             return;
         }
 
@@ -226,10 +226,10 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
         }
 
         //AudioManager.Instance.Play2DSound(isStart ? "UI_Click_01" : "UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-        if(isStart)
-            excutedSound?.Post(gameObject);
-        else
-            refusedSound?.Post(gameObject);
+        //if(isStart)
+        //    excutedSound?.Post(gameObject);
+        //else
+        //    refusedSound?.Post(gameObject);
     }
 
     private void StopResearch()
@@ -242,6 +242,6 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
         researchState = ResearchState.Incomplete;
 
         //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-        refusedSound?.Post(gameObject);
+        //refusedSound?.Post(gameObject);
     }
 }

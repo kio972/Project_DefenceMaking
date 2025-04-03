@@ -58,8 +58,8 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup layoutGroup;
 
-    [SerializeField]
-    AK.Wwise.Event createSound;
+    //[SerializeField]
+    //AK.Wwise.Event createSound;
 
     public QuestInfo GetInformer(string questId)
     {
@@ -107,7 +107,7 @@ public class QuestController : MonoBehaviour
         mainInfomer.SetQuest(quest);
 
         //AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
-        createSound?.Post(gameObject);
+        //createSound?.Post(gameObject);
     }
 
     private void SetSubQuest(Quest quest)
@@ -120,7 +120,7 @@ public class QuestController : MonoBehaviour
         layoutGroup.enabled = true;
 
         //AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
-        createSound?.Post(gameObject);
+        //createSound?.Post(gameObject);
     }
 
     public void StartQuest(int questID, List<int> startVal, float startTime)

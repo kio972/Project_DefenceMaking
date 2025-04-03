@@ -52,12 +52,12 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
     public bool updateItem = true;
     public bool setContinuous = true;
 
-    [SerializeField]
-    private AK.Wwise.Event openSound;
-    [SerializeField]
-    private AK.Wwise.Event completeSound;
-    [SerializeField]
-    private AK.Wwise.Event refusedSound;
+    //[SerializeField]
+    //private AK.Wwise.Event openSound;
+    //[SerializeField]
+    //private AK.Wwise.Event completeSound;
+    //[SerializeField]
+    //private AK.Wwise.Event refusedSound;
 
 
     public void UpdateMana()
@@ -84,7 +84,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         if (value)
         {
             //AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
-            openSound?.Post(gameObject);
+            //openSound?.Post(gameObject);
         }
     }
 
@@ -137,7 +137,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             if (GameManager.Instance.gold < curPrice)
             {
                 GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
-                refusedSound?.Post(gameObject);
+                //refusedSound?.Post(gameObject);
                 return;
             }
 
@@ -149,26 +149,26 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
-                    refusedSound?.Post(gameObject);
+                    //refusedSound?.Post(gameObject);
                     return;
                 }
 
                 BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-                completeSound?.Post(gameObject);
+                //completeSound?.Post(gameObject);
             }
             else if (curType == CardType.Trap)
             {
                 if (GameManager.Instance.IsAdventurererOnTile(curNode))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_setFailEnemy"));
-                    refusedSound?.Post(gameObject);
+                    //refusedSound?.Post(gameObject);
                     return;
                 }
 
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-                completeSound?.Post(gameObject);
+                //completeSound?.Post(gameObject);
             }
             else if (curType == CardType.Monster)
             {
@@ -178,19 +178,19 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
-                    refusedSound?.Post(gameObject);
+                    //refusedSound?.Post(gameObject);
                     return;
                 }
                 if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireTotalMana"));
-                    refusedSound?.Post(gameObject);
+                    //refusedSound?.Post(gameObject);
                     return;
                 }
 
                 BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-                completeSound?.Post(gameObject);
+                //completeSound?.Post(gameObject);
             }
 
             GameManager.Instance.gold -= curPrice;
@@ -200,7 +200,9 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 DeployEnd().Forget();
         }
         else if (curNode != null && !curNode.setAvail)
-            refusedSound?.Post(gameObject);
+        {
+            //refusedSound?.Post(gameObject);
+        }
         else if (curNode == null || curNode.curTile == null)
             DeployEnd().Forget();
     }

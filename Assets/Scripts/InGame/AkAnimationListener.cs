@@ -6,22 +6,22 @@ public class AkAnimationListener : MonoBehaviour
 {
     private Battler battler;
 
-    [SerializeField]
-    private AK.Wwise.Event attackSound;
+    //[SerializeField]
+    //private AK.Wwise.Event attackSound;
 
-    [Space]
-    [SerializeField]
-    private AK.Wwise.Event deadSound;
+    //[Space]
+    //[SerializeField]
+    //private AK.Wwise.Event deadSound;
 
     void Dead()
     {
-        deadSound?.Post(gameObject);
+        //deadSound?.Post(gameObject);
     }
 
     void Attack()
     {
         battler.Attack();
-        attackSound?.Post(gameObject);
+        //attackSound?.Post(gameObject);
     }
 
     private void Awake()

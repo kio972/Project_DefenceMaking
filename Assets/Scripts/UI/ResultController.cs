@@ -19,10 +19,10 @@ public class ResultController : MonoBehaviour
     [SerializeField]
     private MoveSceneBtn titleBtn;
 
-    [SerializeField]
-    private AK.Wwise.Event winSound;
-    [SerializeField]
-    private AK.Wwise.Event defeatSound;
+    //[SerializeField]
+    //private AK.Wwise.Event winSound;
+    //[SerializeField]
+    //private AK.Wwise.Event defeatSound;
 
     private void TitleBtnOn()
     {
@@ -67,7 +67,7 @@ public class ResultController : MonoBehaviour
             victory.gameObject.SetActive(true);
             defeat.gameObject.SetActive(false);
             //AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
-            winSound?.Post(gameObject);
+            //winSound?.Post(gameObject);
             await UniTask.WaitForSeconds(4);
             SceneController.Instance.MoveScene("DemoEnd");
             return;
@@ -81,7 +81,7 @@ public class ResultController : MonoBehaviour
         victory.gameObject.SetActive(true);
         defeat.gameObject.SetActive(false);
         //AudioManager.Instance.Play2DSound("Victory_icon_01", SettingManager.Instance._FxVolume);
-        winSound?.Post(gameObject);
+        //winSound?.Post(gameObject);
     }
 
     public async UniTaskVoid GameDefeat()
@@ -106,6 +106,6 @@ public class ResultController : MonoBehaviour
         victory.gameObject.SetActive(false);
         defeat.gameObject.SetActive(true);
         //AudioManager.Instance.Play2DSound("Defeat_icon_01", SettingManager.Instance._FxVolume);
-        defeatSound?.Post(gameObject);
+        //defeatSound?.Post(gameObject);
     }
 }

@@ -12,14 +12,14 @@ public class DanStage : MonoBehaviour
     [SerializeField]
     List<GameObject> managementBtns;
 
-    [SerializeField]
-    AK.Wwise.Event ambient;
-    [SerializeField]
-    AK.Wwise.Event bgmSound;
-    [SerializeField]
-    AK.Wwise.Event battleSound;
-    [SerializeField]
-    AK.Wwise.Event battleSound2;
+    //[SerializeField]
+    //AK.Wwise.Event ambient;
+    //[SerializeField]
+    //AK.Wwise.Event bgmSound;
+    //[SerializeField]
+    //AK.Wwise.Event battleSound;
+    //[SerializeField]
+    //AK.Wwise.Event battleSound2;
 
     public bool bossEntered { get; private set; } = false;
 
@@ -42,9 +42,9 @@ public class DanStage : MonoBehaviour
 
     private async UniTaskVoid PlayBossBattleBGM()
     {
-        AudioManager.Instance.PlayBackground(battleSound);
+        //AudioManager.Instance.PlayBackground(battleSound);
         await UniTask.WaitUntil(() => QuestManager.Instance.IsQuestCleared(vicenteQuestId), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-        AudioManager.Instance.PlayBackground(bgmSound);
+        //AudioManager.Instance.PlayBackground(bgmSound);
     }
 
     private async UniTaskVoid CheckBossEnter()
@@ -98,12 +98,12 @@ public class DanStage : MonoBehaviour
         CheckHerbInformer().Forget();
         CheckBossEnter().Forget();
 
-        AudioManager.Instance.PlayBackground(bgmSound);
+        //AudioManager.Instance.PlayBackground(bgmSound);
     }
 
     void Start()
     {
-        ambient?.Post(gameObject);
+        //ambient?.Post(gameObject);
         if (SaveManager.Instance.playerData == null)
             StartCoroutine(ITutorial());
         else
@@ -112,7 +112,7 @@ public class DanStage : MonoBehaviour
             CheckHerbInformer().Forget();
             CheckBossEnter().Forget();
             SetManageBtns().Forget();
-            AudioManager.Instance.PlayBackground(bgmSound);
+            //AudioManager.Instance.PlayBackground(bgmSound);
         }
     }
 }

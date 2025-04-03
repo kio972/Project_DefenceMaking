@@ -187,10 +187,10 @@ public class Tile : MonoBehaviour, ITileKind
     private CompleteRoom _curRoom;
     public CompleteRoom curRoom { get => _curRoom; set => _curRoom = value; }
 
-    [SerializeField]
-    private AK.Wwise.Event rotateSound;
-    [SerializeField]
-    private AK.Wwise.Event buildSound;
+    //[SerializeField]
+    //private AK.Wwise.Event rotateSound;
+    //[SerializeField]
+    //private AK.Wwise.Event buildSound;
 
     public int GetAvailableCount(TileNode node)
     {
@@ -297,7 +297,7 @@ public class Tile : MonoBehaviour, ITileKind
         if(GameManager.Instance.IsInit)
         {
             //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
-            buildSound?.Post(gameObject);
+            //buildSound?.Post(gameObject);
         }
 
     }
@@ -654,7 +654,7 @@ public class Tile : MonoBehaviour, ITileKind
         if (GameManager.Instance.IsInit)
         {
             //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
-            rotateSound?.Post(gameObject);
+            //rotateSound?.Post(gameObject);
         }
     }
 
@@ -695,13 +695,13 @@ public class Tile : MonoBehaviour, ITileKind
 
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
             {
-                rotateSound?.Post(gameObject);
+                //rotateSound?.Post(gameObject);
                 //AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 twin.RotateToNext(curNode);
             }
             else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
             {
-                rotateSound?.Post(gameObject);
+                //rotateSound?.Post(gameObject);
                 //AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateToNext(curNode, true);
             }

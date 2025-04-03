@@ -30,13 +30,13 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
 
         if (repayAmount > GameManager.Instance.gold)
         {
-            AkSoundEngine.PostEvent(faillClipName, gameObject);
+            //AkSoundEngine.PostEvent(faillClipName, gameObject);
             return;
         }
 
         GameManager.Instance.gold -= repayAmount;
         repay.ReduceGold(repayAmount);
-        AkSoundEngine.PostEvent(successClipName, gameObject);
+        //AkSoundEngine.PostEvent(successClipName, gameObject);
         repay.UpdateQuest();
         if (repay._IsComplete[0])
             gameObject.SetActive(false);

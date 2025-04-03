@@ -76,8 +76,8 @@ public class GameManager : IngameSingleton<GameManager>
 
     public bool isInBattle = false;
 
-    [SerializeField]
-    private AK.Wwise.Event midBellSound;
+    //[SerializeField]
+    //private AK.Wwise.Event midBellSound;
 
 
     public ReactiveCollection<Adventurer> adventurersList = new ReactiveCollection<Adventurer>();
@@ -341,7 +341,7 @@ public class GameManager : IngameSingleton<GameManager>
             //이동가능타일 잠금
             //NodeManager.Instance.LockMovableTiles();
 
-            midBellSound?.Post(gameObject);
+            //midBellSound?.Post(gameObject);
             //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
 
             if(curWave % selectInterval == 0)

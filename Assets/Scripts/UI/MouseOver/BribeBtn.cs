@@ -8,10 +8,10 @@ public class BribeBtn : MouseOverTarget
     private Adventurer battler;
     private int cost;
 
-    [SerializeField]
-    private AK.Wwise.Event successClip;
-    [SerializeField]
-    private AK.Wwise.Event failClip;
+    //[SerializeField]
+    //private AK.Wwise.Event successClip;
+    //[SerializeField]
+    //private AK.Wwise.Event failClip;
     readonly Vector2 pivot = new Vector2(0.5f, -0.2f);
 
     public override void SetText()
@@ -26,12 +26,12 @@ public class BribeBtn : MouseOverTarget
     {
         if (cost > GameManager.Instance.gold)
         {
-            failClip?.Post(gameObject);
+            //failClip?.Post(gameObject);
             return;
         }
 
         GameManager.Instance.gold -= cost;
-        successClip?.Post(gameObject);
+        //successClip?.Post(gameObject);
         battler.ReturnToBase(false);
     }
 
