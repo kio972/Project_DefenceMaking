@@ -220,6 +220,7 @@ MonoBehaviour:
   exitBtn: {fileID: 4576682508159347600}
   deployingWindow: {fileID: 1793547368900704898}
   updateItem: 1
+  setContinuous: 1
   openSound:
     idInternal: 0
     valueGuidInternal: 
@@ -478,6 +479,7 @@ GameObject:
   - component: {fileID: 395038420776202488}
   - component: {fileID: 4816257953872222744}
   - component: {fileID: 4179227288763807391}
+  - component: {fileID: 2138026916425944074}
   m_Layer: 5
   m_Name: CardDescription
   m_TagString: Untagged
@@ -527,7 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -616,6 +618,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStr: 
   sizeLock: 1
+--- !u!114 &2138026916425944074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792911001633877507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59253b8e8d1ec4cbb3cac8c6605ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTextOnOverlayCanvas: 1
+  isOnUI: 1
+  targetPivot: {x: 0, y: 1}
 --- !u!1 &842379168497970894
 GameObject:
   m_ObjectHideFlags: 0
@@ -4105,7 +4122,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 25.18, y: 0}
+  m_AnchoredPosition: {x: 28.244999, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &6065963223438648688
@@ -4339,7 +4356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 142.68, y: 0}
+  m_AnchoredPosition: {x: 145.745, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3254333538477768790

@@ -190,7 +190,7 @@ trap_saw,톱날 함정,Saw Trap
 trap_saw_1,"회전톱으로 공격하는 함정
 내구도 : 20","Trap armed with sawblade.
 Druability : 20"
-trap_hole,연금술 폐기물로 만든 조잡한 몬스터,Pitfall trap
+trap_hole,구멍 함정,Pitfall trap
 trap_hole_1,"구멍에 빠뜨려 공격하는 함정
 내구도 : 1","A trap that attacks by falling into a hole.
 Durability : 1"
@@ -346,7 +346,7 @@ research_mimic3_1,"자신이 있는 타일로 적을 유인한다.
 위장하고 있는 동안 체력을 회복한다.","Can lure enemies towards Mimic.
 When in disguise, Mimic restore its HP."
 research_mimic4_0,진수성찬,Feast
-research_mimic4_1,미믹이 주변의 적 수에 비례하여 무작위 버프를 획득한다.,Mimic gains random buff per numbers of surrounding enemies.
+research_mimic4_1,동시에 타격할 수 있는 적의 수 +2,Hit 2 additional enemies
 research_mimic5_0,제작 : 왕실 금고 미믹,Production : Royal chest Mimic
 research_mimic5_1,"자신이 있는 타일로 적을 유인한다.
 위장 해제 시 적을 놀래켜 경직에 빠뜨린다.","Can lure enemies towards Mimic.
@@ -729,7 +729,7 @@ tooltip_St_Room018_0,튼튼하고 매우 넓은 방 입구,Sturdy huge room ente
 tooltip_St_Room018_1,"길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
 마력 2를 사용 가능하게 해준다.","Connect room tiles to create larger room
 Room Mana capacity : 2"
-tooltip_St_Room019_0,방인가 입구인가 일단 튼튼하다,Room? Enterance?? - at least it's sturdy..
+tooltip_St_Room019_0,방인가 입구인가 일단 튼튼하다,Room? Enterance?? - at least it's sturdy…
 tooltip_St_Room019_1,"길 타일과 이어 붙혀서 큰 방의 입구를 만들 수 있다.
 마력 2를 사용 가능하게 해준다.","Connect room tiles to create larger room
 Room Mana capacity : 2"
@@ -939,6 +939,7 @@ tip_content001,적은 0시에 침입합니다.,The enemy invades at midnight.
 tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.,Not all Demon Kings are respected by their demonic kin.
 tip_content003,단탈리온의 던전은 인간 나라의 영토 내에 존재합니다.,Dantalion's dungeon exists within human territory.
 tip_content004,단탈리온은 토벌 우선순위 최하위입니다.,Dantalion has the lowest priority for subjugation.
+tip_content005,게임을 주기적으로 저장하는 습관은 정신건강에 좋습니다.,Regularly saving your game is good for your mental health.
 slime1,최하급 슬라임,Lowest level slime
 slime_rare,하급 슬라임,Low level slime
 slime2,중급 슬라임,Intermediate level slime
@@ -1001,13 +1002,13 @@ I, Papra, your loyal servant, will seek for solutions.
 Until then, please survive on your own."
 q_m0001_2,이럴수가!,"Oh, Hells!"
 q_m0101_0,마왕 타일 이동,Moving Demon Tile
-q_m0101_1,"아....귀찮게 하는구나.
+q_m0101_1,"아….귀찮게 하는구나.
 
 놈들이 헤메는 시간을 만들면 조금 더 쉴 수 있겠지.
 
 짐의 거처를 더블 클릭하면 위치를 바꿀 수 있다.
 
-그럼, 한 번 돌아다녀 볼까.","Ah....such annoyance.
+그럼, 한 번 돌아다녀 볼까.","Ah….such annoyance.
 
 At least I can rest while until they find my location.
 
@@ -1087,7 +1088,7 @@ It was a hard work. I have to rest, then.
 the leftmost cards will be discarded first.」
 
 「So do not rest—keep working.」"
-q_m0105_2,뭐...뭣!,Wait...what?
+q_m0105_2,뭐…뭣!,Wait…what?
 q0001_0,생존,Survive
 q0001_1,5라운드까지 생존,Survive until Round 5
 q0001_2,제한시간 종료시 마왕 HP 1 이상,Have at least 1 HP until round 5
@@ -1128,7 +1129,7 @@ q_m1001_2,알겠다,I see.
 q_m1002_0,첫번째 상환,First repayment
 q_m1002_1,"소인, 감복했습니다.
 
-150년간 숨만 쉬셨던 분께서, 드디어 본분을 다하신다니...
+150년간 숨만 쉬셨던 분께서, 드디어 본분을 다하신다니…
 
 시작이 반이다. 정말로 그렇지 않습니까?
 
@@ -1139,24 +1140,24 @@ A Demon who did nothing but breathing for 150 years - is now doing his part.
 Well begun is half done. wasn't it?
 
 I dare expect you, M'lord, to work harder."
-q_m1002_2,"음, 알겠다...","Hmm, I see..."
+q_m1002_2,"음, 알겠다…","Hmm, I see…"
 q_m1003_0,상환 안내,Repayment information
 q_m1003_1,"『단탈리온 경, 경의 채무 이행이 확인되었습니다.』
 
 『상회는 언제나 최선을 다해 서비스를 제공하겠습니다.』 
 『감사합니다.』
 
-...이상이 마계 상회의 서신입니다.
+…이상이 마계 상회의 서신입니다.
 
 빚을 완전히 갚기 전까지는 계속 조심해야 할 것 같군요. 계속하시죠 - 적을 무찌르고, 돈을 갚는 겁니다.","『Lord Dantallion, your repayment was confirmed』
 
 『Demonic merchant guild will always do our best to serve you.』
 『Thank you.』
 
-...This was the message from the Guild.
+…This was the message from the Guild.
 
 Until our debt is gone, we must be on guard. Please carry on - defeat your enemies, and repay your debt."
-q_m1003_2,쉴 수가 없군...,I can't get any rest...
+q_m1003_2,쉴 수가 없군…,I can't get any rest…
 q_m1004_0,바르바토스의 편지,Barbatos's Letter
 q_m1004_1,"『야 회충. 요즘 집에 벌레가 꼬인다는 얘기가 들린다?』
 
@@ -1169,7 +1170,7 @@ q_m1004_1,"『야 회충. 요즘 집에 벌레가 꼬인다는 얘기가 들린�
 어째서 8위 마왕이 전하께 접근하는지 모르겠으나
 이것이 시작일 것 같은 불길한 느낌이 듭니다.
 
-신경 써야 할 것이 늘었군요...","『Hey, maggot. I heard your place is attracting pests lately?』
+신경 써야 할 것이 늘었군요…","『Hey, maggot. I heard your place is attracting pests lately?』
 
 『You just want to lie around lifelessly all day, huh? But that’s not going so well, is it?』
 
@@ -1180,16 +1181,16 @@ This is a letter from the Demon King Barbatos.
 I have no idea why the 8th Demon King is reaching out to Your Lord,
 but I can’t shake the ominous feeling that this is just the beginning.
 
-Looks like there's yet another thing to worry about..."
+Looks like there's yet another thing to worry about…"
 q_m1004_2,내버려 둬라,Ignore it.
 q_m2001_0,맵 이동 조작,Screen move operation
-q_m2001_1,"어디보자... 파프라가 쪽지 하나를 더 주었는데?
+q_m2001_1,"어디보자… 파프라가 쪽지 하나를 더 주었는데?
 
 「혹여 던전이 너무 커져서 한 눈에 파악하기 어려우시다면」
 
 「휠 클릭&드래그 또는 W,A,S,D 키로 화면을 이동할 수 있습니다.」
 
-「휠 스크롤로 확대&축소도 가능하오니 참고하시어 주십시오.」","Let's see... Papra gave me one more note.
+「휠 스크롤로 확대&축소도 가능하오니 참고하시어 주십시오.」","Let's see… Papra gave me one more note.
 
 「If the dungeon has gotten too big for you to see at a glance.」
 
@@ -1198,7 +1199,7 @@ q_m2001_1,"어디보자... 파프라가 쪽지 하나를 더 주었는데?
 「You can also use the wheel scroll to zoom in and out.」"
 q_m2001_2,크흠!,Hmmm!
 q_m2021_0,채무 상환,Debt Repayment
-q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
+q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠…
 
 「전하. 소인이 마계 상회에 제안한 거래가 통과되었습니다.」
 
@@ -1206,7 +1207,7 @@ q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
 
 「게으름 피우지 말고, 계속해서 노동 해주십시오.」
 
-「우선은 그 시작으로 티끌만큼의 빚을 갚아 보도록 할까요.」","This is tiring. I shall rest before Parpra....
+「우선은 그 시작으로 티끌만큼의 빚을 갚아 보도록 할까요.」","This is tiring. I shall rest before Parpra….
 
 「My lord, I have finished the bargain with the Demonic Merchant Guild.」
 
@@ -1215,13 +1216,13 @@ q_m2021_1,"피곤하군. 파프라 몰래 쉬어야겠...
 「Do not be lazy, and keep working.」
 
 「For now, let’s begin by paying off just a tiny fraction of it.」"
-q_m2021_2,이런...,Hells...
+q_m2021_2,이런…,Hells…
 q_m2005_0,잘 부탁드립니다!,
 q_m2005_1,"「안녕하세요. 전하님!」
 
 「앞서 인사드렸지만 이런건 종이?로 남기는 것도 중요하다고」
 
-「어... 비서님이 그러셨어요!」
+「어… 비서님이 그러셨어요!」
 
 「모쪼록 부족한 몸이지만 잘 부탁드립니다!」
 
@@ -1299,19 +1300,19 @@ q_m2003_1,"『늘 마계 상회를 이용해 주셔서 감사합니다.』
 『We wish your best luck, and thank you for your continued patronage.』"
 q_m2003_2,하나만 더 살래,I want one more
 q_m2008_0,체통 지키기,Stand your ground
-q_m2008_1,"아...
+q_m2008_1,"아…
 
 
-귀찮아아아...
+귀찮아아아…
 
 
-움직이기 싫어...","Ah...
+움직이기 싫어…","Ah…
 
 
-It's annoying...
+It's annoying…
 
 
-I won't move a inch..."
+I won't move a inch…"
 q_m2008_2,침대 속이 제일 행복해,Bed is the happiest place
 q_m2010_0,이 방은 생각보다 넓은데,This room is bigger than I thought.
 q_m2010_1,"전하,방이 커질수록 몬스터들의 만족도가 높아진다더군요.
@@ -1327,13 +1328,13 @@ Thanks to your humble taste, we have literally nothing in the dungeon.
 So, we'll spare your unused rooms to expand rooms for your troops.
 
 Thank you for your kindness and cooperation."
-q_m2010_2,타일 5개 정도면 괜찮겠지...,A room made of 5 tiles would be enough
+q_m2010_2,타일 5개 정도면 괜찮겠지…,A room made of 5 tiles would be enough
 q_m2011_0,안녕하세요. 마계상회입니다.,Demonic merchant guild
 q_m2011_1,"『마계 상회를 이용해주심에 다시 한번 감사합니다.』
 
 『전하의 깊은 관심에 힘입어 신상품을 상점에서 판매중입니다.』
 
-『마왕 전하의 무한한 발전을 기원하고, 앞으로도 많은 협력 기대하겠습니다..』","『Thank you once again for your patronage』
+『마왕 전하의 무한한 발전을 기원하고, 앞으로도 많은 협력 기대하겠습니다…』","『Thank you once again for your patronage』
 
 『Thanks to your interest, new products are now on sale in the shop.』
 
@@ -1383,13 +1384,13 @@ q_m2002_2,약초를 캐자,Digging for herbs
 q_m2015_0,스포너 교체,Replacing spawners
 q_m2015_1,"좋아! 더 귀여운 몬스터를 소환 할 수 있게 되었다.
 
-이녀석을 빨리 소환해 보고 싶은데... 마땅한 자리가 없군
+이녀석을 빨리 소환해 보고 싶은데… 마땅한 자리가 없군
 
 아쉽지만 기존에 있는 스포너를 해체해야겠어.
 
 스포너를 선택하고 정보창에 있는 철거 버튼을 눌러볼까.","Great! We can now summon even cuter monsters.
 
-I can't wait to summon this one... But there's no room for the.
+I can't wait to summon this one… But there's no room for the.
 
 Well then. I'll dispose something and place a new one.
 
@@ -1420,7 +1421,7 @@ q_m2017_1,"파프라? 어째서 내 영지에 파악할 수 없는 공간이 있
 「Sometimes, great leaders inspect their land themselves.」
 
 「Why don't you look for them yourself? Besides, I AM BUSY.」"
-q_m2017_2,이게...아닌데...,Uh oh....
+q_m2017_2,이게…아닌데…,Uh oh….
 q_m2018_0,상회의 집행자,Guild enforcers
 q_m2018_1,"「정해진 기간 내에 빚을 갚지 못했을 경우,」
 
@@ -1439,13 +1440,13 @@ q_m2018_2,다 주겠다! 저리 가거라!,Take it! go away!
 q_m2019_0,슬라임 킹,Slime King
 q_m2019_1,"음? 이 슬라임은 평범한 녀석들하고 좀 다른데
 
-생긴게 아주... 귀엽구나. 좋다!
+생긴게 아주… 귀엽구나. 좋다!
 
 내 친히 네녀석을 슬라임의 왕으로 임명하겠다.
 
-나 대신 슬라임들을 다루어 보거라. 하하핫","Hmm? This slime is a little.... different
+나 대신 슬라임들을 다루어 보거라. 하하핫","Hmm? This slime is a little…. different
 
-This is... adorable. Good!
+This is… adorable. Good!
 
 I, Dantallion, lord of this dungeon, name you 'Slime king'
 
@@ -1454,13 +1455,13 @@ q_m2019_2,나 대신 일하거라,Do some work for me
 q_m2020_0,"My road, My lord","My road, My lord"
 q_m2020_1,"「마족의 지배자이자 영토를 다스리는 마왕이, 던전에 아무 것도 없어서」
 
-「""시간이나 끌게 길을 잔뜩 늘린다""라는 말씀을 하신다니...」
+「""시간이나 끌게 길을 잔뜩 늘린다""라는 말씀을 하신다니…」
 
 「훌륭하십니다, 주군.」
 
 「인간들은 길고 어두운 길일수록 두려워한다고 합니다. 이 점 역시 참고해 주시길.」","「A Demon lord, ruler of the dungeon, have literally nothing in his pocket,.」
 
-「saying such words like ""just build lots of long, dark paths for decoy""...」
+「saying such words like ""just build lots of long, dark paths for decoy""…」
 
 「Excellent idea, my lord.」
 

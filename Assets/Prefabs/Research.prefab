@@ -5050,6 +5050,7 @@ GameObject:
   - component: {fileID: 496786580948783785}
   - component: {fileID: 324228232624583456}
   - component: {fileID: 7370174522936523121}
+  - component: {fileID: 4631924920873846541}
   m_Layer: 5
   m_Name: ResearchDesc
   m_TagString: Untagged
@@ -5188,6 +5189,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStr: 
   sizeLock: 1
+--- !u!114 &4631924920873846541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758563590306092146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59253b8e8d1ec4cbb3cac8c6605ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTextOnOverlayCanvas: 1
+  isOnUI: 1
+  targetPivot: {x: 0, y: 1}
 --- !u!1 &2826229937722217479
 GameObject:
   m_ObjectHideFlags: 0
@@ -38276,7 +38292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61677376332fed4791d89b143b08439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 2
 --- !u!224 &7522849678322718083 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1541984396882622673, guid: f486e1ed80dd1e746b0e8b6668317544, type: 3}

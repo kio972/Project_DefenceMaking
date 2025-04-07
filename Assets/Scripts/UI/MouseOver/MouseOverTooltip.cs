@@ -27,6 +27,26 @@ public class MouseOverTooltip : MonoBehaviour
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
+    public void SetMesseage(Vector3 targetPos, Vector2 pivot, bool isOnUI, string header, string desc, string additional = null)
+    {
+        rect.pivot = pivot;
+        followTarget = null;
+        this.isOnUI = isOnUI;
+        transform.position = isOnUI ? targetPos : Camera.main.WorldToScreenPoint(targetPos);
+
+        this.header.text = header;
+        this.desc.text = desc;
+        if (string.IsNullOrEmpty(additional))
+        {
+            this.additional.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.additional.gameObject.SetActive(true);
+            this.additional.text = additional;
+        }
+    }
+
     public void SetMesseage(Transform follow, Vector2 pivot, bool isOnUI, string header, string desc, string additional = null)
     {
         rect.pivot = pivot;

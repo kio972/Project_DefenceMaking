@@ -13137,6 +13137,7 @@ GameObject:
   - component: {fileID: 3608121050245889291}
   - component: {fileID: 617389742315637747}
   - component: {fileID: 3526919465105422881}
+  - component: {fileID: 6185465535626261819}
   m_Layer: 5
   m_Name: CardDescription
   m_TagString: Untagged
@@ -13186,7 +13187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13275,6 +13276,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStr: 
   sizeLock: 1
+--- !u!114 &6185465535626261819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6063448759902600439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59253b8e8d1ec4cbb3cac8c6605ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTextOnOverlayCanvas: 1
+  isOnUI: 1
+  targetPivot: {x: 0, y: 1}
 --- !u!1 &6085437082392194063
 GameObject:
   m_ObjectHideFlags: 0

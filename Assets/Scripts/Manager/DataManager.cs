@@ -14,7 +14,7 @@ public class DataManager : Singleton<DataManager>
     private List<Dictionary<string, object>> _buff_Table;
     private List<Dictionary<string, object>> _shop_Table;
     private List<Dictionary<string, object>> _deckList;
-
+    private List<Dictionary<string, object>> _tooltipKeys;
     public List<Dictionary<string, object>> battler_Table { get => _battler_Table; }
     public List<Dictionary<string, object>> timeRate_Table { get => _timeRate_Table; }
     public List<Dictionary<string, object>> language_Table { get => _language_Table; }
@@ -57,7 +57,16 @@ public class DataManager : Singleton<DataManager>
 
     public Dictionary<string, List<Dictionary<string, object>>> scriptsDic = null;
     public Dictionary<int, List<WaveData>> waveLevelTable { get; private set; }
+
+    private Dictionary<string, (string name, string desc)> tooltipDic;
     #endregion
+
+    public (string name, string desc) GetTooltipKey(string key)
+    {
+        if (tooltipDic.ContainsKey(key))
+            return tooltipDic[key];
+        return ("", "");
+    }
 
     private void InitLevelTable()
     {
@@ -223,6 +232,13 @@ public class DataManager : Singleton<DataManager>
             battlerDic.Add(item["id"].ToString(), item);
     }
 
+    private void SortTooltipKey()
+    {
+        tooltipDic = new Dictionary<string, (string name, string desc)>();
+        foreach(var item in _tooltipKeys)
+            tooltipDic[item["link_key"].ToString()] = (item["name_id"].ToString(), item["desc_id"].ToString());
+    }
+
     // csv파일 주소(Resource폴더 내)
     //private readonly string wave_Table_DataPath = "Data/waveData";
     private readonly string deckList_DataPath = "Data/deckList";
@@ -236,7 +252,7 @@ public class DataManager : Singleton<DataManager>
     //private readonly string quest_Table_DataPath = "Data/questData";
     //private readonly string questMessage_Table_DataPath = "Data/questMessageData";
     private readonly string shop_Table_DataPath = "Data/shopListData";
-
+    private readonly string tooltipKeys_DataPath = "Data/tooltipKeyData";
     public void SetStageData(TextAsset waveData, TextAsset timeRateData, TextAsset deckListData, TextAsset scriptData, TextAsset questData, TextAsset questMessageData, TextAsset hiddenTileData)
     {
         _wave_Table = CSVLoader.LoadCSV(waveData);
@@ -266,10 +282,12 @@ public class DataManager : Singleton<DataManager>
         //quest_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(quest_Table_DataPath));
         //questMessage_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(questMessage_Table_DataPath));
         _shop_Table = CSVLoader.LoadCSV(Resources.Load<TextAsset>(shop_Table_DataPath));
+        _tooltipKeys = CSVLoader.LoadCSV(Resources.Load<TextAsset>(tooltipKeys_DataPath));
 
         SortDeckList();
         SortShopList();
         SortLanguageList();
         SortBattlerList();
+        SortTooltipKey();
     }
 }
