@@ -45,18 +45,27 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
     [SerializeField]
     AK.Wwise.Event attackSound;
 
+    private void DeActiveGameObject()
+    {
+        gameObject.SetActive(false);
+        transform.position = Vector3.up * 1000f;
+    }
 
     public void DestroyObject()
     {
         _curTile.RemoveObject();
-        gameObject.SetActive(false);
         if (NodeManager.Instance._GuideState == GuideState.ObjectForPath)
             NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
 
-        transform.position = Vector3.up * 1000f;
         GameManager.Instance.trapList.Remove(this);
         isInit = false;
         hpBar?.HPBarEnd();
+
+        if (animator != null)
+        {
+            animator.SetBool("Dead", true);
+            Invoke("DeActiveGameObject", 3f);
+        }
     }
 
     private void ExcuteAttack()
@@ -200,8 +209,15 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
 
         if (attackCount >= duration)
         {
-            if (PassiveManager.Instance.unLockDictionary.ContainsKey("TrapExplosion") && PassiveManager.Instance.unLockDictionary["TrapExplosion"])
+            bool isExplode = PassiveManager.Instance.unLockDictionary.ContainsKey("TrapExplosion") && PassiveManager.Instance.unLockDictionary["TrapExplosion"];
+            if (isExplode)
                 Explosion();
+
+            if (animator != null)
+            {
+                animator.SetBool("Explode", isExplode);
+            }
+
             DestroyObject();
         }
     }
