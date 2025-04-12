@@ -209,6 +209,18 @@ public class SaveManager : Singleton<SaveManager>
         return new T();
     }
 
+    public T LoadDataFromJsonFile<T>(TextAsset jsonFile) where T : new()
+    {
+        if (jsonFile != null && !string.IsNullOrEmpty(jsonFile.text))
+        {
+            return JsonConvert.DeserializeObject<T>(jsonFile.text);
+        }
+        else
+        {
+            return GenerateNewData<T>();
+        }
+    }
+
     // 불러오기
     public T LoadDataJsonConvert<T>(string fileName) where T : new()
     {

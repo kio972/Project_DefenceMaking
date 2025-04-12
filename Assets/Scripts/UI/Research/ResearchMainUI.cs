@@ -23,7 +23,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
     private CancellationTokenSource researchCancelToken;
 
-    private List<string> _completedResearchs;
+    private List<string> _completedResearchs = new List<string>();
     public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
     [SerializeField]
