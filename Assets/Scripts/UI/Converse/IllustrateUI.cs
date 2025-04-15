@@ -28,6 +28,17 @@ public class IllustrateUI : MonoBehaviour
         }
     }
 
+    public void StopTalkAnimation()
+    {
+        if (_Illust_spine == null)
+            return;
+
+        var anim = _Illust_spine.SkeletonData.FindAnimation("talk_end");
+        if (anim == null)
+            return;
+        _Illust_spine.AnimationState.SetAnimation(2, "talk_end", false);
+    }
+
     public void PlayTalkAnimation(float talkTime)
     {
         if (_Illust_spine == null)
@@ -36,7 +47,6 @@ public class IllustrateUI : MonoBehaviour
         var anim = _Illust_spine.SkeletonData.FindAnimation("talk_start");
         if (anim == null)
             return;
-        Spine.TrackEntry track = _Illust_spine.AnimationState.GetCurrent(2);
         _Illust_spine.AnimationState.SetAnimation(2, "talk_start", true);
         _Illust_spine.AnimationState.AddAnimation(2, "talk_end", false, talkTime - anim.Duration);
     }

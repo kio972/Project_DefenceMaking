@@ -253,6 +253,11 @@ public class StoryManager : MonoBehaviour
             targetUI.SetAnim(track1, false, 1);
     }
 
+    private void StopTalkAnim()
+    {
+        prevIllust?.StopTalkAnimation();
+    }
+
     private void PlayTalkAnim(int length)
     {
         float talkTime = 3;
@@ -332,6 +337,7 @@ public class StoryManager : MonoBehaviour
                     if (choiceNum != ' ' && choiceNum != number[0])
                         continue;
 
+                    StopTalkAnim();
                     SetIllust(illustName, isRight, illurXPos, track0, track1);
                     
                     if (trigger != "")
