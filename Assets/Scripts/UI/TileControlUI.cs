@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileControlUI : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class TileControlUI : MonoBehaviour
     private LanguageText toolTip_header;
     [SerializeField]
     private LanguageText toolTip_desc;
+
+    [SerializeField]
+    private TooltipStats toolTip_stats;
 
     private InGameUI inGameUI;
 
@@ -142,6 +146,7 @@ public class TileControlUI : MonoBehaviour
 
         toolTip_header?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_header);
         toolTip_desc?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_descs);
+        toolTip_stats?.SetStatZone(tooltipObject);
 
         if (tooltipObject.toolTipType == ToolTipType.Tile)
             SetButton(tooltipObject.GetComponentInParent<ITileKind>());
@@ -152,6 +157,17 @@ public class TileControlUI : MonoBehaviour
             if (inGameUI == null)
                 inGameUI = GetComponentInParent<InGameUI>();
             inGameUI?.SwitchRightToTileUI(true);
+        }
+
+        UpdateLayouts();
+    }
+
+    private void UpdateLayouts()
+    {
+        LayoutGroup[] layouts = GetComponentsInChildren<LayoutGroup>();
+        foreach (LayoutGroup layout in layouts)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(layout.GetComponent<RectTransform>());
         }
     }
 

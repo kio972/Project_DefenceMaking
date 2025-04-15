@@ -6,6 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using System.Text;
 
 public interface ISaveLoadBattler
 {
@@ -37,7 +38,7 @@ public enum CCType
     KnockBack,
 }
 
-public class Battler : FSM<Battler>, ISaveLoadBattler
+public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 {
     private bool isAnimUniRxSubscribed = false;
 
@@ -169,6 +170,52 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             //float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
             float tileSpeedMult = unitType == UnitType.Player ? _curNode.curTile.tileAllySpeedMult : _curNode.curTile.tileEnemySpeedMult;
             return moveSpeed * tileSpeedMult;
+        }
+    }
+
+
+    public virtual string GetStat(StatType statType)
+    {
+        StringBuilder sb = new StringBuilder();
+        switch (statType)
+        {
+            case StatType.Hp:
+
+                if (curHp < maxHp)
+                    sb.Append($"<color=red>{curHp}</color>");
+                else if (curHp > maxHp)
+                    sb.Append($"<color=green>{curHp}</color>");
+                else
+                    sb.Append(curHp);
+                if (shield > 0)
+                    sb.Append($"<color=#00FFFF>({shield})</color>");
+                return sb.ToString();
+            case StatType.Atk:
+                int curMin = TempDamage(minDamage);
+                int curMax = TempDamage(maxDamage);
+                if (curMax < maxDamage)
+                    sb.Append($"<color=red>{curMin}~{curMax}</color>");
+                else if(curMax > maxDamage)
+                    sb.Append($"<color=green>{curMin}~{curMax}</color>");
+                else
+                    sb.Append($"{curMin}~{curMax}");
+                return sb.ToString();
+            case StatType.AttackSpeed:
+                float curAtkSpeed = TempAttackSpeed(attackSpeed);
+                var textForView = Math.Round(curAtkSpeed, 1);
+                if (curAtkSpeed < attackSpeed)
+                    sb.Append($"<color=red>{textForView}</color>");
+                else if (curAtkSpeed > attackSpeed)
+                    sb.Append($"<color=green>{textForView}</color>");
+                else
+                    sb.Append(textForView);
+                return sb.ToString();
+            case StatType.Def:
+                return armor.ToString();
+            case StatType.AttackRange:
+                return Math.Round(attackRange, 1).ToString();
+            default:
+                return null;
         }
     }
 
@@ -751,7 +798,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         _curNode = tile;
     }
 
-    protected virtual void InitStats(int index)
+    protected virtual void InitStats(int index, bool randomize = true)
     {
         _name = DataManager.Instance.battler_Table[index]["name"].ToString();
         maxHp = Convert.ToInt32(DataManager.Instance.battler_Table[index]["hp"]);
@@ -769,7 +816,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         armor = Convert.ToInt32(DataManager.Instance.battler_Table[index]["armor"]);
         float.TryParse(DataManager.Instance.battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
-        if(float.TryParse(DataManager.Instance.battler_Table[index]["attackRange"].ToString(), out attackRange))
+        if(float.TryParse(DataManager.Instance.battler_Table[index]["attackRange"].ToString(), out attackRange) && randomize)
             attackRange += UnityEngine.Random.Range(-0.01f, 0.01f);
 
         float.TryParse(DataManager.Instance.battler_Table[index]["splashRange"].ToString(), out splashRange);

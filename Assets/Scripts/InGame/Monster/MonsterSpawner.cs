@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public interface ISpawnTimeModifier
 
 }
 
-public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
+public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind, IStatObject
 {
     [SerializeField]
     private Image bgImg;
@@ -180,5 +181,22 @@ public class MonsterSpawner : MonoBehaviour, IDestructableObjectKind
 
         curCoolTime += GameManager.Instance.InGameDeltaTime;
         _spawnRate.Value = curCoolTime / curSpawnCoolTime;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    public string GetStat(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.SpawnCool:
+                int leftTime = Mathf.FloorToInt(curSpawnCoolTime - curCoolTime);
+                sb.Clear();
+                sb.Append((leftTime / 60).ToString("00"));
+                sb.Append(":");
+                sb.Append((leftTime % 60).ToString("00"));
+                return sb.ToString();
+            default:
+                return null;
+        }
     }
 }

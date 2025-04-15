@@ -35,7 +35,7 @@ public interface IDestructableObjectKind : IObjectKind
     void DestroyObject();
 }
 
-public class Tile : MonoBehaviour, ITileKind
+public class Tile : MonoBehaviour, ITileKind, IStatObject
 {
     [SerializeField]
     private List<Direction> pathDirection = new List<Direction>();
@@ -714,6 +714,26 @@ public class Tile : MonoBehaviour, ITileKind
             {
                 EndMove(curNode);
             }
+        }
+    }
+
+    public string GetStat(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Mana:
+
+                int curMana = SupplyMana;
+                if (curMana < supplyMana)
+                    return $"<color=red>{curMana}</color>";
+                else if(curMana >  supplyMana)
+                    return $"<color=green>{curMana}</color>";
+                else 
+                    return $"{curMana}";
+            case StatType.BuffTexts:
+                return null;
+            default:
+                return null;
         }
     }
 }

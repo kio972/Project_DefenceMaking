@@ -5,7 +5,7 @@ using System;
 using UniRx;
 using UnityEngine.UIElements;
 
-public class Trap : MonoBehaviour, IDestructableObjectKind
+public class Trap : MonoBehaviour, IDestructableObjectKind, IStatObject
 {
     private int trapIndex = -1;
     [SerializeField]
@@ -219,6 +219,27 @@ public class Trap : MonoBehaviour, IDestructableObjectKind
             }
 
             DestroyObject();
+        }
+    }
+
+    public string GetStat(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Dur:
+                int curDur = duration - attackCount;
+                if (curDur < duration)
+                    return $"<color=red>{curDur}</color>";
+                else if(curDur > duration)
+                    return $"<color=green>{curDur}</color>";
+                else
+                    return curDur.ToString();
+            case StatType.Atk:
+                return $"{minDamage}~{maxDamage}";
+            case StatType.AttackSpeed:
+                return Math.Round(attackSpeed, 1).ToString();
+            default:
+                return null;
         }
     }
 }

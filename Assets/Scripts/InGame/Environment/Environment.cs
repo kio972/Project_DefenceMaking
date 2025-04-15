@@ -21,7 +21,7 @@ public interface IModifier
     float value { get; }
 }
 
-public class Environment : MonoBehaviour, ITileKind
+public class Environment : MonoBehaviour, ITileKind, IStatObject
 {
     [SerializeField]
     private EnvironmentType environmentType;
@@ -64,5 +64,18 @@ public class Environment : MonoBehaviour, ITileKind
         NodeManager.Instance.AddSightNode(_curNode);
         if(GameManager.Instance.IsInit)
             buildSound?.Post(gameObject);
+    }
+
+    public string GetStat(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Mana:
+                return $"{0}";
+            case StatType.BuffTexts:
+                return null;
+            default:
+                return null;
+        }
     }
 }

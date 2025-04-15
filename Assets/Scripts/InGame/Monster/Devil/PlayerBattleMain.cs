@@ -125,7 +125,7 @@ public class PlayerBattleMain : Battler
         int index = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
         if(index != -1)
         {
-            InitStats(index);
+            InitStats(index, false);
         }
 
         _curNode = NodeManager.Instance.endPoint;
