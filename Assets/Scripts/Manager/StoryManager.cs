@@ -36,7 +36,7 @@ public class StoryManager : MonoBehaviour
     private Queue<List<Dictionary<string, object>>> scriptQueue = new Queue<List<Dictionary<string, object>>>();
     public bool IsScriptQueueEmpty { get { if (scriptQueue.Count == 0) return true; else return false; } }
 
-    private float textTime = 0.1f;
+    private float textTime = 0.05f;
 
     [SerializeField]
     private TextMeshProUGUI targetText;
@@ -131,7 +131,7 @@ public class StoryManager : MonoBehaviour
         for (int i = 0; i < conver.Length; i++)
         {
             sb.Append(conver[i].ToString());
-            if (conver[i] == ' ')
+            if (conver[i] is ' ' or '\r' or '\n')
                 continue;
             targetText.text = sb.ToString();
 
@@ -253,6 +253,16 @@ public class StoryManager : MonoBehaviour
             targetUI.SetAnim(track1, false, 1);
     }
 
+    private void PlayTalkAnim(int length)
+    {
+        float talkTime = 3;
+        if (length < 30)
+            talkTime = 2;
+        else if (length < 10)
+            talkTime = 1;
+        prevIllust?.PlayTalkAnimation(talkTime);
+    }
+
     private IEnumerator ScriptManage()
     {
         Vector2 closedPos1 = fadeUp.anchoredPosition;
@@ -334,12 +344,14 @@ public class StoryManager : MonoBehaviour
 
                     if (conver != "")
                     {
-                        //yield return StartCoroutine(PrintScript(conver));
-                        targetText.text = conver;
-                        yield return null;
+                        PlayTalkAnim(conver.Length);
+
+                        yield return StartCoroutine(PrintScript(conver));
+                        //targetText.text = conver;
+                        //yield return null;
                         if (isSkip)
                             break;
-                        if(act != "NoWait")
+                        if (act != "NoWait")
                         {
                             nextArrow.SetActive(true);
                             while (!Input.anyKeyDown || Input.GetKey(KeyCode.Escape))
