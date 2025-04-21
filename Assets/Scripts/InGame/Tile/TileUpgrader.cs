@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileUpgrader : MonoBehaviour, IModifier
 {
     public UnitType targetUnit { get => UnitType.Player; }
-    public float value { get => 1.2f; }
+    public float modifyValue { get => 1.2f; }
     private Tile _tile;
     private Tile tile
     {

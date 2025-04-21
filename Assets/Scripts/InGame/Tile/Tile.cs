@@ -106,7 +106,7 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
     {
         float speedMult = 1f;
         foreach(IModifier speedModify in speedModifies)
-            speedMult *= speedModify.value;
+            speedMult *= speedModify.modifyValue;
         return speedMult;
     }
 

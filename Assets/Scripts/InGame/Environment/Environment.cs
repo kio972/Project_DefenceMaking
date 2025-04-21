@@ -18,7 +18,7 @@ public interface IManaSupply
 public interface IModifier
 {
     UnitType targetUnit { get; }
-    float value { get; }
+    float modifyValue { get; }
 }
 
 public class Environment : MonoBehaviour, ITileKind, IStatObject
@@ -57,10 +57,9 @@ public class Environment : MonoBehaviour, ITileKind, IStatObject
                 PassiveManager.Instance.slowedTile.Add(node, value);
                 break;
             case EnvironmentType.custom:
-                CustomFunc();
                 break;
         }
-
+        CustomFunc();
         NodeManager.Instance.AddSightNode(_curNode);
         if(GameManager.Instance.IsInit)
             buildSound?.Post(gameObject);

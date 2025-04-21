@@ -19,7 +19,7 @@ public class GameManager : IngameSingleton<GameManager>
     private float defaultSpeed = 100f;
     public float DefaultSpeed { get => defaultSpeed; }
 
-    public float TotalTime { get => curWave * 1440f + Timer; }
+    public float TotalTime { get => curWave.Value * 1440f + Timer; }
 
     public float InGameDeltaTime { get => Time.deltaTime * defaultSpeed * timeScale; }
 
@@ -64,13 +64,13 @@ public class GameManager : IngameSingleton<GameManager>
     //public int king_Hp = 20;
     private bool dailyIncome = true;
 
-    private int curWave = 0; 
+    public ReactiveProperty<int> curWave { get; private set; } = new ReactiveProperty<int>(0); 
     public int CurWave
     {
         get
         {
-            int loopVal = curWave == -1 ? 1 : 0;
-            return (loop * DataManager.Instance.waveLevelTable.Count) + curWave + loopVal;
+            int loopVal = curWave.Value == -1 ? 1 : 0;
+            return (loop * DataManager.Instance.waveLevelTable.Count) + curWave.Value + loopVal;
         }
     }
 
@@ -187,12 +187,12 @@ public class GameManager : IngameSingleton<GameManager>
 
     public void IncreaseWave()
     {
-        curWave++;
+        curWave.Value++;
     }
 
     public void SetWave(int val)
     {
-        curWave = val - 1;
+        curWave.Value = val - 1;
         SkipDay();
     }
 
@@ -329,13 +329,13 @@ public class GameManager : IngameSingleton<GameManager>
 
             timer.Value = 0f;
             dailyIncome = true;
-            curWave++;
-            SetWaveSpeed(curWave);
+            curWave.Value++;
+            SetWaveSpeed(curWave.Value);
             waveController?.UpdateWaveText();
             if (!spawnLock && !allWaveSpawned)
             {
                 //몬스터 웨이브 스폰
-                waveController.SpawnWave(curWave);
+                waveController.SpawnWave(curWave.Value);
             }
 
             //이동가능타일 잠금
@@ -344,7 +344,7 @@ public class GameManager : IngameSingleton<GameManager>
             midBellSound?.Post(gameObject);
             //AudioManager.Instance.Play2DSound("Time_Over_CruchBell-01", SettingManager.Instance._FxVolume * 0.5f);
 
-            if(curWave % selectInterval == 0)
+            if(curWave.Value % selectInterval == 0)
                 cardSelector?.StartCardSelect();
         }
     }
@@ -427,7 +427,7 @@ public class GameManager : IngameSingleton<GameManager>
         //cardDeckController.Invoke("Mulligan", 1f);
         //cardDeckController.Invoke("MulliganFixed", 1f);
         speedController.SetSpeedNormal(false);
-        waveController.SpawnWave(curWave);
+        waveController.SpawnWave(curWave.Value);
         NodeManager.Instance.SetGuideState(GuideState.None);
 
         if (popUpMessage == null)
@@ -446,7 +446,7 @@ public class GameManager : IngameSingleton<GameManager>
 
         ingameUI?.Init(false);
 
-        curWave = data.curWave;
+        curWave.Value = data.curWave;
         timer.Value = data.curTime;
         gold = data.gold;
         herbDic[HerbType.BlackHerb] = data.herb1;
@@ -487,14 +487,14 @@ public class GameManager : IngameSingleton<GameManager>
             target.LoadData(ally);
         }
 
-        SetWaveSpeed(curWave);
-        waveController.SpawnWave(curWave);
+        SetWaveSpeed(curWave.Value);
+        waveController.SpawnWave(curWave.Value);
         waveController.UpdateWaveText();
 
         research?.LoadData(data);
         shop?.LoadData(data);
         QuestManager.Instance.LoadGame(data);
-        SetWaveSpeed(curWave);
+        SetWaveSpeed(curWave.Value);
         speedController.SetSpeedZero();
 
         this.king.LoadData(king);

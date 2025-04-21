@@ -7,7 +7,7 @@ public class Swamp : Environment, IModifier
 {
     private UnitType _targetUnit = UnitType.Enemy;
     public UnitType targetUnit { get => _targetUnit; }
-    public float value { get => base.value; }
+    public float modifyValue { get => base.value; }
 
     protected override void CustomFunc()
     {

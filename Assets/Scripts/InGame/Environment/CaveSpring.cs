@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crater : Environment, ISpawnTimeModifier
+public class CaveSpring : Environment, ISpawnTimeModifier
 {
     public float spawnTimeWeight => value;
 
