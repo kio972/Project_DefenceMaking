@@ -3,7 +3,25 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public interface ITileEffect
+{
 
+}
+
+public interface IBattlerEnterEffect : ITileEffect
+{
+    void Effect(Battler target);
+}
+
+public interface ISetTileEffect : ITileEffect
+{
+    void Effect(ITileKind target);
+}
+
+public interface IObjectSetEffect : ITileEffect
+{
+    void Effect(IObjectKind target);
+}
 
 public enum Direction
 {
@@ -44,6 +62,26 @@ public class TileNode : MonoBehaviour
 
     public Dictionary<Direction, int> connectionState { get; private set; } = new Dictionary<Direction, int>();
 
+    private List<ITileEffect> _curNodeEffects;
+
+    public List<ITileEffect> curNodeEffects
+    {
+        get
+        {
+            if(_curNodeEffects == null)
+                _curNodeEffects = new List<ITileEffect>();
+            return _curNodeEffects;
+        }
+    }
+
+    public void ExcuteBattlerEnterEffect(Battler target)
+    {
+        foreach(var effect in curNodeEffects)
+        {
+            if (effect is IBattlerEnterEffect enterEffect)
+                enterEffect.Effect(target);
+        }
+    }
 
     public void UpdateNodeConnectionState()
     {

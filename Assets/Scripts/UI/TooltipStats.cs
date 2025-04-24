@@ -19,6 +19,9 @@ public enum StatType
     SpawnCool,
     Mana,
     BuffTexts,
+    MoveSpeed,
+    AtkMin,
+    AtkMax,
 }
 
 public class TooltipStats : MonoBehaviour

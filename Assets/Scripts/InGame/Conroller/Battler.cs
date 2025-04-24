@@ -48,7 +48,27 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 
     protected int minDamage;
     protected int maxDamage;
-    public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
+    protected int curMinDamage;
+    protected int curMaxDamage;
+    public int Damage { get { return UnityEngine.Random.Range(curMinDamage, curMaxDamage + 1); } }
+
+    public void CalculateMoveSpeed()
+    {
+        float curMoveSpeed = this.moveSpeed;
+        foreach (var item in _effects)
+        {
+            if (item is IMoveSpeedEffect speedEffect)
+                curMoveSpeed *= speedEffect.moveSpeedRate;
+        }
+        this.curMoveSpeed = curMoveSpeed;
+    }
+
+    public void CalculateDamage()
+    {
+        curMinDamage = TempDamage(minDamage);
+        curMaxDamage = TempDamage(maxDamage);
+    }
+    
     public int TempDamage(int baseDamage)
     {
         int resultDamage = baseDamage;
@@ -163,15 +183,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 
     private float ccTime = 0;
 
-    public virtual float MoveSpeed
-    {
-        get
-        {
-            //float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
-            float tileSpeedMult = unitType == UnitType.Player ? _curNode.curTile.tileAllySpeedMult : _curNode.curTile.tileEnemySpeedMult;
-            return moveSpeed * tileSpeedMult;
-        }
-    }
+    public float curMoveSpeed;
 
 
     public virtual string GetStat(StatType statType)
@@ -191,14 +203,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
                     sb.Append($"<color=#00FFFF>({shield})</color>");
                 return sb.ToString();
             case StatType.Atk:
-                int curMin = TempDamage(minDamage);
-                int curMax = TempDamage(maxDamage);
-                if (curMax < maxDamage)
-                    sb.Append($"<color=red>{curMin}~{curMax}</color>");
-                else if(curMax > maxDamage)
-                    sb.Append($"<color=green>{curMin}~{curMax}</color>");
+                if (curMaxDamage < maxDamage)
+                    sb.Append($"<color=red>{curMinDamage}~{curMaxDamage}</color>");
+                else if(curMaxDamage > maxDamage)
+                    sb.Append($"<color=green>{curMinDamage}~{curMaxDamage}</color>");
                 else
-                    sb.Append($"{curMin}~{curMax}");
+                    sb.Append($"{curMinDamage}~{curMaxDamage}");
                 return sb.ToString();
             case StatType.AttackSpeed:
                 float curAtkSpeed = TempAttackSpeed(attackSpeed);
@@ -262,7 +272,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     {
         T targetEffect;
         if (HaveEffect<T>(out targetEffect))
+        {
             targetEffect.UpdateEffect(effect._originDuration);
+            if (targetEffect is IConditionEffect prevEffect && effect is IConditionEffect curEffect)
+                prevEffect.UpdateEffect(curEffect.condition);
+        }
         else
             _effects.Add(effect);
     }
@@ -510,6 +524,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         {
             _prevNode = _curNode;
             _curNode = nextNode;
+            _curNode.ExcuteBattlerEnterEffect(this);
         }
     }
 
@@ -569,7 +584,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     {
         Vector3 nextPos = nextNode.transform.position;
         RotateCharacter(nextPos);
-        transform.position = Vector3.MoveTowards(transform.position, nextPos, MoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
+        transform.position = Vector3.MoveTowards(transform.position, nextPos, curMoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
         float distance = Vector3.Distance(transform.position, nextPos);
         TileMoveCheck(nextNode, distance);
     }
@@ -763,10 +778,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         if (curTarget != null && !curTarget.isDead)
         {
             int baseDamage = Damage;
-            int tempDamage = TempDamage(baseDamage);
-            curTarget.GetDamage(tempDamage, this);
+            curTarget.GetDamage(baseDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget, tempDamage);
+                SplashAttack(curTarget, baseDamage);
 
             if(attackTargetCount > 1)
             {
@@ -776,7 +790,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
                 {
                     if (i >= targets.Count)
                         break;
-                    targets[i].GetDamage(tempDamage, this);
+                    targets[i].GetDamage(baseDamage, this);
                 }
             }
         }
@@ -825,6 +839,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
             splashDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["splashPower"]);
             splashAttack = true;
         }
+
+        CalculateDamage();
+        CalculateMoveSpeed();
     }
 
     public virtual void Init()
@@ -962,7 +979,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     public void UpdateMoveSpeed()
     {
         if (animator != null)
-            animator.SetFloat("MoveSpeed", MoveSpeed * GameManager.Instance.timeScale);
+            animator.SetFloat("MoveSpeed", curMoveSpeed * GameManager.Instance.timeScale);
     }
 
     private void UpdateAttackSpeed()
@@ -1137,6 +1154,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         _effects.ObserveCountChanged().Subscribe(_ =>
         {
             UpdateAttackSpeed();
+            CalculateDamage();
+            CalculateMoveSpeed();
         }).AddTo(gameObject);
     }
 

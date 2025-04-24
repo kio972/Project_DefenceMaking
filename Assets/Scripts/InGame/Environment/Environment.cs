@@ -15,6 +15,13 @@ public interface IManaSupply
     int manaValue { get; }
 }
 
+public interface IStatModifier
+{
+    StatType statType { get; }
+
+    float modifyValue { get; }
+}
+
 public interface IModifier
 {
     UnitType targetUnit { get; }
