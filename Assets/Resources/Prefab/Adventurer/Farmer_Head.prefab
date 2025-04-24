@@ -70,6 +70,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_boss001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 1
   isSmart: 0
 --- !u!136 &5018297080547852682
@@ -168,7 +169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 380cb2770001cb3408327adb1cd11a51, type: 2}
+  - {fileID: 2100000, guid: b374adf2e99ad954f8405921a4dbfad1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -543,5 +544,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceRenderer: {fileID: 6714291000788777732}
   replacementMaterials:
-  - originalMaterial: {fileID: 2100000, guid: 380cb2770001cb3408327adb1cd11a51, type: 2}
+  - originalMaterial: {fileID: 2100000, guid: b374adf2e99ad954f8405921a4dbfad1, type: 2}
     replacementMaterial: {fileID: 2100000, guid: 25839814f06e62c41bbdb4d83a012d6a, type: 2}
