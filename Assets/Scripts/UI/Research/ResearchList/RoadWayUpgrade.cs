@@ -5,25 +5,8 @@ using UnityEngine;
 
 public class RoadWayUpgrade : MonoBehaviour, IResearch
 {
-    private void ApplyRoadWayUpgrade()
-    {
-        foreach(var node in NodeManager.Instance._ActiveNodes)
-        {
-            if (node.curTile == null)
-                continue;
-
-            Tile tile = node.curTile;
-            if (tile._TileType != TileType.Path || !tile.isUpgraded)
-                continue;
-
-            TileUpgrader upgrader = tile.GetComponent<TileUpgrader>();
-            if (upgrader != null)
-                tile.AddAllyAttackSpeedMult(upgrader);
-        }
-    }
-
     public void ActiveResearch()
     {
-        ApplyRoadWayUpgrade();
+        //ApplyRoadWayUpgrade();
     }
 }

@@ -17,14 +17,8 @@ public interface IManaSupply
 
 public interface IStatModifier
 {
-    StatType statType { get; }
+    //StatType statType { get; }
 
-    float modifyValue { get; }
-}
-
-public interface IModifier
-{
-    UnitType targetUnit { get; }
     float modifyValue { get; }
 }
 

@@ -19,7 +19,7 @@ public interface IMoveSpeedEffect
 
 public interface IAttackSpeedEffect
 {
-    public int attackSpeedRate { get; set; }
+    public float attackSpeedRate { get; set; }
 }
 
 public interface IAttackPowerEffect
@@ -29,7 +29,7 @@ public interface IAttackPowerEffect
 
 public interface IAttackPowerRateEffect
 {
-    public int attackRate { get; set; }
+    public float attackRate { get; set; }
 }
 
 public interface IEnterEffect

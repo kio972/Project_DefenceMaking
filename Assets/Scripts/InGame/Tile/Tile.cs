@@ -92,32 +92,6 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
         }
     }
 
-    public float tileEnemySpeedMult { get; private set; } = 1f;
-    public float tileAllySpeedMult { get; private set; } = 1f;
-    public float tileAllyAttackSpeedMult { get; private set; } = 1f;
-
-    private ReactiveCollection<IModifier> _enemySpeedMults = new ReactiveCollection<IModifier>();
-    private ReactiveCollection<IModifier> _allySpeedMults = new ReactiveCollection<IModifier>();
-    private ReactiveCollection<IModifier> _allyAttackSpeedMults = new ReactiveCollection<IModifier>();
-
-    public List<IModifier> enemySpeedMults { get => new List<IModifier>(_enemySpeedMults); }
-
-    private float CalculateSpeedMult(List<IModifier> speedModifies)
-    {
-        float speedMult = 1f;
-        foreach(IModifier speedModify in speedModifies)
-            speedMult *= speedModify.modifyValue;
-        return speedMult;
-    }
-
-    public void AddEnemySpeedMult(IModifier speedModify) => _enemySpeedMults.Add(speedModify);
-    public void AddAllySpeedMult(IModifier speedModify) => _allySpeedMults.Add(speedModify);
-    public void AddAllyAttackSpeedMult(IModifier attackSpeedModify) => _allyAttackSpeedMults.Add(attackSpeedModify);
-
-    public void RemoveEnemySpeedMult(IModifier speedModify) => _enemySpeedMults.Remove(speedModify);
-    public void RemoveAllySpeedMult(IModifier speedModify) => _allySpeedMults.Remove(speedModify);
-    public void RemoveAllyAttackSpeedMult(IModifier attackSpeedModify) => _allyAttackSpeedMults.Remove(attackSpeedModify);
-
     public TileType _TileType { get => tileType; }
 
     public List<Direction> PathDirection { get => pathDirection; }
@@ -191,6 +165,23 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
     private AK.Wwise.Event rotateSound;
     [SerializeField]
     private AK.Wwise.Event buildSound;
+
+    List<ITileEffect> _curTileEffects = new List<ITileEffect>();
+    public List<ITileEffect> curTileEffects => _curTileEffects;
+    public void ExcuteBattlerEnterEffect(Battler target)
+    {
+        foreach (var effect in curNode.curNodeEffects)
+        {
+            if (effect is IBattlerEnterEffect enterEffect)
+                enterEffect.Effect(target);
+        }
+
+        foreach (var effect in _curTileEffects)
+        {
+            if (effect is IBattlerEnterEffect enterEffect)
+                enterEffect.Effect(target);
+        }
+    }
 
     public int GetAvailableCount(TileNode node)
     {
@@ -635,9 +626,6 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
         }
 
         NodeManager.Instance.SetTile(this);
-        _allySpeedMults.ObserveCountChanged().Subscribe(_ => tileAllySpeedMult = CalculateSpeedMult(new List<IModifier>(_allySpeedMults))).AddTo(gameObject);
-        _enemySpeedMults.ObserveCountChanged().Subscribe(_ => tileEnemySpeedMult = CalculateSpeedMult(new List<IModifier>(_enemySpeedMults))).AddTo(gameObject);
-        _allyAttackSpeedMults.ObserveCountChanged().Subscribe(_ => tileAllyAttackSpeedMult = CalculateSpeedMult(new List<IModifier>(_allyAttackSpeedMults))).AddTo(gameObject);
     }
 
     public void AutoRotate(TileNode curNode, bool isReversed = false)

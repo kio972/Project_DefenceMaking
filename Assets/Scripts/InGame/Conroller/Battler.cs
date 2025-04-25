@@ -73,11 +73,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     {
         int resultDamage = baseDamage;
 
-        float damageRate = 0;
+        float damageRate = 1;
         foreach (var item in _effects)
         {
             if (item is IAttackPowerRateEffect rateEffect)
-                damageRate += rateEffect.attackRate;
+                damageRate *= rateEffect.attackRate;
         }
 
         int bonusDamage = 0;
@@ -87,7 +87,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
                 bonusDamage += effect.attackDamage;
         }
 
-        resultDamage *= Mathf.FloorToInt(1 + (damageRate / 100));
+        resultDamage = Mathf.FloorToInt(resultDamage * damageRate);
         resultDamage += bonusDamage;
 
         return resultDamage;
@@ -100,17 +100,17 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     public float attackSpeed { get; protected set; } = 1;
     public float TempAttackSpeed(float baseAttackSpeed)
     {
-        float attackSpeedRate = 0;
+        float attackSpeedRate = baseAttackSpeed;
         foreach (var item in _effects)
         {
             if (item is IAttackSpeedEffect rateEffect)
-                attackSpeedRate += rateEffect.attackSpeedRate;
+                attackSpeedRate *= rateEffect.attackSpeedRate;
         }
 
-        float atackTempSpeed = baseAttackSpeed * (1 + (attackSpeedRate / 100));
-        if (_curNode != null && _curNode.curTile != null)
-            atackTempSpeed *= _curNode.curTile.tileAllyAttackSpeedMult;
-        return atackTempSpeed;
+        //float atackTempSpeed = baseAttackSpeed * (1 + (attackSpeedRate / 100));
+        //if (_curNode != null && _curNode.curTile != null)
+        //    atackTempSpeed *= _curNode.curTile.tileAllyAttackSpeedMult;
+        return attackSpeedRate;
     }
 
 
@@ -524,7 +524,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         {
             _prevNode = _curNode;
             _curNode = nextNode;
-            _curNode.ExcuteBattlerEnterEffect(this);
+            _curNode.curTile.ExcuteBattlerEnterEffect(this);
         }
     }
 

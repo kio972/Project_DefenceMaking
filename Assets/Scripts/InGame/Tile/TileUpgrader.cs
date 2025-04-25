@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileUpgrader : MonoBehaviour, IModifier
+public class TileUpgrader : MonoBehaviour, IStatModifier, IBattlerEnterEffect
 {
     public UnitType targetUnit { get => UnitType.Player; }
     public float modifyValue { get => 1.2f; }
@@ -17,9 +17,24 @@ public class TileUpgrader : MonoBehaviour, IModifier
         }
     }
 
+    //public StatType statType => StatType.MoveSpeed;
+
     private Material _originMaterial;
     [SerializeField]
     private Material _upgradeMaterial;
+
+    public void Effect(Battler target)
+    {
+        if (target.unitType != UnitType.Player)
+            return;
+
+        TileNode curNode = target.curNode;
+        target.AddStatusEffect<FastCondition>(new FastCondition(target, 0, modifyValue, () => curNode == target.curNode));
+        if (GameManager.Instance.research.completedResearchs.Contains("r_t10002"))
+        {
+            target.AddStatusEffect<AttackSpeedUpCondition>(new AttackSpeedUpCondition(target, 0, modifyValue, () => curNode == target.curNode));
+        }
+    }
 
     public void UpgradeTile()
     {
@@ -36,9 +51,12 @@ public class TileUpgrader : MonoBehaviour, IModifier
         tile.isUpgraded = true;
         if (tile._TileType == TileType.Path)
         {
-            tile.AddAllySpeedMult(this);
-            if (GameManager.Instance.research.completedResearchs.Contains("r_t10002"))
-                tile.AddAllyAttackSpeedMult(this);
+            tile.curTileEffects.Add(this);
+            //tile.AddAllySpeedMult(this);
+            //if (GameManager.Instance.research.completedResearchs.Contains("r_t10002"))
+            //{
+            //    tile.AddAllyAttackSpeedMult(this);
+            //}
         }
         else if (tile._TileType is TileType.Room or TileType.Room_Single or TileType.Door)
         {
@@ -56,8 +74,9 @@ public class TileUpgrader : MonoBehaviour, IModifier
             renderer.material = _originMaterial;
 
         tile.isUpgraded = false;
-        tile.RemoveAllyAttackSpeedMult(this);
-        tile.RemoveAllySpeedMult(this);
-        tile.RemoveEnemySpeedMult(this);
+        //tile.RemoveAllyAttackSpeedMult(this);
+        //tile.RemoveAllySpeedMult(this);
+        //tile.RemoveEnemySpeedMult(this);
+        tile.curTileEffects.Remove(this);
     }
 }

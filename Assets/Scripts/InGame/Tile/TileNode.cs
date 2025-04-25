@@ -74,15 +74,6 @@ public class TileNode : MonoBehaviour
         }
     }
 
-    public void ExcuteBattlerEnterEffect(Battler target)
-    {
-        foreach(var effect in curNodeEffects)
-        {
-            if (effect is IBattlerEnterEffect enterEffect)
-                enterEffect.Effect(target);
-        }
-    }
-
     public void UpdateNodeConnectionState()
     {
         foreach(var direction in neighborNodeDic.Keys)

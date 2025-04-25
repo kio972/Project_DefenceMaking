@@ -38,7 +38,7 @@ public class DevilAuraSkill : ISkill
             if (dist > _devilAuraRange)
                 continue;
 
-            monster.AddStatusEffect<DevilAura>(new DevilAura(monster, 0, king.transform, _devilAuraRange, _devilAuraPower));
+            monster.AddStatusEffect<DevilAura>(new DevilAura(monster, 0, king.transform, _devilAuraRange, 1 + (_devilAuraPower / 100)));
         }
 
         return true;

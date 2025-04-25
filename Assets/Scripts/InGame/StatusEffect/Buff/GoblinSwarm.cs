@@ -8,10 +8,10 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
     private float _buffDist = 0;
 
     private int[] _attackDamage = { 0, 1, 2, 3, 4, 5 };
-    private int[] _attackSpeed = { 0, 20, 40, 60, 80, 100 };
+    private float[] _attackSpeed = { 1, 1.2f, 1.4f, 1.6f, 1.8f, 2.0f };
 
     public int attackDamage { get => _attackDamage[number]; set => throw new System.NotImplementedException(); }
-    public int attackSpeedRate { get => _attackSpeed[number]; set => throw new System.NotImplementedException(); }
+    public float attackSpeedRate { get => _attackSpeed[number]; set => throw new System.NotImplementedException(); }
 
 
     private int _stackCount;

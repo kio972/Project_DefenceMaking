@@ -9,7 +9,7 @@ public interface IConditionEffect
     void UpdateEffect(System.Func<bool> condition);
 }
 
-public class SpeedCondition : Debuff, IWhileEffect, IMoveSpeedEffect, IConditionEffect
+public class SpeedCondition : StatusEffect, IWhileEffect, IMoveSpeedEffect, IConditionEffect
 {
     private System.Func<bool> _condition;
     public System.Func<bool> condition => _condition;
@@ -18,7 +18,6 @@ public class SpeedCondition : Debuff, IWhileEffect, IMoveSpeedEffect, ICondition
     {
         Init(battler, duration);
         effectType = EffectType.Debuff;
-        debuffType = DebuffType.CC;
         _speedWeight = speedWeight;
         UpdateEffect(condition);
     }

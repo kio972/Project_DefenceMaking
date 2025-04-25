@@ -6,12 +6,12 @@ public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
 {
     Transform _devilTransform;
 
-    public int attackRate { get => _devilAuraPower; set => throw new System.NotImplementedException(); }
+    public float attackRate { get => _devilAuraPower; set => throw new System.NotImplementedException(); }
 
     private float _devilAuraRange;
-    private int _devilAuraPower;
+    private float _devilAuraPower;
 
-    public DevilAura(Battler battler, int duration, Transform devilTransform, float devilAuraRange, int devilAuraPower) : base(battler, duration)
+    public DevilAura(Battler battler, int duration, Transform devilTransform, float devilAuraRange, float devilAuraPower) : base(battler, duration)
     {
         Init(battler, duration);
         _originDuration = 0;
