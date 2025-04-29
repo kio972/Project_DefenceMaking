@@ -196,9 +196,9 @@ public class Monster : Battler, IHoldbacker
         minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
         maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
 
-        maxHp += PassiveManager.Instance._MonsterTypeHp_Weight[(int)monsterType];
-        maxHp += PassiveManager.Instance.monsterHp_Weight;
-        maxHp = Mathf.FloorToInt((float)maxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
+        curMaxHp += PassiveManager.Instance._MonsterTypeHp_Weight[(int)monsterType];
+        curMaxHp += PassiveManager.Instance.monsterHp_Weight;
+        curMaxHp = Mathf.FloorToInt((float)curMaxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
 
         resurrectCount += PassiveManager.Instance._MonsterTypeResurrect_Weight[(int)monsterType];
     }
@@ -224,8 +224,8 @@ public class Monster : Battler, IHoldbacker
             int.TryParse(DataManager.Instance.battler_Table[monsterIndex]["requiredMagicpower"].ToString(), out requiredMana);
 
             ModifyPassive();
-            curHp = maxHp;
-        }
+            curHp = curMaxHp;
+        }   
 
         GameManager.Instance.SetMonseter(this, true);
 

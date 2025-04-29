@@ -60,7 +60,7 @@ public class TooltipStats : MonoBehaviour
         { ToolTipType.Tile, new List<StatType>(){ StatType.Mana, StatType.BuffTexts } },
     };
 
-    IStatObject curStatObject; 
+    IStatObject curStatObject;
 
     private void ResetStats()
     {

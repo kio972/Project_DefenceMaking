@@ -54,7 +54,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 
     public void CalculateAttackSpeed()
     {
-        _curAttackSpeed = TempAttackSpeed(curAttackSpeed);
+        _curAttackSpeed = TempAttackSpeed(_attackSpeed);
     }
 
     public void CalculateMoveSpeed()
@@ -100,6 +100,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 
     public int curHp;
     public int maxHp;
+
+    protected int curMaxHp;
+
     public int armor;
     public int shield;
 
@@ -200,23 +203,32 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         switch (statType)
         {
             case StatType.Hp:
-
-                if (curHp < maxHp)
-                    sb.Append($"<color=red>{curHp}</color>");
-                else if (curHp > maxHp)
-                    sb.Append($"<color=green>{curHp}</color>");
-                else
-                    sb.Append(curHp);
                 if (shield > 0)
-                    sb.Append($"<color=#00FFFF>({shield})</color>");
+                    sb.Append("<color=#00FFFF>");
+                else if (curHp < curMaxHp)
+                    sb.Append("<color=red>");
+                else if (curHp > curMaxHp)
+                    sb.Append("<color=green>");
+                sb.Append(curHp + shield);
+                sb.Append("</color>/");
+
+                if (curMaxHp < maxHp)
+                    sb.Append("<color=red>");
+                else if (curMaxHp > maxHp)
+                    sb.Append("<color=green>");
+                sb.Append(curMaxHp);
+                sb.Append("</color>");
                 return sb.ToString();
             case StatType.Atk:
                 if (curMaxDamage < maxDamage)
-                    sb.Append($"<color=red>{curMinDamage}~{curMaxDamage}</color>");
+                    sb.Append("<color=red>");
                 else if(curMaxDamage > maxDamage)
-                    sb.Append($"<color=green>{curMinDamage}~{curMaxDamage}</color>");
+                    sb.Append("<color=green>");
+                if (curMinDamage == curMaxDamage)
+                    sb.Append(curMinDamage);
                 else
                     sb.Append($"{curMinDamage}~{curMaxDamage}");
+                sb.Append("</color>");
                 return sb.ToString();
             case StatType.AttackSpeed:
                 var textForView = Math.Round(curAttackSpeed, 1);
@@ -824,6 +836,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         _name = DataManager.Instance.battler_Table[index]["name"].ToString();
         maxHp = Convert.ToInt32(DataManager.Instance.battler_Table[index]["hp"]);
         curHp = maxHp;
+        curMaxHp = maxHp;
         shield = 0;
         if(int.TryParse(DataManager.Instance.battler_Table[index]["attackPowerMin"].ToString(), out int attackMinDmg))
             minDamage = attackMinDmg;

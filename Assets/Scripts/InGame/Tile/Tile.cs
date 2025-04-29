@@ -5,6 +5,7 @@ using System;
 using UniRx;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using System.Text;
 
 public enum TileType
 {
@@ -35,7 +36,7 @@ public interface IDestructableObjectKind : IObjectKind
     void DestroyObject();
 }
 
-public class Tile : MonoBehaviour, ITileKind, IStatObject
+public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
 {
     [SerializeField]
     private List<Direction> pathDirection = new List<Direction>();
@@ -168,6 +169,28 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
 
     List<ITileEffect> _curTileEffects = new List<ITileEffect>();
     public List<ITileEffect> curTileEffects => _curTileEffects;
+
+    public List<IBuffEffectInfo> effectInfos
+    {
+        get
+        {
+            var list = new List<IBuffEffectInfo>();
+            foreach(var effect in curNode.curNodeEffects)
+            {
+                if(effect is IBuffEffectInfo info)
+                    list.Add(info);
+            }
+
+            foreach (var effect in curTileEffects)
+            {
+                if (effect is IBuffEffectInfo info)
+                    list.Add(info);
+            }
+
+            return list;
+        }
+    }
+
     public void ExcuteBattlerEnterEffect(Battler target)
     {
         foreach (var effect in curNode.curNodeEffects)
@@ -736,7 +759,27 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
                 else 
                     return $"{curMana}";
             case StatType.BuffTexts:
-                return null;
+                if (effectInfos.Count == 0)
+                    return null;
+
+                StringBuilder sb = new StringBuilder();
+                foreach(var item in effectInfos)
+                {
+                    if (string.IsNullOrEmpty(item.descKey))
+                        continue;
+                    var info = DataManager.Instance.GetDescription(item.descKey).Split('$');
+                    sb.Append(info[0]);
+                    if (info.Length > 1)
+                    {
+                        sb.Append(item.effectValue);
+                        sb.Append(info[1]);
+                    }
+                    sb.Append('\n');
+                }
+                if(sb.Length > 0)
+                    sb.Remove(sb.Length - 1, 1);
+
+                return sb.ToString();
             default:
                 return null;
         }

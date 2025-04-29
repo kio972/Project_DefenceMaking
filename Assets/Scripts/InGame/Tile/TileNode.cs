@@ -8,6 +8,17 @@ public interface ITileEffect
 
 }
 
+public interface IBuffContainer
+{
+    List<IBuffEffectInfo> effectInfos { get; }
+}
+
+public interface IBuffEffectInfo
+{
+    string descKey { get; }
+    float effectValue { get; }
+}
+
 public interface IBattlerEnterEffect : ITileEffect
 {
     void Effect(Battler target);

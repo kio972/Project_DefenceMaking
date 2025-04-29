@@ -4,11 +4,15 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Swamp : Environment, IStatModifier, IBattlerEnterEffect
+public class Swamp : Environment, IStatModifier, IBattlerEnterEffect, IBuffEffectInfo
 {
     private UnitType _targetUnit = UnitType.Enemy;
     public UnitType targetUnit { get => _targetUnit; }
     public float modifyValue { get => base.value; }
+
+    public string descKey => "tooltip_buff_1";
+
+    public float effectValue => Mathf.Round((1 - modifyValue) * 100);
 
     //public StatType statType => StatType.MoveSpeed;
 

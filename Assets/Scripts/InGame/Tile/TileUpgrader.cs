@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileUpgrader : MonoBehaviour, IStatModifier, IBattlerEnterEffect
+public class TileUpgrader : MonoBehaviour, IStatModifier, IBattlerEnterEffect, IBuffEffectInfo
 {
     public UnitType targetUnit { get => UnitType.Player; }
     public float modifyValue { get => 1.2f; }
@@ -16,6 +16,18 @@ public class TileUpgrader : MonoBehaviour, IStatModifier, IBattlerEnterEffect
             return _tile;
         }
     }
+
+    public string descKey
+    {
+        get
+        {
+            if (tile == null || !tile.isUpgraded || tile._TileType != TileType.Path)
+                return null;
+            return "tooltip_buff_2";
+        }
+    }
+
+    public float effectValue => Mathf.Round((modifyValue - 1) * 100);
 
     //public StatType statType => StatType.MoveSpeed;
 

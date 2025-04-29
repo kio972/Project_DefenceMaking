@@ -190,10 +190,8 @@ public class TileControlUI : MonoBehaviour
         inGameUI?.SwitchRightToTileUI(true);
     }
 
-    //public void Update()
-    //{
-    //    if (!tileMoveBtn.gameObject.activeSelf && !tileRemoveBtn.gameObject.activeSelf)
-    //        return;
-
-    //}
+    public void Update()
+    {
+        UpdateLayouts();
+    }
 }
