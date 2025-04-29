@@ -26,9 +26,6 @@ public class Swamp : Environment, IStatModifier, IBattlerEnterEffect
         var targetNodes = new HashSet<TileNode>(curNode.neighborNodeDic.Values);
         foreach (var node in curNode.neighborNodeDic.Values)
         {
-            if (node.curTile == null)
-                continue;
-
             node.curNodeEffects.Add(this);
         }
 

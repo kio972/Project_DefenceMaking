@@ -52,6 +52,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     protected int curMaxDamage;
     public int Damage { get { return UnityEngine.Random.Range(curMinDamage, curMaxDamage + 1); } }
 
+    public void CalculateAttackSpeed()
+    {
+        _curAttackSpeed = TempAttackSpeed(curAttackSpeed);
+    }
+
     public void CalculateMoveSpeed()
     {
         float curMoveSpeed = this.moveSpeed;
@@ -97,7 +102,10 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     public int maxHp;
     public int armor;
     public int shield;
-    public float attackSpeed { get; protected set; } = 1;
+
+    private float _attackSpeed = 1;
+    private float _curAttackSpeed;
+    public float curAttackSpeed { get => _curAttackSpeed; }
     public float TempAttackSpeed(float baseAttackSpeed)
     {
         float attackSpeedRate = baseAttackSpeed;
@@ -110,7 +118,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         //float atackTempSpeed = baseAttackSpeed * (1 + (attackSpeedRate / 100));
         //if (_curNode != null && _curNode.curTile != null)
         //    atackTempSpeed *= _curNode.curTile.tileAllyAttackSpeedMult;
-        return attackSpeedRate;
+        return Mathf.Max(attackSpeedRate, 0.1f);
     }
 
 
@@ -211,11 +219,10 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
                     sb.Append($"{curMinDamage}~{curMaxDamage}");
                 return sb.ToString();
             case StatType.AttackSpeed:
-                float curAtkSpeed = TempAttackSpeed(attackSpeed);
-                var textForView = Math.Round(curAtkSpeed, 1);
-                if (curAtkSpeed < attackSpeed)
+                var textForView = Math.Round(curAttackSpeed, 1);
+                if (curAttackSpeed < _attackSpeed)
                     sb.Append($"<color=red>{textForView}</color>");
-                else if (curAtkSpeed > attackSpeed)
+                else if (curAttackSpeed > _attackSpeed)
                     sb.Append($"<color=green>{textForView}</color>");
                 else
                     sb.Append(textForView);
@@ -764,7 +771,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     {
         List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
         splashTargets.Remove(mainTarget);
-        int damage = Mathf.CeilToInt((float)baseDamage * splashDamage / 100f);
+        int damage = Mathf.FloorToInt((float)baseDamage * splashDamage / 100f);
         foreach (Battler target in splashTargets)
             target.GetDamage(damage, this);
     }
@@ -826,7 +833,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
             attackTargetCount = attacktargets;
         float tempAttackSpeed = 1f;
         float.TryParse(DataManager.Instance.battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
-        attackSpeed = tempAttackSpeed;
+        _attackSpeed = tempAttackSpeed;
         armor = Convert.ToInt32(DataManager.Instance.battler_Table[index]["armor"]);
         float.TryParse(DataManager.Instance.battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
@@ -842,6 +849,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 
         CalculateDamage();
         CalculateMoveSpeed();
+        CalculateAttackSpeed();
     }
 
     public virtual void Init()
@@ -985,7 +993,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     private void UpdateAttackSpeed()
     {
         if (animator != null)
-            animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
+            animator.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
     }
 
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)

@@ -183,6 +183,21 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
         }
     }
 
+    public void ExcuteSetObjectEffect(IObjectKind target)
+    {
+        foreach (var effect in curNode.curNodeEffects)
+        {
+            if (effect is IObjectSetEffect objectSetEffect)
+                objectSetEffect.Effect(target);
+        }
+
+        foreach (var effect in _curTileEffects)
+        {
+            if (effect is IObjectSetEffect objectSetEffect)
+                objectSetEffect.Effect(target);
+        }
+    }
+
     public int GetAvailableCount(TileNode node)
     {
         if (!availableNodeDic.ContainsKey(node))
@@ -481,6 +496,8 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject
     public void SetObject(IObjectKind obj)
     {
         _objectKind = obj;
+
+        ExcuteSetObjectEffect(obj);
     }
 
     public void RemoveObject()

@@ -64,7 +64,7 @@ public class Slime : Monster
     private async UniTaskVoid ExcuteSplit(List<TileNode> nextNodes)
     {
         _Animator.SetTrigger("Split");
-        _Animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
+        _Animator.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
         splitElapsed = 1.5f;
         while(splitElapsed > 0)
         {

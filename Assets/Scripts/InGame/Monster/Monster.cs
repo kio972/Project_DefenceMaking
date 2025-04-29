@@ -190,8 +190,8 @@ public class Monster : Battler, IHoldbacker
     private void ModifyPassive()
     {
         armor += PassiveManager.Instance.monsterDefense_Weight;
-        attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
-        attackSpeed *= ((100 + PassiveManager.Instance._MonsterTypeAttackSpeed_Weight[(int)monsterType]) / 100);
+        //attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
+        //attackSpeed *= ((100 + PassiveManager.Instance._MonsterTypeAttackSpeed_Weight[(int)monsterType]) / 100);
 
         minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
         maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
