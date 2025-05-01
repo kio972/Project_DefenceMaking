@@ -21,8 +21,21 @@ public class KingSlime : Monster, ISpawnTimeModifier
 
     public float spawnTimeWeight { get => 0.5f; }
 
+    private int additionalSplitCount = 1;
+
     [SerializeField]
     GameObject kingAttackEffect;
+
+    public override string GetStat(StatType statType)
+    {
+        if(statType == StatType.BuffTexts)
+        {
+            int value = Mathf.RoundToInt((1 / spawnTimeWeight - 1) * 100);
+            return $"{DataManager.Instance.GetDescription("tooltip_buff_4").Replace("$", additionalSplitCount.ToString())}\n{DataManager.Instance.GetDescription("tooltip_buff_5").Replace("$", value.ToString())}";
+        }
+
+        return base.GetStat(statType);
+    }
 
     public override void Attack()
     {
@@ -113,7 +126,7 @@ public class KingSlime : Monster, ISpawnTimeModifier
     private void ActiveSkill()
     {
         foreach (var monster in GameManager.Instance.monsterList)
-            ModifySlimeSplitCount(monster, 1);
+            ModifySlimeSplitCount(monster, additionalSplitCount);
 
         foreach (var spawner in GameManager.Instance.monsterSpawner)
             ModifySpawnerCoolTime(spawner, true);
@@ -122,7 +135,7 @@ public class KingSlime : Monster, ISpawnTimeModifier
     private void DeactiveSkill()
     {
         foreach (var monster in GameManager.Instance.monsterList)
-            ModifySlimeSplitCount(monster, -1);
+            ModifySlimeSplitCount(monster, -additionalSplitCount);
 
         foreach (var spawner in GameManager.Instance.monsterSpawner)
             ModifySpawnerCoolTime(spawner, false);
