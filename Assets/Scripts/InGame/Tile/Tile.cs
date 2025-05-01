@@ -150,8 +150,8 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
     
     private readonly Direction[] RoomRotations = { Direction.None, Direction.Left, Direction.LeftUp, Direction.RightUp, Direction.Right, Direction.RightDown, Direction.LeftDown };
 
-    private bool _isUpgraded = false;
-    public bool isUpgraded { get => _isUpgraded; set => _isUpgraded = value; }
+    public ReactiveProperty<bool> _isUpgraded { get; private set; } = new ReactiveProperty<bool>(false);
+    public bool isUpgraded { get => _isUpgraded.Value; set => _isUpgraded.Value = value; }
 
 
     TileNode prevNode = null;

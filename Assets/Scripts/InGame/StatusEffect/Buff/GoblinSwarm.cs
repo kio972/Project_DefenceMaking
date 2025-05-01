@@ -16,7 +16,7 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
 
     private int _stackCount;
     private int _maxStack = 5;
-    public int stackCount { get => _stackCount; set => _stackCount = Mathf.Min(value, _maxStack); }
+    public int stackCount { get => _stackCount + 1; set => _stackCount = Mathf.Min(value, _maxStack); }
 
     public void StackEffect(float duration)
     {
@@ -55,7 +55,13 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
             targetCount++;
         }
 
-        number = Mathf.Min(targetCount, _attackDamage.Length - 1);
+        targetCount = Mathf.Min(targetCount, _attackDamage.Length - 1);
+        if(targetCount != number)
+        {
+            number = targetCount;
+            _battler.CalculateAttackSpeed();
+        }
+        
         stackCount = number;
         if (number == 0)
         {

@@ -1177,6 +1177,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
             UpdateAttackSpeed();
             CalculateDamage();
             CalculateMoveSpeed();
+            CalculateAttackSpeed();
         }).AddTo(gameObject);
     }
 

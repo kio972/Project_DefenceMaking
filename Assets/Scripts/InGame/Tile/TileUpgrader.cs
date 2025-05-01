@@ -42,10 +42,6 @@ public class TileUpgrader : MonoBehaviour, IStatModifier, IBattlerEnterEffect, I
 
         TileNode curNode = target.curNode;
         target.AddStatusEffect<FastCondition>(new FastCondition(target, 0, modifyValue, () => curNode == target.curNode));
-        if (GameManager.Instance.research.completedResearchs.Contains("r_t10002"))
-        {
-            target.AddStatusEffect<AttackSpeedUpCondition>(new AttackSpeedUpCondition(target, 0, modifyValue, () => curNode == target.curNode));
-        }
     }
 
     public void UpgradeTile()
