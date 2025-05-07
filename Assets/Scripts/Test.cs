@@ -11,7 +11,7 @@ public class Test : MonoBehaviour
     public int endWave = 20;
     private void Start()
     {
-        StoryManager.Instance.EnqueueScript("Tuto200");
+        StoryManager.Instance.EnqueueScript("Dan002");
 
         //await UniTask.WaitUntil(() => GameManager.Instance.IsInit, default, cancellationToken: this.GetCancellationTokenOnDestroy());
 

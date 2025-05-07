@@ -350,7 +350,8 @@ public class StoryManager : MonoBehaviour
 
                     if (conver != "")
                     {
-                        PlayTalkAnim(conver.Length);
+                        if(act != "NoTalk")
+                            PlayTalkAnim(conver.Length);
 
                         yield return StartCoroutine(PrintScript(conver));
                         //targetText.text = conver;
