@@ -46,9 +46,9 @@ public class Stage0_Story : MonoBehaviour
     private EventSystem eventSystem;
 
     [SerializeField]
-    private AK.Wwise.Event ambience;
+    FMODUnity.EventReference ambience;
     [SerializeField]
-    private AK.Wwise.Event bgmSound;
+    FMODUnity.EventReference bgmSound;
 
     private bool LockDestroyTile(ITileKind tileKind)
     {
@@ -110,7 +110,7 @@ public class Stage0_Story : MonoBehaviour
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
-        ambience?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(ambience);
         if (SaveManager.Instance.playerData != null)
         {
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);

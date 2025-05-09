@@ -28,7 +28,7 @@ public class FluctTimer : MonoBehaviour
     public string fluctMessage;
 
     [SerializeField]
-    private AK.Wwise.Event fluctSound;
+    FMODUnity.EventReference fluctSound;
 
     private void UpdateCoolTime()
     {
@@ -65,7 +65,7 @@ public class FluctTimer : MonoBehaviour
         {
             GameManager.Instance.notificationBar?.SetMesseage(DataManager.Instance.GetDescription(refreshMessage), NotificationType.Shop);
             //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
-            fluctSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(fluctSound);
         }
     }
 

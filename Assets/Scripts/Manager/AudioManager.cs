@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,9 +64,10 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public void ChangeVolume(string RTPC_Name, float value)
+    public void ChangeVolume(string target, float value)
     {
-        AkSoundEngine.SetRTPCValue(RTPC_Name, value * 100f);
+        Bus targetBus = RuntimeManager.GetBus("bus:/" + target);
+        targetBus.setVolume(value);
     }
 
 
@@ -83,20 +86,22 @@ public class AudioManager : Singleton<AudioManager>
 
     private string curBGMEventID = null;
 
+    private EventInstance currentBGM;
+
     public void StopBGM(int fadeTileMilliSec = 500)
     {
         if (!string.IsNullOrEmpty(curBGMEventID))
         {
-            AkSoundEngine.ExecuteActionOnEvent(curBGMEventID, AkActionOnEventType.AkActionOnEventType_Stop, gameObject, fadeTileMilliSec /* π–∏Æ√  */, AkCurveInterpolation.AkCurveInterpolation_Exp1);
-            curBGMEventID = null;
+            currentBGM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            currentBGM.release();
         }
     }
 
-    public void PlayBackground(AK.Wwise.Event soundClip, int fadeTileMilliSec = 500)
+    public void PlayBackground(FMODUnity.EventReference soundClip, int fadeTileMilliSec = 500)
     {
         StopBGM(fadeTileMilliSec);
-        soundClip.Post(gameObject);
-        curBGMEventID = soundClip.Name;
+        currentBGM = RuntimeManager.CreateInstance(soundClip);
+        currentBGM.start();
     }
 
     public void PlayBackground(string name, float voulme = 1.0f)

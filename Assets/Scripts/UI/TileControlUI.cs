@@ -28,11 +28,11 @@ public class TileControlUI : MonoBehaviour
     private Tile curToolTipTile;
 
     [SerializeField]
-    AK.Wwise.Event refusedSound;
+    FMODUnity.EventReference refusedSound;
     [SerializeField]
-    AK.Wwise.Event tileMoveSound;
+    FMODUnity.EventReference tileMoveSound;
     [SerializeField]
-    AK.Wwise.Event tileRemoveSound;
+    FMODUnity.EventReference tileRemoveSound;
 
     TooltipInput _tooltipInput;
     TooltipInput tooltipInput
@@ -79,14 +79,14 @@ public class TileControlUI : MonoBehaviour
         if (curTile.IsCharacterOnIt)
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
         }
         else
         {
             CloseAllBtn();
             curTile.ReadyForMove().Forget();
             InputManager.Instance.settingCard = true;
-            tileMoveSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(tileMoveSound);
         }
     }
 
@@ -114,22 +114,22 @@ public class TileControlUI : MonoBehaviour
         if (GameManager.Instance.isBossOnMap)
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailLockdown"));
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
         }
         else if (curTile.objectKind != null)
         { 
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailObject"));
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
         }
         else if (curTile.IsCharacterOnIt)
         {
             GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
         }
         else
         {
             curTile.RemoveTile();
-            tileRemoveSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(tileRemoveSound);
         }
 
         InputManager.Instance.ResetTileClick();

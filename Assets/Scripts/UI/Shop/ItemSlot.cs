@@ -111,9 +111,9 @@ public class ItemSlot : FluctItem, ISlot
     private GameObject clickedImg;
 
     [SerializeField]
-    private AK.Wwise.Event refusedSound;
+    FMODUnity.EventReference refusedSound;
     [SerializeField]
-    private AK.Wwise.Event excutedSound;
+    FMODUnity.EventReference excutedSound;
 
     private void Update()
     {
@@ -160,7 +160,7 @@ public class ItemSlot : FluctItem, ISlot
         {
             shopUI?.PlayScript("Shop034");
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             return;
         }
 
@@ -168,7 +168,7 @@ public class ItemSlot : FluctItem, ISlot
         {
             shopUI?.PlayScript("Shop035");
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             return;
         }
 
@@ -185,7 +185,7 @@ public class ItemSlot : FluctItem, ISlot
             isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
         //AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
-        excutedSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(excutedSound);
     }
 
     private int DecreasePrice()

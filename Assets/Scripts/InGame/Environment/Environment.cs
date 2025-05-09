@@ -34,7 +34,7 @@ public class Environment : MonoBehaviour, ITileKind, IStatObject
     public TileNode curNode { get => _curNode; }
 
     [SerializeField]
-    private AK.Wwise.Event buildSound;
+    FMODUnity.EventReference buildSound;
 
     protected virtual void CustomFunc() { }
 
@@ -63,7 +63,7 @@ public class Environment : MonoBehaviour, ITileKind, IStatObject
         CustomFunc();
         NodeManager.Instance.AddSightNode(_curNode);
         if(GameManager.Instance.IsInit)
-            buildSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(buildSound);
     }
 
     public string GetStat(StatType statType)

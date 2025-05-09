@@ -7,21 +7,21 @@ public class AkAnimationListener : MonoBehaviour
     private Battler battler;
 
     [SerializeField]
-    private AK.Wwise.Event attackSound;
+    FMODUnity.EventReference attackSound;
 
     [Space]
     [SerializeField]
-    private AK.Wwise.Event deadSound;
+    FMODUnity.EventReference deadSound;
 
     void Dead()
     {
-        deadSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(deadSound);
     }
 
     void Attack()
     {
         battler.Attack();
-        attackSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(attackSound);
     }
 
     private void Awake()

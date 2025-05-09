@@ -9,9 +9,9 @@ public class BribeBtn : MouseOverTarget
     private int cost;
 
     [SerializeField]
-    private AK.Wwise.Event successClip;
+    FMODUnity.EventReference successClip;
     [SerializeField]
-    private AK.Wwise.Event failClip;
+    FMODUnity.EventReference failClip;
     readonly Vector2 pivot = new Vector2(0.5f, -0.2f);
 
     public override void SetText()
@@ -26,12 +26,12 @@ public class BribeBtn : MouseOverTarget
     {
         if (cost > GameManager.Instance.gold)
         {
-            failClip?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(failClip);
             return;
         }
 
         GameManager.Instance.gold -= cost;
-        successClip?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(successClip);
         battler.ReturnToBase(false);
     }
 

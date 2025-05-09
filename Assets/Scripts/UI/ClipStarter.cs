@@ -7,7 +7,7 @@ public class ClipStarter : MonoBehaviour
     public AudioClip clip;
     public float volume = 1f;
 
-    public AK.Wwise.Event bgmEvent;
+    public FMODUnity.EventReference bgmEvent;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class ClipStarter : MonoBehaviour
         //}
 
 
-        if(bgmEvent != null)
+        if(!bgmEvent.IsNull)
         {
             AudioManager.Instance.PlayBackground(bgmEvent);
         }

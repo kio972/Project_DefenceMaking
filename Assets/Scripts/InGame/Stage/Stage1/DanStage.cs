@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,13 @@ public class DanStage : MonoBehaviour
     List<GameObject> managementBtns;
 
     [SerializeField]
-    AK.Wwise.Event ambient;
+    FMODUnity.EventReference ambient;
     [SerializeField]
-    AK.Wwise.Event bgmSound;
+    FMODUnity.EventReference bgmSound;
     [SerializeField]
-    AK.Wwise.Event battleSound;
+    FMODUnity.EventReference battleSound;
     [SerializeField]
-    AK.Wwise.Event battleSound2;
+    FMODUnity.EventReference battleSound2;
 
     public bool bossEntered { get; private set; } = false;
 
@@ -103,7 +105,10 @@ public class DanStage : MonoBehaviour
 
     void Start()
     {
-        ambient?.Post(gameObject);
+        EventInstance ambientInstance = RuntimeManager.CreateInstance(ambient);
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(ambientInstance, transform);
+        ambientInstance.start();
+
         if (SaveManager.Instance.playerData == null)
             StartCoroutine(ITutorial());
         else

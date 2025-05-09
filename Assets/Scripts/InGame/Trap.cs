@@ -43,7 +43,7 @@ public class Trap : MonoBehaviour, IDestructableObjectKind, IStatObject
     //[SerializeField]
     //AudioClip attackSound;
     [SerializeField]
-    AK.Wwise.Event attackSound;
+    FMODUnity.EventReference attackSound;
 
     private void DeActiveGameObject()
     {
@@ -86,7 +86,7 @@ public class Trap : MonoBehaviour, IDestructableObjectKind, IStatObject
         attackCount++;
         curDuration.Value = duration - attackCount;
         //AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
-        attackSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(attackSound);
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);

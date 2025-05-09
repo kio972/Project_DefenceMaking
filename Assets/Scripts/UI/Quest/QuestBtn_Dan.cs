@@ -11,12 +11,14 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
 
     Button interactBtn;
 
-    readonly string successClipName = "Use_Coin";
-    readonly string faillClipName = "UI_Fail";
+    [SerializeField]
+    FMODUnity.EventReference successClipName;
+    [SerializeField]
+    FMODUnity.EventReference faillClipName;
 
     readonly Vector2 pivot = new Vector2(0f, 1.4f);
     readonly string interactBtnKey = "tooltip_ui_debt1_0";
-
+    
     public void EndQuest()
     {
         repay = null;
@@ -30,13 +32,13 @@ public class QuestBtn_Dan : MouseOverTarget, IQuestInteract
 
         if (repayAmount > GameManager.Instance.gold)
         {
-            AkSoundEngine.PostEvent(faillClipName, gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(faillClipName);
             return;
         }
 
         GameManager.Instance.gold -= repayAmount;
         repay.ReduceGold(repayAmount);
-        AkSoundEngine.PostEvent(successClipName, gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(successClipName);
         repay.UpdateQuest();
         if (repay._IsComplete[0])
             gameObject.SetActive(false);

@@ -48,9 +48,9 @@ public class QuestInfo : MonoBehaviour
     bool isMainQuest = false;
 
     [SerializeField]
-    AK.Wwise.Event clearSound;
+    FMODUnity.EventReference clearSound;
     [SerializeField]
-    AK.Wwise.Event failSound;
+    FMODUnity.EventReference failSound;
 
 
     private IQuestInteract _interactBtn;
@@ -84,9 +84,9 @@ public class QuestInfo : MonoBehaviour
         //string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
         //AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
         if (_curQuest._IsClear)
-            clearSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(clearSound);
         else
-            failSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(failSound);
         _curQuest = null;
         interactBtn?.EndQuest();
     }

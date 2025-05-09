@@ -34,7 +34,7 @@ public class CardUIEffect : MonoBehaviour
     private float sizeMult = 1.5f;
 
     [SerializeField]
-    private AK.Wwise.Event mouseOverSound;
+    FMODUnity.EventReference mouseOverSound;
 
     public void ResetEffect()
     {
@@ -70,7 +70,7 @@ public class CardUIEffect : MonoBehaviour
             transform.SetAsLastSibling();
 
         //AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
-        mouseOverSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(mouseOverSound);
     }
 
     public void OnPointerExit()

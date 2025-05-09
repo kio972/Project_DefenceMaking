@@ -9,15 +9,15 @@ public class ButtonSoundWise : MonoBehaviour, IPointerClickHandler, IPointerEnte
     public bool soundOnHover = true;
     public bool soundOnUnHover = true;
     [Space]
-    public AK.Wwise.Event soundOnClip;
-    public AK.Wwise.Event soundOnHoverClip;
-    public AK.Wwise.Event soundOnUnHoverClip;
+    public FMODUnity.EventReference soundOnClip;
+    public FMODUnity.EventReference soundOnHoverClip;
+    public FMODUnity.EventReference soundOnUnHoverClip;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (soundOnClick)
         {
-            soundOnClip.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(soundOnClip);
         }
     }
 
@@ -25,7 +25,7 @@ public class ButtonSoundWise : MonoBehaviour, IPointerClickHandler, IPointerEnte
     {
         if (soundOnHover)
         {
-            soundOnHoverClip.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(soundOnHoverClip);
         }
     }
 
@@ -33,7 +33,7 @@ public class ButtonSoundWise : MonoBehaviour, IPointerClickHandler, IPointerEnte
     {
         if (soundOnUnHover)
         {
-            soundOnUnHoverClip.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(soundOnUnHoverClip);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,7 +60,7 @@ public class QuestController : MonoBehaviour
     private VerticalLayoutGroup layoutGroup;
 
     [SerializeField]
-    AK.Wwise.Event createSound;
+    FMODUnity.EventReference createSound;
 
     public QuestInfo GetInformer(string questId)
     {
@@ -107,7 +108,7 @@ public class QuestController : MonoBehaviour
         mainInfomer.SetQuest(quest);
 
         //AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
-        createSound?.Post(gameObject);
+        RuntimeManager.PlayOneShot(createSound);
     }
 
     private void SetSubQuest(Quest quest)
@@ -120,7 +121,7 @@ public class QuestController : MonoBehaviour
         layoutGroup.enabled = true;
 
         //AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
-        createSound?.Post(gameObject);
+        RuntimeManager.PlayOneShot(createSound);
     }
 
     public void StartQuest(int questID, List<int> startVal, float startTime)

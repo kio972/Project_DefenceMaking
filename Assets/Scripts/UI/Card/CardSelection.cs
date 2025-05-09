@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using FMODUnity;
+using FMOD.Studio;
 
 public class CardSelection : MonoBehaviour
 {
@@ -49,7 +51,7 @@ public class CardSelection : MonoBehaviour
     private TextMeshProUGUI rerollText;
 
     [SerializeField]
-    AK.Wwise.Event selectSound;
+    FMODUnity.EventReference selectSound;
 
     private void DeActive()
     {
@@ -90,7 +92,8 @@ public class CardSelection : MonoBehaviour
         //gameObject.SetActive(false);
         Animator animator = GetComponent<Animator>();
         animator?.SetTrigger("End");
-        selectSound?.Post(gameObject);
+        
+        RuntimeManager.PlayOneShot(selectSound);
     }
 
     private TileType GetRandomCardType()

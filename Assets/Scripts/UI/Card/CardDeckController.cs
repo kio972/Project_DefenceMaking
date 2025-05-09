@@ -383,10 +383,10 @@ public class CardDeckController : MonoBehaviour
     }
 
     [SerializeField]
-    private AK.Wwise.Event refusedSound;
+    FMODUnity.EventReference refusedSound;
     [SerializeField]
-    private AK.Wwise.Event excutedSound;
-    public AK.Wwise.Event drawSound { get => excutedSound; }
+    FMODUnity.EventReference excutedSound;
+    public FMODUnity.EventReference drawSound { get => excutedSound; }
 
     public void DrawDeck()
     {
@@ -404,7 +404,7 @@ public class CardDeckController : MonoBehaviour
         if (GameManager.Instance.gold < _CardPrice)
         {
             GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
@@ -412,7 +412,7 @@ public class CardDeckController : MonoBehaviour
         if (_cardDeck.Count < 1)
         {
             //GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
@@ -426,7 +426,7 @@ public class CardDeckController : MonoBehaviour
             DrawCard();
 
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
-        excutedSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(excutedSound);
         //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
     }
 

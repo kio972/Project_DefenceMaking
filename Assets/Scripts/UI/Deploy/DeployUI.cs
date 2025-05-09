@@ -53,11 +53,11 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
     public bool setContinuous = true;
 
     [SerializeField]
-    private AK.Wwise.Event openSound;
+    private FMODUnity.EventReference openSound;
     [SerializeField]
-    private AK.Wwise.Event completeSound;
+    private FMODUnity.EventReference completeSound;
     [SerializeField]
-    private AK.Wwise.Event refusedSound;
+    private FMODUnity.EventReference refusedSound;
 
 
     public void UpdateMana()
@@ -84,7 +84,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
         if (value)
         {
             //AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
-            openSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(openSound);
         }
     }
 
@@ -137,7 +137,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
             if (GameManager.Instance.gold < curPrice)
             {
                 GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
-                refusedSound?.Post(gameObject);
+                FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                 return;
             }
 
@@ -149,26 +149,26 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
-                    refusedSound?.Post(gameObject);
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
 
                 BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-                completeSound?.Post(gameObject);
+                FMODUnity.RuntimeManager.PlayOneShot(completeSound);
             }
             else if (curType == CardType.Trap)
             {
                 if (GameManager.Instance.IsAdventurererOnTile(curNode))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_setFailEnemy"));
-                    refusedSound?.Post(gameObject);
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
 
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-                completeSound?.Post(gameObject);
+                FMODUnity.RuntimeManager.PlayOneShot(completeSound);
             }
             else if (curType == CardType.Monster)
             {
@@ -178,19 +178,19 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 if (!HaveMana(room, out requiredMana))
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
-                    refusedSound?.Post(gameObject);
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
                 if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 {
                     GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireTotalMana"));
-                    refusedSound?.Post(gameObject);
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
 
                 BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
                 //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
-                completeSound?.Post(gameObject);
+                FMODUnity.RuntimeManager.PlayOneShot(completeSound);
             }
 
             GameManager.Instance.gold -= curPrice;
@@ -200,7 +200,7 @@ public class DeployUI : MonoBehaviour, ISwappableGameObject
                 DeployEnd().Forget();
         }
         else if (curNode != null && !curNode.setAvail)
-            refusedSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
         else if (curNode == null || curNode.curTile == null)
             DeployEnd().Forget();
     }

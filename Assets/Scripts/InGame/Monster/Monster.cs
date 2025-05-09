@@ -43,7 +43,7 @@ public class Monster : Battler, IHoldbacker
     [SerializeField]
     private AudioClip summonSound;
     [SerializeField]
-    private AK.Wwise.Event summonSoundEvent;
+    FMODUnity.EventReference summonSoundEvent;
 
     //public override float MoveSpeed
     //{
@@ -209,7 +209,7 @@ public class Monster : Battler, IHoldbacker
         if(GameManager.Instance.IsInit)
         {
             //AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
-            summonSoundEvent?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(summonSoundEvent);
         }
         ResetNode();
 

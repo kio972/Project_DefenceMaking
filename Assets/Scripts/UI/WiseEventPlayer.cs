@@ -5,10 +5,10 @@ using UnityEngine;
 public class WiseEventPlayer : MonoBehaviour
 {
     [SerializeField]
-    private AK.Wwise.Event targetEvent;
+    FMODUnity.EventReference targetEvent;
 
     public void PlayWWiseEvent()
     {
-        targetEvent.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(targetEvent);
     }
 }

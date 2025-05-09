@@ -27,7 +27,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
     public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
     [SerializeField]
-    private AK.Wwise.Event openSound;
+    FMODUnity.EventReference openSound;
 
     private async UniTask ExcuteResearch(ResearchSlot curResearch, float additionalTime)
     {
@@ -58,7 +58,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
         string targetMesseage = DataManager.Instance.GetDescription(curResearch._ResearchData.researchName);
         GameManager.Instance.notificationBar?.SetMesseage(targetMesseage + " " + DataManager.Instance.GetDescription("ui_ResearchCompleted"), NotificationType.Research);
         //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
-        openSound?.Post(gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(openSound);
 
         this.curResearch = null;
         _completedResearchs.Add(curResearch._ResearchId);
@@ -98,7 +98,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
             InputManager.Instance.ResetTileClick();
             GameManager.Instance.SetPause(true);
             //AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
-            openSound?.Post(gameObject);
+            FMODUnity.RuntimeManager.PlayOneShot(openSound);
             Animator btnAnim = btnObject.GetComponent<Animator>();
             btnAnim?.SetBool("End", true);
         }

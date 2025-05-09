@@ -6,6 +6,7 @@ using UniRx;
 using Cysharp.Threading.Tasks;
 using System.Linq;
 using System.Text;
+using FMODUnity;
 
 public enum TileType
 {
@@ -163,9 +164,9 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
     public CompleteRoom curRoom { get => _curRoom; set => _curRoom = value; }
 
     [SerializeField]
-    private AK.Wwise.Event rotateSound;
+    FMODUnity.EventReference rotateSound;
     [SerializeField]
-    private AK.Wwise.Event buildSound;
+    FMODUnity.EventReference buildSound;
 
     List<ITileEffect> _curTileEffects = new List<ITileEffect>();
     public List<ITileEffect> curTileEffects => _curTileEffects;
@@ -326,7 +327,7 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
         if(GameManager.Instance.IsInit)
         {
             //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
-            buildSound?.Post(gameObject);
+            RuntimeManager.PlayOneShot(buildSound);
         }
 
     }
@@ -682,7 +683,7 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
         if (GameManager.Instance.IsInit)
         {
             //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.261", SettingManager.Instance._FxVolume);
-            rotateSound?.Post(gameObject);
+            RuntimeManager.PlayOneShot(rotateSound);
         }
     }
 
@@ -723,13 +724,13 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
 
             if (Input.GetKeyDown(SettingManager.Instance.key_RotateRight._CurKey))
             {
-                rotateSound?.Post(gameObject);
+                RuntimeManager.PlayOneShot(rotateSound);
                 //AudioManager.Instance.Play2DSound("Card_Tile_E", SettingManager.Instance._FxVolume);
                 twin.RotateToNext(curNode);
             }
             else if (Input.GetKeyDown(SettingManager.Instance.key_RotateLeft._CurKey))
             {
-                rotateSound?.Post(gameObject);
+                RuntimeManager.PlayOneShot(rotateSound);
                 //AudioManager.Instance.Play2DSound("Card_Tile_Q", SettingManager.Instance._FxVolume);
                 twin.RotateToNext(curNode, true);
             }
