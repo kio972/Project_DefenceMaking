@@ -4023,6 +4023,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_p10001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
 --- !u!33 &422768635
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10043,6 +10044,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m20001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 62e2e45d391b840f9a2b9201b343fb66, type: 3}
@@ -13199,6 +13201,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a20001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!4 &987778266
@@ -17036,6 +17039,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a30001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!4 &1242409000
@@ -19749,6 +19753,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a40001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!4 &1464204429
@@ -25060,6 +25065,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m10003
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
@@ -30399,14 +30405,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1452168767050608527
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5584508995453480984}
-  m_Enabled: 1
 --- !u!1 &1461567028907168903
 GameObject:
   m_ObjectHideFlags: 0
@@ -32047,7 +32045,7 @@ MonoBehaviour:
   useScreenMove: 0
   stackCam: {fileID: 7194446329525580670}
   stackCam2: {fileID: 7074853190142911402}
-  audioListener: {fileID: 1452168767050608527}
+  audioListener: {fileID: 0}
   impulseSource: {fileID: 6711285982934711072}
 --- !u!4 &2813652242790751583
 Transform:
@@ -36399,7 +36397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2519783108365087649}
-  - component: {fileID: 1452168767050608527}
+  - component: {fileID: 5584508995453480985}
   m_Layer: 0
   m_Name: AudioListener
   m_TagString: Untagged
@@ -36407,6 +36405,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5584508995453480985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5584508995453480984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!224 &5610230123283709554
 RectTransform:
   m_ObjectHideFlags: 0
