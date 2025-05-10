@@ -163,13 +163,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: e965b6400889e1249aac868d71586e0f, type: 2}
+    Guid:
+      Data1: -1758316690
+      Data2: 1188495739
+      Data3: -797950035
+      Data4: -340422365
+    Path: event:/Object/Enemy/intruder/Enemy_Thief_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: 960119528
+      Data2: 1216880188
+      Data3: -783193725
+      Data4: -221907682
+    Path: event:/Object/Enemy/intruder/Enemy_Dead_Body
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2060345853617806872
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +260,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a40001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!136 &5018297080547852682

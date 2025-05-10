@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     private Camera stackCam2;
 
     [SerializeField]
-    private AudioListener audioListener;
+    private Transform audioListener;
 
     [SerializeField]
     private CinemachineImpulseSource impulseSource;

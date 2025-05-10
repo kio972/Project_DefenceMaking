@@ -70,6 +70,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a30002
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!136 &5018297080547852682
@@ -365,13 +366,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 7cd265150cce8fe4dae4226ee98fb68e, type: 2}
+    Guid:
+      Data1: -2025055358
+      Data2: 1164487088
+      Data3: -2022619757
+      Data4: -1906999162
+    Path: event:/Object/Enemy/intruder/Enemy_Archer_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: 960119528
+      Data2: 1216880188
+      Data3: -783193725
+      Data4: -221907682
+    Path: event:/Object/Enemy/intruder/Enemy_Dead_Body
 --- !u!1 &5506255766767720299
 GameObject:
   m_ObjectHideFlags: 0

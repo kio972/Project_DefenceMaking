@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,8 +47,6 @@ public class Stage0_Story : MonoBehaviour
     [SerializeField]
     private EventSystem eventSystem;
 
-    [SerializeField]
-    FMODUnity.EventReference ambience;
     [SerializeField]
     FMODUnity.EventReference bgmSound;
 
@@ -110,7 +110,6 @@ public class Stage0_Story : MonoBehaviour
     // Start is called before the first frame update
     async UniTaskVoid Start()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(ambience);
         if (SaveManager.Instance.playerData != null)
         {
             GameManager.Instance.LoadGame(SaveManager.Instance.playerData);

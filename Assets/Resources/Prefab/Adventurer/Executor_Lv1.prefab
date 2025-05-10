@@ -163,13 +163,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 3f052516db265764ca87043c9526e05b, type: 2}
+    Guid:
+      Data1: -2081760574
+      Data2: 1179484773
+      Data3: 636932015
+      Data4: -1498409276
+    Path: event:/Object/Enemy/Executor/Enemy_executor_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: -1317046927
+      Data2: 1269213344
+      Data3: 395080593
+      Data4: 710438904
+    Path: event:/Object/Enemy/Executor/Enemy_executor_Dead
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: -1747352374
+      Data2: 1076915306
+      Data3: -752842336
+      Data4: -2111895825
+    Path: event:/Object/Enemy/Executor/Enemy_executor_Recall
 --- !u!1 &2060345853617806872
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +260,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_boss006
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 1
   isSmart: 1
 --- !u!136 &5018297080547852682
@@ -510,13 +531,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 3f052516db265764ca87043c9526e05b, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &4601492343520274967
 GameObject:
   m_ObjectHideFlags: 0

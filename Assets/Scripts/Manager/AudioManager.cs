@@ -66,8 +66,15 @@ public class AudioManager : Singleton<AudioManager>
 
     public void ChangeVolume(string target, float value)
     {
-        Bus targetBus = RuntimeManager.GetBus("bus:/" + target);
-        targetBus.setVolume(value);
+        try
+        {
+            Bus targetBus = RuntimeManager.GetBus("bus:/" + target);
+            targetBus.setVolume(value);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
 
@@ -90,7 +97,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public void StopBGM(int fadeTileMilliSec = 500)
     {
-        if (!string.IsNullOrEmpty(curBGMEventID))
+        if (currentBGM.isValid())
         {
             currentBGM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             currentBGM.release();

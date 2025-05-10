@@ -403,13 +403,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: ed25c4a94fe79f84fa01570385b3a3d7, type: 2}
+    Guid:
+      Data1: -1903000713
+      Data2: 1122275282
+      Data3: 34175655
+      Data4: 206842897
+    Path: event:/Object/Creture/Slime/Attack_Slime
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 4edb70c0ba77b4c4d8596cc3d7013509, type: 2}
+    Guid:
+      Data1: 1686888206
+      Data2: 1311738977
+      Data3: -886212171
+      Data4: -1919299633
+    Path: event:/Object/Creture/Slime/Creture_Slime_Explosion
 --- !u!1 &7407060762157910197
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,13 +519,17 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m10003
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
   summonSoundEvent:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: acd5ee431e515e9469489ae7a6b65fb4, type: 2}
+    Guid:
+      Data1: 427867390
+      Data2: 1242897292
+      Data3: -400864601
+      Data4: -759727518
+    Path: event:/Object/Creture/Slime/Creture_Slime_Spawn
   explosionDamage: 10
   middlePos: {fileID: 5045217982242117499}
   explosionPrefab: {fileID: 6441526961993058372, guid: 2a370f81440c2fb40ba65a8d7af3908d, type: 3}

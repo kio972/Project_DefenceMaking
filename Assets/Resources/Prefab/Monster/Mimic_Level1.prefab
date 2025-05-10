@@ -263,13 +263,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: cc95c6aefa50ea74e8a07305c1a897ab, type: 2}
+    Guid:
+      Data1: 367004687
+      Data2: 1196401480
+      Data3: 287584409
+      Data4: -55873508
+    Path: event:/Object/Creture/Mimic/Attack_Mimic
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: c96932d97b410b842ae43ee44d05872b, type: 2}
+    Guid:
+      Data1: 994920480
+      Data2: 1239579269
+      Data3: 1457600163
+      Data4: 1958887298
+    Path: event:/Object/Creture/Mimic/Creture_Mimic_Dead
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,13 +518,17 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m40001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 1
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 21636bb31c25a4b169dfc0bc23dc6317, type: 3}
   summonSoundEvent:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 9ad7f71c303baa84080d3b37fcd9579a, type: 2}
+    Guid:
+      Data1: -77307859
+      Data2: 1143938589
+      Data3: 1258640794
+      Data4: -139391633
+    Path: event:/Object/Creture/Mimic/Summoned_Mimic
   seduceTargetCount: 1
 --- !u!136 &7389840894960381613
 CapsuleCollider:

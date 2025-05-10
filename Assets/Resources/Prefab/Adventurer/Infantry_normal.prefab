@@ -163,13 +163,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 2c88823cf0dcf7e4bb7d9c40a152244f, type: 2}
+    Guid:
+      Data1: 313148673
+      Data2: 1234673140
+      Data3: 209273739
+      Data4: -843263090
+    Path: event:/Object/Enemy/Knight(Spear)/Enemy_knight_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: 9810050
+      Data2: 1244814940
+      Data3: -99580250
+      Data4: 907295290
+    Path: event:/Object/Enemy/Knight(Spear)/Enemy_knight_Dead
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 1860529097
+      Data2: 1257578130
+      Data3: 865359015
+      Data4: 2031876213
+    Path: event:/Object/Enemy/Knight(Spear)/Enemy_knight_Recall
 --- !u!1 &1613094522541217892
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +360,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a50001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!136 &5018297080547852682

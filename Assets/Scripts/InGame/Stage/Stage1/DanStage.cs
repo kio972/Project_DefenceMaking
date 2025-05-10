@@ -15,8 +15,6 @@ public class DanStage : MonoBehaviour
     List<GameObject> managementBtns;
 
     [SerializeField]
-    FMODUnity.EventReference ambient;
-    [SerializeField]
     FMODUnity.EventReference bgmSound;
     [SerializeField]
     FMODUnity.EventReference battleSound;
@@ -105,10 +103,6 @@ public class DanStage : MonoBehaviour
 
     void Start()
     {
-        EventInstance ambientInstance = RuntimeManager.CreateInstance(ambient);
-        FMODUnity.RuntimeManager.AttachInstanceToGameObject(ambientInstance, transform);
-        ambientInstance.start();
-
         if (SaveManager.Instance.playerData == null)
             StartCoroutine(ITutorial());
         else

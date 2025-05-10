@@ -194,13 +194,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 656083f97967d934fb2a9c1015af56e6, type: 2}
+    Guid:
+      Data1: 699936619
+      Data2: 1236499098
+      Data3: 169747096
+      Data4: -1487959965
+    Path: event:/Object/Dantalian/Demon_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: c534442ad542a40498742f4a295ff48a, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &566943586218103506
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +462,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_p10001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
 --- !u!136 &7141161965367787149
 CapsuleCollider:
   m_ObjectHideFlags: 0

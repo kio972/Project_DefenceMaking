@@ -70,6 +70,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a10001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!136 &5018297080547852682
@@ -365,13 +366,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: c5fae1797964aad43a4fa3e432d2fdee, type: 2}
+    Guid:
+      Data1: 60515115
+      Data2: 1211957510
+      Data3: -1831665234
+      Data4: 498443052
+    Path: event:/Object/Enemy/intruder/Enemy_Farmer_TypeA_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: 960119528
+      Data2: 1216880188
+      Data3: -783193725
+      Data4: -221907682
+    Path: event:/Object/Enemy/intruder/Enemy_Dead_Body
 --- !u!1 &4697046094101222476
 GameObject:
   m_ObjectHideFlags: 0

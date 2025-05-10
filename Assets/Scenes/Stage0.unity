@@ -615,9 +615,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &63968588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,9 +907,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &91497456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1677,9 +1683,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &245952138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3907,9 +3916,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &527116693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4105,9 +4117,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &529207506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5283,9 +5298,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &664579252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8341,6 +8359,7 @@ GameObject:
   - component: {fileID: 752236463}
   - component: {fileID: 752236461}
   - component: {fileID: 752236462}
+  - component: {fileID: 752236465}
   m_Layer: 0
   m_Name: Stage0
   m_TagString: Untagged
@@ -8356,7 +8375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752236459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 910.5721, y: 645.1108, z: 9.832973}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8381,14 +8400,13 @@ MonoBehaviour:
   shopBtn: {fileID: 0}
   cardSelection: {fileID: 592963057}
   eventSystem: {fileID: 1293500605}
-  ambience:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 4d59934cec6894437a29d925112916f8, type: 2}
   bgmSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 1112357dcd6842140a2bd217e443a228, type: 2}
+    Guid:
+      Data1: -721156813
+      Data2: 1241317355
+      Data3: 1999384235
+      Data4: -527541006
+    Path: event:/BGM/DM_tutorial
 --- !u!114 &752236462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8454,6 +8472,37 @@ MonoBehaviour:
   deploySlotInfo: {fileID: 6594520554221255558}
   deployConfirmBtn: {fileID: 1256448381189238219}
   slimeResearch: {fileID: 2019506754}
+--- !u!114 &752236465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752236459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1733344786
+      Data2: 1119222945
+      Data3: -349519219
+      Data4: 1318840627
+    Path: event:/Ambi/Ambi_Cave_Old
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &791112696
 GameObject:
   m_ObjectHideFlags: 0
@@ -9718,9 +9767,12 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 93818703e4af04345af919b85697d0e5, type: 3}
   volume: 1
   bgmEvent:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 1112357dcd6842140a2bd217e443a228, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!4 &887567699
 Transform:
   m_ObjectHideFlags: 0
@@ -10233,9 +10285,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &924038959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10460,7 +10515,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7792023356844733569, guid: b2122830a5386e046a67f2c51490f747, type: 3}
   m_PrefabInstance: {fileID: 5417489757586385375}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5417489757586385377}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58b8714fe8addb34ea5ad923ba7a8a4e, type: 3}
@@ -12886,9 +12941,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1199684163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13766,9 +13824,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1264381822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14909,9 +14970,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1378899116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15138,9 +15202,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1419962950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15698,9 +15765,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1445369403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16393,13 +16463,26 @@ MonoBehaviour:
   deckCountText: {fileID: 1031880793}
   recycle: {fileID: 568835693556716903}
   refusedSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5182e462119b455409cf293b33a0cc96, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   excutedSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: e61c7f624f25d5f418b79244b7f59357, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  coinSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1514226275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17325,9 +17408,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1641217979
 GameObject:
   m_ObjectHideFlags: 0
@@ -18837,9 +18923,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1827542065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19762,9 +19851,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &1937166901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26183,9 +26275,12 @@ MonoBehaviour:
   originSiblingIndex: -1
   sizeMult: 1.15
   mouseOverSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d95d83e759d787d449f2eacd780e4866, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!224 &2786482244095916658
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29829,14 +29924,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7792023356844733569, guid: b2122830a5386e046a67f2c51490f747, type: 3}
-      propertyPath: useScreenMove
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7792023356844733575, guid: b2122830a5386e046a67f2c51490f747, type: 3}
-      propertyPath: far clip plane
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 7792023357861035022, guid: b2122830a5386e046a67f2c51490f747, type: 3}
       propertyPath: m_Name
       value: CamGroup
@@ -29892,50 +29979,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 2952396436433328801, guid: b2122830a5386e046a67f2c51490f747, type: 3}
   m_PrefabInstance: {fileID: 5417489757586385375}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5417489757586385377 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7792023356844733573, guid: b2122830a5386e046a67f2c51490f747, type: 3}
-  m_PrefabInstance: {fileID: 5417489757586385375}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5417489757586385378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5417489757586385377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea25f2dee96a4e10bbdf2e373f00ff3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDefaultListener: 1
-  bOverrideScalingFactor: 0
-  scalingFactor: -1
-  listenerId: 0
---- !u!114 &5417489757586385379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5417489757586385377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04b0c98fafde9448ba6128bcd6f8a208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_listeners:
-    initialListenerList: []
-    useDefaultListeners: 1
-  isEnvironmentAware: 0
-  isStaticObject: 0
-  m_positionOffsetData:
-    KeepMe: 0
-    positionOffset: {x: 0, y: 0, z: 0}
-  scalingFactor: 1
-  m_posOffsetData: {fileID: 0}
-  listenerMask: 1
 --- !u!224 &5433467470310047181
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30270,17 +30313,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 05eca69a2b6c89a4786085c1f6029afe, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!224 &5801213300523833736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30845,17 +30897,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 05eca69a2b6c89a4786085c1f6029afe, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!222 &6311292164655281766
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31712,17 +31773,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 05eca69a2b6c89a4786085c1f6029afe, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!224 &7021767396922845387
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32326,17 +32396,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: c2d0b6d2047902840b07b0b21044ee03, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &7435408144886653181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33011,17 +33090,26 @@ MonoBehaviour:
   updateItem: 0
   setContinuous: 0
   openSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 63f4971e72addb34e80f5a40929d1852, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   completeSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: a00719599fd3f504cb67d9575ee6ca4b, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   refusedSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5182e462119b455409cf293b33a0cc96, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   btnObject: {fileID: 904852791617316841}
 --- !u!114 &8116993592926938050
 MonoBehaviour:
@@ -33641,17 +33729,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d00db5ea90bed0343b0726c3a503cf70, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &8806693953229500467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33886,17 +33983,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d00db5ea90bed0343b0726c3a503cf70, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!222 &9154281022007642041
 CanvasRenderer:
   m_ObjectHideFlags: 0

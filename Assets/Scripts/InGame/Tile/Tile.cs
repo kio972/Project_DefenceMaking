@@ -167,6 +167,8 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
     FMODUnity.EventReference rotateSound;
     [SerializeField]
     FMODUnity.EventReference buildSound;
+    [SerializeField]
+    FMODUnity.EventReference destroySound;
 
     List<ITileEffect> _curTileEffects = new List<ITileEffect>();
     public List<ITileEffect> curTileEffects => _curTileEffects;
@@ -590,7 +592,8 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
         InputManager.Instance.ResetTileClick();
         tileAnimator.SetTrigger("Destroy");
 
-        AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.262", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.262", SettingManager.Instance._FxVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(destroySound);
 
         GameManager.Instance.gold += PassiveManager.Instance._TileDesturctIncome;
         Destroy(this.gameObject, 1.0f);

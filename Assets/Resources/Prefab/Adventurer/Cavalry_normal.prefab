@@ -147,6 +147,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a60001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   _isBoss: 0
   isSmart: 0
 --- !u!136 &5018297080547852682
@@ -474,13 +475,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 3f052516db265764ca87043c9526e05b, type: 2}
+    Guid:
+      Data1: 844375263
+      Data2: 1157480722
+      Data3: 228063628
+      Data4: -1390142131
+    Path: event:/Object/Enemy/cavalry/Enemy_cavalry_Attack
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43319aca15a400e4b9ce1239ccf37bed, type: 2}
+    Guid:
+      Data1: -367495048
+      Data2: 1104088181
+      Data3: -12895602
+      Data4: 914909268
+    Path: event:/Object/Enemy/cavalry/Enemy_cavalry_Dead
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: -785286077
+      Data2: 1132180613
+      Data3: 1586382734
+      Data4: -661903931
+    Path: event:/Object/Enemy/cavalry/Enemy_cavalry_Recall
 --- !u!1 &7206292384710682280
 GameObject:
   m_ObjectHideFlags: 0

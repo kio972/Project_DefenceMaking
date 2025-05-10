@@ -386,6 +386,8 @@ public class CardDeckController : MonoBehaviour
     FMODUnity.EventReference refusedSound;
     [SerializeField]
     FMODUnity.EventReference excutedSound;
+    [SerializeField]
+    FMODUnity.EventReference coinSound;
     public FMODUnity.EventReference drawSound { get => excutedSound; }
 
     public void DrawDeck()
@@ -427,6 +429,7 @@ public class CardDeckController : MonoBehaviour
 
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
         FMODUnity.RuntimeManager.PlayOneShot(excutedSound);
+        FMODUnity.RuntimeManager.PlayOneShot(coinSound);
         //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
     }
 
