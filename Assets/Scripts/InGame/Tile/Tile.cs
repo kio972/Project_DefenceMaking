@@ -101,7 +101,7 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
 
     private TileNode _curNode;
 
-    public TileNode curNode { get => _curNode; }
+    public TileNode curNode { get => _curNode; set => _curNode = value; }
 
     private bool removable = false;
     public bool IsRemovable

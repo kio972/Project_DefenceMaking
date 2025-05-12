@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -11,6 +12,22 @@ public class RoomLineDrawer : MonoBehaviour
     readonly List<TileEdgeDirection> directions = new List<TileEdgeDirection>() { TileEdgeDirection.LeftUp, TileEdgeDirection.LeftDown, TileEdgeDirection.Down, TileEdgeDirection.RightDown, TileEdgeDirection.RightUp, TileEdgeDirection.Up };
     [SerializeField]
     private float blinkSpeed = 1f;
+
+    CancellationTokenSource cancellationTokenSource;
+
+    private readonly Color originColor = new Color(0.1f, 0.35f, 0.6f);
+
+    public void SetColor(Color color)
+    {
+        _lineRenderer.startColor = color;
+        _lineRenderer.endColor = color;
+    }
+
+    public void SetColor()
+    {
+        _lineRenderer.startColor = originColor;
+        _lineRenderer.endColor = originColor;
+    }
 
     private async UniTaskVoid FadeEffect()
     {
@@ -25,20 +42,29 @@ public class RoomLineDrawer : MonoBehaviour
             {
                 curAlpha -= Time.deltaTime * blinkSpeed;
                 target.SetColor("_Color", new Color(1, 1, 1, curAlpha));
-                await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+                await UniTask.Yield(cancellationTokenSource.Token);
             }
 
             while (curAlpha < 1f)
             {
                 curAlpha += Time.deltaTime * blinkSpeed;
                 target.SetColor("_Color", new Color(1, 1, 1, curAlpha));
-                await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+                await UniTask.Yield(cancellationTokenSource.Token);
             }
         }
     }
 
+    private void OnDestroy()
+    {
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+    }
+
     private void OnEnable()
     {
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+        cancellationTokenSource = new CancellationTokenSource();
         FadeEffect().Forget();
     }
 

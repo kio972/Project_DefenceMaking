@@ -10,6 +10,8 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
     private List<ManaUI> manaList = new List<ManaUI>();
     private Dictionary<CompleteRoom, RoomLineDrawer> roomLineDic = new Dictionary<CompleteRoom, RoomLineDrawer>();
 
+    private RoomLineDrawer tempRoomLine;
+
     private ManaUI GetManaUI()
     {
         foreach(ManaUI obj in manaList)
@@ -37,6 +39,28 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
         return roomLineDrawer;
     }
 
+    public void ShowManaGuide(bool value, List<Tile> rooms, bool isCompleteRoom = false)
+    {
+        if (tempRoomLine == null)
+            tempRoomLine = Instantiate(Resources.Load<RoomLineDrawer>("Prefab/UI/RoomGuideLine"), transform);
+
+        tempRoomLine.gameObject.SetActive(value);
+        foreach (ManaUI obj in manaList)
+            obj.gameObject.SetActive(false);
+
+        if (!value)
+            return;
+
+        ManaUI mana = GetManaUI();
+        mana.Init(UtilHelper.CalculateMidTile(rooms).transform, rooms, isCompleteRoom);
+        tempRoomLine.Init(rooms);
+        tempRoomLine.gameObject.SetActive(true);
+        if (isCompleteRoom)
+            tempRoomLine.SetColor();
+        else
+            tempRoomLine.SetColor(Color.gray);
+    }
+
     public void SetManaUI(bool value, List<CompleteRoom> rooms)
     {
         foreach (ManaUI obj in manaList)
@@ -52,7 +76,7 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
                     continue;
 
                 ManaUI mana = GetManaUI();
-                mana.Init(room.HeadRoom.transform, room);
+                mana.Init(UtilHelper.CalculateMidTile(room._IncludeRooms).transform, room);
                 RoomLineDrawer roomLine = GetLineUI(room);
                 roomLine.gameObject.SetActive(true);
             }

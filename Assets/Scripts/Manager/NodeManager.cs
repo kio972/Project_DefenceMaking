@@ -588,12 +588,12 @@ public class NodeManager : IngameSingleton<NodeManager>
         return nodes;
     }
 
-    private List<Tile> BFSRoom(Tile startTile)
+    public List<Tile> BFSRoom(Tile startTile, out bool isCompleted)
     {
         List<Tile> visited = new List<Tile> { startTile };
         Queue<Tile> queue = new Queue<Tile>();
         queue.Enqueue(startTile);
-        
+        isCompleted = true;
         while(queue.Count != 0)
         {
             Tile next = queue.Dequeue();
@@ -602,14 +602,20 @@ public class NodeManager : IngameSingleton<NodeManager>
                 TileNode targetNode = next.curNode.DirectionalNode(dir);
                 // 방 방향으로 타일이 모두 닫혀있지 않음
                 if (targetNode == null || targetNode.curTile == null)
-                    return null;
+                {
+                    isCompleted = false;
+                    continue;
+                }
 
                 if (visited.Contains(targetNode.curTile))
                     continue;
 
                 // 방 방향으로 방타일이 연결되어있지 않음
                 if (!targetNode.curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(dir)))
-                    return null;
+                {
+                    isCompleted = false;
+                    continue;
+                }
 
                 queue.Enqueue(targetNode.curTile);
                 visited.Add(targetNode.curTile);
@@ -630,8 +636,9 @@ public class NodeManager : IngameSingleton<NodeManager>
         else
         {
             //BFS 수행, 방 완성조건에 부합 시 해당방들에 대해 방완성 = true
-            List<Tile> completeRoom = BFSRoom(tile);
-            if (completeRoom == null || completeRoom.Count <= 1) return;
+            bool isCompleted = false;
+            List<Tile> completeRoom = BFSRoom(tile, out isCompleted);
+            if (!isCompleted || completeRoom.Count <= 1) return;
             newRoom = new CompleteRoom(completeRoom);
             foreach(Tile target in completeRoom)
             {

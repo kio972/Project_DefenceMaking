@@ -12,7 +12,6 @@ public class CompleteRoom
     private HashSet<MonsterSpawner> spawners = new HashSet<MonsterSpawner>();
     public List<Tile> _IncludeRooms { get => includeRooms; }
     public int _RemainingMana { get { return totalMana - _SpendedMana; } }
-    public Tile HeadRoom { get { return CalculateMidTile(); } }
 
     bool isSingleRoom;
 
@@ -49,33 +48,6 @@ public class CompleteRoom
             spawners.Add(spawner);
         else
             spawners.Remove(spawner);
-    }
-
-    private Tile CalculateMidTile()
-    {
-        if (includeRooms.Count == 1)
-            return includeRooms[0];
-
-        Vector3 vector = Vector3.zero;
-        foreach (Tile tile in includeRooms)
-            vector += tile.transform.position;
-
-        vector = vector / includeRooms.Count;
-
-        Tile resultTile = includeRooms[0];
-        float minMagnitude = (vector - includeRooms[0].transform.position).magnitude;
-
-        foreach(Tile tile in includeRooms)
-        {
-            float targetMagnitude = (vector - tile.transform.position).magnitude;
-            if(targetMagnitude < minMagnitude)
-            {
-                minMagnitude = targetMagnitude;
-                resultTile = tile;
-            }
-        }
-
-        return resultTile;
     }
 
     ~CompleteRoom()

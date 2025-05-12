@@ -182,6 +182,7 @@ public class CardFramework : MonoBehaviour
 
         GameManager.Instance.cardDeckController.curHandlingObject.Value = null;
         GameManager.Instance._InGameUI.tileArrowUI?.SetOFF();
+        RoomManaPool.Instance.ShowManaGuide(false, null);
     }
 
     private void UpdateObjectPosition()
@@ -212,6 +213,23 @@ public class CardFramework : MonoBehaviour
         }
 
         DrawArrowUI(curNode);
+        DrawRoomGuide(curNode, instancedObject);
+    }
+
+    private void DrawRoomGuide(TileNode curNode, GameObject instancedObject)
+    {
+        Tile tile = instancedObject.GetComponent<Tile>();
+        if (tile != null && curNode != null && _curNode.GuideActive && _curNode.setAvail && tile._TileType is TileType.Room or TileType.Door or TileType.Room_Single)
+        {
+            tile.curNode = _curNode;
+            _curNode.tileKind = tile;
+            bool isCompleteRoom = false;
+            var tiles = NodeManager.Instance.BFSRoom(tile, out isCompleteRoom);
+            RoomManaPool.Instance.ShowManaGuide(true, tiles, isCompleteRoom);
+            tile.curNode = null;
+        }
+        else
+            RoomManaPool.Instance.ShowManaGuide(false, null);
     }
 
     private void DrawArrowUI(TileNode curNode)

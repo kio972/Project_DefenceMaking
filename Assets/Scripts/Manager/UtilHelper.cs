@@ -12,6 +12,33 @@ using System.Linq;
 
 public static class UtilHelper
 {
+    public static Tile CalculateMidTile(List<Tile> includeRooms)
+    {
+        if (includeRooms.Count == 1)
+            return includeRooms[0];
+
+        Vector3 vector = Vector3.zero;
+        foreach (Tile tile in includeRooms)
+            vector += tile.transform.position;
+
+        vector = vector / includeRooms.Count;
+
+        Tile resultTile = includeRooms[0];
+        float minMagnitude = (vector - includeRooms[0].transform.position).magnitude;
+
+        foreach (Tile tile in includeRooms)
+        {
+            float targetMagnitude = (vector - tile.transform.position).magnitude;
+            if (targetMagnitude < minMagnitude)
+            {
+                minMagnitude = targetMagnitude;
+                resultTile = tile;
+            }
+        }
+
+        return resultTile;
+    }
+
     public static Vector3 GetDirectionalVector(Direction direction)
     {
         switch (direction)
