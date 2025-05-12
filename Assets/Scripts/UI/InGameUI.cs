@@ -47,6 +47,10 @@ public class InGameUI : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private TileArrowUI _tileArrowUI;
+    public TileArrowUI tileArrowUI { get => _tileArrowUI; }
+
     public void StartBloodEffect()
     {
         bloodEffect?.StartBloodEffect();

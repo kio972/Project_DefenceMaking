@@ -65,6 +65,7 @@ public class TileControlUI : MonoBehaviour
         exitBtn.SetActive(false);
         inGameUI?.SwitchRightToTileUI(false);
         curToolTipObject = null;
+        inGameUI?.tileArrowUI?.SetOFF();
     }
 
     public void MoveTile()
@@ -188,6 +189,8 @@ public class TileControlUI : MonoBehaviour
         if (inGameUI == null)
             inGameUI = GetComponentInParent<InGameUI>();
         inGameUI?.SwitchRightToTileUI(true);
+        inGameUI?.tileArrowUI?.SetOFF();
+        inGameUI?.tileArrowUI?.SetArrow(targetTile, targetTile.curNode);
     }
 
     public void Update()

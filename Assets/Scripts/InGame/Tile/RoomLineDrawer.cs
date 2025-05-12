@@ -42,12 +42,12 @@ public class RoomLineDrawer : MonoBehaviour
         FadeEffect().Forget();
     }
 
-    public void Init(CompleteRoom targetRoom)
+    public void Init(List<Tile> targetRoom)
     {
         _lineRenderer = GetComponent<LineRenderer>();
-        if (targetRoom._IncludeRooms.Count == 1)
+        if (targetRoom.Count == 1)
         {
-            TileEdgeGuide tileEdge = targetRoom._IncludeRooms[0].GetComponentInChildren<TileEdgeGuide>();
+            TileEdgeGuide tileEdge = targetRoom[0].GetComponentInChildren<TileEdgeGuide>();
             _lineRenderer.positionCount = 7;
             int point = 0;
             foreach(var kvp in tileEdge.tileDirectionPos)
@@ -167,18 +167,18 @@ public class RoomLineDrawer : MonoBehaviour
         }
     }
 
-    private Dictionary<Tile, Dictionary<TileEdgeDirection, Tile>> CalculateEdgeStatus(CompleteRoom targetRoom)
+    private Dictionary<Tile, Dictionary<TileEdgeDirection, Tile>> CalculateEdgeStatus(List<Tile> targetRoom)
     {
         Dictionary<Tile, Dictionary<TileEdgeDirection, Tile>> tileEdgeDic = new Dictionary<Tile, Dictionary<TileEdgeDirection, Tile>>();
-        HashSet<Tile> roomTiles = targetRoom._IncludeRooms.ToHashSet();
-        foreach (var room in targetRoom._IncludeRooms)
+        HashSet<Tile> roomTiles = targetRoom.ToHashSet();
+        foreach (var room in targetRoom)
         {
             tileEdgeDic[room] = new Dictionary<TileEdgeDirection, Tile>();
             foreach (var dir in directions)
                 tileEdgeDic[room][dir] = room;
         }
 
-        foreach (var room in targetRoom._IncludeRooms)
+        foreach (var room in targetRoom)
         {
             foreach (var neighborKvp in room.curNode.neighborNodeDic)
             {

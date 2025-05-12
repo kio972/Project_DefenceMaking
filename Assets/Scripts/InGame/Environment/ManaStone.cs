@@ -2,9 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManaStone : Environment, IManaSupply
+public class ManaStone : Environment, IManaSupply, ITileArrowEffect
 {
     public int manaValue { get => (int)value; }
+
+    public ArrowColor GetArrowColor(ITileKind target)
+    {
+        if (target is Tile tile)
+        {
+            if (tile._TileType is TileType.Start or TileType.End)
+                return ArrowColor.None;
+
+            return ArrowColor.Green;
+        }
+
+        return ArrowColor.None;
+    }
 
     protected override void CustomFunc()
     {

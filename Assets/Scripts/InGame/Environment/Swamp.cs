@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Swamp : Environment, IStatModifier, IBattlerEnterEffect, IBuffEffectInfo
+public class Swamp : Environment, IStatModifier, IBattlerEnterEffect, IBuffEffectInfo, ITileArrowEffect
 {
     private UnitType _targetUnit = UnitType.Enemy;
     public UnitType targetUnit { get => _targetUnit; }
@@ -22,6 +22,19 @@ public class Swamp : Environment, IStatModifier, IBattlerEnterEffect, IBuffEffec
 
         TileNode curNode = target.curNode;
         target.AddStatusEffect<SlowCondition>(new SlowCondition(target, 0, modifyValue, () => curNode == target.curNode));
+    }
+
+    public ArrowColor GetArrowColor(ITileKind target)
+    {
+        if (target is Tile tile)
+        {
+            if (tile.spawner != null && tile.spawner._TargetName.Contains("slime"))
+                return ArrowColor.Green;
+
+            return ArrowColor.Red;
+        }
+
+        return ArrowColor.None;
     }
 
     protected override void CustomFunc()

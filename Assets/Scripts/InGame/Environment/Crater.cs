@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crater : Environment, ISpawnTimeModifier, IObjectSetEffect
+public class Crater : Environment, ISpawnTimeModifier, IObjectSetEffect, ITileArrowEffect
 {
     public float spawnTimeWeight => value;
 
@@ -12,6 +12,16 @@ public class Crater : Environment, ISpawnTimeModifier, IObjectSetEffect
         {
             spawner.SetSpawntimeModifier(this, true);
         }
+    }
+
+    public ArrowColor GetArrowColor(ITileKind target)
+    {
+        if (target is Tile tile && tile.spawner != null)
+        {
+            return ArrowColor.Green;
+        }
+
+        return ArrowColor.None;
     }
 
     protected override void CustomFunc()

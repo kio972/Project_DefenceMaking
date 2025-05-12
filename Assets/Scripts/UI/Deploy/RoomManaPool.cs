@@ -32,7 +32,7 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
 
         RoomLineDrawer roomLineDrawer = Resources.Load<RoomLineDrawer>("Prefab/UI/RoomGuideLine");
         roomLineDrawer = Instantiate(roomLineDrawer, transform);
-        roomLineDrawer.Init(room);
+        roomLineDrawer.Init(room._IncludeRooms);
         roomLineDic[room] = roomLineDrawer;
         return roomLineDrawer;
     }

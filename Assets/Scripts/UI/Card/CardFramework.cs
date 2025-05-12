@@ -181,6 +181,7 @@ public class CardFramework : MonoBehaviour
         isUsingCard = false;
 
         GameManager.Instance.cardDeckController.curHandlingObject.Value = null;
+        GameManager.Instance._InGameUI.tileArrowUI?.SetOFF();
     }
 
     private void UpdateObjectPosition()
@@ -209,6 +210,19 @@ public class CardFramework : MonoBehaviour
         {
             instancedObject.transform.position = new Vector3(0, 10000, 0);
         }
+
+        DrawArrowUI(curNode);
+    }
+
+    private void DrawArrowUI(TileNode curNode)
+    {
+        ITileKind tileKind = instancedObject.GetComponent<ITileKind>();
+        if (curNode != null && _curNode.GuideActive && tileKind != null)
+        {
+            GameManager.Instance._InGameUI.tileArrowUI?.SetArrow(tileKind, curNode);
+        }
+        else
+            GameManager.Instance._InGameUI.tileArrowUI?.SetOFF();
     }
 
     private void DrawLine(bool value = true)
