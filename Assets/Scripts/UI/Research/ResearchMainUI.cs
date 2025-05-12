@@ -162,6 +162,8 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
     public void ForceActiveResearch(string id)
     {
+        if (!researchDic.ContainsKey(id))
+            return;
         ResearchSlot slot = researchDic[id];
         slot.SetResearchState(ResearchState.Complete);
         IResearch research = slot.GetComponent<IResearch>();
@@ -173,7 +175,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
     private void Awake()
     {
-        if(_completedResearchs == null)
+        if(_completedResearchs == null || _completedResearchs.Count == 0)
         {
             _completedResearchs = new List<string>();
             ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
