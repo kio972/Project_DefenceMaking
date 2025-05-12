@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class RoomManaPool : IngameSingleton<RoomManaPool>
@@ -45,8 +46,6 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
             tempRoomLine = Instantiate(Resources.Load<RoomLineDrawer>("Prefab/UI/RoomGuideLine"), transform);
 
         tempRoomLine.gameObject.SetActive(value);
-        foreach (ManaUI obj in manaList)
-            obj.gameObject.SetActive(false);
 
         if (!value)
             return;
@@ -63,9 +62,7 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
 
     public void SetManaUI(bool value, List<CompleteRoom> rooms)
     {
-        foreach (ManaUI obj in manaList)
-            obj.gameObject.SetActive(false);
-        foreach(var item in roomLineDic.Values)
+        foreach (var item in roomLineDic.Values)
             item.gameObject.SetActive(false);
 
         if(value)
@@ -81,5 +78,17 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
                 roomLine.gameObject.SetActive(true);
             }
         }
+    }
+
+    public void HideAllManaText()
+    {
+        foreach (ManaUI obj in manaList)
+            obj.gameObject.SetActive(false);
+    }
+
+    public void ShowManaText(Transform followTarget, string desc)
+    {
+        ManaUI mana = GetManaUI();
+        mana.Init(followTarget, desc);
     }
 }

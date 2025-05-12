@@ -183,6 +183,7 @@ public class CardFramework : MonoBehaviour
         GameManager.Instance.cardDeckController.curHandlingObject.Value = null;
         GameManager.Instance._InGameUI.tileArrowUI?.SetOFF();
         RoomManaPool.Instance.ShowManaGuide(false, null);
+        RoomManaPool.Instance.HideAllManaText();
     }
 
     private void UpdateObjectPosition()
@@ -212,7 +213,9 @@ public class CardFramework : MonoBehaviour
             instancedObject.transform.position = new Vector3(0, 10000, 0);
         }
 
+        RoomManaPool.Instance.HideAllManaText();
         DrawArrowUI(curNode);
+        DrawManaUI(curNode);
         DrawRoomGuide(curNode, instancedObject);
     }
 
@@ -241,6 +244,23 @@ public class CardFramework : MonoBehaviour
         }
         else
             GameManager.Instance._InGameUI.tileArrowUI?.SetOFF();
+    }
+
+    private void DrawManaUI(TileNode curNode)
+    {
+        ITileManaEffect manaEffect = instancedObject.GetComponent<ITileManaEffect>();
+        if (manaEffect != null && curNode != null && curNode.GuideActive)
+        {
+            foreach(var node in curNode.neighborNodeDic.Values)
+            {
+                if (node.tileKind == null)
+                    continue;
+                string text = manaEffect.GetManaText(node.tileKind);
+                if (text == null)
+                    continue;
+                RoomManaPool.Instance.ShowManaText(node.transform, text);
+            }
+        }
     }
 
     private void DrawLine(bool value = true)

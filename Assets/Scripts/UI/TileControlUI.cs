@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class TileControlUI : MonoBehaviour
 {
@@ -66,6 +67,7 @@ public class TileControlUI : MonoBehaviour
         inGameUI?.SwitchRightToTileUI(false);
         curToolTipObject = null;
         inGameUI?.tileArrowUI?.SetOFF();
+        RoomManaPool.Instance.HideAllManaText();
     }
 
     public void MoveTile()
@@ -191,6 +193,28 @@ public class TileControlUI : MonoBehaviour
         inGameUI?.SwitchRightToTileUI(true);
         inGameUI?.tileArrowUI?.SetOFF();
         inGameUI?.tileArrowUI?.SetArrow(targetTile, targetTile.curNode);
+
+        if(targetTile is ITileManaEffect effect)
+        {
+            RoomManaPool.Instance.HideAllManaText();
+            DrawManaUI(targetTile.curNode, effect);
+        }
+    }
+
+    private void DrawManaUI(TileNode curNode, ITileManaEffect manaEffect)
+    {
+        if (manaEffect != null && curNode != null)
+        {
+            foreach (var node in curNode.neighborNodeDic.Values)
+            {
+                if (node.tileKind == null)
+                    continue;
+                string text = manaEffect.GetManaText(node.tileKind);
+                if (text == null)
+                    continue;
+                RoomManaPool.Instance.ShowManaText(node.transform, text);
+            }
+        }
     }
 
     public void Update()

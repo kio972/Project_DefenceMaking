@@ -59,10 +59,13 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
             bool isRoom = tileType == TileType.Room || tileType == TileType.Room_Single || tileType == TileType.Door;
             if (isUpgraded && isRoom)
                 curMana++;
-            foreach (TileNode node in _curNode.neighborNodeDic.Values)
+            if(_curNode != null)
             {
-                if (node.environment != null && node.environment is IManaSupply supply)
-                    curMana += supply.manaValue;
+                foreach (TileNode node in _curNode.neighborNodeDic.Values)
+                {
+                    if (node.environment != null && node.environment is IManaSupply supply)
+                        curMana += supply.manaValue;
+                }
             }
 
             roomManaProperty.Value = curMana;
@@ -590,6 +593,7 @@ public class Tile : MonoBehaviour, ITileKind, IStatObject, IBuffContainer
 
         NodeManager.Instance.SetActiveNode(_curNode, false);
         InputManager.Instance.ResetTileClick();
+        _curNode.tileKind = null;
         tileAnimator.SetTrigger("Destroy");
 
         //AudioManager.Instance.Play2DSound("FistHitDoor_ZA01.262", SettingManager.Instance._FxVolume);

@@ -39,6 +39,13 @@ public class ManaUI : MonoBehaviour
         text.color = isCompleteRoom ? Color.white : Color.red;
     }
 
+    public void Init(Transform followTarget, string desc)
+    {
+        this.targetObject = followTarget;
+        this.targetRoom = null;
+        text.text = desc;
+    }
+
     protected virtual void Update()
     {
         if (targetObject == null)

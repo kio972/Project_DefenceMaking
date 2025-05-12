@@ -5901,7 +5901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1749880485438155086, guid: 0b5fcd57c49b85d48899b0c0123e5c18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 1749880485438155086, guid: 0b5fcd57c49b85d48899b0c0123e5c18, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6029,7 +6029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4875402361063626149, guid: 0b5fcd57c49b85d48899b0c0123e5c18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 4875402361063626149, guid: 0b5fcd57c49b85d48899b0c0123e5c18, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6301,7 +6301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8197757373185571600, guid: 0b5fcd57c49b85d48899b0c0123e5c18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 8197757373185571600, guid: 0b5fcd57c49b85d48899b0c0123e5c18, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -21855,6 +21855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HpBarCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 354771245335368661, guid: 8f6ad7d167e311b41b436e3c3444dacc, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4770033111049842352, guid: 8f6ad7d167e311b41b436e3c3444dacc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -21881,6 +21885,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f6ad7d167e311b41b436e3c3444dacc, type: 3}
+--- !u!114 &18214538940786925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 354771245335368660, guid: 8f6ad7d167e311b41b436e3c3444dacc, type: 3}
+  m_PrefabInstance: {fileID: 18214538940786924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f80ec11bcd342049b79d9c263a482fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &33518141025783915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32273,6 +32288,7 @@ MonoBehaviour:
   mouseOverTooltip: {fileID: 1082177083}
   rightUILock: 0
   mainBtn: {fileID: 0}
+  _tileArrowUI: {fileID: 18214538940786925}
 --- !u!1 &7335854915427321634
 GameObject:
   m_ObjectHideFlags: 0

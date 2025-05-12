@@ -16,6 +16,11 @@ public interface ITileArrowEffect
     ArrowColor GetArrowColor(ITileKind target);
 }
 
+public interface ITileManaEffect : IManaSupply
+{
+    string GetManaText(ITileKind target);
+}
+
 public class TileArrowUI : MonoBehaviour
 {
     [SerializeField]
