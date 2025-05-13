@@ -25,13 +25,13 @@ public class AnimationListenerFmod : MonoBehaviour
 
     void Attack()
     {
-        battler.Attack();
+        battler?.Attack();
         FMODUnity.RuntimeManager.PlayOneShot(attackSound, transform.position);
     }
 
     void SkillAttack()
     {
-        battler.Attack();
+        battler?.Attack();
         FMODUnity.RuntimeManager.PlayOneShot(recallSound, transform.position);
     }
 
