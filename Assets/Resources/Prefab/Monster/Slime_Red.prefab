@@ -239,13 +239,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: ed25c4a94fe79f84fa01570385b3a3d7, type: 2}
+    Guid:
+      Data1: -1903000713
+      Data2: 1122275282
+      Data3: 34175655
+      Data4: 206842897
+    Path: event:/Object/Creture/Slime/Attack_Slime
   deadSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 4edb70c0ba77b4c4d8596cc3d7013509, type: 2}
+    Guid:
+      Data1: 523008618
+      Data2: 1207987568
+      Data3: -758551361
+      Data4: -1014428580
+    Path: event:/Object/Creture/Slime/Creture_Slime_Dead
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5340873495643022201
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,13 +532,17 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m10001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
   summonSoundEvent:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: acd5ee431e515e9469489ae7a6b65fb4, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!136 &2645424976404353504
 CapsuleCollider:
   m_ObjectHideFlags: 0
