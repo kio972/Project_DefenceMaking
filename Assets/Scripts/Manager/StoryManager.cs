@@ -128,11 +128,26 @@ public class StoryManager : MonoBehaviour
         // 한글자씩 글자 출력
         StringBuilder sb = new StringBuilder();
         float elapsed = 0f;
+        bool skip = false;
         for (int i = 0; i < conver.Length; i++)
         {
             sb.Append(conver[i].ToString());
             if (conver[i] is ' ' or '\r' or '\n')
                 continue;
+
+            if(conver[i] is '<')
+            {
+                skip = true;
+                continue;
+            }
+
+            if (skip)
+            {
+                if (conver[i] is '>')
+                    skip = false;
+                continue;
+            }
+
             targetText.text = sb.ToString();
 
             elapsed = 0f;

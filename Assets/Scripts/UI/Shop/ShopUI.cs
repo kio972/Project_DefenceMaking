@@ -93,7 +93,7 @@ public class ShopUI : MonoBehaviour, ISwappableGameObject
         
         if(value)
         {
-            PlayScript("Shop000");
+            PlayScript("Shop047");
             //AudioManager.Instance.Play2DSound("Open_Store", SettingManager.Instance._FxVolume);
             FMODUnity.RuntimeManager.PlayOneShot(openSound);
         }

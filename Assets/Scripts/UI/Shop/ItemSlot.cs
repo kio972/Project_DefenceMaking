@@ -158,19 +158,19 @@ public class ItemSlot : FluctItem, ISlot
     {
         if (GameManager.Instance.gold < _saledPrice)
         {
-            shopUI?.PlayScript("Shop034");
+            shopUI?.PlayScript("Shop055");
             //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             return;
         }
 
-        if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
-        {
-            shopUI?.PlayScript("Shop035");
-            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
-            return;
-        }
+        //if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
+        //{
+        //    shopUI?.PlayScript("Shop035");
+        //    //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        //    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+        //    return;
+        //}
 
         GameManager.Instance.gold -= _saledPrice;
 

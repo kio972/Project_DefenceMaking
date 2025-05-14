@@ -35,7 +35,7 @@ public class LanguageSprite : MonoBehaviour, ILanguageChange
         SettingManager.Instance._language.Subscribe(_ =>
         {
             ChangeLangauge(_);
-        });
+        }).AddTo(gameObject);
 
         ChangeLangauge(SettingManager.Instance.language);
     }

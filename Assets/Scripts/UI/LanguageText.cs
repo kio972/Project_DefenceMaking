@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 using TMPro;
 
 public interface ILanguageChange
@@ -120,11 +121,12 @@ public class LanguageText : MonoBehaviour, ILanguageChange
     private void Start()
     {
         ChangeLangauge(SettingManager.Instance.language);
-        LanguageManager.Instance.AddLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
+        SettingManager.Instance._language.Subscribe(_ => ChangeLangauge(_)).AddTo(gameObject);
+        //LanguageManager.Instance.AddLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
     }
 
-    private void OnDestroy()
-    {
-        LanguageManager.Instance.RemoveLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
-    }
+    //private void OnDestroy()
+    //{
+    //    LanguageManager.Instance.RemoveLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
+    //}
 }

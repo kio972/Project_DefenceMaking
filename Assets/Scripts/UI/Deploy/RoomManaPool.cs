@@ -62,6 +62,7 @@ public class RoomManaPool : IngameSingleton<RoomManaPool>
 
     public void SetManaUI(bool value, List<CompleteRoom> rooms)
     {
+        RoomManaPool.Instance.HideAllManaText();
         foreach (var item in roomLineDic.Values)
             item.gameObject.SetActive(false);
 

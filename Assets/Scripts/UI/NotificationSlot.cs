@@ -56,8 +56,8 @@ public class NotificationSlot : MonoBehaviour
 
     [SerializeField]
     FMODUnity.EventReference openSound;
-    [SerializeField]
-    FMODUnity.EventReference closeSound;
+    //[SerializeField]
+    //FMODUnity.EventReference closeSound;
 
     public void Finish()
     {
@@ -91,7 +91,7 @@ public class NotificationSlot : MonoBehaviour
     {
         animator.SetTrigger("OnClick");
         //SendMessageUpwards("ArrangeIndex", index);
-        FMODUnity.RuntimeManager.PlayOneShot(closeSound);
+        //FMODUnity.RuntimeManager.PlayOneShot(closeSound);
     }
 
     private void Awake()
