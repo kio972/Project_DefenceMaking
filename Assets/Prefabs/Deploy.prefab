@@ -1415,6 +1415,7 @@ GameObject:
   - component: {fileID: 842379169498096401}
   - component: {fileID: 842379169498096400}
   - component: {fileID: 6349822058100663723}
+  - component: {fileID: 5045948562194446165}
   m_Layer: 5
   m_Name: MaxTarget
   m_TagString: Untagged
@@ -1465,7 +1466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1554,6 +1555,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStr: ui_MaxTarget
   sizeLock: 0
+--- !u!114 &5045948562194446165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842379169498096398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59253b8e8d1ec4cbb3cac8c6605ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTextOnOverlayCanvas: 1
+  isOnUI: 1
+  targetPivot: {x: 0, y: 1}
 --- !u!1 &842379169957737566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,7 +1668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2009,6 +2025,7 @@ GameObject:
   - component: {fileID: 842379170524641567}
   - component: {fileID: 842379170524641566}
   - component: {fileID: 5142310499724245861}
+  - component: {fileID: 796016344819913984}
   m_Layer: 5
   m_Name: Duration
   m_TagString: Untagged
@@ -2059,7 +2076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2148,6 +2165,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStr: ui_Durability
   sizeLock: 0
+--- !u!114 &796016344819913984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842379170524641564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59253b8e8d1ec4cbb3cac8c6605ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTextOnOverlayCanvas: 1
+  isOnUI: 1
+  targetPivot: {x: 0, y: 1}
 --- !u!1 &888461343526700133
 GameObject:
   m_ObjectHideFlags: 0

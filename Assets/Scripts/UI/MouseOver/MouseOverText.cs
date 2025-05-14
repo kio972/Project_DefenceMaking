@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -74,5 +75,10 @@ public class MouseOverText : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         isPointerOverText = false;
         tooltipPanel.SetActive(false);
         lastHoveredLinkIndex = -1;
+    }
+
+    private void OnDisable()
+    {
+        OnPointerExit(null);
     }
 }
