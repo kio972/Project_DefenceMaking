@@ -17,7 +17,7 @@ public class CaveSpring : Environment, IBattlerEnterEffect
         if (target.unitType == UnitType.Enemy || target is PlayerBattleMain)
             return;
 
-        int healAmount = Mathf.FloorToInt(target.maxHp * 0.1f);
+        int healAmount = Mathf.FloorToInt(target.curMaxHp * 0.1f);
         target.GetHeal(healAmount, null);
         curCoolTime = coolTime;
     }

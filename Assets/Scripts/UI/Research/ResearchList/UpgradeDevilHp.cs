@@ -9,7 +9,7 @@ public class UpgradeDevilHp : MonoBehaviour, IResearch
 
     public void ActiveResearch()
     {
-        GameManager.Instance.king.maxHp += value;
+        GameManager.Instance.king.curMaxHp += value;
         GameManager.Instance.king.curHp += value;
     }
 }

@@ -99,9 +99,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     }
 
     public int curHp;
-    public int maxHp;
+    protected int maxHp;
 
-    protected int curMaxHp;
+    public int curMaxHp;
 
     public int armor;
     public int shield;

@@ -386,7 +386,7 @@ public class GameManager : IngameSingleton<GameManager>
     {
         foreach(Monster monster in monsterList)
         {
-            monster.curHp = Mathf.Max(monster.curHp + healAmount, monster.maxHp);
+            monster.curHp = Mathf.Max(monster.curHp + healAmount, monster.curMaxHp);
         }
     }
 

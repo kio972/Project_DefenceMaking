@@ -69,7 +69,7 @@ public class HpBar : MonoBehaviour
         shield_Bar.gameObject.SetActive(haveShield);
 
         float curHp = battler.curHp;
-        float maxHp = battler.maxHp;
+        float maxHp = battler.curMaxHp;
         float sheldHp = curHp + battler.shield;
         if (haveShield)
         {

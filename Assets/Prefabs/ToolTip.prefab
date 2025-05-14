@@ -457,17 +457,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: d00db5ea90bed0343b0726c3a503cf70, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1251168971452948666
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1303,17 +1312,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 12325752f6bbec440add9022414110e3, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2833631375392519790
 GameObject:
   m_ObjectHideFlags: 0
@@ -2381,6 +2399,7 @@ GameObject:
   - component: {fileID: 1754019956894961330}
   - component: {fileID: 786710159836833084}
   - component: {fileID: 2140271582182550802}
+  - component: {fileID: 7271853208715131259}
   m_Layer: 5
   m_Name: Texts
   m_TagString: Untagged
@@ -2430,7 +2449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2519,6 +2538,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStr: 
   sizeLock: 0
+--- !u!114 &7271853208715131259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047618791694950153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59253b8e8d1ec4cbb3cac8c6605ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTextOnOverlayCanvas: 1
+  isOnUI: 1
+  targetPivot: {x: 1.1, y: 1}
 --- !u!1 &6167501160575544660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,17 +2950,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 2aecdb52f7bd0be46b9ba890d00fe925, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &7611980866521172343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,17 +3267,26 @@ MonoBehaviour:
   toolTip_desc: {fileID: 2140271582182550802}
   toolTip_stats: {fileID: 7698130719566478264}
   refusedSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5182e462119b455409cf293b33a0cc96, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   tileMoveSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 80962292f12e7054bb244ef07c74463f, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   tileRemoveSound:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 2aecdb52f7bd0be46b9ba890d00fe925, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &8578866335135913542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,17 +3456,26 @@ MonoBehaviour:
   soundOnHover: 1
   soundOnUnHover: 0
   soundOnClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 12325752f6bbec440add9022414110e3, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 5f42e04a1536c4f4cae7d7acae52d229, type: 2}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnUnHoverClip:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &8758861219586721210
 GameObject:
   m_ObjectHideFlags: 0
