@@ -50,12 +50,12 @@ ui_Research,연구,Research
 ui_Shop,상점,Shop
 ui_Purchase,구매,Purchase
 ui_SoldOut,품절,Sold Out
-ui_Stock,<link=link_stock>재고</link>,<link=link_stock>Stock</link>
+ui_Stock,<link=stock>재고</link>,<link=stock>Stock</link>
 ui_Hp,체력,HP
 ui_Atk,공격력,ATK
 ui_Def,방어력,DEF
-ui_Durability,<link=link_durability>내구도</link>,<link=link_durability>Durability</link>
-ui_MaxTarget,<link=link_maxTarget>최대대상</link>,<link=link_maxTarget>MaxTarget</link>
+ui_Durability,<link=durability>내구도</link>,<link=durability>Durability</link>
+ui_MaxTarget,<link=maxTarget>최대대상</link>,<link=maxTarget>MaxTarget</link>
 ui_ResearchStop,연구취소,Cancel
 ui_ResearchStart,연구진행,Start Research
 ui_ResearchCompleted,연구 완료,Research completed
@@ -78,7 +78,7 @@ announce_ingame_moveFailEnemy,타일 위에 캐릭터가 있어 움직일 수 �
 announce_ingame_removeFailEnemy,타일 위에 캐릭터가 있어 제거 할 수 없습니다!,You can't remove it : character is on the tile
 announce_ingame_removeFailObject,타일 위에 설치된 물체가 있어 제거할 수 없습니다!,You can't remove it : there's an object placed on the tile
 announce_ingame_removeFailLockdown,강력한 적이 침입하여 철거가 불가능합니다!,You can't remove it : powerful enemy interrupted your command
-announce_ingame_shopRefresh,아이템 <link=link_stock>재고</link> <link=link_refresh>초기화</link>,Item <link=link_stock>Stock</link> <link=link_refresh>Reset</link>
+announce_ingame_shopRefresh,아이템 <link=stock>재고</link> <link=refresh>초기화</link>,Item <link=stock>Stock</link> <link=refresh>Reset</link>
 announce_ingame_shopFluct,아이템 가격 변동,Item Price Fluctuation
 announce_ingame_requireAsset,연구 재화가 부족합니다.,Not enough research resources.
 announce_ingame_requireNoResearch,연구가 이미 진행중입니다.,Research is already in progress.
@@ -193,61 +193,61 @@ slime_poison_1,죽을 때 주변 적을 중독에 빠뜨린다.,Poisons nearby e
 slime_explosion,폭발 슬라임,Explosive Slime
 slime_explosion_1,죽을 때 주변에 피해를 입힌다.,Deals damage to nearby enemies when it falls.
 goblin_warrior,고블린 전사,Warrior Goblin
-goblin_warrior_1,"<link=link_rush>도주</link>
-주변에 고블린 전사가 많을수록 강해진다.","<link=link_rush>Rush</link>
+goblin_warrior_1,"<link=rush>도주</link>
+주변에 고블린 전사가 많을수록 강해진다.","<link=rush>Rush</link>
 Become more stronger if other Goblin fighters are near."
 goblin_scout,고블린 정찰병,Scout Goblin
-goblin_scout_1,"<link=link_rush>도주</link>
+goblin_scout_1,"<link=rush>도주</link>
 원거리 공격
-은신한 적 탐지","<link=link_rush>Rush</link>
+은신한 적 탐지","<link=rush>Rush</link>
 Ranged attack.
 Can detect invisible enemies."
 goblin_archer,고블린 궁수,Archer Goblin
-goblin_archer_1,"<link=link_rush>도주</link>
+goblin_archer_1,"<link=rush>도주</link>
 원거리 공격
-공격한 적을 중독에 빠뜨린다.","<link=link_rush>Rush</link>
+공격한 적을 중독에 빠뜨린다.","<link=rush>Rush</link>
 Ranged attack.
 Can poison enemies."
 golem_stone,석재 골렘,Stone Golem
-golem_stone_1,<link=link_rockstance>바위 태세</link>,<link=link_rockstance>RockStance</link>
+golem_stone_1,<link=rockstance>바위 태세</link>,<link=rockstance>RockStance</link>
 golem_iron,강철 골렘,Steel golem
-golem_iron_1,"<link=link_rockstance>바위 태세</link>
-<link=link_shield>쉴드</link>","<link=link_rockstance>RockStance</link>
-<link=link_shield>Shield</link>"
+golem_iron_1,"<link=rockstance>바위 태세</link>
+<link=shield>쉴드</link>","<link=rockstance>RockStance</link>
+<link=shield>Shield</link>"
 golem_obsidian,흑요석 골렘,Obsidian Golem
-golem_obsidian_1,"<link=link_rockstance>바위 태세</link>
-<link=link_shield>쉴드</link>
-<link=link_shieldbreak>쉴드 폭발</link>","<link=link_rockstance>RockStance</link>
-<link=link_shield>Shield</link>
-<link=link_shieldbreak>Shield Burst</link>"
+golem_obsidian_1,"<link=rockstance>바위 태세</link>
+<link=shield>쉴드</link>
+<link=shieldbreak>쉴드 폭발</link>","<link=rockstance>RockStance</link>
+<link=shield>Shield</link>
+<link=shieldbreak>Shield Burst</link>"
 golem_mithril,미스릴 골렘,Mithril Golem
-golem_mithril_1,"<link=link_rockstance>바위 태세</link>
-<link=link_shield>쉴드</link>
-<link=link_shieldbreak>쉴드 폭발</link>
-<link=link_shieldrecover>쉴드 회복</link>","<link=link_rockstance>RockStance</link>
-<link=link_shield>Shield</link>
-<link=link_shieldbreak>Shield Burst</link>
-<link=link_shieldrecover>Shiled Recover</link>"
+golem_mithril_1,"<link=rockstance>바위 태세</link>
+<link=shield>쉴드</link>
+<link=shieldbreak>쉴드 폭발</link>
+<link=shieldrecover>쉴드 회복</link>","<link=rockstance>RockStance</link>
+<link=shield>Shield</link>
+<link=shieldbreak>Shield Burst</link>
+<link=shieldrecover>Shiled Recover</link>"
 mimic_wood,미믹,Mimic
-mimic_wood_1,<link=link_charm>유혹</link>,<link=link_charm>Lure</link>
+mimic_wood_1,<link=charm>유혹</link>,<link=charm>Lure</link>
 mimic_supply,보급상자 미믹,Supply chest Mimic
-mimic_supply_1,"<link=link_charm>유혹</link>
-<link=link_retrick>재둔갑</link>","<link=link_charm>Lure</link>
-<link=link_retrick>Retrick</link>"
+mimic_supply_1,"<link=charm>유혹</link>
+<link=retrick>재둔갑</link>","<link=charm>Lure</link>
+<link=retrick>Retrick</link>"
 mimic_treasure,보물상자 미믹,Treasure chest Mimic
-mimic_treasure_1,"<link=link_charm>유혹</link>
-<link=link_retrick>재둔갑</link>
-<link=link_trickrecover>둔갑 회복</link>","<link=link_charm>Lure</link>
-<link=link_retrick>Retrick</link>
-<link=link_trickrecover>Trick Recover</link>"
+mimic_treasure_1,"<link=charm>유혹</link>
+<link=retrick>재둔갑</link>
+<link=trickrecover>둔갑 회복</link>","<link=charm>Lure</link>
+<link=retrick>Retrick</link>
+<link=trickrecover>Trick Recover</link>"
 mimic_royal,왕실 금고 미믹,Royal chest Mimic
-mimic_royal_1,"<link=link_charm>유혹</link>
-<link=link_retrick>재둔갑</link>
-<link=link_trickrecover>둔갑 회복</link>
-<link=link_surprise>깜짝 등장</link>","<link=link_charm>Lure</link>
-<link=link_retrick>Retrick</link>
-<link=link_trickrecover>Trick Recover</link>
-<link=link_surprise>Surprise</link>"
+mimic_royal_1,"<link=charm>유혹</link>
+<link=retrick>재둔갑</link>
+<link=trickrecover>둔갑 회복</link>
+<link=surprise>깜짝 등장</link>","<link=charm>Lure</link>
+<link=retrick>Retrick</link>
+<link=trickrecover>Trick Recover</link>
+<link=surprise>Surprise</link>"
 undead_spear,언데드 창병,Spear Undead
 undead_spear_1,창을 든 언데드,Undead with Spears
 undead_shield,언데드 방패병,Shield Undead
@@ -284,21 +284,21 @@ research_undead4_1,"원거리 공격
 research_undead5_0,물량공세,Monster dumping
 research_undead5_1,"슬라임, 언데드 몬스터가 2배로 생성됨",
 research_goblin1_0,소집 : 고블린 전사,Employment : Goblin fighter
-research_goblin1_1,"<link=link_rush>도주</link>
-주변에 고블린 전사가 많을수록 강해진다.","<link=link_rush>Rush</link>
+research_goblin1_1,"<link=rush>도주</link>
+주변에 고블린 전사가 많을수록 강해진다.","<link=rush>Rush</link>
 Become more stronger if other Goblin fighters are near."
 research_goblin2_0,소집 : 고블린 정찰병,Employment : Goblin scout
-research_goblin2_1,"<link=link_rush>도주</link>
+research_goblin2_1,"<link=rush>도주</link>
 원거리 공격
-은신한 적 탐지","<link=link_rush>Rush</link>
+은신한 적 탐지","<link=rush>Rush</link>
 Ranged attack.
 Detect invisible enemies."
 research_goblin3_0,전략적 후퇴,Tactical retreat
-research_goblin3_1,"고블린이 <link=link_rush>도주</link> 후, 체력의 20%를 회복",Goblins recover 20% HP after <link=link_rush>Rush</link>
+research_goblin3_1,"고블린이 <link=rush>도주</link> 후, 체력의 20%를 회복",Goblins recover 20% HP after <link=rush>Rush</link>
 research_goblin4_0,소집 : 고블린 궁수,Employment : Goblin archer
-research_goblin4_1,"<link=link_rush>도주</link>
+research_goblin4_1,"<link=rush>도주</link>
 원거리 공격
-공격한 적을 중독시킴","<link=link_rush>Rush</link>
+공격한 적을 중독시킴","<link=rush>Rush</link>
 Ranged attack.
 Poison enemies."
 research_goblin5_0,고블린 오크 다이어트,Green society
@@ -310,51 +310,51 @@ research_oak2_1,에픽 등급 오크 배치 가능,
 research_oak3_0,오크 완전 엄청 반갑다!!!!!,ORKZ VERY WELLCOME!!!!!
 research_oak3_1,전설 등급 오크 소환 가능,
 research_golem1_0,제작 : 석재 골렘,Production : Stone golem
-research_golem1_1,<link=link_rockstance>바위 태세</link>,<link=link_rockstance>RockStance</link>
+research_golem1_1,<link=rockstance>바위 태세</link>,<link=rockstance>RockStance</link>
 research_golem2_0,제작 : 강철 골렘,Production : Steel golem
-research_golem2_1,"<link=link_rockstance>바위 태세</link>
-<link=link_shield>쉴드</link>","<link=link_rockstance>RockStance</link>
-<link=link_shield>Shield</link>"
+research_golem2_1,"<link=rockstance>바위 태세</link>
+<link=shield>쉴드</link>","<link=rockstance>RockStance</link>
+<link=shield>Shield</link>"
 research_golem3_0,골렘 골격 보강,Golem frame improvement
 research_golem3_1,골렘 최대 체력 +20%,Golem Max HP +20%
 research_golem4_0,제작 : 흑요석 골렘,Production : Obsidian golem
-research_golem4_1,"<link=link_rockstance>바위 태세</link>
-<link=link_shield>쉴드</link>
-<link=link_shieldbreak>쉴드 폭발</link>","<link=link_rockstance>RockStance</link>
-<link=link_shield>Shield</link>
-<link=link_shieldbreak>Shield Burst</link>"
+research_golem4_1,"<link=rockstance>바위 태세</link>
+<link=shield>쉴드</link>
+<link=shieldbreak>쉴드 폭발</link>","<link=rockstance>RockStance</link>
+<link=shield>Shield</link>
+<link=shieldbreak>Shield Burst</link>"
 research_golem5_0,군중 진압 개조,Crowd control conversion
-research_golem5_1,골렘의 <link=link_holdcount>저지수</link> +2 증가,Golem's <link=link_holdcount>Hold Count</link> increased by 2.
+research_golem5_1,골렘의 <link=holdcount>저지수</link> +2 증가,Golem's <link=holdcount>Hold Count</link> increased by 2.
 research_golem6_0,제작 : 미스릴 골렘,Production : Mithril golem
-research_golem6_1,"<link=link_rockstance>바위 태세</link>
-<link=link_shield>쉴드</link>
-<link=link_shieldbreak>쉴드 폭발</link>
-<link=link_shieldrecover>쉴드 회복</link>","<link=link_rockstance>RockStance</link>
-<link=link_shield>Shield</link>
-<link=link_shieldbreak>Shield Burst</link>
-<link=link_shieldrecover>Shiled Recover</link>"
+research_golem6_1,"<link=rockstance>바위 태세</link>
+<link=shield>쉴드</link>
+<link=shieldbreak>쉴드 폭발</link>
+<link=shieldrecover>쉴드 회복</link>","<link=rockstance>RockStance</link>
+<link=shield>Shield</link>
+<link=shieldbreak>Shield Burst</link>
+<link=shieldrecover>Shiled Recover</link>"
 research_mimic1_0,제작 : 미믹,Production : Mimic
-research_mimic1_1,<link=link_charm>유혹</link>,<link=link_charm>Lure</link>
+research_mimic1_1,<link=charm>유혹</link>,<link=charm>Lure</link>
 research_mimic2_0,제작 : 보급상자 미믹,Production : Supply chest Mimic
-research_mimic2_1,"<link=link_charm>유혹</link>
-<link=link_retrick>재둔갑</link>","<link=link_charm>Lure</link>
-<link=link_retrick>Retrick</link>"
+research_mimic2_1,"<link=charm>유혹</link>
+<link=retrick>재둔갑</link>","<link=charm>Lure</link>
+<link=retrick>Retrick</link>"
 research_mimic3_0,제작 : 보물상자 미믹,Production : Treasure chest Mimic
-research_mimic3_1,"<link=link_charm>유혹</link>
-<link=link_retrick>재둔갑</link>
-<link=link_trickrecover>둔갑 회복</link>","<link=link_charm>Lure</link>
-<link=link_retrick>Retrick</link>
-<link=link_trickrecover>Trick Recover</link>"
+research_mimic3_1,"<link=charm>유혹</link>
+<link=retrick>재둔갑</link>
+<link=trickrecover>둔갑 회복</link>","<link=charm>Lure</link>
+<link=retrick>Retrick</link>
+<link=trickrecover>Trick Recover</link>"
 research_mimic4_0,진수성찬,Feast
 research_mimic4_1,동시에 타격할 수 있는 적의 수 +2,Hit 2 additional enemies
 research_mimic5_0,제작 : 왕실 금고 미믹,Production : Royal chest Mimic
-research_mimic5_1,"<link=link_charm>유혹</link>
-<link=link_retrick>재둔갑</link>
-<link=link_trickrecover>둔갑 회복</link>
-<link=link_surprise>깜짝 등장</link>","<link=link_charm>Lure</link>
-<link=link_retrick>Retrick</link>
-<link=link_trickrecover>Trick Recover</link>
-<link=link_surprise>Surprise</link>"
+research_mimic5_1,"<link=charm>유혹</link>
+<link=retrick>재둔갑</link>
+<link=trickrecover>둔갑 회복</link>
+<link=surprise>깜짝 등장</link>","<link=charm>Lure</link>
+<link=retrick>Retrick</link>
+<link=trickrecover>Trick Recover</link>
+<link=surprise>Surprise</link>"
 research_succubus1_0,서큐버스 계약I,0
 research_succubus2_0,서큐버스 협상,0
 research_succubus3_0,서큐버스 계약II,0
@@ -406,7 +406,7 @@ research_envir3_1,주위 몬스터 생산지의 생산 시간 25% 감소,Reduces
 research_envir4_0,동굴샘,Cave lake
 research_envir4_1,주변 타일을 지나가는 몬스터 HP 10% 회복,Monsters regain 10% HP when passing adjacent tiles.
 research_trap1_0,함정 유지 보수,Trap maintenance
-research_trap1_1,함정의 <link=link_durability>내구도</link> 강화,Increases trap <link=link_durability>durability</link>.
+research_trap1_1,함정의 <link=durability>내구도</link> 강화,Increases trap <link=durability>durability</link>.
 research_trap2_0,함정 재설계,Trap redesign
 research_trap2_1,함정의 공격력 강화,Enhances trap attack power.
 research_trap3_0,적을 찾아라,Seek the enemy
@@ -460,9 +460,9 @@ research_maoskill1_1,"액티브 스킬 긴급 탈출을 활성화
 효과 : 마왕 타일을 반드시 랜덤 이동시킨다.
 조건 : HP 5 소모",
 research_maoskill2_0,계획된 도주,Plan B
-research_maoskill2_1,<link=link_danskill>긴급 탈출</link>의 HP 소모값을 제거,Removes HP cost of <link=link_danskill>Emergency evacuation</link>
+research_maoskill2_1,<link=danskill>긴급 탈출</link>의 HP 소모값을 제거,Removes HP cost of <link=danskill>Emergency evacuation</link>
 research_maoskill3_0,도주 경로 설계,Evac route design
-research_maoskill3_1,<link=link_danskill>긴급 탈출</link>의 쿨타임을 25% 감소,Reduce cooldown of <link=link_danskill>Emergency evacuation</link> for 25%
+research_maoskill3_1,<link=danskill>긴급 탈출</link>의 쿨타임을 25% 감소,Reduce cooldown of <link=danskill>Emergency evacuation</link> for 25%
 shop_item0001_0,마계 하급 복권,Cheap guild lottery
 shop_item0001_1,10~100 골드 랜덤 보상,Gain random gold (10 to 100)
 shop_item0002_0,마계 중급 복권,Guild lottery

@@ -115,7 +115,7 @@ public class LanguageText : MonoBehaviour, ILanguageChange
             return;
         }
 
-        _Text.text = data[targetLanguage].ToString();
+        _Text.text = data[targetLanguage].ToString().Replace("<link=", "<u><link=").Replace("</link>", "</link></u>");
     }
 
     private void Start()
