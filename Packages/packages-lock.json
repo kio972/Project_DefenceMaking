@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.coffee.softmask-for-ugui": {
+      "version": "https://github.com/mob-sakai/SoftMaskForUGUI.git?path=Packages/src",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "8b76751edaaf8ba86698977a89861561f5799f47"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.9",
       "depth": 1,
@@ -17,10 +26,10 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {
+        "com.unity.burst": "1.5.1",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.mathematics": "1.1.0",
-        "com.unity.modules.uielements": "1.0.0",
-        "com.unity.burst": "1.5.1"
+        "com.unity.modules.uielements": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -43,9 +52,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.animation": "7.0.9",
         "com.unity.2d.common": "6.0.6",
-        "com.unity.2d.sprite": "1.0.0"
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.2d.animation": "7.0.9"
       },
       "url": "https://packages.unity.com"
     },
@@ -60,9 +69,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.common": "6.0.4",
         "com.unity.2d.path": "5.0.2",
+        "com.unity.2d.common": "6.0.4",
+        "com.unity.mathematics": "1.1.0",
         "com.unity.modules.physics2d": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -78,9 +87,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.tilemap": "1.0.0",
-        "com.unity.2d.tilemap": "1.0.0",
         "com.unity.ugui": "1.0.0",
+        "com.unity.2d.tilemap": "1.0.0",
+        "com.unity.modules.tilemap": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -277,9 +286,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"

@@ -24,11 +24,22 @@ public class GuideSpiner : SpinnerButton
         UIManager.Instance.SetTab(gameObject, value, () => { mainInfoMenu?.SetActive(true); });
     }
 
+    private void SetEffect(Transform target, bool value)
+    {
+        var items = target.GetComponents<SelectedEffect>();
+        foreach (var item in items)
+        {
+            item.SetSelected(value);
+        }
+    }
+
     public void SetIndex(int index)
     {
-        guideBtns[this.index].sprite = defaultSprite;
+        //guideBtns[this.index].sprite = defaultSprite;
+        SetEffect(guideBtns[this.index].transform, false);
         this.index = index;
-        guideBtns[this.index].sprite = selectedSprite;
+        //guideBtns[this.index].sprite = selectedSprite;
+        SetEffect(guideBtns[this.index].transform, true);
         SetBtn();
         OnValueChange();
     }
