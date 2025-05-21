@@ -58,6 +58,10 @@ public class LanguageText : MonoBehaviour, ILanguageChange
         mult = Mathf.Clamp(mult, 0.8f, 1.2f);
         float targetSize = Mathf.Round(originSize * mult);
         _Text.fontSize = targetSize;
+        if(_Text.enableAutoSizing)
+            _Text.fontSizeMax = targetSize;
+        else
+            _Text.fontSize = targetSize;
     }
 
     public void ChangeLangauge(Languages language, string key, object additional)
