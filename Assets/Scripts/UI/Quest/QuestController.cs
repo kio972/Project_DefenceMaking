@@ -136,6 +136,9 @@ public class QuestController : MonoBehaviour
             SetSubQuest(curQuest);
     }
 
+    [SerializeField]
+    private List<Image> decos;
+
     private void Update()
     {
         _mainQuest?.UpdateQuest();
@@ -149,5 +152,11 @@ public class QuestController : MonoBehaviour
 
         foreach (Quest quest in clearedQuest)
             _subQuest.Remove(quest);
+
+        bool haveNoQuest = (_mainQuest == null || _mainQuest._IsEnd) && _subQuest.Count == 0;
+        foreach(var img in decos)
+        {
+            img.color = new Color(img.color.r, img.color.g, img.color.b, haveNoQuest ? 0.3f : 1);
+        }
     }
 }
