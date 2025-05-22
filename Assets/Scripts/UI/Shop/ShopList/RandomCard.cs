@@ -12,7 +12,13 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem, IInfoChangeable
     private Image card_frame;
 
     [SerializeField]
+    private Image slot_frame;
+
+    [SerializeField]
     private Sprite[] frameSprites;
+
+    [SerializeField]
+    private Sprite[] slotFrameSprites;
 
     private int GetFrameIndex(CardType tileType, bool isAdd)
     {
@@ -118,6 +124,7 @@ public class RandomCard : MonoBehaviour, Item, IRefreshableItem, IInfoChangeable
     {
         targetIndex = _curCard.cardIndex;
         card_frame.sprite = frameSprites[GetFrameIndex(_curCard.cardType, isAdd)];
+        slot_frame.sprite = slotFrameSprites[GetFrameIndex(_curCard.cardType, isAdd)];
         object target = DataManager.Instance.deck_Table[targetIndex]["text_name"];
         targetName.Clear();
         targetName.Append(target.ToString());
