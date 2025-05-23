@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DevilAuraUp : MonoBehaviour, Research
+public class DevilAuraUp : MonoBehaviour, IResearch
 {
     [SerializeField]
     private int range = 1;
@@ -11,6 +11,16 @@ public class DevilAuraUp : MonoBehaviour, Research
 
     public void ActiveResearch()
     {
-        PassiveManager.Instance.UpgradeDevilAura(range, value);
+        var king = GameManager.Instance.king;
+        if(king.HaveSkill(out DevilAuraSkill skill))
+        {
+            skill.SetDevilAuraValue(range, value);
+        }
+        else
+        {
+            DevilAuraSkill devilAura = new DevilAuraSkill();
+            devilAura.SetDevilAuraValue(range, value);
+            king.AddSkill(devilAura);
+        }
     }
 }

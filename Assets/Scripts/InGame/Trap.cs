@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UniRx;
+using UnityEngine.UIElements;
 
-public class Trap : MonoBehaviour
+public class Trap : MonoBehaviour, IDestructableObjectKind, IStatObject
 {
     private int trapIndex = -1;
     [SerializeField]
@@ -25,7 +26,8 @@ public class Trap : MonoBehaviour
 
     private List<Battler> targetList = new List<Battler>();
 
-    private Tile curTile;
+    private Tile _curTile;
+    public Tile curTile { get => curTile; }
 
     private Animator animator;
 
@@ -36,19 +38,34 @@ public class Trap : MonoBehaviour
     public ReactiveProperty<int> curDuration = new ReactiveProperty<int>();
     public ReactiveProperty<int> maxDuration = new ReactiveProperty<int>();
 
+    TrapDurationBar hpBar;
+
+    //[SerializeField]
+    //AudioClip attackSound;
     [SerializeField]
-    AudioClip attackSound;
+    FMODUnity.EventReference attackSound;
 
-    public void DestroyTrap()
+    private void DeActiveGameObject()
     {
-        curTile.trap = null;
         gameObject.SetActive(false);
-        if (NodeManager.Instance._GuideState == GuideState.Trap)
-            NodeManager.Instance.SetGuideState(GuideState.Trap);
-
         transform.position = Vector3.up * 1000f;
+    }
+
+    public void DestroyObject()
+    {
+        _curTile.RemoveObject();
+        if (NodeManager.Instance._GuideState == GuideState.ObjectForPath)
+            NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
+
         GameManager.Instance.trapList.Remove(this);
         isInit = false;
+        hpBar?.HPBarEnd();
+
+        if (animator != null)
+        {
+            animator.SetBool("Dead", true);
+            Invoke("DeActiveGameObject", 3f);
+        }
     }
 
     private void ExcuteAttack()
@@ -68,7 +85,8 @@ public class Trap : MonoBehaviour
 
         attackCount++;
         curDuration.Value = duration - attackCount;
-        AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play3DSound(attackSound, transform.position, SettingManager.Instance._FxVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(attackSound);
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);
@@ -79,9 +97,9 @@ public class Trap : MonoBehaviour
         Battler battle = other.GetComponent<Battler>();
         if (battle == null || battle.unitType == UnitType.Player) return;
 
-        if((object)battle.CurState == FSMHide.Instance)
+        if(battle.HaveEffect<Stealth_sup>())
         {
-            if (battle is IHide hider && !hider.canAttackbyTrap)
+            if (!PassiveManager.Instance.unLockDictionary.ContainsKey("TrapDetect") || !PassiveManager.Instance.unLockDictionary["TrapDetect"])
                 return;
         }
 
@@ -96,25 +114,27 @@ public class Trap : MonoBehaviour
         targetList.Remove(battle);
     }
 
+    public void SetTileInfo(Tile tile) => _curTile = tile;
+
     public void Init(Tile curTile, int startDuration = 0)
     {
-        trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        trapIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
 
-        minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPowerMin"]);
-        maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackPowerMax"]);
-        attackSpeed = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["attackSpeed"]);
-        duration = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["duration"]);
-        maxTarget = Convert.ToInt32(DataManager.Instance.Battler_Table[trapIndex]["targetCount"]);
+        minDamage = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["attackPowerMin"]);
+        maxDamage = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["attackPowerMax"]);
+        attackSpeed = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["attackSpeed"]);
+        duration = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["duration"]);
+        maxTarget = Convert.ToInt32(DataManager.Instance.battler_Table[trapIndex]["targetCount"]);
 
-        this.curTile = curTile;
-        curTile.trap = this;
+        SetTileInfo(curTile);
+        curTile.SetObject(this);
         transform.position = curTile.transform.position;
 
         Collider col = GetComponentInChildren<Collider>();
         if (col != null)
             col.enabled = true;
 
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         attackCount = 0;
         coolDown = 0.1f;
@@ -124,7 +144,7 @@ public class Trap : MonoBehaviour
 
         maxDuration.Value = duration;
         curDuration.Value = startDuration == 0 ? duration : startDuration;
-        HPBarPooling.Instance.GetTrapHpBar(this);
+        hpBar = HPBarPooling.Instance.GetTrapHpBar(this);
         isInit = true;
     }
 
@@ -139,6 +159,25 @@ public class Trap : MonoBehaviour
 
         foreach (Battler removeTarget in removeTargets)
             targetList.Remove(removeTarget);
+    }
+
+    private void Explosion()
+    {
+        List<Battler> validTargets = new List<Battler>();
+        Collider[] colliders = new Collider[30];
+        int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, 0.5f, colliders, LayerMask.GetMask("Character"));
+        for (int i = 0; i < colliderCount; i++)
+        {
+            Battler battle = colliders[i].GetComponent<Battler>();
+            if (battle == null)
+                continue;
+            if (battle.unitType == UnitType.Player || battle.isDead)
+                continue;
+            validTargets.Add(battle);
+        }
+
+        foreach(Battler target in validTargets)
+            target.GetDamage(Damage, null);
     }
 
     private void Update()
@@ -169,6 +208,38 @@ public class Trap : MonoBehaviour
         }
 
         if (attackCount >= duration)
-            DestroyTrap();
+        {
+            bool isExplode = PassiveManager.Instance.unLockDictionary.ContainsKey("TrapExplosion") && PassiveManager.Instance.unLockDictionary["TrapExplosion"];
+            if (isExplode)
+                Explosion();
+
+            if (animator != null)
+            {
+                animator.SetBool("Explode", isExplode);
+            }
+
+            DestroyObject();
+        }
+    }
+
+    public string GetStat(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Dur:
+                int curDur = duration - attackCount;
+                if (curDur < duration)
+                    return $"<color=red>{curDur}</color>";
+                else if(curDur > duration)
+                    return $"<color=green>{curDur}</color>";
+                else
+                    return curDur.ToString();
+            case StatType.Atk:
+                return $"{minDamage}~{maxDamage}";
+            case StatType.AttackSpeed:
+                return Math.Round(attackSpeed, 1).ToString();
+            default:
+                return null;
+        }
     }
 }

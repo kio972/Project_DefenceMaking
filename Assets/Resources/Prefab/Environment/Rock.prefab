@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1609608640754181932}
-  - component: {fileID: 6834048429740987051}
+  - component: {fileID: 898630711660123244}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Untagged
@@ -31,11 +31,10 @@ Transform:
   m_Children:
   - {fileID: 6199300507481554968}
   - {fileID: 7499892491963392281}
-  - {fileID: 436500302840522545}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6834048429740987051
+--- !u!114 &898630711660123244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,11 +43,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609608640754181931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d3c03d49165a774e98812c47c97acd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 036d13c87301c3e4da5e781643abd11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   environmentType: 1
   value: 1
+  buildSound:
+    Guid:
+      Data1: -2133203839
+      Data2: 1144174140
+      Data3: 1072843436
+      Data4: -2018870880
+    Path: event:/UI/Tile_Create
 --- !u!1 &5516143358215029463
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,12 +80,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5516143358215029463}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.001, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 1.002, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.40000004, z: 0.40000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1609608640754181932}
-  m_RootOrder: 2
+  m_Father: {fileID: 6199300507481554968}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &5889119499138757921
 SpriteRenderer:

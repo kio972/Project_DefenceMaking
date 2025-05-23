@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class GoblinScout : Goblin
 {
-    protected override void RemoveOutCaseTargets(List<Battler> targets)
+    public override void Init()
     {
-        List<Battler> removeList = new List<Battler>();
-        foreach (Battler battler in rangedTargets)
-        {
-            if (battler.isDead || !targets.Contains(battler))
-                removeList.Add(battler);
-        }
-
-        foreach (Battler battler in removeList)
-            rangedTargets.Remove(battler);
+        base.Init();
+        AddStatusEffect<Detect>(new Detect(this, 0));
     }
 
     protected override Battler GetPriorityTarget()

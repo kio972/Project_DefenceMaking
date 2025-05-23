@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 
-public class DeployUI : MonoBehaviour
+public class DeployUI : MonoBehaviour, ISwappableGameObject
 {
     private bool initState = false;
 
@@ -22,11 +22,11 @@ public class DeployUI : MonoBehaviour
     {
         get
         {
-            if (!uiPage.activeSelf && !exitBtn.gameObject.activeSelf)
+            if (!uiPage.activeSelf && !deployingWindow.activeSelf)
                 return 0;
             else if (uiPage.activeSelf)
                 return 1;
-            else if (exitBtn.gameObject.activeSelf)
+            else if (deployingWindow.activeSelf)
                 return 2;
 
             return 0;
@@ -49,6 +49,17 @@ public class DeployUI : MonoBehaviour
 
     private InGameUI ingameUI;
 
+    public bool updateItem = true;
+    public bool setContinuous = true;
+
+    [SerializeField]
+    private FMODUnity.EventReference openSound;
+    [SerializeField]
+    private FMODUnity.EventReference completeSound;
+    [SerializeField]
+    private FMODUnity.EventReference refusedSound;
+
+
     public void UpdateMana()
     {
         foreach (DeploySlot slot in deployItems)
@@ -57,30 +68,24 @@ public class DeployUI : MonoBehaviour
 
     public void SetActive(bool value)
     {
-        if (value)
-            InputManager.Instance.ResetTileClick();
-
-        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
-        if (value)
-            SetItem();
-
-        if (value)
-            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
-    }
-
-    public void SetActive(bool value, bool updateItem = true)
-    {
-        if (value)
-            InputManager.Instance.ResetTileClick();
-
-        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
         if (value && updateItem)
             SetItem();
 
         if (value)
-            AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
+        {
+            InputManager.Instance.ResetTileClick();
+            GameManager.Instance.SetPause(true);
+            Animator btnAnim = btnObject.GetComponent<Animator>();
+            btnAnim?.SetBool("End", true);
+        }
+
+        UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
+
+        if (value)
+        {
+            //AudioManager.Instance.Play2DSound("Recruit_Open_wood", SettingManager.Instance._FxVolume);
+            FMODUnity.RuntimeManager.PlayOneShot(openSound);
+        }
     }
 
     public async UniTaskVoid DeployEnd()
@@ -98,13 +103,16 @@ public class DeployUI : MonoBehaviour
         //UIManager.Instance.SetTab(uiPage, true, () => { GameManager.Instance.SetPause(false); });
         UIManager.Instance.CloseTab(deployingWindow.gameObject);
         GameManager.Instance.cardLock = false;
+
+        if(GameManager.Instance.timeScale == 0)
+            GameManager.Instance.speedController.SetSpeedPrev();
         //GameManager.Instance.SetPause(true);
 
         if (ingameUI == null)
             ingameUI = GetComponentInParent<InGameUI>();
         ingameUI?.SetRightUI(true);
         ingameUI?.SetDownUI(true);
-        btnBlocker.SetActive(false);
+        //btnBlocker.SetActive(false);
 
         await UniTask.WaitUntil(() => !Input.GetKey(KeyCode.Mouse0));
         InputManager.Instance.settingCard = false;
@@ -112,7 +120,7 @@ public class DeployUI : MonoBehaviour
 
     private bool HaveMana(CompleteRoom room, out int outMana)
     {
-        Dictionary<string, object> data = DataManager.Instance.Battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.Battler_Table, "name")];
+        Dictionary<string, object> data = DataManager.Instance.battler_Table[UtilHelper.Find_Data_Index(curObject.name, DataManager.Instance.battler_Table, "name")];
         int requireMana = Convert.ToInt32(data["requiredMagicpower"]);
         MonsterType monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), data["type"].ToString());
         requireMana -= PassiveManager.Instance._MonsterTypeReduceMana_Weight[(int)monsterType];
@@ -128,7 +136,8 @@ public class DeployUI : MonoBehaviour
         {
             if (GameManager.Instance.gold < curPrice)
             {
-                GameManager.Instance.popUpMessage.ToastMsg("골드가 부족합니다");
+                GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
+                FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                 return;
             }
 
@@ -139,51 +148,60 @@ public class DeployUI : MonoBehaviour
 
                 if (!HaveMana(room, out requiredMana))
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
 
                 BattlerPooling.Instance.SetSpawner(curNode, curObject.name, room);
-                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                FMODUnity.RuntimeManager.PlayOneShot(completeSound);
             }
             else if (curType == CardType.Trap)
             {
-                if(GameManager.Instance.IsAdventurererOnTile(curNode))
+                if (GameManager.Instance.IsAdventurererOnTile(curNode))
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("적이 있는 타일에는 설치할 수 없습니다.");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_setFailEnemy"));
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
 
                 BattlerPooling.Instance.SpawnTrap(curObject.name, curNode);
-                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                FMODUnity.RuntimeManager.PlayOneShot(completeSound);
             }
-            else if(curType == CardType.Monster)
+            else if (curType == CardType.Monster)
             {
                 CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
                 int requiredMana;
 
                 if (!HaveMana(room, out requiredMana))
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("방의 마나가 부족합니다");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireMana"));
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
                 if (GameManager.Instance._CurMana + requiredMana > GameManager.Instance._TotalMana)
                 {
-                    GameManager.Instance.popUpMessage.ToastMsg("보유중인 마나가 부족합니다");
+                    GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireTotalMana"));
+                    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
                     return;
                 }
 
                 BattlerPooling.Instance.SpawnMonster(curObject.name, curNode);
-                AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                //AudioManager.Instance.Play2DSound("Set_trap", SettingManager.Instance._FxVolume);
+                FMODUnity.RuntimeManager.PlayOneShot(completeSound);
             }
 
             GameManager.Instance.gold -= curPrice;
             SetGuideState(curType);
 
-            if (!Input.GetKey(KeyCode.LeftShift))
+            if (!Input.GetKey(KeyCode.LeftShift) || !setContinuous)
                 DeployEnd().Forget();
         }
-        else if(curNode == null || curNode.curTile == null)
+        else if (curNode != null && !curNode.setAvail)
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+        else if (curNode == null || curNode.curTile == null)
             DeployEnd().Forget();
     }
 
@@ -216,12 +234,14 @@ public class DeployUI : MonoBehaviour
             guideObject = Instantiate(targetPrefab);
             guideObject.name = targetName;
             guideObjects.Add(prefabName, guideObject);
+            Battler battler = guideObject.GetComponent<Battler>();
+            if(battler != null) Destroy(battler);
         }
 
         if (unitType is CardType.Monster or CardType.Spawner)
         {
             Monster monster = guideObject.GetComponent<Monster>();
-            monster.SetRotation();
+            monster?.SetRotation();
         }
 
         curObject = guideObject;
@@ -231,7 +251,7 @@ public class DeployUI : MonoBehaviour
     {
         curNode = UtilHelper.RayCastTile();
 
-        if (curNode != null && curNode.GuideActive && curNode.curTile != null && !curNode.curTile.HaveSpawner)
+        if (curNode != null && curNode.GuideActive && curNode.curTile != null && curNode.curTile.objectKind == null)
         {
             curObject.transform.SetParent(curNode.transform, true);
             curObject.transform.position = curNode.transform.position;
@@ -244,16 +264,21 @@ public class DeployUI : MonoBehaviour
 
     private void SetGuideState(CardType unitType)
     {
+        CompleteRoom room = NodeManager.Instance.GetRoomByNode(curNode);
+        int requiredMana = 0;
+        bool haveMana = false;
+        if(unitType is CardType.Spawner or CardType.Monster)
+            haveMana = !HaveMana(room, out requiredMana);
         switch (unitType)
         {
             case CardType.Monster:
-                NodeManager.Instance.SetGuideState(GuideState.Spawner);
+                NodeManager.Instance.SetGuideSpawner(requiredMana);
                 break;
             case CardType.Spawner:
-                NodeManager.Instance.SetGuideState(GuideState.Spawner);
+                NodeManager.Instance.SetGuideSpawner(requiredMana);
                 break;
             case CardType.Trap:
-                NodeManager.Instance.SetGuideState(GuideState.Trap);
+                NodeManager.Instance.SetGuideState(GuideState.ObjectForPath);
                 break;
         }
     }
@@ -275,7 +300,7 @@ public class DeployUI : MonoBehaviour
         GameManager.Instance.cardLock = true;
         UIManager.Instance.CloseTab(uiPage);
         UIManager.Instance.SetTab(deployingWindow.gameObject, true, () => { DeployEnd().Forget(); });
-        btnBlocker.SetActive(true);
+        //btnBlocker.SetActive(true);
     }
 
     public void SetItem()
@@ -287,11 +312,11 @@ public class DeployUI : MonoBehaviour
         {
             //if (!slot.gameObject.activeSelf)
             //    continue;
-            if (slot.cardType == CardType.Trap)
-            {
-                slot.gameObject.SetActive(true);
-                continue;
-            }
+            //if (slot.cardType == CardType.Trap)
+            //{
+            //    slot.gameObject.SetActive(true);
+            //    continue;
+            //}
 
             slot.gameObject.SetActive(slot.IsUnlocked);
         }
@@ -314,6 +339,17 @@ public class DeployUI : MonoBehaviour
         return newSlot;
     }
 
+    public void TryOpenUI()
+    {
+        GameObjectSwap swapper = transform.GetComponentInParent<GameObjectSwap>();
+        if (swapper != null)
+            swapper.SwapObject(this);
+        else
+            SetActive(true);
+    }
+
+    private readonly string[] basicTraps = { "s_t100001", "s_t100002", "s_t100003", "s_t100004" };
+
     public void Init()
     {
         DeploySlot[] temp = GetComponentsInChildren<DeploySlot>(true);
@@ -321,7 +357,7 @@ public class DeployUI : MonoBehaviour
         foreach (DeploySlot slot in deployItems)
             slot.gameObject.SetActive(false);
 
-        foreach (Dictionary<string, object> data in DataManager.Instance.Battler_Table)
+        foreach (Dictionary<string, object> data in DataManager.Instance.battler_Table)
         {
             if (string.IsNullOrEmpty(data["prefab"].ToString()))
                 continue;
@@ -334,23 +370,34 @@ public class DeployUI : MonoBehaviour
 
         deployItems[0].SendInfo();
 
+        foreach(var id in basicTraps)
+            PassiveManager.Instance.deployAvailableTable[id] = true;
+
         initState = true;
     }
 
     [SerializeField]
     private GameObject btnObject;
 
+    private bool isActived { get => btnObject.activeSelf || uiPage.activeSelf; }
+
+    private void Start()
+    {
+        if(updateItem)
+            Init();
+    }
+
     public void Update()
     {
         if (curObject != null)
             UpdateDeployState();
 
-        if (Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) && btnObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) && isActived)
         {
-            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
-                SetActive(true);
-            else if (uiPage.activeSelf)
+            if (uiPage.activeSelf)
                 SetActive(false);
+            else
+                TryOpenUI();
         }
     }
 }

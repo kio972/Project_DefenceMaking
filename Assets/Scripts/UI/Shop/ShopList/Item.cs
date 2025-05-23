@@ -16,3 +16,14 @@ public interface IMalPoongSunOnClick
 {
     public void PlayOnClickScript();
 }
+
+public interface INeedUnlockItem
+{
+    public bool IsUnlock { get; }
+}
+
+public interface IInfoChangeableItem
+{
+    public ItemInfo Info { get; }
+    public object additional { get; }
+}

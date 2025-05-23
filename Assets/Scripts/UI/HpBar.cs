@@ -69,7 +69,7 @@ public class HpBar : MonoBehaviour
         shield_Bar.gameObject.SetActive(haveShield);
 
         float curHp = battler.curHp;
-        float maxHp = battler.maxHp;
+        float maxHp = battler.curMaxHp;
         float sheldHp = curHp + battler.shield;
         if (haveShield)
         {
@@ -103,7 +103,7 @@ public class HpBar : MonoBehaviour
         }
 
         if (status != null)
-            status.text = battler.CurState.GetType().Name;
+            status.text = battler.CurState != null ? battler.CurState.GetType().Name : "";
 
         UpdatePosition(position);
     }

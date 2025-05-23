@@ -21,7 +21,7 @@ public class PopUIControl : MonoBehaviour
     Transform originTransform;
 
     private Transform curTarget;
-    private Coroutine moveCoroutine = null;
+    //private Coroutine moveCoroutine = null;
 
     public float lerpTime = 0.2f;
 

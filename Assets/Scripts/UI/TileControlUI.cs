@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class TileControlUI : MonoBehaviour
 {
@@ -18,9 +20,20 @@ public class TileControlUI : MonoBehaviour
     [SerializeField]
     private LanguageText toolTip_desc;
 
+    [SerializeField]
+    private TooltipStats toolTip_stats;
+
     private InGameUI inGameUI;
 
+    private TooltipObject curToolTipObject;
     private Tile curToolTipTile;
+
+    [SerializeField]
+    FMODUnity.EventReference refusedSound;
+    [SerializeField]
+    FMODUnity.EventReference tileMoveSound;
+    [SerializeField]
+    FMODUnity.EventReference tileRemoveSound;
 
     TooltipInput _tooltipInput;
     TooltipInput tooltipInput
@@ -52,6 +65,9 @@ public class TileControlUI : MonoBehaviour
         tileRemoveBtn.SetActive(false);
         exitBtn.SetActive(false);
         inGameUI?.SwitchRightToTileUI(false);
+        curToolTipObject = null;
+        inGameUI?.tileArrowUI?.SetOFF();
+        RoomManaPool.Instance.HideAllManaText();
     }
 
     public void MoveTile()
@@ -61,25 +77,33 @@ public class TileControlUI : MonoBehaviour
 
     public void MoveTile(Tile curTile)
     {
-        InputManager.Instance.settingCard = true;
         if (curTile == null)
             return;
-        if (curTile.MovableNow)
+        if (curTile.IsCharacterOnIt)
+        {
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+        }
+        else
         {
             CloseAllBtn();
             curTile.ReadyForMove().Forget();
+            InputManager.Instance.settingCard = true;
+            FMODUnity.RuntimeManager.PlayOneShot(tileMoveSound);
         }
-        else
-            GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 움직일 수 없습니다!");
     }
 
     public void RemoveSpawner()
     {
-        Tile curTile = curToolTipTile;
-        if (curTile == null)
+        if (curToolTipObject == null)
             return;
 
-        curTile.RemoveSpawner();
+        IDestructableObjectKind target = curToolTipObject.GetComponentInParent<IDestructableObjectKind>();
+        if (target == null)
+            return;
+
+        target.DestroyObject();
+
         CloseAllBtn();
         //InputManager.Instance.ClickTile(curTile);
     }
@@ -89,26 +113,46 @@ public class TileControlUI : MonoBehaviour
         Tile curTile = curToolTipTile;
         if (curTile == null)
             return;
-        if(curTile.IsRemovableNow)
+
+        if (GameManager.Instance.isBossOnMap)
         {
-            curTile.RemoveTile();
-            InputManager.Instance.ResetTileClick();
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailLockdown"));
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+        }
+        else if (curTile.objectKind != null)
+        { 
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_removeFailObject"));
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+        }
+        else if (curTile.IsCharacterOnIt)
+        {
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_moveFailEnemy"));
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
         }
         else
-            GameManager.Instance.popUpMessage.ToastMsg("타일 위에 캐릭터가 있어 제거 할 수 없습니다!");
+        {
+            curTile.RemoveTile();
+            FMODUnity.RuntimeManager.PlayOneShot(tileRemoveSound);
+        }
+
+        InputManager.Instance.ResetTileClick();
     }
 
     public void SetButton(TooltipObject tooltipObject)
     {
+        curToolTipObject = tooltipObject;
+
         tileMoveBtn.SetActive(false);
         tileRemoveBtn.SetActive(false);
+        spawnerRemoveBtn.SetActive(curToolTipObject.GetComponentInParent<IDestructableObjectKind>() != null);
         exitBtn.SetActive(true);
 
         toolTip_header?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_header);
         toolTip_desc?.ChangeLangauge(SettingManager.Instance.language, tooltipObject.toolTipKey_descs);
+        toolTip_stats?.SetStatZone(tooltipObject);
 
         if (tooltipObject.toolTipType == ToolTipType.Tile)
-            SetButton(tooltipObject.GetComponentInParent<Tile>());
+            SetButton(tooltipObject.GetComponentInParent<ITileKind>());
         else if(tooltipObject.toolTipType == ToolTipType.Devil)
             SetButton(NodeManager.Instance.endPoint.curTile);
         else
@@ -117,27 +161,64 @@ public class TileControlUI : MonoBehaviour
                 inGameUI = GetComponentInParent<InGameUI>();
             inGameUI?.SwitchRightToTileUI(true);
         }
+
+        UpdateLayouts();
     }
 
-    public void SetButton(Tile targetTile)
+    private void UpdateLayouts()
+    {
+        LayoutGroup[] layouts = GetComponentsInChildren<LayoutGroup>();
+        foreach (LayoutGroup layout in layouts)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(layout.GetComponent<RectTransform>());
+        }
+    }
+
+    public void SetButton(ITileKind targetTile)
     {
         if (targetTile == null)
             return;
 
-        tileMoveBtn.SetActive(targetTile.Movable);
-        spawnerRemoveBtn.SetActive(targetTile.HaveSpawner);
-        tileRemoveBtn.SetActive(!targetTile.HaveSpawner && targetTile.IsRemovable);
+        if(targetTile is Tile realTile)
+        {
+            tileMoveBtn.SetActive(realTile.Movable);
+            spawnerRemoveBtn.SetActive(false);
+            tileRemoveBtn.SetActive(realTile.IsRemovable);
+            curToolTipTile = realTile;
+        }
+        
         exitBtn.SetActive(true);
         if (inGameUI == null)
             inGameUI = GetComponentInParent<InGameUI>();
         inGameUI?.SwitchRightToTileUI(true);
-        curToolTipTile = targetTile;
+        inGameUI?.tileArrowUI?.SetOFF();
+        inGameUI?.tileArrowUI?.SetArrow(targetTile, targetTile.curNode);
+
+        if(targetTile is ITileManaEffect effect)
+        {
+            RoomManaPool.Instance.HideAllManaText();
+            DrawManaUI(targetTile.curNode, effect);
+        }
     }
 
-    //public void Update()
-    //{
-    //    if (!tileMoveBtn.gameObject.activeSelf && !tileRemoveBtn.gameObject.activeSelf)
-    //        return;
+    private void DrawManaUI(TileNode curNode, ITileManaEffect manaEffect)
+    {
+        if (manaEffect != null && curNode != null)
+        {
+            foreach (var node in curNode.neighborNodeDic.Values)
+            {
+                if (node.tileKind == null)
+                    continue;
+                string text = manaEffect.GetManaText(node.tileKind);
+                if (text == null)
+                    continue;
+                RoomManaPool.Instance.ShowManaText(node.transform, text);
+            }
+        }
+    }
 
-    //}
+    public void Update()
+    {
+        UpdateLayouts();
+    }
 }

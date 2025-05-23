@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using TMPro;
 using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using UniRx;
 
 public struct Card
 {
@@ -38,11 +41,13 @@ public struct Card
         switch (type)
         {
             case "road":
-                return CardType.MapTile;
+                return CardType.PathTile;
             case "room":
-                return CardType.MapTile;
+                return CardType.RoomTile;
             case "roomPart":
-                return CardType.MapTile;
+                return CardType.RoomTile;
+            case "roomDoor":
+                return CardType.RoomTile;
             case "trap":
                 return CardType.Trap;
             case "environment":
@@ -51,6 +56,10 @@ public struct Card
                 return CardType.Monster;
             case "herb":
                 return CardType.Environment;
+            case "objectForPath":
+                return CardType.ObjectForPath;
+            case "magic":
+                return CardType.Magic;
         }
         return CardType.None;
     }
@@ -91,13 +100,13 @@ public class CardDeckController : MonoBehaviour
 
     public Transform CardZone { get => cardZone; }
 
-    private List<int> cardDeck;
-    public List<int> _CardDeck { get => cardDeck; }
+    private List<int> _cardDeck;
+    public List<int> cardDeck { get => _cardDeck; }
 
-    public int _CardDeckCount { get => cardDeck.Count; }
+    public int cardDeckCount { get => _cardDeck.Count; }
 
-    private List<int> handCards = new List<int>();
-    public List<int> _HandCards { get => handCards; }
+    private List<int> _handCards = new List<int>();
+    public List<int> handCards { get => _handCards; }
     
     private bool initState = false;
 
@@ -106,7 +115,8 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private float handHeight = 1;
 
-    private List<Transform> cards = new List<Transform>();
+    private List<Transform> _cards = new List<Transform>();
+    public List<Transform> cards { get => _cards; }
     //초기 카드 숫자
     public int hand_CardNumber = 0;
     //최대 카드 숫자
@@ -119,7 +129,7 @@ public class CardDeckController : MonoBehaviour
     [SerializeField]
     private float lineAmplitude = 1f;
 
-    private Coroutine set_CardPos_Coroutine = null;
+    private CancellationTokenSource cancellationTokenSource;
 
     [SerializeField]
     private TextMeshProUGUI deckCountText;
@@ -131,6 +141,8 @@ public class CardDeckController : MonoBehaviour
 
     private int freeCount = 0;
     private int curFreeCount = 0;
+
+    public ReactiveProperty<GameObject> curHandlingObject { get; private set; } = new ReactiveProperty<GameObject>();
 
     private int _CardPrice
     {
@@ -144,6 +156,13 @@ public class CardDeckController : MonoBehaviour
 
     public bool IsRecycle { get { return recycle.IsMouseOver; } }
 
+    private Queue<int> nextCardQueue = new Queue<int>();
+
+    public void EnqueueCard(int cardId)
+    {
+        nextCardQueue.Enqueue(cardId);
+    }
+
     public void SetFreeCount(int value)
     {
         freeCount = value;
@@ -155,33 +174,39 @@ public class CardDeckController : MonoBehaviour
         //SetCardPosition();
     }
 
+    public void RemoveCard(int index)
+    {
+        _cardDeck.Remove(index);
+
+    }
+
     public void AddCard(int index)
     {
-        cardDeck.Add(index);
-        UpdateDeckCount();
+        _cardDeck.Add(index);
+
     }
 
     private void UpdateDeckCount()
     {
-        if (deckCountText == null)
-            return;
+        //if (deckCountText == null)
+        //    return;
 
-        deckCountText.text = (cardDeck.Count).ToString();
-        if (cardDeck.Count < 10)
-        {
-            cardCountImg.sprite = emptycardCountSprite;
-            deckCountText.color = Color.red;
-        }
-        else
-        {
-            cardCountImg.sprite = cardCountSprite;
-            deckCountText.color = Color.white;
-        }
+        //deckCountText.text = (_cardDeck.Count).ToString();
+        //if (_cardDeck.Count < 10)
+        //{
+        //    cardCountImg.sprite = emptycardCountSprite;
+        //    deckCountText.color = Color.red;
+        //}
+        //else
+        //{
+        //    cardCountImg.sprite = cardCountSprite;
+        //    deckCountText.color = Color.white;
+        //}
 
-        if (cardDeck.Count <= 0)
-            deckBtnImg.sprite = emptyDeckImg;
-        else
-            deckBtnImg.sprite = originDeckImg;
+        //if (_cardDeck.Count <= 0)
+        //    deckBtnImg.sprite = emptyDeckImg;
+        //else
+        //    deckBtnImg.sprite = originDeckImg;
     }
 
     public void DrawGuide(Vector3 cardPos, bool value)
@@ -318,9 +343,10 @@ public class CardDeckController : MonoBehaviour
 
     public void SetCardPosition()
     {
-        if (set_CardPos_Coroutine != null)
-            StopCoroutine(set_CardPos_Coroutine);
-        set_CardPos_Coroutine = StartCoroutine(ISetCardPosition());
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+        cancellationTokenSource = new CancellationTokenSource();
+        ISetCardPosition().Forget();
     }
 
     private List<Vector3> GetCardPosition()
@@ -345,47 +371,69 @@ public class CardDeckController : MonoBehaviour
 
     private Card ReturnDeck(int target)
     {
-        cardDeck.Remove(target);
-        Card card = new Card(DataManager.Instance.Deck_Table[target], target);
+        //_cardDeck.Remove(target);
+        Card card = new Card(DataManager.Instance.deck_Table[target], target);
         return card;
     }
 
     private Card ReturnDeck()
     {
-        int random = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+        int random = _cardDeck[UnityEngine.Random.Range(0, _cardDeck.Count)];
         return ReturnDeck(random);
     }
 
+    [SerializeField]
+    FMODUnity.EventReference refusedSound;
+    [SerializeField]
+    FMODUnity.EventReference excutedSound;
+    [SerializeField]
+    FMODUnity.EventReference coinSound;
+    public FMODUnity.EventReference drawSound { get => excutedSound; }
+
     public void DrawDeck()
     {
-        if (hand_CardNumber >= maxCardNumber)
-        {
-            GameManager.Instance.popUpMessage?.ToastMsg("손 패가 가득 찼습니다");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        if (GameManager.Instance.drawLock)
             return;
-        }
+
+        //if (hand_CardNumber >= maxCardNumber)
+        //{
+        //    GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_handfull"));
+        //    refusedSound?.Post(gameObject);
+        //    //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        //    return;
+        //}
 
         if (GameManager.Instance.gold < _CardPrice)
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("골드가 부족합니다");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            GameManager.Instance.popUpMessage?.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireGold"));
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
-        if (cardDeck.Count < 1)
+        if (_cardDeck.Count < 1)
         {
-            GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            //GameManager.Instance.popUpMessage?.ToastMsg("덱에 카드를 보충하십시오!");
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
             return;
         }
 
         GameManager.Instance.gold -= _CardPrice;
-        DrawCard();
+        if(nextCardQueue.Count > 0)
+        {
+            DrawCard(nextCardQueue.Dequeue());
+        }
+        else
+            DrawCard();
+
         curFreeCount = curFreeCount != freeCount - 1 ? Mathf.Min(curFreeCount + 1, freeCount - 1) : 0;
-        AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(excutedSound);
+        FMODUnity.RuntimeManager.PlayOneShot(coinSound);
+        //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._UIVolume);
     }
 
-    private IEnumerator ISetCardPosition()
+    private async UniTaskVoid ISetCardPosition()
     {
         //모든 카드들의 위치를 lerpTime에 걸쳐 조정
         //모든 카드들의 회전값을 lerpTime에 걸쳐 조정
@@ -394,13 +442,15 @@ public class CardDeckController : MonoBehaviour
         float lerpTime = 0.5f;
         List<Vector3> cardPos = GetCardPosition();
         List<Vector3> cardRot = CalculateRotation();
-        Vector3[] startPositions = new Vector3[cards.Count];
-        Quaternion[] startRotations = new Quaternion[cards.Count];
-        for (int i = 0; i < cards.Count; i++)
+        Vector3[] startPositions = new Vector3[_cards.Count];
+        Quaternion[] startRotations = new Quaternion[_cards.Count];
+        for (int i = 0; i < _cards.Count; i++)
         {
-            startPositions[i] = cards[i].position;
-            startRotations[i] = cards[i].rotation;
-            CardUIEffect temp = cards[i].GetComponent<CardUIEffect>();
+            CardFramework card = _cards[i].GetComponent<CardFramework>();
+            card.handIndex = i;
+            startPositions[i] = _cards[i].position;
+            startRotations[i] = _cards[i].rotation;
+            CardUIEffect temp = _cards[i].GetComponent<CardUIEffect>();
             temp.originPos = cardPos[i];
             temp.originRot = UtilHelper.AlignUpWithVector(cardRot[i]);
             temp.originSiblingIndex = i;
@@ -412,18 +462,18 @@ public class CardDeckController : MonoBehaviour
             float t = Mathf.Clamp01(elapsedTime / lerpTime);
             t = Mathf.Sin(t * Mathf.PI * 0.5f);
             for (int i = 0; i < hand_CardNumber; i++)
-                cards[i].transform.position = Vector3.Lerp(startPositions[i], cardPos[i], t);
+                _cards[i].transform.position = Vector3.Lerp(startPositions[i], cardPos[i], t);
 
-            for (int i = 0; i < cards.Count; i++)
+            for (int i = 0; i < _cards.Count; i++)
             {
                 Vector3 targetDirection = cardRot[i];
                 Quaternion targetRotation = UtilHelper.AlignUpWithVector(targetDirection);
 
                 Quaternion currentRotation = Quaternion.Lerp(startRotations[i], targetRotation, t);
-                cards[i].transform.rotation = currentRotation;
+                _cards[i].transform.rotation = currentRotation;
             }
 
-            yield return null;
+            await UniTask.Yield(cancellationTokenSource.Token);
         }
     }
 
@@ -439,7 +489,7 @@ public class CardDeckController : MonoBehaviour
             while (targetCards.Count != 0)
             {
                 randomIndex = targetCards[UnityEngine.Random.Range(0, targetCards.Count)];
-                if (cardDeck.Contains(randomIndex))
+                if (_cardDeck.Contains(randomIndex))
                     break;
                 targetCards.Remove(randomIndex);
             }
@@ -457,7 +507,7 @@ public class CardDeckController : MonoBehaviour
     {
         foreach(var card in mulliganList)
         {
-            AddCard(DataManager.Instance.deckListIndex[card]);
+            //AddCard(DataManager.Instance.deckListIndex[card]);
             DrawCard(DataManager.Instance.deckListIndex[card]);
         }
     }
@@ -481,28 +531,44 @@ public class CardDeckController : MonoBehaviour
 
     }
 
+    public void DrawCard(int cardIndex, Transform startPos)
+    {
+        //if (_cardDeck.Count < 1) return;
+        //if (!_cardDeck.Contains(cardIndex)) return;
+        if (hand_CardNumber >= maxCardNumber)
+        {
+            CardController card = cards[0].GetComponentInChildren<CardController>();
+            card?.RemoveCard(false).Forget();
+        }
+
+        InstantiateCard(ReturnDeck(cardIndex), startPos);
+    }
+
     public void DrawCard(int cardIndex)
     {
-        if (cardDeck.Count < 1) return;
-        if (!cardDeck.Contains(cardIndex)) return;
-
-        InstantiateCard(ReturnDeck(cardIndex));
+        DrawCard(cardIndex, transform);
     }
 
     public void DrawCard()
     {
-        if(cardDeck.Count < 1) return;
+        if(_cardDeck.Count < 1) return;
+
+        if(hand_CardNumber >= maxCardNumber)
+        {
+            CardController card = cards[0].GetComponentInChildren<CardController>();
+            card?.RemoveCard(false).Forget();
+        }
 
         InstantiateCard(ReturnDeck());
     }
 
     public void DiscardCard(Transform cardTransform, int cardId)
     {
-        cards.Remove(cardTransform);
-        handCards.Remove(cardId);
+        _cards.Remove(cardTransform);
+        _handCards.Remove(cardId);
     }
 
-    private void InstantiateCard(Card targetCard)
+    private void InstantiateCard(Card targetCard, Transform startPos = null)
     {
         GameObject cardPrefab = Resources.Load<GameObject>("Prefab/UI/Card_Frame");
 
@@ -511,26 +577,33 @@ public class CardDeckController : MonoBehaviour
         CardUIEffect cardUI = card.GetComponent<CardUIEffect>();
         card.Init(targetCard);
         cardUI?.DrawEffect();
-        card.transform.position = transform.position;
-        cards.Add(card.transform);
-        handCards.Add(targetCard.cardIndex);
+        if (startPos == null)
+            startPos = transform;
+        card.transform.position = startPos.position;
+        _cards.Add(card.transform);
+        _handCards.Add(targetCard.cardIndex);
         SetCardPosition();
         UpdateDeckCount();
     }
 
     private void SetDeck()
     {
-        cardDeck = new List<int>();
-        for(int i = 0; i < DataManager.Instance.Deck_Table.Count; i++)
+        _cardDeck = new List<int>();
+        foreach(var data in DataManager.Instance.start_deckTable)
         {
-            Card cardCheck = new Card(DataManager.Instance.Deck_Table[i], i);
+            int cardNumber = Convert.ToInt32(data["startNumber"]);
+            if (cardNumber == 0)
+                continue;
+
+            int index = DataManager.Instance.deckListIndex[data["id"].ToString()];
+
+            Card cardCheck = new Card(DataManager.Instance.deck_Table[index], index);
             GameObject cardPrefab = UtilHelper.GetCardPrefab(cardCheck.cardType, cardCheck.cardPrefabName);
             if (cardPrefab == null)
                 continue;
 
-            int cardNumber = Convert.ToInt32(DataManager.Instance.Deck_Table[i]["startNumber"]);
             for (int j = 0; j < cardNumber; j++)
-                cardDeck.Add(i);
+                _cardDeck.Add(index);
         }
     }
 
@@ -539,10 +612,10 @@ public class CardDeckController : MonoBehaviour
         if (!initState)
             Init();
 
-        cardDeck = new List<int>(deckLists);
+        _cardDeck = new List<int>(deckLists);
         foreach(int id in cardIdes)
         {
-            AddCard(id);
+            //AddCard(id);
             DrawCard(id);
         }
     }
@@ -561,7 +634,13 @@ public class CardDeckController : MonoBehaviour
     private ScreenSize curScreenSize;
     private void Update()
     {
-        if(curScreenSize != SettingManager.Instance.screenSize)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Draw._CurKey))
+        {
+            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+                DrawDeck();
+        }
+
+        if (curScreenSize != SettingManager.Instance.screenSize)
         {
             curScreenSize = SettingManager.Instance.screenSize;
             SetCardPosition();

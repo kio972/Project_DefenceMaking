@@ -8,11 +8,17 @@ public class GoToGameScene : MonoBehaviour
     public float fakeLoadingTime = 3f;
     protected virtual void MoveScene()
     {
-        SceneController.Instance.MoveScene("MapScene");
+        string targetScene = string.IsNullOrEmpty(SettingManager.Instance.nextScene) ? "Stage0" : SettingManager.Instance.nextScene;
+        
+        //if (SaveManager.Instance.playerData != null)
+        //    targetScene = SaveManager.Instance.playerData.sceneName;
+
+        SceneController.Instance.MoveScene(targetScene);
     }
 
     private async UniTaskVoid Start()
     {
+        AudioManager.Instance.StopBGM(5000);
         float waitTime = Time.time;
         await UniTask.WaitUntil(() => !SceneController.Instance.SceneChanging);
         waitTime -= Time.time;

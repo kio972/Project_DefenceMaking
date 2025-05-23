@@ -8,15 +8,15 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
     private float _buffDist = 0;
 
     private int[] _attackDamage = { 0, 1, 2, 3, 4, 5 };
-    private int[] _attackSpeed = { 0, 20, 40, 60, 80, 100 };
+    private float[] _attackSpeed = { 1, 1.2f, 1.4f, 1.6f, 1.8f, 2.0f };
 
     public int attackDamage { get => _attackDamage[number]; set => throw new System.NotImplementedException(); }
-    public int attackSpeedRate { get => _attackSpeed[number]; set => throw new System.NotImplementedException(); }
+    public float attackSpeedRate { get => _attackSpeed[number]; set => throw new System.NotImplementedException(); }
 
 
     private int _stackCount;
     private int _maxStack = 5;
-    public int stackCount { get => _stackCount; set => _stackCount = Mathf.Min(value, _maxStack); }
+    public int stackCount { get => _stackCount + 1; set => _stackCount = Mathf.Min(value, _maxStack); }
 
     public void StackEffect(float duration)
     {
@@ -44,7 +44,7 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
 
         elapsedTime = 0;
         int targetCount = 0;
-        foreach (Monster goblin in GameManager.Instance._MonsterList)
+        foreach (Monster goblin in GameManager.Instance.monsterList)
         {
             if (goblin is not Goblin || goblin == _battler)
                 continue;
@@ -55,7 +55,13 @@ public class GoblinSwarm : StatusEffect, IWhileEffect, IAttackPowerEffect, IAtta
             targetCount++;
         }
 
-        number = Mathf.Min(targetCount, _attackDamage.Length - 1);
+        targetCount = Mathf.Min(targetCount, _attackDamage.Length - 1);
+        if(targetCount != number)
+        {
+            number = targetCount;
+            _battler.CalculateAttackSpeed();
+        }
+        
         stackCount = number;
         if (number == 0)
         {

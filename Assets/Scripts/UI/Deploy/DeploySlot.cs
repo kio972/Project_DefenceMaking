@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DeploySlot : MonoBehaviour
+public class DeploySlot : MonoBehaviour, ISlot
 {
     private string id = "";
 
-    public string _name;
+    public string targetName;
 
     public int minDamage;
     public int maxDamage;
@@ -52,16 +52,33 @@ public class DeploySlot : MonoBehaviour
 
     Dictionary<string, object> data;
 
+    [SerializeField]
+    private GameObject clickedImg;
+
+
     private bool isUnlocked = false;
     public bool IsUnlocked
     {
         get
         {
-            if (!isUnlocked && PassiveManager.Instance.deployAvailableTable.ContainsKey(id))
-                isUnlocked = true;
+            if (PassiveManager.Instance.deployAvailableTable.ContainsKey(id))
+            {
+                isUnlocked = PassiveManager.Instance.deployAvailableTable[id];
+            }
 
             return isUnlocked;
         }
+    }
+    public void SetClicked(bool value)
+    {
+        if (clickedImg != null)
+            clickedImg.SetActive(value);
+    }
+
+    private void OnEnable()
+    {
+        Color targetColor = GameManager.Instance.gold >= cost ? Color.white : Color.red;
+        costText.color = targetColor;
     }
 
     public void SendInfo()
@@ -74,7 +91,7 @@ public class DeploySlot : MonoBehaviour
         if(delpoyUI == null)
             delpoyUI = GetComponentInParent<DeployUI>();
 
-        delpoyUI.DeployReady(cardType, _name, prefabName, cost);
+        delpoyUI.DeployReady(cardType, targetName, prefabName, cost);
     }
 
     public void UpdateMana()
@@ -90,7 +107,7 @@ public class DeploySlot : MonoBehaviour
     public void Init(Dictionary<string,object> data)
     {
         id = data["id"].ToString();
-        _name = data["name"].ToString();
+        targetName = data["name"].ToString();
         cardType = (id[2] == 't' ? CardType.Trap : CardType.Spawner);
         if (id.Contains("s_m4"))
             cardType = CardType.Monster;
@@ -114,7 +131,6 @@ public class DeploySlot : MonoBehaviour
         {
             duration = Convert.ToInt32(data["duration"]);
             maxTarget = Convert.ToInt32(data["targetCount"]);
-            isUnlocked = true;
         }
 
         manaText.gameObject.SetActive(mana == 0 ? false : true);
@@ -125,7 +141,7 @@ public class DeploySlot : MonoBehaviour
 
         Sprite illur = SpriteList.Instance.LoadSprite(prefabName);
         icon.sprite = illur;
-        nameText?.ChangeLangauge(SettingManager.Instance.language, _name);
+        nameText?.ChangeLangauge(SettingManager.Instance.language, targetName);
         costText.text = cost.ToString();
 
         this.data = data;

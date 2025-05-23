@@ -1,5 +1,81 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2509857933200961019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4923430836048125362}
+  - component: {fileID: 1043099712724008424}
+  - component: {fileID: 6512335316832982852}
+  - component: {fileID: 4799656540141305143}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4923430836048125362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509857933200961019}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 224438830185224433}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1043099712724008424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509857933200961019}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.5, y: 7, z: 1}
+  m_Center: {x: 0, y: 3, z: 0}
+--- !u!114 &6512335316832982852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509857933200961019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 3
+  _subLevel: 1
+  toolTipKey_header: mimic_supply
+  toolTipKey_descs: mimic_supply_1
+--- !u!114 &4799656540141305143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509857933200961019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetOutline: {fileID: 4166570101975954382}
 --- !u!1 &4166570101975954382
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +108,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 224438830185224433}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3924723781198983659
 MeshRenderer:
@@ -113,10 +189,7 @@ GameObject:
   - component: {fileID: 8135559933520279386}
   - component: {fileID: 7149043362582349741}
   - component: {fileID: 6106281517710490074}
-  - component: {fileID: 3068550774594301243}
-  - component: {fileID: 3435824312486544759}
-  - component: {fileID: 6230825681333066476}
-  - component: {fileID: 7905037750599674040}
+  - component: {fileID: 2454814107451496533}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -136,6 +209,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4923430836048125362}
   - {fileID: 3999963141940623659}
   m_Father: {fileID: 7628547921235060627}
   m_RootOrder: 0
@@ -252,7 +326,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &3068550774594301243
+--- !u!114 &2454814107451496533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,63 +335,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 5880900752991308404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: e8be002f8cbcd4ce08603a78ec3a9392, type: 3}
-  - {fileID: 8300000, guid: 60fc32af3416d495aa02997a7a2c6b4a, type: 3}
-  - {fileID: 8300000, guid: 9aaaaa6fc1f5c4ed5ad40f0703e4efc7, type: 3}
-  - {fileID: 8300000, guid: ad4c4262fbb4c454fbaba2810c01bc04, type: 3}
-  attackSoundMult: 0.8
-  deadSounds:
-  - {fileID: 8300000, guid: fa459b5a9a1c34e0a9be1b8781f85a3e, type: 3}
-  - {fileID: 8300000, guid: 738026eb9f1a24f7dbe21edd5b6977d9, type: 3}
-  - {fileID: 8300000, guid: 8ff2ee75bccbd4a7780ff06ce3ba13a2, type: 3}
-  deadSoundMult: 1
---- !u!136 &3435824312486544759
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5880900752991308404}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 4.303913
-  m_Height: 7.4574347
-  m_Direction: 1
-  m_Center: {x: 0.0013279915, y: 3.1202173, z: 0}
---- !u!114 &6230825681333066476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5880900752991308404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _toolTipType: 3
-  _subLevel: 1
-  toolTipKey_header: tooltip_mimic2_0
-  toolTipKey_descs: tooltip_mimic2_1
---- !u!114 &7905037750599674040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5880900752991308404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetOutline: {fileID: 4166570101975954382}
+  attackSound:
+    Guid:
+      Data1: 367004687
+      Data2: 1196401480
+      Data3: 287584409
+      Data4: -55873508
+    Path: event:/Object/Creture/Mimic/Attack_Mimic
+  deadSound:
+    Guid:
+      Data1: 994920480
+      Data2: 1239579269
+      Data3: 1457600163
+      Data4: 1958887298
+    Path: event:/Object/Creture/Mimic/Creture_Mimic_Dead
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +502,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -483,9 +518,17 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m40002
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 1
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 21636bb31c25a4b169dfc0bc23dc6317, type: 3}
+  summonSoundEvent:
+    Guid:
+      Data1: -77307859
+      Data2: 1143938589
+      Data3: 1258640794
+      Data4: -139391633
+    Path: event:/Object/Creture/Mimic/Summoned_Mimic
   seduceTargetCount: 3
 --- !u!136 &7389840894960381613
 CapsuleCollider:

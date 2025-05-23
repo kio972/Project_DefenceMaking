@@ -42,18 +42,20 @@ public class Monster : Battler, IHoldbacker
 
     [SerializeField]
     private AudioClip summonSound;
+    [SerializeField]
+    FMODUnity.EventReference summonSoundEvent;
 
-    public override float MoveSpeed
-    {
-        get
-        {
-            float speed = base.MoveSpeed;
-            if (curTile != null && curTile.curTile != null)
-                speed *= (100f + PassiveManager.Instance._TileSpeed_Weight[(int)curTile.curTile._TileType]) / 100f;
+    //public override float MoveSpeed
+    //{
+    //    get
+    //    {
+    //        float speed = base.MoveSpeed;
+    //        if (curTile != null && curTile.curTile != null)
+    //            speed *= (100f + PassiveManager.Instance._TileSpeed_Weight[(int)curTile.curTile._TileType]) / 100f;
 
-            return speed;
-        }
-    }
+    //        return speed;
+    //    }
+    //}
 
     public bool CanHoldBack
     {
@@ -74,7 +76,7 @@ public class Monster : Battler, IHoldbacker
         GameManager.Instance.holdBackedABattlers.Add(target);
     }
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         if(resurrectCount > 0)
         {
@@ -83,7 +85,7 @@ public class Monster : Battler, IHoldbacker
             return;
         }
 
-        base.Dead();
+        base.Dead(attacker);
         GameManager.Instance.SetMonseter(this, false);
         //if (curTile.curTile.monster != null && curTile.curTile.monster == this)
         //{
@@ -101,14 +103,14 @@ public class Monster : Battler, IHoldbacker
             return;
         }
 
-        if (nextTile == null || nextTile.curTile == null)
+        if (_nextNode == null || _nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
-            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
-                path.Remove(curTile);
+            List<TileNode> path = NodeManager.Instance.FindPath(_curNode, targetTile);
+            if ((transform.position - _curNode.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - _curNode.transform.position))
+                path.Remove(_curNode);
 
             if (path != null && path.Count > 0)
-                nextTile = path[0];
+                _nextNode = path[0];
             else
             {
                 ResetPaths();
@@ -116,11 +118,11 @@ public class Monster : Battler, IHoldbacker
             }
         }
 
-        ExcuteMove(nextTile);
+        ExcuteMove(_nextNode);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
-            NodeAction(nextTile);
+        if (Vector3.Distance(transform.position, _nextNode.transform.position) < 0.001f)
+            NodeAction(_nextNode);
     }
 
     protected override void CollapseLogic()
@@ -151,7 +153,7 @@ public class Monster : Battler, IHoldbacker
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
-        nextNodes.Remove(prevTile);
+        nextNodes.Remove(_prevNode);
         nextNodes.Remove(NodeManager.Instance.startPoint);
         nextNodes.Remove(NodeManager.Instance.endPoint);
         if (crossedNodes != null)
@@ -159,6 +161,20 @@ public class Monster : Battler, IHoldbacker
             foreach (TileNode node in crossedNodes)
                 nextNodes.Remove(node);
         }
+
+        List<TileNode> cannotPassTiles = new List<TileNode>();
+        //노드중 통행불가 오브젝트가 설치된 타일은 제외
+        foreach (TileNode node in nextNodes)
+        {
+            if(node.curTile.objectKind != null && node.curTile.objectKind is IBlockingObject blockingObject)
+            {
+                if(blockingObject.blockTargets.Contains(monsterType))
+                    cannotPassTiles.Add(node);
+            }
+        }
+
+        foreach (TileNode node in cannotPassTiles)
+            nextNodes.Remove(node);
 
         if (nextNodes.Count == 0)
             return null;
@@ -171,24 +187,18 @@ public class Monster : Battler, IHoldbacker
         return nextNode;
     }
 
-    public void SetStartPoint(TileNode tile)
-    {
-        transform.position = tile.transform.position;
-        curTile = tile;
-    }
-
     private void ModifyPassive()
     {
         armor += PassiveManager.Instance.monsterDefense_Weight;
-        attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
-        attackSpeed *= ((100 + PassiveManager.Instance._MonsterTypeAttackSpeed_Weight[(int)monsterType]) / 100);
+        //attackSpeed *= ((100 + PassiveManager.Instance.monsterAttackSpeed_Weight) / 100);
+        //attackSpeed *= ((100 + PassiveManager.Instance._MonsterTypeAttackSpeed_Weight[(int)monsterType]) / 100);
 
         minDamage = (int)((float)minDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
         maxDamage = (int)((float)maxDamage * ((100 + PassiveManager.Instance.monsterDamageRate_Weight) / 100));
 
-        maxHp += PassiveManager.Instance._MonsterTypeHp_Weight[(int)monsterType];
-        maxHp += PassiveManager.Instance.monsterHp_Weight;
-        maxHp = Mathf.FloorToInt((float)maxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
+        curMaxHp += PassiveManager.Instance._MonsterTypeHp_Weight[(int)monsterType];
+        curMaxHp += PassiveManager.Instance.monsterHp_Weight;
+        curMaxHp = Mathf.FloorToInt((float)curMaxHp * ((100 + PassiveManager.Instance.monsterHpRate_Weight) / 100));
 
         resurrectCount += PassiveManager.Instance._MonsterTypeResurrect_Weight[(int)monsterType];
     }
@@ -197,21 +207,25 @@ public class Monster : Battler, IHoldbacker
     {
         base.Init();
         if(GameManager.Instance.IsInit)
-            AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
+        {
+            //AudioManager.Instance.Play3DSound(summonSound, transform.position, SettingManager.Instance._FxVolume);
+            FMODUnity.RuntimeManager.PlayOneShot(summonSoundEvent);
+        }
         ResetNode();
 
-        monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.Battler_Table, "id");
+        monsterIndex = UtilHelper.Find_Data_Index(battlerID, DataManager.Instance.battler_Table, "id");
         if(monsterIndex != -1)
         {
             InitStats(monsterIndex);
 
-            monsterType = (MonsterType)Enum.Parse(typeof(MonsterType), DataManager.Instance.Battler_Table[monsterIndex]["type"].ToString());
-            holdBackCount = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["holdbackCount"]);
-            requiredMana = Convert.ToInt32(DataManager.Instance.Battler_Table[monsterIndex]["requiredMagicpower"]);
+            if(Enum.TryParse(typeof(MonsterType), DataManager.Instance.battler_Table[monsterIndex]["type"].ToString(), out object targetType))
+                monsterType = (MonsterType)targetType;
+            int.TryParse(DataManager.Instance.battler_Table[monsterIndex]["holdbackCount"].ToString(), out holdBackCount);
+            int.TryParse(DataManager.Instance.battler_Table[monsterIndex]["requiredMagicpower"].ToString(), out requiredMana);
 
             ModifyPassive();
-            curHp = maxHp;
-        }
+            curHp = curMaxHp;
+        }   
 
         GameManager.Instance.SetMonseter(this, true);
 
@@ -219,11 +233,5 @@ public class Monster : Battler, IHoldbacker
             InitState(this, FSMHide.Instance);
         else
             InitState(this, FSMPatrol.Instance);
-    }
-
-
-    public override void Update()
-    {
-        base.Update();
     }
 }

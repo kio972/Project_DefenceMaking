@@ -16,7 +16,7 @@ public enum ResearchState
 
 
 
-public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHandler
+public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHandler, ISlot
 {
     [SerializeField]
     private string researchId;
@@ -24,6 +24,8 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
 
     [SerializeField]
     private GameObject imgGroup;
+
+    public bool isActivedResearch { get => !string.IsNullOrEmpty(researchId) && imgGroup.activeSelf; }
 
     [SerializeField]
     private GameObject completedFrame;
@@ -79,11 +81,18 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     [SerializeField]
     private ResearchSlot[] prevResearch = null;
 
+    [SerializeField]
+    private ResearchSlot[] prevResearch_Selectable = null;
+
+    [SerializeField]
+    private ResearchSlot oppositeResearch = null;
+    public ResearchSlot OppositeResearch { get => oppositeResearch; }
+
     private readonly Color selectedColor = new Color(0.14f, 1, 0);
-    private readonly Color mouseOverColor = Color.black;
+    private readonly Color mouseOverColor = new Color(0.8f, 0.8f, 0.8f);
     private readonly Color impossibleColor = new Color(0.494f, 0.470f, 0.439f);
     private readonly Color completeColor = new Color(1, 0.4f, 0);
-    private readonly Color defaultColor = new Color(0.305f, 0.274f, 0.254f);
+    private readonly Color defaultColor = Color.white;
 
     private void OnDisable()
     {
@@ -92,6 +101,43 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     }
 
     private void OnEnable()
+    {
+        UpdateSlotState();
+    }
+
+    private bool IsResearchUnlock
+    {
+        get
+        {
+            bool unlock = true;
+            foreach (ResearchSlot researchSlot in prevResearch)
+            {
+                if (researchSlot._CurState == ResearchState.Complete)
+                    continue;
+                unlock = false;
+            }
+
+            bool unlock2 = false;
+            foreach(ResearchSlot researchSlot in prevResearch_Selectable)
+            {
+                if (researchSlot._CurState == ResearchState.Complete)
+                    unlock2 = true;
+            }
+            if (prevResearch_Selectable == null || prevResearch_Selectable.Length == 0)
+                unlock2 = true;
+
+            bool oppositeCheck = true;
+            if (oppositeResearch != null)
+            {
+                if(oppositeResearch._CurState is ResearchState.Complete or ResearchState.InProgress)
+                    oppositeCheck = false;
+            }
+
+            return unlock && unlock2 && oppositeCheck;
+        }
+    }
+
+    public void UpdateSlotState()
     {
         if (outLineFrame != null)
             outLineFrame.SetActive(_curState.Value is ResearchState.Complete or ResearchState.InProgress);
@@ -110,7 +156,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         else
             iconImg.color = Color.white;
 
-        if(isClicked)
+        if (isClicked)
             SetClicked();
     }
 
@@ -119,15 +165,7 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         if (_curState.Value == ResearchState.Complete || _curState.Value == ResearchState.InProgress)
             return;
 
-        bool unlock = true;
-        foreach(ResearchSlot prevSlot in prevResearch)
-        {
-            if (prevSlot._CurState == ResearchState.Complete)
-                continue;
-            unlock = false;
-        }
-
-        if (unlock)
+        if (IsResearchUnlock)
             _curState.Value = ResearchState.Incomplete;
         else
             _curState.Value = ResearchState.Impossible;
@@ -198,6 +236,12 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
         outLineFrame.SetActive(true);
         selectedFrame.SetActive(true);
         iconImg.color = _curState.Value == ResearchState.Impossible ? impossibleColor : Color.white;
+    }
+
+    public void SendInfo()
+    {
+        OnClick();
+        CallPopUpUI();
     }
 
     public void OnClick()

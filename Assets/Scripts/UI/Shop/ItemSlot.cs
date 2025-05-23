@@ -16,6 +16,7 @@ public struct ItemInfo
     public float increaseMax;
     public float decreaseMin;
     public float decreaseMax;
+    public int stockCount;
 
     public ItemInfo(Dictionary<string, object> data)
     {
@@ -28,10 +29,11 @@ public struct ItemInfo
         float.TryParse(data["IncreaseMax"].ToString(), out increaseMax);
         float.TryParse(data["DecreaseMin"].ToString(), out decreaseMin);
         float.TryParse(data["DecreaseMax"].ToString(), out decreaseMax);
+        int.TryParse(data["Stock"].ToString(), out stockCount);
     }
 }
 
-public class ItemSlot : FluctItem
+public class ItemSlot : FluctItem, ISlot
 {
     [SerializeField]
     private string itemId;
@@ -49,38 +51,40 @@ public class ItemSlot : FluctItem
     private GameObject soldOut;
 
     [SerializeField]
-    private ShopUI shopUI;
+    private ShopUI _shopUI;
 
     [SerializeField]
     private string buyScript;
+    [SerializeField]
+    private string soldOutScript;
     [SerializeField]
     private string sellScript;
 
     [SerializeField]
     private FluctType fluctType;
 
-    private Item item;
+    private Item _item;
 
     public Image ItemIcon { get => itemIcon; }
 
     public ItemInfo itemInfo { get; private set; }
-    private Item _Item
+    public Item item
     {
         get
         {
-            if (item == null)
-                item = GetComponent<Item>();
-            return item;
+            if (_item == null)
+                _item = GetComponent<Item>();
+            return _item;
         }
     }
 
-    private ShopUI _ShopUI
+    private ShopUI shopUI
     {
         get
         {
-            if (shopUI == null)
-                shopUI = GetComponentInParent<ShopUI>();
-            return shopUI;
+            if (_shopUI == null)
+                _shopUI = GetComponentInParent<ShopUI>();
+            return _shopUI;
         }
     }
 
@@ -98,40 +102,90 @@ public class ItemSlot : FluctItem
     [SerializeField]
     private ShopSlotInfo slotInfo;
 
+    [SerializeField]
+    private int _stockCount = 1;
+    private int _curStockCount;
+    public int curStockCount { get => _curStockCount; }
+
+    [SerializeField]
+    private GameObject clickedImg;
+
+    [SerializeField]
+    FMODUnity.EventReference refusedSound;
+    [SerializeField]
+    FMODUnity.EventReference excutedSound;
+
+    private void Update()
+    {
+        Color targetColor = GameManager.Instance.gold >= curPrice.Value ? Color.white : Color.red;
+        itemPrice.color = targetColor;
+    }
+
+    public void RefreshStock()
+    {
+        _curStockCount = _stockCount;
+        isSoldOut.Value = false;
+    }
+
+    public void ForceUpdateItemInfo(ItemInfo info)
+    {
+        this.itemInfo = info;
+    }
+
+    public void SetClicked(bool value)
+    {
+        if(clickedImg != null)
+            clickedImg.SetActive(value);
+    }
+
     public void OnClick()
     {
-        if (item is IMalPoongSunOnClick script)
+        if (_item is IMalPoongSunOnClick script)
             script.PlayOnClickScript();
 
-        slotInfo?.UpdateInfo(this);
+        if(_item is IInfoChangeableItem infoChangeable)
+            slotInfo.UpdateInfo(this, infoChangeable.additional);
+        else
+            slotInfo?.UpdateInfo(this);
+    }
+
+    public void SendInfo()
+    {
+        OnClick();
     }
 
     public void BuyItem()
     {
         if (GameManager.Instance.gold < _saledPrice)
         {
-            _ShopUI?.PlayScript("Shop034");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            shopUI?.PlayScript("Shop055");
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             return;
         }
 
-        if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
-        {
-            _ShopUI?.PlayScript("Shop035");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
-            return;
-        }
+        //if(isTileItem && GameManager.Instance.cardDeckController.hand_CardNumber >= 10)
+        //{
+        //    shopUI?.PlayScript("Shop035");
+        //    //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        //    FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
+        //    return;
+        //}
 
         GameManager.Instance.gold -= _saledPrice;
 
-        _Item?.UseItem();
+        _curStockCount--;
+        item?.UseItem();
+        shopUI?.InvokeBuyItemEvents(item);
 
         if (!string.IsNullOrEmpty(buyScript))
-            _ShopUI?.PlayScript(buyScript);
+            shopUI?.PlayScript(buyScript);
 
-        isSoldOut.Value = true;
+        if(_curStockCount <= 0)
+            isSoldOut.Value = true;
         slotInfo?.UpdateInfo(this);
-        AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
+        //AudioManager.Instance.Play2DSound("UI_Shop_Buy", SettingManager.Instance._UIVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(excutedSound);
     }
 
     private int DecreasePrice()
@@ -174,9 +228,6 @@ public class ItemSlot : FluctItem
         }
 
         itemPrice.text = curPrice.ToString();
-
-        if(isRefreshable)
-            isSoldOut.Value = false;
     }
 
     public override void UpdateCoolTime()
@@ -187,8 +238,8 @@ public class ItemSlot : FluctItem
     public void SetItem(Sprite icon, string targetName)
     {
         itemIcon.sprite = icon;
-        itemName.text = targetName;
-        itemPrice.text = curPrice.ToString();
+        //itemName.text = targetName;
+        //itemPrice.text = curPrice.ToString();
     }
 
     private void SetItemInfo()
@@ -203,6 +254,7 @@ public class ItemSlot : FluctItem
         decreaseMax = itemInfo.decreaseMax;
         originPrice = itemInfo.originPrice;
         curPrice.Value = itemInfo.curPrice;
+        _stockCount = itemInfo.stockCount;
     }
 
     public void Init()
@@ -218,6 +270,7 @@ public class ItemSlot : FluctItem
         isSoldOut.Subscribe(_ => soldOut?.SetActive(_));
 
         curPrice.Value = originPrice;
+        _curStockCount = _stockCount;
         IRefreshableItem refresh = GetComponent<IRefreshableItem>();
         refresh?.RefreshItem();
     }

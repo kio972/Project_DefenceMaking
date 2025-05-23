@@ -5,14 +5,14 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public class GolemMithril : GolemIron
+public class GolemMithril : GolemObsidian
 {
     private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         tokenSource.Cancel();
-        base.Dead();
+        base.Dead(attacker);
     }
 
     private async UniTaskVoid ShieldRestoration(float time)
@@ -26,15 +26,17 @@ public class GolemMithril : GolemIron
 
         if (curHp >= 10 && shield <= 0)
             shield = Mathf.RoundToInt(maxHp * 0.2f);
+
+        if (_sheildEffect != null)
+        {
+            _sheildEffect.gameObject.SetActive(true);
+            _sheildEffect.Play();
+        }
     }
 
-    private void ShieldExplosion()
+    protected override void ShieldExplosion()
     {
-        int explosionDamage = Mathf.FloorToInt(maxHp * 0.2f * 0.5f);
-        List<Battler> targets = GetRangedTargets(transform.position, 1f, false);
-        foreach (var target in targets)
-            target.GetDamage(explosionDamage, this);
-
+        base.ShieldExplosion();
         ShieldRestoration(12 * 60).Forget();
     }
 

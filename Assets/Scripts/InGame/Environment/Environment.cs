@@ -10,7 +10,19 @@ public enum EnvironmentType
     slow,
 }
 
-public class Environment : MonoBehaviour
+public interface IManaSupply
+{
+    int manaValue { get; }
+}
+
+public interface IStatModifier
+{
+    //StatType statType { get; }
+
+    float modifyValue { get; }
+}
+
+public class Environment : MonoBehaviour, ITileKind, IStatObject
 {
     [SerializeField]
     private EnvironmentType environmentType;
@@ -18,8 +30,11 @@ public class Environment : MonoBehaviour
     [SerializeField]
     protected float value;
 
-    private TileNode curNode;
-    public TileNode _CurNode { get => curNode; }
+    private TileNode _curNode;
+    public TileNode curNode { get => _curNode; }
+
+    [SerializeField]
+    FMODUnity.EventReference buildSound;
 
     protected virtual void CustomFunc() { }
 
@@ -29,8 +44,8 @@ public class Environment : MonoBehaviour
         transform.position = node.transform.position;
         NodeManager.Instance.SetTile(this);
         NodeManager.Instance.SetActiveNode(node, true);
-        curNode = node;
-        curNode.environment = this;
+        _curNode = node;
+        _curNode.tileKind = this;
         switch(environmentType)
         {
             case EnvironmentType.monsterHp:
@@ -43,10 +58,24 @@ public class Environment : MonoBehaviour
                 PassiveManager.Instance.slowedTile.Add(node, value);
                 break;
             case EnvironmentType.custom:
-                CustomFunc();
                 break;
         }
+        CustomFunc();
+        NodeManager.Instance.AddSightNode(_curNode);
+        if(GameManager.Instance.IsInit)
+            FMODUnity.RuntimeManager.PlayOneShot(buildSound);
+    }
 
-        NodeManager.Instance.AddSightNode(curNode);
+    public string GetStat(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Mana:
+                return $"{0}";
+            case StatType.BuffTexts:
+                return null;
+            default:
+                return null;
+        }
     }
 }

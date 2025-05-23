@@ -22,9 +22,6 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedPrev(bool showPopUp = true, bool setZero = true)
     {
-        if (GameManager.Instance.speedLock)
-            return;
-
         switch (prevState)
         {
             case 0:
@@ -58,7 +55,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_Tile_Connected(TileNode tile)
     {
-        if (PathFinder.FindPath(tile) == null)
+        if (NodeManager.Instance.FindPath(tile) == null)
             return false;
         else
             return true;
@@ -66,7 +63,7 @@ public class GameSpeedController : MonoBehaviour
 
     public bool Is_Game_Continuable()
     {
-        if (PathFinder.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
+        if (NodeManager.Instance.FindPath(NodeManager.Instance.startPoint, NodeManager.Instance.endPoint) == null)
             return false;
 
         //foreach(Battler target in GameManager.Instance.monsterList)
@@ -100,7 +97,7 @@ public class GameSpeedController : MonoBehaviour
             if (tile.curTile.IsDormant)
                 continue;
 
-            if (PathFinder.FindPath(tile) == null)
+            if (NodeManager.Instance.FindPath(tile) == null)
                 return false;
         }
 
@@ -109,9 +106,6 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedZero()
     {
-        if (GameManager.Instance.speedLock)
-            return;
-
         prevState = (int)GameManager.Instance.timeScale;
 
         GameManager.Instance.timeScale = 0;
@@ -120,9 +114,6 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedNormal()
     {
-        if (GameManager.Instance.speedLock)
-            return;
-
         if (!Is_Game_Continuable() && GameManager.Instance.IsInit)
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");
@@ -152,9 +143,6 @@ public class GameSpeedController : MonoBehaviour
 
     public void SetSpeedFast()
     {
-        if (GameManager.Instance.speedLock)
-            return;
-
         if (!Is_Game_Continuable() && GameManager.Instance.IsInit)
         {
             string desc = DataManager.Instance.GetDescription("announce_ingame_tileconnect");

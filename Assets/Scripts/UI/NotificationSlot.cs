@@ -6,8 +6,8 @@ using TMPro;
 
 public enum NotificationType
 {
-    Research,
     Deploy,
+    Research,
     Shop,
 }
 
@@ -51,8 +51,15 @@ public class NotificationSlot : MonoBehaviour
     private NotificationState curState = NotificationState.Closed;
     public NotificationState _CurState { get => curState; }
 
+    [SerializeField]
+    private GameObject linkedPage;
 
-    private void Finish()
+    [SerializeField]
+    FMODUnity.EventReference openSound;
+    //[SerializeField]
+    //FMODUnity.EventReference closeSound;
+
+    public void Finish()
     {
         curState = NotificationState.Closed;
         gameObject.SetActive(false);
@@ -64,6 +71,11 @@ public class NotificationSlot : MonoBehaviour
         curState = NotificationState.Wait;
     }
 
+    public void ForceUpdateText(string msg)
+    {
+        text.text = msg;
+    }
+
     public void SetMesseage(string msg, NotificationType type)
     {
         animator.Rebind();
@@ -72,16 +84,29 @@ public class NotificationSlot : MonoBehaviour
         curState = NotificationState.Open;
         if(img != null && sprites != null)
             img.sprite = sprites[(int)type];
+        FMODUnity.RuntimeManager.PlayOneShot(openSound);
     }
 
     public void OnClick()
     {
         animator.SetTrigger("OnClick");
-        SendMessageUpwards("ArrangeIndex", index);
+        //SendMessageUpwards("ArrangeIndex", index);
+        //FMODUnity.RuntimeManager.PlayOneShot(closeSound);
     }
 
     private void Awake()
     {
         btn.onClick.AddListener(OnClick);
+    }
+
+    private void Update()
+    {
+        if(curState == NotificationState.Wait && linkedPage != null && linkedPage.activeInHierarchy)
+            Finish();
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() => OnClick());
     }
 }

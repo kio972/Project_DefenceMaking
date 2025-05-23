@@ -7,6 +7,6 @@ public class SceneStarter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SettingManager.Instance.SetLanguage();
+        //SettingManager.Instance.SetLanguage();
     }
 }

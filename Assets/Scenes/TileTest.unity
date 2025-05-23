@@ -201,7 +201,8 @@ GameObject:
   m_Component:
   - component: {fileID: 480144406}
   - component: {fileID: 480144405}
-  - component: {fileID: 480144404}
+  - component: {fileID: 480144408}
+  - component: {fileID: 480144407}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -209,14 +210,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &480144404
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480144403}
-  m_Enabled: 1
 --- !u!20 &480144405
 Camera:
   m_ObjectHideFlags: 0
@@ -275,6 +268,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &480144407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480144403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea25f2dee96a4e10bbdf2e373f00ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDefaultListener: 1
+  bOverrideScalingFactor: 0
+  scalingFactor: -1
+  listenerId: 0
+--- !u!114 &480144408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480144403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b0c98fafde9448ba6128bcd6f8a208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 0
+  isStaticObject: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  scalingFactor: 1
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
 --- !u!1001 &1015494803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -449,7 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62314b8897fb1e3409fbdb36b29a7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPackEffect: {fileID: 2136821711}
+  endWave: 20
 --- !u!4 &1280704025
 Transform:
   m_ObjectHideFlags: 0
@@ -886,10 +918,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deckPos: {fileID: 1771345722}
+  fadeImg: {fileID: 0}
   packImg: {fileID: 1975038597}
   packSprites: []
   cardEx: {fileID: 8700319575047614442}
   lerpTime: 0.1
+  confirmBtn: {fileID: 0}
+  cardSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &49617931805563218
 GameObject:
   m_ObjectHideFlags: 0

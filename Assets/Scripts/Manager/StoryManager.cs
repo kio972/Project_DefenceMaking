@@ -36,7 +36,7 @@ public class StoryManager : MonoBehaviour
     private Queue<List<Dictionary<string, object>>> scriptQueue = new Queue<List<Dictionary<string, object>>>();
     public bool IsScriptQueueEmpty { get { if (scriptQueue.Count == 0) return true; else return false; } }
 
-    private float textTime = 0.1f;
+    private float textTime = 0.05f;
 
     [SerializeField]
     private TextMeshProUGUI targetText;
@@ -71,7 +71,18 @@ public class StoryManager : MonoBehaviour
     private GameObject nextArrow;
 
     [SerializeField]
+    private Transform imgGroup;
+
+    private Dictionary<string, IllustrateUI> illustDic;
+
+    [SerializeField]
     private Button skipBtn;
+
+    public MonoBehaviour triggerZone;
+
+    private HashSet<IllustrateUI> curUsedIllur;
+
+    private readonly Color fadedColor = new Color(0.4f, 0.4f, 0.4f);
 
     public void SkipScript()
     {
@@ -117,11 +128,26 @@ public class StoryManager : MonoBehaviour
         // 한글자씩 글자 출력
         StringBuilder sb = new StringBuilder();
         float elapsed = 0f;
+        bool skip = false;
         for (int i = 0; i < conver.Length; i++)
         {
             sb.Append(conver[i].ToString());
-            if (conver[i] == ' ')
+            if (conver[i] is ' ' or '\r' or '\n')
                 continue;
+
+            if(conver[i] is '<')
+            {
+                skip = true;
+                continue;
+            }
+
+            if (skip)
+            {
+                if (conver[i] is '>')
+                    skip = false;
+                continue;
+            }
+
             targetText.text = sb.ToString();
 
             elapsed = 0f;
@@ -144,12 +170,67 @@ public class StoryManager : MonoBehaviour
     private void ResetIllust()
     {
         prevIllust = null;
-        if (leftIllust.gameObject.activeSelf)
-            leftIllust.FadeOut();
-        if (rightIllust.gameObject.activeSelf)
-            rightIllust.FadeOut();
-        if(middleIllust.gameObject.activeSelf)
-            middleIllust.FadeOut();
+        foreach (var illur in curUsedIllur)
+            illur.FadeOut();
+        //if (leftIllust.gameObject.activeSelf)
+        //    leftIllust.FadeOut();
+        //if (rightIllust.gameObject.activeSelf)
+        //    rightIllust.FadeOut();
+        //if(middleIllust.gameObject.activeSelf)
+        //    middleIllust.FadeOut();
+    }
+
+    private IllustrateUI GetIllust(string targetName)
+    {
+        if(illustDic == null)
+        {
+            illustDic = new Dictionary<string, IllustrateUI>();
+            IllustrateUI[] illustrates = imgGroup.GetComponentsInChildren<IllustrateUI>(true);
+            foreach(var illustrate in illustrates)
+            {
+                illustDic[illustrate.name] = illustrate;
+            }
+        }
+
+        if (illustDic.ContainsKey(targetName))
+            return illustDic[targetName];
+        else
+            return null;
+    }
+
+    private void SetIllust(string targetName, bool isRight, float illurXPos, string track0, string track1)
+    {
+        IllustrateUI targetUI = GetIllust(targetName);
+        if (targetUI == null)
+        {
+            prevIllust?.ChangeColor(fadedColor);
+            prevIllust = null;
+            return;
+        }
+
+        targetUI.SetRotation(isRight);
+        targetUI.SetPosition(illurXPos);
+        if (prevIllust != targetUI)
+        {
+            prevIllust?.ChangeColor(fadedColor);
+
+            if (!targetUI.gameObject.activeSelf)
+                targetUI.FadeIn();
+            else
+                targetUI.ChangeColor(Color.white);
+
+            prevIllust = targetUI;
+            curUsedIllur.Add(targetUI);
+        }
+
+        if (!string.IsNullOrEmpty(track0))
+        {
+            bool loop = track0 == "idle" ? true : false;
+            string idle = track0 == "idle" ? "" : "idle";
+            targetUI.SetAnim(track0, loop, 0, idle);
+        }
+        if (!string.IsNullOrEmpty(track1))
+            targetUI.SetAnim(track1, false, 1);
     }
 
     private void SetIllust(string position, string track0, string track1)
@@ -167,7 +248,7 @@ public class StoryManager : MonoBehaviour
 
         if(prevIllust != targetUI)
         {
-            prevIllust?.ChangeColor(new Color(0.6f, 0.6f, 0.6f));
+            prevIllust?.ChangeColor(fadedColor);
 
             if (!targetUI.gameObject.activeSelf)
                 targetUI.FadeIn();
@@ -187,6 +268,21 @@ public class StoryManager : MonoBehaviour
             targetUI.SetAnim(track1, false, 1);
     }
 
+    private void StopTalkAnim()
+    {
+        prevIllust?.StopTalkAnimation();
+    }
+
+    private void PlayTalkAnim(int length)
+    {
+        float talkTime = 3;
+        if (length < 30)
+            talkTime = 2;
+        else if (length < 10)
+            talkTime = 1;
+        prevIllust?.PlayTalkAnimation(talkTime);
+    }
+
     private IEnumerator ScriptManage()
     {
         Vector2 closedPos1 = fadeUp.anchoredPosition;
@@ -200,6 +296,7 @@ public class StoryManager : MonoBehaviour
             if (scriptQueue.Count == 0) { yield return null; continue; }
             nameText.text = "";
             targetText.text = "";
+            curUsedIllur = new HashSet<IllustrateUI>();
             // 컷인
             fadeUp.gameObject.SetActive(true);
             fadeDown.gameObject.SetActive(true);
@@ -224,11 +321,14 @@ public class StoryManager : MonoBehaviour
                     break;
 
                 string type = script["type"].ToString();
-                string conver = script["script"].ToString();
+                string conver = script[SettingManager.Instance.language.ToString()].ToString();
                 string number = script["number"].ToString();
-                string name = script["character name"].ToString();
+                string name = DataManager.Instance.GetDescription(script["nameKey"].ToString());
                 string illustName = script["character sprite"].ToString();
                 string illustPos = script["sprite position"].ToString();
+                float illurXPos = 0;
+                float.TryParse(script["sprite position"].ToString(), out illurXPos);
+                bool isRight = script["direction"].ToString() == "right" ? true : false;
                 string trigger = script["trigger"].ToString();
                 string track0 = script["track0"].ToString();
                 string track1 = script["track1"].ToString();
@@ -252,21 +352,28 @@ public class StoryManager : MonoBehaviour
                     if (choiceNum != ' ' && choiceNum != number[0])
                         continue;
 
+                    StopTalkAnim();
+                    SetIllust(illustName, isRight, illurXPos, track0, track1);
+                    
                     if (trigger != "")
                         SendMessage(trigger, SendMessageOptions.DontRequireReceiver);
 
                     if (nameText.text != name)
                         nameText.text = name;
 
-                    SetIllust(illustPos, track0, track1);
-                    if(conver != "")
+                    //SetIllust(illustPos, track0, track1);
+
+                    if (conver != "")
                     {
-                        //yield return StartCoroutine(PrintScript(conver));
-                        targetText.text = conver;
-                        yield return null;
+                        if(act != "NoTalk")
+                            PlayTalkAnim(conver.Length);
+
+                        yield return StartCoroutine(PrintScript(conver));
+                        //targetText.text = conver;
+                        //yield return null;
                         if (isSkip)
                             break;
-                        if(act != "NoWait")
+                        if (act != "NoWait")
                         {
                             nextArrow.SetActive(true);
                             while (!Input.anyKeyDown || Input.GetKey(KeyCode.Escape))
@@ -300,7 +407,8 @@ public class StoryManager : MonoBehaviour
             }
 
             isSkip = false;
-
+            choiceState = false;
+            ResetChoices();
             fadeUp.anchoredPosition = openedPos1;
             fadeDown.anchoredPosition = openedPos2;
 
@@ -310,9 +418,11 @@ public class StoryManager : MonoBehaviour
             blocker.gameObject.SetActive(false);
 
             scriptQueue.Dequeue();
-            leftIllust.SetColor(Color.white);
-            rightIllust.SetColor(Color.white);
-            middleIllust.SetColor(Color.white);
+            foreach(var illur in curUsedIllur)
+                illur.SetColor(Color.white);
+            //leftIllust.SetColor(Color.white);
+            //rightIllust.SetColor(Color.white);
+            //middleIllust.SetColor(Color.white);
 
             yield return null;
         }
@@ -343,6 +453,25 @@ public class StoryManager : MonoBehaviour
             choice.setInfo = false;
     }
 
+    private void SetBlack()
+    {
+        prevIllust?.SetColor(Color.black);
+    }
+
+    private void FadeBlack()
+    {
+        if (prevIllust == null)
+            return;
+        prevIllust.ChangeColor(Color.black, 0.5f);
+    }
+
+    private void FadeIn()
+    {
+        if (prevIllust == null)
+            return;
+        prevIllust.fadeInState = true;
+        prevIllust.ChangeColor(Color.white);
+    }
 
     private void FadeInLeft()
     {
@@ -366,6 +495,29 @@ public class StoryManager : MonoBehaviour
         rightIllust.SetColor(Color.black);
     }
 
+    private void ZoomStartTile()
+    {
+        GameManager.Instance.cameraController.ResetCamPos(true);
+        GameManager.Instance.cameraController.SetCamZoom(4);
+    }
+
+    private void ZoomEndTile()
+    {
+        GameManager.Instance.cameraController.ResetCamPos();
+        GameManager.Instance.cameraController.SetCamZoom(4);
+    }
+
+    private void ResetCamPos()
+    {
+        GameManager.Instance.cameraController.CamMoveToPos(Vector3.right * 2.5f);
+        GameManager.Instance.cameraController.SetCamZoom(1);
+    }
+
+    private void SkipTutorial()
+    {
+        SceneController.Instance.MoveScene("Stage1", 0f);
+    }
+
     #endregion
 
     public void EnqueueScript(string scriptID)
@@ -385,5 +537,6 @@ public class StoryManager : MonoBehaviour
         nameText.text = "";
         targetText.text = "";
         blocker.gameObject.SetActive(false);
+        triggerZone = this;
     }
 }

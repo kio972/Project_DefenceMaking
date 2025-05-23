@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-public class HerbCard : MonoBehaviour, Item, IRefreshableItem
+public class HerbCard : MonoBehaviour, Item, IRefreshableItem, ICardPackList
 {
     [SerializeField]
     private bool isSuperial;
@@ -18,6 +18,18 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
 
     List<Card> curCards = new List<Card>();
 
+    private List<int> _targetCards;
+
+    public List<int> targetCards
+    {
+        get
+        {
+            if (_targetCards == null)
+                UpdateTargetCards();
+            return _targetCards;
+        }
+    }
+
     [SerializeField]
     CardPackEffect packEffect;
 
@@ -29,6 +41,17 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
             if (itemSlot == null)
                 itemSlot = GetComponent<ItemSlot>();
             return itemSlot;
+        }
+    }
+
+    private void UpdateTargetCards()
+    {
+        _targetCards = new List<int>();
+        string targetGrade = isSuperial ? "rare" : "normal";
+        foreach (int herb in DataManager.Instance.herbCard_Indexs)
+        {
+            if (DataManager.Instance.deck_Table[herb]["grade"].ToString() == targetGrade)
+                _targetCards.Add(herb);
         }
     }
 
@@ -48,7 +71,7 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
         if (script == null)
             return;
 
-        string conver = script["script"].ToString();
+        string conver = script[SettingManager.Instance.language.ToString()].ToString();
         string track0 = script["track0"].ToString();
         string track1 = script["track1"].ToString();
         //shopUI?.PlayScript("\'" + DataManager.Instance.GetDescription(targetName.ToString()) + conver.Replace('%', '\''), track0, track1);
@@ -65,18 +88,11 @@ public class HerbCard : MonoBehaviour, Item, IRefreshableItem
     public void RefreshItem()
     {
         curCards = new List<Card>();
-        List<int> targets = new List<int>();
-        string targetGrade = isSuperial ? "rare" : "normal";
-        foreach(int herb in DataManager.Instance.herbCard_Indexs)
-        {
-            if (DataManager.Instance.Deck_Table[herb]["grade"].ToString() == targetGrade)
-                targets.Add(herb);
-        }
-
+        
         for(int i = 0; i < number; i++)
         {
-            int cardIndex = GetRandomIndex(targets);
-            curCards.Add(new Card(DataManager.Instance.Deck_Table[cardIndex], cardIndex));
+            int cardIndex = GetRandomIndex(targetCards);
+            curCards.Add(new Card(DataManager.Instance.deck_Table[cardIndex], cardIndex));
         }
 
         //_ItemSlot?.SetItem(SpriteList.Instance.LoadSprite(DataManager.Instance.Deck_Table[targetIndex]["prefab"].ToString()), DataManager.Instance.GetDescription(targetName.ToString()));

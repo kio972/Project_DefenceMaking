@@ -16,6 +16,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField]
     private BloodEffect bloodEffect;
 
+    public MouseOverTooltip mouseOverTooltip;
+
     private Vector2 originPos_uiTop;
     private Vector2 originPos_uiRight;
     private Vector2 originPos_uiDown;
@@ -31,6 +33,23 @@ public class InGameUI : MonoBehaviour
     private Coroutine right2Coroutine;
 
     public bool rightUILock = false;
+
+    [SerializeField]
+    private Transform mainBtn;
+    private IQuestInteract _mainQuestInteractBtn;
+    public IQuestInteract mainQuestInteractBtn
+    {
+        get
+        {
+            if(_mainQuestInteractBtn == null && mainBtn != null)
+                _mainQuestInteractBtn = mainBtn.GetComponent<IQuestInteract>();
+            return _mainQuestInteractBtn;
+        }
+    }
+
+    [SerializeField]
+    private TileArrowUI _tileArrowUI;
+    public TileArrowUI tileArrowUI { get => _tileArrowUI; }
 
     public void StartBloodEffect()
     {
@@ -105,13 +124,14 @@ public class InGameUI : MonoBehaviour
     private void Awake()
     {
         originPos_uiTop = uiTop.anchoredPosition;
-        hidePos_uiTop = originPos_uiTop + new Vector2(0, uiTop.sizeDelta.y + 20);
+        hidePos_uiTop = originPos_uiTop + new Vector2(0, uiTop.sizeDelta.y + 50);
 
         originPos_uiRight = uiRight.anchoredPosition;
         hidePos_uiRight = originPos_uiRight + new Vector2(uiRight.sizeDelta.x + 50, 0);
 
         originPos_uiDown = uiDown.anchoredPosition;
         hidePos_uiDown = originPos_uiDown + new Vector2(0, -uiRight.sizeDelta.y - 20);
+
 
         uiTop.anchoredPosition = hidePos_uiTop;
         uiRight.anchoredPosition = hidePos_uiRight;

@@ -25,13 +25,35 @@ public class ManaUI : MonoBehaviour
         text.text = targetRoom._RemainingMana.ToString();
     }
 
+    public void Init(Transform followTarget, List<Tile> targetRoom, bool isCompleteRoom)
+    {
+        this.targetObject = followTarget;
+        this.targetRoom = null;
+
+        int totalMana = 0;
+        foreach(var tile in targetRoom)
+        {
+            totalMana += tile.RoomMana;
+        }
+        text.text = totalMana.ToString();
+        text.color = isCompleteRoom ? Color.white : Color.red;
+    }
+
+    public void Init(Transform followTarget, string desc)
+    {
+        this.targetObject = followTarget;
+        this.targetRoom = null;
+        text.text = desc;
+    }
+
     protected virtual void Update()
     {
-        if (targetObject == null || targetRoom == null)
+        if (targetObject == null)
             return;
 
         //transform.position = targetObject.transform.position;
         transform.position = Camera.main.WorldToScreenPoint(targetObject.transform.position) + new Vector3(xOffset, yOffset);
-        text.text = targetRoom._RemainingMana.ToString();
+        if(targetRoom != null)
+            text.text = targetRoom._RemainingMana.ToString();
     }
 }

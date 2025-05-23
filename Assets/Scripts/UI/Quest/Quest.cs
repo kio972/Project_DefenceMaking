@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,10 +33,53 @@ public abstract class Quest
     public bool _IsEnd { get => isEnd; }
     public bool _IsClear { get { return isEnd && !isComplete.Contains(false) ? true : false; } }
 
+    private string targetReward;
+    private int rewardValue;
+
     public abstract void CheckCondition();
+
+    protected virtual void GetReward()
+    {
+        if (string.IsNullOrEmpty(targetReward))
+            return;
+
+        switch(targetReward)
+        {
+            case "Gold":
+                GameManager.Instance.gold += rewardValue;
+                break;
+            case "BlackHerb":
+                GameManager.Instance.herbDic[HerbType.BlackHerb] += rewardValue;
+                break;
+            case "PurpleHerb":
+                GameManager.Instance.herbDic[HerbType.PurpleHerb] += rewardValue;
+                break;
+            case "WhiteHerb":
+                GameManager.Instance.herbDic[HerbType.BlackHerb] += rewardValue;
+                break;
+            default:
+                if(targetReward.Length == 6 && targetReward[0] == 'c')
+                {
+                    if (!DataManager.Instance.deckListIndex.ContainsKey(targetReward))
+                        break;
+
+                    int index = DataManager.Instance.deckListIndex[targetReward];
+                    QuestInfo info = QuestManager.Instance.questController.GetInformer(questID);
+                    Transform targetTransform = info == null ? null : info.transform;
+                    for (int i = 0; i < rewardValue; i++)
+                        GameManager.Instance.cardDeckController.DrawCard(index, targetTransform);
+                }
+                break;
+        }
+    }
 
     public virtual void CompleteQuest()
     {
+        for (int i = 0; i < isComplete.Count; i++)
+            isComplete[i] = true;
+
+        GetReward();
+
         if (!string.IsNullOrEmpty(nextQuestMsg))
             QuestManager.Instance.EnqueueQuest(nextQuestMsg);
         QuestManager.Instance.EndQuest(this, true);
@@ -69,14 +113,18 @@ public abstract class Quest
         }
     }
 
-    public void Init(List<Dictionary<string, object>> data, List<int> startVal = null)
+    public void Init(List<Dictionary<string, object>> data, List<int> startVal = null, float startTime = 0)
     {
         questID = data[0]["ID"].ToString();
-        questName = data[0]["Name"].ToString();
+        questName = data[0]["NameKey"].ToString();
         timeLimit = float.Parse(data[0]["TimeLimit"].ToString());
         nextQuestMsg = data[0]["NextQuest"].ToString();
         isMainQuest = data[0]["Type"].ToString() == "main" ? true : false;
-        curTime = 0;
+        targetReward = data[0]["Reward"].ToString();
+        if (int.TryParse(data[0]["RewardNum"].ToString(), out int rewardNum))
+            rewardValue = rewardNum;
+
+        curTime = startTime;
         clearNum = new List<int>();
         curClearNum = startVal != null ? new List<int>(startVal) : new List<int>();
         clearInfo = new List<string>();
@@ -86,7 +134,7 @@ public abstract class Quest
             clearNum.Add(System.Convert.ToInt32(val["ClearNum"]));
             if(startVal == null)
                 curClearNum.Add(0);
-            clearInfo.Add(val["ClearInfo"].ToString());
+            clearInfo.Add(val["InfoKey"].ToString());
             isComplete.Add(false);
         }
     }

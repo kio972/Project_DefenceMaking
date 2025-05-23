@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 
-public class ResearchPopup : MonoBehaviour
+public class ResearchPopup : MonoBehaviour, ISlotInformer
 {
     [SerializeField]
     private Image icon;
     [SerializeField]
     private GameObject inprogressFrame;
     [SerializeField]
-    private TextMeshProUGUI researchName;
+    private LanguageText researchName;
     [SerializeField]
-    private TextMeshProUGUI researchDesc;
+    private LanguageText researchDesc;
     [SerializeField]
     private TextMeshProUGUI researchTime;
     [SerializeField]
@@ -40,16 +40,19 @@ public class ResearchPopup : MonoBehaviour
     [SerializeField]
     private GameObject completePart;
 
-    private ResearchMainUI researchMain;
+    [SerializeField]
+    private GameObject researchInfos;
 
-    private ResearchMainUI ResearchMain
+    private ResearchMainUI _researchMain;
+
+    private ResearchMainUI researchMain
     {
         get
         {
-            if (researchMain == null)
-                researchMain = GetComponentInParent<ResearchMainUI>();
+            if (_researchMain == null)
+                _researchMain = GetComponentInParent<ResearchMainUI>();
 
-            return researchMain;
+            return _researchMain;
         }
     }
 
@@ -59,10 +62,10 @@ public class ResearchPopup : MonoBehaviour
     {
         get
         {
-            if (ResearchMain == null)
+            if (researchMain == null)
                 return 0;
 
-            return ResearchMain.CurProgressTime;
+            return researchMain.CurProgressTime;
         }
     }
 
@@ -73,14 +76,32 @@ public class ResearchPopup : MonoBehaviour
     bool haveHerb2;
     bool haveHerb3;
 
-    //private void OnDisable()
-    //{
-    //    this.gameObject.SetActive(false);
-    //}
+    public ISlot curSlot { get => curResearch; }
+    public void ExcuteAction()
+    {
+
+    }
+
+    void Start()
+    {
+        ResetPopUp();
+    }
 
     private string GetMinSecTime(float time)
     {
         return ((int)(time / 60)).ToString("00") + ":" + ((int)(time % 60)).ToString("00");
+    }
+
+    public void ResetPopUp()
+    {
+        curResearch = null;
+        researchInfos.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if(curResearch != null)
+            SetPopUp(curResearch, icon.sprite, curResearch._CurState);
     }
 
     public void SetPopUp(ResearchSlot researchSlot, Sprite iconSprite, ResearchState curState)
@@ -96,8 +117,8 @@ public class ResearchPopup : MonoBehaviour
         if (isInProgress)
             researchTimer.text = GetMinSecTime(CurTime);
 
-        researchName.text = researchData.researchName;
-        researchDesc.text = researchData.researchDesc;
+        researchName.ChangeLangauge(SettingManager.Instance.language, researchData.researchName);
+        researchDesc.ChangeLangauge(SettingManager.Instance.language, researchData.researchDesc);
         researchTime.text = GetMinSecTime(researchData.requiredTime);
 
         herb1.text = researchData.requiredherb1.ToString();
@@ -115,15 +136,16 @@ public class ResearchPopup : MonoBehaviour
         haveGold = GameManager.Instance.gold >= curResearch._ResearchData.requiredMoney;
         gold.color = haveGold ? Color.white : Color.red;
 
-        haveHerb1 = GameManager.Instance.herb1 >= curResearch._ResearchData.requiredherb1;
+        haveHerb1 = GameManager.Instance.herbDic[HerbType.BlackHerb] >= curResearch._ResearchData.requiredherb1;
         herb1.color = haveHerb1 ? Color.white : Color.red;
 
-        haveHerb2 = GameManager.Instance.herb2 >= curResearch._ResearchData.requiredherb2;
+        haveHerb2 = GameManager.Instance.herbDic[HerbType.PurpleHerb] >= curResearch._ResearchData.requiredherb2;
         herb2.color = haveHerb2 ? Color.white : Color.red;
 
-        haveHerb3 = GameManager.Instance.herb3 >= curResearch._ResearchData.requiredherb3;
+        haveHerb3 = GameManager.Instance.herbDic[HerbType.WhiteHerb] >= curResearch._ResearchData.requiredherb3;
         herb3.color = haveHerb3 ? Color.white : Color.red;
 
+        researchInfos.SetActive(true);
         SetResearchBtn(researchState);
     }
 
@@ -137,9 +159,9 @@ public class ResearchPopup : MonoBehaviour
         int plusMinus = isPlus ? 1 : -1;
 
         GameManager.Instance.gold += curResearch._ResearchData.requiredMoney * plusMinus;
-        GameManager.Instance.herb1 += curResearch._ResearchData.requiredherb1 * plusMinus;
-        GameManager.Instance.herb2 += curResearch._ResearchData.requiredherb2 * plusMinus;
-        GameManager.Instance.herb3 += curResearch._ResearchData.requiredherb3 * plusMinus;
+        GameManager.Instance.herbDic[HerbType.BlackHerb] += curResearch._ResearchData.requiredherb1 * plusMinus;
+        GameManager.Instance.herbDic[HerbType.PurpleHerb] += curResearch._ResearchData.requiredherb2 * plusMinus;
+        GameManager.Instance.herbDic[HerbType.WhiteHerb] += curResearch._ResearchData.requiredherb3 * plusMinus;
     }
 
     private void SetResearchBtn(ResearchState curState)
@@ -166,25 +188,33 @@ public class ResearchPopup : MonoBehaviour
     public void ResearchInteract(bool blockStop = false)
     {
         ResearchState curState = researchState;
-        if (curState == ResearchState.Incomplete)
+        if (researchMain.curResearch != null && researchMain.curResearch != curResearch)
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireNoResearch"));
+        else if (curState == ResearchState.Incomplete)
             StartResearch();
         else if (curState == ResearchState.InProgress && !blockStop)
             StopResearch();
 
-        if(curState != researchState)
+        if (curState != researchState)
             SetResearchBtn(researchState);
     }
+
+    [SerializeField]
+    FMODUnity.EventReference refusedSound;
+    [SerializeField]
+    FMODUnity.EventReference excutedSound;
 
     private void StartResearch()
     {
         if (!HaveAsset())
         {
-            GameManager.Instance.popUpMessage.ToastMsg("연구 재화가 부족합니다.");
-            AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            GameManager.Instance.popUpMessage.ToastMsg(DataManager.Instance.GetDescription("announce_ingame_requireAsset"));
+            //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
             return;
         }
 
-        bool isStart = ResearchMain.StartResearch(curResearch);
+        bool isStart = researchMain.StartResearch(curResearch);
         if (isStart)
         {
             inprogressFrame.SetActive(true);
@@ -194,21 +224,24 @@ public class ResearchPopup : MonoBehaviour
             ModifyAssets(false);
             researchState = ResearchState.InProgress;
         }
-        else
-            GameManager.Instance.popUpMessage.ToastMsg("연구가 이미 진행중입니다.");
 
-        AudioManager.Instance.Play2DSound(isStart ? "UI_Click_01" : "UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        //AudioManager.Instance.Play2DSound(isStart ? "UI_Click_01" : "UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        if(isStart)
+            FMODUnity.RuntimeManager.PlayOneShot(excutedSound);
+        else
+            FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
     }
 
     private void StopResearch()
     {
-        ResearchMain.StopResearch(curResearch);
+        researchMain.StopResearch(curResearch);
         inprogressFrame.SetActive(false);
         inProgressBtn.SetActive(false);
         researchTimer.gameObject.SetActive(false);
         ModifyAssets(true);
         researchState = ResearchState.Incomplete;
 
-        AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        //AudioManager.Instance.Play2DSound("UI_Click_DownPitch_01", SettingManager.Instance._UIVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(refusedSound);
     }
 }

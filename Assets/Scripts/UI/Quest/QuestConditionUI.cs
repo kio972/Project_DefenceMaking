@@ -14,14 +14,16 @@ public class QuestConditionUI : MonoBehaviour
     private int index = 0;
     private bool isClear = false;
 
+    private int curClearNum = -1;
+
     public void SetText()
     {
         if (quest._ClearNum[index] > 0)
-            text.text = $"{quest._ClearInfo[index]}{" (남은 라운드 "}{quest._CurClearNum[index]}{")"}";
+            text.text = $"{DataManager.Instance.GetDescription(quest._ClearInfo[index])} ({DataManager.Instance.GetDescription("q_ui_rounds")} : {quest._CurClearNum[index]})";
         else if (quest._ClearNum[index] < 0)
-            text.text = $"{quest._ClearInfo[index]}{" ("}{quest._CurClearNum[index]}{" / "}{Mathf.Abs(quest._ClearNum[index])}{")"}";
+            text.text = $"{DataManager.Instance.GetDescription(quest._ClearInfo[index])} ({quest._CurClearNum[index]}{" / "}{Mathf.Abs(quest._ClearNum[index])})";
         else
-            text.text = quest._ClearInfo[index];
+            text.text = DataManager.Instance.GetDescription(quest._ClearInfo[index]);
     }
 
     public void SetQuest(Quest quest, int index)
@@ -33,6 +35,7 @@ public class QuestConditionUI : MonoBehaviour
         if(checkBox != null)
             checkBox.SetActive(false);
         isClear = false;
+        SetText();
     }
 
     void Update()
@@ -40,7 +43,12 @@ public class QuestConditionUI : MonoBehaviour
         if (quest == null || isClear)
             return;
 
-        SetText();
+        if(curClearNum != quest._CurClearNum[index])
+        {
+            curClearNum = quest._CurClearNum[index];
+            SetText();
+        }
+
         if(quest._IsComplete[index])
         {
             if (checkBox != null)
@@ -49,5 +57,10 @@ public class QuestConditionUI : MonoBehaviour
             text.color = Color.gray;
             isClear = true;
         }
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() => SetText());
     }
 }

@@ -54,6 +54,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -69,6 +70,9 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a10001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
+  _isBoss: 0
+  isSmart: 0
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -131,7 +135,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 14138555898155272}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &7366178984948051321
 MeshRenderer:
@@ -212,10 +216,7 @@ GameObject:
   - component: {fileID: 2014937560329946990}
   - component: {fileID: 4383217014043702367}
   - component: {fileID: 1126983552592219004}
-  - component: {fileID: 863002703800960164}
-  - component: {fileID: 6182418371417494314}
-  - component: {fileID: 4780438866423758507}
-  - component: {fileID: 7312863931744992321}
+  - component: {fileID: 3834531437041709074}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -235,6 +236,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1212993414747439127}
   - {fileID: 8312631960628535231}
   m_Father: {fileID: 2823092532441335052}
   m_RootOrder: 0
@@ -351,7 +353,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &863002703800960164
+--- !u!114 &3834531437041709074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,39 +362,78 @@ MonoBehaviour:
   m_GameObject: {fileID: 4554826399069124451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: 80bc71f8e3b7c4ee1b58819418cf95bf, type: 3}
-  - {fileID: 8300000, guid: a0d3231f646204e9388a4a1f2d87a4c7, type: 3}
-  - {fileID: 8300000, guid: edac4f0c8ddf44935b3428af83f0bd28, type: 3}
-  - {fileID: 8300000, guid: 3ba40cc141d6a4b34be5e0dae1f6a53d, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 19017297110624dc5aec2c138c763e6f, type: 3}
-  deadSoundMult: 0.6
---- !u!136 &6182418371417494314
+  attackSound:
+    Guid:
+      Data1: 60515115
+      Data2: 1211957510
+      Data3: -1831665234
+      Data4: 498443052
+    Path: event:/Object/Enemy/intruder/Enemy_Farmer_TypeA_Attack
+  deadSound:
+    Guid:
+      Data1: 960119528
+      Data2: 1216880188
+      Data3: -783193725
+      Data4: -221907682
+    Path: event:/Object/Enemy/intruder/Enemy_Dead_Body
+--- !u!1 &4697046094101222476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212993414747439127}
+  - component: {fileID: 4280919425270201052}
+  - component: {fileID: 935326932807213843}
+  - component: {fileID: 3948732638722023734}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1212993414747439127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697046094101222476}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 14138555898155272}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4280919425270201052
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554826399069124451}
+  m_GameObject: {fileID: 4697046094101222476}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 4.6672525
-  m_Height: 13.616962
+  m_Radius: 4
+  m_Height: 14
   m_Direction: 1
-  m_Center: {x: 0.13882875, y: 5.871024, z: 0}
---- !u!114 &4780438866423758507
+  m_Center: {x: 0.3, y: 6, z: 0}
+--- !u!114 &935326932807213843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554826399069124451}
+  m_GameObject: {fileID: 4697046094101222476}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
@@ -402,13 +443,13 @@ MonoBehaviour:
   _subLevel: 0
   toolTipKey_header: tooltip_farmer1_0
   toolTipKey_descs: tooltip_farmer1_1
---- !u!114 &7312863931744992321
+--- !u!114 &3948732638722023734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554826399069124451}
+  m_GameObject: {fileID: 4697046094101222476}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}

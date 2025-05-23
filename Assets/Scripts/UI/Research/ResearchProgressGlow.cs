@@ -18,7 +18,7 @@ public class ResearchProgressGlow : MonoBehaviour
     [SerializeField]
     GameObject glowImage;
 
-    private bool activeState = false;
+    //private bool activeState = false;
 
     private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -45,11 +45,11 @@ public class ResearchProgressGlow : MonoBehaviour
             }
 
             fillImage.fillAmount = 1;
+            fillImage.gameObject.SetActive(false);
             glowImage.SetActive(true);
 
             await UniTask.WaitUntil(() => researchUI.activeSelf, default, cancellationTokenSource.Token);
             glowImage.SetActive(false);
-            fillImage.gameObject.SetActive(false);
         }
     }
 

@@ -28,8 +28,45 @@ public class IllustrateUI : MonoBehaviour
         }
     }
 
+    public void StopTalkAnimation()
+    {
+        if (_Illust_spine == null)
+            return;
+
+        var anim = _Illust_spine.SkeletonData.FindAnimation("talk_end");
+        if (anim == null)
+            return;
+        _Illust_spine.AnimationState.SetAnimation(2, "talk_end", false);
+    }
+
+    public void PlayTalkAnimation(float talkTime)
+    {
+        if (_Illust_spine == null)
+            return;
+
+        var anim = _Illust_spine.SkeletonData.FindAnimation("talk_start");
+        if (anim == null)
+            return;
+        _Illust_spine.AnimationState.SetAnimation(2, "talk_start", true);
+        _Illust_spine.AnimationState.AddAnimation(2, "talk_end", false, talkTime - anim.Duration);
+    }
+
+    public void SetRotation(bool isRight)
+    {
+        transform.rotation = isRight ? Quaternion.identity : Quaternion.Euler(new Vector3(0, 180, 0));
+    }
+
+    public void SetPosition(float x)
+    {
+        float positionX = x / 1920 * SettingManager.Instance.GetScreenSize()[0];
+        transform.position = new Vector3(positionX, transform.position.y, transform.position.z);
+    }
+
     public void SetAnim(string animName, bool loop, int trackNum = 0, string nextAnim = "")
     {
+        if (_Illust_spine == null)
+            return;
+
         Spine.TrackEntry track = _Illust_spine.AnimationState.GetCurrent(trackNum);
         if (track == null || track.Animation.Name != animName)
             _Illust_spine.AnimationState.SetAnimation(trackNum, animName, loop);

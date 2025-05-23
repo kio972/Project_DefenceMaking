@@ -23,13 +23,13 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
         }
 
         //2
-        if(e.CurTile.curTile._TileType == TileType.Room && e.CurTile.curTile.IsBigRoom)
+        if(e.curNode.curTile._TileType == TileType.Room && e.curNode.curTile.IsBigRoom)
         {
             e.ChangeState(FSMRoom.Instance);
             return true;
         }
         //3
-        else if (e.CurTile.curTile._TileType == TileType.End)
+        else if (e.curNode.curTile._TileType == TileType.End)
         {
             e.ChangeState(FSMKingAttack.Instance);
             return true;
@@ -72,6 +72,7 @@ public class FSMPatrol : FSMSingleton<FSMPatrol>, CharState<Battler>
             return;
 
         e.Patrol();
+        e.UpdateMoveSpeed();
     }
 
     public void Exit(Battler e)

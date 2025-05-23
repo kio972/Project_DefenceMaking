@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -7,10 +8,10 @@ public enum GuideState
 {
     None,
     Monster,
-    Trap,
+    ObjectForPath,
     Tile,
     Environment,
-    Movable,
+    Selected,
     Spawner,
 }
 
@@ -26,7 +27,7 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public HashSet<TileNode> allNodes = new HashSet<TileNode>();
 
-    public List<CompleteRoom> roomTiles = new List<CompleteRoom>();
+    public ReactiveCollection<CompleteRoom> roomTiles = new ReactiveCollection<CompleteRoom>();
 
     public HashSet<TileNode> hiddenTiles = new HashSet<TileNode>();
 
@@ -37,6 +38,8 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public TileNode startPoint;
     public TileNode endPoint;
+
+    public Queue<GameObject> hiddenPrioritys = new Queue<GameObject>();
 
     private int minRow;
     private int maxRow;
@@ -69,6 +72,66 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public ReactiveCollection<TileNode> directSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
     public ReactiveCollection<TileNode> inDirectSightNodes { get; private set; } = new ReactiveCollection<TileNode>();
+
+    private Dictionary<(TileNode start, TileNode end), (List<TileNode> path, int version)> pathCache = new Dictionary<(TileNode start, TileNode end), (List<TileNode> path, int version)>();
+    private int nodeVersion = int.MinValue;
+
+    public void IncreaseNodeVersion() => nodeVersion++;
+
+    public float GetBattlerDistance(Battler origin, Battler target)
+    {
+        if (origin.curNode == target.curNode)
+        {
+            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.curNode.transform.position);
+            float modifyTarget = Vector3.Distance(target.transform.position, target.curNode.transform.position);
+            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.curNode.transform.position);
+            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.transform.position - target.curNode.transform.position);
+            if (originBattlerDirection == targetBattlerDirection)
+                modifyTarget *= -1f;
+
+            return modifyOrigin + modifyTarget;
+        }
+        else
+        {
+            List<TileNode> path = FindPath(origin.curNode, target.curNode);
+            if (path == null || path.Count <= 0)
+                return Mathf.Infinity;
+            float distance = path.Count * 1f;
+
+            float modifyOrigin = Vector3.Distance(origin.transform.position, origin.curNode.transform.position);
+            Direction originBattlerDirection = UtilHelper.CheckClosestDirection(origin.transform.position - origin.curNode.transform.position);
+            Direction originPathDirection = origin.curNode.GetNodeDirection(path[0]);
+            if (originBattlerDirection == originPathDirection)
+                modifyOrigin *= -1f;
+
+            float modifyTarget = Vector3.Distance(target.transform.position, target.curNode.transform.position);
+            Direction targetBattlerDirection = UtilHelper.CheckClosestDirection(target.curNode.transform.position - target.transform.position);
+            TileNode destPoint = origin.curNode;
+            if (path.Count > 1)
+                destPoint = path[path.Count - 2];
+            Direction targetPathDirection = destPoint.GetNodeDirection(target.curNode);
+            if (targetBattlerDirection == targetPathDirection)
+                modifyTarget *= -1f;
+
+            return distance + modifyOrigin + modifyTarget;
+        }
+    }
+
+    public List<TileNode> FindPath(TileNode startTile, TileNode endTile = null)
+    {
+        if (endTile == null)
+            endTile = endPoint;
+
+        var key = (startTile, endTile);
+
+        if (pathCache.TryGetValue(key, out var cachedPath) && cachedPath.version == nodeVersion)
+            return cachedPath.path;
+
+        List<TileNode> path = PathFinder.FindPath(startTile, endTile);
+        pathCache[key] = (path, nodeVersion);
+
+        return path;
+    }
 
     public void RemoveSightNode(TileNode node)
     {
@@ -131,11 +194,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     public void ResetNode()
     {
-        activeNodes = new HashSet<TileNode>();
-        emptyNodes = new HashSet<TileNode>();
-        allNodes = new HashSet<TileNode>();
-        roomTiles = new List<CompleteRoom>();
-        dormantTile = new List<Tile>();
+        activeNodes.Clear();
+        emptyNodes.Clear();
+        allNodes.Clear();
+        roomTiles.Clear();
+        dormantTile.Clear();
     }
 
 
@@ -152,10 +215,17 @@ public class NodeManager : IngameSingleton<NodeManager>
             return;
 
         manaGuideState = value;
-        RoomManaPool.Instance.SetManaUI(value, roomTiles);
+        RoomManaPool.Instance.SetManaUI(value, roomTiles.ToList());
     }
 
-    public void SetGuideState(GuideState guideState, Tile tile = null)
+    public void SetGuideSpawner(int requiredMana)
+    {
+        this.guideState = GuideState.Spawner;
+        ResetAvail();
+        SetSpawnerAvail(requiredMana);
+    }
+
+    public void SetGuideState(GuideState guideState, ITileKind tile = null)
     {
         //if (this.guideState == guideState)
         //    return;
@@ -168,19 +238,20 @@ public class NodeManager : IngameSingleton<NodeManager>
             case GuideState.None:
                 //ShowMovableTiles();
                 break;
-            case GuideState.Movable:
+            case GuideState.Selected:
                 ShowSelectedTile(tile);
                 break;
             case GuideState.Tile:
                 if (tile == null)
                     return;
-                SetTileAvail(tile);
+                if(tile is Tile realTile)
+                    SetTileAvail(realTile);
                 break;
-            case GuideState.Trap:
-                SetTrapAvail();
+            case GuideState.ObjectForPath:
+                SetObjectForPathAvail();
                 break;
             case GuideState.Spawner:
-                SetSpawnerAvail();
+                SetSpawnerAvail(0);
                 break;
             case GuideState.Monster:
                 SetMonsterAvail();
@@ -203,7 +274,7 @@ public class NodeManager : IngameSingleton<NodeManager>
             SetGuideState(GuideState.None);
     }
 
-    private void ShowSelectedTile(Tile targetTile)
+    private void ShowSelectedTile(ITileKind targetTile)
     {
         if (targetTile == null) return;
         targetTile.curNode.SetGuideColor(Color.yellow);
@@ -223,12 +294,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     private bool IsSpawnerSetable(TileNode node)
     {
-        if (node.curTile != null)
+        if (node.curTile != null && node.curTile.objectKind == null)
         {
             if (node.curTile._TileType == TileType.Room || node.curTile._TileType == TileType.Room_Single)
             {
-                if (!node.curTile.HaveSpawner)
-                    return true;
+                return true;
             }
         }
 
@@ -240,19 +310,24 @@ public class NodeManager : IngameSingleton<NodeManager>
         return node.curTile != null && node != startPoint && node != endPoint;
     }
 
-    private void SetSpawnerAvail()
+    private void SetSpawnerAvail(int requiredMana)
     {
-        foreach (TileNode node in activeNodes)
-            node.SetAvail(false);
-
         foreach (CompleteRoom room in roomTiles)
         {
-            foreach(Tile tile in room._IncludeRooms)
+            if (room.IsDormant)
+                continue;
+
+            bool haveMana = room._RemainingMana >= requiredMana;
+            foreach (Tile tile in room._IncludeRooms)
             {
+                if (tile.spawnLock)
+                    continue;
+
                 TileNode node = tile.curNode;
-                if (IsSpawnerSetable(node))
+                node.SetAvail(false);
+                if (IsSpawnerSetable(node) && haveMana)
                 {
-                    List<TileNode> path = PathFinder.FindPath(node);
+                    List<TileNode> path = FindPath(node);
                     node.SetAvail(path != null);
                 }
             }
@@ -265,7 +340,7 @@ public class NodeManager : IngameSingleton<NodeManager>
         {
             if (IsMonsterSetable(node))
             {
-                List<TileNode> path = PathFinder.FindPath(node);
+                List<TileNode> path = FindPath(node);
                 node.SetAvail(path != null);
             }
             else
@@ -273,18 +348,16 @@ public class NodeManager : IngameSingleton<NodeManager>
         }
     }
 
-    private void SetTrapAvail()
+    private void SetObjectForPathAvail()
     {
         foreach (TileNode node in activeNodes)
         {
-            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.trap == null)
+            if (node.curTile != null && node.curTile._TileType == TileType.Path && node.curTile.objectKind == null)
                 node.SetAvail(true);
             else
                 node.SetAvail(false);
         }
     }
-
-    
 
     private void SetEnvironmentAvail()
     {
@@ -300,11 +373,11 @@ public class NodeManager : IngameSingleton<NodeManager>
 
     }
 
-    private void SetEndTileGuide()
+    public List<TileNode> GetEndTileMovableNodes()
     {
+        List<TileNode> nodes = new List<TileNode>();
         SetVirtualNode(true);
         virtualNodes.Add(endPoint);
-        ResetAvail();
         foreach (TileNode node in virtualNodes)
         {
             if (node == null)
@@ -313,47 +386,56 @@ public class NodeManager : IngameSingleton<NodeManager>
 
             int connectedPathCount = 0;
             int connectedRoomCount = 0;
-            foreach (int val in node.connectionState.Values)
+            Direction connectedPathDir = Direction.None;
+            foreach (var kvp in node.connectionState)
             {
-                if (val == 1)
+                if (kvp.Value == 1)
+                {
                     connectedPathCount++;
-                else if (val == 2)
+                    connectedPathDir = kvp.Key;
+                }
+                else if (kvp.Value == 2)
                     connectedRoomCount++;
             }
-            
+
             bool isAvail = connectedPathCount == 1 && connectedRoomCount == 0 ? true : false;
-            node.SetAvail(isAvail);
+            if (isAvail)
+            {
+                if(FindPath(startPoint, node.neighborNodeDic[connectedPathDir]) != null)
+                    nodes.Add(node);
+            }
         }
+        return nodes;
+    }
+
+    private void SetEndTileGuide()
+    {
+        List<TileNode> movableNodes = GetEndTileMovableNodes();
+        ResetAvail();
+        foreach (TileNode node in virtualNodes)
+            node?.SetAvail(false);
+
+        foreach (TileNode node in movableNodes)
+            node.SetAvail(true);
     }
 
     private void SetTileAvail(Tile targetTile)
     {
-        if(targetTile._TileType == TileType.End)
-        {
+        bool isEndtile = targetTile._TileType == TileType.End;
+        SetVirtualNode(isEndtile);
+        if (isEndtile)
             SetEndTileGuide();
-            return;
-        }
-
-        SetVirtualNode();
-
-        List<Direction> targetNode_PathDirection = targetTile.PathDirection;
-        List<Direction> targetNode_RoomDirection = targetTile.RoomDirection;
-
-        ResetAvail();
-        foreach (TileNode node in virtualNodes)
+        else
         {
-            if (node == null)
-                continue;
+            targetTile.UpdateAvailableNode(virtualNodes, !isEndtile);
+            ResetAvail();
+            foreach (TileNode node in virtualNodes)
+            {
+                if (node == null)
+                    continue;
 
-            bool isConnected = node.IsConnected(targetNode_PathDirection, targetNode_RoomDirection, true);
-            foreach (Direction dir in targetNode_PathDirection)
-                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
-                    isConnected = false;
-            foreach (Direction dir in targetNode_RoomDirection)
-                if (node.neighborNodeDic[dir] != null && node.neighborNodeDic[dir].environment != null)
-                    isConnected = false;
-
-            node.SetAvail(isConnected);
+                node.SetAvail(targetTile.availableNodes.Contains(node));
+            }
         }
     }
 
@@ -434,15 +516,15 @@ public class NodeManager : IngameSingleton<NodeManager>
             tileDictionary.Add(type, new List<Tile>());
     }
 
-    private List<System.Func<GameObject, bool>> setTileEvents = new List<System.Func<GameObject, bool>>();
-    public void AddSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Add(newEvent);
-    public void RemoveSetTileEvent(System.Func<GameObject, bool> newEvent) => setTileEvents.Remove(newEvent);
+    private List<System.Func<ITileKind, bool>> setTileEvents = new List<System.Func<ITileKind, bool>>();
+    public void AddSetTileEvent(System.Func<ITileKind, bool> newEvent) => setTileEvents.Add(newEvent);
+    public void RemoveSetTileEvent(System.Func<ITileKind, bool> newEvent) => setTileEvents.Remove(newEvent);
 
     public void SetTile(Environment environment)
     {
         environments.Add(environment);
         foreach (var events in setTileEvents)
-            events?.Invoke(environment.gameObject);
+            events?.Invoke(environment);
     }
 
     public void SetTile(Tile tile)
@@ -453,12 +535,14 @@ public class NodeManager : IngameSingleton<NodeManager>
         tileDictionary[tile._TileType].Add(tile);
         
         foreach (var events in setTileEvents)
-            events?.Invoke(tile.gameObject);
+            events?.Invoke(tile);
+
+        nodeVersion++;
     }
     
-    private List<System.Func<GameObject, bool>> removeTileEvents = new List<System.Func<GameObject, bool>>();
-    public void AddRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Add(newEvent);
-    public void RemoveRemoveTileEvent(System.Func<GameObject, bool> newEvent) => removeTileEvents.Remove(newEvent);
+    private List<System.Func<ITileKind, bool>> removeTileEvents = new List<System.Func<ITileKind, bool>>();
+    public void AddRemoveTileEvent(System.Func<ITileKind, bool> newEvent) => removeTileEvents.Add(newEvent);
+    public void RemoveRemoveTileEvent(System.Func<ITileKind, bool> newEvent) => removeTileEvents.Remove(newEvent);
 
     public void RemoveTile(Tile tile)
     {
@@ -468,13 +552,15 @@ public class NodeManager : IngameSingleton<NodeManager>
         tileDictionary[tile._TileType].Remove(tile);
 
         foreach (var events in removeTileEvents)
-            events?.Invoke(tile.gameObject);
+            events?.Invoke(tile);
         RemoveSightNode(tile.curNode);
         if (tile._TileType == TileType.Room_Single)
         {
             var item = FindRoom(tile.curNode.row, tile.curNode.col);
             roomTiles.Remove(item);
         }
+
+        nodeVersion++;
     }
 
     public void DormantTileCheck()
@@ -502,12 +588,12 @@ public class NodeManager : IngameSingleton<NodeManager>
         return nodes;
     }
 
-    private List<Tile> BFSRoom(Tile startTile)
+    public List<Tile> BFSRoom(Tile startTile, out bool isCompleted)
     {
         List<Tile> visited = new List<Tile> { startTile };
         Queue<Tile> queue = new Queue<Tile>();
         queue.Enqueue(startTile);
-        
+        isCompleted = true;
         while(queue.Count != 0)
         {
             Tile next = queue.Dequeue();
@@ -516,14 +602,20 @@ public class NodeManager : IngameSingleton<NodeManager>
                 TileNode targetNode = next.curNode.DirectionalNode(dir);
                 // 방 방향으로 타일이 모두 닫혀있지 않음
                 if (targetNode == null || targetNode.curTile == null)
-                    return null;
+                {
+                    isCompleted = false;
+                    continue;
+                }
 
                 if (visited.Contains(targetNode.curTile))
                     continue;
 
                 // 방 방향으로 방타일이 연결되어있지 않음
                 if (!targetNode.curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(dir)))
-                    return null;
+                {
+                    isCompleted = false;
+                    continue;
+                }
 
                 queue.Enqueue(targetNode.curTile);
                 visited.Add(targetNode.curTile);
@@ -544,9 +636,14 @@ public class NodeManager : IngameSingleton<NodeManager>
         else
         {
             //BFS 수행, 방 완성조건에 부합 시 해당방들에 대해 방완성 = true
-            List<Tile> completeRoom = BFSRoom(tile);
-            if (completeRoom == null || completeRoom.Count <= 1) return;
+            bool isCompleted = false;
+            List<Tile> completeRoom = BFSRoom(tile, out isCompleted);
+            if (!isCompleted || completeRoom.Count <= 1) return;
             newRoom = new CompleteRoom(completeRoom);
+            foreach(Tile target in completeRoom)
+            {
+                target.SetRoom(newRoom);
+            }
         }
         
         // 해당 방들 완성으로 변경코드 추가 예정

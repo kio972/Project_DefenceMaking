@@ -5,16 +5,24 @@ using UnityEngine;
 public class ExplosionSlime : Slime
 {
     [SerializeField] private int explosionDamage = 10;
+
+    [SerializeField]
+    protected Transform middlePos;
+    [SerializeField]
+    GameObject explosionPrefab;
+
     private void ExplodeEffect()
     {
-        var targets = GetRangedTargets(transform.position, 1, false);
+        var targets = GetRangedTargets(transform.position, 0.75f, false);
         foreach (Adventurer item in targets)
             item.GetDamage(explosionDamage, this);
+        if (explosionPrefab != null)
+            EffectPooling.Instance.PlayEffect(explosionPrefab, middlePos);
     }
 
-    public override void Dead()
+    public override void Dead(Battler attacker)
     {
         ExplodeEffect();
-        base.Dead();
+        base.Dead(attacker);
     }
 }

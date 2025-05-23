@@ -230,6 +230,8 @@ MonoBehaviour:
   frameImg: {fileID: 5648661459538452643}
   iconImg: {fileID: 8300259188968005654}
   prevResearch: []
+  prevResearch_Selectable: []
+  oppositeResearch: {fileID: 0}
 --- !u!1 &4598847282204651286
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +361,7 @@ GameObject:
   - component: {fileID: 336079911662334243}
   - component: {fileID: 5648661459538452643}
   - component: {fileID: 2104242375181505791}
+  - component: {fileID: 8279287683981604080}
   m_Layer: 5
   m_Name: IconFrame
   m_TagString: Untagged
@@ -454,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49411768, g: 0.47058827, b: 0.43921572, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -489,6 +492,42 @@ MonoBehaviour:
   soundOnClip: {fileID: 8300000, guid: 5a4ae5288afe74a6b9dee98a89313fa8, type: 3}
   soundOnHoverClip: {fileID: 8300000, guid: c7082d35d253f4c6da5433379e33b803, type: 3}
   soundOnUnHoverClip: {fileID: 0}
+--- !u!114 &8279287683981604080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6715845843587437934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad328896f9b8714db9260123d02be34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOnClick: 1
+  soundOnHover: 1
+  soundOnUnHover: 0
+  soundOnClip:
+    Guid:
+      Data1: -776394622
+      Data2: 1190494814
+      Data3: 1529009082
+      Data4: -995389105
+    Path: event:/UI/UI_Click
+  soundOnHoverClip:
+    Guid:
+      Data1: 2027060944
+      Data2: 1078091892
+      Data3: -1100716867
+      Data4: -824605958
+    Path: event:/UI/UI_MouseOver
+  soundOnUnHoverClip:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &7893572992132476203
 GameObject:
   m_ObjectHideFlags: 0

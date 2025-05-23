@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopSlotInfo : MonoBehaviour
+public class ShopSlotInfo : MonoBehaviour, ISlotInformer
 {
     [SerializeField]
     private Image card_illust;
@@ -22,7 +22,8 @@ public class ShopSlotInfo : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI card_Cost;
 
-    private ItemSlot curslot;
+    private ItemSlot _curslot;
+    public ISlot curSlot { get => _curslot; }
 
     private bool _isSoldOut;
     [SerializeField]
@@ -32,24 +33,57 @@ public class ShopSlotInfo : MonoBehaviour
     [SerializeField]
     private GameObject soldOutImage;
 
+    //[SerializeField]
+    //private ItemSlot initSlot;
+
     [SerializeField]
-    private ItemSlot initSlot;
+    private GameObject cardPackViewBtn;
+    [SerializeField]
+    private CardPackView cardPackView;
+
+    [SerializeField]
+    private TextMeshProUGUI stockText;
+
+    private void UpdateText()
+    {
+        buyText.text = DataManager.Instance.GetDescription(_isSoldOut ? "ui_SoldOut" : "ui_Purchase");
+        if(curSlot != null)
+            stockText.text = $"{DataManager.Instance.GetDescription("ui_Stock")} : {_curslot.curStockCount}";
+    }
+
+    public void ViewCardPack()
+    {
+        if(_curslot.item is ICardPackList cardPack)
+        {
+            cardPackView?.SetCardList(cardPack.targetCards);
+        }
+    }
 
     private void SetSoldOutImg(bool isSoldOut)
     {
         int index = isSoldOut ? 1 : 0;
         buyBtn.sprite = btnSprites[index];
-        bgImg.sprite = bgSprites[index];
-        buyText.text = isSoldOut ? "품절" : "구매";
+        //bgImg.sprite = bgSprites[index];
+        buyText.text = DataManager.Instance.GetDescription(isSoldOut ? "ui_SoldOut" : "ui_Purchase");
         soldOutImage.SetActive(isSoldOut);
     }
 
-    public void UpdateInfo(ItemSlot data)
+    public void UpdateInfo(ItemSlot data, object additional = null)
     {
-        curslot = data;
+        _curslot?.SetClicked(false);
+        _curslot = data;
+        _curslot?.SetClicked(true);
 
-        card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName);
-        card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc);
+        if(additional != null)
+        {
+            card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName, additional);
+            card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc, additional);
+        }
+        else
+        {
+            card_Name.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemName);
+            card_Description.ChangeLangauge(SettingManager.Instance.language, data.itemInfo.itemDesc);
+        }
 
         card_illust.sprite = data.ItemIcon.sprite;
 
@@ -57,6 +91,12 @@ public class ShopSlotInfo : MonoBehaviour
 
         _isSoldOut = data.IsSoldOut;
         SetSoldOutImg(_isSoldOut);
+        cardPackViewBtn.SetActive(_curslot.item is ICardPackList);
+        stockText.text = $"{DataManager.Instance.GetDescription("ui_Stock")} : {data.curStockCount}";
+    }
+    public void ExcuteAction()
+    {
+        Buy();
     }
 
     public void Buy()
@@ -64,8 +104,8 @@ public class ShopSlotInfo : MonoBehaviour
         if (_isSoldOut)
             return;
 
-        curslot.BuyItem();
-        if (curslot.IsSoldOut)
+        _curslot.BuyItem();
+        if (_curslot.IsSoldOut)
         {
             _isSoldOut = true;
             SetSoldOutImg(true);
@@ -74,7 +114,22 @@ public class ShopSlotInfo : MonoBehaviour
 
     private void OnEnable()
     {
-        if (initSlot != null)
-            UpdateInfo(initSlot);
+        ItemSlot targetSlot = null;
+        foreach(var slot in GameManager.Instance.shop.itemSlots)
+        {
+            if(slot.gameObject.activeSelf)
+            {
+                targetSlot = slot;
+                break;
+            }
+        }
+
+        if (targetSlot != null)
+            UpdateInfo(targetSlot);
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() => UpdateText());
     }
 }

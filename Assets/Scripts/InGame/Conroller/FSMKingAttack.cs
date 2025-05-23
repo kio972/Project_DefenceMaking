@@ -55,7 +55,7 @@ public class FSMKingAttack : FSMSingleton<FSMKingAttack>, CharState<Battler>
             return;
         }
 
-        e.transform.position = Vector3.MoveTowards(e.transform.position, GameManager.Instance.king.transform.position, e.MoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
+        e.transform.position = Vector3.MoveTowards(e.transform.position, GameManager.Instance.king.transform.position, e.curMoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
     }
 
     public void Exit(Battler e)

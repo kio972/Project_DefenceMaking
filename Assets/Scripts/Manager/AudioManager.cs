@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,6 +64,20 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    public void ChangeVolume(string target, float value)
+    {
+        try
+        {
+            Bus targetBus = RuntimeManager.GetBus("bus:/" + target);
+            targetBus.setVolume(value);
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+
     public void UpdateMusicVolume(float volume)
     {
         background.volume = volume;
@@ -73,6 +89,26 @@ public class AudioManager : Singleton<AudioManager>
         {
             effect.volume = volume;
         }
+    }
+
+    private string curBGMEventID = null;
+
+    private EventInstance currentBGM;
+
+    public void StopBGM(int fadeTileMilliSec = 500)
+    {
+        if (currentBGM.isValid())
+        {
+            currentBGM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            currentBGM.release();
+        }
+    }
+
+    public void PlayBackground(FMODUnity.EventReference soundClip, int fadeTileMilliSec = 500)
+    {
+        StopBGM(fadeTileMilliSec);
+        currentBGM = RuntimeManager.CreateInstance(soundClip);
+        currentBGM.start();
     }
 
     public void PlayBackground(string name, float voulme = 1.0f)

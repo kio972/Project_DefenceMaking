@@ -5,6 +5,8 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using System.Threading;
+using Cysharp.Threading.Tasks;
+using System.Text;
 
 public interface ISaveLoadBattler
 {
@@ -36,7 +38,7 @@ public enum CCType
     KnockBack,
 }
 
-public class Battler : FSM<Battler>, ISaveLoadBattler
+public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 {
     private bool isAnimUniRxSubscribed = false;
 
@@ -46,16 +48,41 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     protected int minDamage;
     protected int maxDamage;
-    public int Damage { get { return UnityEngine.Random.Range(minDamage, maxDamage + 1); } }
+    protected int curMinDamage;
+    protected int curMaxDamage;
+    public int Damage { get { return UnityEngine.Random.Range(curMinDamage, curMaxDamage + 1); } }
+
+    public void CalculateAttackSpeed()
+    {
+        _curAttackSpeed = TempAttackSpeed(_attackSpeed);
+    }
+
+    public void CalculateMoveSpeed()
+    {
+        float curMoveSpeed = this.moveSpeed;
+        foreach (var item in _effects)
+        {
+            if (item is IMoveSpeedEffect speedEffect)
+                curMoveSpeed *= speedEffect.moveSpeedRate;
+        }
+        this.curMoveSpeed = curMoveSpeed;
+    }
+
+    public void CalculateDamage()
+    {
+        curMinDamage = TempDamage(minDamage);
+        curMaxDamage = TempDamage(maxDamage);
+    }
+    
     public int TempDamage(int baseDamage)
     {
         int resultDamage = baseDamage;
 
-        float damageRate = 0;
+        float damageRate = 1;
         foreach (var item in _effects)
         {
             if (item is IAttackPowerRateEffect rateEffect)
-                damageRate += rateEffect.attackRate;
+                damageRate *= rateEffect.attackRate;
         }
 
         int bonusDamage = 0;
@@ -65,33 +92,43 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
                 bonusDamage += effect.attackDamage;
         }
 
-        resultDamage *= Mathf.FloorToInt(1 + (damageRate / 100));
+        resultDamage = Mathf.FloorToInt(resultDamage * damageRate);
         resultDamage += bonusDamage;
 
         return resultDamage;
     }
 
     public int curHp;
-    public int maxHp;
+    protected int maxHp;
+
+    public int curMaxHp;
+
     public int armor;
     public int shield;
-    public float attackSpeed { get; protected set; } = 1;
+
+    private float _attackSpeed = 1;
+    private float _curAttackSpeed;
+    public float curAttackSpeed { get => _curAttackSpeed; }
     public float TempAttackSpeed(float baseAttackSpeed)
     {
-        float attackSpeedRate = 0;
+        float attackSpeedRate = baseAttackSpeed;
         foreach (var item in _effects)
         {
             if (item is IAttackSpeedEffect rateEffect)
-                attackSpeedRate += rateEffect.attackSpeedRate;
+                attackSpeedRate *= rateEffect.attackSpeedRate;
         }
 
-        return baseAttackSpeed * (1 + (attackSpeedRate / 100));
+        //float atackTempSpeed = baseAttackSpeed * (1 + (attackSpeedRate / 100));
+        //if (_curNode != null && _curNode.curTile != null)
+        //    atackTempSpeed *= _curNode.curTile.tileAllyAttackSpeedMult;
+        return Mathf.Max(attackSpeedRate, 0.1f);
     }
 
 
     public float attackRange;
     public float attackCoolTime = 0;
     public float curAttackCoolTime = 0;
+    public float attackTargetCount = 1;
 
     protected float moveSpeed;
 
@@ -104,7 +141,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     [SerializeField]
     private AttackType attackType = AttackType.Melee;
 
-    private HpBar hpBar;
+    protected HpBar hpBar;
 
     protected List<CCType> cc_Emmunes = new List<CCType>();
 
@@ -127,11 +164,11 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     public bool isDead = false;
 
     protected HashSet<TileNode> crossedNodes = new HashSet<TileNode>();
-    protected TileNode prevTile;
-    protected TileNode curTile;
-    protected TileNode nextTile;
-    public TileNode CurTile { get => curTile; }
-    public TileNode NextTile { get => nextTile; set => nextTile = value; }
+    protected TileNode _prevNode;
+    protected TileNode _curNode;
+    protected TileNode _nextNode;
+    public TileNode curNode { get => _curNode; }
+    public TileNode NextTile { get => _nextNode; set => _nextNode = value; }
     protected TileNode lastCrossRoad;
     protected bool directPass = false;
     public TileNode directPassNode { get; protected set; } = null;
@@ -157,12 +194,57 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     private float ccTime = 0;
 
-    public virtual float MoveSpeed
+    public float curMoveSpeed;
+
+
+    public virtual string GetStat(StatType statType)
     {
-        get
+        StringBuilder sb = new StringBuilder();
+        switch (statType)
         {
-            float slowRate = Mathf.Clamp(1 - PassiveManager.Instance.GetSlowRate(curTile), 0, Mathf.Infinity);
-            return moveSpeed * slowRate;
+            case StatType.Hp:
+                if (shield > 0)
+                    sb.Append("<color=#00FFFF>");
+                else if (curHp < curMaxHp)
+                    sb.Append("<color=red>");
+                else if (curHp > curMaxHp)
+                    sb.Append("<color=green>");
+                sb.Append(curHp + shield);
+                sb.Append("</color>/");
+
+                if (curMaxHp < maxHp)
+                    sb.Append("<color=red>");
+                else if (curMaxHp > maxHp)
+                    sb.Append("<color=green>");
+                sb.Append(curMaxHp);
+                sb.Append("</color>");
+                return sb.ToString();
+            case StatType.Atk:
+                if (curMaxDamage < maxDamage)
+                    sb.Append("<color=red>");
+                else if(curMaxDamage > maxDamage)
+                    sb.Append("<color=green>");
+                if (curMinDamage == curMaxDamage)
+                    sb.Append(curMinDamage);
+                else
+                    sb.Append($"{curMinDamage}~{curMaxDamage}");
+                sb.Append("</color>");
+                return sb.ToString();
+            case StatType.AttackSpeed:
+                var textForView = Math.Round(curAttackSpeed, 1);
+                if (curAttackSpeed < _attackSpeed)
+                    sb.Append($"<color=red>{textForView}</color>");
+                else if (curAttackSpeed > _attackSpeed)
+                    sb.Append($"<color=green>{textForView}</color>");
+                else
+                    sb.Append(textForView);
+                return sb.ToString();
+            case StatType.Def:
+                return armor.ToString();
+            case StatType.AttackRange:
+                return Math.Round(attackRange, 1).ToString();
+            default:
+                return null;
         }
     }
 
@@ -176,14 +258,14 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         return false;
     }
 
-    public bool HaveEffect<T>(out StatusEffect statusEffect) where T : StatusEffect
+    public bool HaveEffect<T>(out T statusEffect) where T : StatusEffect
     {
         statusEffect = null;
         foreach (var item in _effects)
         {
-            if (item is T)
+            if (item is T targetEffect)
             {
-                statusEffect = item;
+                statusEffect = targetEffect;
                 return true;
             }
         }
@@ -192,7 +274,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void RemoveStatusEffect<T>() where T : StatusEffect
     {
-        if(HaveEffect<T>(out StatusEffect effect))
+        if(HaveEffect<T>(out T effect))
             RemoveStatusEffect(effect);
     }
 
@@ -207,9 +289,13 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void AddStatusEffect<T>(StatusEffect effect) where T : StatusEffect
     {
-        StatusEffect targetEffect;
+        T targetEffect;
         if (HaveEffect<T>(out targetEffect))
+        {
             targetEffect.UpdateEffect(effect._originDuration);
+            if (targetEffect is IConditionEffect prevEffect && effect is IConditionEffect curEffect)
+                prevEffect.UpdateEffect(curEffect.condition);
+        }
         else
             _effects.Add(effect);
     }
@@ -227,14 +313,71 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         this.ccTime = time;
         this.ChangeState(FSMCC.Instance);
+        _Animator.SetBool("Move", false);
+    }
+
+
+    public void ForceKnockBack(Battler attacker, TileNode targetTile, Vector3 destPos, float lerpTime)
+    {
+        _curNode = targetTile;
+        GetCC(attacker, lerpTime + 30);
+        ExcuteMoveToPos(destPos, lerpTime).Forget();
+    }
+
+    public void KnockBack(Battler attacker, TileNode targetTile, Vector3 destPos, float lerpTime)
+    {
+        if (this is ICCEmmune emmune && emmune.emmuneCCs.Contains(CCType.KnockBack))
+            return;
+
+        _curNode = targetTile;
+        GetCC(attacker, lerpTime + 30);
+        ExcuteMoveToPos(destPos, lerpTime).Forget();
+    }
+
+    public void KnockBack(Battler attacker, Direction knockBackDirection, float knockBackDist, float lerpTime)
+    {
+        if (this is ICCEmmune emmune && emmune.emmuneCCs.Contains(CCType.KnockBack))
+            return;
+
+        //현재 타일의 중심으로부터의 거리
+        Vector3 curPointDir = transform.position - curNode.transform.position;
+        bool isNodeEnough = true;
+        TileNode targetNode = curNode;
+        float leftDist = knockBackDist % 1;
+        int dist = (int)knockBackDist;
+        for (int i = 0; i < dist; i++)
+        {
+            if (targetNode.curTile.PathDirection.Contains(knockBackDirection) || targetNode.curTile.RoomDirection.Contains(knockBackDirection))
+                targetNode = targetNode.neighborNodeDic[knockBackDirection];
+            else
+            {
+                isNodeEnough = false;
+                break;
+            }
+        }
+        Vector3 leftPos = UtilHelper.GetDirectionalVector(knockBackDirection) * leftDist;
+
+        Vector3 targetPos = targetNode.transform.position;
+
+        if (isNodeEnough)
+        {
+            targetPos += curPointDir;
+            targetPos += leftPos;
+        }
+        else
+        {
+            Vector3 edgePoint = (targetNode.neighborNodeDic[knockBackDirection].transform.position - targetNode.transform.position) * 0.45f;
+            targetPos += edgePoint;
+        }
+        KnockBack(attacker, targetNode, targetPos, lerpTime);
     }
 
     public void ResetNode()
     {
         crossedNodes.Clear();
-        prevTile = null;
+        _prevNode = null;
         //curTile = null;
-        nextTile = null;
+        _nextNode = null;
         lastCrossRoad = null;
         directPass = false;
     }
@@ -252,7 +395,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Invoke("SetActiveFalse", 0.1f);
     }
 
-    public virtual void Dead()
+    public virtual void Dead(Battler attacker)
     {
         hpBar?.UpdateHp();
         isDead = true;
@@ -268,6 +411,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Invoke("RemoveBody", 2.5f);
         if(GameManager.Instance.holdBackedABattlers.Contains(this))
             GameManager.Instance.holdBackedABattlers.Remove(this);
+        GameManager.Instance.InvokeBattlerDeadEvents(this, attacker);
     }
 
     private void UpdateChaseTarget(Battler attacker)
@@ -282,8 +426,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             chaseTarget = attacker;
         else
         {
-            float originDist = PathFinder.GetBattlerDistance(this, chaseTarget);
-            float updateDist = PathFinder.GetBattlerDistance(this, attacker);
+            float originDist = NodeManager.Instance.GetBattlerDistance(this, chaseTarget);
+            float updateDist = NodeManager.Instance.GetBattlerDistance(this, attacker);
             if (updateDist < originDist)
                 chaseTarget = attacker;
         }
@@ -324,6 +468,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         curHp = Mathf.Min(curHp + heal, maxHp);
         const float fontSize = 27f;
         DamageTextPooling.Instance.TextEffect(transform.position, heal, fontSize, Color.green, false, true);
+        EffectPooling.Instance.PlayEffect("HealEffect", animator.transform.parent);
     }
 
     public virtual void GetDamage(int damage, Battler attacker)
@@ -348,7 +493,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             curHp -= Mathf.Abs(shield - finalDamage);
             shield = 0;
             if (curHp <= 0)
-                Dead();
+                Dead(attacker);
         }
 
         if ((object)CurState == FSMPatrol.Instance)
@@ -391,13 +536,14 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     private void TileMoveCheck(TileNode nextNode, float distance)
     {
-        if (curTile == nextNode)
+        if (_curNode == nextNode)
             return;
 
-        if(distance < Vector3.Distance(curTile.transform.position, transform.position))
+        if(distance < Vector3.Distance(_curNode.transform.position, transform.position))
         {
-            prevTile = curTile;
-            curTile = nextNode;
+            _prevNode = _curNode;
+            _curNode = nextNode;
+            _curNode.curTile.ExcuteBattlerEnterEffect(this);
         }
     }
 
@@ -406,7 +552,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         //startNode에서 roomDirection이나 pathDirection이 있는 방향의 이웃노드를 받아옴
         List<TileNode> nextNodes = UtilHelper.GetConnectedNodes(curNode);
         //해당 노드에서 전에 갔던 노드는 제외
-        nextNodes.Remove(prevTile);
+        nextNodes.Remove(_prevNode);
         nextNodes.Remove(NodeManager.Instance.startPoint);
         if (crossedNodes != null)
         {
@@ -427,20 +573,37 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     protected virtual void NodeAction(TileNode nextNode)
     {
-        this.nextTile = null;
-        crossedNodes.Add(curTile);
-        transform.position = curTile.transform.position;
+        this._nextNode = null;
+        crossedNodes.Add(_curNode);
+        transform.position = _curNode.transform.position;
 
         // 마왕성 이동 중 유효타일이 발생시 directPass = false;
-        if (directPass && FindNextNode(curTile) != null)
+        if (directPass && FindNextNode(_curNode) != null)
             directPass = false;
+    }
+
+    protected async UniTaskVoid ExcuteMoveToPos(Vector3 destPos, float lerpTime)
+    {
+        Vector3 startPos = transform.position;
+        float elapsedTime = 0f;
+        while(elapsedTime < lerpTime)
+        {
+            elapsedTime += GameManager.Instance.InGameDeltaTime;
+            Vector3 nextPos = Vector3.Lerp(startPos, destPos, elapsedTime / lerpTime);
+            nextPos.y += (Mathf.Sin(elapsedTime / lerpTime * Mathf.PI) * 0.2f);
+            transform.position = nextPos;
+
+            await UniTask.Yield(unitaskCancelTokenSource.Token);
+        }
+
+        transform.position = destPos;
     }
 
     protected void ExcuteMove(TileNode nextNode)
     {
         Vector3 nextPos = nextNode.transform.position;
         RotateCharacter(nextPos);
-        transform.position = Vector3.MoveTowards(transform.position, nextPos, MoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
+        transform.position = Vector3.MoveTowards(transform.position, nextPos, curMoveSpeed * Time.deltaTime * GameManager.Instance.timeScale);
         float distance = Vector3.Distance(transform.position, nextPos);
         TileMoveCheck(nextNode, distance);
     }
@@ -449,7 +612,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         crossedNodes.Clear();
         lastCrossRoad = null;
-        prevTile = null;
+        _prevNode = null;
         directPass = false;
     }
 
@@ -461,16 +624,16 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     protected virtual void DirectPass(TileNode targetTile)
     {
         //마왕타일로 이동수행
-        if (nextTile == null || nextTile.curTile == null)
+        if (_nextNode == null || _nextNode.curTile == null)
         {
-            List<TileNode> path = PathFinder.FindPath(curTile, targetTile);
+            List<TileNode> path = NodeManager.Instance.FindPath(_curNode, targetTile);
 
             //이미 다음노드로 이동중이었다면 현재노드는 제외
-            if ((transform.position - curTile.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - curTile.transform.position))
-                path.Remove(curTile);
+            if ((transform.position - _curNode.transform.position).magnitude > 0.001f && path.Count >= 2 && UtilHelper.ReverseDirection(path[1].GetNodeDirection(path[0])) == UtilHelper.CheckClosestDirection(transform.position - _curNode.transform.position))
+                path.Remove(_curNode);
             
             if (path != null && path.Count > 0)
-                nextTile = path[0];
+                _nextNode = path[0];
             else
             {
                 ResetPaths();
@@ -478,39 +641,39 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             }
         }
 
-        ExcuteMove(nextTile);
+        ExcuteMove(_nextNode);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
-            NodeAction(nextTile);
+        if (Vector3.Distance(transform.position, _nextNode.transform.position) < 0.001f)
+            NodeAction(_nextNode);
     }
 
     protected void NormalPatrol()
     {
         //다음 노드가 없으면 다음노드 탐색
-        if (nextTile == null || nextTile.curTile == null)
-            nextTile = FindNextNode(curTile);
+        if (_nextNode == null || _nextNode.curTile == null)
+            _nextNode = FindNextNode(_curNode);
 
         //탐색후에도 유효한 노드가 없을경우
-        if (nextTile == null)
+        if (_nextNode == null)
         {
             directPass = true;
             return;
         }
 
         // nextNode로 이동수행
-        ExcuteMove(nextTile);
+        ExcuteMove(_nextNode);
 
         // nextNode까지 이동완료
-        if (Vector3.Distance(transform.position, nextTile.transform.position) < 0.001f)
-            NodeAction(nextTile);
+        if (Vector3.Distance(transform.position, _nextNode.transform.position) < 0.001f)
+            NodeAction(_nextNode);
     }
 
     protected float collapseCool = 0;
 
     public virtual void UseSkill() { }
 
-    private void ReturnToBase()
+    public void ReturnToBase(bool addToWave)
     {
         StopAllCoroutines();
         hpBar.HPBarEnd();
@@ -519,14 +682,18 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         Invoke("RemoveBody", 2.5f);
         //if (deadSound != null)
         //    AudioManager.Instance.Play2DSound(deadSound, SettingManager.Instance._FxVolume);
-        GameManager.Instance.waveController.AddDelayedTarget(_name);
+        if(addToWave)
+            GameManager.Instance.waveController.AddDelayedTarget(_name);
+        if(this is Adventurer adventurer)
+            GameManager.Instance.adventurersList.Remove(adventurer);
     }
 
-    protected bool isCollapsed = false;
+    protected ReactiveProperty<bool> _isCollapsed = new ReactiveProperty<bool>(false);
+    public bool isCollapsed { get => _isCollapsed.Value; }
 
     public void CheckTargetCollapsed()
     {
-        isCollapsed = PathFinder.FindPath(curTile, NodeManager.Instance.endPoint) == null;
+        _isCollapsed.Value = NodeManager.Instance.FindPath(_curNode, NodeManager.Instance.endPoint) == null;
     }
 
     protected virtual void CollapseLogic()
@@ -537,7 +704,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             if (collapseCool >= 5f)
             {
                 collapseCool = 0f;
-                ReturnToBase();
+                ReturnToBase(true);
             }
         }
     }
@@ -554,7 +721,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public void Chase()
     {
-        DirectPass(chaseTarget.curTile);
+        DirectPass(chaseTarget._curNode);
     }
 
     protected Battler FindNextTarget(Battler prevTarget = null)
@@ -616,7 +783,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     {
         List<Battler> splashTargets = GetRangedTargets(mainTarget.transform.position, splashRange, false);
         splashTargets.Remove(mainTarget);
-        int damage = Mathf.CeilToInt((float)baseDamage * splashDamage / 100f);
+        int damage = Mathf.FloorToInt((float)baseDamage * splashDamage / 100f);
         foreach (Battler target in splashTargets)
             target.GetDamage(damage, this);
     }
@@ -630,10 +797,21 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         if (curTarget != null && !curTarget.isDead)
         {
             int baseDamage = Damage;
-            int tempDamage = TempDamage(baseDamage);
-            curTarget.GetDamage(tempDamage, this);
+            curTarget.GetDamage(baseDamage, this);
             if (splashAttack)
-                SplashAttack(curTarget, tempDamage);
+                SplashAttack(curTarget, baseDamage);
+
+            if(attackTargetCount > 1)
+            {
+                List<Battler> targets = GetRangedTargets(transform.position, attackRange);
+                targets.Remove(curTarget);
+                for(int i = 0; i < attackTargetCount - 1; i++)
+                {
+                    if (i >= targets.Count)
+                        break;
+                    targets[i].GetDamage(baseDamage, this);
+                }
+            }
         }
     }
 
@@ -646,29 +824,45 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         }
     }
 
-    protected virtual void InitStats(int index)
-    {
-        _name = DataManager.Instance.Battler_Table[index]["name"].ToString();
-        maxHp = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["hp"]);
-        curHp = maxHp;
-        shield = 0;
-        minDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMin"]);
-        maxDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["attackPowerMax"]);
-        float tempAttackSpeed = 1f;
-        float.TryParse(DataManager.Instance.Battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
-        attackSpeed = tempAttackSpeed;
-        armor = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["armor"]);
-        float.TryParse(DataManager.Instance.Battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
-        if(float.TryParse(DataManager.Instance.Battler_Table[index]["attackRange"].ToString(), out attackRange))
+    public void SetStartPoint(TileNode tile)
+    {
+        transform.position = tile.transform.position;
+        _curNode = tile;
+    }
+
+    protected virtual void InitStats(int index, bool randomize = true)
+    {
+        _name = DataManager.Instance.battler_Table[index]["name"].ToString();
+        maxHp = Convert.ToInt32(DataManager.Instance.battler_Table[index]["hp"]);
+        curHp = maxHp;
+        curMaxHp = maxHp;
+        shield = 0;
+        if(int.TryParse(DataManager.Instance.battler_Table[index]["attackPowerMin"].ToString(), out int attackMinDmg))
+            minDamage = attackMinDmg;
+        if(int.TryParse(DataManager.Instance.battler_Table[index]["attackPowerMax"].ToString(), out int attackMaxDmg))
+            maxDamage = attackMaxDmg;
+        if (int.TryParse(DataManager.Instance.battler_Table[index]["targetCount"].ToString(), out int attacktargets))
+            attackTargetCount = attacktargets;
+        float tempAttackSpeed = 1f;
+        float.TryParse(DataManager.Instance.battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
+        _attackSpeed = tempAttackSpeed;
+        armor = Convert.ToInt32(DataManager.Instance.battler_Table[index]["armor"]);
+        float.TryParse(DataManager.Instance.battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
+
+        if(float.TryParse(DataManager.Instance.battler_Table[index]["attackRange"].ToString(), out attackRange) && randomize)
             attackRange += UnityEngine.Random.Range(-0.01f, 0.01f);
 
-        float.TryParse(DataManager.Instance.Battler_Table[index]["splashRange"].ToString(), out splashRange);
+        float.TryParse(DataManager.Instance.battler_Table[index]["splashRange"].ToString(), out splashRange);
         if (splashRange > 0)
         {
-            splashDamage = Convert.ToInt32(DataManager.Instance.Battler_Table[index]["splashPower"]);
+            splashDamage = Convert.ToInt32(DataManager.Instance.battler_Table[index]["splashPower"]);
             splashAttack = true;
         }
+
+        CalculateDamage();
+        CalculateMoveSpeed();
+        CalculateAttackSpeed();
     }
 
     public virtual void Init()
@@ -676,24 +870,24 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         isDead = false;
         chaseTarget = null;
         curTarget = null;
-        isCollapsed = false;
+        _isCollapsed.Value = false;
         hpBar = HPBarPooling.Instance.GetHpBar(unitType, this);
         _effects.Clear();
         SetRotation();
         moveSpeed = 1;
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
-        animator.SetBool("Move", GameManager.Instance.timeScale != 0);
+        animator?.SetBool("Move", GameManager.Instance.timeScale != 0);
         if (animator != null && !isAnimUniRxSubscribed)
         {
             isAnimUniRxSubscribed = true;
             SubscribeAnimation();
         }
 
-        if (curTile == null)
+        if (_curNode == null)
         {
-            curTile = NodeManager.Instance.startPoint;
-            transform.position = curTile.transform.position;
+            _curNode = NodeManager.Instance.startPoint;
+            transform.position = _curNode.transform.position;
         }
 
         RandomizePosition();
@@ -702,7 +896,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
     private void RandomizePosition()
     {
         float targetZ = UnityEngine.Random.Range(-0.001f, 0.001f);
-        animator.transform.localPosition = new Vector3(0, 0, targetZ);
+        if(animator != null)
+            animator.transform.localPosition = new Vector3(0, 0, targetZ);
     }
 
     private Quaternion TargetRoation(int camera_Level)
@@ -793,25 +988,31 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             attackType = AttackType.Melee;
         }
 
-        if (target.CurTile == null)
+        if (target.curNode == null)
             return false;
 
-        if (PathFinder.GetBattlerDistance(this, target) > attackRange)
+        if (NodeManager.Instance.GetBattlerDistance(this, target) > attackRange)
             return false;
 
         return true;
     }
 
+    public void UpdateMoveSpeed()
+    {
+        if (animator != null)
+            animator.SetFloat("MoveSpeed", curMoveSpeed * GameManager.Instance.timeScale);
+    }
+
     private void UpdateAttackSpeed()
     {
         if (animator != null)
-            animator.SetFloat("AttackSpeed", TempAttackSpeed(attackSpeed) * GameManager.Instance.timeScale);
+            animator.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
     }
 
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)
     {
         List<Battler> validTargets = new List<Battler>();
-        Collider[] colliders = new Collider[10];
+        Collider[] colliders = new Collider[30];
         int colliderCount = Physics.OverlapSphereNonAlloc(position, attackRange, colliders, LayerMask.GetMask("Character"));
         for (int i = 0; i < colliderCount; i++)
         {
@@ -832,7 +1033,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         List<Battler> removeList = new List<Battler>();
         foreach (Battler battler in rangedTargets)
         {
-            if (battler.isDead || !targets.Contains(battler) || (object)battler.CurState == FSMHide.Instance)
+            if (battler.HaveEffect<Stealth>() && !this.HaveEffect<Detect>())
+                removeList.Add(battler);
+            else if (battler.isDead || !targets.Contains(battler))
                 removeList.Add(battler);
         }
 
@@ -911,9 +1114,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
 
     public virtual void LoadData(BattlerData data)
     {
-        curTile = NodeManager.Instance.FindNode(data.row, data.col);
+        _curNode = NodeManager.Instance.FindNode(data.row, data.col);
         if(data.nextRow != -1)
-            nextTile = NodeManager.Instance.FindNode(data.nextRow, data.nextCol);
+            _nextNode = NodeManager.Instance.FindNode(data.nextRow, data.nextCol);
 
         if (data.lastCrossedRow != -1)
             lastCrossRoad = NodeManager.Instance.FindNode(data.lastCrossedRow, data.lastCrossedCol);
@@ -936,8 +1139,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         target.pos_x = transform.position.x;
         target.pos_z = transform.position.z;
 
-        target.row = curTile.row;
-        target.col = curTile.col;
+        target.row = _curNode.row;
+        target.col = _curNode.col;
 
         target.crossedRow = new List<int>();
         target.crossedCol = new List<int>();
@@ -947,8 +1150,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
             target.crossedCol.Add(node.col);
         }
         
-        target.nextRow = nextTile != null ? nextTile.row : -1;
-        target.nextCol = nextTile != null ? nextTile.col : -1;
+        target.nextRow = _nextNode != null ? _nextNode.row : -1;
+        target.nextCol = _nextNode != null ? _nextNode.col : -1;
 
         target.lastCrossedRow = lastCrossRoad != null ? lastCrossRoad.row : -1;
         target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;
@@ -972,14 +1175,17 @@ public class Battler : FSM<Battler>, ISaveLoadBattler
         _effects.ObserveCountChanged().Subscribe(_ =>
         {
             UpdateAttackSpeed();
+            CalculateDamage();
+            CalculateMoveSpeed();
+            CalculateAttackSpeed();
         }).AddTo(gameObject);
-
-        SubscribeStateAnimation();
     }
 
-    protected void SubscribeStateAnimation()
+    private void OnDestroy()
     {
-        _CurState.Where(_ => animator.ContainsParam("Move")).
-            Subscribe(_ => animator.SetBool("Move", (object)_ == FSMPatrol.Instance || FSMChase.Instance || FSMDirectMove.Instance));
+        foreach(StatusEffect effect in _effects)
+        {
+            effect.DeActiveEffect();
+        }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609608640754181932}
   - component: {fileID: -508909328115285257}
+  - component: {fileID: -109488819943012321}
   m_Layer: 0
   m_Name: RoomTile0
   m_TagString: Untagged
@@ -48,12 +49,45 @@ MonoBehaviour:
   pathDirection: 01000000
   roomDirection: 
   tileType: 5
-  roomMana: 3
-  curNode: {fileID: 0}
+  roomMana: 2
+  spawnLock: 0
   waitToMove: 0
   twin: {fileID: 0}
-  trap: {fileID: 0}
   IsBigRoom: 0
+  rotateSound:
+    Guid:
+      Data1: -1408924426
+      Data2: 1218834812
+      Data3: -707702861
+      Data4: 755462683
+    Path: event:/UI/Tile_Rotate
+  buildSound:
+    Guid:
+      Data1: -2133203839
+      Data2: 1144174140
+      Data3: 1072843436
+      Data4: -2018870880
+    Path: event:/UI/Tile_Create
+  destroySound:
+    Guid:
+      Data1: 1756529270
+      Data2: 1249738115
+      Data3: -1826863970
+      Data4: -182735825
+    Path: event:/UI/Tile_demolition
+--- !u!114 &-109488819943012321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609608640754181931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad83448870ef8234d8f2a30d74c48bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradeMaterial: {fileID: 2100000, guid: fc55b5bb8245473498630d726355fd0c, type: 2}
 --- !u!1001 &3648294816420817913
 PrefabInstance:
   m_ObjectHideFlags: 0

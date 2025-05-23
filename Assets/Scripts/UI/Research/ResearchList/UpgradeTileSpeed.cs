@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeTileSpeed : MonoBehaviour, Research
+public class UpgradeTileSpeed : MonoBehaviour, IResearch
 {
     [SerializeField]
     private TileType targetType;

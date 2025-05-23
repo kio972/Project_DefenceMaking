@@ -8,7 +8,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int monsterHp_Weight = 0;
 
     public int monsterDefense_Weight = 0;
-    public float monsterAttackSpeed_Weight = 0; 
+    public float monsterAttackSpeed_Weight = 0;
     public float monsterDamageRate_Weight = 0;
     public float monsterHpRate_Weight = 0;
 
@@ -19,7 +19,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public int income_Weight = 0;
     public Dictionary<TileNode, float> slowedTile = new Dictionary<TileNode, float>();
 
-    public ReactiveDictionary<TileNode, int> manaTile { get; private set; } = new ReactiveDictionary<TileNode, int>();
+    //public ReactiveDictionary<TileNode, int> manaTile { get; private set; } = new ReactiveDictionary<TileNode, int>();
 
     public List<WaveData> adventurerRaiseTable = new List<WaveData>();
 
@@ -43,11 +43,14 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     private int tileDestructIncome = 0;
     public int _TileDesturctIncome { get => tileDestructIncome; }
 
+    public Dictionary<string, bool> unLockDictionary = new Dictionary<string, bool>();
+    public Dictionary<string, int> countDictionary = new Dictionary<string, int>();
+
     public ReactiveProperty<int> _shopSaleAmount { get; private set; } = new ReactiveProperty<int>(0);
 
-    public int devilAuraRange { get; private set; } = 0;
-    public int devilAuraPower { get; private set; } = 0;
-    public bool devilDetection { get; private set; } = false;
+    //public int devilAuraRange { get; private set; } = 0;
+    //public int devilAuraPower { get; private set; } = 0;
+    //public bool devilDetection { get; private set; } = false;
 
 
     public ReactiveProperty<int> _slimeSplit_Weight { get; private set; } = new ReactiveProperty<int>(0);
@@ -58,16 +61,38 @@ public class PassiveManager : IngameSingleton<PassiveManager>
 
     public bool isMimicBuffActive { get; private set; } = false;
 
-    public void AddManaStone(TileNode node, int manaAmount)
+    public Dictionary<HerbType, int> herbSupplyDic { get; private set; } = new Dictionary<HerbType, int>()
     {
-        foreach(var item in node.neighborNodeDic.Values)
-        {
-            if(item == null) continue;
+        {HerbType.BlackHerb, 0},
+        {HerbType.PurpleHerb, 0},
+        {HerbType.WhiteHerb, 0}
+    };
 
-            if (!manaTile.ContainsKey(item))
-                manaTile.Add(item, 0);
-            manaTile[item] += manaAmount;
-        }
+    public void UpgradeHerb(HerbType targetHerb, int value)
+    {
+        herbSupplyDic[targetHerb] += value;
+    }
+
+    //public void AddManaStone(TileNode node, int manaAmount)
+    //{
+    //    foreach(var item in node.neighborNodeDic.Values)
+    //    {
+    //        if(item == null) continue;
+
+    //        if (!manaTile.ContainsKey(item))
+    //            manaTile.Add(item, 0);
+    //        manaTile[item] += manaAmount;
+    //    }
+    //}
+
+    public void SetCount(string target, int count)
+    {
+        countDictionary[target] = count;
+    }
+
+    public void SetUnLockState(string target, bool value)
+    {
+        unLockDictionary[target] = value;
     }
 
     public void MimicBuffActive()
@@ -78,7 +103,7 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void GolemHoldbackUp(int value)
     {
         golemHoldback_Weight += value;
-        foreach (var target in GameManager.Instance._MonsterList)
+        foreach (var target in GameManager.Instance.monsterList)
         {
             if(target is Golem golem)
                 golem.UpdateHoldBack(value);
@@ -93,23 +118,18 @@ public class PassiveManager : IngameSingleton<PassiveManager>
     public void UpgradeSlimeSplit(int value)
     {
         _slimeSplit_Weight.Value += value;
-        foreach (var target in GameManager.Instance._MonsterList)
+        foreach (var target in GameManager.Instance.monsterList)
         {
             if(target is Slime slime)
-                slime.UpgradeSplitCount(value);
+                slime.ModifySplitCount(value);
         }
     }
 
-    public void UpgradeDevilDetection()
-    {
-        devilDetection = true;
-    }
-
-    public void UpgradeDevilAura(int range, int value)
-    {
-        devilAuraRange = range;
-        devilAuraPower = value;
-    }
+    //public void UpgradeDevilAura(int range, int value)
+    //{
+    //    devilAuraRange = range;
+    //    devilAuraPower = value;
+    //}
 
     public void UpgradeShopSale(int value)
     {
@@ -155,10 +175,14 @@ public class PassiveManager : IngameSingleton<PassiveManager>
         monsterTypeHp_Weight[(int)monsterType] += value;
     }
 
+    public void RemoveDeployData(string targetId)
+    {
+        deployAvailableTable[targetId] = false;
+    }
+
     public void AddDeployData(string targetId)
     {
-        if(!deployAvailableTable.ContainsKey(targetId))
-            deployAvailableTable.Add(targetId, true);
+        deployAvailableTable[targetId] = true;
     }
 
     public void AddBuffTable(Dictionary<string, object> data)

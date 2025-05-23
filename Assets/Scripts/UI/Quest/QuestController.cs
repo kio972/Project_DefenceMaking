@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,11 +27,11 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    private Quest mainQuest;
-    public Quest _MainQuest { get => mainQuest; }
+    private Quest _mainQuest;
+    public Quest mainQuest { get => _mainQuest; }
 
-    private List<Quest> subQuest = new List<Quest>();
-    public List<Quest> _SubQuest { get => subQuest; }
+    private List<Quest> _subQuest = new List<Quest>();
+    public List<Quest> subQuest { get => _subQuest; }
 
     private Dictionary<int, List<Dictionary<string, object>>> questDic;
     private Dictionary<int, List<Dictionary<string, object>>> _QuestDic
@@ -40,7 +41,7 @@ public class QuestController : MonoBehaviour
             if(questDic == null)
             {
                 questDic = new Dictionary<int, List<Dictionary<string, object>>>();
-                foreach (Dictionary<string, object> data in DataManager.Instance.Quest_Table)
+                foreach (Dictionary<string, object> data in DataManager.Instance.quest_Table)
                 {
                     int index;
                     if(int.TryParse(data["ID"].ToString().Replace("q", ""), out index))
@@ -58,12 +59,32 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup layoutGroup;
 
+    [SerializeField]
+    FMODUnity.EventReference createSound;
+
+    public QuestInfo GetInformer(string questId)
+    {
+        if (mainInfomer.curQuest._QuestID == questId)
+            return mainInfomer;
+
+        foreach(QuestInfo questInfo in subInformer)
+        {
+            if (questInfo.curQuest == null)
+                continue;
+
+            if(questInfo.curQuest._QuestID == questId)
+                return questInfo;
+        }
+
+        return null;
+    }
+
     public bool IsQuestStarted(string questID)
     {
-        if (mainQuest != null && mainQuest._QuestID == questID)
+        if (_mainQuest != null && _mainQuest._QuestID == questID)
             return true;
 
-        foreach (var quest in subQuest)
+        foreach (var quest in _subQuest)
             if (quest._QuestID == questID)
                 return true;
 
@@ -72,7 +93,7 @@ public class QuestController : MonoBehaviour
 
     private Quest LoadQuest(int questID)
     {
-        string questClassName = "Quest" + questID.ToString(); // 퀘스트 클래스의 이름
+        string questClassName = "Quest" + questID.ToString("0000"); // 퀘스트 클래스의 이름
         Type questType = Type.GetType(questClassName);
 
         if (questType != null && typeof(Quest).IsAssignableFrom(questType))
@@ -83,41 +104,46 @@ public class QuestController : MonoBehaviour
 
     private void SetMainQuest(Quest quest)
     {
-        mainQuest = quest;
+        _mainQuest = quest;
         mainInfomer.SetQuest(quest);
 
-        AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Quset_Creat_02", SettingManager.Instance._FxVolume);
+        RuntimeManager.PlayOneShot(createSound);
     }
 
     private void SetSubQuest(Quest quest)
     {
-        subQuest.Add(quest);
+        _subQuest.Add(quest);
         QuestInfo next = nextSubInformer;
         next.SetQuest(quest);
         layoutGroup.enabled = false;
         next.transform.SetAsLastSibling();
         layoutGroup.enabled = true;
 
-        AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Quset_Creat_01", SettingManager.Instance._FxVolume);
+        RuntimeManager.PlayOneShot(createSound);
     }
 
-    public void StartQuest(int questID, List<int> startVal)
+    public void StartQuest(int questID, List<int> startVal, float startTime)
     {
         Quest curQuest = LoadQuest(questID);
         if (curQuest == null)
             return;
-        curQuest.Init(_QuestDic[questID], startVal);
+        curQuest.Init(_QuestDic[questID], startVal, startTime);
         if (curQuest._IsMainQuest)
             SetMainQuest(curQuest);
         else
             SetSubQuest(curQuest);
     }
 
+    [SerializeField]
+    private List<Image> decos;
+
     private void Update()
     {
-        mainQuest?.UpdateQuest();
+        _mainQuest?.UpdateQuest();
         List<Quest> clearedQuest = new List<Quest>();
-        foreach(Quest quest in subQuest)
+        foreach(Quest quest in _subQuest)
         {
             quest.UpdateQuest();
             if (quest._IsEnd)
@@ -125,6 +151,12 @@ public class QuestController : MonoBehaviour
         }
 
         foreach (Quest quest in clearedQuest)
-            subQuest.Remove(quest);
+            _subQuest.Remove(quest);
+
+        bool haveNoQuest = (_mainQuest == null || _mainQuest._IsEnd) && _subQuest.Count == 0;
+        foreach(var img in decos)
+        {
+            img.color = new Color(img.color.r, img.color.g, img.color.b, haveNoQuest ? 0.3f : 1);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : Singleton<SaveManager>
 {
@@ -20,9 +21,9 @@ public class SaveManager : Singleton<SaveManager>
         playerData.curWave = GameManager.Instance.CurWave;
         playerData.curTime = GameManager.Instance.Timer;
         playerData.gold = GameManager.Instance.gold;
-        playerData.herb1 = GameManager.Instance.herb1;
-        playerData.herb2 = GameManager.Instance.herb2;
-        playerData.herb3 = GameManager.Instance.herb3;
+        playerData.herb1 = GameManager.Instance.herbDic[HerbType.BlackHerb];
+        playerData.herb2 = GameManager.Instance.herbDic[HerbType.PurpleHerb];
+        playerData.herb3 = GameManager.Instance.herbDic[HerbType.WhiteHerb];
     }
 
     private void SaveSpanwerData(PlayerData playerData)
@@ -31,8 +32,8 @@ public class SaveManager : Singleton<SaveManager>
         foreach(MonsterSpawner spawner in GameManager.Instance.monsterSpawner)
         {
             SpawnerData spawnerData = new SpawnerData();
-            spawnerData.row = spawner.CurTile.row;
-            spawnerData.col = spawner.CurTile.col;
+            spawnerData.row = spawner.curTile.curNode.row;
+            spawnerData.col = spawner.curTile.curNode.col;
             spawnerData.spawnerId = spawner._TargetName;
             spawnerData.spawnerCool = spawner._CurCoolTime;
             playerData.spawners.Add(spawnerData);
@@ -53,8 +54,8 @@ public class SaveManager : Singleton<SaveManager>
         {
             TileData tile = new TileData();
             tile.id = environment.name.ToString().Replace("(Clone)", "");
-            tile.row = environment._CurNode.row;
-            tile.col = environment._CurNode.col;
+            tile.row = environment.curNode.row;
+            tile.col = environment.curNode.col;
             playerData.environments.Add(tile);
         }
 
@@ -71,16 +72,24 @@ public class SaveManager : Singleton<SaveManager>
         playerData.nextHiddenTileCount = GameManager.Instance.mapBuilder.curTileSetCount;
     }
 
+    public void ResetPlayerData()
+    {
+        playerData = new PlayerData();
+        SaveDataJsonCovnert(playerData, playerDataFileName);
+    }
+
     public void SavePlayerData()
     {
         playerData = new PlayerData();
+
+        playerData.sceneName = SceneManager.GetActiveScene().name;
 
         SaveAssetData(playerData);
         SaveTileData(playerData);
         SaveSpanwerData(playerData);
 
-        playerData.deckLists = new List<int>(GameManager.Instance.cardDeckController._CardDeck);
-        playerData.cardIdes = new List<int>(GameManager.Instance.cardDeckController._HandCards);
+        playerData.deckLists = new List<int>(GameManager.Instance.cardDeckController.cardDeck);
+        playerData.cardIdes = new List<int>(GameManager.Instance.cardDeckController.handCards);
 
         playerData.enemys = new List<BattlerData>();
         foreach (Battler enemy in GameManager.Instance.adventurersList)
@@ -90,7 +99,7 @@ public class SaveManager : Singleton<SaveManager>
         }
 
         playerData.allies = new List<BattlerData>();
-        foreach (Battler monster in GameManager.Instance._MonsterList)
+        foreach (Battler monster in GameManager.Instance.monsterList)
         {
             if (monster is ISaveLoadBattler battler)
                 playerData.allies.Add(battler.GetData());
@@ -122,10 +131,16 @@ public class SaveManager : Singleton<SaveManager>
     public void LoadSettingData()
     {
         settingData = LoadData<SettingData>(settingDataFileName);
-        SettingManager.Instance.masterVolume = settingData.volume_Master;
-        SettingManager.Instance.bgmVolume = settingData.volume_Bgm;
-        SettingManager.Instance.fxVolume = settingData.volume_Fxs;
-        SettingManager.Instance.uiVolume = settingData.volume_UI;
+        //SettingManager.Instance.masterVolume = settingData.volume_Master;
+        //SettingManager.Instance.bgmVolume = settingData.volume_Bgm;
+        //SettingManager.Instance.fxVolume = settingData.volume_Fxs;
+        //SettingManager.Instance.uiVolume = settingData.volume_UI;
+        SettingManager.Instance.SetVolume(VolumeType.Master, settingData.volume_Master);
+        SettingManager.Instance.SetVolume(VolumeType.BGM, settingData.volume_Bgm);
+        SettingManager.Instance.SetVolume(VolumeType.SFX, settingData.volume_Fxs);
+        SettingManager.Instance.SetVolume(VolumeType.UI, settingData.volume_UI);
+        SettingManager.Instance.SetVolume(VolumeType.Ambience, settingData.volume_Amb);
+
         SettingManager.Instance.muteOnBackground = settingData.muteOnBackground;
 
         SettingManager.Instance.screen_FullSize = settingData.fullScreen;
@@ -144,14 +159,22 @@ public class SaveManager : Singleton<SaveManager>
         SettingManager.Instance.key_SpeedControl_Zero.SetCurKey((KeyCode)settingData.key_SpeedControl_Zero);
         SettingManager.Instance.key_SpeedControl_One.SetCurKey((KeyCode)settingData.key_SpeedControl_One);
         SettingManager.Instance.key_SpeedControl_Double.SetCurKey((KeyCode)settingData.key_SpeedControl_Double);
+        SettingManager.Instance.key_Deploy.SetCurKey((KeyCode)settingData.key_deploy);
+        SettingManager.Instance.key_Research.SetCurKey((KeyCode)settingData.key_research);
+        SettingManager.Instance.key_Shop.SetCurKey((KeyCode)settingData.key_shop);
+
+        SettingManager.Instance.stageState = settingData.stageState;
+
+        SettingManager.Instance.showShortCut = settingData.showShortCut;
     }                               
 
     public void SaveSettingData()
     {
-        settingData.volume_Master = SettingManager.Instance.masterVolume;
-        settingData.volume_Bgm = SettingManager.Instance.bgmVolume;
-        settingData.volume_Fxs = SettingManager.Instance.fxVolume;
-        settingData.volume_UI = SettingManager.Instance.uiVolume;
+        settingData.volume_Master = SettingManager.Instance.GetVolume(VolumeType.Master);
+        settingData.volume_Bgm = SettingManager.Instance.GetVolume(VolumeType.BGM);
+        settingData.volume_Fxs = SettingManager.Instance.GetVolume(VolumeType.SFX);
+        settingData.volume_UI = SettingManager.Instance.GetVolume(VolumeType.UI);
+        settingData.volume_Amb = SettingManager.Instance.GetVolume(VolumeType.Ambience);
         settingData.muteOnBackground = SettingManager.Instance.muteOnBackground;
 
         settingData.fullScreen = SettingManager.Instance.screen_FullSize;
@@ -170,6 +193,13 @@ public class SaveManager : Singleton<SaveManager>
         settingData.key_SpeedControl_Zero = (int)SettingManager.Instance.key_SpeedControl_Zero._CurKey;
         settingData.key_SpeedControl_One = (int)SettingManager.Instance.key_SpeedControl_One._CurKey;
         settingData.key_SpeedControl_Double = (int)SettingManager.Instance.key_SpeedControl_Double._CurKey;
+        settingData.key_deploy = (int)SettingManager.Instance.key_Deploy._CurKey;
+        settingData.key_research = (int)SettingManager.Instance.key_Research._CurKey;
+        settingData.key_shop = (int)SettingManager.Instance.key_Shop._CurKey;
+
+        settingData.stageState = SettingManager.Instance.stageState;
+
+        settingData.showShortCut = SettingManager.Instance.showShortCut;
 
         SaveData(settingData, settingDataFileName);
     }
@@ -177,6 +207,18 @@ public class SaveManager : Singleton<SaveManager>
     private T GenerateNewData<T>() where T : new()
     {
         return new T();
+    }
+
+    public T LoadDataFromJsonFile<T>(TextAsset jsonFile) where T : new()
+    {
+        if (jsonFile != null && !string.IsNullOrEmpty(jsonFile.text))
+        {
+            return JsonConvert.DeserializeObject<T>(jsonFile.text);
+        }
+        else
+        {
+            return GenerateNewData<T>();
+        }
     }
 
     // 불러오기

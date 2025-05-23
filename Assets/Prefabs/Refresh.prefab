@@ -61,11 +61,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  _curTime: 0
   fluctTime: 10
+  _curRefreashTime: 0
   refreashTime: 3
   text: {fileID: 3747144718594405148}
   refreshMessage: 
   fluctMessage: 
+  fluctSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2017098346009623023
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,8 +143,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97a869447a59c1e4b883838bdbcb986a, type: 2}
-  m_sharedMaterial: {fileID: 2186946242765391702, guid: 97a869447a59c1e4b883838bdbcb986a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5890836ae1fc68b48aa1a6d07e129ca0, type: 2}
+  m_sharedMaterial: {fileID: -8507589400617782125, guid: 5890836ae1fc68b48aa1a6d07e129ca0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -159,8 +168,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -195,7 +204,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 3, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 2}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

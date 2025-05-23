@@ -16,6 +16,7 @@ public class CardUIEffect : MonoBehaviour
     [SerializeField]
     private float mouseOverTime = 0.2f;
 
+    [SerializeField]
     private bool drawEnd = false;
 
     public Vector3 originPos;
@@ -28,6 +29,12 @@ public class CardUIEffect : MonoBehaviour
 
     private CancellationTokenSource _scaleToken;
     private CancellationTokenSource _moveToken;
+
+    [SerializeField]
+    private float sizeMult = 1.5f;
+
+    [SerializeField]
+    FMODUnity.EventReference mouseOverSound;
 
     public void ResetEffect()
     {
@@ -54,14 +61,16 @@ public class CardUIEffect : MonoBehaviour
         _moveToken = new CancellationTokenSource();
         _scaleToken = new CancellationTokenSource();
 
-        UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one * 1.5f, mouseOverTime, _scaleToken.Token).Forget();
+        UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one * sizeMult, mouseOverTime, _scaleToken.Token).Forget();
         if(useSiblingArrange)
             UtilHelper.IMoveEffect(effectTarget, effectTarget.position, new Vector3(originPos.x, 180, originPos.z), mouseOverTime, _moveToken.Token).Forget();
 
         effectTarget.rotation = Quaternion.identity;
-        transform.SetAsLastSibling();
+        if(useSiblingArrange)
+            transform.SetAsLastSibling();
 
-        AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_card", SettingManager.Instance._FxVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(mouseOverSound);
     }
 
     public void OnPointerExit()
@@ -81,7 +90,7 @@ public class CardUIEffect : MonoBehaviour
             UtilHelper.IMoveEffect(effectTarget, effectTarget.position, originPos, mouseOverTime, _moveToken.Token).Forget();
 
         effectTarget.rotation = originRot;
-        if (originSiblingIndex != -1)
+        if (useSiblingArrange && originSiblingIndex != -1)
             transform.SetSiblingIndex(originSiblingIndex);
     }
 
@@ -99,6 +108,19 @@ public class CardUIEffect : MonoBehaviour
         _scaleToken.Dispose();
     }
 
+    public async UniTaskVoid OnMagicDrag()
+    {
+        await UniTask.Yield();
+        //_moveToken.Cancel();
+        _scaleToken.Cancel();
+        //_moveToken.Dispose();
+        _scaleToken.Dispose();
+        //_moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
+        
+        UtilHelper.IScaleEffect(effectTarget, effectTarget.localScale, Vector3.one, mouseOverTime, _scaleToken.Token).Forget();
+    }
+
     public async UniTaskVoid DiscardEffect(bool isRecycle)
     {
         drawEnd = false;
@@ -110,10 +132,10 @@ public class CardUIEffect : MonoBehaviour
         _scaleToken = new CancellationTokenSource();
 
         float lerpTime = 0.4f;
-        UtilHelper.IColorEffect(transform, Color.white, new Color(1, 1, 1, 0), lerpTime).Forget();
+        UtilHelper.IColorEffect(effectTarget, Color.white, new Color(1, 1, 1, 0), lerpTime).Forget();
         if (isRecycle)
         {
-            UtilHelper.IMoveEffect(transform, originPos, GameManager.Instance.cardDeckController.transform.position, lerpTime, _moveToken.Token).Forget();
+            UtilHelper.IMoveEffect(transform, transform.position, GameManager.Instance.cardDeckController.transform.position, lerpTime, _moveToken.Token).Forget();
             await UtilHelper.IScaleEffect(transform, Vector3.one, Vector3.zero, lerpTime, _scaleToken.Token);
         }
         else
@@ -137,6 +159,36 @@ public class CardUIEffect : MonoBehaviour
         drawEnd = true;
     }
 
+    public async UniTaskVoid MagicDrag()
+    {
+        //Vector3 originPos = transform.position;
+        drawEnd = false;
+        _moveToken.Cancel();
+        _scaleToken.Cancel();
+        _moveToken.Dispose();
+        _scaleToken.Dispose();
+        _moveToken = new CancellationTokenSource();
+        _scaleToken = new CancellationTokenSource();
+
+        await UniTask.WaitUntil(() => !Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey), cancellationToken: _moveToken.Token);
+        while(true)
+        {
+            bool cancelInput = Input.GetKeyDown(SettingManager.Instance.key_BasicControl._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_CancelControl._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Deploy._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) || Input.GetKeyDown(SettingManager.Instance.key_Shop._CurKey) || Input.GetKeyDown(KeyCode.Escape) || GameManager.Instance.isPause;
+            if(cancelInput)
+                break;
+            transform.position = Input.mousePosition;
+            transform.localScale = Vector3.one;
+            effectTarget.rotation = Quaternion.identity;
+            effectTarget.position = transform.position;
+
+            await UniTask.Yield(cancellationToken: _moveToken.Token);
+        }
+
+        transform.position = originPos;
+        drawEnd = true;
+        OnPointerExit();
+    }
+
     private void OnEnable()
     {
         _moveToken = new CancellationTokenSource();
@@ -150,6 +202,13 @@ public class CardUIEffect : MonoBehaviour
         {
             image.OnPointerEnterAsObservable().Where(_ => !GameManager.Instance.cardLock && drawEnd && !InputManager.Instance.settingCard).Subscribe(_ => OnPointerEnter());
             image.OnPointerExitAsObservable().Where(_ => drawEnd).Subscribe(_ => OnPointerExit());
+
+            //CardFramework cardFramework = GetComponent<CardFramework>();
+            //if(cardFramework != null && cardFramework._cardInfo.Value.cardType == CardType.Magic)
+            //{
+            //    var startStream = image.OnPointerDownAsObservable()
+            //        .Subscribe(_ => MagicDrag().Forget()).AddTo(disposables);
+            //}
         }
     }
 }

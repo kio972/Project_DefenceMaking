@@ -14,13 +14,13 @@ public class Thief : Adventurer, IHide
         if (this.curHp < curHp && (object)CurState == FSMHide.Instance)
         {
             ChangeState(FSMPatrol.Instance);
-            GetCC(attacker, 0.5f);
+            GetCC(attacker, 0.5f * GameManager.Instance.DefaultSpeed);
         }
     }
 
     public void HideAction()
     {
-        if(CurTile == NodeManager.Instance.endPoint)
+        if(curNode == NodeManager.Instance.endPoint)
             ChangeState(FSMPatrol.Instance);
         else
             Patrol();
@@ -30,6 +30,7 @@ public class Thief : Adventurer, IHide
     {
         base.Init();
         ChangeState(FSMHide.Instance);
+        AddStatusEffect<Stealth>(new Stealth(this, 0));
     }
 
     public override BattlerData GetData()
@@ -37,7 +38,7 @@ public class Thief : Adventurer, IHide
         BattlerData data = base.GetData();
         data.additionalData = new Dictionary<string, object>();
         data.additionalData.Add("hideState", (object)CurState == FSMHide.Instance);
-        return base.GetData();
+        return data;
     }
 
     public override void LoadData(BattlerData data)

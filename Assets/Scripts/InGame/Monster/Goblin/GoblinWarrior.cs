@@ -14,7 +14,7 @@ public class GoblinWarrior : Goblin
             if (HaveEffect<GoblinSwarm>())
                 continue;
 
-            foreach (Monster goblin in GameManager.Instance._MonsterList)
+            foreach (Monster goblin in GameManager.Instance.monsterList)
             {
                 if (goblin == this || goblin is not Goblin)
                     continue;

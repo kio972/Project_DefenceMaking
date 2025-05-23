@@ -1,3 +1,4 @@
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,6 @@ public class FSMCC : FSMSingleton<FSMCC>, CharState<Battler>
 
     public void Exit(Battler e)
     {
-
+        e._Animator?.SetBool("Move", GameManager.Instance.timeScale != 0);
     }
 }

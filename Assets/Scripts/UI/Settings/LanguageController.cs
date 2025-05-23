@@ -15,7 +15,7 @@ public class LanguageController : SpinnerButton
     private void SetLanguage()
     {
         Languages language = (Languages)index;
-        SettingManager.Instance.SetLanguage(language);
+        //SettingManager.Instance.SetLanguage(language);
     }
 
     protected override void OnValueChange()

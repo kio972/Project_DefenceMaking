@@ -181,7 +181,7 @@ public class Tutorial : MonoBehaviour
             yield return null;
 
         //모험가 침입
-        Vector3 prevPos = GameManager.Instance.cameraController._GuidePos;
+        Vector3 prevPos = GameManager.Instance.cameraController.guidePos;
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.spawnLock = true;
         GameManager.Instance.cameraController.CamMoveToPos(NodeManager.Instance.startPoint.transform.position);
@@ -357,13 +357,13 @@ public class Tutorial : MonoBehaviour
 
     private IEnumerator Dan006()
     {
-        while(GameManager.Instance._MonsterList.Count == 0)
+        while(GameManager.Instance.monsterList.Count == 0)
             yield return null;
 
-        Vector3 prevPos = GameManager.Instance.cameraController._GuidePos;
+        Vector3 prevPos = GameManager.Instance.cameraController.guidePos;
         GameManager.Instance.speedController.SetSpeedZero();
         GameManager.Instance.speedLock = true;
-        GameManager.Instance.cameraController.CamMoveToPos(GameManager.Instance._MonsterList[0].transform.position);
+        GameManager.Instance.cameraController.CamMoveToPos(GameManager.Instance.monsterList[0].transform.position);
         GameManager.Instance.cameraController.SetCamZoom(3);
         
         StoryManager.Instance.EnqueueScript("Dan006");

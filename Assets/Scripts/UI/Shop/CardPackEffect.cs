@@ -35,6 +35,9 @@ public class CardPackEffect : MonoBehaviour
     [SerializeField]
     private GameObject confirmBtn;
 
+    [SerializeField]
+    FMODUnity.EventReference cardSound;
+
     private void InitCards(List<Card> cards)
     {
         packImg.gameObject.SetActive(true);
@@ -91,7 +94,8 @@ public class CardPackEffect : MonoBehaviour
 
         for (int i = cards.Count - 1; i >= 0; i--)
         {
-            AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._FxVolume);
+            //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._FxVolume);
+            FMODUnity.RuntimeManager.PlayOneShot(cardSound);
             await UtilHelper.MoveEffect(cardObjects[i].transform, targetPositions[i], lerpTime, cancellationToken);
         }
 
@@ -112,7 +116,8 @@ public class CardPackEffect : MonoBehaviour
         packImg.gameObject.SetActive(false);
         UtilHelper.IColorEffect(fadeImg.transform, fadeColor, Color.clear, 0.3f).Forget();
         float toDeckLerpTime = 0.5f;
-        AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._FxVolume);
+        //AudioManager.Instance.Play2DSound("Click_card_01", SettingManager.Instance._FxVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(cardSound);
         for (int i = 0; i < cards.Count; i++)
         {
             UtilHelper.ScaleEffect(cardObjects[i].transform, Vector3.one * 0.3f, toDeckLerpTime, cancellationToken).Forget();

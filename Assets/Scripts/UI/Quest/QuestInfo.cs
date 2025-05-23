@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public interface IQuestInteract
+{
+    void EndQuest();
+    void SetQuest(Quest quest);
+}
+
 public class QuestInfo : MonoBehaviour
 {
     [SerializeField]
@@ -20,7 +26,8 @@ public class QuestInfo : MonoBehaviour
 
     private bool isTimerOn = false;
 
-    private Quest curQuest = null;
+    private Quest _curQuest = null;
+    public Quest curQuest { get => _curQuest; }
 
     [SerializeField]
     private Color idleColor = Color.white;
@@ -37,6 +44,31 @@ public class QuestInfo : MonoBehaviour
     [SerializeField]
     private GameObject alarmObject;
 
+    [SerializeField]
+    bool isMainQuest = false;
+
+    [SerializeField]
+    FMODUnity.EventReference clearSound;
+    [SerializeField]
+    FMODUnity.EventReference failSound;
+
+
+    private IQuestInteract _interactBtn;
+    private IQuestInteract interactBtn
+    {
+        get
+        {
+            if (_interactBtn == null)
+            {
+                if (isMainQuest)
+                    _interactBtn = GameManager.Instance._InGameUI.mainQuestInteractBtn;
+                else
+                    _interactBtn = GetComponentInChildren<IQuestInteract>(true);
+            }
+            return _interactBtn;
+        }
+    }
+
     private void DeActive()
     {
         gameObject.SetActive(false);
@@ -45,19 +77,23 @@ public class QuestInfo : MonoBehaviour
     public void EndQuest()
     {
         isTimerOn = false;
-        _Animator.SetBool("IsClear", curQuest._IsClear);
+        _Animator.SetBool("IsClear", _curQuest._IsClear);
         _Animator.SetTrigger("End");
         //Invoke("DeActive", 1f);
 
-        string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
-        AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
-
-        curQuest = null;
+        //string questEndClip = (curQuest._IsClear ? "Quset_Close_Sussed_" : "Quset_Close_Failed_") + Random.Range(1, 3).ToString();
+        //AudioManager.Instance.Play2DSound(questEndClip, SettingManager.Instance._FxVolume);
+        if (_curQuest._IsClear)
+            FMODUnity.RuntimeManager.PlayOneShot(clearSound);
+        else
+            FMODUnity.RuntimeManager.PlayOneShot(failSound);
+        _curQuest = null;
+        interactBtn?.EndQuest();
     }
 
     public void SetQuestText(Quest quest)
     {
-        questName.text = quest._QuestName;
+        questName.text = DataManager.Instance.GetDescription(quest._QuestName);
         foreach (QuestConditionUI condition in conditions)
             condition.gameObject.SetActive(false);
 
@@ -70,7 +106,7 @@ public class QuestInfo : MonoBehaviour
 
     public void SetQuest(Quest quest)
     {
-        curQuest = quest;
+        _curQuest = quest;
         
         SetQuestText(quest);
         self.sizeDelta = new Vector2(self.sizeDelta.x, baseScale + (conditionScale * quest._ClearInfo.Count));
@@ -79,6 +115,7 @@ public class QuestInfo : MonoBehaviour
         isTimerOn = true;
         alarmObject.SetActive(false);
         UpdateTimer();
+        interactBtn?.SetQuest(quest);
     }
 
     private void UpdateTimer()
@@ -87,11 +124,11 @@ public class QuestInfo : MonoBehaviour
             return;
 
         if (questTimer != null)
-            questTimer.fillAmount = curQuest._TimeRemain;
+            questTimer.fillAmount = _curQuest._TimeRemain;
 
-        if (curQuest._TimeRemain > 0.34f)
+        if (_curQuest._TimeRemain > 0.34f)
             questTimer.color = idleColor;
-        else if (curQuest._TimeRemain > 0.17f)
+        else if (_curQuest._TimeRemain > 0.17f)
             questTimer.color = midColor;
         else
         {
@@ -99,7 +136,7 @@ public class QuestInfo : MonoBehaviour
             alarmObject.SetActive(true);
         }
 
-        if (curQuest._TimeRemain <= 0)
+        if (_curQuest._TimeRemain <= 0)
         {
             isTimerOn = false;
             alarmObject.SetActive(false);
@@ -108,11 +145,20 @@ public class QuestInfo : MonoBehaviour
 
     private void Update()
     {
-        if (curQuest == null)
+        if (_curQuest == null)
             return;
 
         UpdateTimer();
-        if (curQuest._IsEnd)
+        if (_curQuest._IsEnd)
             EndQuest();
+    }
+
+    private void Start()
+    {
+        LanguageManager.Instance.AddLanguageAction(() =>
+        {
+            if(_curQuest != null)
+                questName.text = DataManager.Instance.GetDescription(_curQuest._QuestName);
+        });
     }
 }

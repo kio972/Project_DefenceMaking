@@ -9,7 +9,6 @@ public class KeyBindController : MonoBehaviour
     // 3. KeyCode.None이 아니라면, 할당 불가 키에 해당하는지 확인. => 할당 불가 키 리스트 작성 필요
     // 4. 해당 키코드가 이미 사용중인지 확인, 만약 사용중이라면 교체
 
-    [SerializeField]
     private List<KeyBinder> keyBinders = new List<KeyBinder>();
 
     private bool initState = false;
@@ -40,7 +39,7 @@ public class KeyBindController : MonoBehaviour
 
     private void Init()
     {
-        KeyBinder[] keyBinders = GetComponentsInChildren<KeyBinder>();
+        KeyBinder[] keyBinders = GetComponentsInChildren<KeyBinder>(true);
 
         foreach(KeyBinder keyBinder in keyBinders)
         {

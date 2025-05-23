@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5766997024599297664}
   - component: {fileID: 2548589239429506243}
   - component: {fileID: 1542008682014445915}
-  - component: {fileID: 2614113715709192420}
+  - component: {fileID: 4749044574758603008}
   m_Layer: 6
   m_Name: c1
   m_TagString: Untagged
@@ -114,13 +114,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766232643672563741}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 1b934b3635a7f594c803c16491445081, type: 2}
-  initialSkinName: blue
+  initialSkinName: epic
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &2614113715709192420
+--- !u!114 &4749044574758603008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,18 +157,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 766232643672563741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: b815cbd8b853c46f3b44cf0f5d6fa672, type: 3}
-  - {fileID: 8300000, guid: 87003694a32ed4e3eaa6b38845575530, type: 3}
-  - {fileID: 8300000, guid: d8784a308f422430dba0722e615026e2, type: 3}
-  - {fileID: 8300000, guid: 19b8110894c7c4eb0b0f09e22b3c465d, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 69a07dc71919f4c208c2b2ff7fcb7cb6, type: 3}
-  deadSoundMult: 0.6
+  attackSound:
+    Guid:
+      Data1: -1265544259
+      Data2: 1117522370
+      Data3: -390995266
+      Data4: -937892839
+    Path: event:/Object/Enemy/intruder/Enemy_Warrior_Attack
+  deadSound:
+    Guid:
+      Data1: 960119528
+      Data2: 1216880188
+      Data3: -783193725
+      Data4: -221907682
+    Path: event:/Object/Enemy/intruder/Enemy_Dead_Body
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2060345853617806872
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +242,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -238,6 +258,9 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_a20004
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
+  _isBoss: 0
+  isSmart: 0
 --- !u!136 &5018297080547852682
 CapsuleCollider:
   m_ObjectHideFlags: 0

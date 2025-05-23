@@ -1,10 +1,11 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotInfo : MonoBehaviour
+public class SlotInfo : MonoBehaviour, ISlotInformer
 {
     [SerializeField]
     private Image card_Frame;
@@ -40,12 +41,18 @@ public class SlotInfo : MonoBehaviour
     [SerializeField]
     private GameObject trapInfo;
 
+    [SerializeField]
+    private Button deployBtn;
 
-    private DeploySlot curslot;
+    private DeploySlot _curSlot;
+    public DeploySlot curDeploySlot { get => _curSlot; }
+    public ISlot curSlot { get => _curSlot; }
 
     public void UpdateInfo(DeploySlot data)
     {
-        curslot = data;
+        _curSlot?.SetClicked(false);
+        _curSlot = data;
+        _curSlot?.SetClicked(true);
         string type = "monster";
         if (data.cardType == CardType.Trap)
             type = "trap";
@@ -56,8 +63,8 @@ public class SlotInfo : MonoBehaviour
         Sprite cardRank = SpriteList.Instance.LoadSprite("cardRank_" + data.rate);
         card_Rank.sprite = cardRank;
 
-        card_Name.ChangeLangauge(SettingManager.Instance.language, data._name);
-        card_Description.ChangeLangauge(SettingManager.Instance.language, data._name + "_1");
+        card_Name.ChangeLangauge(SettingManager.Instance.language, data.targetName);
+        card_Description.ChangeLangauge(SettingManager.Instance.language, data.targetName + "_1");
 
         card_illust.sprite = data.illur;
 
@@ -89,11 +96,26 @@ public class SlotInfo : MonoBehaviour
 
     private DeployUI delpoyUI;
 
+    public void ExcuteAction()
+    {
+        DelayedDeploy().Forget();
+    }
+
+    private async UniTaskVoid DelayedDeploy()
+    {
+        await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        Deploy();
+    }
+
     public void Deploy()
     {
         if (delpoyUI == null)
             delpoyUI = GetComponentInParent<DeployUI>();
 
-        delpoyUI.DeployReady(curslot.cardType, curslot._name, curslot.prefabName, curslot.cost);
+        if (deployBtn != null && !deployBtn.enabled)
+            return;
+
+        delpoyUI.DeployReady(_curSlot.cardType, _curSlot.targetName, _curSlot.prefabName, _curSlot.cost);
     }
 }

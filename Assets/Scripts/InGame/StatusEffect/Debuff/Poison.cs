@@ -39,5 +39,7 @@ public class Poison : Debuff, IWhileEffect, IStackable
 
         tick = 0f;
         _battler.GetDamage(3 + _battler.armor, null);
+        if (_battler.isDead)
+            EffectPooling.Instance.PlayEffect("PoisonDeath", _battler._Animator.transform.parent);
     }
 }

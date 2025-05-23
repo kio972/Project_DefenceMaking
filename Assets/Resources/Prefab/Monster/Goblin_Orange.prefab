@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5121816003620464307}
   - component: {fileID: 4442121077108697256}
   - component: {fileID: 8638838801445434031}
-  - component: {fileID: 3445309568579405342}
+  - component: {fileID: 1226985714114366716}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -114,13 +114,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3948826638235807827}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 64e8967e7c227d74592db417c20e7f82, type: 2}
-  initialSkinName: orange
+  initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &3445309568579405342
+--- !u!114 &1226985714114366716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,13 +157,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3948826638235807827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds: []
-  attackSoundMult: 1
-  deadSounds: []
-  deadSoundMult: 1
+  attackSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  deadSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +324,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -329,9 +340,17 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m20004
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 62e2e45d391b840f9a2b9201b343fb66, type: 3}
+  summonSoundEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!136 &7389840894960381613
 CapsuleCollider:
   m_ObjectHideFlags: 0

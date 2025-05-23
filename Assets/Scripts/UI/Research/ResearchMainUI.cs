@@ -1,14 +1,17 @@
+using Cysharp.Threading.Tasks;
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ResearchMainUI : MonoBehaviour
+public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 {
     [SerializeField]
     GameObject uiPage;
 
-    private ResearchSlot curResearch;
+    public ResearchSlot curResearch { get; private set; }
 
     private float curProgressTime;
 
@@ -16,27 +19,35 @@ public class ResearchMainUI : MonoBehaviour
 
     public float CurProgressRate { get => curResearch == null ? -1 : 1 - (curProgressTime / curResearch._ResearchData.requiredTime); }
 
-    private Coroutine researchCoroutine;
+    //private Coroutine researchCoroutine;
 
-    private List<string> _completedResearchs;
+    private CancellationTokenSource researchCancelToken;
+
+    private List<string> _completedResearchs = new List<string>();
     public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
 
-    private IEnumerator IResearch(ResearchSlot curResearch, float additionalTime)
+    [SerializeField]
+    FMODUnity.EventReference openSound;
+
+    private async UniTask ExcuteResearch(ResearchSlot curResearch, float additionalTime)
     {
         this.curResearch = curResearch;
 
         float startTime = (GameManager.Instance.CurWave * 1440) + GameManager.Instance.Timer;
         float endTime = startTime + curResearch._ResearchData.requiredTime - additionalTime;
         curResearch.SetResearchState(ResearchState.InProgress);
-        yield return null;
-        
-        while(true)
+        curResearch.OppositeResearch?.UpdateSlotState();
+
+        float curTime = startTime;
+        await UniTask.Yield(researchCancelToken.Token);
+
+        while (true)
         {
-            float curTime = (GameManager.Instance.CurWave * 1440) + GameManager.Instance.Timer;
+            curTime += GameManager.Instance.InGameDeltaTime;
             if(curTime >= endTime)
                 break;
             curProgressTime = endTime - curTime;
-            yield return null;
+            await UniTask.Yield(researchCancelToken.Token);
         }
 
         curProgressTime = 0f;
@@ -44,12 +55,14 @@ public class ResearchMainUI : MonoBehaviour
         //ResearchPopup popup = GetComponentInChildren<ResearchPopup>();
         //if (popup.gameObject.activeSelf && popup._CurResearch == curResearch._ResearchData)
         //    curResearch.CallPopUpUI();
-        GameManager.Instance.notificationBar?.SetMesseage(curResearch._ResearchData.researchName + " 연구 완료", NotificationType.Research);
-        AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+        string targetMesseage = DataManager.Instance.GetDescription(curResearch._ResearchData.researchName);
+        GameManager.Instance.notificationBar?.SetMesseage(targetMesseage + " " + DataManager.Instance.GetDescription("ui_ResearchCompleted"), NotificationType.Research);
+        //AudioManager.Instance.Play2DSound("Complete_Tech", SettingManager.Instance._FxVolume);
+        FMODUnity.RuntimeManager.PlayOneShot(openSound);
 
         this.curResearch = null;
         _completedResearchs.Add(curResearch._ResearchId);
-        Research[] research = curResearch.GetComponents<Research>();
+        IResearch[] research = curResearch.GetComponents<IResearch>();
         foreach(var item in research)
             item?.ActiveResearch();
         
@@ -57,10 +70,10 @@ public class ResearchMainUI : MonoBehaviour
 
     public bool StartResearch(ResearchSlot target, float additionalTime = 0)
     {
-        if (curResearch != null)
-            return false;
-
-        researchCoroutine = StartCoroutine(IResearch(target, additionalTime));
+        researchCancelToken?.Cancel();
+        researchCancelToken?.Dispose();
+        researchCancelToken = new CancellationTokenSource();
+        ExcuteResearch(target, additionalTime).Forget();
         return true;
     }
 
@@ -69,9 +82,12 @@ public class ResearchMainUI : MonoBehaviour
         if (curResearch == null)
             return;
 
-        StopCoroutine(researchCoroutine);
+        researchCancelToken?.Cancel();
+        researchCancelToken?.Dispose();
+        researchCancelToken = new CancellationTokenSource();
         curProgressTime = 0f;
         curResearch.SetResearchState(ResearchState.Incomplete);
+        curResearch.OppositeResearch?.UpdateSlotState();
         this.curResearch = null;
     }
 
@@ -80,24 +96,39 @@ public class ResearchMainUI : MonoBehaviour
         if (value)
         {
             InputManager.Instance.ResetTileClick();
-            AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
+            GameManager.Instance.SetPause(true);
+            //AudioManager.Instance.Play2DSound("Tech_research_Open", SettingManager.Instance._FxVolume);
+            FMODUnity.RuntimeManager.PlayOneShot(openSound);
+            Animator btnAnim = btnObject.GetComponent<Animator>();
+            btnAnim?.SetBool("End", true);
         }
 
         UIManager.Instance.SetTab(uiPage, value, () => { GameManager.Instance.SetPause(false); });
-        GameManager.Instance.SetPause(value);
     }
+
+    public void TryOpenUI()
+    {
+        GameObjectSwap swapper = transform.GetComponentInParent<GameObjectSwap>();
+        if (swapper != null)
+            swapper.SwapObject(this);
+        else
+            SetActive(true);
+    }
+
 
     [SerializeField]
     private GameObject btnObject;
 
+    private bool isActived { get => btnObject.activeSelf || uiPage.activeSelf; }
+
     public void Update()
     {
-        if (Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) && btnObject.activeSelf)
+        if (Input.GetKeyDown(SettingManager.Instance.key_Research._CurKey) && isActived)
         {
-            if (UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
-                SetActive(true);
-            else if (uiPage.activeSelf)
+            if (uiPage.activeSelf)
                 SetActive(false);
+            else
+                TryOpenUI();
         }
     }
 
@@ -121,7 +152,7 @@ public class ResearchMainUI : MonoBehaviour
             if (_completedResearchs.Contains(slot._ResearchId))
             {
                 slot.SetResearchState(ResearchState.Complete);
-                Research research = slot.GetComponent<Research>();
+                IResearch research = slot.GetComponent<IResearch>();
                 research?.ActiveResearch();
             }
             else if(!string.IsNullOrEmpty(data.curResearch) && slot._ResearchId == data.curResearch)
@@ -129,19 +160,36 @@ public class ResearchMainUI : MonoBehaviour
         }
     }
 
+    public void ForceActiveResearch(string id)
+    {
+        if (!researchDic.ContainsKey(id))
+            return;
+        ResearchSlot slot = researchDic[id];
+        slot.SetResearchState(ResearchState.Complete);
+        IResearch research = slot.GetComponent<IResearch>();
+        research?.ActiveResearch();
+        _completedResearchs.Add(slot._ResearchId);
+    }
+
+    private Dictionary<string, ResearchSlot> researchDic = new Dictionary<string, ResearchSlot>();
+
     private void Awake()
     {
-        if(_completedResearchs == null)
+        if(_completedResearchs == null || _completedResearchs.Count == 0)
         {
-            _completedResearchs = new List<string>() { "r_m10001" };
+            _completedResearchs = new List<string>();
             ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
             foreach (ResearchSlot slot in slots)
             {
+                if (string.IsNullOrEmpty(slot._ResearchId) || researchDic.ContainsKey(slot._ResearchId))
+                    continue;
+
+                researchDic.Add(slot._ResearchId, slot);
                 if (!_completedResearchs.Contains(slot._ResearchId))
                     continue;
 
                 slot.SetResearchState(ResearchState.Complete);
-                Research research = slot.GetComponent<Research>();
+                IResearch research = slot.GetComponent<IResearch>();
                 research?.ActiveResearch();
             }
         }

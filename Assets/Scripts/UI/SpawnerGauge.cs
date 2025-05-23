@@ -11,6 +11,8 @@ public class SpawnerGauge : MonoBehaviour
     private MonsterSpawner spanwer;
     [SerializeField]
     private Image fillImg;
+    [SerializeField]
+    private GameObject deactivedImg;
 
     private float battlerCurHp;
     private float battlerCurSheild;
@@ -53,6 +55,7 @@ public class SpawnerGauge : MonoBehaviour
     {
         if (deadBar) return;
 
+        deactivedImg.SetActive(!spanwer.spawnerActivatedState);
         if (!GameManager.Instance.monsterSpawner.Contains(spanwer))
             HPBarEnd();
     }

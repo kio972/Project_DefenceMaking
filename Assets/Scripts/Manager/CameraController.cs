@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -19,7 +20,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Transform guideObject;
-    public Vector3 _GuidePos { get => guideObject.position; }
+    public Vector3 guidePos { get => guideObject.position; }
 
     private float mouseMult = 1f;
 
@@ -31,7 +32,15 @@ public class CameraController : MonoBehaviour
     private Camera stackCam2;
 
     [SerializeField]
-    private AudioListener audioListener;
+    private Transform audioListener;
+
+    [SerializeField]
+    private CinemachineImpulseSource impulseSource;
+
+    public void ShakeCamera()
+    {
+        impulseSource?.GenerateImpulse();
+    }
 
     public void ResetCamPos(bool isStartPoint = false)
     {
@@ -189,7 +198,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.isPause)
+        if (GameManager.Instance.isPause || GameManager.Instance.cameraLock)
             return;
 
         CamMove();
@@ -198,7 +207,17 @@ public class CameraController : MonoBehaviour
             SetCam();
     }
 
-    private void FixedUpdate()
+    private void Awake()
+    {
+        CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
+    }
+
+    private void OnDestroy()
+    {
+        CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCameraUpdated);
+    }
+
+    private void OnCameraUpdated(CinemachineBrain brain)
     {
         stackCam.orthographicSize = Camera.main.orthographicSize;
         stackCam2.orthographicSize = Camera.main.orthographicSize;

@@ -8,6 +8,14 @@ public struct QuestData
 {
     public string id;
     public List<int> curVal;
+    public float curTime;
+}
+
+public struct SkillData
+{
+    public string skillName;
+    public float curCool;
+    public Dictionary<string, object> additionalData;
 }
 
 public struct BattlerData
@@ -30,6 +38,8 @@ public struct BattlerData
     public List<int> crossedRow;
     public List<int> crossedCol;
 
+    public List<SkillData> skills;
+
     public Dictionary<string, object> additionalData;
 }
 
@@ -43,6 +53,7 @@ public struct TileData
     public bool isRemovable;
     public string trapId;
     public int trapDuration;
+    public bool isUpgraded;
 }
 
 public struct SpawnerData
@@ -62,6 +73,9 @@ public struct ShopData
 
 public class PlayerData
 {
+    //Scene 관련
+    public string sceneName;
+
     //GameManager 관련
     public int curWave;
     public float curTime;
@@ -96,9 +110,11 @@ public class PlayerData
     public List<ShopData> herbData;
     public List<ShopData> itemsData;
     public int itemFluctCool;
+    public int itemRefreshCool;
 
     //퀘스트 현황
     public List<string> clearedQuests;
+    public List<string> failedQuests;
     public List<string> enqueuedQuests;
     public List<QuestData> curQuests;
 }

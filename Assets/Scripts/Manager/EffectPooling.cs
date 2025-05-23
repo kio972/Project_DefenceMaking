@@ -6,6 +6,16 @@ public class EffectPooling : Singleton<EffectPooling>
 {
     private List<GameObject> fxEffects = new List<GameObject>();
 
+    public void StopAllEffect()
+    {
+        foreach(GameObject fxEffect in fxEffects)
+        {
+            ParticleSystem particleSystem = fxEffect.GetComponentInChildren<ParticleSystem>(true);
+            particleSystem.Stop();
+            fxEffect.gameObject.SetActive(false);
+        }
+    }
+
     public void PlayEffect(string effectName, Transform pos, Vector3 modifyPos = new Vector3(), float modifyScale = 1f, Vector3 target = new Vector3())
     {
         string particleAddress = "Prefab/Effect/" + effectName;

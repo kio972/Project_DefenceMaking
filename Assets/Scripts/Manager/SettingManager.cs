@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public enum ScreenSize
@@ -44,6 +45,17 @@ public enum ControlKey
     key_Deploy,
     key_Research,
     key_Shop,
+
+    key_Draw,
+}
+
+public enum VolumeType
+{
+    Master,
+    BGM,
+    SFX,
+    UI,
+    Ambience,
 }
 
 public class BindKey
@@ -68,9 +80,11 @@ public class BindKey
 public class SettingManager : Singleton<SettingManager>
 {
     #region GamePlaySetting
-    public Languages language = Languages.korean;
+    public ReactiveProperty<Languages> _language = new ReactiveProperty<Languages>(Languages.english);
+    public Languages language { get => _language.Value; set { _language.Value = value; } }
     public AutoPlaySetting autoPlay = AutoPlaySetting.setTile;
     public float textSize = 1f;
+    public bool showShortCut = false;
     #endregion
 
     #region ControlsSetting
@@ -81,8 +95,8 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_Camera_MoveRight = new BindKey(ControlKey.key_Camera_MoveRight, KeyCode.D);
 
     public BindKey key_SpeedControl_Zero = new BindKey(ControlKey.key_SpeedControl_Zero, KeyCode.Space);
-    public BindKey key_SpeedControl_One = new BindKey(ControlKey.key_SpeedControl_One, KeyCode.Alpha1);
-    public BindKey key_SpeedControl_Double = new BindKey(ControlKey.key_SpeedControl_Double, KeyCode.Alpha2);
+    public BindKey key_SpeedControl_One = new BindKey(ControlKey.key_SpeedControl_One, KeyCode.F1);
+    public BindKey key_SpeedControl_Double = new BindKey(ControlKey.key_SpeedControl_Double, KeyCode.F2);
 
     public BindKey key_Camera_Reset = new BindKey(ControlKey.key_SpeedControl_Double, KeyCode.Return);
     public BindKey key_Camera_ResetAssist = new BindKey(ControlKey.key_Camera_ResetAssist, KeyCode.LeftShift);
@@ -93,9 +107,13 @@ public class SettingManager : Singleton<SettingManager>
     public BindKey key_RotateLeft = new BindKey(ControlKey.key_RotateTile, KeyCode.Q);
     public BindKey key_RotateRight = new BindKey(ControlKey.key_RotateTile, KeyCode.E);
 
-    public BindKey key_Deploy = new BindKey(ControlKey.key_Deploy, KeyCode.F1);
-    public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.F2);
-    public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.F3);
+    public BindKey key_Deploy = new BindKey(ControlKey.key_Deploy, KeyCode.Z);
+    public BindKey key_Research = new BindKey(ControlKey.key_Research, KeyCode.X);
+    public BindKey key_Shop = new BindKey(ControlKey.key_Shop, KeyCode.C);
+
+    public BindKey key_Draw = new BindKey(ControlKey.key_Draw, KeyCode.F);
+
+    public int stageState = 0;
 
     public List<BindKey> bindKeys;
 
@@ -171,17 +189,66 @@ public class SettingManager : Singleton<SettingManager>
     #endregion
 
     #region AudioSetting
-    public float masterVolume = 1f;
-    public float bgmVolume = 1f;
-    public float fxVolume = 1f;
-    public float uiVolume = 1f;
+    private float masterVolume = 1f;
+    private float bgmVolume = 1f;
+    private float fxVolume = 1f;
+    private float uiVolume = 1f;
+    private float ambienceVolume = 1f;
     public bool muteOnBackground = false;
 
     public float _BGMVolume { get { return bgmVolume * masterVolume; } }
     public float _FxVolume { get { return fxVolume * masterVolume; } }
     public float _UIVolume { get { return uiVolume * masterVolume; } }
 
+    public float GetVolume(VolumeType volumeType)
+    {
+        switch(volumeType)
+        {
+            case VolumeType.Master:
+                return masterVolume;
+            case VolumeType.BGM:
+                return bgmVolume;
+            case VolumeType.SFX:
+                return fxVolume;
+            case VolumeType.UI:
+                return uiVolume;
+            case VolumeType.Ambience:
+                return ambienceVolume;
+        }
+
+        return 0;
+    }
+
+    public void SetVolume(VolumeType volumeType, float value)
+    {
+        switch (volumeType)
+        {
+            case VolumeType.Master:
+                masterVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_Master", value);
+                break;
+            case VolumeType.BGM:
+                bgmVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_BGM", value);
+                break;
+            case VolumeType.SFX:
+                fxVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_SFX", value);
+                break;
+            case VolumeType.UI:
+                uiVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_UI", value);
+                break;
+            case VolumeType.Ambience:
+                ambienceVolume = value;
+                AudioManager.Instance.ChangeVolume("UI_Volume_Ambience", value);
+                break;
+        }
+    }
+
     #endregion
+
+    public string nextScene = "";
 
     public void Set_FPSLimit(bool value)
     {
@@ -213,6 +280,12 @@ public class SettingManager : Singleton<SettingManager>
         SaveManager.Instance.SaveSettingData();
     }
 
+    public void Set_ShowShortcut(bool value)
+    {
+        this.showShortCut = value;
+        SaveManager.Instance.SaveSettingData();
+    }
+
     public int[] GetScreenSize()
     {
         int width = 0;
@@ -227,7 +300,7 @@ public class SettingManager : Singleton<SettingManager>
 
     public void SetLanguage()
     {
-        SetLanguage(language);
+        //SetLanguage(language);
     }
 
     public void SetLanguage(Languages language)
@@ -280,6 +353,7 @@ public class SettingManager : Singleton<SettingManager>
         bindKeys.Add(key_Deploy);
         bindKeys.Add(key_Research);
         bindKeys.Add(key_Shop);
+        bindKeys.Add(key_Draw);
     }
 
     public void Init()
@@ -288,7 +362,7 @@ public class SettingManager : Singleton<SettingManager>
         InitControlKey();
         Set_ScreenSize(screenSize);
         Set_FullScreen(screen_FullSize);
-        SetLanguage(language);
+        //SetLanguage(language);
         SetTextSize(textSize);
     }
 }

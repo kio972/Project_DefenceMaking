@@ -34211,7 +34211,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &2591017609458029578
 MonoBehaviour:
@@ -34268,7 +34268,21 @@ MonoBehaviour:
   victory: {fileID: 2785780346168339724}
   defeat: {fileID: 7306981320150937695}
   fade: {fileID: 918777996546156807}
-  titleBtn: {fileID: 3874838725099155022}
+  titleBtn: {fileID: 5519010093497112561}
+  winSound:
+    Guid:
+      Data1: 1554254069
+      Data2: 1139810752
+      Data3: 1330456479
+      Data4: 1866276465
+    Path: event:/Object/Icon_Event/Icon_Victory Event
+  defeatSound:
+    Guid:
+      Data1: -219482276
+      Data2: 1316657878
+      Data3: 252684708
+      Data4: 101380464
+    Path: event:/Object/Icon_Event/Icon_Defect_Event
 --- !u!1 &2591017609538039964
 GameObject:
   m_ObjectHideFlags: 0
@@ -39600,6 +39614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btn: {fileID: 1862602105592880572}
   sceneName: TitleScene
+  useLoadingScene: 0
 --- !u!1 &4295358570168652218
 GameObject:
   m_ObjectHideFlags: 0

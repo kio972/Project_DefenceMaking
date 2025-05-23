@@ -48,15 +48,15 @@ public class HerbSlot : FluctItem
         switch (targetherb)
         {
             case 1:
-                GameManager.Instance.herb1 = Mathf.Clamp(GameManager.Instance.herb1, 0, GameManager.Instance.herb1Max);
+                GameManager.Instance.herbDic[HerbType.BlackHerb] = Mathf.Clamp(GameManager.Instance.herbDic[HerbType.BlackHerb], 0, GameManager.Instance.herb1Max);
                 GameManager.Instance.notificationBar?.SetMesseage("흑색 허브의 가치가 떨어져 폐기처분되었습니다.", NotificationType.Shop);
                 return;
             case 2:
-                GameManager.Instance.herb2 = Mathf.Clamp(GameManager.Instance.herb1, 0, GameManager.Instance.herb2Max);
+                GameManager.Instance.herbDic[HerbType.PurpleHerb] = Mathf.Clamp(GameManager.Instance.herbDic[HerbType.PurpleHerb], 0, GameManager.Instance.herb2Max);
                 GameManager.Instance.notificationBar?.SetMesseage("자색 허브의 가치가 떨어져 폐기처분되었습니다.", NotificationType.Shop);
                 return;
             case 3:
-                GameManager.Instance.herb3 = Mathf.Clamp(GameManager.Instance.herb1, 0, GameManager.Instance.herb3Max);
+                GameManager.Instance.herbDic[HerbType.WhiteHerb] = Mathf.Clamp(GameManager.Instance.herbDic[HerbType.WhiteHerb], 0, GameManager.Instance.herb3Max);
                 GameManager.Instance.notificationBar?.SetMesseage("백색 허브의 가치가 떨어져 폐기처분되었습니다.", NotificationType.Shop);
                 return;
         }
@@ -67,13 +67,13 @@ public class HerbSlot : FluctItem
         switch (targetherb)
         {
             case 1:
-                GameManager.Instance.herb1 += count;
+                GameManager.Instance.herbDic[HerbType.BlackHerb] += count;
                 return;
             case 2:
-                GameManager.Instance.herb2 += count;
+                GameManager.Instance.herbDic[HerbType.PurpleHerb] += count;
                 return;
             case 3:
-                GameManager.Instance.herb3 += count;
+                GameManager.Instance.herbDic[HerbType.WhiteHerb] += count;
                 return;
         }
     }
@@ -82,11 +82,11 @@ public class HerbSlot : FluctItem
         switch (targetherb)
         {
             case 1:
-                return GameManager.Instance.herb1 > 0 ? true : false;
+                return GameManager.Instance.herbDic[HerbType.BlackHerb] > 0 ? true : false;
             case 2:
-                return GameManager.Instance.herb2 > 0 ? true : false;
+                return GameManager.Instance.herbDic[HerbType.PurpleHerb] > 0 ? true : false;
             case 3:
-                return GameManager.Instance.herb3 > 0 ? true : false;
+                return GameManager.Instance.herbDic[HerbType.WhiteHerb] > 0 ? true : false;
         }
 
         return false;

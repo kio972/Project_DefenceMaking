@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class ResearchSelectControl : MonoBehaviour
 {
-    ResearchSelectBtn curBtn = null;
+    ResearchSelectBtn _curBtn = null;
+
+    ResearchSelectBtn[] _researchBtns;
+    public ResearchSelectBtn curBtn { get => _curBtn; }
+
     [SerializeField]
-    GameObject popUpUI;
+    private ResearchPopup popUp;
 
     public void SetCurResearch(ResearchSelectBtn target)
     {
-        curBtn?.DeActiveClick();
-        curBtn = target;
+        _curBtn?.DeActiveClick();
+        _curBtn = target;
+        popUp?.ResetPopUp();
     }
 
     private void Awake()
     {
-        ResearchSelectBtn[] btns = GetComponentsInChildren<ResearchSelectBtn>();
-        if (btns.Length == 0)
+        _researchBtns = GetComponentsInChildren<ResearchSelectBtn>();
+        if (_researchBtns.Length == 0)
             return;
-        foreach(ResearchSelectBtn btn in btns)
+        foreach(ResearchSelectBtn btn in _researchBtns)
         {
             btn.Init();
             btn.DeActiveClick();
         }
 
-        btns[0].OnClick();
+        _researchBtns[0].OnClick();
     }
 }

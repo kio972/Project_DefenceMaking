@@ -12,6 +12,100 @@ using System.Linq;
 
 public static class UtilHelper
 {
+    public static Tile CalculateMidTile(List<Tile> includeRooms)
+    {
+        if (includeRooms.Count == 1)
+            return includeRooms[0];
+
+        Vector3 vector = Vector3.zero;
+        foreach (Tile tile in includeRooms)
+            vector += tile.transform.position;
+
+        vector = vector / includeRooms.Count;
+
+        Tile resultTile = includeRooms[0];
+        float minMagnitude = (vector - includeRooms[0].transform.position).magnitude;
+
+        foreach (Tile tile in includeRooms)
+        {
+            float targetMagnitude = (vector - tile.transform.position).magnitude;
+            if (targetMagnitude < minMagnitude)
+            {
+                minMagnitude = targetMagnitude;
+                resultTile = tile;
+            }
+        }
+
+        return resultTile;
+    }
+
+    public static Vector3 GetDirectionalVector(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.Left: return new Vector3(-1, 0, 0);
+            case Direction.LeftUp: return new Vector3(-0.707f, 0.707f, 0);
+            case Direction.RightUp: return new Vector3(0.707f, 0.707f, 0);
+            case Direction.Right: return new Vector3(1, 0, 0);
+            case Direction.RightDown: return new Vector3(0.707f, -0.707f, 0);
+            case Direction.LeftDown: return new Vector3(-0.707f, -0.707f, 0);
+            default: return Vector3.zero;
+        }
+    }
+
+    public static TileType GetTileType(string type)
+    {
+        switch(type)
+        {
+            case "road":
+                return TileType.Path;
+            case "room":
+                return TileType.Room_Single;
+            case "roomPart":
+                return TileType.Room;
+            case "roomDoor":
+                return TileType.Door;
+            case "environment":
+                return TileType.Environment;
+            case "herb":
+                return TileType.Herb;
+            default:
+                return TileType.Special;
+        }
+    }
+
+    public static List<Tile> GetPathCount(Tile startTile)
+    {
+        List<Tile> visited = new List<Tile> { startTile };
+        Queue<Tile> queue = new Queue<Tile>();
+        queue.Enqueue(startTile);
+
+        while (queue.Count != 0)
+        {
+            Tile next = queue.Dequeue();
+            foreach (Direction dir in next.PathDirection)
+            {
+                TileNode targetNode = next.curNode.DirectionalNode(dir);
+                // 대상 방향에 길 타일 없음
+                if (targetNode == null || targetNode.curTile == null || targetNode.curTile._TileType != TileType.Path)
+                    continue;
+
+                // 이미 방문한 타일임
+                if (visited.Contains(targetNode.curTile))
+                    continue;
+
+                // 대상 방향으로 길 연결되어있지 않음
+                if (!targetNode.curTile.PathDirection.Contains(UtilHelper.ReverseDirection(dir)))
+                    continue;
+
+                queue.Enqueue(targetNode.curTile);
+                visited.Add(targetNode.curTile);
+            }
+        }
+
+        return visited;
+    }
+
     public static bool ContainsParam(this Animator _Anim, string _ParamName)
     {
         foreach (AnimatorControllerParameter param in _Anim.parameters)
@@ -315,7 +409,10 @@ public static class UtilHelper
         string targetPrefabPath = "Prefab/";
         switch (type)
         {
-            case CardType.MapTile:
+            case CardType.PathTile:
+                targetPrefabPath += "Tile";
+                break;
+            case CardType.RoomTile:
                 targetPrefabPath += "Tile";
                 break;
             case CardType.Monster:
@@ -329,6 +426,9 @@ public static class UtilHelper
                 break;
             case CardType.Environment:
                 targetPrefabPath += "Environment";
+                break;
+            default:
+                targetPrefabPath += "Objects";
                 break;
         }
         targetPrefabPath = targetPrefabPath + "/" + targetName;

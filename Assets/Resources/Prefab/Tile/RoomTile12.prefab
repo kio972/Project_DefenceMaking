@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609608640754181932}
   - component: {fileID: -508909328115285257}
+  - component: {fileID: -4747985100633091177}
   m_Layer: 0
   m_Name: RoomTile12
   m_TagString: Untagged
@@ -46,14 +47,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathDirection: 
-  roomDirection: 01000000030000000400000006000000
+  roomDirection: 01000000030000000400000005000000
   tileType: 2
   roomMana: 1
-  curNode: {fileID: 0}
+  spawnLock: 0
   waitToMove: 0
   twin: {fileID: 0}
-  trap: {fileID: 0}
   IsBigRoom: 0
+  rotateSound:
+    Guid:
+      Data1: -1408924426
+      Data2: 1218834812
+      Data3: -707702861
+      Data4: 755462683
+    Path: event:/UI/Tile_Rotate
+  buildSound:
+    Guid:
+      Data1: -2133203839
+      Data2: 1144174140
+      Data3: 1072843436
+      Data4: -2018870880
+    Path: event:/UI/Tile_Create
+  destroySound:
+    Guid:
+      Data1: 1756529270
+      Data2: 1249738115
+      Data3: -1826863970
+      Data4: -182735825
+    Path: event:/UI/Tile_demolition
+--- !u!114 &-4747985100633091177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609608640754181931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad83448870ef8234d8f2a30d74c48bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradeMaterial: {fileID: 2100000, guid: a35575cb4abf1944ebc70ecb1864b989, type: 2}
 --- !u!1001 &3168065380198208021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147,16 +181,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: toolTipKey_descs
-      value: tooltip_room013_1
+      value: card_1_room_parts1
       objectReference: {fileID: 0}
     - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: toolTipKey_header
-      value: tooltip_room013_0
+      value: card_0_room_parts9
       objectReference: {fileID: 0}
     - target: {fileID: 8937943421281466749, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86a4d151dd066944ea1d47775dbfc5f4, type: 2}
+      objectReference: {fileID: 2100000, guid: 76a8e71281933b34088dc393181dd4f6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
 --- !u!4 &3202938322182688393 stripped

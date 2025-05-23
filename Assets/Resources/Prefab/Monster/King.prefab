@@ -44,10 +44,7 @@ GameObject:
   - component: {fileID: 971494091278798916}
   - component: {fileID: 4050704818054284067}
   - component: {fileID: 6646922155541554632}
-  - component: {fileID: 5650871661538000912}
-  - component: {fileID: 6945040983027666840}
-  - component: {fileID: 9043513347336103160}
-  - component: {fileID: 6302651962080252198}
+  - component: {fileID: 1638200518761596297}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -67,6 +64,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5993798088055042262}
   - {fileID: 4856769621438276815}
   m_Father: {fileID: 1677496451540108331}
   m_RootOrder: 0
@@ -119,7 +117,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &4050704818054284067
 Animator:
@@ -183,7 +181,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &5650871661538000912
+--- !u!114 &1638200518761596297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,36 +190,78 @@ MonoBehaviour:
   m_GameObject: {fileID: 348260517911839998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: 8362aaa0085de43aab0313854598737a, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 4c920cfdfdbe0492db421adf796fa497, type: 3}
-  deadSoundMult: 1
---- !u!136 &6945040983027666840
+  attackSound:
+    Guid:
+      Data1: 699936619
+      Data2: 1236499098
+      Data3: 169747096
+      Data4: -1487959965
+    Path: event:/Object/Dantalian/Demon_Attack
+  deadSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!1 &566943586218103506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5993798088055042262}
+  - component: {fileID: 3730748416264057475}
+  - component: {fileID: 3689870650461414014}
+  - component: {fileID: 764650921395613452}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5993798088055042262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566943586218103506}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6666667, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4513429621830501250}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3730748416264057475
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348260517911839998}
+  m_GameObject: {fileID: 566943586218103506}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3.2077816
-  m_Height: 13.138533
+  m_Radius: 3.5
+  m_Height: 14
   m_Direction: 1
-  m_Center: {x: 0.053498983, y: 6.5690613, z: 0}
---- !u!114 &9043513347336103160
+  m_Center: {x: -0.5, y: 6.5, z: 0}
+--- !u!114 &3689870650461414014
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348260517911839998}
+  m_GameObject: {fileID: 566943586218103506}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
@@ -231,13 +271,13 @@ MonoBehaviour:
   _subLevel: 0
   toolTipKey_header: tooltip_boss_0
   toolTipKey_descs: tooltip_boss_1
---- !u!114 &6302651962080252198
+--- !u!114 &764650921395613452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348260517911839998}
+  m_GameObject: {fileID: 566943586218103506}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
@@ -276,7 +316,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4513429621830501250}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3216933740129522476
 MeshRenderer:
@@ -406,6 +446,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 1
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -421,6 +462,7 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_p10001
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
 --- !u!136 &7141161965367787149
 CapsuleCollider:
   m_ObjectHideFlags: 0

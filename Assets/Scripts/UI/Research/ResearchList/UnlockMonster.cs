@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnlockMonster : MonoBehaviour, Research
+public class UnlockMonster : MonoBehaviour, IResearch
 {
     [SerializeField]
-    private string targetId;
+    private string[] targetId;
 
     public void ActiveResearch()
     {
-        PassiveManager.Instance.AddDeployData(targetId);
+        foreach (string id in targetId)
+            PassiveManager.Instance.AddDeployData(id);
     }
 }

@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
 {
-    Transform devilTransform;
+    Transform _devilTransform;
 
-    public int attackRate { get => PassiveManager.Instance.devilAuraPower; set => throw new System.NotImplementedException(); }
+    public float attackRate { get => _devilAuraPower; set => throw new System.NotImplementedException(); }
 
-    public DevilAura(Battler battler, int duration, Transform devilTransform) : base(battler, duration)
+    private float _devilAuraRange;
+    private float _devilAuraPower;
+
+    public DevilAura(Battler battler, int duration, Transform devilTransform, float devilAuraRange, float devilAuraPower) : base(battler, duration)
     {
         Init(battler, duration);
         _originDuration = 0;
         effectType = EffectType.Buff;
-        this.devilTransform = devilTransform;
+        _devilAuraRange = devilAuraRange;
+        _devilAuraPower = devilAuraPower;
+        _devilTransform = devilTransform;
     }
 
     private float scanCoolTime = 0.3f;
     private float elapsedTime = 0.3f;
+
+    public void UpdateEffectPower(float devilAuraRange, int devilAuraPower)
+    {
+        _devilAuraRange = devilAuraRange;
+        _devilAuraPower = devilAuraPower;
+    }
 
     public void WhileEffect()
     {
@@ -29,8 +40,8 @@ public class DevilAura : StatusEffect, IWhileEffect, IAttackPowerRateEffect
 
         elapsedTime = 0;
 
-        float dist = UtilHelper.CalCulateDistance(_battler.transform, devilTransform);
-        if (dist > PassiveManager.Instance.devilAuraRange)
+        float dist = UtilHelper.CalCulateDistance(_battler.transform, _devilTransform);
+        if (dist > _devilAuraRange)
         {
             _battler.RemoveStatusEffect(this);
             DeActiveEffect();

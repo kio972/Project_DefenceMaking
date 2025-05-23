@@ -17,25 +17,21 @@ public class MapBuilder : MonoBehaviour
     private int startPathSize = 3;
 
     [SerializeField]
-    private int emptyNodeSize = 4;
+    protected int emptyNodeSize = 4;
 
     private int _curTileSetCount = 0;
     private int forHiddenTileCount = 10;
     
     public int curTileSetCount { get => _curTileSetCount; set => _curTileSetCount = value; }
 
-    private bool SetHiddenTileContinuous(GameObject tile)
+    private bool SetHiddenTileContinuous(ITileKind tileKind)
     {
         if (!GameManager.Instance.IsInit)
             return false;
 
-        if (tile.GetComponent<TileHidden>() != null)
+        if (tileKind is TileHidden || tileKind.curNode == NodeManager.Instance.endPoint)
             return false;
-
-        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().curNode == NodeManager.Instance.endPoint)
-            return false;
-
-        if (tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().IsDormant)
+        if (tileKind is Tile tile && tile.IsDormant)
             return false;
 
         _curTileSetCount++;
@@ -77,9 +73,8 @@ public class MapBuilder : MonoBehaviour
             return;
 
         TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
-        GameObject targetPrefab = GetRandomPrefab();
         hidden = Instantiate(hidden);
-        hidden.Init(targetNode, targetPrefab);
+        hidden.Init(targetNode);
     }
 
     public async UniTaskVoid SetHiddenTile(TileData tile)
@@ -90,9 +85,8 @@ public class MapBuilder : MonoBehaviour
             return;
 
         TileHidden hidden = Resources.Load<TileHidden>("Prefab/Tile/HiddenTile");
-        GameObject targetPrefab = GetRandomPrefab();
         hidden = Instantiate(hidden);
-        hidden.Init(targetNode, targetPrefab);
+        hidden.Init(targetNode);
     }
 
     private void SetRamdomTileToRandomNode(TileNode tileNode, Tile targetTilePrefab, int range)
@@ -136,7 +130,7 @@ public class MapBuilder : MonoBehaviour
         newTile.Init(targetNode, true);
     }
 
-    private void SetBasicTile()
+    protected virtual void SetBasicTile()
     {
         //스타트포인트부터 스타트포인트 - 직선길 - 직선길  직선길 - 직선길 - 마왕방
         //print(NodeManager.Instance.startPoint.transform.position);
@@ -188,6 +182,21 @@ public class MapBuilder : MonoBehaviour
         Tile roomTile = Instantiate(roomPrefab)?.GetComponent<Tile>();
         roomTile.Init(nextNode, false, false, false);
         roomTile.RotateTile(true);
+
+        Tutorial tutorial = FindObjectOfType<Tutorial>();
+        if (tutorial == null)
+        {
+            SetHiddenTile(3).Forget();
+            SetHiddenTile(3).Forget();
+            SetHiddenTile(3).Forget();
+        }
+
+        StartHiddenTileCounter();
+    }
+
+    public virtual void StartHiddenTileCounter()
+    {
+        NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
     }
 
     private bool IsStartPointValid(TileNode node)
@@ -225,7 +234,7 @@ public class MapBuilder : MonoBehaviour
         if (isRoom == 1)
             index = DataManager.Instance.roomCard_Indexs[Random.Range(0, DataManager.Instance.roomCard_Indexs.Count)];
 
-        string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+        string prefabName = DataManager.Instance.deck_Table[index]["prefab"].ToString();
 
         GameObject targetTilePrefab = Resources.Load<GameObject>("Prefab/Tile/" + prefabName);
         if (targetTilePrefab != null)
@@ -241,7 +250,7 @@ public class MapBuilder : MonoBehaviour
         if(isRoom == 1)
             index = DataManager.Instance.roomCard_Indexs[Random.Range(0, DataManager.Instance.roomCard_Indexs.Count)];
 
-        string prefabName = DataManager.Instance.Deck_Table[index]["prefab"].ToString();
+        string prefabName = DataManager.Instance.deck_Table[index]["prefab"].ToString();
 
         Tile targetTilePrefab = Resources.Load<Tile>("Prefab/Tile/" + prefabName);
         if(targetTilePrefab == null)
@@ -286,6 +295,11 @@ public class MapBuilder : MonoBehaviour
             instance.Init(node, tile.isDormant, tile.isRemovable, false);
             if (!string.IsNullOrEmpty(tile.trapId))
                 BattlerPooling.Instance.SpawnTrap(tile.trapId, node, "id", tile.trapDuration);
+            if(tile.isUpgraded)
+            {
+                TileUpgrader upgrader = instance.GetComponent<TileUpgrader>();
+                upgrader?.UpgradeTile();
+            }
         }
     }
 
@@ -300,19 +314,7 @@ public class MapBuilder : MonoBehaviour
         NodeManager.Instance.startPoint = NodeManager.Instance.FindNode(0, 0);
 
         if(setmap)
-        {
             SetBasicTile();
-
-            Tutorial tutorial = FindObjectOfType<Tutorial>();
-            if (tutorial == null)
-            {
-                SetHiddenTile(3).Forget();
-                SetHiddenTile(3).Forget();
-                SetHiddenTile(3).Forget();
-            }
-        }
-
-        NodeManager.Instance.AddSetTileEvent(SetHiddenTileContinuous);
 
         InputManager input = InputManager.Instance;
     }

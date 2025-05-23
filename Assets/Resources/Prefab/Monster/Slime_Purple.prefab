@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7843268663189822344}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &2256106872305122990
 MeshRenderer:
@@ -133,6 +133,113 @@ Transform:
   m_Father: {fileID: 5274736231055975365}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4863317824534022279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5045217982242117499}
+  m_Layer: 6
+  m_Name: MiddlePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5045217982242117499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4863317824534022279}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7628547921235060627}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5051075587597247914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 918754166477264919}
+  - component: {fileID: 9110019621948816390}
+  - component: {fileID: 5423722243562786555}
+  - component: {fileID: 7195630133118774218}
+  m_Layer: 10
+  m_Name: toolTipObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &918754166477264919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051075587597247914}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7843268663189822344}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &9110019621948816390
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051075587597247914}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.5
+  m_Center: {x: 0, y: 3, z: 0}
+--- !u!114 &5423722243562786555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051075587597247914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipType: 3
+  _subLevel: 0
+  toolTipKey_header: slime_explosion
+  toolTipKey_descs: slime_explosion_1
+--- !u!114 &7195630133118774218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051075587597247914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetOutline: {fileID: 455239411113457382}
 --- !u!1 &7007486865758600648
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,10 +253,7 @@ GameObject:
   - component: {fileID: 5841294556767739458}
   - component: {fileID: 6103454960217645788}
   - component: {fileID: 3751242916941741315}
-  - component: {fileID: 3298926367875218062}
-  - component: {fileID: 3994244078372220029}
-  - component: {fileID: 7150984735978809819}
-  - component: {fileID: 7948858585109861351}
+  - component: {fileID: 7823730851802540275}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -169,6 +273,7 @@ Transform:
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 918754166477264919}
   - {fileID: 749473199666950964}
   m_Father: {fileID: 7628547921235060627}
   m_RootOrder: 0
@@ -285,7 +390,7 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
---- !u!114 &3298926367875218062
+--- !u!114 &7823730851802540275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,63 +399,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7007486865758600648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561e954a40606af4a9eaee3de0e1c2f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e5dcf84521f729b4a8d7a2ef494d2b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSounds:
-  - {fileID: 8300000, guid: 56f702c862b304af1a3dd8701e586d12, type: 3}
-  - {fileID: 8300000, guid: 05019a5400c724794804e508be725196, type: 3}
-  - {fileID: 8300000, guid: a9e260fb6508f4a2ba1d7f8cf472872e, type: 3}
-  attackSoundMult: 1
-  deadSounds:
-  - {fileID: 8300000, guid: 4027f8ddf52774545a81eae02e8a6a9b, type: 3}
-  - {fileID: 8300000, guid: 7d9a919b5c01045659da1ad85ff86291, type: 3}
-  - {fileID: 8300000, guid: ed62bfff6df5f4ef59c468492da2b1de, type: 3}
-  - {fileID: 8300000, guid: fad36d84a44e04d369fc0f6b71ecf855, type: 3}
-  deadSoundMult: 0.6
---- !u!136 &3994244078372220029
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7007486865758600648}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 4.76
-  m_Height: 8.744373
-  m_Direction: 1
-  m_Center: {x: -0.026533604, y: 3.09, z: 0}
---- !u!114 &7150984735978809819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7007486865758600648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1fd724ea7f7ca47bc7572bb7d15945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _toolTipType: 3
-  _subLevel: 0
-  toolTipKey_header: tooltip_slime3_0
-  toolTipKey_descs: tooltip_slime3_1
---- !u!114 &7948858585109861351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7007486865758600648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d45c8d0bdcf560e4cb11b55da482e1a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetOutline: {fileID: 455239411113457382}
+  attackSound:
+    Guid:
+      Data1: -1903000713
+      Data2: 1122275282
+      Data3: 34175655
+      Data4: 206842897
+    Path: event:/Object/Creture/Slime/Attack_Slime
+  deadSound:
+    Guid:
+      Data1: 1686888206
+      Data2: 1311738977
+      Data3: -886212171
+      Data4: -1919299633
+    Path: event:/Object/Creture/Slime/Creture_Slime_Explosion
 --- !u!1 &7407060762157910197
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +445,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7843268663189822344}
+  - {fileID: 5045217982242117499}
   m_Father: {fileID: 8796258438534338472}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -437,6 +503,7 @@ MonoBehaviour:
   attackRange: 0
   attackCoolTime: 0
   curAttackCoolTime: 0
+  attackTargetCount: 1
   splashAttack: 0
   splashDamage: 0
   splashRange: 0
@@ -452,10 +519,20 @@ MonoBehaviour:
   attackZone: {fileID: 0}
   battlerID: s_m10003
   attackEffect: {fileID: 0}
+  curMoveSpeed: 0
   isHide: 0
   holdBackCount: 1
   summonSound: {fileID: 8300000, guid: 2e1484cc7273745c98d5cb64ae25ef07, type: 3}
+  summonSoundEvent:
+    Guid:
+      Data1: 427867390
+      Data2: 1242897292
+      Data3: -400864601
+      Data4: -759727518
+    Path: event:/Object/Creture/Slime/Creture_Slime_Spawn
   explosionDamage: 10
+  middlePos: {fileID: 5045217982242117499}
+  explosionPrefab: {fileID: 6441526961993058372, guid: 2a370f81440c2fb40ba65a8d7af3908d, type: 3}
 --- !u!136 &7568349882826013026
 CapsuleCollider:
   m_ObjectHideFlags: 0

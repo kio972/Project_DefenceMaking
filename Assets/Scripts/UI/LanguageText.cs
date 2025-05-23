@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 using TMPro;
 
+public interface ILanguageChange
+{
+    void ChangeLangauge(Languages language, string key = null);
+}
+
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class LanguageText : MonoBehaviour
+public class LanguageText : MonoBehaviour, ILanguageChange
 {
     [SerializeField]
     protected string keyStr;
@@ -16,6 +22,8 @@ public class LanguageText : MonoBehaviour
     private TextMeshProUGUI text;
 
     private float originSize;
+
+    private object _additional = null;
 
     public TextMeshProUGUI _Text
     {
@@ -50,9 +58,13 @@ public class LanguageText : MonoBehaviour
         mult = Mathf.Clamp(mult, 0.8f, 1.2f);
         float targetSize = Mathf.Round(originSize * mult);
         _Text.fontSize = targetSize;
+        if(_Text.enableAutoSizing)
+            _Text.fontSizeMax = targetSize;
+        else
+            _Text.fontSize = targetSize;
     }
 
-    public void ChangeLangauge(Languages language, string key = null)
+    public void ChangeLangauge(Languages language, string key, object additional)
     {
         if (key != null)
             keyStr = key;
@@ -60,7 +72,7 @@ public class LanguageText : MonoBehaviour
             return;
 
         // 1. text의 key값으로 인덱스 불러오기
-        int index = UtilHelper.Find_Data_Index(keyStr, DataManager.Instance.Language_Table, "id");
+        int index = UtilHelper.Find_Data_Index(keyStr, DataManager.Instance.language_Table, "id");
         if (index == -1)
         {
             _Text.text = keyStr;
@@ -68,13 +80,57 @@ public class LanguageText : MonoBehaviour
         }
 
         string targetLanguage = language.ToString();
-        Dictionary<string, object> data = DataManager.Instance.Language_Table[index];
+        Dictionary<string, object> data = DataManager.Instance.language_Table[index];
+        if (!data.ContainsKey(targetLanguage))
+        {
+            _Text.text = keyStr;
+            return;
+        }
+
+        _Text.text = data[targetLanguage].ToString().Replace("%", additional.ToString());
+    }
+
+    public void ChangeLangauge(Languages language, string key = null)
+    {
+        if (_additional != null)
+        {
+            ChangeLangauge(language, key, _additional);
+            return;
+        }
+
+        if (key != null)
+            keyStr = key;
+        if (string.IsNullOrEmpty(keyStr))
+            return;
+
+        // 1. text의 key값으로 인덱스 불러오기
+        int index = UtilHelper.Find_Data_Index(keyStr, DataManager.Instance.language_Table, "id");
+        if (index == -1)
+        {
+            _Text.text = keyStr;
+            return;
+        }
+
+        string targetLanguage = language.ToString();
+        Dictionary<string, object> data = DataManager.Instance.language_Table[index];
         if(!data.ContainsKey(targetLanguage))
         {
             _Text.text = keyStr;
             return;
         }
 
-        _Text.text = data[targetLanguage].ToString();
+        _Text.text = data[targetLanguage].ToString().Replace("<link=", "<u><link=").Replace("</link>", "</link></u>");
     }
+
+    private void Start()
+    {
+        ChangeLangauge(SettingManager.Instance.language);
+        SettingManager.Instance._language.Subscribe(_ => ChangeLangauge(_)).AddTo(gameObject);
+        //LanguageManager.Instance.AddLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
+    }
+
+    //private void OnDestroy()
+    //{
+    //    LanguageManager.Instance.RemoveLanguageAction(() => ChangeLangauge(SettingManager.Instance.language));
+    //}
 }

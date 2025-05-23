@@ -3,7 +3,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public interface ITileEffect
+{
 
+}
+
+public interface IBuffContainer
+{
+    List<IBuffEffectInfo> effectInfos { get; }
+}
+
+public interface IBuffEffectInfo
+{
+    string descKey { get; }
+    float effectValue { get; }
+}
+
+public interface IBattlerEnterEffect : ITileEffect
+{
+    void Effect(Battler target);
+}
+
+public interface ISetTileEffect : ITileEffect
+{
+    void Effect(ITileKind target);
+}
+
+public interface IObjectSetEffect : ITileEffect
+{
+    void Effect(IObjectKind target);
+}
 
 public enum Direction
 {
@@ -21,8 +50,9 @@ public class TileNode : MonoBehaviour
     public int row;
     public int col;
 
-    public Tile curTile;
-    public Environment environment;
+    public Tile curTile { get => tileKind is Tile tile ? tile : null; }
+    public Environment environment { get => tileKind is Environment environment ? environment : null; }
+    public ITileKind tileKind;
 
     //public List<TileNode> neighborNodes = new List<TileNode>();
     public Dictionary<Direction, TileNode> neighborNodeDic = new Dictionary<Direction, TileNode>();
@@ -32,6 +62,7 @@ public class TileNode : MonoBehaviour
     public bool GuideActive { get => guideObject.gameObject.activeSelf; }
 
     public bool setAvail = false;
+    public bool isLock = false;
     [SerializeField]
     private RoadEmptyMaterialProperties guideColor;
 
@@ -42,6 +73,17 @@ public class TileNode : MonoBehaviour
 
     public Dictionary<Direction, int> connectionState { get; private set; } = new Dictionary<Direction, int>();
 
+    private List<ITileEffect> _curNodeEffects;
+
+    public List<ITileEffect> curNodeEffects
+    {
+        get
+        {
+            if(_curNodeEffects == null)
+                _curNodeEffects = new List<ITileEffect>();
+            return _curNodeEffects;
+        }
+    }
 
     public void UpdateNodeConnectionState()
     {
@@ -50,12 +92,18 @@ public class TileNode : MonoBehaviour
             if(!connectionState.ContainsKey(direction))
                 connectionState.Add(direction, 0);
 
-            if (neighborNodeDic[direction] == null || neighborNodeDic[direction].curTile == null)
+            Tile targetTile = neighborNodeDic[direction].curTile;
+            if (targetTile == null)
+            {
+                connectionState[direction] = 0;
                 continue;
+            }
 
-            if (neighborNodeDic[direction].curTile.PathDirection.Contains(UtilHelper.ReverseDirection(direction)))
+            if(targetTile._TileType == TileType.End)
+                connectionState[direction] = 0;
+            else if (targetTile.PathDirection.Contains(UtilHelper.ReverseDirection(direction)))
                 connectionState[direction] = 1;
-            else if(neighborNodeDic[direction].curTile.RoomDirection.Contains(UtilHelper.ReverseDirection(direction)))
+            else if(targetTile.RoomDirection.Contains(UtilHelper.ReverseDirection(direction)))
                 connectionState[direction] = 2;
             else
                 connectionState[direction] = 0;
@@ -104,8 +152,8 @@ public class TileNode : MonoBehaviour
         if (guideObject == null)
             return;
 
-        guideObject.gameObject.SetActive(true);
-        setAvail = value;
+        guideObject.gameObject.SetActive(true && !isLock);
+        setAvail = value && !isLock;
 
         if(value)
             guideColor?.SetColor(Color.green);
@@ -115,47 +163,43 @@ public class TileNode : MonoBehaviour
 
 
 
-    public bool IsConnected(List<Direction> targetNode_PathDirection, List<Direction> targetNode_RoomDirection, bool isRestricted = true)
+    public bool IsConnected(List<Direction> pathDirection, List<Direction> roomDirection, bool includeDormant = true)
     {
-        //현재 노드와 targetNode를 비교하여 연결되어있는지 확인하는 함수
+        //현재 노드가 pathDirection, roomDirection의 조건을 충족하는지 확인하는 함수
         int connectedCount = 0;
         foreach(Direction direction in NodeManager.Instance.GetAllDirection())
         {
             if (neighborNodeDic.ContainsKey(direction))
             {
                 TileNode neighborNode = neighborNodeDic[direction];
-                if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || neighborNode.curTile == null)
+                Tile curTile = neighborNode.curTile;
+                if (!NodeManager.Instance._ActiveNodes.Contains(neighborNode) || curTile == null)
                     continue;
 
-                if (neighborNode.curTile.IsDormant && !isRestricted)
-                    return false;
+                if (!includeDormant)
+                {
+                    if (curTile.IsDormant)
+                        return false;
+                    else if (NodeManager.Instance.FindPath(NodeManager.Instance.startPoint, neighborNode) == null)
+                        return false;
+                }
 
                 Direction reversed = UtilHelper.ReverseDirection(direction);
-                if (neighborNode.curTile.PathDirection.Contains(reversed))
+                if (curTile.PathDirection.Contains(reversed))
                 {
-                    if (targetNode_PathDirection.Contains(direction))
-                    {
-                        if (isRestricted)
-                            connectedCount++;
-                        else
-                            return true;
-                    }
+                    if (pathDirection.Contains(direction))
+                        connectedCount++;
                     else
                         return false;
                 }
-                else if (neighborNode.curTile.RoomDirection.Contains(reversed))
+                else if (curTile.RoomDirection.Contains(reversed))
                 {
-                    if (targetNode_RoomDirection.Contains(direction))
-                    {
-                        if (isRestricted)
-                            connectedCount++;
-                        else
-                            return true;
-                    }
+                    if (roomDirection.Contains(direction))
+                        connectedCount++;
                     else
                         return false;
                 }
-                else if(targetNode_PathDirection.Contains(direction) || targetNode_RoomDirection.Contains(direction))
+                else if(pathDirection.Contains(direction) || roomDirection.Contains(direction))
                     return false;
             }
         }

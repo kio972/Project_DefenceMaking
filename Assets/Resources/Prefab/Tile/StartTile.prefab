@@ -50,11 +50,31 @@ MonoBehaviour:
   roomDirection: 
   tileType: 0
   roomMana: 0
-  curNode: {fileID: 0}
+  spawnLock: 0
   waitToMove: 0
   twin: {fileID: 0}
-  trap: {fileID: 0}
   IsBigRoom: 0
+  rotateSound:
+    Guid:
+      Data1: -1408924426
+      Data2: 1218834812
+      Data3: -707702861
+      Data4: 755462683
+    Path: event:/UI/Tile_Rotate
+  buildSound:
+    Guid:
+      Data1: -2133203839
+      Data2: 1144174140
+      Data3: 1072843436
+      Data4: -2018870880
+    Path: event:/UI/Tile_Create
+  destroySound:
+    Guid:
+      Data1: 1756529270
+      Data2: 1249738115
+      Data3: -1826863970
+      Data4: -182735825
+    Path: event:/UI/Tile_demolition
 --- !u!1 &4767283432982174199
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +369,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514013976115028936, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
+      propertyPath: toolTipKey_descs
+      value: tooltip_start_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094935589187936367, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
+      propertyPath: toolTipKey_header
+      value: tooltip_start_0
       objectReference: {fileID: 0}
     - target: {fileID: 8937943421281466749, guid: 86a39cbe5df96e547ab59eaec32f396b, type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -12,9 +12,14 @@ public enum EffectType
     Debuff,
 }
 
+public interface IMoveSpeedEffect
+{
+    public float moveSpeedRate { get; set; }
+}
+
 public interface IAttackSpeedEffect
 {
-    public int attackSpeedRate { get; set; }
+    public float attackSpeedRate { get; set; }
 }
 
 public interface IAttackPowerEffect
@@ -24,7 +29,7 @@ public interface IAttackPowerEffect
 
 public interface IAttackPowerRateEffect
 {
-    public int attackRate { get; set; }
+    public float attackRate { get; set; }
 }
 
 public interface IEnterEffect
@@ -57,7 +62,7 @@ public class StatusEffect
 
     protected CancellationTokenSource _cancellationToken;
 
-    public void UpdateEffect(float duration)
+    public virtual void UpdateEffect(float duration)
     {
         //스택이 가능하면 스택카운트 올리면서 이펙트발동
         if(this is IStackable stackable)

@@ -48,9 +48,6 @@ MonoBehaviour:
   defaultSpeed: 100
   gameSpeed: 3640
   gold: 50
-  herb1: 0
-  herb2: 0
-  herb3: 0
   herb1Max: 0
   herb2Max: 0
   herb3Max: 0
@@ -65,18 +62,31 @@ MonoBehaviour:
   notificationBar: {fileID: 0}
   research: {fileID: 0}
   shop: {fileID: 0}
+  cardSelector: {fileID: 0}
+  selectInterval: 3
   isInBattle: 0
+  midBellSound:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: bebad9cc7c4cb0b47b89ec3971212ac5, type: 2}
   adventurer_entered_BossRoom: []
-  monsterSpawner: []
   trapList: []
   king: {fileID: 0}
-  timeScale: 0
+  _timeScale:
+    value: 1
   researchLevel: 1
   popUpMessage: {fileID: 0}
   isPause: 0
   speedLock: 0
   spawnLock: 0
   cardLock: 0
+  drawLock: 0
   tileLock: 0
+  timerLock: 0
+  cameraLock: 0
+  saveLock: 0
+  rotateLock: 0
+  moveLock: 0
   loop: 0
   ingameUI: {fileID: 0}
+  LastSpawnedAdventurer: {fileID: 0}
