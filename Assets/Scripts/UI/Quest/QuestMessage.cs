@@ -23,6 +23,7 @@ public class QuestMessage : MonoBehaviour
     private DissolveController dissolveController;
 
     private int curIndex = 0;
+    private string curQuestMsgId;
     private List<string> targetQuest;
 
     [SerializeField]
@@ -139,6 +140,7 @@ public class QuestMessage : MonoBehaviour
 
         dissolveController.isDisappare = true;
         StartCoroutine(Resume(id));
+        QuestManager.Instance.AddPastQuestMessage(curQuestMsgId);
     }
 
     public void SelectFirst()
@@ -184,6 +186,7 @@ public class QuestMessage : MonoBehaviour
         if (data == null)
             return;
 
+        curQuestMsgId = data["ID"].ToString();
         //titleText.text = data["MessageTitle"].ToString();
         titleText.ChangeLangauge(SettingManager.Instance.language, data["TitleKey"].ToString());
         //messageText.text = data["MessageText"].ToString();

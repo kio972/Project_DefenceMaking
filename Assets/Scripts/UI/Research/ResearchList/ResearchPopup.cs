@@ -146,7 +146,7 @@ public class ResearchPopup : MonoBehaviour, ISlotInformer
         herb3.color = haveHerb3 ? Color.white : Color.red;
 
         researchInfos.SetActive(true);
-        SetResearchBtn(researchState);
+        SetResearchBtn(researchSlot.IsLock ? ResearchState.Impossible : researchState);
     }
 
     private bool HaveAsset()

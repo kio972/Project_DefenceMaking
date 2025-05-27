@@ -116,5 +116,6 @@ public class PlayerData
     public List<string> clearedQuests;
     public List<string> failedQuests;
     public List<string> enqueuedQuests;
+    public List<string> passedQuestMsgs;
     public List<QuestData> curQuests;
 }

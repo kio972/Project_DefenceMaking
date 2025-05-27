@@ -61,8 +61,14 @@ public class QuestManager : IngameSingleton<QuestManager>
         }
     }
 
+
+    HashSet<string> pastMessages = new HashSet<string>();
     HashSet<string> clearedQuests = new HashSet<string>();
     HashSet<string> failedQuests = new HashSet<string>();
+
+    public void AddPastQuestMessage(string questMsgId) => pastMessages.Add(questMsgId);
+
+    public bool IsQuestMessagePassed(string questMsgId) => pastMessages.Contains(questMsgId);
 
     public bool IsQuestCleared(string questId) => clearedQuests.Contains(questId);
 
@@ -189,6 +195,7 @@ public class QuestManager : IngameSingleton<QuestManager>
 
         data.clearedQuests = new List<string>(clearedQuests);
         data.failedQuests = new List<string>(failedQuests);
+        data.passedQuestMsgs = new List<string>(pastMessages);
     }
 
     public void LoadGame(PlayerData data)
@@ -203,5 +210,7 @@ public class QuestManager : IngameSingleton<QuestManager>
             failedQuests.Add(quest);
         foreach (string quest in data.enqueuedQuests)
             EnqueueQuest(quest);
+        foreach(string msg in data.passedQuestMsgs)
+            pastMessages.Add(msg);
     }
 }

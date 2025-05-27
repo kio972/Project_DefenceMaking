@@ -94,6 +94,35 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
     private readonly Color completeColor = new Color(1, 0.4f, 0);
     private readonly Color defaultColor = Color.white;
 
+    [SerializeField]
+    private bool _isLock = false;
+    [SerializeField]
+    private string _unLockTrigger;
+    [SerializeField]
+    private GameObject lockGameObject;
+
+    public bool IsLock
+    {
+        get
+        {
+            if (!_isLock)
+                return false;
+
+            if (string.IsNullOrEmpty(_unLockTrigger))
+                return _isLock;
+
+            if (_unLockTrigger[0] == 'q')
+            {
+                if (_unLockTrigger[1] == '_')
+                    return !QuestManager.Instance.IsQuestMessagePassed(_unLockTrigger);
+                else
+                    return !QuestManager.Instance.IsQuestCleared(_unLockTrigger);
+            }
+
+            return _isLock;
+        }
+    }
+
     private void OnDisable()
     {
         DeActiveClick();
@@ -144,6 +173,9 @@ public class ResearchSlot : PopUICallBtn, IPointerEnterHandler, IPointerExitHand
 
         if (inProgressFrame != null)
             inProgressFrame.SetActive(_curState.Value == ResearchState.InProgress);
+
+        if (lockGameObject != null)
+            lockGameObject.SetActive(IsLock);
 
         CheckResearchUnlock();
 
