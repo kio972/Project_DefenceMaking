@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class Adventurer : Battler
@@ -25,10 +24,10 @@ public class Adventurer : Battler
             NormalPatrol();
     }
 
-    protected override void RemoveBody()
-    {
-        base.RemoveBody();
-    }
+    //protected override void RemoveBody()
+    //{
+    //    base.RemoveBody();
+    //}
 
     public override void Dead(Battler attacker)
     {

@@ -7,6 +7,7 @@ using UniRx.Triggers;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using System.Text;
+using UnityEditor.Experimental.GraphView;
 
 public interface ISaveLoadBattler
 {
@@ -471,6 +472,18 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         EffectPooling.Instance.PlayEffect("HealEffect", animator.transform.parent);
     }
 
+    public virtual void GetTureDamage(int damage)
+    {
+        if (isDead)
+            return;
+
+        curHp -= damage;
+        if (curHp <= 0)
+            Dead(null);
+
+        PlayDamageText(damage, unitType, false);
+    }
+
     public virtual void GetDamage(int damage, Battler attacker)
     {
         if (isDead)
@@ -496,7 +509,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
                 Dead(attacker);
         }
 
-        if ((object)CurState == FSMPatrol.Instance)
+        if (attacker != null && (object)CurState == FSMPatrol.Instance)
         {
             UpdateChaseTarget(attacker);
             ChangeState(FSMChase.Instance);
