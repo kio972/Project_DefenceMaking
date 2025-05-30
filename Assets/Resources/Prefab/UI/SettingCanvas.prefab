@@ -2096,8 +2096,8 @@ RectTransform:
   m_Father: {fileID: 6711575904414805929}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 36, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2456,7 +2456,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 12, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4828,16 +4828,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 7398503502813114460}
   m_HandleRect: {fileID: 9019215274101441258}
   m_Direction: 0
-  m_MinValue: 0.8
-  m_MaxValue: 1.2
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1.2
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TextSizeController, Assembly-CSharp
-        m_MethodName: SilderUpdateCheck
+      - m_Target: {fileID: 7095559975557249725}
+        m_TargetAssemblyTypeName: VolumeCountroller, Assembly-CSharp
+        m_MethodName: OnValueChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5084,8 +5084,8 @@ RectTransform:
   m_Father: {fileID: 4797371022483069855}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 36, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7155,8 +7155,8 @@ RectTransform:
   m_Father: {fileID: 8000110828139097020}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 36, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8852,7 +8852,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8981,16 +8981,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 295944766603531889}
   m_HandleRect: {fileID: 3590488535473133185}
   m_Direction: 0
-  m_MinValue: 0.8
-  m_MaxValue: 1.2
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1.2
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TextSizeController, Assembly-CSharp
-        m_MethodName: SilderUpdateCheck
+      - m_Target: {fileID: 6010060808760748956}
+        m_TargetAssemblyTypeName: VolumeCountroller, Assembly-CSharp
+        m_MethodName: OnValueChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9261,9 +9261,9 @@ RectTransform:
   m_Father: {fileID: 3744821807754840423}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 374, y: -240}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 728, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5783592195815640095
@@ -12347,9 +12347,9 @@ RectTransform:
   m_Father: {fileID: 3744821807754840423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 374, y: -40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 728, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8529394964204010288
@@ -14791,16 +14791,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 5350790868411597324}
   m_HandleRect: {fileID: 109812779070449774}
   m_Direction: 0
-  m_MinValue: 0.8
-  m_MaxValue: 1.2
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1.2
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TextSizeController, Assembly-CSharp
-        m_MethodName: SilderUpdateCheck
+      - m_Target: {fileID: 8529394964204010288}
+        m_TargetAssemblyTypeName: VolumeCountroller, Assembly-CSharp
+        m_MethodName: OnValueChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15432,16 +15432,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 5331613865059141790}
   m_HandleRect: {fileID: 7207693012008904295}
   m_Direction: 0
-  m_MinValue: 0.8
-  m_MaxValue: 1.2
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1.2
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TextSizeController, Assembly-CSharp
-        m_MethodName: SilderUpdateCheck
+      - m_Target: {fileID: 5783592195815640095}
+        m_TargetAssemblyTypeName: VolumeCountroller, Assembly-CSharp
+        m_MethodName: OnValueChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15988,7 +15988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6724764431936937180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28360,7 +28360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5057814957139885657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32204,8 +32204,8 @@ RectTransform:
   m_Father: {fileID: 109294352168826853}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 36, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -34169,7 +34169,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 480}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7379308220221191800
 MonoBehaviour:
@@ -36709,7 +36709,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -37026,7 +37026,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -38379,9 +38379,9 @@ RectTransform:
   m_Father: {fileID: 3744821807754840423}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 374, y: -440}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 728, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6010060808760748956
@@ -39581,7 +39581,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -39845,9 +39845,9 @@ RectTransform:
   m_Father: {fileID: 3744821807754840423}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 374, y: -140}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 728, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7095559975557249725

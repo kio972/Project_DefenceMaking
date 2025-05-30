@@ -225,23 +225,23 @@ public class SettingManager : Singleton<SettingManager>
         {
             case VolumeType.Master:
                 masterVolume = value;
-                AudioManager.Instance.ChangeVolume("UI_Volume_Master", value);
+                AudioManager.Instance.ChangeVolume("Master_Volume", value);
                 break;
             case VolumeType.BGM:
                 bgmVolume = value;
-                AudioManager.Instance.ChangeVolume("UI_Volume_BGM", value);
+                AudioManager.Instance.ChangeVolume("BGM", value);
                 break;
             case VolumeType.SFX:
                 fxVolume = value;
-                AudioManager.Instance.ChangeVolume("UI_Volume_SFX", value);
+                AudioManager.Instance.ChangeVolume("SFX", value);
                 break;
             case VolumeType.UI:
                 uiVolume = value;
-                AudioManager.Instance.ChangeVolume("UI_Volume_UI", value);
+                AudioManager.Instance.ChangeVolume("UI", value);
                 break;
             case VolumeType.Ambience:
                 ambienceVolume = value;
-                AudioManager.Instance.ChangeVolume("UI_Volume_Ambience", value);
+                AudioManager.Instance.ChangeVolume("Ambience", value);
                 break;
         }
     }

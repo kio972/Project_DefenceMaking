@@ -68,8 +68,8 @@ public class AudioManager : Singleton<AudioManager>
     {
         try
         {
-            Bus targetBus = RuntimeManager.GetBus("bus:/" + target);
-            targetBus.setVolume(value);
+            VCA vca = RuntimeManager.GetVCA("vca:/" + target);
+            vca.setVolume(value);
         }
         catch (Exception e)
         {
