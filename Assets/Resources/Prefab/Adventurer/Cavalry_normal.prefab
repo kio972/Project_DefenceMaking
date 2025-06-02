@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 12
-  maxHp: 12
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0
@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 4190730513580381890}
   - component: {fileID: 5992828728764131237}
   - component: {fileID: 227955105477403184}
+  - component: {fileID: 3714942088090021883}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -502,6 +503,18 @@ MonoBehaviour:
       Data3: 1586382734
       Data4: -661903931
     Path: event:/Object/Enemy/cavalry/Enemy_cavalry_Recall
+--- !u!114 &3714942088090021883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6915727576973256564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7206292384710682280
 GameObject:
   m_ObjectHideFlags: 0

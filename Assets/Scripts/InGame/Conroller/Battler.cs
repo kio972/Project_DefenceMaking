@@ -174,8 +174,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     protected bool directPass = false;
     public TileNode directPassNode { get; protected set; } = null;
 
-    protected Animator animator;
-    public Animator _Animator { get => animator; }
+    protected IBattlerAnimationController animator;
+    public IBattlerAnimationController _Animator { get => animator; }
 
     [SerializeField]
     private Transform attackZone;
@@ -469,7 +469,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         curHp = Mathf.Min(curHp + heal, maxHp);
         const float fontSize = 27f;
         DamageTextPooling.Instance.TextEffect(transform.position, heal, fontSize, Color.green, false, true);
-        EffectPooling.Instance.PlayEffect("HealEffect", animator.transform.parent);
+        EffectPooling.Instance.PlayEffect("HealEffect", transform.parent);
     }
 
     public virtual void GetTureDamage(int damage)
@@ -889,7 +889,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         SetRotation();
         moveSpeed = 1;
         if (animator == null)
-            animator = GetComponentInChildren<Animator>();
+            animator = GetComponentInChildren<IBattlerAnimationController>();
         animator?.SetBool("Move", GameManager.Instance.timeScale != 0);
         if (animator != null && !isAnimUniRxSubscribed)
         {
@@ -909,8 +909,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     private void RandomizePosition()
     {
         float targetZ = UnityEngine.Random.Range(-0.001f, 0.001f);
-        if(animator != null)
-            animator.transform.localPosition = new Vector3(0, 0, targetZ);
+        rotatonAxis.localPosition = new Vector3(0, 0, targetZ);
     }
 
     private Quaternion TargetRoation(int camera_Level)
@@ -1010,17 +1009,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         return true;
     }
 
-    public void UpdateMoveSpeed()
-    {
-        if (animator != null)
-            animator.SetFloat("MoveSpeed", curMoveSpeed * GameManager.Instance.timeScale);
-    }
+    public void UpdateMoveSpeed() => animator?.SetFloat("MoveSpeed", curMoveSpeed * GameManager.Instance.timeScale);
 
-    private void UpdateAttackSpeed()
-    {
-        if (animator != null)
-            animator.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
-    }
+    private void UpdateAttackSpeed() => animator?.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
 
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)
     {

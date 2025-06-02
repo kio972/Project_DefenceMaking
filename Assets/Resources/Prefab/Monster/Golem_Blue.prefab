@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 2103541630921623617}
   - component: {fileID: 9014006541645648792}
   - component: {fileID: 5664544616733494807}
+  - component: {fileID: 5582744396167414568}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -307,6 +308,32 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &5582744396167414568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4809690254627854902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5971875333444504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,7 +479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
-  maxHp: 1
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0

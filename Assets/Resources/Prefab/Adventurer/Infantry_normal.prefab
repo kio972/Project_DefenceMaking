@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6738698836095570606}
   - component: {fileID: 55870590666178219}
   - component: {fileID: 1807616640887484997}
+  - component: {fileID: 2398013100915356476}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -190,6 +191,18 @@ MonoBehaviour:
       Data3: 865359015
       Data4: 2031876213
     Path: event:/Object/Enemy/Knight(Spear)/Enemy_knight_Recall
+--- !u!114 &2398013100915356476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151369722696836408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1613094522541217892
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 12
-  maxHp: 12
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0

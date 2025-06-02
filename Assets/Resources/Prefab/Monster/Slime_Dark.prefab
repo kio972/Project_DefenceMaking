@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 906992845347959712}
   - component: {fileID: 8273688622129687675}
   - component: {fileID: 4962218739472367760}
+  - component: {fileID: 371280979372556566}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -174,6 +175,32 @@ MonoBehaviour:
       Data3: -758551361
       Data4: -1014428580
     Path: event:/Object/Creture/Slime/Creture_Slime_Dead
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &371280979372556566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487404222048084393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215894734976800493
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
-  maxHp: 1
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0

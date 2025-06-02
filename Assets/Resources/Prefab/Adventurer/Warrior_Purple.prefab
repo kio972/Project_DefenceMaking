@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 12
-  maxHp: 12
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0
@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 9021916489997692659}
   - component: {fileID: 7944142812854196014}
   - component: {fileID: 8575124225866749121}
+  - component: {fileID: 7515294566379293000}
   m_Layer: 6
   m_Name: c1
   m_TagString: Untagged
@@ -566,3 +567,15 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+--- !u!114 &7515294566379293000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026505278944122364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -84,7 +84,7 @@ public class PlayerBattleMain : Battler
         if (curHp <= 0)
             Dead(attacker);
 
-        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("IDLE") && !animator.IsInTransition(0))
+        if (animator.GetCurrentAnimatorStateInfo("IDLE", 0) && !animator.IsInTransition(0))
             animator.SetTrigger("Damaged");
 
         PlayDamageText(1, UnitType.Player, false);

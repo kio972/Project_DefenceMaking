@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1483512595879417012}
   - component: {fileID: 4815250341119429759}
   - component: {fileID: 3214681680456679338}
+  - component: {fileID: 8032446056940373342}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -190,6 +191,18 @@ MonoBehaviour:
       Data3: -752842336
       Data4: -2111895825
     Path: event:/Object/Enemy/Executor/Enemy_executor_Recall
+--- !u!114 &8032446056940373342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955857251197813268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2060345853617806872
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 12
-  maxHp: 12
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0

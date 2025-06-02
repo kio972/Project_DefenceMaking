@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4442121077108697256}
   - component: {fileID: 8638838801445434031}
   - component: {fileID: 270769795596523453}
+  - component: {fileID: 752794797022240502}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -176,6 +177,32 @@ MonoBehaviour:
       Data3: -2099714115
       Data4: 1385320189
     Path: event:/Object/Creture/Goblin/Creture_Goblin_Dead
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &752794797022240502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3948826638235807827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4811415846287569560
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
-  maxHp: 1
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0

@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 6103454960217645788}
   - component: {fileID: 3751242916941741315}
   - component: {fileID: 7823730851802540275}
+  - component: {fileID: 6637745748827073391}
   m_Layer: 6
   m_Name: model
   m_TagString: Untagged
@@ -416,6 +417,32 @@ MonoBehaviour:
       Data3: -886212171
       Data4: -1919299633
     Path: event:/Object/Creture/Slime/Creture_Slime_Explosion
+  skillSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  recallSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &6637745748827073391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007486865758600648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d39cd4c82ab85248ac4e5026627ceaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7407060762157910197
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
-  maxHp: 1
+  curMaxHp: 0
   armor: 0
   shield: 0
   attackRange: 0
