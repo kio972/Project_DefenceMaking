@@ -32,10 +32,10 @@ public class Goblin : Monster
         }
 
         directPassNode = targetTile;
-        animator.SetBool("RunAway", true);
+        animator.UseSkill(true);
         ChangeState(FSMDirectMove.Instance);
         await UniTask.WaitUntil(() => (object)CurState != FSMDirectMove.Instance, default, unitaskCancelTokenSource.Token);
-        animator.SetBool("RunAway", false);
+        animator.UseSkill(false);
         if(PassiveManager.Instance.isGoblinHealActive)
             GetHeal(Mathf.RoundToInt(maxHp * 0.2f), this);
     }

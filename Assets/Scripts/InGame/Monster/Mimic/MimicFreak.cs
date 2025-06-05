@@ -37,8 +37,8 @@ public class MimicFreak : MimicRecover
         {
             target.KnockBack(this, UtilHelper.CheckClosestDirection(target.transform.position - transform.position), 0.5f, 60);
         }
-        await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo("Reveal", 0));
-        await UniTask.WaitUntil(() => !animator.GetCurrentAnimatorStateInfo("Reveal", 0));
+        await UniTask.WaitUntil(() => animator.IsPlayingAnimation("Reveal", 0));
+        await UniTask.WaitUntil(() => !animator.IsPlayingAnimation("Reveal", 0));
         moveSpeed = curMovespeed;
         ChangeState(FSMChase.Instance);
     }

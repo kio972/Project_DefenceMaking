@@ -39,7 +39,7 @@ public class AdventurerBoss : Adventurer
     private async UniTaskVoid ExcuteParry()
     {
         isUsingSkill = true;
-        animator.SetBool("Skill", true);
+        animator.PlayAnimation("Skill");
 
         float elpasedTime = 0f;
         while(elpasedTime < skillTime)
@@ -51,7 +51,6 @@ public class AdventurerBoss : Adventurer
         }
 
         isUsingSkill = false;
-        animator.SetBool("Skill", false);
         if(!isDead)
             ChangeState(FSMPatrol.Instance);
     }

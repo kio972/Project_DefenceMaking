@@ -25,11 +25,10 @@ public class FarmerHead : Adventurer
             return;
 
         _isSkill = _curSkillCoolTime <= 0;
-        animator.SetBool("Skill", _isSkill);
-
-        base.Play_AttackAnimation();
-        if (_isSkill)
+        if(_isSkill)
             _curSkillCoolTime = _skillCoolTime;
+        animator.UseSkill(_isSkill);
+        base.Play_AttackAnimation();
     }
 
     public void SkillAttack()

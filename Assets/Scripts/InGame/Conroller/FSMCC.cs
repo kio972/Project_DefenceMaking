@@ -23,7 +23,7 @@ public class FSMCC : FSMSingleton<FSMCC>, CharState<Battler>
 
     public void Enter(Battler e)
     {
-        e._Animator.SetTrigger("CC");
+        e._Animator.PlayAnimation("CC");
     }
 
     public void Excute(Battler e)
@@ -37,6 +37,6 @@ public class FSMCC : FSMSingleton<FSMCC>, CharState<Battler>
 
     public void Exit(Battler e)
     {
-        e._Animator?.SetBool("Move", GameManager.Instance.timeScale != 0);
+        e._Animator?.SetMove(GameManager.Instance.timeScale != 0);
     }
 }

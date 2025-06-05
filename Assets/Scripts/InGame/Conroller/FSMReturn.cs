@@ -6,7 +6,7 @@ public class FSMReturn : FSMSingleton<FSMReturn>, CharState<Battler>
 {
     public void Enter(Battler e)
     {
-        e._Animator?.SetTrigger("Return");
+        e._Animator?.PlayAnimation("Return");
     }
 
     public void Excute(Battler e)

@@ -35,9 +35,8 @@ public class FSMAttack : FSMSingleton<FSMAttack>, CharState<Battler>
         if (NeedChange(e))
             return;
 
-        if (!e._Animator.GetCurrentAnimatorStateInfo("ATTACK", 0) && !e._Animator.IsInTransition(0))
+        if (e._Animator.IsAttackEnd())
         {
-            e._Animator.ResetTrigger("Attack");
             e.ChangeState(e.PrevState);
         }
     }

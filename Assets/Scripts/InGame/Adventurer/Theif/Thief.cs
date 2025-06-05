@@ -30,6 +30,7 @@ public class Thief : Adventurer, IHide
     {
         base.Init();
         ChangeState(FSMHide.Instance);
+        animator?.SetHide(true);
         AddStatusEffect<Stealth>(new Stealth(this, 0));
     }
 
@@ -48,7 +49,10 @@ public class Thief : Adventurer, IHide
         {
             bool hideState = System.Convert.ToBoolean(data.additionalData["hideState"]);
             if (!hideState)
+            {
+                animator?.SetHide(false);
                 ChangeState(FSMPatrol.Instance);
+            }
         }
     }
 }

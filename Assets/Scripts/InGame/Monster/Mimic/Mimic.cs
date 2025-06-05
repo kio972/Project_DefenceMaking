@@ -61,6 +61,7 @@ public class Mimic : Monster, IHide
         AddStatusEffect<Stealth>(new Stealth(this, 0));
         if (PassiveManager.Instance.isMimicBuffActive)
             attackTargetCount += 2;
+        animator?.SetHide(true);
     }
 
     private async UniTaskVoid CheckNodeOut(TileNode curNode)
@@ -76,6 +77,15 @@ public class Mimic : Monster, IHide
     {
         base.LoadData(data);
         curSeduceCount = System.Convert.ToInt32(data.additionalData["curSeduceCount"]);
+        if (data.additionalData != null && data.additionalData.Count > 0)
+        {
+            bool hideState = System.Convert.ToBoolean(data.additionalData["hideState"]);
+            if (!hideState)
+            {
+                animator?.SetHide(false);
+                ChangeState(FSMPatrol.Instance);
+            }
+        }
     }
 
     public override BattlerData GetData()
@@ -83,6 +93,7 @@ public class Mimic : Monster, IHide
         BattlerData data = base.GetData();
         data.additionalData = new Dictionary<string, object>();
         data.additionalData.Add("curSeduceCount", curSeduceCount);
+        data.additionalData.Add("hideState", (object)CurState == FSMHide.Instance);
         return base.GetData();
     }
 }

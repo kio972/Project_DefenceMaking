@@ -7,7 +7,6 @@ using UniRx.Triggers;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using System.Text;
-using UnityEditor.Experimental.GraphView;
 
 public interface ISaveLoadBattler
 {
@@ -41,7 +40,7 @@ public enum CCType
 
 public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
 {
-    private bool isAnimUniRxSubscribed = false;
+    private bool isUniRxSubscribed = false;
 
     protected CancellationTokenSource unitaskCancelTokenSource = new CancellationTokenSource();
 
@@ -314,7 +313,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     {
         this.ccTime = time;
         this.ChangeState(FSMCC.Instance);
-        _Animator.SetBool("Move", false);
+
+        _Animator.SetMove(false);
     }
 
 
@@ -392,7 +392,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
     {
         gameObject.transform.position = Vector3.up * 1000f;
         _effects.Clear();
-        animator?.Rebind();
+        animator?.ResetState();
         Invoke("SetActiveFalse", 0.1f);
     }
 
@@ -770,26 +770,27 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         return false;
     }
 
-    protected void AttackEndCheck()
-    {
-        if (curTarget == null || curTarget.isDead)
-        {
-            if (animator != null)
-            {
-                animator.SetBool("Attack", false);
-                UpdateAttackSpeed();
-            }
-            return;
-        }
-    }
+    //protected void AttackEndCheck()
+    //{
+    //    if (curTarget == null || curTarget.isDead)
+    //    {
+    //        if (animator != null)
+    //        {
+    //            animator.SetBool("Attack", false);
+    //            UpdateAttackSpeed();
+    //        }
+    //        return;
+    //    }
+    //}
 
     public virtual void Play_AttackAnimation()
     {
-        if (animator != null)
-        {
-            UpdateAttackSpeed();
-            animator.SetTrigger("Attack");
-        }
+        animator?.PlayAttackAnimation();
+        //if (animator != null)
+        //{
+        //    UpdateAttackSpeed();
+        //    animator.SetTrigger("Attack");
+        //}
     }
 
     private void SplashAttack(Battler mainTarget, int baseDamage)
@@ -888,13 +889,18 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         _effects.Clear();
         SetRotation();
         moveSpeed = 1;
-        if (animator == null)
-            animator = GetComponentInChildren<IBattlerAnimationController>();
-        animator?.SetBool("Move", GameManager.Instance.timeScale != 0);
-        if (animator != null && !isAnimUniRxSubscribed)
+        CalculateDamage();
+        CalculateMoveSpeed();
+        CalculateAttackSpeed();
+        if (!isUniRxSubscribed)
         {
-            isAnimUniRxSubscribed = true;
-            SubscribeAnimation();
+            isUniRxSubscribed = true;
+            _effects.ObserveCountChanged().Subscribe(_ =>
+            {
+                CalculateDamage();
+                CalculateMoveSpeed();
+                CalculateAttackSpeed();
+            }).AddTo(gameObject);
         }
 
         if (_curNode == null)
@@ -904,6 +910,12 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         }
 
         RandomizePosition();
+
+        if (animator == null)
+            animator = GetComponentInChildren<IBattlerAnimationController>();
+        animator?.SetMove(GameManager.Instance.timeScale != 0);
+        animator?.UpdateMoveSpeed(curMoveSpeed * GameManager.Instance.timeScale);
+
     }
 
     private void RandomizePosition()
@@ -1009,9 +1021,9 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         return true;
     }
 
-    public void UpdateMoveSpeed() => animator?.SetFloat("MoveSpeed", curMoveSpeed * GameManager.Instance.timeScale);
+    //public void UpdateMoveSpeed() => animator?.SetFloat("MoveSpeed", curMoveSpeed * GameManager.Instance.timeScale);
 
-    private void UpdateAttackSpeed() => animator?.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
+    //private void UpdateAttackSpeed() => animator?.SetFloat("AttackSpeed", TempAttackSpeed(curAttackSpeed) * GameManager.Instance.timeScale);
 
     public List<Battler> GetRangedTargets(Vector3 position, float attackRange, bool attackRangeCheck = true)
     {
@@ -1161,28 +1173,6 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         target.lastCrossedCol = lastCrossRoad != null ? lastCrossRoad.col : -1;
 
         return target;
-    }
-
-    private void SubscribeAnimation()
-    {
-        GameManager.Instance._timeScale.Where(_ => animator.ContainsParam("Move"))
-            .Subscribe(_ =>
-            {
-                animator.SetBool("Move", _ != 0);
-            }).AddTo(gameObject);
-
-        GameManager.Instance._timeScale.Subscribe(_ =>
-        {
-            UpdateAttackSpeed();
-        }).AddTo(gameObject);
-
-        _effects.ObserveCountChanged().Subscribe(_ =>
-        {
-            UpdateAttackSpeed();
-            CalculateDamage();
-            CalculateMoveSpeed();
-            CalculateAttackSpeed();
-        }).AddTo(gameObject);
     }
 
     private void OnDestroy()
