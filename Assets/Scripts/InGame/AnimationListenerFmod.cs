@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine;
+using Spine.Unity;
 using UnityEngine;
 
 public class AnimationListenerFmod : MonoBehaviour
@@ -32,17 +34,33 @@ public class AnimationListenerFmod : MonoBehaviour
     void SkillAttack()
     {
         battler?.Attack();
-        FMODUnity.RuntimeManager.PlayOneShot(recallSound, transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot(attackSound, transform.position);
     }
 
     void Recall()
     {
+        FMODUnity.RuntimeManager.PlayOneShot(recallSound, transform.position);
+    }
 
+    private void HandleSpineEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+        switch(e.Data.Name)
+        {
+            case "ATTACK":
+                Attack();
+                break;
+        }
     }
 
     private void Awake()
     {
         if (battler == null)
             battler = GetComponentInParent<Battler>();
+
+        var _skeletonAnimation = GetComponent<SkeletonAnimation>();
+        if (_skeletonAnimation != null)
+        {
+            _skeletonAnimation.AnimationState.Event += HandleSpineEvent;
+        }
     }
 }

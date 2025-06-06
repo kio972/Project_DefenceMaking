@@ -7,8 +7,8 @@ public class Rage : StatusEffect, IMoveSpeedEffect, IAttackSpeedEffect, IStackab
     private float attackStackRate = 0.05f;
     private float moveStackRate = 0.05f;
 
-    public float moveSpeedRate { get => _stackCount * moveStackRate; set => throw new System.NotImplementedException(); }
-    public float attackSpeedRate { get => _stackCount * attackStackRate; set => throw new System.NotImplementedException(); }
+    public float moveSpeedRate { get => 1 + (_stackCount * moveStackRate); set => throw new System.NotImplementedException(); }
+    public float attackSpeedRate { get => 1 + (_stackCount * attackStackRate); set => throw new System.NotImplementedException(); }
 
 
     private int _stackCount;

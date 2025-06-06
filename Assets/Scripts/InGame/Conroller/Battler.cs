@@ -287,7 +287,7 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         }
     }
 
-    public void AddStatusEffect<T>(StatusEffect effect) where T : StatusEffect
+    public StatusEffect AddStatusEffect<T>(StatusEffect effect) where T : StatusEffect
     {
         T targetEffect;
         if (HaveEffect<T>(out targetEffect))
@@ -295,9 +295,15 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
             targetEffect.UpdateEffect(effect._originDuration);
             if (targetEffect is IConditionEffect prevEffect && effect is IConditionEffect curEffect)
                 prevEffect.UpdateEffect(curEffect.condition);
+
+            return targetEffect;
         }
         else
+        {
             _effects.Add(effect);
+            return effect;
+        }
+
     }
 
     public bool CCEscape()
@@ -861,7 +867,8 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         float tempAttackSpeed = 1f;
         float.TryParse(DataManager.Instance.battler_Table[index]["attackSpeed"].ToString(), out tempAttackSpeed);
         _attackSpeed = tempAttackSpeed;
-        armor = Convert.ToInt32(DataManager.Instance.battler_Table[index]["armor"]);
+        if (int.TryParse(DataManager.Instance.battler_Table[index]["armor"].ToString(), out int armorValue))
+            armor = armorValue;
         float.TryParse(DataManager.Instance.battler_Table[index]["moveSpeed"].ToString(), out moveSpeed);
 
         if(float.TryParse(DataManager.Instance.battler_Table[index]["attackRange"].ToString(), out attackRange) && randomize)
@@ -889,9 +896,6 @@ public class Battler : FSM<Battler>, ISaveLoadBattler, IStatObject
         _effects.Clear();
         SetRotation();
         moveSpeed = 1;
-        CalculateDamage();
-        CalculateMoveSpeed();
-        CalculateAttackSpeed();
         if (!isUniRxSubscribed)
         {
             isUniRxSubscribed = true;

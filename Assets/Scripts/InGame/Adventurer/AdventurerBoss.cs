@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEditor.Experimental.GraphView;
+using Spine.Unity;
+using UniRx;
 using UnityEngine;
 
 public class AdventurerBoss : Adventurer
@@ -16,6 +17,19 @@ public class AdventurerBoss : Adventurer
     private float curParryCoolTime = 0f;
     private float parryCoolTime = 300f;
 
+    private void PlayRageEffect(StatusEffect effect)
+    {
+        var skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+        if (skeletonAnimation == null) return;
+
+        skeletonAnimation?.AnimationState.SetAnimation(1, "skill_b_stack", false);
+
+        if (effect is Rage rage && rage.stackCount >= 10)
+        {
+            skeletonAnimation?.AnimationState.SetAnimation(2, "skill_b", true);
+        }
+    }
+
     public override void Attack()
     {
         if (curTarget == null || curTarget.isDead)
@@ -24,14 +38,17 @@ public class AdventurerBoss : Adventurer
         base.Attack();
 
         //°ø°Ý ÈÄ ÀûÀÌ »ç¸Á ½Ã ±¤Æø¹öÇÁ È¹µæ
-        if(curTarget.isDead)
+        if(curTarget!= null && curTarget.isDead)
         {
-            AddStatusEffect<Rage>(new Rage(this, 120));
+            var rage = AddStatusEffect<Rage>(new Rage(this, 120));
+            PlayRageEffect(rage);
         }
     }
 
     public override void UseSkill()
     {
+        if(isUsingSkill)
+            return;
         curParryCoolTime = parryCoolTime;
         ExcuteParry().Forget();
     }
@@ -39,15 +56,16 @@ public class AdventurerBoss : Adventurer
     private async UniTaskVoid ExcuteParry()
     {
         isUsingSkill = true;
-        animator.PlayAnimation("Skill");
-
+        animator.PlayAnimation("skill_a");
+        float animationTime = 1.333f;
         float elpasedTime = 0f;
         while(elpasedTime < skillTime)
         {
             elpasedTime += GameManager.Instance.InGameDeltaTime;
+            animator.UpdateAttackSpeed((animationTime * GameManager.Instance.DefaultSpeed / skillTime) * GameManager.Instance.timeScale);
             if (isDead)
                 break;
-            await UniTask.WaitForSeconds(GameManager.Instance.InGameDeltaTime, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            await UniTask.Yield(cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         }
 
         isUsingSkill = false;
@@ -94,6 +112,12 @@ public class AdventurerBoss : Adventurer
     {
         base.Init();
         curParryCoolTime = 0;
+
+        _effects.ObserveRemove().Where(_ => _.Value is Rage).Subscribe(_ =>
+        {
+            var skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+            skeletonAnimation?.AnimationState.SetEmptyAnimation(2, 0.5f);
+        }).AddTo(unitaskCancelTokenSource.Token);
     }
 
     public override void Update()
