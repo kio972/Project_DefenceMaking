@@ -397,6 +397,8 @@ research_room1_0,내부 공사,Remodeled interior
 research_room1_1,"방 타일의 사용 가능 마력 +1
 조건 : 방 완성","Room mana capacity + 1
 Condition : Construct 1 comlete room"
+research_room2_0,방 조합,Room Combination
+research_room2_1,이어 붙일 수 있는 방 카드 해금,Unlock Connectable Room Cards
 research_envir1_0,석재 선별,Stone selection
 research_envir1_1,바위 타일이 제공하는 추가 체력 +1,Increase bonus health from Rock tile (+1)
 research_envir2_0,고급 채광 기술,Advanced mining technique
@@ -553,7 +555,7 @@ tooltip_start_0,던전 입구,Dungeon Enterance
 tooltip_start_1,"침입하는 적들은 이곳에서 등장한다.
 타일 위의 아이콘을 클릭해 침입하는 적들의 종류를 파악할 수 있다.","This is where enemies appear.
 You can click the icon above this tile to search for enemy info."
-tooltip_boss_0,마왕의 방,Dantallion's room
+tooltip_boss_0,마왕의 방,Demon Tile
 tooltip_boss_1,"마왕의 HP가 0이 되면 패배한다.
 더블 클릭으로 이동 배치가 가능하다.","Game over when Dantallion's HP is 0.
 You can move this tile by double click."
@@ -868,7 +870,7 @@ tooltip_magician3_1,전설적인 정예 마법사,Legendary Elite Wizards
 tooltip_boss1_0,마을 이장,Mayor
 tooltip_boss1_1,던저 근처 마을의 이장,"Ex-adventurer, mayor of nearby town"
 tooltip_boss2_0,모험가 길드장,Adventurer Guild Leader
-tooltip_bos2_1,마왕성 근처 길드의 길드장,Guild Leader of a guild near Demon Castle
+tooltip_boss2_1,마왕성 근처 길드의 길드장,Guild Leader of a guild near Demon Castle
 tooltip_boss3_0,기사단장,Templar
 tooltip_boss3_1,마왕성 근처 영지의 기사단장,Templar Captain of an estate near Demon Castle
 tooltip_boss4_0,벨레드,Veled
@@ -950,6 +952,9 @@ tip_content002,모든 마왕이 마족으로부터 존경받지는 않습니다.
 tip_content003,단탈리온의 던전은 인간 나라의 영토 내에 존재합니다.,Dantalion's dungeon exists within human territory.
 tip_content004,단탈리온은 토벌 우선순위 최하위입니다.,Dantalion has the lowest priority for subjugation.
 tip_content005,게임을 주기적으로 저장하는 습관은 정신건강에 좋습니다.,Regularly saving your game is good for your mental health.
+tip_content006,"비서들은 단순한 업무조차 기억하지 못하는 마왕들을 위해 가이드 문서를 작성했습니다.
+ESC 또는 옵션 버튼을 통해 가이드를 확인할 수 있습니다.","The secretarys have prepared a guide document for the demon lords who can't remember even the simplest tasks.
+You can access the guide by pressing the ESC key or the Options button."
 slime1,최하급 슬라임,Lowest level slime
 slime_rare,하급 슬라임,Low level slime
 slime2,중급 슬라임,Intermediate level slime
@@ -1477,6 +1482,91 @@ q_m2020_1,"「마족의 지배자이자 영토를 다스리는 마왕이, 던전
 
 「Humans are afraid of long, dark roads, so please take that into consideration as well.」"
 q_m2020_2,길을 길게 설치 하자,"Let's build up a long, long path"
+q_m3001_0,생존,
+q_m3001_1,"단탈리온 전하
+
+인간들이 전하의 목에 걸린 현상금을 노리고 침입해왔습니다.
+현재 마왕성에는 전하의 무능으로 인해 아무것도 없는 상황입니다.
+
+소인, 전하의 종복으로 대책을 마련하겠나이나.
+그동안은 자력으로 살아남아주십시오.",
+q_m3001_2,이럴수가!,
+q_m3002_0,빚 갚기I,
+q_m3002_1,"단탈리온 전하,
+
+상회에서 최후 통첩이 왔습니다. 전하께서 빌린
+원금 <sprite name=""Gold"">5,000 골드와 이자 <sprite name=""Gold"">10,000골드를 갚을 때까지,
+놈들의 병력들이 계속해서 쳐들어 올 것입니다.
+
+침입하는 적들을 막아내며 빚을 갚으십시오.",
+q_m3002_2,알겠다,
+q_m3101_0,던전 건설I,
+q_m3101_1,,
+q_m3101_2,,
+q_m3102_0,마왕 타일 이동,
+q_m3102_1,,
+q_m3102_2,,
+q_m3103_0,함정 설치,
+q_m3103_1,,
+q_m3103_2,,
+q_m3104_0,던전 건설II,
+q_m3104_1,,
+q_m3104_2,,
+q_m3105_0,슬라임 배치,
+q_m3105_1,,
+q_m3105_2,,
+q_m3106_0,던전 건설III,
+q_m3106_1,,
+q_m3106_2,,
+q_m3107_0,히든 타일 조우,
+q_m3107_1,,
+q_m3107_2,,
+q_m3108_0,상점 오픈,
+q_m3108_1,,
+q_m3108_2,,
+q_m3109_0,시간 배속 조절,
+q_m3109_1,,
+q_m3109_2,,
+q_m3110_0,고블린 연구,
+q_m3110_1,,
+q_m3110_2,,
+q_m3111_0,타일 철거,
+q_m3111_1,,
+q_m3111_2,,
+q_m3112_0,마을 이장 처치,
+q_m3112_1,,
+q_m3112_2,,
+q_m3113_0,던전 연구 해금,
+q_m3113_1,,
+q_m3113_2,,
+q_m3114_0,조합방 사용하기,
+q_m3114_1,,
+q_m3114_2,,
+q_m3115_0,쿠오인 동생 찾기,
+q_m3115_1,"「저… 전하님」
+
+「다름이 아니라… 제 동생이 몇 명 있는데요…」
+
+「분명히 제 은신처에서 나가지 말라고 했는데요…」
+
+「그… 아무래도… 행방불명되어… 던전 어딘가에서 길을 잃고 있을 텐데…」
+
+「혹시… 발견하시면… 저에게 알려주실 수 있을까요?」
+
+「그 뒤로 나머지는 제가 알아서 하겠습니다!」",
+q_m3115_2,…,
+q_m3116_0,도적 처치,
+q_m3116_1,,
+q_m3116_2,,
+q_m3117_0,환경 타일과 생산지 시너지,
+q_m3117_1,,
+q_m3117_2,,
+q_m3118_0,골렘 배치,
+q_m3118_1,,
+q_m3118_2,,
+q_m3119_0,길드장 처치,
+q_m3119_1,,
+q_m3119_2,,
 q1001_0,빚 갚기I,Paying off debt I
 q1001_1,500골드 변제,Repay 500 gold
 q1001_2,11라운드 전까지 500골드 상환,Repay 500 gold at the Store before Round 11
@@ -1548,6 +1638,71 @@ q2018_2,집행자 위의 아이콘을 클릭해서 집행자 돌려보내기,Cli
 q2019_0,슬라임 킹,Slime King
 q2019_1,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king tile
 q2019_2,슬라임 킹이 있는 타일 연결하기,Connect a path to Slime king tile
+q3001_0,살아남기,Survive
+q3001_1,11라운드까지 생존,Survive until Round 11
+q3001_2,11라운드까지 생존,Survive until Round 11
+q3002_0,빚 갚기I,Debt Repayment I
+q3002_1,1500골드 변제,"Repay 1,500 Gold"
+q3002_2,21라운드 전까지 1500골드 상환,"Repay 1,500 Gold by Round 21"
+q3101_0,던전 건설I,Dungeon Construction I
+q3101_1,길 타일 배치,Place a Path Tile
+q3101_2,길 타일 5개 배치,Place 5 Path Tiles
+q3101_3,카드 뽑기,Draw a card
+q3101_4,덱에서 카드 5장 뽑기,Draw 5 cards from the deck
+q3102_0,마왕 타일 이동,Demon Lord Tile Movement
+q3102_1,마왕방 타일 이동,Move the Demon Tile
+q3102_2,마왕방 타일 1번 이동,Move the Demon Tile Once
+q3103_0,함정 설치,Trap Setting
+q3103_1,아무 함정 설치하기,Set a Trap
+q3103_2,아무 함정 5개 설치하기,Set 5 Traps
+q3104_0,던전 건설II,Dungeon Construction II
+q3104_1,단일방 타일 배치,Place a Single Room Tile
+q3104_2,단일방 타일 3개 배치,Place 3 Single Room Tiles
+q3105_0,슬라임 배치,Slime Deployment
+q3105_1,슬라임 고용,Hire a Slime
+q3105_2,슬라임 고용 3개,Hire 3 Slimes
+q3106_0,던전 건설III,Dungeon Construction III
+q3106_1,환경 타일 배치,Place an Environment Tile
+q3106_2,환경 타일 3개 배치,Place 3 Environment Tiles
+q3107_0,히든 타일 조우,Hidden Tile Discovery
+q3107_1,히든 타일 밝히기,Reveal a Hidden Tile
+q3107_2,히든 타일 1개 밝히기,Reveal 1 Hidden Tile
+q3108_0,상점 오픈,Shop Open
+q3108_1,상점에서 아이템 구매,Purchase an Item from the Shop
+q3108_2,상점에서 아이템 1개 구매,Purchase 1 Item from the Shop
+q3109_0,시간 배속 조절,Time Control
+q3109_1,시간 배속 조절,Adjust the Game Speed
+q3109_2,"시간 배속 1회 조절(배속 버튼 및 키보드 Space, F1, F2 조작)",Adjust the Game Speed once (via Speed Button or Space/F1/F2 keys)
+q3110_0,고블린 연구,Goblin Research
+q3110_1,고블린 전사 연구 진행,Conduct Goblin Warrior Research
+q3110_2,고블린 전사 연구 진행,Conduct Goblin Warrior Research
+q3111_0,타일 철거,Tile Removal
+q3111_1,타일 제거,Remove a Tile
+q3111_2,타일 3개 제거(실패시 -300골드),Remove 3 Tiles (Penalty: -300 Gold if failed)
+q3112_0,마을이장 처치,Defeat the Village Chief
+q3112_1,마을이장 처치,Defeat the Village Chief
+q3112_2,마을이장 처치,Defeat the Village Chief
+q3113_0,던전 연구 해금,Dungeon Research Unlock
+q3113_1,연구 진행하기,Conduct Research
+q3113_2,조합방 연구 진행하기,Conduct Combination Room Research
+q3114_0,조합방 사용하기,Combination Room Usage
+q3114_1,조합방 사용하여 방 완성,Complete a Room using a Combination Room
+q3114_2,조합방 3개를 사용하여 방 완성하기,Complete 3 Rooms using Combination Rooms
+q3115_0,쿠오인 동생 찾기,Find Quoin’s Sibling
+q3115_1,첫째 동생 찾기,Find the First Sibling
+q3115_2,히든 타일을 밝혀내어 첫째 동생 찾기,Find the First Sibling by Revealing a Hidden Tile
+q3116_0,도적 처치,Defeat Thieves
+q3116_1,도적 처치하기,Defeat a Thief
+q3116_2,도적 5마리 처치하기,Defeat 5 Thieves
+q3117_0,환경 타일과 생산지 시너지,Environment Tile and Production Synergy
+q3117_1,환경 타일 시너지 발동,Activate Synergy with Environment Tile
+q3117_2,환경 타일 시너지 발동,Activate Synergy with Environment Tile
+q3118_0,골렘 배치,Golem Deployment
+q3118_1,완성된 조합방에 골렘 배치하기,Place a Golem in a Completed Combination Room
+q3118_2,골렘 배치하기,Deploy a Golem
+q3119_0,길드장 처치,Defeat the Guild Master
+q3119_1,길드장 처치,Defeat the Guild Master
+q3119_2,길드장 처치,Defeat the Guild Master
 npc_name_dan,마왕 단탈리온,Lord Dantallion
 npc_name_papra,파프라,Papra
 npc_name_vicente,비센테,Vicente
