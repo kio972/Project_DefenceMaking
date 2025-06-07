@@ -87,7 +87,7 @@ public class GameManager : IngameSingleton<GameManager>
     public ReactiveCollection<Monster> monsterList { get; private set; } = new ReactiveCollection<Monster>();
     public ReactiveCollection<MonsterSpawner> monsterSpawner { get; private set; } = new ReactiveCollection<MonsterSpawner>();
 
-    public List<Trap> trapList = new List<Trap>();
+    public ReactiveCollection<Trap> trapList { get; private set; } = new ReactiveCollection<Trap>();
 
     public PlayerBattleMain king;
 

@@ -23,11 +23,12 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
     private CancellationTokenSource researchCancelToken;
 
-    private List<string> _completedResearchs = new List<string>();
-    public List<string> completedResearchs { get => new List<string>(_completedResearchs); }
+    private HashSet<string> _completedResearchs = new HashSet<string>();
 
     [SerializeField]
     FMODUnity.EventReference openSound;
+
+    public bool IsResearchCompleted(string id) => _completedResearchs.Contains(id);
 
     private async UniTask ExcuteResearch(ResearchSlot curResearch, float additionalTime)
     {
@@ -144,7 +145,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
 
     public void LoadData(PlayerData data)
     {
-        _completedResearchs = new List<string>(data.researchIdes);
+        _completedResearchs = new HashSet<string>(data.researchIdes);
 
         ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
         foreach (ResearchSlot slot in slots)
@@ -177,7 +178,7 @@ public class ResearchMainUI : MonoBehaviour, ISwappableGameObject
     {
         if(_completedResearchs == null || _completedResearchs.Count == 0)
         {
-            _completedResearchs = new List<string>();
+            _completedResearchs = new HashSet<string>();
             ResearchSlot[] slots = GetComponentsInChildren<ResearchSlot>(true);
             foreach (ResearchSlot slot in slots)
             {

@@ -250,3 +250,28 @@ public class Quest1011 : Quest
         
     }
 }
+
+public class Quest3001 : Quest
+{
+    public override void CheckCondition()
+    {
+
+    }
+
+    //살아남기 퀘스트, 제한시간이 지나면 자동으로 클리어
+    public override void UpdateQuest()
+    {
+        if (_CurTime > _TimeLimit)
+            isComplete[1] = true;
+
+        base.UpdateQuest();
+    }
+}
+
+public class Quest3002 : QuestDebtRepay
+{
+    public Quest3002()
+    {
+        executorCount = 1;
+    }
+}

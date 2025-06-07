@@ -38,6 +38,8 @@ public abstract class Quest
 
     public abstract void CheckCondition();
 
+    protected virtual void InitEvent() { }
+
     protected virtual void GetReward()
     {
         if (string.IsNullOrEmpty(targetReward))
@@ -137,5 +139,7 @@ public abstract class Quest
             clearInfo.Add(val["InfoKey"].ToString());
             isComplete.Add(false);
         }
+
+        InitEvent();
     }
 }

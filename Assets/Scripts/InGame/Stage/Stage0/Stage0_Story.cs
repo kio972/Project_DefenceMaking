@@ -251,7 +251,7 @@ public class Stage0_Story : MonoBehaviour
         GameManager.Instance.speedController.SetSpeedNormal();
         GameManager.Instance.speedLock = true;
 
-        await UniTask.WaitUntil(() => GameManager.Instance.research.completedResearchs.Contains("r_m10001"), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => GameManager.Instance.research.IsResearchCompleted("r_m10001"), cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await UniTask.WaitForSeconds(1, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
         await PlayScript(_Tuto8);
 

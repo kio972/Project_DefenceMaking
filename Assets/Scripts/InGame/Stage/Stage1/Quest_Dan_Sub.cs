@@ -45,6 +45,91 @@ public class QuestKillBattler : Quest
     }
 }
 
+
+public abstract class SetTileQuest : Quest
+{
+    protected abstract bool SetTileCheck(ITileKind tileKind);
+
+    protected override void InitEvent()
+    {
+        NodeManager.Instance.AddSetTileEvent(SetTileCheck);
+    }
+
+    public override void FailQuest()
+    {
+        NodeManager.Instance.RemoveSetTileEvent(SetTileCheck);
+        base.FailQuest();
+    }
+
+    public override void CompleteQuest()
+    {
+        NodeManager.Instance.RemoveSetTileEvent(SetTileCheck);
+        base.CompleteQuest();
+    }
+}
+
+public abstract class RemoveTileQuest : Quest
+{
+    protected abstract bool RemoveTileCheck(ITileKind tileKind);
+
+    protected override void InitEvent()
+    {
+        NodeManager.Instance.AddRemoveTileEvent(RemoveTileCheck);
+    }
+
+    public override void FailQuest()
+    {
+        NodeManager.Instance.RemoveRemoveTileEvent(RemoveTileCheck);
+        base.FailQuest();
+    }
+
+    public override void CompleteQuest()
+    {
+        NodeManager.Instance.RemoveRemoveTileEvent(RemoveTileCheck);
+        base.CompleteQuest();
+    }
+}
+
+public abstract class ShopBuyQuest : Quest
+{
+    protected abstract void CheckBuy(Item item);
+
+    protected override void InitEvent()
+    {
+        GameManager.Instance.shop.AddBuyItemEvent(CheckBuy);
+    }
+
+    public override void FailQuest()
+    {
+        GameManager.Instance.shop.AddBuyItemEvent(CheckBuy);
+        base.FailQuest();
+    }
+
+    public override void CompleteQuest()
+    {
+        GameManager.Instance.shop.AddBuyItemEvent(CheckBuy);
+        base.CompleteQuest();
+    }
+}
+
+public abstract class QuestUniRx : Quest
+{
+    protected CancellationTokenSource cancellationToken = new CancellationTokenSource();
+    public override void FailQuest()
+    {
+        base.FailQuest();
+        cancellationToken.Cancel();
+        cancellationToken.Dispose();
+    }
+
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        cancellationToken.Cancel();
+        cancellationToken.Dispose();
+    }
+}
+
 public class Quest2001 : Quest
 {
     //카메라 이동 퀘스트
@@ -137,65 +222,6 @@ public class Quest2003 : Quest
         base.CompleteQuest();
         GameManager.Instance.shop.RemoveBuyItemEvent(CheckBuyCardPack);
     }
-}
-
-public class Quest2004 : QuestKillBattler
-{
-    //도적 처치 퀘스트
-    public Quest2004()
-    {
-        targetId = "s_a40001";
-    }
-}
-
-public class Quest2005 : Quest
-{
-    private bool isInit = false;
-
-    private void CheckBuyCardPack(Item item)
-    {
-        if (item is DebtRepay)
-            return;
-
-        curClearNum[0]++;
-    }
-
-    public override void CheckCondition()
-    {
-        if (!isInit)
-            GameManager.Instance.shop.AddBuyItemEvent(CheckBuyCardPack);
-
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
-            isComplete[0] = true;
-    }
-
-
-    public override void FailQuest()
-    {
-        base.FailQuest();
-        GameManager.Instance.shop.AddBuyItemEvent(CheckBuyCardPack);
-    }
-
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        GameManager.Instance.shop.AddBuyItemEvent(CheckBuyCardPack);
-    }
-}
-
-public class Quest2006 : QuestKillBattler
-{
-    //마을이장 처치 퀘스트
-    public Quest2006()
-    {
-        targetId = "s_boss007";
-    }
-
-    //public override void CompleteQuest()
-    //{
-    //    base.CompleteQuest();
-    //    GameManager.Instance.WinGame();
-    //}
 }
 
 public class Quest2007 : QuestKillBattler
@@ -304,44 +330,6 @@ public class Quest2011 : Quest
     }
 }
 
-public class Quest2012 : Quest
-{
-    //카드팩 구매 퀘스트
-    private bool isInit = false;
-
-    public bool RemoveTileEvent(ITileKind tileKind)
-    {
-        curClearNum[0]++;
-
-        return true;
-    }
-
-
-    public override void CheckCondition()
-    {
-        if (!isInit)
-        {
-            NodeManager.Instance.AddRemoveTileEvent(RemoveTileEvent);
-            isInit = true;
-        }
-
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
-            isComplete[0] = true;
-    }
-
-    public override void FailQuest()
-    {
-        base.FailQuest();
-        NodeManager.Instance.RemoveRemoveTileEvent(RemoveTileEvent);
-        GameManager.Instance.gold = Mathf.Max(GameManager.Instance.gold - 300, 0);
-    }
-
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        NodeManager.Instance.RemoveRemoveTileEvent(RemoveTileEvent);
-    }
-}
 
 public class Quest2013 : Quest
 {
@@ -404,10 +392,6 @@ public class Quest2014 : Quest
         EmergencyEscape escape = new EmergencyEscape();
         ISkill target = king.AddSkill(escape);
 
-        //await UniTask.WaitUntil(() => king.skills.Count > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
-
-        //await UniTask.Yield(cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
-
         await UniTask.WaitUntil(() => target.coolRate.Value > 0, cancellationToken: king.gameObject.GetCancellationTokenOnDestroy());
 
         curClearNum[0]++;
@@ -424,7 +408,7 @@ public class Quest2014 : Quest
     }
 }
 
-public class Quest2015 : Quest
+public class Quest2015 : QuestUniRx
 {
     private bool isInit = false;
 
@@ -432,7 +416,6 @@ public class Quest2015 : Quest
     private HashSet<Tile> spawnerTiles = new HashSet<Tile>();
 
     private bool isCleared = false;
-    private CancellationTokenSource cancellationToken = new CancellationTokenSource();
 
     public override void CheckCondition()
     {
@@ -475,28 +458,8 @@ public class Quest2016 : Quest
     }
 }
 
-public class Quest2017 : Quest
+public class Quest2018 : QuestUniRx
 {
-    private int curHiddenCount = -1;
-
-    public override void CheckCondition()
-    {
-        if (curHiddenCount == -1)
-            curHiddenCount = NodeManager.Instance.hiddenTiles.Count;
-
-        if (NodeManager.Instance.hiddenTiles.Count < curHiddenCount)
-            curClearNum[0]++;
-
-        curHiddenCount = NodeManager.Instance.hiddenTiles.Count;
-
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
-            isComplete[0] = true;
-    }
-}
-
-public class Quest2018 : Quest
-{
-    CancellationTokenSource cancellationToken = new CancellationTokenSource();
     HashSet<Adventurer> adventurers = new HashSet<Adventurer>();
 
     private bool isInit = false;
@@ -542,20 +505,6 @@ public class Quest2018 : Quest
             }).AddTo(cancellationToken.Token);
             isInit = true;
         }
-    }
-
-    public override void FailQuest()
-    {
-        base.FailQuest();
-        cancellationToken.Cancel();
-        cancellationToken.Dispose();
-    }
-
-    public override void CompleteQuest()
-    {
-        base.CompleteQuest();
-        cancellationToken.Cancel();
-        cancellationToken.Dispose();
     }
 }
 
@@ -622,5 +571,312 @@ public class Quest2021 : Quest
 
         if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
+    }
+}
+
+public class Quest3101 : SetTileQuest
+{
+    //길 타일 설치 퀘스트 + 카드 뽑기
+    private int cardCount = -1;
+
+    protected override void InitEvent()
+    {
+        base.InitEvent();
+        cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
+    }
+
+    protected override bool SetTileCheck(ITileKind tileKind)
+    {
+        if (tileKind is Tile tile && tile._TileType == TileType.Path)
+        {
+            curClearNum[0]++;
+            return true;
+        }
+
+        return false;
+    }
+
+    public override void CheckCondition()
+    {
+        if (!isComplete[1] && GameManager.Instance.cardDeckController.hand_CardNumber > cardCount)
+        {
+            curClearNum[1] += GameManager.Instance.cardDeckController.hand_CardNumber - cardCount;
+        }
+        cardCount = GameManager.Instance.cardDeckController.hand_CardNumber;
+
+        for (int i = 0; i < curClearNum.Count; i++)
+        {
+            if (curClearNum[i] >= Mathf.Abs(_ClearNum[i]))
+                isComplete[i] = true;
+        }
+    }
+}
+
+public class Quest3102 : Quest
+{
+    private TileNode curNode = null;
+
+    public override void CheckCondition()
+    {
+        if (curNode == null)
+            curNode = NodeManager.Instance.endPoint;
+
+        if (curNode != NodeManager.Instance.endPoint)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+}
+
+public class Quest3103 : QuestUniRx
+{
+    protected override void InitEvent()
+    {
+        GameManager.Instance.trapList.ObserveAdd().Subscribe(_ => curClearNum[0]++).AddTo(cancellationToken.Token);
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3104 : SetTileQuest
+{
+    protected override bool SetTileCheck(ITileKind tileKind)
+    {
+        if (tileKind is Tile tile && tile._TileType == TileType.Room_Single)
+        {
+            curClearNum[0]++;
+            return true;
+        }
+
+        return false;
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3105 : QuestUniRx
+{
+    //슬라임 스포너 3개 설치 퀘스트
+    protected override void InitEvent()
+    {
+        GameManager.Instance.monsterSpawner.ObserveAdd().Where(_ => _.Value._TargetName.Contains("slime")).Subscribe(_ => curClearNum[0]++).AddTo(cancellationToken.Token);
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3106 : SetTileQuest
+{
+    protected override bool SetTileCheck(ITileKind tileKind)
+    {
+        if (tileKind is Environment)
+        {
+            curClearNum[0]++;
+            return true;
+        }
+
+        return false;
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3107 : Quest
+{
+    private int curHiddenCount = -1;
+    protected override void InitEvent() => curHiddenCount = NodeManager.Instance.hiddenTiles.Count;
+
+    public override void CheckCondition()
+    {
+        if (NodeManager.Instance.hiddenTiles.Count < curHiddenCount)
+            curClearNum[0]++;
+
+        curHiddenCount = NodeManager.Instance.hiddenTiles.Count;
+
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3108 : ShopBuyQuest
+{
+    protected override void CheckBuy(Item item)
+    {
+        if (item is DebtRepay)
+            return;
+
+        curClearNum[0]++;
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3109 : Quest
+{
+    float prevTimeScale = -1;
+    protected override void InitEvent() => prevTimeScale = GameManager.Instance.timeScale;
+
+    public override void CheckCondition()
+    {
+        if (prevTimeScale != GameManager.Instance.timeScale && UIManager.Instance._OpendUICount == 0 && !GameManager.Instance.isPause)
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+}
+
+public class Quest3110 : Quest
+{
+    public override void CheckCondition()
+    {
+        if (GameManager.Instance.research.IsResearchCompleted("r_m30001"))
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+}
+
+public class Quest3111 : RemoveTileQuest
+{
+    protected override bool RemoveTileCheck(ITileKind tileKind)
+    {
+        curClearNum[0]++;
+
+        return true;
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+
+    public override void FailQuest()
+    {
+        base.FailQuest();
+        GameManager.Instance.gold = Mathf.Max(GameManager.Instance.gold - 300, 0);
+    }
+}
+
+public class Questq3112 : QuestKillBattler
+{
+    //마을이장 처치 퀘스트
+    public Questq3112()
+    {
+        targetId = "s_boss007";
+    }
+}
+
+public class Quest3113 : Quest
+{
+    public override void CheckCondition()
+    {
+        if (GameManager.Instance.research.IsResearchCompleted("r_t10002"))
+        {
+            curClearNum[0]++;
+            isComplete[0] = true;
+        }
+    }
+}
+
+public class Quest3114 : Quest
+{
+    private int curRoomCount = -1;
+
+    protected override void InitEvent() => curRoomCount = NodeManager.Instance.roomTiles.Count;
+
+    public override void CheckCondition()
+    {
+        if (curRoomCount != NodeManager.Instance.roomTiles.Count)
+        {
+            curClearNum[0] = NodeManager.Instance.roomTiles[NodeManager.Instance.roomTiles.Count - 1]._IncludeRooms.Count;
+            curRoomCount = NodeManager.Instance.roomTiles.Count;
+        }
+
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3115 : Quest
+{
+    public bool isFind = false;
+    public override void CheckCondition()
+    {
+        if (isFind)
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3116 : QuestKillBattler
+{
+    //도적 처치 퀘스트
+    public Quest3116()
+    {
+        targetId = "s_a40001";
+    }
+}
+
+public class Quest3117 : Quest
+{
+    public bool isFind = false;
+    public override void CheckCondition()
+    {
+        if (isFind)
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3118 : QuestUniRx
+{
+    //골렘 스포너 설치 퀘스트
+    protected override void InitEvent()
+    {
+        GameManager.Instance.monsterSpawner.ObserveAdd().Where(_ => _.Value._TargetName.Contains("golem")).Subscribe(_ => curClearNum[0]++).AddTo(cancellationToken.Token);
+    }
+
+    public override void CheckCondition()
+    {
+        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+            isComplete[0] = true;
+    }
+}
+
+public class Quest3119 : QuestKillBattler
+{
+    //길드장 처치 퀘스트
+    public Quest3119()
+    {
+        targetId = "s_boss002";
+    }
+
+    //임시로 승리
+    public override void CompleteQuest()
+    {
+        base.CompleteQuest();
+        GameManager.Instance.WinGame();
     }
 }
