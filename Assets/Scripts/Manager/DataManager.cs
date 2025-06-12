@@ -174,7 +174,7 @@ public class DataManager : Singleton<DataManager>
     {
         shopListDic = new Dictionary<string, Dictionary<string, object>>();
         foreach (var item in _shop_Table)
-            shopListDic.Add(item["id"].ToString(), item);
+            shopListDic[item["id"].ToString()] = item;
     }
 
     private void SortDeckList()
@@ -214,7 +214,7 @@ public class DataManager : Singleton<DataManager>
             if (_deckList[i]["type"].ToString() == "herb")
                 herbCard_Indexs.Add(i);
 
-            deckListIndex.Add(_deckList[i]["id"].ToString(), i);
+            deckListIndex[_deckList[i]["id"].ToString()] = i;
         }
     }
 
@@ -222,14 +222,14 @@ public class DataManager : Singleton<DataManager>
     {
         languageDic = new Dictionary<string, Dictionary<string, object>>();
         foreach (var item in _language_Table)
-            languageDic.Add(item["id"].ToString(), item);
+            languageDic[item["id"].ToString()] = item;
     }
 
     private void SortBattlerList()
     {
         battlerDic = new Dictionary<string, Dictionary<string, object>>();
         foreach (var item in _battler_Table)
-            battlerDic.Add(item["id"].ToString(), item);
+            battlerDic[item["id"].ToString()] = item;
     }
 
     private void SortTooltipKey()

@@ -28,7 +28,9 @@ public class QuestKillBattler : Quest
             isInit = true;
         }
 
-        if (curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
+        if (_ClearNum[0] == 0 && curClearNum[0] >= 1)
+            isComplete[0] = true;
+        else if (_ClearNum[0] != 0 && curClearNum[0] >= Mathf.Abs(_ClearNum[0]))
             isComplete[0] = true;
     }
 
